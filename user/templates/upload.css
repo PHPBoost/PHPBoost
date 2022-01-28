@@ -219,3 +219,8 @@
 
 .upload-cat-list li span,
 .upload-cat-explorer li span { padding: 0.309em 0.228em; }
+
+.missing-file > * {
+    background-color: var(--error-tone) !important;
+    color: var(--txt-alt) !important;
+}

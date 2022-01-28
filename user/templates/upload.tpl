@@ -465,7 +465,7 @@
 							<div class="cell-flex cell-tile  # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
 								# IF C_PERSONAL_FILES #
 			                        # START personal_files #
-				                        <div class="cell# IF personal_files.C_RECENT_FILE # new-content# ENDIF #">
+				                        <div class="cell# IF personal_files.C_RECENT_FILE # new-content# ENDIF ## IF NOT personal_files.C_FILE_EXISTS # missing-file# ENDIF #">
 											<span id="imgf{personal_files.ID}"></span>
 											<div class="cell-header">
 												<div id="fifl{personal_files.ID}" class="cell-name ellipsis">
@@ -553,7 +553,7 @@
 							# IF C_SHARED_FILES #
 		                    	<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
 			                        # START shared_files #
-				                        <div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF #">
+				                        <div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF ## IF NOT shared_files.C_FILE_EXISTS # missing-file# ENDIF #">
 											<span id="imgf{shared_files.ID}"></span>
 											<div class="cell-header">
 												<div id="fifl{shared_files.ID}" class="cell-name ellipsis">{shared_files.NAME}</div>
@@ -566,7 +566,7 @@
 											</div>
 				                            # IF shared_files.C_ENABLED_THUMBNAILS #
 												<div class="cell-body" aria-label="{@common.see.details}">
-													<div class="cell-thumbnail cell-landscape">
+													<div class="cell-thumbnail cell-landscape cell-center">
 							                            # IF shared_files.C_IMG #
 															<img src="{shared_files.URL}" alt="{shared_files.NAME}">
 							                                <a class="cell-thumbnail-caption" href="{shared_files.URL}" data-lightbox="formatter" data-rel="lightcase:collection">

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 27
+ * @version     PHPBoost 6.0 - last update: 2022 01 28
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -439,11 +439,9 @@ else
         ));
         while ($row = $result->fetch()) {
             $name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
-            
-            $width_source = !empty($width_source) ? $width_source + 30 : 0;
-            $height_source = !empty($height_source) ? $height_source + 30 : 0;
-            
+
             $get_img_mimetype = Uploads::get_img_mimetype($row['type']);
+            $file = new file(PATH_TO_ROOT . '/upload/' . $row['path']);
             $size_img = '';
             switch ($row['type']) {
                 // Pictures
@@ -457,15 +455,14 @@ else
                 case 'raw':
                 case 'ico':
                 case 'tif':
-                    $file = new file($row['path']);
                     if ($file->exists())
-                    {
                         list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
-                    }
-                        $size_img = ' (' . $width_source . 'x' . $height_source . ')';
-                        $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
-                        $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
-                        $link = '/upload/' . $row['path'];
+                    $width_source = !empty($width_source) ? $width_source + 30 : 0;
+                    $height_source = !empty($height_source) ? $height_source + 30 : 0;
+                    $size_img = ' (' . $width_source . 'x' . $height_source . ')';
+                    $bbcode = '[img]/upload/' . $row['path'] . '[/img]';
+                    $tinymce = '<img src="/upload/' . $row['path'] . '" alt="' . $row['name'] . '" />';
+                    $link = '/upload/' . $row['path'];
                     break;
                 // Sounds
                 case 'wav':
@@ -490,7 +487,9 @@ else
             $is_bbcode_editor = ($editor == 'BBCode');
             $displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
             $inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
+
             $view->assign_block_vars($loop_id, array(
+                'C_FILE_EXISTS' => $file->exists(),
                 'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
                 'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
                 'C_RECENT_FILE' => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // File added less than 2 minutes ago
