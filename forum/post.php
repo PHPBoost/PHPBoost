@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 01 28
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -602,7 +602,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					'KERNEL_EDITOR'  => $editor->display(),
 					'TITLE_T'        => stripslashes($topic['title']),
 
-					'U_ACTION'       => 'post.php' . url('?update =1&amp;new =msg&amp;id =' . $id_get . '&amp;idt =' . $idt_get . '&amp;idm =' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
+					'U_ACTION'       => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
 					'U_CATEGORY'     => 'forum' . url('.php?id    =' . $id_get, '-' . $id_get . '.php'),
 					'U_TITLE_T'      => 'topic' . url('.php?id    =' . $idt_get, '-' . $idt_get . '.php'),
 
