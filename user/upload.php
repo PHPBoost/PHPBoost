@@ -455,6 +455,7 @@ else
                 case 'raw':
                 case 'ico':
                 case 'tif':
+                    $width_source = $height_source = 0;
                     if ($file->exists())
                         list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
                     $width_source = !empty($width_source) ? $width_source + 30 : 0;
