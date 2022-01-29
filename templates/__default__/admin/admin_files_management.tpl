@@ -395,7 +395,7 @@
 				</div>
 				<div class="cell-flex cell-tile cell-inline">
 					# START personal_files #
-						<div class="cell# IF personal_files.C_RECENT_FILE # new-content# ENDIF #">
+						<div class="cell# IF personal_files.C_RECENT_FILE # new-content# ENDIF ## IF NOT personal_files.C_FILE_EXISTS # missing-file# ENDIF #">
 							<span id="imgf{personal_files.ID}"></span>
 							<div class="cell-header">
 								<div id="fi1{personal_files.ID}" class="cell-name ellipsis">{personal_files.NAME}</div>
@@ -471,7 +471,7 @@
 			# IF C_SHARED_FILES_EXIST #
 				<div class="cell-flex cell-tile cell-inline">
 					# START shared_files #
-						<div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF #">
+						<div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF ## IF NOT shared_files.C_FILE_EXISTS # missing-file# ENDIF #">
 							<span><span>{@upload.posted.by}</span># IF shared_files.C_AUTHOR_EXIST #<a class="{shared_files.AUTHOR_LEVEL_CLASS}"# IF shared_files.C_AUTHOR_GROUP_COLOR # style="color:{shared_files.AUTHOR_GROUP_COLOR}"# ENDIF # href="{shared_files.U_AUTHOR_PROFILE}">{shared_files.AUTHOR}</a># ELSE #{@user.guest}# ENDIF #</span>
 							<span id="imgf{shared_files.ID}"></span>
 							<div class="cell-header">

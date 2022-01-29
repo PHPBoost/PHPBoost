@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2022 01 29
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -469,6 +469,7 @@ else
 			$name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
+			$file = new file(PATH_TO_ROOT . '/upload/' . $row['path']);
 			$size_img = '';
 			switch ($row['type']) {
 				// Images
@@ -483,10 +484,12 @@ else
 				case 'raw':
 				case 'ico':
 				case 'tif':
-					list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
-					$size_img = ' (' . $width_source . 'x' . $height_source . ')';
+					$width_source = $height_source = 0;
+					if ($file->exists())
+						list($width_source, $height_source) = @getimagesize(PATH_TO_ROOT . '/upload/' . $row['path']);
 					$width_source = !empty($width_source) ? $width_source + 30 : 0;
 					$height_source = !empty($height_source) ? $height_source + 30 : 0;
+					$size_img = ' (' . $width_source . 'x' . $height_source . ')';
 					$bbcode = '[img]/upload/' . $row['path'] . '[/img]';
 					$link = PATH_TO_ROOT . '/upload/' . $row['path'];
 					break;
@@ -511,6 +514,7 @@ else
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$view->assign_block_vars($loop_id, array(
+				'C_FILE_EXISTS'        => $file->exists(),
 				'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
 				'C_IMG'                => $get_img_mimetype['img'] == 'far fa-file-image',
 				'C_RECENT_FILE'        => $row['timestamp'] > ($now->get_timestamp() - (2 * 60)), // File added less than 2 minutes ago
