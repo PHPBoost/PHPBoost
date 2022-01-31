@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 29
+ * @version     PHPBoost 6.0 - last update: 2022 01 31
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -470,7 +470,7 @@ else
 
 			$get_img_mimetype = Uploads::get_img_mimetype($row['type']);
 			$file = new file(PATH_TO_ROOT . '/upload/' . $row['path']);
-			$size_img = '';
+			$size_img = $link = '';
 			switch ($row['type']) {
 				// Images
 				case 'jpg':
