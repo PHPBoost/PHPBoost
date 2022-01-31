@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 01 31
  * @since       PHPBoost 3.0 - 2009 12 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -53,7 +53,7 @@ abstract class ModuleController extends AbstractController
 	
 	public static function get_module_configuration()
 	{
-		if (self::$module_id && !in_array(self::$module_id, array('admin', 'kernel', 'user')))
+		if (self::$module_id && !in_array(self::$module_id, array('admin', 'kernel', 'user')) && self::get_module())
 			self::$module_configuration = self::get_module()->get_configuration();
 		
 		return self::$module_configuration;
