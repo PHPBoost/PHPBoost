@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 22
+ * @version     PHPBoost 6.0 - last update: 2022 02 01
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,11 +19,20 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 * @var BreadCrumb The page breadcrumb
 	 */
 	private $breadcrumb = null;
+	
+	private static $lang;
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->set_breadcrumb(new BreadCrumb());
+
+		$this->load_lang();
+	}
+
+	private function load_lang()
+	{
+		self::$lang = LangLoader::get_all_langs();
 	}
 
 	/**
@@ -32,7 +41,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	public function display($content)
 	{
 		$view = new FileTemplate('body.tpl');
-		$view->add_lang(LangLoader::get_all_langs());
+		$view->add_lang(self::$lang);
 
 		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
@@ -91,14 +100,14 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	function display_page(View $body_template)
 	{
 		$view = new FileTemplate('frame.tpl');
-		$view->add_lang(LangLoader::get_all_langs());
+		$view->add_lang(self::$lang);
 
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
 		$maintenance_config = MaintenanceConfig::load();
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
-		$js_top_tpl->add_lang(LangLoader::get_all_langs());
+		$js_top_tpl->add_lang(self::$lang);
 		$js_top_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
 			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
@@ -107,7 +116,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		));
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
-		$js_bottom_tpl->add_lang(LangLoader::get_all_langs());
+		$js_bottom_tpl->add_lang(self::$lang);
 		$js_bottom_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance()
 		));
@@ -261,9 +270,8 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
 
-		$lang = LangLoader::get_all_langs();
 		$view =  new FileTemplate('maintain.tpl');
-		$view->add_lang($lang);
+		$view->add_lang(self::$lang);
 
 		$maintenance_config = MaintenanceConfig::load();
 		if ($maintenance_config->is_under_maintenance() && $maintenance_config->get_display_duration() && (!AppContext::get_current_user()->is_admin() || (AppContext::get_current_user()->is_admin() && $maintenance_config->get_display_duration_for_admin())))
@@ -271,10 +279,10 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
 			$array_delay = array($lang['common.unspecified'],
-				'1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '10 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'],
-				'1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '3 ' . $lang['date.hours'], '4 ' . $lang['date.hours'], '5 ' . $lang['date.hours'], '6 ' . $lang['date.hours'], '7 ' . $lang['date.hours'], '8 ' . $lang['date.hours'], '16 ' . $lang['date.hours'],
-				'1 ' . $lang['date.day'], '2 ' . $lang['date.day'],
-				'1 ' . $lang['date.week']);
+				'1 ' . self::$lang['date.minute'], '5 ' . self::$lang['date.minutes'], '10 ' . self::$lang['date.minutes'], '15 ' . self::$lang['date.minutes'], '30 ' . self::$lang['date.minutes'],
+				'1 ' . self::$lang['date.hour'], '2 ' . self::$lang['date.hours'], '3 ' . self::$lang['date.hours'], '4 ' . self::$lang['date.hours'], '5 ' . self::$lang['date.hours'], '6 ' . self::$lang['date.hours'], '7 ' . self::$lang['date.hours'], '8 ' . self::$lang['date.hours'], '16 ' . self::$lang['date.hours'],
+				'1 ' . self::$lang['date.day'], '2 ' . self::$lang['date.day'],
+				'1 ' . self::$lang['date.week']);
 
 			//Retourne le délai de maintenance le plus proche.
 			if (!$maintenance_config->is_unlimited_maintenance())
@@ -332,7 +340,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			$form = new HTMLForm('disable_maintenance_form', '', false);
 
-			$submit_button = new FormButtonSubmit($lang['admin.disable.maintenance'], 'disable_maintenance', '', 'bgc-full warning disable-maintenance-button');
+			$submit_button = new FormButtonSubmit(self::$lang['admin.disable.maintenance'], 'disable_maintenance', '', 'bgc-full warning disable-maintenance-button');
 			$form->add_button($submit_button);
 
 			if ($submit_button->has_been_submited() && $form->validate())

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 22
+ * @version     PHPBoost 6.0 - last update: 2022 02 01
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,7 +26,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 	private function load_lang()
 	{
-		self::$lang = LangLoader::get_all_langs();
+		self::$lang = LangLoader::get_kernel_langs();
 	}
 
 	public function display($content)
@@ -85,20 +85,20 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	private function display_page(View $body_template)
 	{
 		$view = new FileTemplate('admin/frame.tpl');
-		$view->add_lang(LangLoader::get_all_langs());
+		$view->add_lang(self::$lang);
 
 		$customization_config = CustomizationConfig::load();
 		$cookiebar_config = CookieBarConfig::load();
 		$maintenance_config = MaintenanceConfig::load();
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
-		$js_top_tpl->add_lang(LangLoader::get_all_langs());
+		$js_top_tpl->add_lang(self::$lang);
 		$js_top_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => false
 		));
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
-		$js_bottom_tpl->add_lang(LangLoader::get_all_langs());
+		$js_bottom_tpl->add_lang(self::$lang);
 		$js_bottom_tpl->put_all(array(
 			'C_COOKIEBAR_ENABLED' => false
 		));
