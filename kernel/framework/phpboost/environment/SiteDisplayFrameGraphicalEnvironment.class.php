@@ -26,7 +26,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 	 */
 	public function display($content)
 	{
-		$lang = LangLoader::get_all_langs();
+		$lang = LangLoader::get_kernel_langs();
 		$view = new FileTemplate('frame.tpl');
 		$view->add_lang($lang);
 

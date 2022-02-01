@@ -32,7 +32,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 
 	private function load_lang()
 	{
-		self::$lang = LangLoader::get_all_langs();
+		self::$lang = LangLoader::get_kernel_langs();
 	}
 
 	/**
