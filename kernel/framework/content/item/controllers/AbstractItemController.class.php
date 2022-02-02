@@ -126,7 +126,7 @@ abstract class AbstractItemController extends DefaultModuleController
 	protected function init_lang()
 	{
 		$this->lang = array_merge(
-			$this->lang,
+			LangLoader::get_all_langs(self::$module_id),
 			ItemsService::get_items_lang(self::get_module()->get_id())
 		);
 	}
