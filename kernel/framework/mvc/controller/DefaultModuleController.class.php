@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.0 - last update: 2022 02 02
  * @since       PHPBoost 6.0 - 2021 11 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -39,7 +39,7 @@ abstract class DefaultModuleController extends ModuleController
 	{
 		$this->request = AppContext::get_request();
 		$this->config = self::get_module_configuration()->get_configuration_parameters();
-		$this->lang = LangLoader::get_all_langs(self::$module_id);
+		$this->init_lang();
 	}
 
 	protected function init_view()
@@ -52,6 +52,11 @@ abstract class DefaultModuleController extends ModuleController
 			'MODULE_ID'   => self::get_module()->get_id(),
 			'MODULE_NAME' => self::get_module_configuration()->get_name()
 		));
+	}
+	
+	protected function init_lang()
+	{
+		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
 	/**
