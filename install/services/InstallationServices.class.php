@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 02
+ * @version     PHPBoost 6.0 - last update: 2022 02 03
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,9 +38,11 @@ class InstallationServices
 	{
 		$this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
 		$this->load_distribution_configuration();
-		$locale = in_array($locale, self::get_available_langs()) ? $locale : self::get_default_lang();
-		$this->set_default_locale($locale);
-		LangLoader::set_locale($this->distribution_config['default_lang']);
+		if ($locale)
+		{
+			$this->set_default_locale($locale);
+			LangLoader::set_locale($this->distribution_config['default_lang']);
+		}
 		$this->messages = LangLoader::get_all_langs('install');
 	}
 
@@ -60,7 +62,7 @@ class InstallationServices
 
 	private function set_default_locale($locale)
 	{
-		$langs = $this->get_langs_not_installed();
+		$langs = $this->get_available_langs();
 		if (!empty($locale) && in_array($locale, $langs))
 			$this->distribution_config['default_lang'] = $locale;
 	}
