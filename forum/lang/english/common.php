@@ -45,7 +45,7 @@ $lang['forum.config.status.message.unsolved']      = 'Message explanation to mem
 $lang['forum.config.status.message.solved']        = 'Message explanation to members if topic status is solved';
 $lang['forum.config.display.issue.status.icon']    = 'Display associated icon';
     // Default
-$lang['forum.config.forum.name']            = GeneralConfig::load()->get_site_name() . ' forum';
+$lang['forum.config.default.forum.name']   = GeneralConfig::load()->get_site_name() . ' forum';
 $lang['forum.config.issue.status']          = '[Solved]';
 $lang['forum.config.issue.status.unsolved'] = 'Solved topic?';
 $lang['forum.config.issue.status.solved']   = 'Unsolved topic?';
