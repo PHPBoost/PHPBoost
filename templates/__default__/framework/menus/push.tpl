@@ -8,10 +8,8 @@
 					<div class="cell-header menu-vertical-{DEPTH}">
 		# ENDIF #
 			<a class="toggle-{ID} pushmenu-toggle">
-				# IF C_IMG #
-					<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" />
-					# IF C_ICON #<i class="{ICON}"></i> # ELSE #<i class="fa fa-bars"></i> # ENDIF #
-				# ENDIF #
+				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
+				# IF C_ICON #<i class="{ICON}"></i># ENDIF #
 	            <span>{TITLE}</span>
           	</a>
 			<nav id="pushmenu-{ID}" class="pushnav# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
