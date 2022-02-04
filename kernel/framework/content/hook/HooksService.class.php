@@ -41,6 +41,21 @@ class HooksService
 	}
 
 	/**
+	 * @desc Get the list of modules that have specific hooks defined
+	 * @return string[] List of modules
+	 */
+	public static function get_modules_with_specific_hooks_list()
+	{
+		$modules = array();
+		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
+		{
+			if ($module->get_configuration()->get_specific_hooks())
+				$modules[] = $module->get_id();
+		}
+		return $modules;
+	}
+
+	/**
 	 * @desc Execute all Hook child classes functions defined for a requested action
 	 * @param string $action Name of the requested action
 	 * @param string $module_id Id of the current module
