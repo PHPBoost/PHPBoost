@@ -120,7 +120,7 @@
 </div>
 <div class="flex-between">
 	<a href="javascript:FormFieldPossibleValues.add_field();" id="add_${escape(HTML_ID)}" class="add-more-values" aria-label="${LangLoader::get_message('common.add', 'common-lang')}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
-	# IF C_DISPLAY_DEFAULT_RADIO #<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"> <i class="fa fa-times" aria-hidden="true"></i> {@form.delete.default.values.}</a># ENDIF #
+	# IF C_DISPLAY_DEFAULT_RADIO #<a href="#" onclick="return false;" id="uncheck_default_${escape(HTML_ID)}"# IF NOT C_HAS_DEFAULT_VALUE # style="display: none;"# ENDIF # class="small"> <i class="fa fa-times" aria-hidden="true"></i> {@form.delete.default.values}</a># ENDIF #
 </div>
 
 # IF C_DISPLAY_DEFAULT_RADIO #
