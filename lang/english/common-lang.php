@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 28
+ * @version     PHPBoost 6.0 - last update: 2022 02 04
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,6 +25,7 @@ $lang['common.filters']        = 'Filters';
 $lang['common.home']           = 'Home';
 $lang['common.id']             = 'ID';
 $lang['common.image']          = 'Image';
+$lang['common.icon']           = 'Icon';
 $lang['common.informations']   = 'Informations';
 $lang['common.loading']        = 'Loading';
 $lang['common.message']        = 'Message';
