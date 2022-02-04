@@ -229,10 +229,7 @@ ul.pagination a { padding: 0.309em; }
 }
 
 /* --- Content --- */
-
 .pagin-forum { float: right; }
-
-
 
 @media (max-width: 768px) {
 	tfoot,
@@ -247,7 +244,10 @@ ul.pagination a { padding: 0.309em; }
 }
 
 /* --- footer --- */
-#forum-bottom { margin: 1em 0 0.309em 0; }
+#forum-bottom {
+	margin: 1em 0 0.309em 0;
+	padding: 0.618em;
+}
 
 #forum-bottom .forum-message-options { border-bottom: none; }
 
