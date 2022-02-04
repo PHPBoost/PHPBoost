@@ -5,7 +5,7 @@
  * css for checkboxes
 */
 
-.checkbox { padding: 0.228em; }
+.checkbox { padding: 0.309em 0.228em; }
 
 .checkbox [type="checkbox"]:disabled + span { cursor: not-allowed;}
 
@@ -46,7 +46,7 @@
 
 .mini-checkbox .checkbox [type="checkbox"] + span::before {
 	left:-1px;
-	top: -2px;
+	top: 0;
 	width: 1.309em;
 	height: 1.309em;
 	border-width: 1px;
@@ -66,7 +66,7 @@
 .mini-checkbox .checkbox input[type="checkbox"]:checked + span::after {
 	position: absolute;
 	content: '\f00c';
-	top: 0;
+	top: 2px;
 	left: 2px;
 	transition: all .3s ease 0s;
 }
