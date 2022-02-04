@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 28
+ * @version     PHPBoost 6.0 - last update: 2022 02 04
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -275,6 +275,18 @@ abstract class Hook implements ExtensionPoint
 	public function on_display_action($module_id, $content, array $properties = array())
 	{
 		return $content;
+	}
+
+	/**
+	 * @desc Define a global function to treat all the modules specific hooks the same way. You can also define a specific function in your Hook class if you want to treat one or several of these module specific hook differently. For instance a specific function for on_forum_add_topic_action.
+	 * @param string $action Name of the module specific hook
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties Properties of the item (title, content, ...)
+	 * @param string $description Optional description of the action
+	 */
+	public function execute_module_specific_hook_action($action, $module_id, array $properties, $description = '')
+	{
+		return true;
 	}
 }
 ?>

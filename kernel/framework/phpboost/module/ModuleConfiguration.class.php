@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2022 02 04
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -32,6 +32,7 @@ class ModuleConfiguration
 	private $admin_menu;
 	private $home_page;
 	private $contribution_interface;
+	private $specific_hooks;
 	private $url_rewrite_rules;
 	private $documentation;
 	private $features;
@@ -120,6 +121,11 @@ class ModuleConfiguration
 	public function get_contribution_interface()
 	{
 		return $this->contribution_interface;
+	}
+
+	public function get_specific_hooks()
+	{
+		return $this->specific_hooks;
 	}
 
 	public function get_url_rewrite_rules()
@@ -220,6 +226,7 @@ class ModuleConfiguration
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->features               = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
+		$this->specific_hooks         = !empty($config['specific_hooks']) ? explode(',', preg_replace('/\s/', '', $config['specific_hooks'])) : array();
 		$this->contribution_interface = !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 		
@@ -285,7 +292,8 @@ class ModuleConfiguration
 			'creation_date'          => $this->creation_date,
 			'last_update'            => $this->last_update,
 			'php_version'            => $this->php_version,
-			'features'               => $this->features,
+			'features'               => implode(', ', $this->features),
+			'specific_hooks'         => implode(', ', $this->features),
 			'contribution_interface' => $this->contribution_interface,
 			'home_page'              => $this->home_page,
 			'admin_main_page'        => $this->admin_main_page,
