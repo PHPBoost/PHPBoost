@@ -10,8 +10,7 @@
 			<a class="toggle-{ID} pushmenu-toggle">
 				# IF C_IMG #
 					<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" />
-				# ELSE #
-					<i class="fa fa-bars"></i>
+					# IF C_ICON #<i class="{ICON}"></i> # ELSE #<i class="fa fa-bars"></i> # ENDIF #
 				# ENDIF #
 	            <span>{TITLE}</span>
           	</a>
@@ -52,9 +51,17 @@
 	# IF C_NEXT_MENU #
 		<li>
 			# IF C_URL #
-				<a href="{REL_URL}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
+				<a href="{REL_URL}">
+					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
+					# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+					<span>{TITLE}</span>
+				</a>
 			# ELSE #
-				<span># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#<span>{TITLE}</span></span>
+				<span># IF C_IMG #
+					<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#
+					# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+					<span>{TITLE}</span>
+				</span>
 			# ENDIF #
 			# IF C_HAS_CHILD #
 				<ul># START elements #{elements.DISPLAY}# END elements #</ul>

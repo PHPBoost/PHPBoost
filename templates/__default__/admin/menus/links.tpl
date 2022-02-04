@@ -69,6 +69,10 @@
 		jQuery('<span/>').text(${escapejs(@common.image)}).appendTo('#menu_label_image_' + id);
 		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
 
+		jQuery('<label/>', {id : 'menu_label_icon_' + id, for : 'menu_element_' + id + '_icon', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text(${escapejs(@common.icon)}).appendTo('#menu_label_icon_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_icon', name : 'menu_element_' + id + '_icon'}).appendTo('#menu_label_icon_' + id);
+
 		jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
 
@@ -111,6 +115,10 @@
 		jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<span/>').text(${escapejs(@common.image)}).appendTo('#menu_label_image_' + id);
 		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
+
+		jQuery('<label/>', {id : 'menu_label_icon_' + id, for : 'menu_element_' + id + '_icon', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<span/>').text(${escapejs(@common.icon)}).appendTo('#menu_label_icon_' + id);
+		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_icon', name : 'menu_element_' + id + '_icon'}).appendTo('#menu_label_icon_' + id);
 
 		jQuery('<span/>', {id : 'menu_element_' + id + '_image_preview_span', class : 'preview grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<img/>', {id : 'menu_element_' + id + '_image_preview', style : 'display:none;'}).appendTo('#menu_element_' + id + '_image_preview_span');
@@ -211,17 +219,21 @@
 		<fieldset>
 			<legend># IF C_EDIT #{@menu.links.edit}# ELSE #{@menu.links.add}# ENDIF #</legend>
 			<div class="fieldset-inset">
-				<div class="form-element third-field">
+				<div class="form-element">
 					<label for="menu_element_{ID}_name">* {@common.name}</label>
 					<div class="form-field"><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}"></div>
 				</div>
-				<div class="form-element third-field">
+				<div class="form-element">
 					<label for="menu_element_{ID}_url">{@common.url}</label>
 					<div class="form-field"><input type="text" name="menu_element_{ID}_url" id="menu_element_{ID}_url" value="{MENU_URL}"></div>
 				</div>
-				<div class="form-element third-field">
+				<div class="form-element">
 					<label for="menu_element_{ID}_image">{@common.image}</label>
 					<div class="form-field"><input type="text" name="menu_element_{ID}_image" id="menu_element_{ID}_image" value="{MENU_IMG}"></div>
+				</div>
+				<div class="form-element">
+					<label for="menu_element_{ID}_icon">{@common.icon}</label>
+					<div class="form-field"><input type="text" name="menu_element_{ID}_icon" id="menu_element_{ID}_icon" value="{MENU_ICON}"></div>
 				</div>
 				<div class="form-element third-field">
 					<label for="menu_element_{ID}_location">{@menu.location}</label>

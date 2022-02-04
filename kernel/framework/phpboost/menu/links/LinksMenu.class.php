@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2022 02 04
  * @since       PHPBoost 2.0 - 2008 07 08
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -49,7 +49,7 @@ class LinksMenu extends LinksMenuElement
 	* @param string $type Menu's type
 	* @param int $id The Menu's id in the database
 	*/
-	public function __construct($title, $url, $image = '', $type = self::AUTOMATIC_MENU)
+	public function __construct($title, $url, $image = '', $icon = '', $type = self::AUTOMATIC_MENU)
 	{
 		// Set the menu type
 
@@ -58,7 +58,7 @@ class LinksMenu extends LinksMenuElement
 		$this->type = in_array($type, self::get_menu_types_list()) ? $type : self::AUTOMATIC_MENU;
 
 		// Build the menu element on witch is based the menu
-		parent::__construct($title, $url, $image);
+		parent::__construct($title, $url, $image, $icon);
 	}
 
 	/**

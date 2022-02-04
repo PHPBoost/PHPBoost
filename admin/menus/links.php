@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2022 02 04
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,19 +31,20 @@ if ($action == 'save')
 	{
 		$menu = null;
 		$menu_element_id = $elements_ids['id'];
-		$menu_name = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
-		$menu_url = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
+		$menu_name  = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
+		$menu_url   = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
 		$menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
-
+		$menu_icon  = retrieve(POST, 'menu_element_' . $menu_element_id . '_icon', '');
+		
 		$array_size = count($elements_ids);
 
 		if ($array_size == 1 && $level > 0)
 		{   // If it's a menu, there's only one element;
-			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image);
+			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image, $menu_icon);
 		}
 		else
 		{
-			$menu = new LinksMenu($menu_name, $menu_url, $menu_image);
+			$menu = new LinksMenu($menu_name, $menu_url, $menu_image, $menu_icon);
 
 			// We unset the id key of the array
 			unset($elements_ids['id']);
@@ -207,6 +208,7 @@ $view->put_all(array(
 	'MENU_NAME'  => $menu->get_title(),
 	'MENU_URL'   => $menu->get_url(true),
 	'MENU_IMG'   => $menu->get_image(true),
+	'MENU_ICON'  => $menu->get_icon(),
 	'ID'         => $menu->get_uid()
 ));
 

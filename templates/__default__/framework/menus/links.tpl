@@ -9,9 +9,11 @@
 						# IF RELATIVE_URL #
 							<h6 class="cell-name"><a class="offload" href="{REL_URL}">{TITLE}</a></h6>
 							# IF C_IMG #<a class="offload" href="{REL_URL}"><img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /></a># ENDIF #
+							# IF C_ICON #<a class="offload" href="{REL_URL}"><i class="{ICON}"></i></a># ENDIF #
 						# ELSE #
 							<h6 class="cell-name">{TITLE}</h6>
 							# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
+							# IF C_ICON #<i class="{ICON}"></i># ENDIF #
 						# ENDIF #
 					</div>
 					<div class="cell-body">
@@ -41,9 +43,17 @@
 	# IF C_NEXT_MENU #
 		<li# IF C_HAS_CHILD # class="has-sub"# ENDIF #>
 			# IF C_URL #
-				<a href="{REL_URL}" class="cssmenu-title offload"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
+				<a href="{REL_URL}" class="cssmenu-title offload">
+					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
+					# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+					<span>{TITLE}</span>
+				</a>
 			# ELSE #
-				<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF#<span>{TITLE}</span></span>
+				<span class="cssmenu-title">
+					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
+					# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+					<span>{TITLE}</span>
+				</span>
 			# ENDIF #
 			# IF C_HAS_CHILD #
 				<ul class="level-{DEPTH}"># START elements #{elements.DISPLAY}# END elements #</ul>
@@ -54,9 +64,17 @@
 # ELSE #
 	<li>
 		# IF C_URL #
-			<a href="{REL_URL}" class="cssmenu-title offload"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
+			<a href="{REL_URL}" class="cssmenu-title offload">
+				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
+				# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+				<span>{TITLE}</span>
+			</a>
 		# ELSE #
-			<span class="cssmenu-title"># IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF#<span>{TITLE}</span></span>
+			<span class="cssmenu-title">
+				# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
+				# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+				<span>{TITLE}</span>
+			</span>
 		# ENDIF #
 	</li>
 # ENDIF #

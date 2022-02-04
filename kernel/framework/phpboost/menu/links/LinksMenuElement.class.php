@@ -1,6 +1,6 @@
 <?php
 /**
- * A LinksMenuElement contains a Title, an url, and an image url
+ * A LinksMenuElement contains a Title, an url, and an image url and/or an fonticon
  * <div class="message-helper bgc notice">Abstract class : Do not instanciate it
  * LinksMenuLink and LinksMenuLink classes are based on this class
  * use, on of these</div>
@@ -9,7 +9,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2022 02 04
  * @since       PHPBoost 2.0 - 2008 07 08
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -35,6 +35,11 @@ abstract class LinksMenuElement extends Menu
 	public $image = '';
 	/**
 	 * @access protected
+	 * @var string the icon class
+	 */
+	public $icon = '';
+	/**
+	 * @access protected
 	 * @var int Menu's uid
 	 */
 	public $uid = null;
@@ -49,13 +54,15 @@ abstract class LinksMenuElement extends Menu
 	 * @param $title
 	 * @param $url
 	 * @param $image
+	 * @param $icon
 	 * @param int $id The Menu's id in the database
 	 */
-	public function __construct($title, $url, $image = '')
+	public function __construct($title, $url, $image = '', $icon = '')
 	{
 		parent::__construct($title);
 		$this->set_url($url);
 		$this->set_image($image);
+		$this->set_icon($icon);
 		$this->uid = AppContext::get_uid();
 	}
 
@@ -111,8 +118,10 @@ abstract class LinksMenuElement extends Menu
 			'C_MENU'         => false,
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
 			'C_URL'          => $this->url,
+			'C_ICON'         => !empty($this->icon),
 
 			'TITLE'        => $this->title,
+			'ICON'         => $this->icon,
 			'DEPTH'        => $this->depth,
 			'PARENT_DEPTH' => $this->depth - 1,
 			'ID'           => $this->get_uid(),
@@ -148,13 +157,9 @@ abstract class LinksMenuElement extends Menu
 			$url = new Url($string_url);
 
 		if ($compute_relative_url)
-		{
 			return $url->relative();
-		}
 		else
-		{
 			return $url->absolute();
-		}
 	}
 
 	/**
@@ -180,6 +185,13 @@ abstract class LinksMenuElement extends Menu
 	public function set_url($url)
 	{
 		$this->url = $url;
+	}
+	/**
+	 * @param string $icon the value to set
+	 */
+	public function set_icon($icon)
+	{
+		$this->icon = $icon;
 	}
 
 	## Getters ##
@@ -214,6 +226,15 @@ abstract class LinksMenuElement extends Menu
 	public function get_image($compute_relative_url = true)
 	{
 		return $this->_get_url($this->image, $compute_relative_url);
+	}
+
+	/**
+	 * @param bool $compute_relative_url If true, computes relative urls to the website root
+	 * @return string the $icon url
+	 */
+	public function get_icon()
+	{
+		return $this->icon;
 	}
 }
 ?>
