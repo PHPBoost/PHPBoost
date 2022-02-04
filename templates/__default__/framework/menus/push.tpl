@@ -9,7 +9,9 @@
 		# ENDIF #
 			<a class="toggle-{ID} pushmenu-toggle">
 				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
-				# IF C_ICON #<i class="{ICON}"></i># ENDIF #
+				# IF C_ICON #
+					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+				# ENDIF #
 	            <span>{TITLE}</span>
           	</a>
 			<nav id="pushmenu-{ID}" class="pushnav# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
@@ -51,13 +53,17 @@
 			# IF C_URL #
 				<a href="{REL_URL}">
 					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
-					# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+					# IF C_ICON #
+						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+					# ENDIF #
 					<span>{TITLE}</span>
 				</a>
 			# ELSE #
 				<span># IF C_IMG #
-					<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#
-					# IF C_ICON #<i class="{ICON}"></i> # ENDIF #
+					<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
+					# IF C_ICON #
+						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+					# ENDIF #
 					<span>{TITLE}</span>
 				</span>
 			# ENDIF #
@@ -70,9 +76,21 @@
 # ELSE #
 	<li>
 		# IF C_URL #
-			<a href="{REL_URL}"># IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #<span>{TITLE}</span></a>
+			<a href="{REL_URL}">
+				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
+				# IF C_ICON #
+					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+				# ENDIF #
+				<span>{TITLE}</span>
+			</a>
 		# ELSE #
-			<span># IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF#<span>{TITLE}</span></span>
+			<span>
+				# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
+				# IF C_ICON #
+					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+				# ENDIF #
+				<span>{TITLE}</span>
+			</span>
 		# ENDIF #
 	</li>
 # ENDIF #

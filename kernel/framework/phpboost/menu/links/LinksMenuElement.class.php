@@ -118,7 +118,8 @@ abstract class LinksMenuElement extends Menu
 			'C_MENU'         => false,
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
 			'C_URL'          => $this->url,
-			'C_ICON'         => !empty($this->icon),
+			'C_ICON'      	 => !empty($this->icon),
+			'C_FA_ICON'    	 => str_contains($this->icon, 'fa-'),
 
 			'TITLE'        => $this->title,
 			'ICON'         => $this->icon,
