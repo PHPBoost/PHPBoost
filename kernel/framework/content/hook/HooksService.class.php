@@ -68,7 +68,7 @@ class HooksService
 			
 			foreach (ModulesManager::get_module($module_id)->get_configuration()->get_specific_hooks() as $action)
 			{
-				$hooks[$action] = isset($module_lang[$module_id . '.specific_hook.' . $action]) ? $module_lang[$module_id . '.specific_hook.' . $action] : '';
+				$hooks[$action] = isset($module_lang[$module_id . '.specific_hook.' . $action]) ? $module_lang[$module_id . '.specific_hook.' . $action] : $action;
 			}
 		}
 		return $hooks;
