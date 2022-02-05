@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 01
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 * @var BreadCrumb The page breadcrumb
 	 */
 	private $breadcrumb = null;
-	
+
 	private static $lang;
 
 	public function __construct()
@@ -278,7 +278,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			//Durée de la maintenance.
 			$array_time = array(-1, 60, 300, 600, 900, 1800, 3600, 7200, 10800, 14400, 18000, 21600, 25200, 28800, 57600, 86400, 172800, 604800);
-			$array_delay = array($lang['common.unspecified'],
+			$array_delay = array(self::$lang['common.unspecified'],
 				'1 ' . self::$lang['date.minute'], '5 ' . self::$lang['date.minutes'], '10 ' . self::$lang['date.minutes'], '15 ' . self::$lang['date.minutes'], '30 ' . self::$lang['date.minutes'],
 				'1 ' . self::$lang['date.hour'], '2 ' . self::$lang['date.hours'], '3 ' . self::$lang['date.hours'], '4 ' . self::$lang['date.hours'], '5 ' . self::$lang['date.hours'], '6 ' . self::$lang['date.hours'], '7 ' . self::$lang['date.hours'], '8 ' . self::$lang['date.hours'], '16 ' . self::$lang['date.hours'],
 				'1 ' . self::$lang['date.day'], '2 ' . self::$lang['date.day'],
