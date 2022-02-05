@@ -59,7 +59,7 @@ class HooksService
 	 * @desc Get the list of all the specific hooks defined in the modules with their localized name
 	 * @return string[] List of specific hooks (hook name in id and localized name in parameter if exists, empty value otherwise)
 	 */
-	public static function get_specific_hooks_list_localized_names()
+	public static function get_specific_hooks_list_with_localized_names()
 	{
 		$hooks = array();
 		foreach (self::get_modules_with_specific_hooks_list() as $module_id)
