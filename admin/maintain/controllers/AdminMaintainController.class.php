@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -79,7 +79,7 @@ class AdminMaintainController extends DefaultAdminController
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_during', $this->lang['admin.maintenance.type.during'], $this->get_maintain_during_select_option(), $this->build_maintain_during_select_options(),
-			array('hidden' => $this->get_maintain_type() != 'during')
+			array('required' => true, 'hidden' => $this->get_maintain_type() != 'during')
 		));
 
 		$fieldset->add_field(new FormFieldDate('maintain_until', $this->lang['admin.maintenance.type.until'], $this->get_maintain_until_date(),
