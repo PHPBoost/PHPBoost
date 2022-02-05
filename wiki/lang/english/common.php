@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 07
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 1.6 - 2007 10 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -98,6 +98,11 @@ $lang['wiki.index.text'] = '
 	To customize the home page of this module, <a class="offload" href="' . WikiUrlBuilder::configuration()->relative() . '">click here</a>.<br /><br />
 	For more information about the features of this module, feel free to ask questions on the <a class="offload" href="https://www.phpboost.com/forum/">support forum</a>.
 ';
+
+//Hooks
+$lang['wiki.specific_hook.wiki_change_status'] = 'Page status change';
+$lang['wiki.specific_hook.wiki_delete_archive'] = 'Archive delete';
+$lang['wiki.specific_hook.wiki_restore_archive'] = 'Archive restoration';
 
 // Changing reason
 $lang['wiki.changing.reason.label'] = 'Reason for the change (optional 100 car max)';

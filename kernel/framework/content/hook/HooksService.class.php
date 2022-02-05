@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 04
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -53,6 +53,25 @@ class HooksService
 				$modules[] = $module->get_id();
 		}
 		return $modules;
+	}
+
+	/**
+	 * @desc Get the list of all the specific hooks defined in the modules with their localized name
+	 * @return string[] List of specific hooks (hook name in id and localized name in parameter if exists, empty value otherwise)
+	 */
+	public static function get_specific_hooks_list_localised_names()
+	{
+		$hooks = array();
+		foreach (self::get_modules_with_specific_hooks_list() as $module_id)
+		{
+			$module_lang = LangLoader::get_all_langs($module_id);
+			
+			foreach (ModulesManager::get_module()->get_configuration()->get_specific_hooks() as $action)
+			{
+				$hooks[$action] = isset($module_lang[$module_id . '.specific_hook.' . $action]) ? $module_lang[$module_id . '.specific_hook.' . $action] : '';
+			}
+		}
+		return $hooks;
 	}
 
 	/**

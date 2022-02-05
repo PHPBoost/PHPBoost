@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 28
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -50,6 +50,13 @@ $lang['forum.config.issue.status']          = '[Solved]';
 $lang['forum.config.issue.status.unsolved'] = 'Solved topic?';
 $lang['forum.config.issue.status.solved']   = 'Unsolved topic?';
 
+// Hooks
+$lang['forum.specific_hook.forum_add_topic'] = 'Topic add';
+$lang['forum.specific_hook.forum_edit_topic'] = 'Topic edit';
+$lang['forum.specific_hook.forum_delete_topic'] = 'Topic delete';
+$lang['forum.specific_hook.forum_lock_topic'] = 'Topic lock';
+$lang['forum.specific_hook.forum_unlock_topic'] = 'Topic unlock';
+$lang['forum.specific_hook.forum_move_topic'] = 'Topic move';
 
 // Email
 $lang['forum.email.title.new.post'] = 'New post on the forum';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 04
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 1.6 - 2006 12 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -98,6 +98,11 @@ $lang['wiki.index.text'] = '
 	Pour personnaliser l\'accueil de ce module, <a class="offload" href="' . WikiUrlBuilder::configuration()->relative() . '">cliquez ici</a><br /><br />
 	Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a class="offload" href="https://www.phpboost.com/forum/">PHPBoost</a>.
 ';
+
+//Hooks
+$lang['wiki.specific_hook.wiki_change_status'] = 'Changement d\'état d\'une page';
+$lang['wiki.specific_hook.wiki_delete_archive'] = 'Suppression d\'une archive';
+$lang['wiki.specific_hook.wiki_restore_archive'] = 'Restauration d\'une archive';
 
 // Changing reason
 $lang['wiki.changing.reason.label'] = 'Nature de la modification (facultatif, 100 caractères max)';

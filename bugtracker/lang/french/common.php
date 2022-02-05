@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2022 02 05
  * @since       PHPBoost 3.0 - 2012 11 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -301,6 +301,9 @@ $lang['config.auth.create'] = 'Autorisation de signaler un ticket';
 $lang['config.auth.create_advanced'] = 'Autorisation avancée pour signaler un ticket';
 $lang['config.auth.create_advanced_explain'] = 'Permet de choisir le niveau et la priorité du ticket';
 $lang['config.auth.moderate'] = 'Autorisation de modération des tickets';
+
+//Hooks
+$lang['bugtracker.specific_hook.bugtracker_change_status'] = 'Changement d\'état d\'un ticket';
 
 // Errors
 $lang['error.e_unexist_bug'] = 'Ce ticket n\'existe pas';
