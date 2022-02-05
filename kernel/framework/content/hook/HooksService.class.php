@@ -66,7 +66,7 @@ class HooksService
 		{
 			$module_lang = LangLoader::get_all_langs($module_id);
 			
-			foreach (ModulesManager::get_module()->get_configuration()->get_specific_hooks() as $action)
+			foreach (ModulesManager::get_module($module_id)->get_configuration()->get_specific_hooks() as $action)
 			{
 				$hooks[$action] = isset($module_lang[$module_id . '.specific_hook.' . $action]) ? $module_lang[$module_id . '.specific_hook.' . $action] : '';
 			}
