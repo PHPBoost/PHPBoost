@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 04
+ * @version     PHPBoost 6.0 - last update: 2022 02 06
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -35,7 +35,7 @@ if ($action == 'save')
 		$menu_url   = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
 		$menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
 		$menu_icon  = retrieve(POST, 'menu_element_' . $menu_element_id . '_icon', '');
-		
+
 		$array_size = count($elements_ids);
 
 		if ($array_size == 1 && $level > 0)
@@ -193,7 +193,7 @@ if ($menu_id > 0)
 }
 else
 {   // Create a new generic menu
-	$menu = new LinksMenu('', '', '', LinksMenu::AUTOMATIC_MENU);
+	$menu = new LinksMenu('', '', '', '', LinksMenu::AUTOMATIC_MENU);
 }
 
 $view->put_all(array(
