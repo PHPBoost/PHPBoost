@@ -108,13 +108,15 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 
 .modal {
     position: fixed;
-    z-index:100;
+    z-index: -1;
     top: 0;
     left: 0;
     height:100vh;
     width:100vw;
     overflow-y: auto;
 }
+
+.modal.active-panel { z-index: 100; }
 
 .modal-animation {
     opacity: 0;
