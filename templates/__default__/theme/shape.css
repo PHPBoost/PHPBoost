@@ -94,9 +94,10 @@ body {
 }
 
 @media (min-width: 769px) {
-	#inner-header-container { flex-direction: row; }
-
-	#inner-header-container { align-self: flex-end; }
+	#inner-header-container {
+		flex-direction: row; 
+		align-self: flex-end; 
+	}
 
 	#site-logo {
 		width: 90px;
