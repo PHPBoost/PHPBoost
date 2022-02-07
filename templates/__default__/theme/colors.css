@@ -8,7 +8,7 @@
 /* --- shape ---------------------------------------------------------------- */
 
 ::selection {
-	background-color: var(--main-tone);
+	background-color: var(--bgc-alt);
 	color: var(--txt-alt);
 }
 
@@ -18,13 +18,13 @@ body {
 }
 
 .bgc-main	{ background-color: var(--bgc-main); }
-.bgc-sub    { background-color: var(--bgc-alt); }
+.bgc-sub    { background-color: var(--bgc-sub); }
 .bgc-title	{ background-color: var(--main-light); color: var(--txt-alt); }
 
 #footer       { border-color: var(--main-tone); }
 .footer-infos { border-color: var(--main-tone); }
 
-.scroll-to   	 { background-color: var(--main-tone); }
+.scroll-to   	 { background-color: var(--bgc-alt); }
 .scroll-to:hover { background-color: var(--main-light); }
 .scroll-to i 	 { color: var(--txt-alt); }
 
@@ -37,11 +37,11 @@ body {
 }
 
 /* --- Cookies --- */
-.cookiebar-container { background-color: var(--bgc-alt); }
+.cookiebar-container { background-color: var(--bgc-sub); }
 
 /* --- Prime item --- */
 table tbody tr.prime-item td,
-.prime-item { background-color: var(--bgc-alt);}
+.prime-item { background-color: var(--bgc-sub);}
 
 /* --- Pagination --- */
 .pagination-item a { border-color: var(--bdr-main); }
@@ -52,7 +52,7 @@ table tbody tr.prime-item td,
 }
 
 .pagination-item a:active {
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main);
 }
 
@@ -70,7 +70,7 @@ table tbody tr.prime-item td,
 
 /* --- Options --- */
 .options {
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main);
 }
 
@@ -81,7 +81,7 @@ table tbody tr.prime-item td,
 
 
 /* --- Progress bar --- */
-.progressbar-container { background-color: var(--bgc-alt); }
+.progressbar-container { background-color: var(--bgc-sub); }
 
 .progressbar-container .progressbar { background-color: var(--success-tone); }
 
@@ -101,7 +101,7 @@ table tbody tr.prime-item td,
 .dropzone { border-color: rgba(var(--main-rgb-t), 0.5); }
 
 /* --- Messages --- */
-.message-header-container { background-color: var(--bgc-alt); }
+.message-header-container { background-color: var(--bgc-sub); }
 
 .message-header-container,
 .message-content,
@@ -114,7 +114,7 @@ table tbody tr.prime-item td,
 .sharing-element > a { color: var(--txt-alt); }
 
 .sharing-element-comments > a { background-color: var(--notice-tone); }
-.sharing-element-mail > a     { background-color: var(--main-tone); }
+.sharing-element-mail > a     { background-color: var(--bgc-alt); }
 .sharing-element-print > a    { background-color: var(--notice-tone); }
 .sharing-element-sms > a      { background-color: var(--notice-tone); }
 
@@ -183,7 +183,7 @@ table tbody tr.prime-item td,
 
 .button.submit,
 .submit {
-    background-color: var(--main-tone);
+    background-color: var(--bgc-alt);
     border-color: var(--main-tone);
 	color: var(--txt-alt);
 }
@@ -195,7 +195,7 @@ table tbody tr.prime-item td,
 }
 
 .button.submit:active,
-.submit:active { background-color: var(--main-tone); }
+.submit:active { background-color: var(--bgc-alt); }
 
 .button.alt-submit,
 .alt-submit {
@@ -238,8 +238,8 @@ legend { border-color: var(--bdr-main); }
 [type=file],
 textarea,
 select {
-	background-color: var(--bgc-alt);
-	border-color: var(--bdr-alt);
+	background-color: var(--bgc-sub);
+	border-color: var(--bdr-sub);
 	color: var(--txt-main);
 }
 
@@ -253,7 +253,7 @@ select {
 [type=password]:hover,
 [type=file]:hover,
 textarea:hover,
-select:hover { background-color: var(--bgc-alt); }
+select:hover { background-color: var(--bgc-sub); }
 
 [type=text]:focus,
 [type=email]:focus,
@@ -265,7 +265,7 @@ select:hover { background-color: var(--bgc-alt); }
 [type=password]:focus,
 [type=file]:focus,
 textarea:focus,
-select:focus { background-color: var(--bgc-alt); }
+select:focus { background-color: var(--bgc-sub); }
 
 [disabled],
 [disabled]:hover { border-color: var(--notice-tone); }
@@ -369,7 +369,7 @@ table caption { border-color: var(--bdr-main); }
 
 thead th,
 .formatter-table .formatter-table-head {
-	background-color: var(--main-tone);
+	background-color: var(--bgc-alt);
 	color: var(--txt-alt);
 	border-color: var(--main-tone);
 }
@@ -399,7 +399,7 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 .calendar-table a:hover { background-color: rgba(var(--main-rgb-t), 0.1); }
 
-.calendar-container > a { background-color: var(--bgc-alt); }
+.calendar-container > a { background-color: var(--bgc-sub); }
 
 /* --- Font Awesome icons --------------------------------------------------- */
 .user-locked .fa-user-lock:before   { color: var(--error-tone); }
@@ -414,7 +414,7 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 /* --- formatter & bbcode --------------------------------------------------- */
 .bbcode-bar {
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main) !important;
 }
 
@@ -426,11 +426,11 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 }
 
 .formatter-content {
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main);
 }
 
-pre[style*="display:inline"] { background-color: var(--bgc-alt); }
+pre[style*="display:inline"] { background-color: var(--bgc-sub); }
 
 h2.formatter-title,
 h3.formatter-title { border-color: var(--main-tone); }
@@ -479,12 +479,12 @@ h3.formatter-title { border-color: var(--main-tone); }
 }
 
 .cssmenu-select .has-sub > .cssmenu-title {
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main);
 	color: var(--txt-main);
 }
 
-.cssmenu-select .has-sub:hover > .cssmenu-title { background-color: var(--bgc-alt); }
+.cssmenu-select .has-sub:hover > .cssmenu-title { background-color: var(--bgc-sub); }
 
 .small-screen.cssmenu ul ul,
 .small-screen.cssmenu-actionslinks ul { box-shadow: 0 0 0 transparent; }
@@ -658,7 +658,7 @@ a[class*='lightcase-icon-']:hover {
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
 .cell-tile .cell > [class*="cell-"] {
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main);
 }
 
@@ -694,7 +694,7 @@ a,
 .bgc.link-color { background-color: rgba(var(--main-rgb-t), 0.2);}
 
 .bgc-full.link-color {
-	background-color: var(--main-tone);
+	background-color: var(--bgc-alt);
 	color: var(--txt-alt)
 }
 
@@ -750,7 +750,7 @@ figure { border-color: var(--bdr-main); }
 abbr,
 a.wikipedia-link { border-bottom-color: var(--main-tone); }
 
-.sticky-menu { background-color: var(--bgc-alt); }
+.sticky-menu { background-color: var(--bgc-sub); }
 
 /* --- Colors classes --------------------------------------------------------------- */
 .floating-element,

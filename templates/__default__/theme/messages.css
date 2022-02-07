@@ -70,7 +70,7 @@
 	top: calc(100% + 2em);
 	display: flex;
 	flex-direction: row;
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	opacity: 0;
 	visibility: hidden;
 }

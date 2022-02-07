@@ -12,13 +12,15 @@
 
     --bgc-rgb-m: 255, 255, 255;
     --bgc-main:  #FFFFFF;
-    --bgc-rgb-a: 236, 242, 249;
-    --bgc-alt:   #ECF2F8;
+    --bgc-rgb-s: 236, 242, 249;
+    --bgc-sub:   #ECF2F8;
+    --bgc-rgb-a: 50, 100, 147;
+    --bgc-alt:  #366493;
 
     --bdr-rgb-m: 189, 194, 201;
     --bdr-main:  #BDC2C9;
-    --bdr-rgb-a: 187, 217, 245;
-    --bdr-alt:   #BCD9F5;
+    --bdr-rgb-s: 187, 217, 245;
+    --bdr-sub:   #BCD9F5;
 
     --darken :   0, 0, 0;
     --lighten:   255, 255, 255;
