@@ -51,6 +51,15 @@ body {
 @media (min-width: 1025px) { .content-wrapper { width: 1024px; } }
 @media (min-width: 1367px) { .content-wrapper { width: 1280px; } }
 
+/* --- Visits counter --- */
+#visit-counter {
+	position: absolute;
+	right: 1.618em;
+	top : 92.5%;
+	font-size: 0.9em;
+	text-align: right;
+	min-width: 150px;
+}
 
 /* --- Header --------------------------------------------------------------- */
 #header { position: relative; }
@@ -95,8 +104,8 @@ body {
 
 @media (min-width: 769px) {
 	#inner-header-container {
-		flex-direction: row; 
-		align-self: flex-end; 
+		flex-direction: row;
+		align-self: flex-end;
 	}
 
 	#site-logo {

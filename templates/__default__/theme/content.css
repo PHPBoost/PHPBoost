@@ -3,7 +3,6 @@
  * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
  *
  * Contains css for specific containers
- * 		visit counter
  * 		breadcrumb
  * 		notation
  * 		progress bar
@@ -11,16 +10,6 @@
  * 		suggested links
  * 		options (for filters)
 */
-
-/* --- Visits counter --- */
-#visit-counter {
-	position: absolute;
-	right: 1.618em;
-	top : 92.5%;
-	font-size: 0.9em;
-	text-align: right;
-	min-width: 150px;
-}
 
 /* --- Breadcrumb --- */
 #breadcrumb {
