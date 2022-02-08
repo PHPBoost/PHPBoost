@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 11
+ * @version     PHPBoost 6.0 - last update: 2022 02 08
  * @since       PHPBoost 3.0 - 2011 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModulesCssFilesService
@@ -66,15 +67,20 @@ class ModulesCssFilesService
 		{
 			return $css_file;
 		}
-		if (strpos($css_file, '/') !== false)
+		if (TextHelper::strpos($css_file, '/') !== false)
 		{
 			return $css_file;
 		}
-		
+
 		$theme_id = AppContext::get_current_user()->get_theme();
+		$parent_theme_id = ThemesManager::get_theme($theme_id)->get_configuration()->get_parent_theme() . '/';
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file))
 		{
 			return '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file;
+		}
+		else if (!empty($parent_theme_id) && file_exists(PATH_TO_ROOT . '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $css_file))
+		{
+			return '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $css_file;
 		}
 		return '/' . $module_id . '/templates/' . $css_file;
 	}
