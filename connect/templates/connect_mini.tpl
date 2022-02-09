@@ -131,10 +131,10 @@
 						# START additional_menus #
 							# IF additional_menus.C_DISPLAY #
 								# IF additional_menus.C_UNREAD_ELEMENTS #
-								<span class="stacked {additional_menus.LEVEL_CLASS}">
-									# IF additional_menus.C_ICON #<i class="fa fa-fw {additional_menus.ICON}" aria-hidden="true"></i># ENDIF #
-									<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span>
-								</span>
+									<span class="stacked {additional_menus.LEVEL_CLASS}">
+										<i class="fa-fw# IF additional_menus.C_ICON # {additional_menus.ICON} # ELSE # far fa-file-alt# ENDIF #" aria-hidden="true"></i>
+										<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span>
+									</span>
 								# ENDIF #
 							# ENDIF #
 						# END additional_menus #
@@ -206,15 +206,23 @@
 						</li>
 						# START additional_menus #
 							# IF additional_menus.C_DISPLAY #
-							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-{additional_menus.MENU_NAME}">
-								<span # IF additional_menus.C_UNREAD_ELEMENTS #class="stacked {additional_menus.LEVEL_CLASS}"# ENDIF #>
-									# IF additional_menus.C_ICON #<i class="fa fa-fw {additional_menus.ICON}" aria-hidden="true"></i># ENDIF #
-									# IF additional_menus.C_UNREAD_ELEMENTS #<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span># ENDIF #
-								</span>
-								<a href="{additional_menus.URL}" class="offload">
-									<span>{additional_menus.LABEL}</span>
-								</a>
-							</li>
+								<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-{additional_menus.MENU_NAME}">
+									<span # IF additional_menus.C_UNREAD_ELEMENTS #class="stacked {additional_menus.LEVEL_CLASS}"# ENDIF #>
+										# IF additional_menus.C_ICON #
+											<i class="fa fa-fw {additional_menus.ICON}" aria-hidden="true"></i>
+										# ELSE #
+											<a href="{additional_menus.URL}" class="offload">
+												<span>{additional_menus.LABEL}</span>
+											</a>
+										# ENDIF #
+										# IF additional_menus.C_UNREAD_ELEMENTS #<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span># ENDIF #
+									</span>
+									# IF additional_menus.C_ICON #
+										<a href="{additional_menus.URL}" class="offload">
+											<span>{additional_menus.LABEL}</span>
+										</a>
+									# ENDIF #
+								</li>
 							# ENDIF #
 						# END additional_menus #
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-sign-out">
