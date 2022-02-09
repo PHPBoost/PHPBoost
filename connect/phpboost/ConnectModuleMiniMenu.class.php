@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2022 02 09
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -102,6 +102,8 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'U_USER_PM'      => UserUrlBuilder::personnal_message($user->get_id())->rel(),
 					'U_USER_AVATAR'  => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
 				));
+				
+				$this->display_additional_menus($view, $user);
 			}
 			else
 			{
@@ -132,6 +134,27 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 			return $view->render();
 		}
 		return '';
+	}
+
+	private function display_additional_menus($view, $user)
+	{
+		foreach (AppContext::get_extension_provider_service()->get_extension_point(ConnectMenuLink::EXTENSION_POINT) as $id => $provider)
+		{
+			if ($provider && $provider instanceof ConnectMenuLink)
+			{
+				$view->assign_block_vars('additional_menus', array(
+					'C_DISPLAY'              => $user->get_level() >= $provider->get_display_level(),
+					'C_UNREAD_ELEMENTS'      => $provider->get_unread_elements_number() > 0,
+					'C_ICON'                 => $provider->get_icon() != '',
+					'ICON'                   => $provider->get_icon(),
+					'LABEL'                  => $provider->get_label(),
+					'LEVEL_CLASS'            => UserService::get_level_class($provider->get_display_level()),
+					'MENU_NAME'              => $provider->get_menu_name(),
+					'UNREAD_ELEMENTS_NUMBER' => $provider->get_unread_elements_number(),
+					'URL'                    => $provider->get_url() instanceof Url ? $provider->get_url()->rel() : Url::to_rel($provider->get_url())
+				));
+			}
+		}
 	}
 }
 ?>

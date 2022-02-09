@@ -128,6 +128,16 @@
 								<span class="stack-event stack-circle stack-sup stack-right bgc moderator blink">{UNREAD_CONTRIBUTIONS_NUMBER}</span>
 							</span>
 						# ENDIF #
+						# START additional_menus #
+							# IF additional_menus.C_DISPLAY #
+								# IF additional_menus.C_UNREAD_ELEMENTS #
+								<span class="stacked {additional_menus.LEVEL_CLASS}">
+									# IF additional_menus.C_ICON #<i class="fa fa-fw {additional_menus.ICON}" aria-hidden="true"></i># ENDIF #
+									<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span>
+								</span>
+								# ENDIF #
+							# ENDIF #
+						# END additional_menus #
 					</a>
 			# ENDIF #
 					<ul class="connect-container# IF C_HORIZONTAL # connect-container-horizontal# ENDIF #">
@@ -194,6 +204,19 @@
 								<span>{@user.contribution.panel}</span>
 							</a>
 						</li>
+						# START additional_menus #
+							# IF additional_menus.C_DISPLAY #
+							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-{additional_menus.MENU_NAME}">
+								<span # IF additional_menus.C_UNREAD_ELEMENTS #class="stacked {additional_menus.LEVEL_CLASS}"# ENDIF #>
+									# IF additional_menus.C_ICON #<i class="fa fa-fw {additional_menus.ICON}" aria-hidden="true"></i># ENDIF #
+									# IF additional_menus.C_UNREAD_ELEMENTS #<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span># ENDIF #
+								</span>
+								<a href="{additional_menus.URL}" class="offload">
+									<span>{additional_menus.LABEL}</span>
+								</a>
+							</li>
+							# ENDIF #
+						# END additional_menus #
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-sign-out">
 							<i class="fa fa-fw fa-sign-out-alt" aria-hidden="true"></i>
 							<a href="${relative_url(UserUrlBuilder::disconnect())}" class="offload">
