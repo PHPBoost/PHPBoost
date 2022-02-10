@@ -72,7 +72,7 @@
 <pre class="language-css line-numbers"><code class="language-css">.success { ... }
 .success::before {
     content: "\f00c";
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 900;
 }</code></pre>
                 </div>

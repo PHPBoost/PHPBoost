@@ -17,7 +17,7 @@
 
 #module-connect .js-menu-button::after {
 	position: absolute;
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	content: '\f0d7';
 	right: 0.809em;

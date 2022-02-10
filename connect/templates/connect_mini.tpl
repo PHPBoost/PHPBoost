@@ -132,7 +132,7 @@
 							# IF additional_menus.C_DISPLAY #
 								# IF additional_menus.C_UNREAD_ELEMENTS #
 									<span class="stacked {additional_menus.LEVEL_CLASS}">
-										<i class="fa-fw# IF additional_menus.C_ICON # {additional_menus.ICON} # ELSE # far fa-file-alt# ENDIF #" aria-hidden="true"></i>
+										<i class="fa-fw# IF additional_menus.C_ICON # {additional_menus.ICON}# ELSE # far fa-file-alt# ENDIF #" aria-hidden="true"></i>
 										<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span>
 									</span>
 								# ENDIF #

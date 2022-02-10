@@ -77,7 +77,7 @@
 
 .listorder-drop-down .listorder-dd-panel::after {
 	content: '\f0d7';
-	font-family: "Font Awesome 5 Free";
+	font-family: "Font Awesome 6 Free";
 	display: inline-block;
 	position: absolute;
 	right: 10px;

@@ -91,7 +91,7 @@
 	position: absolute;
 	display: inline-block;
 	content: '';
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	font-size: 1rem;
 	top: 50%;
@@ -232,7 +232,7 @@
 	padding: 0.618em;
 	display: inline-block;
 	content: '\f0c9';
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	font-size: 1.482rem;
 	right: 0;
@@ -258,7 +258,7 @@
 	position: absolute;
 	display: block;
 	content: '\f0d7';
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	font-size: 1.482rem;
 	right: 0;
@@ -286,7 +286,7 @@
 .cssmenu-actionslinks .menu-button::after {
 	position: absolute;
 	display: block;
-	font-family: 'Font Awesome 5 Free';
+	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	font-size: 1.482rem;
 	content: "\f013";
