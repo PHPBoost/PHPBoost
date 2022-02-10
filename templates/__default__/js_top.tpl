@@ -45,6 +45,7 @@
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/owl.carousel.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.helpers.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortable.js"></script>

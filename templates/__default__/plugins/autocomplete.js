@@ -11,7 +11,7 @@
 
 ! function(a) {
     "use strict";
-    "function" == typeof define && define.amd ? define(["jquery"], a) : a("object" == typeof exports && "function" == typeof require ? require("jquery") : jQuery)
+    "function" == typeof define && define.amd ? define(["jquery"], a) : a("object" == typeof exports && "function" == typeof require ? require("jquery") : jQuery);
 }(function(a) {
     "use strict";
 

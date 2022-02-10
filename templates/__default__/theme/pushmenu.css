@@ -101,18 +101,18 @@ body.push-nav-open {
 .pushmenu a,
 .pushmenu a:hover { text-decoration: none }
 
-.pushmenu .nav-item {
+.pushmenu .nav-item-link {
     position: relative;
     display: block;
 }
 
-.pushmenu .nav-item i + span,
-.pushmenu .nav-item span + span,
-.pushmenu .nav-item img + span { padding-left: 0.618em; }
+.pushmenu .nav-item-link i + span,
+.pushmenu .nav-item-link span + span,
+.pushmenu .nav-item-link img + span { padding-left: 0.618em; }
 
-.pushmenu .nav-item span.cssmenu-title { padding: 0; }
+.pushmenu .nav-item-link span.cssmenu-title { padding: 0; }
 
-.pushmenu .nav-item p { margin: 0; }
+.pushmenu .nav-item-link p { margin: 0; }
 
 .pushmenu.disable-body::after,
 .pushmenu .nav-wrapper::after {
@@ -269,7 +269,7 @@ body.push-nav-open {
 }
 
 .pushmenu a,
-.pushmenu .nav-item {
+.pushmenu .nav-item-link {
     padding: 0.618em 0.309em;
     z-index: 1;
     border-width: 0 0 1px;
@@ -284,23 +284,23 @@ body.push-nav-open {
     border-color: transparent;
 }
 
-.pushmenu li.nav-close a,
-.pushmenu li.nav-back a {
+.pushmenu .nav-close a,
+.pushmenu .nav-back a {
     border-width: 1px 0 1px;
     border-style: solid;
     border-color: transparent;
 }
 
-.pushmenu li.nav-close:not(:first-child) a,
-.pushmenu li.nav-back:not(:first-child) a { margin-top: -1px; }
+.pushmenu .nav-close:not(:first-child) a,
+.pushmenu .nav-back:not(:first-child) a { margin-top: -1px; }
 
-.pushmenu li.nav-parent > .nav-item { padding-right: 3.618em; }
+.pushmenu .nav-parent > .nav-item-link { padding-right: 3.618em; }
 
-.pushmenu li.nav-parent .nav-item:not(:last-child) { margin-right: 2.809em; }
+.pushmenu .nav-parent .nav-item-link:not(:last-child) { margin-right: 2.809em; }
 
-.pushmenu li.nav-close span,
-.pushmenu li.nav-parent .nav-next,
-.pushmenu li.nav-back span {
+.pushmenu .nav-close span,
+.pushmenu .nav-parent .nav-next,
+.pushmenu .nav-back span {
     width: 2.809em;
     position: absolute;
     top: 0;
@@ -319,8 +319,8 @@ body.push-nav-open {
     bottom: 0;
 }
 
-.pushmenu li.nav-close span::before,
-.pushmenu li.nav-close span::after {
+.pushmenu .nav-close span::before,
+.pushmenu .nav-close span::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -333,12 +333,12 @@ body.push-nav-open {
     border-color: transparent;
 }
 
-.pushmenu li.nav-close span::before {
+.pushmenu .nav-close span::before {
     margin-left: -9px;
     transform: rotate(135deg);
 }
 
-.pushmenu li.nav-close span::after { transform: rotate(-45deg); }
+.pushmenu .nav-close span::after { transform: rotate(-45deg); }
 
 .pushmenu a[href]:not([href="#"]) > span.nav-next {
     border-width: 0 0 0 1px;
@@ -353,7 +353,7 @@ a.nav-next {
 }
 
 .pushmenu .nav-next span::before,
-.pushmenu li.nav-back span::before {
+.pushmenu .nav-back span::before {
     content: '';
     position: absolute;
     top: 1.456em;
@@ -369,7 +369,7 @@ a.nav-next {
 
 .pushmenu .nav-next span::before { transform: translate(-50%, -50%) rotate(135deg); }
 
-.pushmenu li.nav-back span::before { transform: translate(-50%, -50%) rotate(-45deg); }
+.pushmenu .nav-back span::before { transform: translate(-50%, -50%) rotate(-45deg); }
 
 .pushmenu.nav-position-right .nav-next span::before {
     margin-left: 0;
@@ -377,7 +377,7 @@ a.nav-next {
     transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.pushmenu.nav-position-right li.nav-back span::before {
+.pushmenu.nav-position-right .nav-back span::before {
     margin-left: 0;
     margin-right: -2px;
     transform: translate(-50%, -50%) rotate(135deg);
@@ -389,7 +389,7 @@ a.nav-next {
     transform: translate(-50%, -50%) rotate(-135deg);
 }
 
-.pushmenu.nav-position-top li.nav-back span::before {
+.pushmenu.nav-position-top .nav-back span::before {
     margin-left: 0;
     margin-right: -2px;
     transform: translate(-50%, -50%) rotate(45deg);
@@ -401,7 +401,7 @@ a.nav-next {
     transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.pushmenu.nav-position-bottom li.nav-back span::before {
+.pushmenu.nav-position-bottom .nav-back span::before {
     margin-left: 0;
     margin-right: -2px;
     transform: translate(-50%, -50%) rotate(-135deg);
@@ -460,7 +460,7 @@ a.nav-next {
     border-width: 0 1px 1px 0 ;
 }
 
-.pushmenu.rtl li.nav-parent .nav-item {
+.pushmenu.rtl li.nav-parent .nav-item-link {
     padding-right: 17px;
     padding-left: 58px;
 }
