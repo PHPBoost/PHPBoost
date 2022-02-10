@@ -565,8 +565,8 @@ a.nav-next { border-color: var(--bdr-main); }
     background-color: transparent;
 }
 
-.pushmenu.nav-levels-expand .nav-container .level-open > .nav-item,
-.pushmenu.nav-levels-none .nav-container .level-open > .nav-item { background-color: rgba(var(--main-rgb-t), 0.2); }
+.pushmenu.nav-levels-expand .nav-container .level-open > .nav-item-link,
+.pushmenu.nav-levels-none .nav-container .level-open > .nav-item-link { background-color: rgba(var(--main-rgb-t), 0.2); }
 
 .pushmenu.nav-levels-expand .nav-container .level-open .nav-item-wrapper > a,
 .pushmenu.nav-levels-none .nav-container .level-open .nav-item-wrapper > a { border-color: var(--main-light); }
