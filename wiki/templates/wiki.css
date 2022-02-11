@@ -33,10 +33,10 @@ ul.no-list a i.fa { width: 1.228em; }
 	display: inline-block;
 	padding: 0.382em 0.809em;
 	width: 100%;
-	background-color: var(--bgc-alt);
+	background-color: var(--bgc-sub);
 	border-width: 1px;
 	border-style: solid;
-	border-color: var(--bdr-alt);
+	border-color: var(--bdr-sub);
 	margin-bottom: 2.618em;
 }
 
@@ -97,7 +97,7 @@ body {
 	left: 50%;
 	transform: translateX(-50%);
 	padding: 0.1em 0.809em;
-	background-color: var(--main-tone);
+	background-color: var(--bgc-alt);
 	color: var(--txt-alt);
 	display: block;
 }
