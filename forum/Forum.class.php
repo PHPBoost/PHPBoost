@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 04
+ * @version     PHPBoost 6.0 - last update: 2022 02 11
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -521,7 +521,8 @@ class Forum
 
 		ForumCategoriesCache::invalidate();
 
-		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
+		$categories_cache = ForumCategoriesCache::load();
+		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))), StringVars::replace_vars($this->lang['forum.specific_hook.forum_move_topic.description'], array('old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name())));
 	}
 
 	//Déplacement d'un sujet
@@ -680,7 +681,14 @@ class Forum
 	//Ajout d'un sondage.
 	function Add_poll($idtopic, $question, $answers, $nbr_votes, $type)
 	{
-		PersistenceContext::get_querier()->insert(PREFIX . "forum_poll", array('idtopic' => $idtopic, 'question' => $question, 'answers' => implode('|', $answers), 'voter_id' => 0, 'votes' => trim(str_repeat('0|', $nbr_votes)), 'type' => NumberHelper::numeric($type)));
+		$topic_title = '';
+		try {
+			$topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {}
+		
+		$properties = array('idtopic' => $idtopic, 'question' => $question, 'answers' => implode('|', $answers), 'voter_id' => 0, 'votes' => trim(str_repeat('0|', $nbr_votes)), 'type' => NumberHelper::numeric($type));
+		PersistenceContext::get_querier()->insert(PREFIX . "forum_poll", $properties);
+		HooksService::execute_hook_action('forum_add_poll', 'forum', array_merge($properties, array('id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic_title) : '') . '.php'))));
 	}
 
 	//Edition d'un sondage.
@@ -696,7 +704,14 @@ class Forum
 		foreach ($answers as $key => $answer_value) //Récupération des votes précédents.
 		$votes[$key] = isset($previous_votes[$key]) ? $previous_votes[$key] : 0;
 
-		PersistenceContext::get_querier()->update(PREFIX . "forum_poll", array('question' => $question, 'answers' => implode('|', $answers), 'votes' => implode('|', $votes), 'type' => $type), 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
+		$topic_title = '';
+		try {
+			$topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', array('id' => $idtopic));
+		} catch (RowNotFoundException $e) {}
+		
+		$properties = array('question' => $question, 'answers' => implode('|', $answers), 'votes' => implode('|', $votes), 'type' => $type);
+		PersistenceContext::get_querier()->update(PREFIX . "forum_poll", $properties, 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
+		HooksService::execute_hook_action('forum_edit_poll', 'forum', array_merge($properties, array('idtopic' => $idtopic, 'id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic_title) : '') . '.php'))));
 	}
 
 	//Suppression d'un sondage.

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 29
+ * @version     PHPBoost 6.0 - last update: 2022 02 11
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -155,7 +155,7 @@ elseif (!empty($idt_get))
 	elseif ($poll && AppContext::get_current_user()->get_id() !== -1) //Enregistrement vote du sondage
 	{
 		try {
-			$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('voter_id', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
+			$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('*'), 'WHERE idtopic=:id', array('id' => $idt_get));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -185,7 +185,10 @@ elseif (!empty($idt_get))
 						$array_votes[$i]++;
 				}
 			}
-			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', array('voter_id' =>  implode('|', $voter_id), 'votes' =>  implode('|', $array_votes)), 'WHERE idtopic=:id', array('id' => $idt_get));
+			
+			$properties = array('voter_id' =>  implode('|', $voter_id), 'votes' =>  implode('|', $array_votes));
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', $properties, 'WHERE idtopic=:id', array('id' => $idt_get));
+			HooksService::execute_hook_action('forum_answer_poll', 'forum', array_merge($info_poll, $properties, array('id' => $idt_get, 'url' => Url::to_rel('/forum/topic.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php'))));
 		}
 
 		AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
