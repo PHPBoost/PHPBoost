@@ -8,7 +8,7 @@
 	</nav>
 	<script>
 		jQuery("#cssmenu-module-${escape(ID)}").menumaker({
-			title: ${escapejs(@menu.tree.links)} + "{MODULE_NAME}",
+			title: ${escapejs(@menu.tree.links)} + " {MODULE_NAME}",
 			format: "multitoggle",
 			actionslinks: true,
 			breakpoint: 768
