@@ -7,6 +7,8 @@
 :root {
     --txt-rgb-m: 85, 85, 85;
     --txt-main:  #555555;
+    --txt-rgb-s: 85, 85, 85;
+    --txt-sub:  #555555;
     --txt-rgb-a: 255, 255, 255;
     --txt-alt:   #FFFFFF;
 
@@ -21,6 +23,8 @@
     --bdr-main:  #BDC2C9;
     --bdr-rgb-s: 187, 217, 245;
     --bdr-sub:   #BCD9F5;
+    --bdr-rgb-a: 2, 125, 184;
+    --bdr-alt:   #027DB8;
 
     --darken :   0, 0, 0;
     --lighten:   255, 255, 255;
