@@ -16,28 +16,21 @@
 .mini-calendar th,
 .mini-calendar .calendar-week span,
 .mini-calendar td a {
-	padding: 0.809em;
+	padding: 0.809em 0;
 	font-size: 0.809em;
 }
 
 .mini-calendar a:hover { text-decoration: none; }
 
-@media (min-width: 481px) {
-	.mini-calendar th,
-	.mini-calendar .calendar-week span,
-	.mini-calendar td a { padding: 0.809em 0.1618em; }
-}
-
-@media (min-width: 769px) {
+@media (min-width: 768px) {
 	.mini-calendar th,
 	.mini-calendar .calendar-week span,
 	.mini-calendar td a {
-		padding: 0.456em 0;
 		font-size: 0.618em;
 	}
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
 	.mini-calendar th,
 	.mini-calendar .calendar-week span,
 	.mini-calendar td a { font-size: 0.809em; }
