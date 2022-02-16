@@ -485,7 +485,7 @@
 												# ENDIF #
 												# IF C_VIEWS_COUNTER_ENABLED #
 													<li>
-														<span id="gv{pics_list.ID}">{pics_list.VIEWS_NUMBER}</span> <span id="gvl{pics_list.ID}"># IF pics_list.C_SEVERAL_VIEWS #{@common.view}# ELSE #{@common.views}# ENDIF #</span>
+														<span id="gv{pics_list.ID}">{pics_list.VIEWS_NUMBER}</span> <span id="gvl{pics_list.ID}"># IF pics_list.C_SEVERAL_VIEWS #{@common.views}# ELSE #{@common.view}# ENDIF #</span>
 													</li>
 												# ENDIF #
 												# IF C_COMMENTS_ENABLED #
