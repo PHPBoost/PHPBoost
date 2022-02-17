@@ -57,9 +57,9 @@
 					        <ul>
 								# START categories #
 					            	<li
-									data_id="{categories.CATEGORY_ID}"
-									data_p_id="{categories.CATEGORY_PARENT_ID}"
-									data_order_id="{categories.CATEGORY_SUB_ORDER}">
+											data_id="{categories.CATEGORY_ID}"
+											data_p_id="{categories.CATEGORY_PARENT_ID}"
+											data_order_id="{categories.CATEGORY_SUB_ORDER}">
 										<div class="d-block flex-between toggle-menu-button-{categories.CATEGORY_ID}">
 											<div class="categories-item flex-between">
 												<span><i class="far fa-fw fa-folder" aria-hidden="true"></i> {categories.CATEGORY_NAME}</span>
@@ -76,7 +76,7 @@
 												# ENDIF #
 												# START categories.items #
 													<li class="flex-between">
-														<a class="offload" class="d-block categories-item" href="{categories.items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {categories.items.TITLE}</a>
+														<a class="d-block categories-item offload" href="{categories.items.U_ITEM}"><i class="fa fa-fw fa-file-alt"></i> {categories.items.TITLE}</a>
 														# IF categories.items.C_CONTROLS #
 															<div class="controls">
 																# IF categories.items.C_EDIT #<a class="offload" href="{categories.items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
