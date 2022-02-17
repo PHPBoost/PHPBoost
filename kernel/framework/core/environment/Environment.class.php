@@ -8,12 +8,13 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 02
+ * @version     PHPBoost 6.0 - last update: 2022 02 17
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor xela <xela@phpboost.com>
 */
 
 class Environment
@@ -55,14 +56,14 @@ class Environment
 
 	public static function try_init()
 	{
+		self::load_static_constants();
+		self::load_dynamic_constants();
 		self::redirect_to_update_script_if_needed();
 		self::init_output_bufferization();
 		self::fit_to_php_configuration();
 		self::init_services();
-		self::load_static_constants();
 		DBFactory::load_prefix();
 
-		self::load_dynamic_constants();
 		self::init_session();
 		self::set_default_timezone();
 
@@ -106,7 +107,7 @@ class Environment
 		//check (if function is enabled) and setup php for working with Unicode data
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 		if (function_exists('mb_regex_encoding')) { mb_regex_encoding('UTF-8'); }
-        if (function_exists('mb_language')) { mb_language('uni'); }
+		if (function_exists('mb_language')) { mb_language('uni'); }
 		ob_start('mb_output_handler');
 
 		@ini_set('open_basedir', NULL);
@@ -115,26 +116,27 @@ class Environment
 	public static function load_static_constants()
 	{
 		//Path from the server root
-		define('SCRIPT', 			TextHelper::htmlspecialchars($_SERVER['PHP_SELF']));
-		define('REWRITED_SCRIPT', 	TextHelper::htmlspecialchars($_SERVER['REQUEST_URI']));
+		defined('SCRIPT') or define('SCRIPT', TextHelper::htmlspecialchars($_SERVER['PHP_SELF']));
+		defined('REWRITED_SCRIPT') or define('REWRITED_SCRIPT', TextHelper::htmlspecialchars($_SERVER['REQUEST_URI']));
 
 		//Get parameters
-		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
-		define('PHPBOOST', 			true);
+		defined('QUERY_STRING') or define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING']));
+		defined('PHPBOOST') or define('PHPBOOST', true);
 
 		### Authorizations ###
-		define('AUTH_FLOOD', 		'auth_flood');
-		define('PM_GROUP_LIMIT', 	'pm_group_limit');
-		define('DATA_GROUP_LIMIT', 	'data_group_limit');
+		defined('AUTH_FLOOD') or define('AUTH_FLOOD', 'auth_flood');
+		defined('PM_GROUP_LIMIT') or define('PM_GROUP_LIMIT', 'pm_group_limit');
+		defined('DATA_GROUP_LIMIT') or define('DATA_GROUP_LIMIT', 'data_group_limit');
+
 	}
 
 	public static function load_dynamic_constants()
 	{
 		$general_config = GeneralConfig::load();
 		$site_path = $general_config->get_site_path();
-		define('DIR', $site_path);
-		define('HOST', AppContext::get_request()->get_site_url());
-		define('TPL_PATH_TO_ROOT', DIR);
+		defined('DIR') or define('DIR', $site_path);
+		defined('HOST') or define('HOST', AppContext::get_request()->get_site_url());
+		defined('TPL_PATH_TO_ROOT') or define('TPL_PATH_TO_ROOT', DIR);
 	}
 
 	public static function init_session()
@@ -374,7 +376,6 @@ class Environment
 		$folder = new Folder(PATH_TO_ROOT . '/update');
 		if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
 		{
-			self::load_dynamic_constants();
 			AppContext::get_response()->redirect(new Url(HOST . DIR . '/update'));
 		}
 	}
