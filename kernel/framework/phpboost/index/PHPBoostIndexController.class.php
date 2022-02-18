@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 13
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 3.0 - 2012 02 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -68,6 +68,7 @@ class PHPBoostIndexController extends AbstractController
 			GeneralConfig::save();
 			AppContext::get_cache_service()->clear_cache();
 			HtaccessFileCache::regenerate();
+			NginxFileCache::regenerate();
 			
 			$file = new File(PATH_TO_ROOT . '/change_domain.php');
 			$file->delete();
