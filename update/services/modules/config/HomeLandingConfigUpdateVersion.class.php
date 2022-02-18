@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 6.0 - 2020 07 29
 */
 
@@ -18,7 +18,7 @@ class HomeLandingConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		$old_config = $this->get_old_config();
 
-		if (ModulesManager::is_module_installed('HomeLanding') && ModulesManager::get_module('HomeLanding')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION && class_exists('HomeLandingConfig') && !empty($old_config))
+		if (ModulesManager::is_module_installed('HomeLanding') && ModulesManager::get_module('HomeLanding')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION && ClassLoader::is_class_registered_and_valid('HomeLandingConfig') && !empty($old_config))
 		{
 			$config = HomeLandingConfig::load();
 			$modules = $config->get_modules();

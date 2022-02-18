@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 08
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 2.0 - 2009 01 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -127,7 +127,7 @@ class DefaultModuleSetup implements ModuleSetup
 			if ($this->module_configuration->has_categories())
 			{
 				$module_category_class = TextHelper::ucfirst($this->module_id) . 'Category';
-				$category_class_name = (class_exists($module_category_class) && is_subclass_of($module_category_class, 'Category')) ? $module_category_class : ($this->module_configuration->feature_is_enabled('rich_categories') ? CategoriesManager::RICH_CATEGORY_CLASS : CategoriesManager::STANDARD_CATEGORY_CLASS);
+				$category_class_name = (ClassLoader::is_class_registered_and_valid($module_category_class) && is_subclass_of($module_category_class, 'Category')) ? $module_category_class : ($this->module_configuration->feature_is_enabled('rich_categories') ? CategoriesManager::RICH_CATEGORY_CLASS : CategoriesManager::STANDARD_CATEGORY_CLASS);
 				$category_class_name::create_categories_table($this->module_configuration->get_categories_table_name());
 			}
 		}

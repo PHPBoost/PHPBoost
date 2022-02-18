@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 17
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 4.0 - 2013 01 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@phpboost.com>
@@ -31,7 +31,7 @@ abstract class CategoriesCache implements CacheData
 			self::$module_id       = $module_id;
 			self::$module          = ModulesManager::get_module(self::$module_id);
 			$category_class        = TextHelper::ucfirst(self::$module_id) . 'Category';
-			self::$module_category = (class_exists($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
+			self::$module_category = (ClassLoader::is_class_registered_and_valid($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
 		}
 	}
 
@@ -42,7 +42,7 @@ abstract class CategoriesCache implements CacheData
 			self::$module_id       = $module_id;
 			self::$module          = ModulesManager::get_module(self::$module_id);
 			$category_class        = TextHelper::ucfirst(self::$module_id) . 'Category';
-			self::$module_category = (class_exists($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
+			self::$module_category = (ClassLoader::is_class_registered_and_valid($category_class) && is_subclass_of($category_class, 'Category') ? $category_class : '');
 		}
 		else
 		{

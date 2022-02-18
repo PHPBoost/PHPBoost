@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 21
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,7 +34,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		}
 
 		// Pages
-		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && class_exists('PagesService') && $actual_major_version >= '6.0')
+		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && ClassLoader::is_class_registered_and_valid('PagesService') && $actual_major_version >= '6.0')
 		{
 			$this->urls_mappings[] = new UrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
 

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 24
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -24,7 +24,7 @@ class ItemsService
 				$module_id = GeneralConfig::load()->get_module_home_page();
 
 			$items_manager_class_name = TextHelper::ucfirst($module_id) . 'Manager';
-			if (class_exists($items_manager_class_name) && is_subclass_of($items_manager_class_name, 'ItemsManager'))
+			if (ClassLoader::is_class_registered_and_valid($items_manager_class_name) && is_subclass_of($items_manager_class_name, 'ItemsManager'))
 				self::$items_manager = new $items_manager_class_name();
 			else
 				self::$items_manager = new ItemsManager($module_id);

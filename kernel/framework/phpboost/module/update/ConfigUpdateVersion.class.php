@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 03
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -87,7 +87,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 		$configuration_class_name = ucfirst(self::$module_id) . 'Config';
 		$old_config = $this->get_old_config();
 
-		if (class_exists($configuration_class_name) && !empty($old_config))
+		if (ClassLoader::is_class_registered_and_valid($configuration_class_name) && !empty($old_config))
 		{
 			$config = $configuration_class_name::load(self::$module_id);
 			$modified_properties = array();

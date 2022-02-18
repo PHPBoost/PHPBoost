@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 6.0 - 2019 11 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -43,7 +43,7 @@ class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
 		$cache_classes = array(ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache');
 		foreach ($cache_classes as $cache_class)
 		{
-			if (class_exists($cache_class) && is_subclass_of($cache_class, 'CacheData'))
+			if (ClassLoader::is_class_registered_and_valid($cache_class) && is_subclass_of($cache_class, 'CacheData'))
 				call_user_func($cache_class .'::invalidate');
 		}
 	}

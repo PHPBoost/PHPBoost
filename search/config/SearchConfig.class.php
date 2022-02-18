@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 28
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 3.0 - 2010 04 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -138,7 +138,7 @@ class SearchConfig extends AbstractConfigData
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
 			$authorizations_class = TextHelper::ucfirst($module->get_id()) . 'AuthorizationsService';
-			if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'read') && !$authorizations_class::check_authorizations()->read())
+			if (ClassLoader::is_class_registered_and_valid($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'read') && !$authorizations_class::check_authorizations()->read())
 				$modules_without_read_authorization[] = $module->get_id();
 		}
 

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -343,6 +343,8 @@ class ModulesManager
 
 	public static function upgrade_module($module_identifier, $generate_cache = true)
 	{
+		self::update_class_list();
+		
 		if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier))
 		{
 			if (self::is_module_installed($module_identifier))

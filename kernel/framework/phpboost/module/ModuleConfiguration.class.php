@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 04
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -155,12 +155,12 @@ class ModuleConfiguration
 
 	public function has_items()
 	{
-		return $this->item_name && class_exists($this->item_name) && ($this->item_name == 'Item' || is_subclass_of($this->item_name, 'Item'));
+		return $this->item_name && ClassLoader::is_class_registered_and_valid($this->item_name) && ($this->item_name == 'Item' || is_subclass_of($this->item_name, 'Item'));
 	}
 
 	public function has_rich_items()
 	{
-		return $this->item_name && class_exists($this->item_name) && ($this->item_name == 'RichItem' || is_subclass_of($this->item_name, 'RichItem'));
+		return $this->item_name && ClassLoader::is_class_registered_and_valid($this->item_name) && ($this->item_name == 'RichItem' || is_subclass_of($this->item_name, 'RichItem'));
 	}
 
 	public function get_items_table_name()
@@ -199,7 +199,7 @@ class ModuleConfiguration
 
 	public function has_rich_config_parameters()
 	{
-		return $this->configuration_name && class_exists($this->configuration_name) && is_subclass_of($this->configuration_name, 'DefaultRichModuleConfig');
+		return $this->configuration_name && ClassLoader::is_class_registered_and_valid($this->configuration_name) && is_subclass_of($this->configuration_name, 'DefaultRichModuleConfig');
 	}
 
 	public function get_configuration_parameters()

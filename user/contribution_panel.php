@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -307,7 +307,7 @@ else
 
 		$authorized = true;
 		$authorizations_class = TextHelper::ucfirst($module->get_id()) . 'AuthorizationsService';
-		if (class_exists($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'contribution') && ($module->get_configuration()->has_categories() ? !$authorizations_class::check_authorizations(Category::ROOT_CATEGORY, $module->get_id())->contribution() : !$authorizations_class::check_authorizations($module->get_id())->contribution()))
+		if (ClassLoader::is_class_registered_and_valid($authorizations_class) && method_exists($authorizations_class, 'check_authorizations') && method_exists($authorizations_class, 'contribution') && ($module->get_configuration()->has_categories() ? !$authorizations_class::check_authorizations(Category::ROOT_CATEGORY, $module->get_id())->contribution() : !$authorizations_class::check_authorizations($module->get_id())->contribution()))
 			$authorized = false;
 
 		if (!empty($contribution_interface) && $authorized)

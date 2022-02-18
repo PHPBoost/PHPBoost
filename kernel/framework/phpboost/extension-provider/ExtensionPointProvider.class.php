@@ -9,7 +9,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 12
+ * @version     PHPBoost 6.0 - last update: 2022 02 18
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -101,9 +101,9 @@ abstract class ExtensionPointProvider
 		$class = TextHelper::ucfirst($this->get_id()) . $extension_point_label;
 		$default_class = 'Default' . $extension_point_label;
 		
-		if (class_exists($class) && (in_array($extension_point_full_name, class_implements($class)) || is_subclass_of($class, $extension_point_full_name)))
+		if (ClassLoader::is_class_registered_and_valid($class) && (in_array($extension_point_full_name, class_implements($class)) || is_subclass_of($class, $extension_point_full_name)))
 			return new $class($this->get_id());
-		else if (class_exists($default_class) && (in_array($extension_point_full_name, class_implements($default_class)) || is_subclass_of($default_class, $extension_point_full_name)))
+		else if (ClassLoader::is_class_registered_and_valid($default_class) && (in_array($extension_point_full_name, class_implements($default_class)) || is_subclass_of($default_class, $extension_point_full_name)))
 			return new $default_class($this->get_id());
 		else
 			return false;
