@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 2.0 - 2008 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,8 +65,8 @@ $used_modules = array();
 
 // Génération des formulaires précomplétés et passage aux templates
 $provider_service = AppContext::get_extension_provider_service();
-$search_extensions_point_modules = array_keys($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT));
 $search_extensions_point = $provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
+$search_extensions_point_modules = array_keys($search_extensions_point);
 $providers = $provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT);
 
 foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $id => $module)
