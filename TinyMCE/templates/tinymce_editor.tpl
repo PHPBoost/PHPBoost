@@ -99,7 +99,7 @@
 			{title: ${escapejs(@warning.error)}, inline: 'span', classes: 'error'}
 		],
 		setup : function(ed) {
-			ed.addButton('insertfile', {
+			ed.ui.registry.addButton('insertfile', {
 				icon: 'browse',
 				onclick: function (field_name) {
 					ed.windowManager.open({
