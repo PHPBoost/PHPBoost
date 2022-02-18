@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 17
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -374,7 +374,7 @@ class Environment
 	private static function redirect_to_update_script_if_needed()
 	{
 		$folder = new Folder(PATH_TO_ROOT . '/update');
-		if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
+		if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && ClassLoader::is_class_registered_and_valid('UpdateServices') && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
 		{
 			AppContext::get_response()->redirect(new Url(HOST . DIR . '/update'));
 		}
