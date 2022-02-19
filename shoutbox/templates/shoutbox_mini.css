@@ -16,7 +16,7 @@
 
 .bbcode-elements.bbcode-block-shoutbox { position: static !important; }
 
-.cell-mini #shoutbox-bbcode-container [class*="cell-"] { background-color: var(--bgc-alt) !important; }
+#shoutbox-bbcode-container [class*="cell-"] { background-color: var(--bgc-sub); }
 
 .bbcode-block-container::after { border-color: transparent; }
 
