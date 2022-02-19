@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 27
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 6.0 - 2020 01 27
 */
 
@@ -23,7 +23,9 @@ class DefaultScheduledJobsModule extends AbstractScheduledJobExtensionPoint
 
 	public function on_changepage()
 	{
-		$this->deferred_publication_processing();
+		$running_module_name = Environment::get_running_module_name();
+		if (!in_array($running_module_name, array('user', 'admin', 'kernel')) && $running_module_name == $this->module_id)
+			$this->deferred_publication_processing();
 	}
 
 	protected function deferred_publication_processing()
