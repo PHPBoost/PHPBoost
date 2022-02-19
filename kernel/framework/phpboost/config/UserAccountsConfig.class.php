@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -92,7 +92,7 @@ class UserAccountsConfig extends AbstractConfigData
 	const ITEMS_PER_PAGE = 'items_per_page';
 	const ITEMS_PER_ROW = 'items_per_row';
 
-	const NO_AVATAR_URL = '/templates/__default__/images/no_avatar.png';
+	const NO_AVATAR_URL = '/templates/__default__/images/no_avatar.webp';
 
 
 	public function get_display_type()

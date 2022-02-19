@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 02
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -46,7 +46,7 @@ class CalendarItemContent
 	const DISPLAY_REGISTERED_USERS_AUTHORIZATION = 1;
 	const REGISTER_AUTHORIZATION = 2;
 
-	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
+	const THUMBNAIL_URL = '/templates/__default__/images/default_item.webp';
 
 	public function set_id($id)
 	{

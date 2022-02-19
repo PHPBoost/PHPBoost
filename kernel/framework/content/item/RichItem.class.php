@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 07
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 6.0 - 2020 01 23
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,7 +18,7 @@ class RichItem extends Item
 	protected $author_custom_name_field_enabled = true;
 	protected $thumbnail_field_enabled          = true;
 
-	const THUMBNAIL_URL = '/templates/__default__/images/default_item_thumbnail.png';
+	const THUMBNAIL_URL = '/templates/__default__/images/default_item.webp';
 
 	protected function set_kernel_additional_attributes_list()
 	{
@@ -105,11 +105,11 @@ class RichItem extends Item
 			if (!empty($summary))
 				return FormatingHelper::second_parse($summary);
 		}
-		
-		$summary = TextHelper::strip_content_tags($parsed_content); 
+
+		$summary = TextHelper::strip_content_tags($parsed_content);
 		$summary = TextHelper::cut_string(@strip_tags($summary ? $summary : FormatingHelper::second_parse($this->content), '<br><br/>'), self::$module->get_configuration()->get_configuration_parameters()->get_auto_cut_characters_number());
 		$summary = TextHelper::strip_content_extra_line_break($summary);
-		return $summary; 
+		return $summary;
 	}
 
 	public function get_author_custom_name()

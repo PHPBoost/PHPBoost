@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 12
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 3.0 - 2010 01 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -103,7 +103,7 @@ class MediaSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['media.cat.name']),
 			'name' => $this->messages['media.cat.name'],
 			'description' => $this->messages['media.cat.content'],
-			'thumbnail' => '/templates/__default__/images/default_category_thumbnail.png',
+			'thumbnail' => '/templates/__default__/images/default_category.webp',
 			'content_type' => 2
 		));
 	}

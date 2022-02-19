@@ -103,10 +103,10 @@ class UserErrorController extends AbstractController
 	private function fill_view()
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
-		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.png'))
-			$error_img = TPL_PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.png';
+		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.webp'))
+			$error_img = TPL_PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.webp';
 		else
-			$error_img = TPL_PATH_TO_ROOT . '/templates/__default__/images/error.png';
+			$error_img = TPL_PATH_TO_ROOT . '/templates/__default__/images/error.webp';
 
 		$this->view->put_all(array(
 			'ERROR_TYPE'  => $this->get_error_type(),

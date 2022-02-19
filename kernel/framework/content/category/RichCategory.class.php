@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2022 02 19
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,7 +14,7 @@
 
 class RichCategory extends Category
 {
-	const THUMBNAIL_URL = '/templates/__default__/images/default_category_thumbnail.png';
+	const THUMBNAIL_URL = '/templates/__default__/images/default_category.webp';
 
 	protected function set_kernel_additional_attributes_list()
 	{
