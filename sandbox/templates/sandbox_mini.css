@@ -27,27 +27,22 @@
 /* --- Toggle button position --- */
 
 .fwkboost-toggle {
-    padding: 0.1em 0.618em;
+    padding: 0.809em 1.618em 1.618em 0.809em;
     text-align: center;
     z-index: 399;
     cursor: pointer;
     text-decoration: none;
-    position: absolute;
-    top: 0.618em;
-    left: 0.618em;
+    position: fixed;
+    top: 0;
+    left: 0;
 	opacity: 0.3;
+    border-radius: 0 0 100% 0;
 }
 
 .fwkboost-toggle:hover {
     opacity: 1;
     text-decoration: none;
+    padding: 1em 1.809em 1.809em 1em;
 }
 
 .nav-item .mini-toolbox > .warning.blink { margin-right: 1.618em;}
-
-@media (min-width: 769px) {
-	.fwkboost-toggle {
-    	padding: 0.5em 1.618em;
-        position: fixed;
-	}
-}
