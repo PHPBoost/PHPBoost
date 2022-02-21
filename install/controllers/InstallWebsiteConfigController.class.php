@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 02
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -57,7 +57,6 @@ class InstallWebsiteConfigController extends InstallController
 
 	private function build_form()
 	{
-		$lang = LangLoader::get_all_langs();
 		$this->form = new HTMLForm('websiteForm', '', false);
 
 		$fieldset = new FormFieldsetHTML('yourSite', $this->lang['install.website.yours']);
@@ -85,24 +84,24 @@ class InstallWebsiteConfigController extends InstallController
 			array('description' => $this->lang['install.website.timezone.clue'])
 		));
 
-		$fieldset = new FormFieldsetHTML('security_config', $lang['user.security']);
+		$fieldset = new FormFieldsetHTML('security_config', $this->lang['user.security']);
 		$this->form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
+		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
 			array('min' => 6, 'max' => 30),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
 		));
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
+		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
 			array(
-				new FormFieldSelectChoiceOption($lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
-				new FormFieldSelectChoiceOption($lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
-				new FormFieldSelectChoiceOption($lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
-				new FormFieldSelectChoiceOption($lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
+				new FormFieldSelectChoiceOption($this->lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
 			)
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
+		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -186,7 +185,7 @@ if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){field.setValue(va
 		$step_title = $this->lang['install.website.config.title'];
 		$default_captcha = $this->distribution_config['default_captcha'];
 		$additional_stylesheet = $default_captcha ? $default_captcha::get_css_stylesheet() : '';
-		$response = new InstallDisplayResponse(4, $step_title, $this->view, $additional_stylesheet);
+		$response = new InstallDisplayResponse(4, $step_title, $this->lang, $this->view, $additional_stylesheet);
 		return $response;
 	}
 }

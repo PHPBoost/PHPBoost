@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,10 +26,9 @@ class InstallDisplayResponse extends AbstractResponse
 	 */
 	private $full_view;
 
-	public function __construct($step_number, $step_title, Template $view, $additional_stylesheet = '')
+	public function __construct($step_number, $step_title, $lang, Template $view, $additional_stylesheet = '')
 	{
-		$this->load_language_resources();
-		$this->init_response($step_number, $view);
+		$this->init_response($step_number, $lang, $view);
 		$env = new InstallDisplayGraphicalEnvironment();
 		$this->add_language_bar();
 		$this->init_steps();
@@ -51,18 +50,14 @@ class InstallDisplayResponse extends AbstractResponse
 		parent::__construct($env, $this->full_view);
 	}
 
-	public function init_response($step_number, Template $view)
+	public function init_response($step_number, $lang, Template $view)
 	{
 		$this->current_step = $step_number;
+		$this->lang = $lang;
 		$this->full_view = new FileTemplate('install/main.tpl');
 		$this->full_view->put('INSTALL_STEP', $view);
 		$this->full_view->add_lang($this->lang);
 		$view->add_lang($this->lang);
-	}
-
-	public function load_language_resources()
-	{
-		$this->lang = LangLoader::get_all_langs('install');
 	}
 
 	private function add_language_bar()
