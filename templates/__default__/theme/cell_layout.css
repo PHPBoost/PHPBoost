@@ -142,3 +142,5 @@
 .cell-mini .cell-form .cell-input { padding: 0; }
 
 .cell-mini fieldset { margin: 0; }
+
+.cell-mini select:not(.grouped-element) { width: 100%; }
