@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 19
+ * @version     PHPBoost 6.0 - last update: 2022 02 21
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -182,6 +182,8 @@ class CalendarItem
 		$end_date = $this->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR);
 
 		return array_merge(
+			Date::get_array_tpl_vars($this->content->get_creation_date(), 'date'),
+			Date::get_array_tpl_vars($this->content->get_update_date(), 'update_date'),
 			Date::get_array_tpl_vars($this->start_date, 'start_date'),
 			Date::get_array_tpl_vars($this->end_date, 'end_date'),
 			array(
@@ -209,6 +211,15 @@ class CalendarItem
 				'C_CANCELLED'                => $this->content->is_cancelled(),
 				'C_FULL_ITEM_DISPLAY'        => CalendarConfig::load()->is_full_item_displayed(),
 				'C_NEW_CONTENT'              => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('calendar', $this->content->get_creation_date()->get_timestamp()),
+				'C_HAS_UPDATE_DATE' 		 => $this->content->get_update_date(),
+
+				//Category
+				'C_ROOT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY,
+				'CATEGORY_ID'     => $category->get_id(),
+				'CATEGORY_NAME'   => $category->get_name(),
+				'CATEGORY_COLOR'  => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
+				'U_EDIT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'calendar')->rel(),
+				'U_CATEGORY'      => $category->get_id() != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $this->get_start_date()->get_year(), $this->get_start_date()->get_month())->rel() : '',
 
 				//Event
 				'ID'                       => $this->id,
@@ -226,14 +237,6 @@ class CalendarItem
 				'AUTHOR_GROUP_COLOR'       => $author_group_color,
 				'L_MISSING_PARTICIPANTS'   => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.remaining.places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.remaining.place'],
 				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.remaining.days'], array('days_left' => $registration_days_left)) : $lang['calendar.remaining.day'],
-
-				//Category
-				'C_ROOT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY,
-				'CATEGORY_ID'     => $category->get_id(),
-				'CATEGORY_NAME'   => $category->get_name(),
-				'CATEGORY_COLOR'  => $category->get_id() != Category::ROOT_CATEGORY ? $category->get_color() : '',
-				'U_EDIT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'calendar')->rel(),
-				'U_CATEGORY'      => $category->get_id() != Category::ROOT_CATEGORY ? CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $this->get_start_date()->get_year(), $this->get_start_date()->get_month())->rel() : '',
 
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),

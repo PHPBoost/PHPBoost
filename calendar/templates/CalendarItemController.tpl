@@ -14,8 +14,9 @@
 
 				<div class="flex-between">
 					<div class="more">
-						<span class="pinned"><i class="fa fa-user"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #<span class="visitor">{AUTHOR}</span># ENDIF #</span>
-						# IF NOT C_ROOT_CATEGORY #<span class="pinned-category" data-color-surround="{CATEGORY_COLOR}"><a class="offload" aria-label="{@common.category}" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span># ENDIF #
+						<span class="pinned item-author"><i class="fa fa-user"></i> # IF C_AUTHOR_EXISTS #<a itemprop="author" href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #<span class="visitor">{AUTHOR}</span># ENDIF #</span>
+						<span class="pinned item-creation-date" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{DATE_ISO8601}" itemprop="datePublished">{DATE}</time> </span>
+						# IF NOT C_ROOT_CATEGORY #<span class="pinned-category item-category" data-color-surround="{CATEGORY_COLOR}"><a class="offload" aria-label="{@common.category}" href="{U_CATEGORY}">{CATEGORY_NAME}</a></span># ENDIF #
 					</div>
 					# IF C_CONTROLS #
 						<div class="controls align-right">
@@ -28,6 +29,9 @@
 						</div>
 					# ENDIF #
 				</div>
+				# IF C_HAS_UPDATE_DATE #
+					<span class="pinned notice small text-italic item-modified-date"><i>{@common.last.update} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></span>
+				# ENDIF #
 
 				# IF NOT C_APPROVED #
 					# INCLUDE NOT_VISIBLE_MESSAGE #

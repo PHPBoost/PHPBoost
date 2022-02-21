@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 19
+ * @version     PHPBoost 6.0 - last update: 2022 02 21
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -25,6 +25,7 @@ class CalendarItemContent
 	private $approved;
 
 	private $creation_date;
+	private $update_date;
 	private $author_user;
 
 	private $registration_authorized;
@@ -177,6 +178,16 @@ class CalendarItemContent
 		return $this->creation_date;
 	}
 
+	public function set_update_date(Date $update_date)
+	{
+		$this->update_date = $update_date;
+	}
+
+	public function get_update_date()
+	{
+		return $this->update_date;
+	}
+
 	public function set_author_user(User $author)
 	{
 		$this->author_user = $author;
@@ -326,6 +337,7 @@ class CalendarItemContent
 			'approved' => (int)$this->is_approved(),
 			'map_displayed' => (int)$this->is_map_displayed(),
 			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
+			'update_date' => (int)$this->get_update_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
 			'registration_limit' => (int)$this->is_registration_limited(),
@@ -378,6 +390,7 @@ class CalendarItemContent
 		$this->register_authorizations = TextHelper::unserialize($properties['register_authorizations']);
 
 		$this->creation_date = new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE);
+		$this->update_date = new Date($properties['update_date'], Timezone::SERVER_TIMEZONE);
 
 		$this->repeat_number = $properties['repeat_number'];
 		$this->repeat_type = $properties['repeat_type'];

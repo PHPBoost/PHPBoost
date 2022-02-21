@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 10
+ * @version     PHPBoost 6.0 - last update: 2022 02 21
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -316,7 +316,11 @@ class CalendarItemFormController extends DefaultModuleController
 		if (CategoriesAuthorizationsService::check_authorizations($item_content->get_id_category())->moderation())
 		{
 			if ($this->form->get_value('approved'))
+			{
 				$item_content->approve();
+				if ($item->get_id() !== null)
+					$item_content->set_update_date(new Date());
+			}
 			else
 				$item_content->unapprove();
 		}
