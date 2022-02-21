@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 20
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,11 +18,6 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	private $module_id;
 
 	/**
-	 * @var bool display of items links or not
-	 */
-	private $display_items_links;
-
-	/**
 	 * @var mixed[] authorizations checker
 	 */
 	private $authorizations;
@@ -30,12 +25,10 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	/**
 	 * DefaultTreeLinks constructor
 	 * @param string $module_id the module id.
-	 * @param bool   $display_items_links the module id.
 	 */
-	public function __construct($module_id, $display_items_links = true)
+	public function __construct($module_id)
 	{
 		$this->module_id = $module_id;
-		$this->display_items_links = $display_items_links;
 	}
 
 	/**
@@ -54,18 +47,11 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		return $this->module_id;
 	}
 
-	/**
-	 * @return bool Return true if items links are displayed
-	 */
-	public function are_items_links_displayed()
-	{
-		return $this->display_items_links;
-	}
-
 	public function get_actions_tree_links()
 	{
 		$tree = new ModuleTreeLinks();
-		$has_categories = ModulesManager::get_module($this->module_id)->get_configuration()->has_categories();
+		$module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+		$has_categories = $module_configuration->has_categories();
 		$this->authorizations = $has_categories ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id) : ItemsAuthorizationsService::check_authorizations($this->module_id);
 
 		if ($has_categories)
@@ -74,7 +60,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 			$tree->add_link(new ModuleLink(LangLoader::get_message('category.add', 'category-lang'), CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id), $this->authorizations->manage()));
 		}
 
-		if ($this->display_items_links)
+		if ($module_configuration->has_items() || ClassLoader::is_class_registered_and_valid(ucfirst($this->module_id) . 'Item'))
 		{
 			$lang = ItemsService::get_items_lang($this->module_id);
 
