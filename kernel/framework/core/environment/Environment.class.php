@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 19
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -248,10 +248,10 @@ class Environment
 	{
 		$today = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 		$yesterday = new Date(self::get_yesterday_timestamp(), Timezone::SERVER_TIMEZONE);
-		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
-		foreach ($jobs as $job)
+		foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job)
 		{
-			$job->on_changeday($yesterday, $today);
+			if ($job)
+				$job->on_changeday($yesterday, $today);
 		}
 	}
 
@@ -308,10 +308,10 @@ class Environment
 
 	private static function execute_modules_changepage_tasks()
 	{
-		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
-		foreach ($jobs as $job)
+		foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job)
 		{
-			$job->on_changepage();
+			if ($job)
+				$job->on_changepage();
 		}
 	}
 

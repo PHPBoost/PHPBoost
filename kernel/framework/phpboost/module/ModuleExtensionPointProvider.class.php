@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 17
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 6.0 - 2020 01 02
 */
 
@@ -63,14 +63,6 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 	{
 		if ($class = $this->get_class('ModuleMiniMenu'))
 			return new ModuleMenus(array($class));
-	}
-
-	public function scheduled_jobs()
-	{
-		if ($class = $this->get_class('ScheduledJobs', 'ScheduledJobExtensionPoint'))
-			return $class;
-		else
-			return new DefaultScheduledJobsModule($this->get_id());
 	}
 
 	public function tree_links()

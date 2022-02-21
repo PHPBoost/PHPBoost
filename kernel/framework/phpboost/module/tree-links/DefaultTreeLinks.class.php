@@ -50,7 +50,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	public function get_actions_tree_links()
 	{
 		$tree = new ModuleTreeLinks();
-		$module_configuration = ModulesManager::get_module($this->module_id)->get_configuration();
+		$module_configuration = ModuleConfigurationManager::get($this->module_id);
 		$has_categories = $module_configuration->has_categories();
 		$this->authorizations = $has_categories ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id) : ItemsAuthorizationsService::check_authorizations($this->module_id);
 
