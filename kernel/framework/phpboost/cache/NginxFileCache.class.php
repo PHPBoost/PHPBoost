@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 20
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 5.2 - 2019 10 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -328,15 +328,15 @@ class NginxFileCache implements CacheData
 	{
 		$this->add_section('Expires Headers');
 		$this->add_line('map $sent_http_content_type $expires {');
-		$this->add_line('	# Default expiration: 1 week after request');
-		$this->add_line('	default                   7d;');
+		$this->add_line('	# Default expiration: 1 month after request');
+		$this->add_line('	default                   30d;');
 		$this->add_empty_line();
-		$this->add_line('	# CSS and JS expiration: 1 week after request');
-		$this->add_line('	text/css                  7d;');
-		$this->add_line('	text/javascript           7d;');
-		$this->add_line('	text/x-javascript         7d;');
-		$this->add_line('	application/javascript    7d;');
-		$this->add_line('	application/x-javascript  7d;');
+		$this->add_line('	# CSS and JS expiration: 1 month after request');
+		$this->add_line('	text/css                  30d;');
+		$this->add_line('	text/javascript           30d;');
+		$this->add_line('	text/x-javascript         30d;');
+		$this->add_line('	application/javascript    30d;');
+		$this->add_line('	application/x-javascript  30d;');
 		$this->add_empty_line();
 		$this->add_line('	# Fonts expiration: 1 month after request');
 		$this->add_line('	application/font-woff     30d;');
