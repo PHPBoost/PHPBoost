@@ -1,4 +1,4 @@
-<section id="module-calendar" class="category-{CATEGORY_ID}">
+<section id="module-calendar" class="category-{CATEGORY_ID} single-item">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
@@ -10,7 +10,7 @@
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
-			<article itemscope="itemscope" itemtype="https://schema.org/Event" id="calendar-item-{ID}" class="calendar-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+			<article itemscope="itemscope" itemtype="https://schema.org/Event" id="calendar-item-{ID}" class="calendar-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 				<div class="flex-between">
 					<div class="more">

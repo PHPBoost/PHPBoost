@@ -1,4 +1,4 @@
-<section id="module-{MODULE_ID}" class="category-{CATEGORY_ID}">
+<section id="module-{MODULE_ID}" class="category-{CATEGORY_ID} single-item">
 	<header class="section-header">
 		<div class="controls align-right">
 			# IF C_SYNDICATION #<a href="{U_SYNDICATION}" class="offload" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a># ENDIF #
@@ -16,7 +16,7 @@
 					# INCLUDE NOT_PUBLISHED_MESSAGE #
 				</div>
 			# ENDIF #
-			<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item single-item# IF C_PRIME_ITEM # prime-item# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+			<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item# IF C_PRIME_ITEM # prime-item# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 				<div class="flex-between">
 					# IF C_MORE_OPTIONS #
 						<div class="more">

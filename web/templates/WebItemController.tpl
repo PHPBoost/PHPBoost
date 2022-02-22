@@ -1,4 +1,4 @@
-<section id="module-web" class="category-{CATEGORY_ID}">
+<section id="module-web" class="category-{CATEGORY_ID} single-item">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="{U_SYNDICATION}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
@@ -14,7 +14,7 @@
 					# INCLUDE NOT_VISIBLE_MESSAGE #
 				</div>
 			# ENDIF #
-			<article id="web-item-{ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="web-item single-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
+			<article id="web-item-{ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="web-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
 				# IF C_CONTROLS #
 					<div class="controls align-right">
 						# IF C_EDIT #<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #

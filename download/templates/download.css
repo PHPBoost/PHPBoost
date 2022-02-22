@@ -7,8 +7,7 @@
 
 .download-sources-title { font-weight: bold; }
 
-.article-download.several-items .actions { padding-top: 0.618em; }
-
+.several-items .article-download .actions { padding-top: 0.618em; }
 
 @media (min-width: 769px) {
 	#DownloadFormController_file_size_field,

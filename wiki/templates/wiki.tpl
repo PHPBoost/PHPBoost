@@ -1,4 +1,4 @@
-<section id="module-wiki">
+<section id="module-wiki" class="single-item">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki', ID_CATEGORY))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
@@ -54,7 +54,7 @@
 	# ENDIF #
 	<div class="sub-section">
 		<div class="content-container">
-			<article id="article-wiki-{ID}" class="wiki-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #">
+			<article id="article-wiki-{ID}" class="wiki-item# IF C_NEW_CONTENT # new-content# ENDIF #">
 
 				# INCLUDE WIKI_TOOLS #
 

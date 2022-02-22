@@ -1,4 +1,4 @@
-<section id="module-guestbook">
+<section id="module-guestbook" class="several-items">
 	<header class="section-header">
 		<h1>{@guestbook.module.title}</h1>
 	</header>
@@ -26,7 +26,7 @@
 							# ENDIF #
 							<form method="post" class="fieldset-content">
 								# START messages #
-									<article id="m{messages.ID}" class="guestbook-item several-items message-container message-small" itemscope="itemscope" itemtype="https://schema.org/Comment">
+									<article id="m{messages.ID}" class="guestbook-item message-container message-small" itemscope="itemscope" itemtype="https://schema.org/Comment">
 										<header class="message-header-container">
 											# IF messages.C_AVATAR #
 												<img class="message-user-avatar" src="{messages.U_AVATAR}" alt="{@common.avatar}" />

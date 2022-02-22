@@ -1,4 +1,4 @@
-<section id="module-wiki">
+<section id="module-wiki" class="several-items">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('wiki'))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>

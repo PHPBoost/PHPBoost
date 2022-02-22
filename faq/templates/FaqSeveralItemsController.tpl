@@ -29,7 +29,7 @@
 	</script>
 # ENDIF #
 # INCLUDE MESSAGE_HELPER #
-<section id="module-faq">
+<section id="module-faq" class="several-items">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('faq', ID_CAT))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>

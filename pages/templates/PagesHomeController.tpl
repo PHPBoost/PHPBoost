@@ -1,4 +1,4 @@
-<section id="module-pages">
+<section id="module-pages" class="several-items">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('pages', CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
@@ -32,7 +32,7 @@
 	# ELSE #
 		<div class="sub-section">
 			<div class="content-container">
-				<article class="pages-item several-items">
+				<article class="pages-item">
 					<div class="content">
 						<ul class="root-list # IF C_CONTROLS ## IF C_ROOT_SEVERAL_ITEMS # root-ul# ENDIF ## ENDIF #">
 							# IF C_CONTROLS #

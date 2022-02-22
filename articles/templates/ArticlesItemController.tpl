@@ -1,4 +1,4 @@
-<section id="module-articles" class="category-{CATEGORY_ID}">
+<section id="module-articles" class="category-{CATEGORY_ID} single-item">
 
 	<header class="section-header">
 		<div class="controls align-right">
@@ -13,7 +13,7 @@
 			# IF NOT C_PUBLISHED #
 				<div class="content"># INCLUDE NOT_PUBLISHED_MESSAGE #</div>
 			# ENDIF #
-			<article id="article-articles-{ID}" class="articles-item single-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Article">
+			<article id="article-articles-{ID}" class="articles-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Article">
 				<div class="flex-between">
 					<div class="more">
 						# IF C_AUTHOR_DISPLAYED #

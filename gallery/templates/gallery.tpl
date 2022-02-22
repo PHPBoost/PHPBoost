@@ -237,7 +237,7 @@
 
 # INCLUDE MESSAGE_HELPER #
 
-<section id="module-gallery">
+<section id="module-gallery" class="several-items">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', ID_CATEGORY))}" aria-label="{@common.syndication}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
@@ -335,7 +335,7 @@
 		# IF C_ITEMS #
 			<div class="sub-section">
 				<div class="content-container">
-					<article id="article-gallery-{ID_CATEGORY}" class="article-gallery several-items category-{ID_CATEGORY}">
+					<article id="gallery-item-{ID_CATEGORY}" class="gallery-item category-{ID_CATEGORY}">
 						<header>
 							<h2>{@common.image}</h2>
 						</header>

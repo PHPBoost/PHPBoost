@@ -1,4 +1,4 @@
-<section id="module-media">
+<section id="module-media" class="several-items">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('media', CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
@@ -101,7 +101,7 @@
 					# ENDIF #
 					<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 						# START items #
-							<article id="article-media-{items.ID}" class="media-item several-items category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
+							<article id="article-media-{items.ID}" class="media-item category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 								<header class="cell-header">
 									<h2 class="cell-name">
 										<a class="offload" href="{items.U_ITEM}">{items.TITLE}</a>

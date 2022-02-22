@@ -1,6 +1,6 @@
 # INCLUDE MESSAGE_HELPER #
 
-<section id="module-calendar">
+<section id="module-calendar" class="several-items">
 	<header class="section-header">
 		<div class="controls align-right">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('calendar'))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>

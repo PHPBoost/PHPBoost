@@ -1,4 +1,4 @@
-<section id="module-shoutbox">
+<section id="module-shoutbox" class="several-items">
 	<header class="section-header">
 		<h1>{@shoutbox.module.title}</h1>
 	</header>
@@ -26,7 +26,7 @@
 						# ENDIF #
 						# IF C_MULTIPLE_DELETE_DISPLAYED #<form method="post" class="fieldset-content"># ENDIF #
 							# START messages #
-								<article id="article-shoutbox-{messages.ID}" class="shoutbox-item several-items message-container message-small# IF IS_USER_CONNECTED # message-offset# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Comment">
+								<article id="article-shoutbox-{messages.ID}" class="shoutbox-item message-container message-small# IF IS_USER_CONNECTED # message-offset# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Comment">
 									<header class="message-header-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 										# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="{@common.avatar}" class="message-user-avatar" /># ENDIF #
 										<div class="message-header-infos">

@@ -5,10 +5,10 @@
 
 #module-articles hr { margin-top: 0.618em; }
 
-.articles-item.several-items h2,
-.articles-item.several-items .more { margin: 0; }
+.several-items .articles-item h2,
+.several-items .articles-item .more { margin: 0; }
 
-.articles-item.several-items img { padding: 0 0 0.618em 0; }
+.several-items .articles-item img { padding: 0 0 0.618em 0; }
 
 /* --- Pages pagination --- */
 .pages-pagination { width: 100%; }
