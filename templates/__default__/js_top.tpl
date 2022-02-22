@@ -27,28 +27,3 @@
 </script>
 
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
-<script src="{PATH_TO_ROOT}/kernel/lib/js/prism/prism.js"></script>
-
-# IF C_CSS_CACHE_ENABLED #
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@phpboost.min.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.min.js"></script>
-# ELSE #
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autocomplete.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autobox.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/basictable.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/dndfiles.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/lightcase.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/linedtextarea.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/menumaker.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/multitabs.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/owl.carousel.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.helpers.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortable.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/wizard.js"></script>
-# ENDIF #

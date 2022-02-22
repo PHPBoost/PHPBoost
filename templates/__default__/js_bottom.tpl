@@ -1,3 +1,28 @@
+# IF C_CSS_CACHE_ENABLED #
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@phpboost.min.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.min.js"></script>
+# ELSE #
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autocomplete.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autobox.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/basictable.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/dndfiles.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/lightcase.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/linedtextarea.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/menumaker.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/multitabs.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/owl.carousel.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.helpers.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortable.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/wizard.js"></script>
+# ENDIF #
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/prism.min.js"></script>
+
 <script>
 // Delete confirmation
 	function update_data_confirmations() {
@@ -106,9 +131,9 @@
 			autoplayHoverPause: true,
 			responsive: {
 				0: { items: 1},
-				768: { items: 2},
-				1024: { items: 3},
-				1366: { items: 4}
+				769: { items: 2},
+				1025: { items: 3},
+				1367: { items: 4}
 			}
 	});
 
