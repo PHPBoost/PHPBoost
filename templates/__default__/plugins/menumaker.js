@@ -20,7 +20,8 @@
 			breakpoint: 768,
 			sticky: false,
 			static: false,
-			actionslinks: false
+			actionslinks: false,
+			openedmenu: false
 		}, options);
 
 		var regtitle = new RegExp('[^A-Za-z0-9]', 'gi');
@@ -86,6 +87,19 @@
 					}
 
 					cssmenu.addClass('small-screen');
+				}
+
+				if (settings.openedmenu) {
+					if (!$smallscreen) {
+						cssmenu.addClass('small-screen');
+						cssmenu.find('ul:not(.level-0)').removeClass('open');
+						cssmenu.find('ul:not(.level-0)').addClass('close');
+						cssmenu.find('div.menu-button').hide();
+					} else {
+						cssmenu.find('ul').removeClass('open');
+						cssmenu.find('ul').addClass('close');
+						cssmenu.find('div.menu-button').show();
+					}
 				}
 
 			};
