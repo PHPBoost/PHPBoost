@@ -19,10 +19,10 @@ function showCookieBar() {
 	//Case 1 : NO TRACKING : Only technical cookies (login / preferences / anonymous stats)
 	//Case 2 : TRACKING : cookies for tracking systems (google-analytics, advertising, social networks links, and so on...)
 	if ( COOKIEBAR_TRACKING_MODE == 'notracking') {
-		L_BUTTON = '<button type="button" class="button submit" id="cookiebar-button-allowed">' + L_COOKIEBAR_UNDERSTAND + '</button>';
+		L_BUTTON = '<button type="button" class="button submit grouped-element" id="cookiebar-button-allowed">' + L_COOKIEBAR_UNDERSTAND + '</button>';
 	}
 	else {
-		L_BUTTON = '<button type="submit" class="button bgc success" id="cookiebar-button-allowed">' + L_COOKIEBAR_ALLOWED + '</button><button type="submit" class="button bgc error" id="cookiebar-button-declined">' + L_COOKIEBAR_DECLINED + '</button>';
+		L_BUTTON = '<button type="submit" class="button bgc success grouped-element" id="cookiebar-button-allowed">' + L_COOKIEBAR_ALLOWED + '</button><button type="submit" class="button bgc error grouped-element" id="cookiebar-button-declined">' + L_COOKIEBAR_DECLINED + '</button>';
 	}
 
 	if (getCookie('pbt-cookiebar-viewed') == "")
@@ -30,7 +30,7 @@ function showCookieBar() {
 		// Add cookies bar if it doesn't exist
 		if ($('#cookiebar-container').length < 1 )
 		{
-			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions">' + L_BUTTON + ' <span class="button small"><a class="offload" href="' + U_COOKIEBAR_ABOUTCOOKIE + '">' + L_COOKIEBAR_MORE + '</a></span></div></div>');
+			$('body').prepend('<div class="cookiebar-container" id="cookiebar-container"><div class="cookiebar-content" id="cookiebar-content">' + L_COOKIEBAR_CONTENT + '</div><div class="cookiebar-actions grouped-inputs">' + L_BUTTON + '<a class="button small grouped-element offload cookiebar-question" href="' + U_COOKIEBAR_ABOUTCOOKIE + '" aria-label="' + L_COOKIEBAR_MORE + '"><i class="fa fa-question"></i></a></div></div>');
 		}
 
 		// If cookie is accepted then save this choice
