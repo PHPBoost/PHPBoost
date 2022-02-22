@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 02 22
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -446,7 +446,7 @@ class MenuService
 	 */
 	public static function website_modules($menu_type = LinksMenu::AUTOMATIC_MENU)
 	{
-		$modules_menu = new LinksMenu('PHPBoost', '/', '', $menu_type);
+		$modules_menu = new LinksMenu('PHPBoost', '/', '', '', $menu_type);
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 		foreach ($modules as $module)
 		{
@@ -457,7 +457,7 @@ class MenuService
 				$img = '';
 				$img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id();
 
-				foreach (array('_mini.png', '_mini.gif', '_mini.jpg') as $extension)
+				foreach (array('_mini.png', '_mini.gif', '_mini.jpg', '_mini.webp') as $extension)
 				{
 					$file = new File($img_url . $extension);
 					if ($file->exists())
@@ -466,7 +466,7 @@ class MenuService
 						break;
 					}
 				}
-				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img));
+				$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img, ''));
 			}
 		}
 		return $modules_menu;
