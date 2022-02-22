@@ -49,7 +49,7 @@
 
 .accordion-container > .accordion-nav > ul > li > a:after {
     position: absolute;
-    font-family: 'Font Awesome 5 free';
+    font-family: 'Font Awesome 6 free';
     font-weight: 900;
     top: 50%;
     transform: translateY(-50%);
@@ -98,7 +98,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 
 .modal-btn:after {
     position: absolute;
-    font-family: 'Font Awesome 5 free';
+    font-family: 'Font Awesome 6 free';
     font-weight: 900;
     top: 50%;
     transform: translateY(-50%);
@@ -161,7 +161,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     top: 0.309em;
     right: 0.309em;
     font-size: 1.608em;
-    font-family: 'Font Awesome 5 free';
+    font-family: 'Font Awesome 6 free';
     font-weight: 400;
     content: '\f057';
 }
