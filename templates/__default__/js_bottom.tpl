@@ -2,7 +2,6 @@
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@phpboost.min.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.min.js"></script>
 # ELSE #
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autocomplete.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/autobox.js"></script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/basictable.js"></script>
