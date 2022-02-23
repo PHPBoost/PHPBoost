@@ -46,3 +46,11 @@
 }
 
 .nav-item .mini-toolbox > .warning.blink { margin-right: 1.618em;}
+
+.switchtheme.grouped-inputs input,
+.switchtheme.grouped-inputs select,
+.switchtheme.inputs-with-sup .label-sup {
+    flex: auto 0 0;
+    margin: 0;
+    width: auto;
+}

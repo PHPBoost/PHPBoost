@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2022 02 23
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,4 +62,6 @@ $lang['sandbox.mini.admin.menu.tools']          = 'Outils';
 $lang['sandbox.mini.admin.menu.users']          = 'Utilisateurs';
 $lang['sandbox.mini.admin.menu.content']        = 'Contenu';
 $lang['sandbox.mini.admin.menu.modules']        = 'Modules';
+
+$lang['sandbox.refrech.nav.cache'] = 'Recharger (page + cache nav)';
 ?>

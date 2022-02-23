@@ -338,11 +338,16 @@
 						</li>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-modules">
-								<i class="fa fa-fw fa-cube" aria-hidden="true"></i>
 								<span>{@sandbox.mini.admin.menu.modules}</span>
 							</a>
 						</li>
 					</ul>
+				</li>
+				<li class="reload-nav-cache">
+					<a href="#" onclick="location.reload(true);return false">
+						<i class="fa fa-fw fa-arrows-rotate" aria-hidden="true"></i>
+						<span>{@sandbox.refrech.nav.cache}</span>
+					</a>
 				</li>
 			</ul>
 			<ul class="sandbox-controls bottom-nav">
