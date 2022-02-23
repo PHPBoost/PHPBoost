@@ -94,7 +94,11 @@
 	z-index: 1;
 	top: 100%;
 	left: 0;
-	padding: 10px 1px 10px 10px;
+	padding: 8px 1px 10px 10px;
+}
+
+.addon-menu-checkbox .checkbox {
+	padding: 0.309em 0;
 }
 
 .addon-auth {
