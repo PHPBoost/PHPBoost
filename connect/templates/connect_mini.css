@@ -30,7 +30,7 @@
 	flex-wrap: nowrap;
 }
 
-#module-connect .cell-list .li-spaced a { padding-right: 0.618em; }
+#module-connect .cell-list .li-spaced a { padding: 0.618em; }
 
 #module-connect .cell-list li:hover { background-color: transparent; }
 
@@ -48,6 +48,8 @@
 	}
 
 	#module-connect .li-spaced { width: auto; }
+
+	#module-connect .cell-list .li-spaced a { padding: 0 0.618em 0 0; }
 }
 
 .connect-container-horizontal {

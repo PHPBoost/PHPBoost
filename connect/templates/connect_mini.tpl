@@ -110,21 +110,21 @@
 						<span aria-label="{@user.my.profile}" class="{USER_LEVEL_CLASS}" # IF C_USER_GROUP_COLOR # style="color:{USER_GROUP_COLOR}"# ENDIF #>{USER_DISPLAYED_NAME}</span>
 						# IF C_HAS_PM #
 							<span class="stacked member">
-								<i class="fa fa-fw fa-people-arrows" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-lg fa-people-arrows" aria-hidden="true"></i>
 								<span class="stack-event stack-circle stack-sup stack-right bgc member blink">{PM_NUMBER}</span>
 							</span>
 						# ENDIF #
 						# IF IS_ADMIN #
 							# IF C_UNREAD_ALERTS #
 								<span class="stacked administrator">
-									<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
+									<i class="fa fa-fw fa-lg fa-wrench" aria-hidden="true"></i>
 									<span class="stack-event stack-circle stack-sup stack-right bgc administrator blink">{UNREAD_ALERTS_NUMBER}</span>
 								</span>
 							# ENDIF #
 						# ENDIF #
 						# IF C_UNREAD_CONTRIBUTIONS #
 							<span class="stacked moderator">
-								<i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-lg fa-file-alt" aria-hidden="true"></i>
 								<span class="stack-event stack-circle stack-sup stack-right bgc moderator blink">{UNREAD_CONTRIBUTIONS_NUMBER}</span>
 							</span>
 						# ENDIF #
@@ -132,7 +132,7 @@
 							# IF additional_menus.C_DISPLAY #
 								# IF additional_menus.C_UNREAD_ELEMENTS #
 									<span class="stacked {additional_menus.LEVEL_CLASS}">
-										<i class="fa-fw# IF additional_menus.C_ICON # {additional_menus.ICON}# ELSE # far fa-file-alt# ENDIF #" aria-hidden="true"></i>
+										<i class="fa-fw fa-lg# IF additional_menus.C_ICON # {additional_menus.ICON}# ELSE # far fa-file-alt# ENDIF #" aria-hidden="true"></i>
 										<span class="stack-event stack-circle stack-sup stack-right bgc {additional_menus.LEVEL_CLASS} blink">{additional_menus.UNREAD_ELEMENTS_NUMBER}</span>
 									</span>
 								# ENDIF #
@@ -169,7 +169,7 @@
 						</li>
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-pm">
 							<span # IF C_HAS_PM #class="stacked member"# ENDIF #>
-								<i class="fa fa-fw fa-people-arrows" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-lg fa-people-arrows" aria-hidden="true"></i>
 								# IF C_HAS_PM #<span class="stack-event stack-circle stack-sup stack-right bgc member blink">{PM_NUMBER}</span> # ENDIF #
 							</span>
 							<a href="{U_USER_PM}" class="offload">
@@ -179,7 +179,7 @@
 						# IF IS_ADMIN #
 							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-admin">
 								<span # IF C_UNREAD_ALERTS #class="stacked administrator"# ENDIF #>
-									<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
+									<i class="fa fa-fw fa-lg fa-wrench" aria-hidden="true"></i>
 									# IF C_UNREAD_ALERTS # <span class="stack-event stack-circle stack-sup stack-right bgc administrator blink">{UNREAD_ALERTS_NUMBER}</span> # ENDIF #
 								</span>
 								<a href="${relative_url(UserUrlBuilder::administration())}" class="offload">
@@ -189,7 +189,7 @@
 						# ENDIF #
 						# IF IS_MODERATOR #
 							<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-moderation">
-								<i class="fa fa-fw fa-gavel" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-lg fa-gavel" aria-hidden="true"></i>
 								<a href="${relative_url(UserUrlBuilder::moderation_panel())}" class="offload">
 									<span>{@user.moderation.panel}</span>
 								</a>
@@ -197,7 +197,7 @@
 						# ENDIF #
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-contribution">
 							<span # IF C_UNREAD_CONTRIBUTIONS #class="stacked moderator"# ENDIF #>
-								<i class="fa fa-fw fa-file-alt" aria-hidden="true"></i>
+								<i class="fa fa-fw fa-lg fa-file-alt" aria-hidden="true"></i>
 								# IF C_UNREAD_CONTRIBUTIONS #<span class="stack-event stack-circle stack-sup stack-right bgc moderator blink">{UNREAD_CONTRIBUTIONS_NUMBER}</span># ENDIF #
 							</span>
 							<a href="${relative_url(UserUrlBuilder::contribution_panel())}" class="offload">
@@ -209,7 +209,7 @@
 								<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-{additional_menus.MENU_NAME}">
 									<span # IF additional_menus.C_UNREAD_ELEMENTS #class="stacked {additional_menus.LEVEL_CLASS}"# ENDIF #>
 										# IF additional_menus.C_ICON #
-											<i class="fa fa-fw {additional_menus.ICON}" aria-hidden="true"></i>
+											<i class="fa fa-fw fa-lg {additional_menus.ICON}" aria-hidden="true"></i>
 										# ELSE #
 											<a href="{additional_menus.URL}" class="offload">
 												<span>{additional_menus.LABEL}</span>
@@ -226,7 +226,7 @@
 							# ENDIF #
 						# END additional_menus #
 						<li class="# IF C_VERTICAL #li-stretch # ELSE #li-spaced # ENDIF #connect-sign-out">
-							<i class="fa fa-fw fa-sign-out-alt" aria-hidden="true"></i>
+							<i class="fa fa-fw fa-lg fa-sign-out-alt" aria-hidden="true"></i>
 							<a href="${relative_url(UserUrlBuilder::disconnect())}" class="offload">
 								<span>{@user.sign.out}</span>
 							</a>
