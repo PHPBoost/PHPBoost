@@ -11,7 +11,6 @@
 			<span>{VISITORS_NUMBER}</span>
 		</li>
 
-
 		<li class="li-stretch">
 			<span class="small pinned member">{@user.members}</span>
 			<span>{MEMBERS_NUMBER}</span>

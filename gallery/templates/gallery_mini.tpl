@@ -26,11 +26,13 @@
 		# ENDIF #
 	});
 </script>
-<div class="cell-body">
-	<div id="scrolling-images">
-		# IF C_NO_ITEM #
-			<div class="message-helper bgc notice">{@common.no.item.now}</div>
-		# ELSE #
+# IF C_NO_ITEM #
+	<div class="cell-alert">
+		<div class="message-helper bgc notice">{@common.no.item.now}</div>
+	</div>
+# ELSE #
+	<div class="cell-body">
+		<div id="scrolling-images">
 			# IF C_STATIC #
 				# START pics_mini #
 					<div class="mini-picture">
@@ -46,9 +48,9 @@
 					# END pics_mini #
 				</ul>
 			# ENDIF #
-		# ENDIF #
+		</div>
 	</div>
-</div>
+# ENDIF #
 <div class="cell-body">
 	<div class="cell-content align-center">
 		<a class="button small offload" href="{PATH_TO_ROOT}/gallery/gallery.php">{@gallery.module.title}</a>

@@ -1,5 +1,5 @@
-<div class="cell-body">
-    # IF C_ANY_MESSAGE_GUESTBOOK #
+# IF C_ANY_MESSAGE_GUESTBOOK #
+    <div class="cell-body">
         <div class="cell-content">
             # IF C_HORIZONTAL #
                 {CONTENT}
@@ -16,12 +16,12 @@
                 # ENDIF #
             </p>
         </div>
-    # ELSE #
-        <div class="cell-content">
-            {@common.no.item.now}
+        <div class="cell-content align-center">
+            <a class="button small offload" href="{U_GUESTBOOK}">{@guestbook.module.title}</a>
         </div>
-    # ENDIF #
-    <div class="cell-content align-center">
-        <a class="button small offload" href="{U_GUESTBOOK}">{@guestbook.module.title}</a>
     </div>
-</div>
+# ELSE #
+    <div class="cell-alert">
+        <div class="message-helper bgc notice">{@common.no.item.now}</div>
+    </div>
+# ENDIF #
