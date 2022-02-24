@@ -59,7 +59,7 @@ class ModuleTreeLinksService
 		$view = new FileTemplate('framework/module/admin_module_actions_links_menu.tpl');
 		$view->add_lang($lang);
 
-		$img = new File(TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png');
+		$img = new File(PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png');
 		$fa_icon = $configuration->get_fa_icon();
 		$hexa_icon = $configuration->get_hexa_icon();
 
