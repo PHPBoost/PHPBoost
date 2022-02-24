@@ -126,7 +126,7 @@
 <footer id="footer">
 
 	# IF C_MENUS_TOP_FOOTER_CONTENT #
-		<div id="top-footer">
+		<div id="top-footer" class="content-wrapper">
 			# START menus_top_footer #
 			{menus_top_footer.MENU}
 			# END menus_top_footer #
