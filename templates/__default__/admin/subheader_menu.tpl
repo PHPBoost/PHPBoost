@@ -212,7 +212,7 @@
 				</div>
 				<ul class="modal-menu">
 					<li>
-						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cube"></i>{@menu.modules}</a>
+						<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a>
 						<ul class="level-2">
 							<li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
 							<li><a href="${relative_url(AdminModulesUrlBuilder::add_module())}"><i aria-hidden="true" class="fa fa-fw fa-plus"></i>{@menu.add}</a></li>
