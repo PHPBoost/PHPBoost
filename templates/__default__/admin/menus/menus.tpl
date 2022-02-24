@@ -108,7 +108,7 @@
 
 <form id="form_menus" action="menus.php?action=save" method="post" onsubmit="build_menu_tree();">
 
-	<div class="themesmanagement flex-between">
+	<div class="themesmanagement">
 		<h2>{@menu.menus.management}</h2>
 		<div class="grouped-inputs">
 			<span class="grouped-element">{@menu.theme.management} :</span>
