@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 02 24
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,6 +40,8 @@ class ModuleConfiguration
 	private $items_table_name;
 	private $categories_table_name;
 	private $configuration_name;
+	private $fa_icon;
+	private $hexa_icon;
 
 	public function __construct($config_ini_file, $desc_ini_file, $module_id)
 	{
@@ -86,6 +88,16 @@ class ModuleConfiguration
 	public function get_last_update()
 	{
 		return $this->last_update;
+	}
+
+	public function get_fa_icon()
+	{
+		return $this->fa_icon;
+	}
+
+	public function get_hexa_icon()
+	{
+		return $this->hexa_icon;
 	}
 
 	public function get_compatibility()
@@ -223,13 +235,15 @@ class ModuleConfiguration
 		$this->creation_date          = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']), Date::FORMAT_DAY_MONTH_YEAR) : '';
 		$this->last_update            = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']), Date::FORMAT_DAY_MONTH_YEAR) : '';
 		$this->compatibility          = $config['compatibility'];
+		$this->fa_icon         		  = isset($config['fa_icon']) ? $config['fa_icon'] : '';
+		$this->hexa_icon          	  = isset($config['hexa_icon']) ? $config['hexa_icon'] : '';
 		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 		$this->features               = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
 		$this->specific_hooks         = !empty($config['specific_hooks']) ? explode(',', preg_replace('/\s/', '', $config['specific_hooks'])) : array();
 		$this->contribution_interface = !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
 		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
-		
+
 		if (GeneralConfig::load()->get_phpboost_major_version() >= '6.0' && $this->compatibility >= '6.0' && ((ModulesManager::is_module_installed($this->module_id) && ModulesConfig::load()->get_module($this->module_id)->get_installed_version() == $this->version) || !ModulesManager::is_module_installed($this->module_id)))
 		{
 			$this->item_name              = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
@@ -237,10 +251,10 @@ class ModuleConfiguration
 			$this->categories_table_name  = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories() ? $this->module_id . '_cats' : '');
 			$this->configuration_name     = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
 		}
-		
-		$this->home_page              = !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
-		$this->admin_main_page        = !empty($config['admin_main_page']) ? (!preg_match('/' . $this->module_id . '\//', $config['admin_main_page']) ? Url::to_relative('/' . $this->module_id . '/' . $config['admin_main_page']) : $config['admin_main_page']) : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
-		$this->admin_menu             = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
+
+		$this->home_page       = !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
+		$this->admin_main_page = !empty($config['admin_main_page']) ? (!preg_match('/' . $this->module_id . '\//', $config['admin_main_page']) ? Url::to_relative('/' . $this->module_id . '/' . $config['admin_main_page']) : $config['admin_main_page']) : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
+		$this->admin_menu      = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 	}
 
 	private function get_default_configuration_class_name()
@@ -289,6 +303,8 @@ class ModuleConfiguration
 			'author_website'         => $this->author_website,
 			'version'                => $this->version,
 			'compatibility'          => $this->compatibility,
+			'fa_icon'          		 => $this->fa_icon,
+			'hexa_icon'              => $this->hexa_icon,
 			'creation_date'          => $this->creation_date,
 			'last_update'            => $this->last_update,
 			'php_version'            => $this->php_version,

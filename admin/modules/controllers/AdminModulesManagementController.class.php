@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2022 02 24
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -37,13 +37,19 @@ class AdminModulesManagementController extends DefaultAdminController
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 			$documentation = $configuration->get_documentation();
+			$fa_icon = $configuration->get_fa_icon();
+			$hexa_icon = $configuration->get_hexa_icon();
+			$thumbnail = new File(PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png');
 
 			$this->view->assign_block_vars('modules_installed', array(
+				'C_THUMBNAIL'      => $thumbnail->exists(),
+				'C_FA_ICON' 	   => !empty($fa_icon),
+				'C_HEXA_ICON' 	   => !empty($hexa_icon),
 				'C_AUTHOR_EMAIL'   => !empty($author_email),
 				'C_AUTHOR_WEBSITE' => !empty($author_website),
 				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
 				'C_IS_ACTIVATED'   => $module->is_activated(),
-				'C_DOCUMENTATION' => !empty($documentation),
+				'C_DOCUMENTATION'  => !empty($documentation),
 
 				'MODULE_NUMBER'  => $module_number,
 				'MODULE_ID'      => $module->get_id(),
@@ -57,6 +63,8 @@ class AdminModulesManagementController extends DefaultAdminController
 				'DESCRIPTION'    => $configuration->get_description(),
 				'COMPATIBILITY'  => $configuration->get_compatibility(),
 				'PHP_VERSION'    => $configuration->get_php_version(),
+				'FA_ICON' 		 => $fa_icon,
+				'HEXA_ICON' 	 => $hexa_icon,
 
 				'U_DOCUMENTATION' => $documentation
 			));

@@ -52,7 +52,19 @@
 					<div class="cell-list">
 						<ul>
 							<li class="li-stretch">
-								<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.MODULE_ID}/{modules_installed.MODULE_ID}.png" alt="{modules_installed.MODULE_NAME}" />
+								# IF modules_installed.C_THUMBNAIL #
+									<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_installed.MODULE_ID}/{modules_installed.MODULE_ID}.png" alt="{modules_installed.MODULE_NAME}" />
+								# ELSE #
+									# IF modules_installed.C_FA_ICON #
+										<i class="{modules_installed.FA_ICON} fa-2x"></i>
+									# ELSE #
+										# IF modules_installed.C_HEXA_ICON #
+											<span class="hexa-icon bigger">{modules_installed.HEXA_ICON}</span>									
+										# ELSE #
+											no icon
+										# ENDIF #
+									# ENDIF #
+								# ENDIF #
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@common.version} :</span>

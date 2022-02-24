@@ -10,7 +10,7 @@
 			<a class="toggle-{ID} pushmenu-toggle">
 				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
 				# IF C_ICON #
-					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #
 				# ENDIF #
 	            <span>{TITLE}</span>
           	</a>
@@ -54,7 +54,7 @@
 				<a href="{REL_URL}">
 					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
 					# IF C_ICON #
-						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #
 					# ENDIF #
 					<span>{TITLE}</span>
 				</a>
@@ -62,7 +62,7 @@
 				<span># IF C_IMG #
 					<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
 					# IF C_ICON #
-						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #
 					# ENDIF #
 					<span>{TITLE}</span>
 				</span>
@@ -79,7 +79,7 @@
 			<a href="{REL_URL}">
 				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
 				# IF C_ICON #
-					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #
 				# ENDIF #
 				<span>{TITLE}</span>
 			</a>
@@ -87,7 +87,7 @@
 			<span>
 				# IF C_IMG #<img src="{REL_IMG}" alt="" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /># ENDIF #
 				# IF C_ICON #
-					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON}&nbsp;# ENDIF #
+					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #
 				# ENDIF #
 				<span>{TITLE}</span>
 			</span>
