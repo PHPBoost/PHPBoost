@@ -81,7 +81,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.component.table.responsive.header}
+<pre class="precode"><code>// {@sandbox.component.table.responsive.header}
 &lt;table class="table">...&lt;/table>
 <br />
 // {@sandbox.component.table.responsive.no.header}

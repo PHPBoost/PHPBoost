@@ -83,7 +83,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">&lt;article id="Id" class="message-container (message-small/message-offset) cell-tile cell-modal modal-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
+<pre class="precode"><code>&lt;article id="Id" class="message-container (message-small/message-offset) cell-tile cell-modal modal-container" itemscope="itemscope" itemtype="https://schema.org/Comment">
     &lt;header class="message-header-container">
         &lt;img class="message-user-avatar" src="/image/avatar/link" alt="{@common.avatar'}">
         &lt;div class="message-header-infos">

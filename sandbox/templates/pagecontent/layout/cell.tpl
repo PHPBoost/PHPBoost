@@ -201,7 +201,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// header
+<pre class="precode"><code>// header
 &lt;div class="cell-header">
     &lt;h1 class="cell-name">...&lt;/h1>
     &lt;span>...&lt;/span>

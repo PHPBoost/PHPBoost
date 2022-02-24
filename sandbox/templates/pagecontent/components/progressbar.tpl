@@ -29,7 +29,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">&lt;div class="progressbar-container" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+<pre class="precode"><code>&lt;div class="progressbar-container" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
     &lt;div class="progressbar-infos">25%&lt;/div>
     &lt;div class="progressbar" style="width:25%;">&lt;/div>
 &lt;/div></code></pre>

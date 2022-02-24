@@ -79,7 +79,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.layout.grid.free}
+<pre class="precode"><code>// {@sandbox.layout.grid.free}
 &lt;div class="cell-flex">
     &lt;article class="cell">... &lt;/article>
     &lt;article class="cell">... &lt;/article>

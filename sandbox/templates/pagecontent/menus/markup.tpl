@@ -2,7 +2,7 @@
     <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
     <div class="formatter-content formatter-code">
         <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// cssmenu
+<pre class="precode"><code>// cssmenu
 &lt;nav id="menu-[ID]" class="cssmenu"> // cssmenu-horizontal cssmenu-vertical cssmenu-static cssmenu-left cssmenu-right cssmenu-with-submenu
     &lt;ul class="level-0">
         &lt;li class="has-sub">

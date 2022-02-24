@@ -64,7 +64,7 @@ abstract class CategoriesCache implements CacheData
         <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.bbcode.quote}
+<pre class="precode"><code>// {@sandbox.bbcode.quote}
 &lt;blockquote class="formatter-container formatter-blockquote">
     &lt;span class="formatter-title">John Doe&lt;/span>
     &lt;div class="formatter-content">

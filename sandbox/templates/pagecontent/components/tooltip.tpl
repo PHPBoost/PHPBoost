@@ -24,7 +24,7 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="no-style"><pre class="language-html line-numbers"><code class="language-html">// {@sandbox.component.tooltip}
+            <div class="no-style"><pre class="precode"><code>// {@sandbox.component.tooltip}
 &lt;span aria-label="Lorem ipsum....">Tooltip&lt;/span>
 <br />
 // {@sandbox.component.tooltip.custom}

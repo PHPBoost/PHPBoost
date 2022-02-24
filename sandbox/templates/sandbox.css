@@ -24,12 +24,13 @@
 }
 
 /* --- Source code ---------------------------------------------------------- */
-.copy-code { float: none; }
-
-.formatter-content.formatter-code {
-	text-align: right;
-	margin-bottom: 1.618em;
+.copy-code {
+	position: absolute;
+	top: -0.618em;
+	right: 0;
 }
+
+.formatter-content.formatter-code { margin-bottom: 1.618em; }
 
 /* --- lang --- */
 #module-sandbox-lang li { padding: 0; }

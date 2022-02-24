@@ -22,7 +22,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">// {@sandbox.bbcode.block}
+<pre class="precode"><code>// {@sandbox.bbcode.block}
 &lt;div class="formatter-container formatter-block">Lorem ipsum&lt;/div>
 <br />
 // {@sandbox.bbcode.fieldset}

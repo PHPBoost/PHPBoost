@@ -95,7 +95,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html line-numbers"><code class="language-html">&lt;ul id="[ID]" class="sortable-block">
+<pre class="precode"><code>&lt;ul id="[ID]" class="sortable-block">
     &lt;li id="cat-1" class="sortable-element" data-id="1">
         &lt;div class="sortable-selector" aria-label="{@common.move}">&lt;/div>
         &lt;div class="sortable-title">
