@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 13
+ * @version     PHPBoost 6.0 - last update: 2022 02 24
  * @since       PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -143,7 +143,7 @@ class GuestbookController extends DefaultModuleController
 				{
 					if (isset($this->ids[$i]) && !in_array($this->ids[$i], $this->hide_delete_input))
 					{
-						$item = GuestbookService::get_message('WHERE id=:id', array('id' => $this->ids[$i]));
+						$item = GuestbookService::get_item('WHERE id=:id', array('id' => $this->ids[$i]));
 						GuestbookService::delete('WHERE id=:id', array('id' => $this->ids[$i]));
 						HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 						$deleted_messages_number++;
