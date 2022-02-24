@@ -156,7 +156,7 @@ $lang = array(
 									<li><a href="https://github.com/chamilo/pclzip">PCLZIP</a> créé par <a href="https://www.phpconcept.net/">PHPConcept</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
 									<li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="http://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
 									<li><a href="https://www.tiny.cloud/">TinyMCE</a> : Editeur <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> permettant la mise en page à la volée.</li>
-									<li><a href="http://qbnz.com/highlighter/">GeSHi</a> et <a href="https://prismjs.com/">Prismjs</a>  : Colorateurs de code source dans de nombreux langages informatiques.</li>
+									<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
 									<li><a href="https://jquery.com">jQuery</a> : Framework Javascript et <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr></li>
 									<li><a href="https://fontawesome.com/?from=io">Font Awesome</a> : librairie d\'icônes</li>
 								</ul>

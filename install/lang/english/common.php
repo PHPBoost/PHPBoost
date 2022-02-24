@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 28
+ * @version     PHPBoost 6.0 - last update: 2022 02 24
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -215,7 +215,7 @@ $lang['install.finish.message'] = '
 				<li><a href="https://github.com/chamilo/pclzip">PCLZIP</a> by <a href="https://www.phpconcept.net/">PHPConcept</a>: PHP library which manage work with zip files.</li>
 				<li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
 				<li><a href="https://www.tiny.cloud/">TinyMCE</a>: TinyMCE is a <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> editor which allows users to see their text formatting in real time.</li>
-				<li><a href="https://github.com/GeSHi/geshi-1.0">GeSHi</a> and <a href="https://prismjs.com/">Prismjs</a>: Generic Syntax Highlighters used to highlight the source code of many programming languages.</li>
+				<li><a href="https://github.com/GeSHi/geshi-1.0">GeSHi</a>: Generic Syntax Highlighters used to highlight the source code of many programming languages.</li>
 				<li><a href="https://jquery.com">jQuery</a>: Javascript and <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr> Framework</li>
 				<li><a href="https://fontawesome.com/?from=io">Font Awesome</a>: icons librairy</li>
 			</ul>
