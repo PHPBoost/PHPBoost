@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 12
+ * @version     PHPBoost 6.0 - last update: 2022 02 24
  * @since       PHPBoost 4.1 - 2013 11 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,12 +59,23 @@ class ModuleTreeLinksService
 		$view = new FileTemplate('framework/module/admin_module_actions_links_menu.tpl');
 		$view->add_lang($lang);
 
+		$img = new File(TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png');
+		$fa_icon = $configuration->get_fa_icon();
+		$hexa_icon = $configuration->get_hexa_icon();
+
 		$view->put_all(array(
-			'U_LINK' => preg_match('/' . $id_module . '/', $admin_main_page) ? Url::to_rel($admin_main_page) : TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $admin_main_page,
-			'NAME' => $configuration->get_name(),
-			'IMG' => TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png',
+			'C_HAS_IMG'      => $img->exists(),
+			'C_FA_ICON'      => !empty($fa_icon),
+			'C_HEXA_ICON'    => !empty($hexa_icon),
 			'C_HAS_SUB_LINK' => false,
-			'C_DISPLAY' => !empty($admin_main_page)
+			'C_DISPLAY'      => !empty($admin_main_page),
+
+			'NAME'      => $configuration->get_name(),
+			'IMG'       => TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $id_module . '_mini.png',
+			'FA_ICON'   => $fa_icon,
+			'HEXA_ICON' => $hexa_icon,
+
+			'U_LINK' => preg_match('/' . $id_module . '/', $admin_main_page) ? Url::to_rel($admin_main_page) : TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $admin_main_page,
 		));
 
 		$tree_links = self::get_tree_links($id_module);
