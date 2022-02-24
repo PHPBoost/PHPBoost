@@ -12,7 +12,7 @@
 						<a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@common.filter.items}# ENDIF #</a>
 						<div class="filters-container">
 							<i class="close-filters far fa-window-close" aria-hidden="true"></i> <span class="sr-only">{@common.close}</span>
-							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
+							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 							# INCLUDE FILTERS #
 						</div>
 					</div>
