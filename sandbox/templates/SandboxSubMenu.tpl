@@ -1,7 +1,7 @@
 <div class="sticky-menu">
     <nav id="component-submenu" class="cssmenu cssmenu-horizontal summary-menu">
         <ul>
-            <li><a class="cssmenu-title offload" href="{U_HOME}" aria-label="{@sandbox.trigger}"><span></span>&nbsp;<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>&nbsp;</a></li>
+            <li><a class="cssmenu-title offload" href="{U_HOME}" aria-label="{@sandbox.trigger}"><span></span>&nbsp;<i class="fa fa-fw fa-screwdriver-wrench" aria-hidden="true"></i>&nbsp;</a></li>
             <li class="has-sub fwk-builder">
                 <a href="{U_BUILDER}" class="cssmenu-title offload"><span>{@sandbox.builder.title}</span></a>
                 <ul>

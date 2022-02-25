@@ -1,7 +1,7 @@
 # IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="mini-sandbox">
 		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator" data-tooltip="{@sandbox.module.title}">
-			<i class="fa fa-wrench" aria-hidden="true"></i>
+			<i class="fa fa-screwdriver-wrench" aria-hidden="true"></i>
 			<span class="sr-only">{@sandbox.module.title}</span>
 		</a>
 		<nav id="pushmenu-fwkboost" class="pushnav">
