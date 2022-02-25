@@ -6,7 +6,7 @@
 					# IF action.C_IMG #
 						<img src="{action.U_IMG}" alt="{action.TITLE}" />
 					# ELSE #
-						<i class="fa {action.CSS_CLASS}" aria-hidden="true"></i>
+						<i class="{action.CSS_CLASS}" aria-hidden="true"></i>
 					# ENDIF #
 				# ENDIF #
 				{action.TITLE}
