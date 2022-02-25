@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 02 25
  * @since       PHPBoost 4.1 - 2015 02 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -93,6 +93,11 @@ class AdminMediaConfigController extends DefaultAdminModuleController
 			)
 		));
 
+		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->lang['form.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
+			array('min' => 20, 'max' => 1000, 'required' => true),
+			array(new FormFieldConstraintIntegerRange(20, 1000)
+		)));
+
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'min' => 1, 'max' => 4, 'required' => true,
@@ -131,6 +136,7 @@ class AdminMediaConfigController extends DefaultAdminModuleController
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 		$this->config->set_items_per_row($this->form->get_value('items_per_row'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+		$this->config->set_characters_number_to_cut($this->form->get_value('characters_number_to_cut'));
 
 		if ($this->form->get_value('author_displayed'))
 			$this->config->display_author();

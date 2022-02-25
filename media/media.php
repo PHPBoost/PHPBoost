@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 19
+ * @version     PHPBoost 6.0 - last update: 2022 02 25
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -100,6 +100,7 @@ elseif ($id_media > 0)
 			'C_ENABLED_NOTATION'   => $content_management_config->module_notation_is_enabled('media'),
 			'C_ENABLED_COMMENTS'   => $comments_config->module_comments_is_enabled('media'),
 			'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $media['creation_date']),
+			'C_AUTHOR_DISPLAYED'   => $config->is_author_displayed(),
 			'C_AUTHOR_EXISTS'      => !empty($media['display_name']),
 			'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
 

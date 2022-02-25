@@ -111,10 +111,13 @@
 									<div class="cell-infos">
 										<div class="more">
 											<span class="pinned item-author" aria-label="{@common.author}">
-												# IF items.C_AUTHOR_EXISTS #
-													<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
-												# ELSE #
-													<span class="visitor">{@user.guest}</span>
+												# IF items.C_AUTHOR_DISPLAYED #
+													<i class="far fa-user"></i>
+													# IF items.C_AUTHOR_EXISTS #
+														<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
+													# ELSE #
+														<span class="visitor">{@user.guest}</span>
+													# ENDIF #
 												# ENDIF #
 											</span>
 											<span class="pinned item-creation-date" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>
@@ -142,7 +145,7 @@
 									# ENDIF #
 									# IF items.C_CONTENT #
 										<div itemprop="text" class="cell-content">
-											{items.CONTENT}
+											{items.SUMMARY}
 										</div>
 									# ENDIF #
 								</div>

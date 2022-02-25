@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2022 02 25
  * @since       PHPBoost 4.1 - 2015 02 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,6 +15,7 @@ class MediaConfig extends AbstractConfigData
 	const CATEGORIES_PER_ROW = 'categories_per_row';
 	const ITEMS_PER_PAGE = 'items_per_page';
 	const ITEMS_PER_ROW = 'items_per_row';
+	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
 	const AUTHOR_DISPLAYED = 'author_displayed';
 	const MAX_VIDEO_WIDTH = 'max_video_width';
 	const MAX_VIDEO_HEIGHT = 'max_video_height';
@@ -80,6 +81,16 @@ class MediaConfig extends AbstractConfigData
 	public function set_display_type($display_type)
 	{
 		$this->set_property(self::DISPLAY_TYPE, $display_type);
+	}
+
+	public function get_characters_number_to_cut()
+	{
+		return $this->get_property(self::CHARACTERS_NUMBER_TO_CUT);
+	}
+
+	public function set_characters_number_to_cut($number)
+	{
+		$this->set_property(self::CHARACTERS_NUMBER_TO_CUT, $number);
 	}
 
 	public function display_author()
@@ -183,6 +194,7 @@ class MediaConfig extends AbstractConfigData
 			self::ITEMS_PER_PAGE => 25,
 			self::ITEMS_PER_ROW => 2,
 			self::DISPLAY_TYPE => self::GRID_VIEW,
+			self::CHARACTERS_NUMBER_TO_CUT => 128,
 			self::AUTHOR_DISPLAYED => true,
 			self::MAX_VIDEO_WIDTH => 900,
 			self::MAX_VIDEO_HEIGHT => 570,

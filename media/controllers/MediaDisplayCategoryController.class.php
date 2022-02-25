@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 19
+ * @version     PHPBoost 6.0 - last update: 2022 02 25
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -209,19 +209,22 @@ class MediaDisplayCategoryController extends DefaultModuleController
 
 			$date = new Date($row['creation_date'], Timezone::SERVER_TIMEZONE);
 
+			$summary = TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($row['content']), '<br><br/>'), $this->config->get_characters_number_to_cut());
+
 			$this->view->assign_block_vars('items', array_merge(
 				$poster_infos,
 				Date::get_array_tpl_vars($date, 'date'),
 				array(
 				'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['creation_date']),
 				'C_CONTENT'            => !empty($row['content']),
+				'C_AUTHOR_DISPLAYED'   => $this->config->is_author_displayed(),
 				'C_AUTHOR_EXISTS'      => !empty($row['display_name']),
 				'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
 
 				'ID'                  => $row['id'],
 				'TITLE'               => $row['title'],
 				'IMG_TITLE'           => str_replace('"', '\"', $row['title']),
-				'CONTENT'             => FormatingHelper::second_parse(stripslashes($row['content'])),
+				'SUMMARY'             => FormatingHelper::second_parse($summary),
 				'AUTHOR_DISPLAY_NAME' => $row['display_name'],
 				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
 				'AUTHOR_GROUP_COLOR'  => $group_color,
