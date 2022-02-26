@@ -20,7 +20,7 @@
 </script>
 
 # IF C_LAYOUT #
-	<section id="module-{MODULE_ID}">
+	<section id="module-{MODULE_ID}" class="single-item item-form">
 		<header class="section-header">
 			<h1>{LAYOUT_TITLE}</h1>
 		</header>

@@ -1,5 +1,5 @@
 # IF C_LAYOUT #
-	<section id="module-{MODULE_ID}">
+	<section id="module-{MODULE_ID}" class="several-items items-table">
 		<header class="section-header">
 			<h1>{LAYOUT_TITLE}</h1>
 		</header>
@@ -73,30 +73,30 @@
 
 								<tbody>
 									# START row #
-									<tr
-										# IF row.C_ID # id="{row.ID}"# ENDIF #
-										# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
-										# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
-										# IF C_MULTIPLE_DELETE_DISPLAYED #
-											<td class="mini-checkbox">
-												# IF row.C_DISPLAY_DELETE_INPUT #
-													<label for="multiple-checkbox-{row.ELEMENTS_NUMBER}" class="checkbox" aria-label="{@common.select.element}">
-														<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENTS_NUMBER}" name="delete-checkbox-{row.ELEMENTS_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
-														<span>&nbsp;</span>
-													</label>
-												# ENDIF #
-											</td>
-										# ENDIF #
-										# START row.cell #
-											<td
-												# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
-												# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
-												# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
-												# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
-												{row.cell.VALUE}
-											</td>
-										# END row.cell #
-									</tr>
+										<tr
+											# IF row.C_ID # id="{row.ID}"# ENDIF #
+											# IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
+											# IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
+											# IF C_MULTIPLE_DELETE_DISPLAYED #
+												<td class="mini-checkbox">
+													# IF row.C_DISPLAY_DELETE_INPUT #
+														<label for="multiple-checkbox-{row.ELEMENTS_NUMBER}" class="checkbox" aria-label="{@common.select.element}">
+															<input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENTS_NUMBER}" name="delete-checkbox-{row.ELEMENTS_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
+															<span>&nbsp;</span>
+														</label>
+													# ENDIF #
+												</td>
+											# ENDIF #
+											# START row.cell #
+												<td
+													# IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
+													# IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
+													# IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+													# IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+													{row.cell.VALUE}
+												</td>
+											# END row.cell #
+										</tr>
 									# END row #
 								</tbody>
 								# IF C_DISPLAY_FOOTER #
