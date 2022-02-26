@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 07
+ * @version     PHPBoost 6.0 - last update: 2022 02 26
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,6 +65,7 @@ $lang['addon.modules.delete.multiple'] = 'Suppression de modules';
 $lang['addon.modules.installed']       = 'Modules installés';
 $lang['addon.modules.available']       = 'Modules disponibles';
 $lang['addon.modules.select.all']      = 'Sélectionner tous les modules';
+$lang['addon.modules.no.icon']         = 'Aucune icône';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.modules.warning.install'] = 'Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.';

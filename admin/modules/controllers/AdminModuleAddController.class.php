@@ -99,7 +99,14 @@ class AdminModuleAddController extends DefaultAdminController
 			$author_email = $configuration->get_author_email();
 			$author_website = $configuration->get_author_website();
 
+			$fa_icon = $configuration->get_fa_icon();
+			$hexa_icon = $configuration->get_hexa_icon();
+			$thumbnail = new File(PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png');
+
 			$this->view->assign_block_vars('modules_not_installed', array(
+				'C_THUMBNAIL'      => $thumbnail->exists(),
+				'C_FA_ICON' 	   => !empty($fa_icon),
+				'C_HEXA_ICON' 	   => !empty($hexa_icon),
 				'C_AUTHOR_EMAIL'    => !empty($author_email),
 				'C_AUTHOR_WEBSITE'  => !empty($author_website),
 				'C_COMPATIBLE'      => $configuration->get_compatibility() == $phpboost_version,
@@ -116,6 +123,8 @@ class AdminModuleAddController extends DefaultAdminController
 				'DESCRIPTION'    => $configuration->get_description(),
 				'COMPATIBILITY'  => $configuration->get_compatibility(),
 				'PHP_VERSION'    => $configuration->get_php_version(),
+				'FA_ICON' 		 => $fa_icon,
+				'HEXA_ICON' 	 => $hexa_icon,
 			));
 			$module_number++;
 		}

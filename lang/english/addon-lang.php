@@ -65,6 +65,7 @@ $lang['addon.modules.delete.multiple'] = 'Delete or deactivate modules';
 $lang['addon.modules.installed']       = 'Installed modules';
 $lang['addon.modules.available']       = 'Available modules';
 $lang['addon.modules.select.all']      = 'Select all modules';
+$lang['addon.modules.no.icon']         = 'No icon';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.';
 $lang['addon.modules.warning.install'] = 'The installed modules are automatically enabled. Do not forget to disable them if necessary.';

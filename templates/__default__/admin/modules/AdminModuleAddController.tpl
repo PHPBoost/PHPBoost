@@ -32,7 +32,19 @@
 						<div class="cell-list">
 							<ul>
 								<li class="li-stretch">
-									<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.MODULE_ID}/{modules_not_installed.MODULE_ID}.png" alt="{modules_not_installed.MODULE_NAME}" />
+									# IF modules_not_installed.C_THUMBNAIL #
+										<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.MODULE_ID}/{modules_not_installed.MODULE_ID}.png" alt="{modules_not_installed.MODULE_NAME}" />
+									# ELSE #
+										# IF modules_not_installed.C_FA_ICON #
+											<i class="{modules_not_installed.FA_ICON} fa-2x"></i>
+										# ELSE #
+											# IF modules_not_installed.C_HEXA_ICON #
+												<span class="hexa-icon bigger">{modules_not_installed.HEXA_ICON}</span>
+											# ELSE #
+												{@addon.modules.no.icon}
+											# ENDIF #
+										# ENDIF #
+									# ENDIF #
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@common.version} :</span>

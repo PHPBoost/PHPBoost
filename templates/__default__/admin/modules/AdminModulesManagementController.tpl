@@ -59,9 +59,9 @@
 										<i class="{modules_installed.FA_ICON} fa-2x"></i>
 									# ELSE #
 										# IF modules_installed.C_HEXA_ICON #
-											<span class="hexa-icon bigger">{modules_installed.HEXA_ICON}</span>									
+											<span class="hexa-icon bigger">{modules_installed.HEXA_ICON}</span>
 										# ELSE #
-											no icon
+											{@addon.modules.no.icon}
 										# ENDIF #
 									# ENDIF #
 								# ENDIF #
