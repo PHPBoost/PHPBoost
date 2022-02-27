@@ -172,6 +172,23 @@ a.pinned { cursor: pointer; }
 	.flex-between.flex-between-large > * { margin-bottom: 0; }
 }
 
+.flex-around {
+    display: flex !important;
+	justify-content: space-around;
+	flex-direction: row;
+	align-items: center;
+}
+
+.flex-around.flex-around-large { flex-direction: column; }
+
+.flex-around.flex-around-large > * { margin-bottom: 0.309em; }
+
+@media (min-width: 769px) {
+	.flex-around.flex-around-large { flex-direction: row; }
+
+	.flex-around.flex-around-large > * { margin-bottom: 0; }
+}
+
 /* --- Display --- */
 .d-flex         { display: flex; }
 .d-inline 	    { display: inline; }
