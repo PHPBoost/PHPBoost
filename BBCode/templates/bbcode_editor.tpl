@@ -49,7 +49,7 @@
 
 <div class="bbcode-bar">
 	<nav class="bbcode-containers">
-		<ul class="bbcode-container modal-container cell-flex cell-modal cell-tile">
+		<ul class="bbcode-container modal-container cell-modal cell-tile">
 			<li id="format-bold" class="bbcode-elements">
 				<span class="bbcode-button{AUTH_B}" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.bold}">
 					<i class="fa fa-fw fa-bold" aria-hidden="true"></i>
