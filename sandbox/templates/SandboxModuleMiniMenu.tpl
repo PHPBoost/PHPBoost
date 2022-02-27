@@ -338,6 +338,7 @@
 						</li>
 						<li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-modules">
+								<i class="fa fa-fw fa-cubes" aria-hidden="true"></i>
 								<span>{@sandbox.mini.admin.menu.modules}</span>
 							</a>
 						</li>
