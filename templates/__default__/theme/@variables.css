@@ -5,6 +5,10 @@
 */
 
 :root {
+    /* cell */
+    --cell-gap : 1.236em;
+
+    /* colors */
     --txt-rgb-m: 85, 85, 85;
     --txt-main:  #555555;
     --txt-rgb-s: 85, 85, 85;

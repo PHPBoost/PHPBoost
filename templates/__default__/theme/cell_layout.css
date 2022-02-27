@@ -8,6 +8,7 @@
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
+	gap: var(--cell-gap);
 }
 
 .cell-flex::before,
@@ -22,29 +23,29 @@
 @media (min-width: 769px) {
 	.cell-flex { flex-direction: row; }
 
-	.cell-columns-2 > .cell { width: calc(100% / 2); }
-	.cell-columns-3 > .cell { width: calc(100% / 2); }
-	.cell-columns-4 > .cell { width: calc(100% / 2); }
+	.cell-columns-2 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
+	.cell-columns-3 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
+	.cell-columns-4 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
 
 	.cell-flex > .cell-100 { width: 100% !important; }
 	.cell-flex > .cell-1-4,
 	.cell-flex > .cell-1-3,
 	.cell-flex > .cell-1-2,
 	.cell-flex > .cell-2-3,
-	.cell-flex > .cell-3-4 { width: calc(100% / 2) !important; }
+	.cell-flex > .cell-3-4 { width: calc(100% / 2 - var(--cell-gap)) !important; }
 }
 
 @media (min-width: 1024px) {
-	.cell-columns-2 > .cell { width: calc(100% / 2); }
-	.cell-columns-3 > .cell { width: calc(100% / 3); }
-	.cell-columns-4 > .cell { width: calc(100% / 4); }
+	.cell-columns-2 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
+	.cell-columns-3 > .cell { width: calc(100% / 3 - var(--cell-gap)); }
+	.cell-columns-4 > .cell { width: calc(100% / 4 - var(--cell-gap)); }
 
 	.cell-flex > .cell-100 { width: 100% !important; }
-	.cell-flex > .cell-1-4 { width: calc(100% / 4) !important; }
-	.cell-flex > .cell-1-3 { width: calc(100% / 3) !important; }
-	.cell-flex > .cell-1-2 { width: calc(100% / 2) !important; }
-	.cell-flex > .cell-2-3 { width: calc(100% * 2 / 3) !important; }
-	.cell-flex > .cell-3-4 { width: calc(100% * 3 / 4) !important; }
+	.cell-flex > .cell-1-4 { width: calc(100% / 4 - var(--cell-gap)) !important; }
+	.cell-flex > .cell-1-3 { width: calc(100% / 3 - var(--cell-gap)) !important; }
+	.cell-flex > .cell-1-2 { width: calc(100% / 2 - var(--cell-gap)) !important; }
+	.cell-flex > .cell-2-3 { width: calc(100% * 2 / 3 - var(--cell-gap)) !important; }
+	.cell-flex > .cell-3-4 { width: calc(100% * 3 / 4 - var(--cell-gap)) !important; }
 }
 
 .cell-flex .cell {
