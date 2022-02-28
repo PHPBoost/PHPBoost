@@ -29,6 +29,7 @@
 <script src="{PATH_TO_ROOT}/kernel/lib/js/jquery/jquery.js"></script>
 
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/dndfiles# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/menumaker# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/pushmenu.helpers# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>

@@ -1,6 +1,5 @@
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/autocomplete# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/basictable# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
-<script src="{PATH_TO_ROOT}/templates/__default__/plugins/dndfiles# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/lightcase# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/linedtextarea# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
@@ -101,9 +100,20 @@
 		var widthRef = jQuery(this).innerWidth();
 		jQuery(this).outerHeight(widthRef * 16 / 9);
 	});
-
-// Autoresize Textareas
-	// jQuery(document).autoboxOn('textarea:not(.lined textarea)');
+	jQuery(window).on('resize', function(){
+		jQuery('.cell-thumbnail.cell-landscape').each(function() {
+			var widthRef = jQuery(this).innerWidth();
+			jQuery(this).outerHeight(widthRef * 9 / 16);
+		});
+		jQuery('.cell-thumbnail.cell-square').each(function() {
+			var widthRef = jQuery(this).innerWidth();
+			jQuery(this).outerHeight(widthRef);
+		});
+		jQuery('.cell-thumbnail.cell-portrait').each(function() {
+			var widthRef = jQuery(this).innerWidth();
+			jQuery(this).outerHeight(widthRef * 16 / 9);
+		});
+	});
 
 // Add a colored square to the element and color its borders if it has
  	jQuery('[data-color-surround]').colorSurround();
