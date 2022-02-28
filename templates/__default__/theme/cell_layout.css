@@ -8,7 +8,6 @@
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	margin: 0 var(--cell-container-gap) var(--cell-container-gap) 0;
 }
 
 .cell-flex::before,
@@ -21,7 +20,10 @@
 .cell { width: 100%; }
 
 @media (min-width: 769px) {
-	.cell-flex { flex-direction: row; }
+	.cell-flex {
+		flex-direction: row;
+		margin: 0 var(--cell-container-gap) var(--cell-container-gap) 0;
+	}
 
 	.cell-columns-2 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
 	.cell-columns-3 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
