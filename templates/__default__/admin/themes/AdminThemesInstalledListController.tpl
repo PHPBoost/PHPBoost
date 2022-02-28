@@ -52,18 +52,16 @@
 								</div>
 							# ENDIF #
 					</header>
-					<div class="cell-body">
-						<div class="cell-thumbnail cell-landscape" >
-							# IF themes_installed.C_THUMBNAILS #
-								<img src="{themes_installed.U_MAIN_THUMBNAIL}" alt="{themes_installed.MODULE_NAME}" />
-								<a class="cell-thumbnail-caption" href="{themes_installed.U_MAIN_THUMBNAIL}" data-lightbox="{themes_installed.MODULE_ID}" data-rel="lightcase:collection-{themes_installed.MODULE_ID}">
-									{@addon.themes.view.real.preview}
-								</a>
-								# START themes_installed.pictures #
-									<a href="{themes_installed.pictures.U_THUMBNAIL}" data-lightbox="{themes_installed.MODULE_ID}" data-rel="lightcase:collection-{themes_installed.MODULE_ID}" aria-label="{themes_installed.MODULE_NAME}"></a>
-								# END themes_installed.pictures #
-							# ENDIF #
-						</div>
+					<div class="cell-thumbnail cell-landscape" >
+						# IF themes_installed.C_THUMBNAILS #
+							<img src="{themes_installed.U_MAIN_THUMBNAIL}" alt="{themes_installed.MODULE_NAME}" />
+							<a class="cell-thumbnail-caption" href="{themes_installed.U_MAIN_THUMBNAIL}" data-lightbox="{themes_installed.MODULE_ID}" data-rel="lightcase:collection-{themes_installed.MODULE_ID}">
+								{@addon.themes.view.real.preview}
+							</a>
+							# START themes_installed.pictures #
+								<a href="{themes_installed.pictures.U_THUMBNAIL}" data-lightbox="{themes_installed.MODULE_ID}" data-rel="lightcase:collection-{themes_installed.MODULE_ID}" aria-label="{themes_installed.MODULE_NAME}"></a>
+							# END themes_installed.pictures #
+						# ENDIF #
 					</div>
 					<div class="cell-list">
 						<ul>

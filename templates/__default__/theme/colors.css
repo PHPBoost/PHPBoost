@@ -598,7 +598,7 @@ a[class*='lightcase-icon-']:hover {
 
 @media screen and (min-width: 769px) {
     html[data-lc-type=image] #lightcase-content,
-	html[data-lc-type=video] #lightcase-content { background-color: var(--administrator-tone); }
+	html[data-lc-type=video] #lightcase-content { background-color: rgba(var(--darken), 0.8); }
 }
 
 #lightcase-content h1,
@@ -622,7 +622,7 @@ a[class*='lightcase-icon-']:hover {
 #lightcase-loading,
 #lightcase-loading:focus { color: var(--txt-alt); }
 
-#lightcase-overlay { background-color: var(--administrator-tone); }
+#lightcase-overlay { background-color: rgba(var(--darken), 0.7); }
 
 /* --- plugins --- */
 .accordion-container > .accordion-nav > ul > li > a {
