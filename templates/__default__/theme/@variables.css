@@ -6,6 +6,7 @@
 
 :root {
     /* cell */
+    --cell-container-gap : -1.236em;
     --cell-gap : 1.236em;
 
     /* colors */

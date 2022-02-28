@@ -8,7 +8,7 @@
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	gap: var(--cell-gap);
+	margin: 0 var(--cell-container-gap) var(--cell-container-gap) 0;
 }
 
 .cell-flex::before,
@@ -51,6 +51,7 @@
 .cell-flex .cell {
 	display: flex;
 	flex-direction: column;
+	margin: 0 var(--cell-gap) var(--cell-gap) 0;
 }
 
 .cell-flex .cell-body,
