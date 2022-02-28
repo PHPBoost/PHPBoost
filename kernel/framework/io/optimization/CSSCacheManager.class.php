@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 10 18
+ * @version     PHPBoost 6.0 - last update: 2022 02 28
  * @since       PHPBoost 3.0 - 2011 03 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -113,7 +113,7 @@ class CSSCacheManager
 			$cache_file_time = filemtime($this->cache_file_location);
 			foreach ($files as $file)
 			{
-				if (filemtime($file) > $cache_file_time)
+				if (file_exists($file) && filemtime($file) > $cache_file_time)
 				{
 					$this->force_regenerate_cache($intensity);
 					break;
