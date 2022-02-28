@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 06 14
+ * @version     PHPBoost 6.0 - last update: 2022 02 28
  * @since       PHPBoost 3.0 - 2011 03 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -129,15 +129,18 @@ class CSSFileOptimizer
 		$content = '';
 		foreach ($this->files as $file)
 		{
-			$content_file = php_strip_whitespace($file);
-			if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
+			if (file_exists($file))
 			{
-				$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
-				$content .= preg_replace($this->regex_search_files_path, $replace_path, $content_file);
-			}
-			else
-			{
-				$content .= $content_file;
+				$content_file = php_strip_whitespace($file);
+				if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
+				{
+					$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
+					$content .= preg_replace($this->regex_search_files_path, $replace_path, $content_file);
+				}
+				else
+				{
+					$content .= $content_file;
+				}
 			}
 		}
 
