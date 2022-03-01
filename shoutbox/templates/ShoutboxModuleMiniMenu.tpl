@@ -123,7 +123,7 @@
 		</div>
 		<nav class="cell-body" id="shoutbox-bbcode-container">
 			# IF C_DISPLAY_SHOUT_BBCODE #
-			<ul class="bbcode-container modal-container cell-flex cell-modal cell-tile">
+			<ul class="bbcode-container modal-container cell-list cell-inline-list cell-modal cell-tile">
 				<li class="bbcode-elements bbcode-block-shoutbox">
 					<span class="bbcode-button" data-modal data-target="bb-shoutbox-smileys" aria-label="{@bbcode.smileys}">
 						<i class="far fa-fw fa-smile" aria-hidden="true"></i>
