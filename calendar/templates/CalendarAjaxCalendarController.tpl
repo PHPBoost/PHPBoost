@@ -50,14 +50,14 @@
 	<table class="# IF C_MINI_MODULE #mini-calendar # ENDIF #calendar-table">
 		<thead>
 			<tr>
-				<th><span class="sr-only">{@date.week.mini}</span></th>
-				<th class="text-strong">{@date.monday.mini}</th>
-				<th class="text-strong">{@date.tuesday.mini}</th>
-				<th class="text-strong">{@date.wednesday.mini}</th>
-				<th class="text-strong">{@date.thursday.mini}</th>
-				<th class="text-strong">{@date.friday.mini}</th>
-				<th class="text-strong">{@date.saturday.mini}</th>
-				<th class="text-strong">{@date.sunday.mini}</th>
+				<th class="calendar-cell"><span class="sr-only">{@date.week.mini}</span></th>
+				<th class="text-strong calendar-cell">{@date.monday.mini}</th>
+				<th class="text-strong calendar-cell">{@date.tuesday.mini}</th>
+				<th class="text-strong calendar-cell">{@date.wednesday.mini}</th>
+				<th class="text-strong calendar-cell">{@date.thursday.mini}</th>
+				<th class="text-strong calendar-cell">{@date.friday.mini}</th>
+				<th class="text-strong calendar-cell">{@date.saturday.mini}</th>
+				<th class="text-strong calendar-cell">{@date.sunday.mini}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -65,7 +65,7 @@
 				# START day #
 					<td class="{day.CLASS}">
 						# IF day.C_MONTH_DAY #
-							<a# IF day.C_HAS_TITLE # aria-label="{day.TITLE}"# ENDIF # href="{day.U_DAY_EVENTS}" class="offload">
+							<a# IF day.C_HAS_TITLE # aria-label="{day.TITLE}"# ENDIF # href="{day.U_DAY_EVENTS}" class="offload calendar-cell">
 								{day.DAY}
 								# IF day.C_COLOR #
 									<div class="event-container">
@@ -76,7 +76,7 @@
 								# ENDIF #
 							</a>
 						# ENDIF #
-						# IF day.C_WEEK_LABEL #<span>{day.DAY}</span># ENDIF #
+						# IF day.C_WEEK_LABEL #<span class="calendar-cell">{day.DAY}</span># ENDIF #
 					</td>
 				# IF day.CHANGE_LINE #
 			</tr>

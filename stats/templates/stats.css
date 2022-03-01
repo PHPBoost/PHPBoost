@@ -130,6 +130,6 @@
 
 .js-menu-button span { padding: 0 0 0 0.456em; }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 	.js-menu-button { display: none; }
 }

@@ -13,27 +13,21 @@
 
 .mini-calendar .calendar-week span { display: block; }
 
-.mini-calendar th,
-.mini-calendar .calendar-week span,
-.mini-calendar td a {
+.mini-calendar .calendar-cell {
 	padding: 0.809em 0;
 	font-size: 0.809em;
 }
 
 .mini-calendar a:hover { text-decoration: none; }
 
-@media (min-width: 768px) {
-	.mini-calendar th,
-	.mini-calendar .calendar-week span,
-	.mini-calendar td a {
-		font-size: 0.618em;
-	}
+@media (min-width: 769px) {
+	.mini-calendar .calendar-cell { font-size: 0.618em; }
+
+	.narrow-menu .mini-calendar .calendar-cell { padding: 0.456em 0; }
 }
 
-@media (min-width: 1024px) {
-	.mini-calendar th,
-	.mini-calendar .calendar-week span,
-	.mini-calendar td a { font-size: 0.809em; }
+@media (min-width: 1025px) {
+	.mini-calendar .calendar-cell { font-size: 0.809em; }
 }
 
 .mini-calendar td[class*="calendar-"],

@@ -416,7 +416,7 @@ ul.level-2 ul { padding: 0; }
 	border-radius: 0 0 5px 5px;
 }
 
-@media (max-width: 769px) {
+@media (max-width: 768px) {
 	.menus-block-add { padding-bottom: 5px; }
 }
 

@@ -217,7 +217,7 @@ nav.admin-index a { color: var(--txt-alt); }
 .admin-extend-menu li:hover { background-color: var(--bgc-main); }
 
 /* --- Menu Manager --- */
-@media (max-width: 769px) {
+@media (max-width: 768px) {
     .themesmanagement {
     	background-color: var(--administrator-tone);
     	color: var(--txt-alt);

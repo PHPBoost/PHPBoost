@@ -37,7 +37,7 @@
 	.cell-flex > .cell-3-4 { width: calc(100% / 2 - var(--cell-gap)) !important; }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
 	.cell-columns-2 > .cell { width: calc(100% / 2 - var(--cell-gap)); }
 	.cell-columns-3 > .cell { width: calc(100% / 3 - var(--cell-gap)); }
 	.cell-columns-4 > .cell { width: calc(100% / 4 - var(--cell-gap)); }

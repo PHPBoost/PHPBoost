@@ -126,6 +126,6 @@ td.alert-priority { border-width: 0 0 1px 0; }
 }
 
 /* --- Phpinfo --- */
-@media (max-width: 769px) {
+@media (max-width: 768px) {
     table.phpinfo td .bt-content {word-break: break-word;}
 }
