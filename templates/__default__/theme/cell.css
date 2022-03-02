@@ -17,6 +17,11 @@
 .cell .grouped-inputs,
 .cell .formatter-title { margin: 0 !important; }
 
+.cell {
+	display: flex;
+	flex-direction: column;
+}
+
 .cell,
 .cell > [class*="cell-"] {
 	border-style: solid;

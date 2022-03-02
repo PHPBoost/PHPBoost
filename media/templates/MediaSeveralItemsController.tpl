@@ -107,36 +107,36 @@
 										<a class="offload" href="{items.U_ITEM}">{items.TITLE}</a>
 									</h2>
 								</header>
-								<div class="cell-body">
-									<div class="cell-infos">
-										<div class="more">
-											<span class="pinned item-author" aria-label="{@common.author}">
-												# IF items.C_AUTHOR_DISPLAYED #
-													<i class="far fa-user"></i>
-													# IF items.C_AUTHOR_EXISTS #
-														<a itemprop="author" class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
-													# ELSE #
-														<span class="visitor">{@user.guest}</span>
-													# ENDIF #
+								<div class="cell-infos">
+									<div class="more">
+										<span class="pinned item-author" aria-label="{@common.author}">
+											# IF items.C_AUTHOR_DISPLAYED #
+												<i class="far fa-user"></i>
+												# IF items.C_AUTHOR_EXISTS #
+													<a itemprop="author" class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
+												# ELSE #
+													<span class="visitor">{@user.guest}</span>
 												# ENDIF #
-											</span>
-											<span class="pinned item-creation-date" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>
-											<span class="pinned item-views-number" role="contentinfo" aria-label="{@common.views.number}"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
-											# IF C_ENABLED_COMMENTS #
-												<span class="pinned item-comments" aria-label="{@common.comments}"><i class="far fa-comments" aria-hidden="true"></i> {items.COMMENTS_NUMBER}</span>
 											# ENDIF #
-											# IF C_ENABLED_NOTATION #
-												<div class="pinned item-category">{items.KERNEL_NOTATION}</div>
-											# ENDIF #
-										</div>
-										# IF C_CONTROLS #
-											<div class="controls align-right">
-												<a class="offload item-status" href="{items.U_STATUS}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
-												<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-												<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
-											</div>
+										</span>
+										<span class="pinned item-creation-date" aria-label="{@common.creation.date}"><i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="{items.DATE_ISO8601}" itemprop="datePublished">{items.DATE}</time></span>
+										<span class="pinned item-views-number" role="contentinfo" aria-label="{@common.views.number}"><i class="far fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+										# IF C_ENABLED_COMMENTS #
+											<span class="pinned item-comments" aria-label="{@common.comments}"><i class="far fa-comments" aria-hidden="true"></i> {items.COMMENTS_NUMBER}</span>
+										# ENDIF #
+										# IF C_ENABLED_NOTATION #
+											<div class="pinned item-category">{items.KERNEL_NOTATION}</div>
 										# ENDIF #
 									</div>
+									# IF C_CONTROLS #
+										<div class="controls align-right">
+											<a class="offload item-status" href="{items.U_STATUS}" aria-label="{@media.hide.item}"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i></a>
+											<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
+											<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+										</div>
+									# ENDIF #
+								</div>
+								<div class="cell-body">
 									# IF items.C_HAS_PICTURE #
 										<div class="cell-thumbnail cell-landscape cell-center">
 											<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />

@@ -137,28 +137,27 @@
 								<header class="cell-header">
 									<h2 class="cell-name"><a class="offload" href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
-								<div class="cell-body">
-									<div class="cell-infos">
-										<div class="more">
-											<span class="pinned item-views-number"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
-											# IF C_ENABLED_COMMENTS #
-												<span class="pinned item-comments">
-													<i class="fa fa-comments" aria-hidden="true"></i>
-													# IF items.C_COMMENTS # {items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
-												</span>
-											# ENDIF #
-											# IF C_ENABLED_NOTATION #
-												<div class="pinned item-notation">{items.STATIC_NOTATION}</div>
-											# ENDIF #
-										</div>
-										# IF items.C_CONTROLS #
-											<span class="controls align-right">
-												# IF items.C_EDIT #<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-												# IF items.C_DELETE #<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+								<div class="cell-infos">
+									<div class="more">
+										<span class="pinned item-views-number"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
+										# IF C_ENABLED_COMMENTS #
+											<span class="pinned item-comments">
+												<i class="fa fa-comments" aria-hidden="true"></i>
+												# IF items.C_COMMENTS # {items.COMMENTS_NUMBER} # ENDIF # {items.L_COMMENTS}
 											</span>
 										# ENDIF #
+										# IF C_ENABLED_NOTATION #
+											<div class="pinned item-notation">{items.STATIC_NOTATION}</div>
+										# ENDIF #
 									</div>
-
+									# IF items.C_CONTROLS #
+										<span class="controls align-right">
+											# IF items.C_EDIT #<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+											# IF items.C_DELETE #<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+										</span>
+									# ENDIF #
+								</div>
+								<div class="cell-body">
 									# IF NOT C_FULL_ITEM_DISPLAY #
 										# IF items.C_IS_ADORNED #
 											<div class="cell-thumbnail cell-landscape cell-center">

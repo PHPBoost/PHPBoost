@@ -222,95 +222,95 @@
 								<header class="cell-header">
 									<h2 class="cell-name"><a class="offload" href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
-								<div class="cell-body">
-									# IF items.C_COMPLETED #
-										<div class="cell-content">
-											<span class="message-helper bgc error">{@completed.item}</span>
-										</div>
-									# ENDIF #
-									<div class="cell-infos">
-										<div class="more">
-											# IF NOT C_MEMBER_ITEMS #
-												# IF C_AUTHOR_DISPLAYED #
-													<span class="pinned item-author">
-														<i class="far fa-user"></i>
-														# IF items.C_AUTHOR_CUSTOM_NAME #
-															<span aria-label="{@common.author}" itemprop="author">{items.AUTHOR_CUSTOM_NAME}</span>
+								# IF items.C_COMPLETED #
+									<div class="cell-content completed">
+										<span class="message-helper bgc error">{@completed.item}</span>
+									</div>
+								# ENDIF #
+								<div class="cell-infos">
+									<div class="more">
+										# IF NOT C_MEMBER_ITEMS #
+											# IF C_AUTHOR_DISPLAYED #
+												<span class="pinned item-author">
+													<i class="far fa-user"></i>
+													# IF items.C_AUTHOR_CUSTOM_NAME #
+														<span aria-label="{@common.author}" itemprop="author">{items.AUTHOR_CUSTOM_NAME}</span>
+													# ELSE #
+														# IF items.C_AUTHOR_EXISTS #
+															<a aria-label="{@common.author}" itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="offload# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
+																{items.AUTHOR_DISPLAY_NAME}
+															</a>
 														# ELSE #
-															# IF items.C_AUTHOR_EXISTS #
-																<a aria-label="{@common.author}" itemprop="author" href="{items.U_AUTHOR_PROFILE}" class="offload# IF C_AUTHOR_GROUP_COLOR # {items.AUTHOR_GROUP_COLOR}# ELSE # {items.AUTHOR_LEVEL_CLASS}# ENDIF #">
-																	{items.AUTHOR_DISPLAY_NAME}
-																</a>
-															# ELSE #
-																<span aria-label="{@common.author}" itemprop="author">{items.AUTHOR_DISPLAY_NAME}</span>
-															# ENDIF #
+															<span aria-label="{@common.author}" itemprop="author">{items.AUTHOR_DISPLAY_NAME}</span>
 														# ENDIF #
-													</span>
+													# ENDIF #
+												</span>
 
-												# ENDIF #
 											# ENDIF #
-											# IF C_ENABLED_DATE #
-												<span class="pinned item-creation-date" aria-label="{@common.creation.date}">
-													<i class="far fa-calendar-alt" aria-hidden="true"></i>
-													<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-														# IF items.C_DEFFERED_PUBLISHING #
-															{items.DEFFERED_PUBLISHING_START_DATE}
-														# ELSE #
-															{items.DATE}
-														# ENDIF #
+										# ENDIF #
+										# IF C_ENABLED_DATE #
+											<span class="pinned item-creation-date" aria-label="{@common.creation.date}">
+												<i class="far fa-calendar-alt" aria-hidden="true"></i>
+												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+													# IF items.C_DEFFERED_PUBLISHING #
+														{items.DEFFERED_PUBLISHING_START_DATE}
+													# ELSE #
+														{items.DATE}
+													# ENDIF #
+												</time>
+											</span>
+										# ENDIF #
+										# IF C_ENABLED_UPDATE_DATE #
+											# IF items.C_HAS_UPDATE_DATE #
+												<span class="pinned item-modified-date" aria-label="{@common.last.update}">
+													<i class="far fa-calendar-plus" aria-hidden="true"></i>
+													<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
+														{items.UPDATE_DATE}
 													</time>
 												</span>
 											# ENDIF #
-											# IF C_ENABLED_UPDATE_DATE #
-												# IF items.C_HAS_UPDATE_DATE #
-													<span class="pinned item-modified-date" aria-label="{@common.last.update}">
-														<i class="far fa-calendar-plus" aria-hidden="true"></i>
-														<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
-															{items.UPDATE_DATE}
-														</time>
+										# ENDIF #
+										# IF C_ENABLED_CATEGORIES #
+											# IF items.C_HAS_CATEGORY #
+												# IF NOT items.C_ROOT_CATEGORY #
+													<span class="pinned item-category" aria-label="{@common.category}">
+														<a class="offload" aria-label="{@common.category}" itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
 													</span>
 												# ENDIF #
 											# ENDIF #
-											# IF C_ENABLED_CATEGORIES #
-												# IF items.C_HAS_CATEGORY #
-													# IF NOT items.C_ROOT_CATEGORY #
-														<span class="pinned item-category" aria-label="{@common.category}">
-															<a class="offload" aria-label="{@common.category}" itemprop="about" href="{items.U_CATEGORY}"><i class="far fa-folder" aria-hidden="true"></i> {items.CATEGORY_NAME}</a>
-														</span>
-													# ENDIF #
-												# ENDIF #
+										# ENDIF #
+										# IF NOT C_PENDING #
+											# IF C_ENABLED_VIEWS #
+												<span class="pinned item-views-number" role="contentinfo" aria-label="{@common.views.number}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
 											# ENDIF #
-											# IF NOT C_PENDING #
-												# IF C_ENABLED_VIEWS #
-													<span class="pinned item-views-number" role="contentinfo" aria-label="{@common.views.number}"><i class="fa fa-eye" aria-hidden="true"></i> {items.VIEWS_NUMBER}</span>
-												# ENDIF #
-												# IF C_ENABLED_VISITS #
-													<span class="pinned item-visits-number" aria-label="{@common.visits.number}">
-														{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@common.visits}# ELSE #{@common.visit}# ENDIF #
-													</span>
-												# ENDIF #
-												# IF C_ENABLED_DOWNLOADS #
-													<span class="pinned item-downloads-number" aria-label="{@common.downloads.number}">
-														{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@common.downloads}# ELSE #{@common.download}# ENDIF #
-													</span>
-												# ENDIF #
-												# IF C_ENABLED_NOTATION #
-													<div class="pinned item-notation">{items.STATIC_NOTATION}</div>
-												# ENDIF #
-												# IF C_ENABLED_COMMENTS #
-													<span class="pinned item-comments" aria-label="{@common.comments}">
-														<a class="offload" href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
-													</span>
-												# ENDIF #
+											# IF C_ENABLED_VISITS #
+												<span class="pinned item-visits-number" aria-label="{@common.visits.number}">
+													{items.VISITS_NUMBER} # IF C_SEVERAL_VISITS #{@common.visits}# ELSE #{@common.visit}# ENDIF #
+												</span>
 											# ENDIF #
-										</div>
-										# IF items.C_CONTROLS #
-											<div class="controls align-right">
-												# IF items.C_EDIT #<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
-												# IF items.C_DELETE #<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-											</div>
+											# IF C_ENABLED_DOWNLOADS #
+												<span class="pinned item-downloads-number" aria-label="{@common.downloads.number}">
+													{items.DOWNLOADS_NUMBER} # IF C_SEVERAL_DOWNLOADS #{@common.downloads}# ELSE #{@common.download}# ENDIF #
+												</span>
+											# ENDIF #
+											# IF C_ENABLED_NOTATION #
+												<div class="pinned item-notation">{items.STATIC_NOTATION}</div>
+											# ENDIF #
+											# IF C_ENABLED_COMMENTS #
+												<span class="pinned item-comments" aria-label="{@common.comments}">
+													<a class="offload" href="{items.U_COMMENTS}"><i class="fa fa-comments" aria-hidden="true"></i> {items.COMMENTS_LABEL}</a>
+												</span>
+											# ENDIF #
 										# ENDIF #
 									</div>
+									# IF items.C_CONTROLS #
+										<div class="controls align-right">
+											# IF items.C_EDIT #<a class="offload item-edit" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+											# IF items.C_DELETE #<a class="item-delete" href="{items.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+										</div>
+									# ENDIF #
+								</div>
+								<div class="cell-body">
 									# IF NOT C_FULL_ITEM_DISPLAY #
 										# IF items.C_HAS_THUMBNAIL #
 											<div class="cell-thumbnail cell-landscape cell-center">

@@ -123,8 +123,6 @@
 								</div>
 								<div class="content">{items.CONTENT}</div>
 							</div>
-
-							<footer></footer>
 						</article>
 					# END items #
 				</div>
