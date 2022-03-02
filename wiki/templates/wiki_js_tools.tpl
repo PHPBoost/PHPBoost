@@ -11,7 +11,7 @@
 
 <div class="bbcode wiki-extended-bbcode">
 	<nav class="bbcode-containers">
-		<ul id="wiki-paragraph-container" class="bbcode-container cell-flex cell-tile cell-modal modal-container">
+		<ul id="wiki-paragraph-container" class="bbcode-container cell-list cell-list-inline cell-tile cell-modal modal-container">
 			<li class="bbcode-elements">
 				<span data-modal data-target="block-link" class="bbcode-button" aria-label="{@wiki.insert.link}">
 					<i class="fa fa-link" aria-hidden="true"></i>
