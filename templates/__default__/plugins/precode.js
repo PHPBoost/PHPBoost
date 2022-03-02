@@ -1,5 +1,5 @@
 (function() {
-    const pre = document.querySelectorAll('pre'),
+    const pre = document.querySelectorAll('pre.precode'),
           pl = pre.length;
 
     for (let i = 0; i < pl; i++) {
