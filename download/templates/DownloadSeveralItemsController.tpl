@@ -205,18 +205,17 @@
 										</div>
 									# ENDIF #
 								</div>
-
-								<div class="cell-body">
-									# IF NOT C_FULL_ITEM_DISPLAY #
-										# IF items.C_HAS_THUMBNAIL #
-											<div class="cell-thumbnail cell-landscape cell-center">
-												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-												<a href="{items.U_ITEM}" class="cell-thumbnail-caption offload">
-													{@common.see.details}
-												</a>
-											</div>
-										# ENDIF #
+								# IF NOT C_FULL_ITEM_DISPLAY #
+									# IF items.C_HAS_THUMBNAIL #
+										<div class="cell-thumbnail cell-landscape cell-center">
+											<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
+											<a href="{items.U_ITEM}" class="cell-thumbnail-caption offload">
+												{@common.see.details}
+											</a>
+										</div>
 									# ENDIF #
+								# ENDIF #
+								<div class="cell-body">
 									<div class="cell-list">
 										<ul>
 											<li class="li-stretch">

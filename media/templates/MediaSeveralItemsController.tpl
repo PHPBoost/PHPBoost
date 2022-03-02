@@ -136,13 +136,13 @@
 										</div>
 									# ENDIF #
 								</div>
+								# IF items.C_HAS_PICTURE #
+									<div class="cell-thumbnail cell-landscape cell-center">
+										<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
+										<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></a>
+									</div>
+								# ENDIF #
 								<div class="cell-body">
-									# IF items.C_HAS_PICTURE #
-										<div class="cell-thumbnail cell-landscape cell-center">
-											<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
-											<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></a>
-										</div>
-									# ENDIF #
 									# IF items.C_CONTENT #
 										<div itemprop="text" class="cell-content">
 											{items.SUMMARY}

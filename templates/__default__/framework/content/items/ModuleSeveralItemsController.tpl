@@ -310,17 +310,17 @@
 										</div>
 									# ENDIF #
 								</div>
-								<div class="cell-body">
-									# IF NOT C_FULL_ITEM_DISPLAY #
-										# IF items.C_HAS_THUMBNAIL #
-											<div class="cell-thumbnail cell-landscape cell-center">
-												<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-												<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}">
-													{@common.see.details}
-												</a>
-											</div>
-										# ENDIF #
+								# IF NOT C_FULL_ITEM_DISPLAY #
+									# IF items.C_HAS_THUMBNAIL #
+										<div class="cell-thumbnail cell-landscape cell-center">
+											<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
+											<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}">
+												{@common.see.details}
+											</a>
+										</div>
 									# ENDIF #
+								# ENDIF #
+								<div class="cell-body">
 									<div class="cell-content">
 										# IF C_ENABLED_VISIT #
 											<div class="cell-infos">

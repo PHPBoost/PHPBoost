@@ -157,27 +157,27 @@
 										</span>
 									# ENDIF #
 								</div>
-								<div class="cell-body">
-									# IF NOT C_FULL_ITEM_DISPLAY #
-										# IF items.C_IS_ADORNED #
-											<div class="cell-thumbnail cell-landscape cell-center">
-												# IF items.C_IS_PARTNER #
-													# IF items.C_HAS_PARTNER_THUMBNAIL #
-														<img src="{items.U_PARTNER_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-													# ELSE #
-														<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-													# ENDIF #
+								# IF NOT C_FULL_ITEM_DISPLAY #
+									# IF items.C_IS_ADORNED #
+										<div class="cell-thumbnail cell-landscape cell-center">
+											# IF items.C_IS_PARTNER #
+												# IF items.C_HAS_PARTNER_THUMBNAIL #
+													<img src="{items.U_PARTNER_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 												# ELSE #
-													# IF items.C_HAS_THUMBNAIL #
-														<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
-													# ENDIF #
+													<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
 												# ENDIF #
-												<a class="offload cell-thumbnail-caption" href="{items.U_ITEM}">
-													{@common.see.details}
-												</a>
-											</div>
-										# ENDIF #
+											# ELSE #
+												# IF items.C_HAS_THUMBNAIL #
+													<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" itemprop="image" />
+												# ENDIF #
+											# ENDIF #
+											<a class="offload cell-thumbnail-caption" href="{items.U_ITEM}">
+												{@common.see.details}
+											</a>
+										</div>
 									# ENDIF #
+								# ENDIF #
+								<div class="cell-body">
 									<div class="cell-list">
 										<ul>
 											<li class="li-stretch">

@@ -110,15 +110,15 @@
 							</div>
 						# ENDIF #
 					</div>
-					<div class="cell-body# IF items.C_CANCELLED # error# ENDIF #">
-						# IF NOT C_FULL_ITEM_DISPLAY #
-							# IF items.C_HAS_THUMBNAIL #
-								<div class="cell-thumbnail">
-									<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
-									<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" itemprop="thumbnailUrl" aria-label="{@common.see.details}"><i class="far fa-eye" aria-hidden="true"></i></a>
-								</div>
-							# ENDIF #
+					# IF NOT C_FULL_ITEM_DISPLAY #
+						# IF items.C_HAS_THUMBNAIL #
+							<div class="cell-thumbnail">
+								<img src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
+								<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" itemprop="thumbnailUrl" aria-label="{@common.see.details}"><i class="far fa-eye" aria-hidden="true"></i></a>
+							</div>
 						# ENDIF #
+					# ENDIF #
+					<div class="cell-body# IF items.C_CANCELLED # error# ENDIF #">
 						<div class="cell-content" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 							# IF items.C_CANCELLED #
 								<span class="message-helper bgc error">{@calendar.cancelled.item}</span>
