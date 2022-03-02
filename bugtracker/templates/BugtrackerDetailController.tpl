@@ -1,6 +1,6 @@
 <div class="more">
-	<span class="pinned">{@common.by} # IF C_AUTHOR_EXISTS #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #</span>
-	<span class="pinned">{@common.on.date} {SUBMIT_DATE_FULL}</span>
+	<span class="pinned item-author">{@common.by} # IF C_AUTHOR_EXISTS #<a href="{U_AUTHOR_PROFILE}" class="{AUTHOR_LEVEL_CLASS} offload" itemprop="author" # IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}" # ENDIF #>{AUTHOR}</a># ELSE #{AUTHOR}# ENDIF #</span>
+	<span class="pinned item-creation-date">{@common.on.date} {SUBMIT_DATE_FULL}</span>
 </div>
 <nav id="cssmenu-bugtrackeractions" class="cssmenu cssmenu-group">
 	<ul>

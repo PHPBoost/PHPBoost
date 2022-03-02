@@ -114,7 +114,7 @@
 												# IF items.C_AUTHOR_DISPLAYED #
 													<i class="far fa-user"></i>
 													# IF items.C_AUTHOR_EXISTS #
-														<a class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
+														<a itemprop="author" class="{items.AUTHOR_LEVEL_CLASS} offload"# IF items.C_AUTHOR_GROUP_COLOR # style="color:{items.AUTHOR_GROUP_COLOR}"# ENDIF # href="{items.U_AUTHOR_PROFILE}">{items.AUTHOR_DISPLAY_NAME}</a>
 													# ELSE #
 														<span class="visitor">{@user.guest}</span>
 													# ENDIF #

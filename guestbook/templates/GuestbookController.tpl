@@ -35,7 +35,7 @@
 												<div class="message-user-container">
 													<h3 class="message-user-pseudo">
 														# IF messages.C_AUTHOR_EXISTS #
-															<a href="{messages.U_AUTHOR_PROFILE}" class="{messages.AUTHOR_LEVEL_CLASS} offload" # IF messages.C_AUTHOR_GROUP_COLOR # style="color:{messages.AUTHOR_GROUP_COLOR}" # ENDIF #>{messages.AUTHOR_DISPLAY_NAME}</a>
+															<a itemprop="author" href="{messages.U_AUTHOR_PROFILE}" class="{messages.AUTHOR_LEVEL_CLASS} offload" # IF messages.C_AUTHOR_GROUP_COLOR # style="color:{messages.AUTHOR_GROUP_COLOR}" # ENDIF #>{messages.AUTHOR_DISPLAY_NAME}</a>
 														# ELSE #
 															<span class="visitor">{messages.AUTHOR_DISPLAY_NAME}</span>
 														# ENDIF #

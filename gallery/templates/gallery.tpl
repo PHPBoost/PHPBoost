@@ -362,7 +362,7 @@
 														<span class="text-strong">{@common.author}</span>
 														<span>
 															# IF C_AUTHOR_EXISTS #
-																<a class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
+																<a itemprop="author" class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">{AUTHOR_DISPLAY_NAME}</a>
 															# ELSE #
 																<span class="visitor">{@user.guest}</span>
 															# ENDIF #
@@ -475,7 +475,7 @@
 												# IF C_AUTHOR_DISPLAYED #
 													<li>
 														# IF pics_list.C_AUTHOR_EXISTS #
-															<a class="{pics_list.AUTHOR_LEVEL_CLASS} offload"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
+															<a itemprop="author" class="{pics_list.AUTHOR_LEVEL_CLASS} offload"# IF pics_list.C_AUTHOR_GROUP_COLOR # style="color:{pics_list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics_list.U_AUTHOR_PROFILE}">
 																{@common.by} {pics_list.AUTHOR_DISPLAY_NAME}
 															</a>
 														# ELSE #

@@ -311,7 +311,7 @@
 								<strong>{@common.name}:</strong> <span id="fi_{pics.pics_max.ID}">{pics.pics_max.PICTURE_NAME}</span> <span id="fi{pics.pics_max.ID}"></span>
 							</td>
 							<td>
-								<strong>{@common.author}:</strong> # IF pics.pics_max.C_AUTHOR_EXISTS #<a class="{pics.pics_max.AUTHOR_LEVEL_CLASS}"# IF pics.pics_max.C_AUTHOR_GROUP_COLOR # style="color:{pics.pics_max.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics.pics_max.U_AUTHOR_PROFILE}">{pics.pics_max.AUTHOR_DISPLAY_NAME}</a># ELSE #{@user.guest}# ENDIF #
+								<strong>{@common.author}:</strong> # IF pics.pics_max.C_AUTHOR_EXISTS #<a itemprop="author" class="{pics.pics_max.AUTHOR_LEVEL_CLASS}"# IF pics.pics_max.C_AUTHOR_GROUP_COLOR # style="color:{pics.pics_max.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics.pics_max.U_AUTHOR_PROFILE}">{pics.pics_max.AUTHOR_DISPLAY_NAME}</a># ELSE #{@user.guest}# ENDIF #
 							</td>
 						</tr>
 						<tr>
@@ -414,7 +414,7 @@
 									<div class="cell-list">
 										<ul>
 											<li>
-												# IF pics.list.C_AUTHOR_EXISTS #{@common.by} <a class="{pics.list.AUTHOR_LEVEL_CLASS}"# IF pics.list.C_AUTHOR_GROUP_COLOR # style="color:{pics.list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics.list.U_AUTHOR_PROFILE}">{pics.list.AUTHOR_DISPLAY_NAME}</a># ELSE #{@user.guest}# ENDIF #
+												# IF pics.list.C_AUTHOR_EXISTS #{@common.by} <a itemprop="author" class="{pics.list.AUTHOR_LEVEL_CLASS}"# IF pics.list.C_AUTHOR_GROUP_COLOR # style="color:{pics.list.AUTHOR_GROUP_COLOR}"# ENDIF # href="{pics.list.U_AUTHOR_PROFILE}">{pics.list.AUTHOR_DISPLAY_NAME}</a># ELSE #{@user.guest}# ENDIF #
 											</li>
 										</ul>
 									</div>

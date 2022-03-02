@@ -109,7 +109,7 @@
 												{@user.administrator}
 												# ELSE #
 													# IF convers.list.C_AUTHOR_EXIST #
-														<a href="{convers.list.U_AUTHOR_PROFILE}" class="{convers.list.AUTHOR_CSSCLASS} offload"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
+														<a itemprop="author" href="{convers.list.U_AUTHOR_PROFILE}" class="{convers.list.AUTHOR_CSSCLASS} offload"# IF convers.list.C_AUTHOR_GROUP_COLOR #style="color:{convers.list.AUTHOR_GROUP_COLOR}"# ENDIF #>{convers.list.AUTHOR_NAME}</a>
 													# ELSE #
 														<del>{@user.guest}</del>
 													# ENDIF #

@@ -178,7 +178,7 @@
 													# ENDIF #
 												</td>
 												<td >
-													<a href="{contributions.U_AUTHOR_PROFILE}" class="{contributions.AUTHOR_LEVEL_CLASS} offload" # IF contributions.C_AUTHOR_GROUP_COLOR # style="color:{contributions.AUTHOR_GROUP_COLOR}" # ENDIF #>{contributions.POSTER}</a>
+													<a itemprop="author" href="{contributions.U_AUTHOR_PROFILE}" class="{contributions.AUTHOR_LEVEL_CLASS} offload" # IF contributions.C_AUTHOR_GROUP_COLOR # style="color:{contributions.AUTHOR_GROUP_COLOR}" # ENDIF #>{contributions.POSTER}</a>
 												</td>
 												<td >
 													# IF contributions.C_FIXED #

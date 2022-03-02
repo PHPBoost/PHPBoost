@@ -472,7 +472,7 @@
 				<div class="cell-flex cell-tile cell-inline">
 					# START shared_files #
 						<div class="cell# IF shared_files.C_RECENT_FILE # new-content# ENDIF ## IF NOT shared_files.C_FILE_EXISTS # missing-file# ENDIF #">
-							<span><span>{@upload.posted.by}</span># IF shared_files.C_AUTHOR_EXIST #<a class="{shared_files.AUTHOR_LEVEL_CLASS}"# IF shared_files.C_AUTHOR_GROUP_COLOR # style="color:{shared_files.AUTHOR_GROUP_COLOR}"# ENDIF # href="{shared_files.U_AUTHOR_PROFILE}">{shared_files.AUTHOR}</a># ELSE #{@user.guest}# ENDIF #</span>
+							<span><span>{@upload.posted.by}</span># IF shared_files.C_AUTHOR_EXIST #<a itemprop="author" class="{shared_files.AUTHOR_LEVEL_CLASS}"# IF shared_files.C_AUTHOR_GROUP_COLOR # style="color:{shared_files.AUTHOR_GROUP_COLOR}"# ENDIF # href="{shared_files.U_AUTHOR_PROFILE}">{shared_files.AUTHOR}</a># ELSE #{@user.guest}# ENDIF #</span>
 							<span id="imgf{shared_files.ID}"></span>
 							<div class="cell-header">
 								<div id="fifl{shared_files.ID}" class="cell-name ellipsis">{shared_files.NAME}</div>

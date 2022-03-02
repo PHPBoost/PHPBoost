@@ -16,7 +16,7 @@
 							# IF C_AUTHOR_DISPLAYED #
 								<i class="far fa-user"></i>
 								# IF C_AUTHOR_EXISTS #
-									<a class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">
+									<a itemprop="author" class="{AUTHOR_LEVEL_CLASS} offload"# IF C_AUTHOR_GROUP_COLOR # style="color:{AUTHOR_GROUP_COLOR}"# ENDIF # href="{U_AUTHOR_PROFILE}">
 										{AUTHOR_DISPLAY_NAME}
 									</a>
 								# ELSE #

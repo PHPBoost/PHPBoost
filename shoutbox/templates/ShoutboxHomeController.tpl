@@ -33,7 +33,7 @@
 											<div class="message-user-container">
 												<h3 class="message-user-pseudo">
 													# IF messages.C_AUTHOR_EXISTS #
-														<a href="{messages.U_AUTHOR_PROFILE}" class="{messages.USER_LEVEL_CLASS} offload" # IF messages.C_USER_GROUP_COLOR # style="color:{messages.USER_GROUP_COLOR}" # ENDIF #>{messages.PSEUDO}</a>
+														<a itemprop="author" href="{messages.U_AUTHOR_PROFILE}" class="{messages.USER_LEVEL_CLASS} offload" # IF messages.C_USER_GROUP_COLOR # style="color:{messages.USER_GROUP_COLOR}" # ENDIF #>{messages.PSEUDO}</a>
 													# ELSE #
 														<span class="visitor">{messages.PSEUDO}</span>
 													# ENDIF #
