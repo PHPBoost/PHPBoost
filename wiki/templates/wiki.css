@@ -104,15 +104,29 @@ body {
 
 @media (min-width: 769px) {
 	.wiki-sticky-title {
-		padding: 0.618em 0.809em;
-		top:8.618em;
-		left: -3.618em;
-		transform: translateX(0);
+		padding: 0.618em 2.809em 0.618em 0.809em;
+		top: 50%;
+        transform: translateY(-50%);
+		left: -9.618em;
 		opacity: 0.3;
-		transform: rotate(-90deg);
+        transition: left 0.3s
 	}
 
-	.wiki-sticky-title:hover { opacity: 1; }
+    .wiki-sticky-title::after {
+        content: '\f550';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        top: 50%;
+        right: 0.618em;
+        transform: translateY(-50%);
+    }
+
+	.wiki-sticky-title:hover {
+		opacity: 1;
+        left: 0;
+        transition: left 0.3s
+	}
 }
 
 .wiki-sticky-title {
