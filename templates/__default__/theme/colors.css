@@ -435,12 +435,6 @@ pre[style*="display:inline"] { background-color: var(--bgc-sub); }
 h2.formatter-title,
 h3.formatter-title { border-color: var(--bdr-alt); }
 
-.copy-code-content span[style*="color: #0000FF;"] {color: var(--notice-tone) !important;}
-.copy-code-content span[style*="color: #000080;"] {color: #91367a !important;}
-.copy-code-content span[style*="color: #8000FF;"] {color: #917a36 !important;}
-.copy-code-content span[style*="color: #808080;"] {color: #369163 !important;}
-.copy-code-content span[style*="color: #008000;"] {color: var(--success-tone) !important;}
-
 .formatter-hide .formatter-hide-message {
 	background-color: rgba(var(--main-rgb-t), 0.15);
 	border-color: rgba(var(--main-rgb-t), 0.4);
