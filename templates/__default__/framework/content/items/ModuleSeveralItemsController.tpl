@@ -222,11 +222,6 @@
 								<header class="cell-header">
 									<h2 class="cell-name"><a class="offload" href="{items.U_ITEM}" itemprop="name">{items.TITLE}</a></h2>
 								</header>
-								# IF items.C_COMPLETED #
-									<div class="cell-content completed">
-										<span class="message-helper bgc error">{@completed.item}</span>
-									</div>
-								# ENDIF #
 								<div class="cell-infos">
 									<div class="more">
 										# IF NOT C_MEMBER_ITEMS #
@@ -321,6 +316,11 @@
 									# ENDIF #
 								# ENDIF #
 								<div class="cell-body">
+									# IF items.C_COMPLETED #
+										<div class="cell-content completed">
+											<span class="message-helper bgc error">{@completed.item}</span>
+										</div>
+									# ENDIF #
 									<div class="cell-content">
 										# IF C_ENABLED_VISIT #
 											<div class="cell-infos">
