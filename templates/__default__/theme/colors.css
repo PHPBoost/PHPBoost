@@ -34,6 +34,7 @@ body {
 /* Item thumbnail */
 @media (min-width: 769px) {
 	.item-thumbnail { background-color: var(--bgc-main); }
+	.prime-item .item-thumbnail { background-color: var(--bgc-sub); }
 }
 
 /* --- Cookies --- */

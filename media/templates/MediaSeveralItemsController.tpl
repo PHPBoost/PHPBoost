@@ -24,7 +24,7 @@
 			<div class="content-container">
 				<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
 					# START sub_categories_list #
-						<div class="cell category-{sub_categories_list.CATEGORY_ID}">
+						<div class="cell cell-category category-{sub_categories_list.CATEGORY_ID}">
 							<div class="cell-header">
 								<h5 class="cell-name" itemprop="about">
 									<a class="offload" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a>
@@ -99,7 +99,7 @@
 							</div>
 						</div>
 					# ENDIF #
-					<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+					<div class="cell-flex # IF C_GRID_VIEW #cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 						# START items #
 							<article id="article-media-{items.ID}" class="media-item category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 								<header class="cell-header">
