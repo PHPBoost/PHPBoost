@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -108,6 +108,32 @@ class BBCodeEditor extends ContentEditor
 				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
 			));
+		}
+
+		$emojis = LangLoader::get_all_langs();
+		foreach ($emojis as $unicode => $values)
+		{
+			$is_emo = TextHelper::substr($unicode, 0, 2) === "U+";
+			$is_category = TextHelper::substr($unicode, 0, 7) === "U+.cat.";
+			$is_sub = TextHelper::substr($unicode, 0, 7) === "U+.sub.";
+			if ($is_emo)
+			{
+				foreach($values as $name => $decimal)
+				{
+					$name = TextHelper::strtolower($name);
+					$name = TextHelper::ucfirst($name);
+					$symbole = TextHelper::htmlspecialchars_decode($decimal);
+					$template->assign_block_vars('emojis', array(
+						'C_CATEGORY'     => $is_category,
+						'C_SUB_CATEGORY' => $is_sub,
+
+						'CATEGORY_NAME'     => $name,
+						'SUB_CATEGORY_NAME' => $name,
+						'NAME'              => $name,
+						'DECIMAL'           => $symbole
+					));
+				}
+			}
 		}
 
 		foreach ($this->icon_fa as $key => $value)

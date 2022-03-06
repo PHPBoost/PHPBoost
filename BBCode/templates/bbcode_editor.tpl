@@ -923,6 +923,49 @@
 					</div>
 				</div>
 			</li>
+			<li id="emojis" class="bbcode-elements">
+				<span class="bbcode-button {AUTH_EMO}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
+					&#128578;
+				</span>
+				<div id="block-emojis{FIELD}" class="modal modal-animation">
+					<div class="close-modal" role="button" aria-label="{@common.close}"></div>
+					<div class="content-panel cell">
+						<div class="cell-header">
+							<div class="cell-name">{@bbcode.emojis}</div>
+						</div>
+						<div class="cell-content align-center">
+							{@H|bbcode.emojis.link}
+						</div>
+						<div class="cell-list cell-list-inline large-list">
+							<ul class="flex-start">
+								# START emojis #
+									# IF emojis.C_CATEGORY #
+										</ul>
+										<ul class="flex-start">
+											<li> <h5>{emojis.CATEGORY_NAME}</h5> </li>
+										</ul>
+										<ul class="flex-start">
+									# ELSE #
+										# IF emojis.C_SUB_CATEGORY #
+											</ul>
+											<ul class="flex-start">
+												<li> <h6>{emojis.CATEGORY_NAME}</h6> </li>
+											</ul>
+											<ul class="flex-start">
+										# ELSE #
+											<li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
+												<span class="hide-modal bigger" onclick="insertbbcode('[emo]{emojis.DECIMAL}[/emo]', '', '{FIELD}');" role="button" aria-label="{emojis.NAME}">
+													{emojis.DECIMAL}
+												</span>
+											</li>
+										# ENDIF #
+									# ENDIF #
+								# END emojis #
+							</ul>
+						</div>
+					</div>
+				</div>
+			</li>
 			<li id="code-fa" class="bbcode-elements">
 				<span class="bbcode-button {AUTH_FA}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-fa{FIELD}" role="button" aria-label="{@bbcode.fa}">
 					<i class="far fa-fw fa-flag" aria-hidden="true"></i>
@@ -933,19 +976,17 @@
 						<div class="cell-header">
 							<div class="cell-name">{@bbcode.fa}</div>
 						</div>
-						<div class="cell-body">
-							<div class="cell-content align-center">
-								{@bbcode.fa.tag}
-							</div>
+						<div class="cell-content align-center">
+							{@bbcode.fa.tag}
 						</div>
 						<div class="cell-list cell-list-inline">
 							<ul>
 								# START code_fa #
-								<li>
-									<span class="hide-modal" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
-										<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
-									</span>
-								</li>
+									<li>
+										<span class="hide-modal" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
+											<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
+										</span>
+									</li>
 								# END code_fa #
 							</ul>
 						</div>

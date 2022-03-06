@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 10
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -332,6 +332,16 @@ abstract class ContentFormattingParser extends AbstractParser
 			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
 		else
 			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
+	}
+
+	/**
+	 * @desc Callback which parses the html emojis
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the emo tag are parsed
+	 */
+	protected function parse_emo_tag($matches)
+	{
+		return '<span class="emo-tag">' . HTMLEmojisDecoder::decode_html_emojis(!empty($matches[1]) ? $matches[1] : '') . '</span>';
 	}
 
 	/**

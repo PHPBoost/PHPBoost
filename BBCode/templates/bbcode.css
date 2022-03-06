@@ -63,3 +63,19 @@
 #html-style .button.bgc-full {
 	padding: 0.228em 1.618em;
 }
+
+/* large liste */
+.large-list {
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+#emojis.bbcode-elements ul { justify-content: flex-start; }
+#emojis.bbcode-elements ul li { padding: 0; }
+#emojis.bbcode-elements ul li h5 { padding: 0.618em 0.618em; }
+#emojis.bbcode-elements ul li h6 { padding: 0.618em 1.618em; }
+#emojis.bbcode-elements ul li span {
+	display: block;
+	padding: 0.228em 0.809em;
+	text-shadow: 0 0 1px rgba(var(--darken), 1);
+}

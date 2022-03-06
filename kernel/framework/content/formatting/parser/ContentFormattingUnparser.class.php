@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -167,7 +167,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	protected function unparse_fa_tag($matches)
 	{
 		$fa_code = '';
-		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd'));
+		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd', 't'));
 		$options_list = isset($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 
@@ -191,6 +191,15 @@ abstract class ContentFormattingUnparser extends AbstractParser
 		}
 
 		return '[fa' . $fa_code . $style . ']' . $matches[2] . '[/fa]';
+	}
+	/**
+	 * @desc Callback which allows to unparse the font awasome icons tag
+	 * @param string[] $matches Content matched by a regular expression
+	 * @return string The string in which the fa tag are parsed
+	 */
+	protected function unparse_emo_tag($matches)
+	{
+		return '[emo]' . HTMLEmojisDecoder::decode_html_emojis($matches[1]) . '[/emo]';
 	}
 
 	/**

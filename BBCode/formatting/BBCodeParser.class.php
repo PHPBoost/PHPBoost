@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 09 06
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -242,119 +242,125 @@ class BBCodeParser extends ContentFormattingParser
 			'teaser' => '[[TEASER]]$1[[/TEASER]]',
 		);
 
-			$parse_line = true;
+		$parse_line = true;
 
-			//Suppression des remplacements des balises interdites.
-			if (!empty($this->forbidden_tags))
+		//Suppression des remplacements des balises interdites.
+		if (!empty($this->forbidden_tags))
+		{
+			//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
+			if (in_array('url', $this->forbidden_tags))
 			{
-				//Si on interdit les liens, on ajoute toutes les manières par lesquelles elles peuvent passer
-				if (in_array('url', $this->forbidden_tags))
+				$this->forbidden_tags[] = 'url1';
+				$this->forbidden_tags[] = 'url2';
+				$this->forbidden_tags[] = 'url3';
+				$this->forbidden_tags[] = 'url4';
+				$this->forbidden_tags[] = 'url5';
+				$this->forbidden_tags[] = 'url6';
+				$this->forbidden_tags[] = 'url7';
+			}
+			if (in_array('mail', $this->forbidden_tags))
+			{
+				$this->forbidden_tags[] = 'mail';
+				$this->forbidden_tags[] = 'mail2';
+			}
+
+			foreach ($this->forbidden_tags as $key => $tag)
+			{
+				if ($tag == 'line')
 				{
-					$this->forbidden_tags[] = 'url1';
-					$this->forbidden_tags[] = 'url2';
-					$this->forbidden_tags[] = 'url3';
-					$this->forbidden_tags[] = 'url4';
-					$this->forbidden_tags[] = 'url5';
-					$this->forbidden_tags[] = 'url6';
-					$this->forbidden_tags[] = 'url7';
+					$parse_line = false;
 				}
-				if (in_array('mail', $this->forbidden_tags))
+				else
 				{
-					$this->forbidden_tags[] = 'mail';
-					$this->forbidden_tags[] = 'mail2';
-				}
-
-				foreach ($this->forbidden_tags as $key => $tag)
-				{
-					if ($tag == 'line')
-					{
-						$parse_line = false;
-					}
-					else
-					{
-						unset($array_preg[$tag]);
-						unset($array_preg_replace[$tag]);
-					}
+					unset($array_preg[$tag]);
+					unset($array_preg_replace[$tag]);
 				}
 			}
+		}
 
-			//Remplacement : on parse les balises classiques
-			$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
+		//Remplacement : on parse les balises classiques
+		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
-			//Line tag
-			if ($parse_line)
-			$this->content = str_replace('[line]', '<hr class="formatter-hr" />', $this->content);
+		//Line tag
+		if ($parse_line)
+		$this->content = str_replace('[line]', '<hr class="formatter-hr" />', $this->content);
 
-			//Title tag
-			if (!in_array('title', $this->forbidden_tags))
-			{
-				$this->content = preg_replace_callback('`\[title=([1-6])\](.+)\[/title\]`iuU', array($this, 'parse_title'), $this->content);
-			}
+		//Title tag
+		if (!in_array('title', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[title=([1-6])\](.+)\[/title\]`iuU', array($this, 'parse_title'), $this->content);
+		}
 
-			//Image tag
-			if (!in_array('img', $this->forbidden_tags))
-			{
-				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|webp|gif|png|tiff|svg))\[/img\]`iuU', array($this, 'parse_img'), $this->content);
-				$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]data:(.+)\[/img\]`iuU', array($this, 'parse_img'), $this->content);
-			}
+		//Image tag
+		if (!in_array('img', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|webp|gif|png|tiff|svg))\[/img\]`iuU', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]data:(.+)\[/img\]`iuU', array($this, 'parse_img'), $this->content);
+		}
 
-			//FA tag
-			if (!in_array('fa', $this->forbidden_tags))
-			{
-				$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9- ]+)\[/fa\]`iuU', array($this, 'parse_fa_tag'), $this->content);
-			}
+		//FA tag
+		if (!in_array('fa', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9- ]+)\[/fa\]`iuU', array($this, 'parse_fa_tag'), $this->content);
+		}
 
-			//Wikipedia tag
-			if (!in_array('wikipedia', $this->forbidden_tags))
-			{
-				$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_tag'), $this->content);
-			}
+		//HTML emoji tag
+		if (!in_array('emo', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[emo\](.+)\[/emo\]`iuU', array($this, 'parse_emo_tag'), $this->content);
+		}
 
-			##Parsage des balises imbriquées.
-			//Quote tag
-			if (!in_array('quote', $this->forbidden_tags))
-			{
-				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('editor.quote', 'editor-lang') . ' :</span><div class="formatter-content">$1</div></blockquote>');
-				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>');
-			}
+		//Wikipedia tag
+		if (!in_array('wikipedia', $this->forbidden_tags))
+		{
+			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_tag'), $this->content);
+		}
 
-			//Hide tag
-			if (!in_array('hide', $this->forbidden_tags))
-			{
-				$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title">' . LangLoader::get_message('common.hidden', 'common-lang') . ' :</span><div class="formatter-content">$1</div></div>');
-				$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
-			}
+		##Parsage des balises imbriquées.
+		//Quote tag
+		if (!in_array('quote', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('editor.quote', 'editor-lang') . ' :</span><div class="formatter-content">$1</div></blockquote>');
+			$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></blockquote>');
+		}
 
-			//Indent tag
-			if (!in_array('indent', $this->forbidden_tags))
-			{
-				$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`suU', '<div class="indent">$1</div>');
-			}
+		//Hide tag
+		if (!in_array('hide', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[hide]', '`\[hide\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title">' . LangLoader::get_message('common.hidden', 'common-lang') . ' :</span><div class="formatter-content">$1</div></div>');
+			$this->_parse_imbricated('[hide=', '`\[hide=([^\]]+)\](.+)\[/hide\]`suU', '<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
+		}
 
-			//Block tag
-			if (!in_array('block', $this->forbidden_tags))
-			{
-				$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`suU', '<div class="formatter-container formatter-block">$1</div>');
-				$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`suU', '<div class="formatter-container formatter-block" style="$1">$2</div>');
-			}
+		//Indent tag
+		if (!in_array('indent', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[indent]', '`\[indent\](.+)\[/indent\]`suU', '<div class="indent">$1</div>');
+		}
 
-			//Fieldset tag
-			if (!in_array('fieldset', $this->forbidden_tags))
-			{
-				$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`suU', '<fieldset class="formatter-container formatter-fieldset" style="$2"><legend>$1</legend><div class="formatter-content">$3</div></fieldset>');
-			}
+		//Block tag
+		if (!in_array('block', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[block]', '`\[block\](.+)\[/block\]`suU', '<div class="formatter-container formatter-block">$1</div>');
+			$this->_parse_imbricated('[block style=', '`\[block style="([^"]+)"\](.+)\[/block\]`suU', '<div class="formatter-container formatter-block" style="$1">$2</div>');
+		}
 
-			// Feed tag
-			if (!in_array('feed', $this->forbidden_tags))
-			{
-				$this->parse_feed_tag();
-			}
+		//Fieldset tag
+		if (!in_array('fieldset', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[fieldset', '`\[fieldset(?: legend="(.*)")?(?: style="([^"]*)")?\](.+)\[/fieldset\]`suU', '<fieldset class="formatter-container formatter-fieldset" style="$2"><legend>$1</legend><div class="formatter-content">$3</div></fieldset>');
+		}
 
-			//Container tag
-			if (!in_array('container', $this->forbidden_tags))
-			{
-				$this->_parse_imbricated('[container', '`\[container(?: id="([^"]*)")?(?: class="([^"]*)")?(?: style="([^"]*)")?\](.+)\[/container\]`suU', '<div id="$1" class="$2" style="$3">$4</div>');
-			}
+		// Feed tag
+		if (!in_array('feed', $this->forbidden_tags))
+		{
+			$this->parse_feed_tag();
+		}
+
+		//Container tag
+		if (!in_array('container', $this->forbidden_tags))
+		{
+			$this->_parse_imbricated('[container', '`\[container(?: id="([^"]*)")?(?: class="([^"]*)")?(?: style="([^"]*)")?\](.+)\[/container\]`suU', '<div id="$1" class="$2" style="$3">$4</div>');
+		}
 	}
 
 	/**

@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 05
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -300,6 +300,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		##Callbacks
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?(?: title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
+
+		//HTML emoji Icon
+		$this->content = preg_replace_callback('`<span class="emo-tag">(?:[a-z0-9_+.:?/=#%@&;,-])</span>`iuU', array($this, 'unparse_emo_tag'), $this->content);
 
 		##Remplacement des balises imbriquées
 

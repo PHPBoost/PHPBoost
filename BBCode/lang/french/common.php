@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 01
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -132,6 +132,8 @@ $lang['bbcode.figure.caption'] = 'Description de l\'image';
 $lang['bbcode.upload'] = 'Attacher un fichier';
 
 $lang['bbcode.smileys']            = 'Smileys';
+$lang['bbcode.emojis']             = 'Emojis HTML';
+$lang['bbcode.emojis.link']        = 'Liste complète sur <a href="https://unicode-table.com/fr/" target="_blank" rel="noopener norefferer">unicode-table.com</a>';
 $lang['bbcode.fa']                 = 'Icônes Font Awesome';
 $lang['bbcode.fa.tag']             = '[fa=fa-style,fa-option]nom de l\'icône (sans le "fa-")[/fa]';
 $lang['bbcode.code']               = 'Code';
