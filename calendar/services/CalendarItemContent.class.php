@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 05
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -188,6 +188,11 @@ class CalendarItemContent
 		return $this->update_date;
 	}
 
+	public function has_update_date()
+	{
+		return $this->update_date !== null && $this->update_date > $this->creation_date;
+	}
+
 	public function set_author_user(User $author)
 	{
 		$this->author_user = $author;
@@ -337,7 +342,7 @@ class CalendarItemContent
 			'approved' => (int)$this->is_approved(),
 			'map_displayed' => (int)$this->is_map_displayed(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
-			'update_date' => $this->get_update_date()->get_timestamp(),
+			'update_date' => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
 			'registration_limit' => (int)$this->is_registration_limited(),

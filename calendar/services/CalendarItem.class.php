@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 05
+ * @version     PHPBoost 6.0 - last update: 2022 03 06
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -211,7 +211,7 @@ class CalendarItem
 				'C_CANCELLED'                => $this->content->is_cancelled(),
 				'C_FULL_ITEM_DISPLAY'        => CalendarConfig::load()->is_full_item_displayed(),
 				'C_NEW_CONTENT'              => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('calendar', $this->content->get_creation_date()->get_timestamp()),
-				'C_HAS_UPDATE_DATE' 		 => $this->content->get_update_date(),
+				'C_HAS_UPDATE_DATE' 		 => $this->content->has_update_date(),
 
 				//Category
 				'C_ROOT_CATEGORY' => $category->get_id()   == Category::ROOT_CATEGORY,
