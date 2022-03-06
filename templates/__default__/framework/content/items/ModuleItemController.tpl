@@ -16,7 +16,7 @@
 			# IF NOT C_PUBLISHED #
 				<div class="content"># INCLUDE NOT_PUBLISHED_MESSAGE #</div>
 			# ENDIF #
-			<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item# IF C_PRIME_ITEM # prime-item# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
+			<article id="{MODULE_ID}-item-{ID}" class="{MODULE_ID}-item# IF C_NEW_CONTENT # new-content# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 				<div class="flex-between">
 					# IF C_MORE_OPTIONS #
 						<div class="more">
@@ -77,7 +77,7 @@
 				</div>
 				# IF C_HAS_UPDATE_DATE #<span class="pinned notice small text-italic item-modified-date">{@common.last.update}: <time datetime="{UPDATE_DATE_ISO8601}" itemprop="dateModified">{UPDATE_DATE_FULL}</time></span># ENDIF #
 
-				<div class="content cell-tile">
+				<div class="content cell-tile# IF C_PRIME_ITEM # prime-item# ENDIF #">
 					# IF C_CELL_OPTIONS #
 						<div class="cell cell-options">
 							<div class="cell-header">

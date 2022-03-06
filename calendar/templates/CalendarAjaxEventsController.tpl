@@ -73,7 +73,7 @@
 			</table>
 		</div>
 	# ELSE #
-		<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+		<div class="cell-flex # IF C_GRID_VIEW #cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 			# START items #
 				<article itemscope="itemscope" itemtype="https://schema.org/Event" id="calendar-item-{items.ID}" class="calendar-item category-{items.CATEGORY_ID} cell# IF items.C_NEW_CONTENT # new-content# ENDIF #">
 					<header class="cell-header">

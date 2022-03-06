@@ -94,11 +94,6 @@
     clear: both;
 }
 
-.cell-row {
-	display: flex;
-	flex-direction: column;
-}
-
 .cell-row .cell-body {
 	display: flex;
 	flex-direction: row;
@@ -110,7 +105,7 @@
 
 @media (min-width: 769px) {
 	.cell-row .cell-thumbnail {
-		width: 30%;
+		max-height: 8.09em;
 		padding: 0.618em;
 	}
 	.cell-row .cell-thumbnail.cell-avatar {

@@ -33,7 +33,7 @@
 				<div class="content-container">
 					<div class="cell-flex cell-tile cell-columns-{CATEGORIES_PER_ROW}">
 						# START sub_categories_list #
-							<div class="cell category-{sub_categories_list.CATEGORY_ID}" itemscope>
+							<div class="cell cell-category category-{sub_categories_list.CATEGORY_ID}" itemscope>
 								<div class="cell-header">
 									<h5 class="cell-name" itemprop="about"><a class="offload" href="{sub_categories_list.U_CATEGORY}">{sub_categories_list.CATEGORY_NAME}</a></h5>
 									<span class="small pinned notice" aria-label="{sub_categories_list.ITEMS_NUMBER} # IF sub_categories_list.C_SEVERAL_ITEMS #{@items}# ELSE #{@item}# ENDIF #">
@@ -216,7 +216,7 @@
 						</table>
 					</div>
 				# ELSE #
-					<div class="# IF C_GRID_VIEW #cell-flex cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
+					<div class="cell-flex # IF C_GRID_VIEW #cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">
 						# START items #
 							<article id="{MODULE_ID}-item-{items.ID}" class="{MODULE_ID}-item category-{items.CATEGORY_ID} cell# IF items.C_PRIME_ITEM # prime-item# ENDIF ## IF items.C_NEW_CONTENT # new-content# ENDIF#" itemscope="itemscope" itemtype="https://schema.org/CreativeWork">
 								<header class="cell-header">
