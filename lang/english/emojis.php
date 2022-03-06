@@ -12,7 +12,7 @@
 ####################################################
 
 $lang = array(
-'emo.cat.smileys' => array('Simleys and emotions' => ''),
+'U+.cat.smileys' => array('Simleys and emotions' => ''),
     'U+1F600' => array('Grinning Face'                                                                  => '&#128512;'),
     'U+1F609' => array('Winking Face'                                                                   => '&#128521;'),
     'U+1F601' => array('Grinning Face with Smiling Eyes'                                                => '&#128513;'),
