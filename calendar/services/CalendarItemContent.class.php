@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 21
+ * @version     PHPBoost 6.0 - last update: 2022 03 05
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -336,8 +336,8 @@ class CalendarItemContent
 			'cancelled' => (int)$this->is_cancelled(),
 			'approved' => (int)$this->is_approved(),
 			'map_displayed' => (int)$this->is_map_displayed(),
-			'creation_date' => (int)$this->get_creation_date()->get_timestamp(),
-			'update_date' => (int)$this->get_update_date()->get_timestamp(),
+			'creation_date' => $this->get_creation_date()->get_timestamp(),
+			'update_date' => $this->get_update_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'registration_authorized' => (int)$this->is_registration_authorized(),
 			'registration_limit' => (int)$this->is_registration_limited(),

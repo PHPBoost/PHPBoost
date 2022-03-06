@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 21
+ * @version     PHPBoost 6.0 - last update: 2022 03 05
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -113,8 +113,8 @@ class CalendarItem
 		return array(
 			'id_event' => $this->get_id(),
 			'content_id' => $this->content->get_id(),
-			'start_date' => (int)($this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : ''),
-			'end_date' => (int)($this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : ''),
+			'start_date' => ($this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : ''),
+			'end_date' => ($this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : ''),
 			'parent_id' => $this->get_parent_id()
 		);
 	}
