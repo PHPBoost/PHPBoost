@@ -341,7 +341,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 */
 	protected function parse_emo_tag($matches)
 	{
-		return '<span class="emo-tag">' . HTMLEmojisDecoder::decode_html_emojis(!empty($matches[1]) ? $matches[1] : '') . '</span>';
+		return '<span class="emoji-tag">' . HTMLEmojisDecoder::decode_html_emojis(!empty($matches[1]) ? $matches[1] : '') . '</span>';
 	}
 
 	/**

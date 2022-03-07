@@ -124,6 +124,17 @@ form > [class*="cell-"]:not(.cell-header) { border-width: 0 1px 1px; }
 	align-items: flex-end;
 }
 
+/* oversize */
+.cell-overflow-x {
+	max-width: 500px;
+	overflow-x: auto;
+}
+
+.cell-overflow-y {
+	max-height: 500px;
+	overflow-y: auto;
+}
+
 /* --- list --- */
 .cell-list ul {
 	margin: 0;

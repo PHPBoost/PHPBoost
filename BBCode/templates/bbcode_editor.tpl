@@ -924,7 +924,7 @@
 				</div>
 			</li>
 			<li id="emojis" class="bbcode-elements">
-				<span class="bbcode-button {AUTH_EMO}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
+				<span class="bbcode-button {AUTH_EMOJI}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
 					&#128578;
 				</span>
 				<div id="block-emojis{FIELD}" class="modal modal-animation">
@@ -936,7 +936,7 @@
 						<div class="cell-content align-center">
 							{@H|bbcode.emojis.link}
 						</div>
-						<div class="cell-list cell-list-inline large-list">
+						<div class="cell-list cell-list-inline cell-overflow-y">
 							<ul class="flex-start">
 								# START emojis #
 									# IF emojis.C_CATEGORY #
@@ -954,7 +954,7 @@
 											<ul class="flex-start">
 										# ELSE #
 											<li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
-												<span class="hide-modal bigger" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
+												<span class="hide-modal bigger emoji-tag" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
 													{emojis.DECIMAL}
 												</span>
 											</li>

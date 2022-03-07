@@ -256,6 +256,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU',
 			'`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU',
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
+			'`<span class="emoji-tag">(.*)</span>`isuU',
 		);
 
 		$array_preg_replace = array(
@@ -293,6 +294,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"[member]$1[/member]",
 			"[moderator]$1[/moderator]",
 			"[teaser]$1[/teaser]",
+			"[emoji]$1[/emoji]",
 		);
 
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
@@ -302,7 +304,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<i class="fa([blrsd])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?(?: title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
 
 		//HTML emoji Icon
-		$this->content = preg_replace_callback('`<span class="emo-tag">(?:[a-z0-9_+.:?/=#%@&;,-])</span>`iuU', array($this, 'unparse_emo_tag'), $this->content);
+		$this->content = preg_replace_callback('`<span class="emoji-tag">(?:[a-z0-9_+.:?/=#%@&;,-])</span>`iuU', array($this, 'unparse_emo_tag'), $this->content);
 
 		##Remplacement des balises imbriquées
 
