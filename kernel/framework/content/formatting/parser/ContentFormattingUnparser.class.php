@@ -197,7 +197,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
-	protected function unparse_emo_tag($matches)
+	protected function unparse_emoji_tag($matches)
 	{
 		return '[emoji]' . HTMLEmojisDecoder::decode_html_emojis($matches[1]) . '[/emoji]';
 	}

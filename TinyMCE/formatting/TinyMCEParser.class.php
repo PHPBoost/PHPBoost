@@ -733,9 +733,9 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 
 		//HTML emoji tag
-		if (!in_array('emo', $this->forbidden_tags))
+		if (!in_array('emoji', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[emoji\](.+)\[/emoji\]`iuU', array($this, 'parse_emo_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[emoji\](.+)\[/emoji\]`iuU', array($this, 'parse_emoji_tag'), $this->content);
 		}
 
 		##Nested tags
