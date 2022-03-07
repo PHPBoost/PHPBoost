@@ -108,12 +108,11 @@
 		max-height: 8.09em;
 		padding: 0.618em;
 	}
+	
 	.cell-row .cell-thumbnail.cell-avatar {
 		width: auto;
 		margin: 0;
 	}
-
-	.cell-row .cell-thumbnail + .cell-content { width: 70%; }
 }
 
 /* --- Modal ---------------------------------------------------------------- */
