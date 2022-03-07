@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 06
+ * @version     PHPBoost 6.0 - last update: 2022 03 07
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -199,7 +199,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	 */
 	protected function unparse_emo_tag($matches)
 	{
-		return '[emo]' . HTMLEmojisDecoder::decode_html_emojis($matches[1]) . '[/emo]';
+		return '[emoji]' . HTMLEmojisDecoder::decode_html_emojis($matches[1]) . '[/emoji]';
 	}
 
 	/**

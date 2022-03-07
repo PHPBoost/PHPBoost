@@ -954,7 +954,7 @@
 											<ul class="flex-start">
 										# ELSE #
 											<li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
-												<span class="hide-modal bigger" onclick="insertbbcode('[emo]{emojis.DECIMAL}[/emo]', '', '{FIELD}');" role="button" aria-label="{emojis.NAME}">
+												<span class="hide-modal bigger" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
 													{emojis.DECIMAL}
 												</span>
 											</li>

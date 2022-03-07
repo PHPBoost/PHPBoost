@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 06
+ * @version     PHPBoost 6.0 - last update: 2022 03 07
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -132,7 +132,7 @@ $lang['bbcode.upload'] = 'Attach files';
 
 $lang['bbcode.smileys']            = 'Smileys';
 $lang['bbcode.emojis']             = 'HTML Emojis';
-$lang['bbcode.emojis.link']        = 'Complete list at <a href="https://unicode-table.com/en/" target="_blank" rel="noopener norefferer">unicode-table.com</a>';
+$lang['bbcode.emojis.link']        = 'More emojis at <a href="https://unicode-table.com/en/" target="_blank" rel="noopener norefferer">unicode-table.com</a> or <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
 $lang['bbcode.fa']                 = 'Font Awesome Icon';
 $lang['bbcode.fa.tag']             = '[fa=fa-style,fa-option]codename (without "fa-")[/fa]';
 $lang['bbcode.code']               = 'Code';

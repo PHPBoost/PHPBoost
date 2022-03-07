@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 06
+ * @version     PHPBoost 6.0 - last update: 2022 03 07
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -735,7 +735,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//HTML emoji tag
 		if (!in_array('emo', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[emo\](.+)\[/emo\]`iuU', array($this, 'parse_emo_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[emoji\](.+)\[/emoji\]`iuU', array($this, 'parse_emo_tag'), $this->content);
 		}
 
 		##Nested tags
