@@ -258,7 +258,7 @@ class ForumConfig extends AbstractConfigData
 			self::MESSAGE_WHEN_TOPIC_IS_SOLVED              => LangLoader::get_message('forum.config.issue.status.solved', 'common', 'forum'),
 			self::MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED => true,
 			self::AUTHORIZATIONS                            => array('r-1' => 129, 'r0' => 131, 'r1' => 139),
-			self::DISPLAY_THUMBNAILS						=> true
+			self::DISPLAY_THUMBNAILS						=> false
 		);
 	}
 
