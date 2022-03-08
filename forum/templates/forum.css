@@ -2,6 +2,13 @@
 * Copy this file into your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
+/* thumbnail */
+.forum-thumbnail img,
+.forum-category-thumbnail {
+	max-width: 50px;
+	max-height: 50px;
+	vertical-align: middle;
+}
 
 /* --- Forum table --- */
 #module-forum table.bt tbody td.forum-last-topic .bt-content { max-width: 63%; }

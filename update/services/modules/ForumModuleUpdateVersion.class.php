@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2022 03 08
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,6 +26,15 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/ForumSitemapExtensionPoint.class.php'
 		);
 
+		$this->database_columns_to_add = array(
+			array(
+				'table_name' => PREFIX . 'forum_cats',
+				'columns' => array(
+					'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+				)
+			),
+		);
+
 		$this->database_columns_to_modify = array(
 			array(
 				'table_name' => PREFIX . 'forum_alerts',
@@ -43,7 +52,9 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'forum_topics',
 				'columns' => array(
-					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0'
+					'idcat'    => 'id_category INT(11) NOT NULL DEFAULT 0',
+					'title'    => 'title VARCHAR(255) NOT NULL DEFAULT ""',
+					'subtitle' => 'subtitle VARCHAR(255) NOT NULL DEFAULT ""'
 				)
 			)
 		);

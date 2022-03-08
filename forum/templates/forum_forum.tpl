@@ -9,7 +9,10 @@
 # IF C_FORUM_SUB_CATS #
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-subforum" class="forum-content">
 		<header class="flex-between">
-			<h2>{@forum.sub.forums}</h2>
+			<h2>
+				# IF C_THUMBNAILS_DISPLAYED ## IF C_HAS_THUMBNAIL#<img class="forum-category-thumbnail" src="{U_CATEGORY_THUMBNAIL}" alt="{CURRENT_SUBCAT_NAME}" /># ENDIF ## ENDIF # {CURRENT_SUBCAT_NAME}
+				{@forum.sub.forums}
+			</h2>
 			<div class="controls">
 				<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}"><i class="fa fa-rss warning" aria-hidden="true"></i><span class="sr-only">{@common.syndication}</span></a>
 			</div>
@@ -18,7 +21,8 @@
 			<table class="table forum-table">
 				<thead>
 					<tr>
-						<th class="forum-announce-topic" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i></th>
+						<th class="forum-announce-topic w5" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i></th>
+						# IF C_THUMBNAILS_DISPLAYED #<th class="forum-thumbnail w10" aria-label="{@form.thumbnail}"><i class="far fa-image" aria-hidden="true"></i><span class="hidden-large-screens">{@form.thumbnail}</span></th># ENDIF #
 						<th class="forum-topic">{@forum.forums}</th>
 						<th class="forum-subject-nb" aria-label="{@forum.topics}"><i class="far fa-file-alt fa-fw" aria-hidden="true"></i><span class="sr-only">{@forum.topics}</span></th>
 						<th class="forum-message-nb" aria-label="{@forum.messages.number}"><i class="far fa-comments fa-fw" aria-hidden="true"></i><span class="sr-only">{@forum.messages.number}</span></th>
@@ -32,6 +36,11 @@
 								<td class="forum-announce-topic">
 									<i class="fa fa-globe fa-2x" aria-hidden="true"></i>
 								</td>
+								# IF C_THUMBNAILS_DISPLAYED #
+									<td class="forum-thumbnail">
+										# IF subcats.C_HAS_THUMBNAIL #<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" /># ENDIF #
+									</td>
+								# ENDIF #
 								<td class="forum-topic" colspan="4">
 									<a class="offload" href="{subcats.U_LINK}">{subcats.CATEGORY_NAME}</a>
 									<span class="small d-block">{subcats.DESCRIPTION}</span>
@@ -40,6 +49,11 @@
 								<td class="forum-announce-topic">
 									<i class="fa # IF subcats.C_BLINK #blink # ENDIF #{subcats.TOPIC_ICON}" aria-hidden="true"></i>
 								</td>
+								# IF C_THUMBNAILS_DISPLAYED #
+									<td class="forum-thumbnail">
+										# IF subcats.C_HAS_THUMBNAIL #<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" /># ENDIF #
+									</td>
+								# ENDIF #
 								<td class="forum-topic">
 									<a class="offload" href="forum{subcats.U_CATEGORY}">{subcats.CATEGORY_NAME}</a>
 									<span class="small d-block">{subcats.DESCRIPTION}</span>
@@ -80,7 +94,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="6">
+						<td colspan="# IF C_THUMBNAILS_DISPLAYED #7# ELSE #6# ENDIF #">
 						</td>
 					</tr>
 				</tfoot>
@@ -93,7 +107,7 @@
 	<header>
 		<div class="flex-between">
 			<h2>
-				{CURRENT_SUBCAT_NAME}
+				# IF C_THUMBNAILS_DISPLAYED ## IF C_HAS_THUMBNAIL#<img class="forum-category-thumbnail" src="{U_CATEGORY_THUMBNAIL}" alt="{CURRENT_SUBCAT_NAME}" /># ENDIF ## ENDIF # {CURRENT_SUBCAT_NAME}
 			</h2>
 			<div class="controls align-right">
 				# IF C_POST_NEW_TOPIC #
@@ -110,7 +124,7 @@
 			<thead>
 				<tr>
 					# IF C_CONTROLS #<th class="w5" aria-label="{@common.moderation}"><i class="fa fa-gavel" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th># ENDIF #
-					<th class="forum-announce-topic" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th>
+					<th class="forum-announce-topic w5" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th>
 					<th class="forum-fixed-topic" aria-label="{@forum.topic.options}"><i class="fa fa-check success" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topic.options}</span></th>
 					<th class="forum-topic" aria-label="{@forum.topics}"><i class="far fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th>
 					<th class="forum-author" aria-label="{@forum.topic.author}"><i class="far fa-user fa-fw hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topic.author}</span></th>

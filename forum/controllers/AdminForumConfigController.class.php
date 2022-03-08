@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2022 03 08
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,7 @@ class AdminForumConfigController extends DefaultAdminModuleController
 			$this->form->get_field_by_id('message_when_topic_is_unsolved')->set_hidden(!$this->config->is_message_before_topic_title_displayed());
 			$this->form->get_field_by_id('message_when_topic_is_solved')->set_hidden(!$this->config->is_message_before_topic_title_displayed());
 			$this->form->get_field_by_id('message_before_topic_title_icon_displayed')->set_hidden(!$this->config->is_message_before_topic_title_displayed());
-			$view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
 		$this->view->put('CONTENT', $this->form->display());
@@ -80,6 +80,10 @@ class AdminForumConfigController extends DefaultAdminModuleController
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars($this->lang['form.hide.right.column'], array('module' => "forum")), $this->config->is_right_column_disabled(),
+			array('class' => 'custom-checkbox')
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('display_thumbnails', $this->lang['forum.config.display.thumbnails'], $this->config->are_thumbnails_displayed(),
 			array('class' => 'custom-checkbox')
 		));
 
@@ -195,6 +199,11 @@ class AdminForumConfigController extends DefaultAdminModuleController
 		}
 		else
 			$this->config->hide_message_before_topic_title();
+
+		if ($this->form->get_value('display_thumbnails'))
+			$this->config->display_thumbnails();
+		else
+			$this->config->hide_thumbnails();
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 03
+ * @version     PHPBoost 6.0 - last update: 2022 03 08
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,6 +27,7 @@ class ForumConfig extends AbstractConfigData
 	const MESSAGE_WHEN_TOPIC_IS_SOLVED              = 'message_when_topic_is_solved';
 	const MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED = 'message_before_topic_title_icon_displayed';
 	const AUTHORIZATIONS                            = 'authorizations';
+	const DISPLAY_THUMBNAILS                        = 'display_thumbnail';
 
 	public function get_forum_name()
 	{
@@ -106,6 +107,21 @@ class ForumConfig extends AbstractConfigData
 	public function are_multiple_posts_allowed()
 	{
 		return $this->get_property(self::MULTIPLE_POSTS_ALLOWED);
+	}
+
+	public function display_thumbnails()
+	{
+		$this->set_property(self::DISPLAY_THUMBNAILS, true);
+	}
+
+	public function hide_thumbnails()
+	{
+		$this->set_property(self::DISPLAY_THUMBNAILS, false);
+	}
+
+	public function are_thumbnails_displayed()
+	{
+		return $this->get_property(self::DISPLAY_THUMBNAILS);
 	}
 
 	public function display_connexion_form()
@@ -241,7 +257,8 @@ class ForumConfig extends AbstractConfigData
 			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED            => LangLoader::get_message('forum.config.issue.status.unsolved', 'common', 'forum'),
 			self::MESSAGE_WHEN_TOPIC_IS_SOLVED              => LangLoader::get_message('forum.config.issue.status.solved', 'common', 'forum'),
 			self::MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED => true,
-			self::AUTHORIZATIONS                            => array('r-1' => 129, 'r0' => 131, 'r1' => 139)
+			self::AUTHORIZATIONS                            => array('r-1' => 129, 'r0' => 131, 'r1' => 139),
+			self::DISPLAY_THUMBNAILS						=> true
 		);
 	}
 

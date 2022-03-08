@@ -5,7 +5,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="5">
+						<td colspan="# IF C_THUMBNAILS_DISPLAYED #6# ELSE #5# ENDIF #">
 						</td>
 					</tr>
 				</tfoot>
@@ -22,6 +22,7 @@
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-{forums_list.cats.CATEGORY_ID}" class="forum-content">
 		<header class="flex-between">
 			<h2>
+				# IF C_THUMBNAILS_DISPLAYED ## IF forums_list.cats.C_HAS_THUMBNAIL#<img class="forum-category-thumbnail" src="{forums_list.cats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.cats.CATEGORY_NAME}" /># ENDIF ## ENDIF #
 				<a href="{forums_list.cats.U_CATEGORY}" class="forum-link-cat offload">{forums_list.cats.CATEGORY_NAME}</a>
 			</h2>
 			<div class="controls">
@@ -35,7 +36,8 @@
 			<table id="table-{forums_list.cats.CATEGORY_ID}" class="table forum-table">
 				<thead>
 					<tr>
-						<th class="forum-announce-topic" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i></th>
+						<th class="forum-announce-topic w5" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i></th>
+						# IF C_THUMBNAILS_DISPLAYED #<th class="forum-thumbnail w10" aria-label="{@form.thumbnail}"><i class="far fa-image" aria-hidden="true"></i><span class="hidden-large-screens">{@form.thumbnail}</span></th># ENDIF #
 						<th class="forum-topic" aria-label="{@forum.forum}"><i class="far fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.forum}</span></th>
 						<th class="forum-topic" aria-label="{@forum.topics.number}"><i class="far fa-copy hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics.number}</span></th>
 						<th class="forum-message-nb" aria-label="{@forum.messages.number}"><i class="far fa-comments fa-fw hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.messages.number}</span></th>
@@ -50,6 +52,11 @@
 							<td class="forum-announce-topic">
 								<i class="fa fa-globe" aria-hidden="true"></i>
 							</td>
+							# IF C_THUMBNAILS_DISPLAYED #
+								<td class="forum-thumbnail">
+									# IF forums_list.subcats.C_HAS_THUMBNAIL #<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" /># ENDIF #
+								</td>
+							# ENDIF #
 							<td class="forum-topic" colspan="4">
 								<a class="offload" href="{forums_list.subcats.U_LINK}">{forums_list.subcats.CATEGORY_NAME}</a>
 								<span class="small d-block hidden-small-screens">{forums_list.subcats.DESCRIPTION}</span>
@@ -58,6 +65,11 @@
 							<td class="forum-announce-topic">
 								<i class="fa # IF forums_list.subcats.C_BLINK #blink # ENDIF #{forums_list.subcats.TOPIC_ICON}" aria-hidden="true"></i>
 							</td>
+							# IF C_THUMBNAILS_DISPLAYED #
+								<td class="forum-thumbnail">
+									# IF forums_list.subcats.C_HAS_THUMBNAIL #<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" /># ENDIF #
+								</td>
+							# ENDIF #
 							<td class="forum-topic">
 								<a class="offload" href="{forums_list.subcats.U_CATEGORY}">{forums_list.subcats.CATEGORY_NAME}</a>
 								<span class="small d-block hidden-small-screens">{forums_list.subcats.DESCRIPTION}</span>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 03 08
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -111,7 +111,7 @@ if (!empty($id_get))
 
 		//On liste les sous-catégories.
 		$result = PersistenceContext::get_querier()->select('SELECT
-			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.last_topic_id, c.status AS cat_status,
+			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.thumbnail, c.last_topic_id, c.status AS cat_status,
 			t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status,
 			m.user_id, m.display_name, m.level AS user_level, m.user_groups,
 			v.last_view_id
@@ -210,11 +210,12 @@ if (!empty($id_get))
 					'C_SUBFORUMS'             => !empty($subforums),
 					'C_LAST_TOPIC_MSG'        => !empty($row['last_topic_id']),
 					'C_LAST_MESSAGE_GUEST'    => !empty($row['display_name']),
+					'C_HAS_THUMBNAIL'         => !empty($row['thumbnail']),
 					'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
 
 					'TOPIC_ICON'              => $topic_icon,
 					'CATEGORY_ID'             => $row['cid'],
-					'CATEGORY_NAME'           => stripslashes($row['name']),
+					'CATEGORY_NAME'           => stripslashes($row['name']) . '/',
 					'DESCRIPTION'             => stripslashes($row['subname']),
 					'REWRITED_NAME'           => $row['rewrited_name'],
 					'SUBFORUMS'               => !empty($subforums) && !empty($row['subname']) ? $subforums : $subforums,
@@ -229,6 +230,7 @@ if (!empty($id_get))
 					'U_CATEGORY'              => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
 					'U_LAST_TOPIC'            => "topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 					'U_LAST_MESSAGE'          => !empty($row['last_topic_id']) ? "topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
+					'U_CATEGORY_THUMBNAIL' 	  => $categories_cache->get_category($row['cid'])->get_thumbnail()->rel(),
 					'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 				)));
 			}
@@ -288,9 +290,11 @@ if (!empty($id_get))
 	$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 	$vars_tpl = array(
+		'C_THUMBNAILS_DISPLAYED'     => $config->are_thumbnails_displayed(),
 		'C_PAGINATION'               => $pagination->has_several_pages(),
 		'C_CONTROLS'                 => $check_group_edit_auth,
 		'C_POST_NEW_TOPIC'           => $check_group_write_auth,
+		'C_HAS_THUMBNAIL'           => !empty($categories_cache->get_category($id_get)->get_thumbnail()),
 
 		'FORUM_NAME'                 => $config->get_forum_name(),
 		'PAGINATION'                 => $pagination->display(),
@@ -299,6 +303,7 @@ if (!empty($id_get))
 		'CURRENT_SUBCAT_NAME'        => $current_subcat,
 
 		'U_MARK_AS_READ'             => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $id_get, '')),
+		'U_CATEGORY_THUMBNAIL' => $categories_cache->get_category($id_get)->get_thumbnail()->rel(),
 		'U_CHANGE_CAT'               => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
 		'U_ONCHANGE'                 => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'             => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),

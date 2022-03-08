@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 11
+ * @version     PHPBoost 6.0 - last update: 2022 03 08
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -39,6 +39,7 @@ $lang['forum.config.enable.edit.marker']           = 'Display last edited time i
 $lang['forum.config.enable.multiple.posts']        = 'Allow members to post multiple consecutive messages';
 $lang['forum.config.enable.multiple.posts.clue']   = 'If the option is unchecked, the last message of the user will automatically be completed with the new posted content';
 $lang['forum.config.display.connexion.form']       = 'Display login form';
+$lang['forum.config.display.thumbnails']            = 'Display thumbnails';
 $lang['forum.config.display.message.before.topic'] = 'Display message before topic title';
 $lang['forum.config.message.before.topic']         = 'Message before topic title';
 $lang['forum.config.status.message.unsolved']      = 'Message explanation to members if topic status is unsolved';

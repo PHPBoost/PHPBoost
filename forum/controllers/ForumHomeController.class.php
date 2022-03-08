@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 03 08
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -13,7 +13,6 @@
 class ForumHomeController extends DefaultModuleController
 {
 	private $category;
-
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -62,8 +61,8 @@ class ForumHomeController extends DefaultModuleController
 		$i = 0;
 
 		//On liste les catégories et sous-catégories.
-		$result = PersistenceContext::get_querier()->select('
-		SELECT c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description AS subname, c.url, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.user_groups, v.last_view_id
+		$result = PersistenceContext::get_querier()->select('SELECT
+			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description AS subname, c.url, c.thumbnail, c.last_topic_id, c.status AS cat_status, t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status, m.user_id, m.display_name as login, m.level as user_level, m.user_groups, v.last_view_id
 		FROM ' . ForumSetup::$forum_cats_table . ' c
 		LEFT JOIN ' . ForumSetup::$forum_topics_table . ' t ON t.id = c.last_topic_id
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
@@ -74,6 +73,8 @@ class ForumHomeController extends DefaultModuleController
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories
 		));
+
+		$this->view->put('C_THUMBNAILS_DISPLAYED', $this->config->are_thumbnails_displayed());
 
 		$categories = array();
 		while ($row = $result->fetch())
@@ -104,11 +105,16 @@ class ForumHomeController extends DefaultModuleController
 
 			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
+
 				$this->view->assign_block_vars('forums_list.cats', array(
+					'C_HAS_THUMBNAIL' => !empty($row['thumbnail']),
+
 					'CATEGORY_ID'   => $row['cid'],
 					'CATEGORY_NAME' => $row['name'],
 					'REWRITED_NAME' => $row['rewrited_name'],
-					'U_CATEGORY'    => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel()
+
+					'U_CATEGORY'           => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel(),
+					'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
 				));
 				$display_sub_cats = $row['cat_status'] == ForumCategory::STATUS_UNLOCKED;
 			}
@@ -122,10 +128,14 @@ class ForumHomeController extends DefaultModuleController
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
 						$this->view->assign_block_vars('forums_list.cats', array(
+							'C_HAS_THUMBNAIL'         => !empty($this->category->get_thumbnail()),
+
 							'CATEGORY_ID'   => $this->category->get_id(),
 							'CATEGORY_NAME' => $this->category->get_name(),
 							'REWRITED_NAME' => $this->category->get_rewrited_name(),
-							'U_CATEGORY'    => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
+
+							'U_CATEGORY'           => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php'),
+							'U_CATEGORY_THUMBNAIL' => Url::to_rel($this->category->get_thumbnail()),
 						));
 						$display_cat = false;
 					}
@@ -201,6 +211,7 @@ class ForumHomeController extends DefaultModuleController
 						'C_SUBFORUMS'             => !empty($subforums),
 						'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
 						'C_LAST_TOPIC_MSG'        => !empty($row['last_topic_id']),
+						'C_HAS_THUMBNAIL'         => !empty($row['thumbnail']),
 						'C_LAST_MESSAGE_GUEST'    => ($row['last_user_id']) != '-1',
 
 						'TOPIC_ICON'            => $topic_icon,
@@ -216,11 +227,12 @@ class ForumHomeController extends DefaultModuleController
 						'LAST_USER_LEVEL'       => UserService::get_level_class($row['user_level']),
 						'LAST_USER_GROUP_COLOR' => $last_group_color,
 
-						'U_LAST_TOPIC'        => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
-						'U_LAST_MESSAGE'      => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
-						'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-						'U_LINK'              => $row['url'],
-						'U_CATEGORY'          => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
+						'U_LAST_TOPIC'         => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+						'U_LAST_MESSAGE'       => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
+						'U_LAST_USER_PROFILE'  => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+						'U_LINK'               => $row['url'],
+						'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
+						'U_CATEGORY'           => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 					)));
 				}
 			}

@@ -177,8 +177,8 @@ class ForumSetup extends DefaultModuleSetup
 		$fields = array(
 			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
 			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 100, 'notnull' => 1, 'default' => "''"),
-			'subtitle' => array('type' => 'string', 'length' => 75, 'notnull' => 1, 'default' => "''"),
+			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+			'subtitle' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'nbr_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
 			'nbr_views' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
