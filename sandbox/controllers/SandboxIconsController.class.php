@@ -28,52 +28,55 @@ class SandboxIconsController extends DefaultModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
-			'FA'              => self::get_fa(),
+			'FAS'              => self::get_fa_list(PATH_TO_ROOT . '/sandbox/templates/fas.css', 'fas'),
+			'FAB'              => self::get_fa_list(PATH_TO_ROOT . '/sandbox/templates/fab.css', 'fab'),
 			'ICOMOON'         => self::build_markup('sandbox/pagecontent/icons/icomoon.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 	}
 
-	private function get_fa()
+	public function get_fa_list($file, $prefix)
 	{
-		$view = new FileTemplate('sandbox/pagecontent/icons/fa.tpl');
-		$view->add_lang(array_merge($this->lang));
+		$view = new FileTemplate('sandbox/pagecontent/icons/fa_list.tpl');
+		$view->add_lang($this->lang);
 
-		// Social
-		$icons = array(
-			array('fab', 'facebook-f', '\f39e'),
-			array('fab', 'google-plus-g', '\f0d5'),
-			array('fab', 'twitter', '\f099'),
-			array('fas', 'hashtag', '\f292')
-		);
-
-		foreach ($icons as $icon)
-		{
-			$view->assign_block_vars('social', array(
-				'PREFIX' => $icon[0],
-				'FA'     => $icon[1],
-				'CODE'   => $icon[2]
+		$css_file = file_get_contents($file);
+	    $properties_list = explode('}', $css_file);
+        foreach($properties_list as $property)
+        {
+			$icon = $code = '';
+			$contents = explode('{', $property);
+	        foreach($contents as $pseudo_class)
+	        {
+				if (TextHelper::strpos($pseudo_class, 'content') !== false)
+	            {
+	                $content = explode('"', $pseudo_class);
+	                foreach($content as $row)
+	                {
+	                    if (TextHelper::strpos($row, '\\') !== false)
+	                    $code = $row;
+	                }
+	            }
+	            else
+	            {
+	                $classes = explode(':', $pseudo_class);
+	                foreach($classes as $class)
+	                {
+	                    if (TextHelper::strpos($class, 'fa-') !== false) {
+	                        $icon = str_replace('.', '',$class);
+	                        if (TextHelper::strpos($class, 'fa-') !== false) {
+	                            $fa = $icon;
+	                        }
+	                    }
+	                }
+	            }
+	        }
+			$view->assign_block_vars('fa_icons', array(
+				'PREFIX' => $prefix,
+				'FA'     => $icon,
+				'CODE'   => $code
 			));
-		}
-
-		// Responsive
-		$icons = array(
-			array('fas', 'tv', '\f26c'),
-			array('fas', 'desktop', '\f108'),
-			array('fas', 'laptop', '\f109'),
-			array('fas', 'tablet-alt', '\f3fa'),
-			array('fas', 'mobile-alt', '\f3cd')
-		);
-
-		foreach ($icons as $icon)
-		{
-			$view->assign_block_vars('responsive', array(
-				'PREFIX' => $icon[0],
-				'FA'     => $icon[1],
-				'CODE'   => $icon[2]
-			));
-		}
-
+        }
 		return $view;
 	}
 

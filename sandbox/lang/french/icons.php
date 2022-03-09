@@ -16,13 +16,8 @@
 
 // fa
 $lang['sandbox.icons.fa']        = ' Font-Awesome';
-$lang['sandbox.icons.fa.sample'] = 'Quelques exemples';
-$lang['sandbox.icons.fa.social'] = 'Réseaux sociaux';
-$lang['sandbox.icons.fa.screen'] = 'Ecrans';
-$lang['sandbox.icons.fa.icon']   = 'Icône';
-$lang['sandbox.icons.fa.name']   = 'Nom';
-$lang['sandbox.icons.fa.code']   = 'Code';
-$lang['sandbox.icons.fa.list']   = 'La liste complète des icônes et de leur code associé : ';
+$lang['sandbox.icons.fa.sample'] = 'Liste des icônes disponibles';
+$lang['sandbox.icons.fa.search'] = 'Recherche d\'icônes';
 
 $lang['sandbox.icons.fa.howto']                       = 'Comment ça marche ?';
 $lang['sandbox.icons.fa.howto.clue']                  = 'Font-Awesome est une <span class="text-strong">icon font</span>: une police de caractère qui permet d\'afficher des icônes simplement.';

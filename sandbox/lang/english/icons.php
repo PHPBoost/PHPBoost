@@ -16,16 +16,11 @@
 
 // fa
 $lang['sandbox.icons.fa']        = ' Font-Awesome';
-$lang['sandbox.icons.fa.sample'] = 'Some samples';
-$lang['sandbox.icons.fa.social'] = 'Social networks';
-$lang['sandbox.icons.fa.screen'] = 'Screens';
-$lang['sandbox.icons.fa.icon']   = 'Icon';
-$lang['sandbox.icons.fa.name']   = 'Name';
-$lang['sandbox.icons.fa.code']   = 'Code';
-$lang['sandbox.icons.fa.list']   = 'Full list of icons and associated code: ';
+$lang['sandbox.icons.fa.sample'] = 'Available icons list';
+$lang['sandbox.icons.fa.search'] = 'Icon search';
 
 $lang['sandbox.icons.fa.howto']                       = 'How it works?';
-$lang['sandbox.icons.fa.howto.clue']               = 'Font-Awesome is a <span class="text-strong">font-icon</span>: a font built with icons.';
+$lang['sandbox.icons.fa.howto.clue']                  = 'Font-Awesome is a <span class="text-strong">font-icon</span>: a font built with icons.';
 $lang['sandbox.icons.fa.howto.update']                = 'It is part of PHPBoost since the 4.1 version. Each Font-Awesome update is added to the next version of PHPBoost.';
 $lang['sandbox.icons.fa.howto.html']                  = 'With HTML';
 $lang['sandbox.icons.fa.howto.html.class']            = 'Use the icon name as class: ';
@@ -43,7 +38,7 @@ $lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '[fa]icon name[/fa]';
 $lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'E.g., <code class="language-markup">[fa]cubes[/fa]</code> give the icon:';
 $lang['sandbox.icons.fa.howto.bbcode.icon.variants']  = 'Variants font-awesome features are usable with BBCode as explained at ';
 $lang['sandbox.icons.fa.howto.variants']              = 'Variants';
-$lang['sandbox.icons.fa.howto.variants.clue']      = 'Font-Awesome aloows a list of variants feature such as width, animation, rotation, stacking and more.';
+$lang['sandbox.icons.fa.howto.variants.clue']         = 'Font-Awesome aloows a list of variants feature such as width, animation, rotation, stacking and more.';
 $lang['sandbox.icons.fa.howto.variants.list']         = 'Variants documentation: ';
 $lang['sandbox.icons.fa.howto.variants.spinner']      = 'give the "spinner" icon, animated with rotation and twice initial width: ';
 
