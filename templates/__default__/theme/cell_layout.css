@@ -17,7 +17,10 @@
 	content: "";
 }
 
-.cell-flex > * { width: 100%; }
+.cell-flex > * {
+	width: 100%;
+	margin: 0 0 var(--cell-gap);
+}
 
 @media (min-width: 769px) {
 	.cell-flex {
@@ -108,7 +111,7 @@
 		max-height: 8.09em;
 		padding: 0.618em;
 	}
-	
+
 	.cell-row .cell-thumbnail.cell-avatar {
 		width: auto;
 		margin: 0;
@@ -130,8 +133,10 @@
 }
 
 /* --- Inline --------------------------------------------------------------- */
+.cell-inline > * { width: auto; }
+
 @media (min-width: 769px) {
-	.cell-inline .cell { max-width: 234px; }
+	.cell-inline > * { max-width: 234px; }
 }
 
 /* --- Mini module ---------------------------------------------------------- */
