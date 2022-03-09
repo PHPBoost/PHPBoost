@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2022 03 09
  * @since       PHPBoost 6.0 - 2021 11 27
 */
 
@@ -48,10 +48,31 @@ class SandboxLangController extends DefaultModuleController
 				));
 				foreach(LangLoader::get($filename) as $var => $desc)
 				{
+					if(!is_array($desc))
 					$this->view->assign_block_vars('lang_file.items', array(
 						'VAR' => $var,
 						'DESC' => $desc
 					));
+					else {
+						foreach($desc as $sub_var => $sub_desc)
+						{
+							if(!is_array($sub_desc))
+								$this->view->assign_block_vars('lang_file.items', array(
+									'VAR' => $sub_var,
+									'DESC' => $sub_desc
+								));
+							else
+							{
+								foreach($sub_desc as $sub_sub_var => $sub_sub_desc)
+								{
+									$this->view->assign_block_vars('lang_file.items', array(
+										'VAR' => $sub_sub_var,
+										'DESC' => $sub_sub_desc
+									));
+								}
+							}
+						}
+					}
 				}
 			}
 		}

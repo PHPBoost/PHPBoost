@@ -27,7 +27,7 @@
 									# START lang_file.items #
 										<li class="search-text lang-file">
 											<span class="text-strong">{lang_file.items.VAR}</span>
-											<span>{lang_file.items.DESC}</span>
+											<span class="search-target">{lang_file.items.DESC}</span>
 										</li>
 									# END lang_file.items #
 								</ul>
@@ -60,7 +60,7 @@
 												# START module.module_file.items #
 													<li class="search-text lang-file">
 														<span class="text-strong">{module.module_file.items.VAR}</span>
-														<span>{module.module_file.items.DESC}</span>
+														<span class="search-target">{module.module_file.items.DESC}</span>
 													</li>
 												# END module.module_file.items #
 											</ul>
@@ -119,7 +119,7 @@
 	    jQuery('input#filtersearch').bind('keyup change', function () {
 	        if (jQuery(this).val().trim().length !== 0) {
 	            jQuery('.search-text').show().hide().each(function () {
-	                if (jQuery(this).is(':icontains(' + jQuery('input#filtersearch').val() + ')'))
+	                if (jQuery(this).children('.search-target').is(':icontains(' + jQuery('input#filtersearch').val() + ')'))
 					{
 						jQuery(this).show();
 					}
@@ -135,59 +135,5 @@
 	    jQuery.expr[':'].icontains = function (obj, index, meta, stack) {
 	        return (obj.textContent || obj.innerText || jQuery(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
 	    };
-
-		jQuery.fn.highlightFilter = function (a) {
-			a = jQuery.extend(
-				{
-					highlightBgColor: "var(--main-tone)",
-					highlightTxtColor: "var(--txt-alt)",
-					caseSensitive: false,
-					targetClass: "search-text",
-				},
-				a
-			);
-			jQuery.expr[":"].icontains = function (a, b, c) {
-				return jQuery(a).text().toUpperCase().indexOf(c[3].toUpperCase()) >= 0;
-			};
-			var b = /(<em.+?>)(.+?)(<\/em>)/g;
-			var c = "g";
-			if (!a.caseSensitive) {
-				b = /(<em.+?>)(.+?)(<\/em>)/gi;
-				c = "gi";
-			}
-			return this.each(function () {
-				jQuery(this).keyup(function (d) {
-					if ((d.which && d.which == 13) || (d.keyCode && d.keyCode == 13)) {
-						return false;
-					} else {
-						var e = jQuery(this).val();
-						if (e.length > 0) {
-							var f = "icontains";
-							if (a.caseSensitive) {
-								f = "contains";
-							}
-							jQuery.each(jQuery("." + a.targetClass), function (a, c) {
-								jQuery(c).html(jQuery(c).html().replace(new RegExp(b), "$2"));
-							});
-							jQuery.each(jQuery("." + a.targetClass + ":" + f + "(" + e + ")"), function (b, d) {
-								var f = jQuery(d).html();
-								jQuery(d).html(
-									f.replace(new RegExp(e, c), function (b) {
-										return ["<em style='background-color:" + a.highlightBgColor + ";color:" + a.highlightTxtColor + "'>", b, "</em>"].join("");
-									})
-								);
-							});
-						} else {
-							jQuery.each(jQuery("." + a.targetClass), function (a, c) {
-								var d = jQuery(c).html().replace(new RegExp(b), "$2");
-								jQuery(c).html(d);
-							});
-						}
-					}
-				});
-			});
-		};
-
-	   jQuery("#filtersearch").highlightFilter();
 	});
 </script>

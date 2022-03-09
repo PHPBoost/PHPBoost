@@ -44,8 +44,6 @@
 						# IF IS_ADMIN #<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::admin_component())}"><i class="fa fa-fw fa-cog"></i> {@sandbox.welcome.admin}</a># ENDIF #
 					</div>
 				</div>
-			</div>
-			<div class="cell-flex cell-tile cell-columns-2">
 				<div class="cell">
 					<div class="cell-header">
 						<h6 class="cell-name">
@@ -78,8 +76,6 @@
 						<a class="pinned link-color offload" href="${relative_url(SandboxUrlBuilder::layout())}"><i class="fa fa-fw fa-eye"></i> {@sandbox.welcome.see}</a>
 					</div>
 				</div>
-			</div>
-			<div class="cell-flex cell-tile cell-columns-2">
 				<div class="cell">
 					<div class="cell-header">
 						<h6 class="cell-name">
