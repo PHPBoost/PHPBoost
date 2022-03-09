@@ -7,6 +7,6 @@
                 <span class="small d-block">{fa_icons.CODE}</span>
             </div>
         </div>
-        <span class="stack-event stack-circle stack-sup stack-center bgc-full question">{fa_icons.PREFIX}</span>
+        <span class="stack-event stack-circle stack-top-center bgc-full question">{fa_icons.PREFIX}</span>
     </div>
 # END fa_icons #

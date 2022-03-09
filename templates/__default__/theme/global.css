@@ -124,23 +124,21 @@ a.pinned { cursor: pointer; }
     padding: 0 0.309em;
     font-size: 0.809em;
 	white-space: nowrap;
-}
-
-.stacked .stack-event.stack-left  { right: calc(100% - 0.809em); }
-.stacked .stack-event.stack-right { left: calc(100% - 0.809em); }
-.stacked .stack-event.stack-sup   { top: -0.809em; }
-.stacked .stack-event.stack-sub   { bottom: -0.809em; }
-
-.stacked .stack-event.stack-icon.stack-sup   { top: -0.456em; }
-.stacked .stack-event.stack-icon.stack-sub   { bottom: -0.456em; }
-
-.stacked .stack-event.stack-center   {
-	top: 50%;
-	left: 50%;
 	transform: translate(-50%, -50%);
 }
 
-.stacked .stack-event.stack-circle {
+.stacked .stack-top-left  	  { top: 0;    left: 0; }
+.stacked .stack-top-center    { top: 0;    left: 50%; }
+.stacked .stack-top-right 	  { top: 0;    left: 100%; }
+.stacked .stack-center-right  { top: 50%;  left: 100%; }
+.stacked .stack-bottom-right  { top: 100%; left: 100%; }
+.stacked .stack-bottom-center { top: 100%; left: 50%; }
+.stacked .stack-bottom-left   { top: 100%; left: 0; }
+.stacked .stack-center-left   { top: 50%;  left: 0; }
+
+.stacked .stack-center        { top: 50%; left: 50%; }
+
+.stacked .stack-circle {
     border-width: 1px;
     border-style: solid;
     border-radius: 1.309em;
