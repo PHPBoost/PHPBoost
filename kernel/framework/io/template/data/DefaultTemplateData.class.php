@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 04
+ * @version     PHPBoost 6.0 - last update: 2022 03 10
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -43,23 +43,69 @@ class DefaultTemplateData implements TemplateData
 		$user = AppContext::get_current_user();
 		$this->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
-			'THEME'               => $user->get_theme(),
-			'PARENT_THEME'        => ThemesManager::get_theme($user->get_theme()) ? ThemesManager::get_theme($user->get_theme())->get_configuration()->get_parent_theme() : '',
-			'LANG'                => $user->get_locale(),
 			'IS_USER_CONNECTED'   => $user->check_level(User::MEMBER_LEVEL),
 			'IS_ADMIN'            => $user->check_level(User::ADMINISTRATOR_LEVEL),
 			'IS_MODERATOR'        => $user->check_level(User::MODERATOR_LEVEL),
-			'IS_MOBILE_DEVICE'    => AppContext::get_request()->is_mobile_device(),
-			'U_SITE'			  => GeneralConfig::load()->get_site_url(),
-			'PATH_TO_ROOT'        => TPL_PATH_TO_ROOT,
-			'PHP_PATH_TO_ROOT'    => PATH_TO_ROOT,
-			'TOKEN'               => !empty($session) ? $session->get_token() : '',
-			'REWRITED_SCRIPT'     => REWRITED_SCRIPT
+
+			'THEME'            => $user->get_theme(),
+			'PARENT_THEME'     => ThemesManager::get_theme($user->get_theme()) ? ThemesManager::get_theme($user->get_theme())->get_configuration()->get_parent_theme() : '',
+			'LANG'             => $user->get_locale(),
+			'IS_MOBILE_DEVICE' => AppContext::get_request()->is_mobile_device(),
+			'TOKEN'            => !empty($session) ? $session->get_token() : '',
+			'REWRITED_SCRIPT'  => REWRITED_SCRIPT,
+
+			'PATH_TO_ROOT'     => TPL_PATH_TO_ROOT,
+			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
+			'U_SITE'	       => GeneralConfig::load()->get_site_url(),
 		));
 
 		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
 		{
 			$this->put('C_' . TextHelper::strtoupper($id) . '_EDITOR', (int)($user->get_editor() == $id));
+		}
+
+		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
+		$menus = MenusCache::load()->get_menus();
+		$columns_disabled = $theme ? $theme->get_columns_disabled() : new ColumnsDisabled();
+
+		foreach ($menus as $cached_menu)
+		{
+			$menu = $cached_menu->get_menu();
+			if ($menu->check_auth() && !$columns_disabled->menus_column_is_disabled($menu->get_block()))
+			{
+				$display = false;
+				$filters = $menu->get_filters();
+				$nbr_filters = count($filters);
+				foreach ($filters as $filter)
+				{
+					if (($nbr_filters > 1 && $filter->get_pattern() != '/') || ($filter->match() && !$display))
+						$display = true;
+				}
+
+				if ($display)
+				{
+					$this->put_all(array(
+						'C_HAS_TOP_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled(),
+						'C_HAS_HEADER_MENUS'      => !$columns_disabled->header_is_disabled(),
+						'C_HAS_SUB_HEADER_MENUS'  => !$columns_disabled->sub_header_is_disabled(),
+						'C_HAS_SOME_HEADER_MENUS' => !$columns_disabled->top_header_is_disabled() || !$columns_disabled->header_is_disabled() || !$columns_disabled->sub_header_is_disabled(),
+						'C_HAS_ALL_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled() && !$columns_disabled->header_is_disabled() && !$columns_disabled->sub_header_is_disabled(),
+
+						'C_HAS_LEFT_MENUS'     		=> !$columns_disabled->left_columns_is_disabled(),
+						'C_HAS_RIGHT_MENUS'    		=> !$columns_disabled->right_columns_is_disabled(),
+						'C_HAS_SOME_VERTICAL_MENUS' => !$columns_disabled->left_columns_is_disabled() || !$columns_disabled->right_columns_is_disabled(),
+						'C_HAS_ALL_VERTICAL_MENUS'  => !$columns_disabled->left_columns_is_disabled() && !$columns_disabled->right_columns_is_disabled(),
+
+						'C_HAS_TOP_CENTRAL_MENUS'    => !$columns_disabled->top_central_is_disabled(),
+						'C_HAS_BOTTOM_CENTRAL_MENUS' => !$columns_disabled->bottom_central_is_disabled(),
+						'C_HAS_SOME_CENTRAL_MENUS'   => !$columns_disabled->top_central_is_disabled() || !$columns_disabled->bottom_central_is_disabled(),
+						'C_HAS_ALL_CENTRAL_MENUS'    => !$columns_disabled->top_central_is_disabled() && !$columns_disabled->bottom_central_is_disabled(),
+
+						'C_HAS_TOP_FOOTER_MENUS' => !$columns_disabled->top_footer_is_disabled(),
+						'C_HAS_FOOTER_MENUS'     => !$columns_disabled->footer_is_disabled(),
+					));
+				}
+			}
 		}
 	}
 
