@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 30
+ * @version     PHPBoost 6.0 - last update: 2022 03 10
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -151,7 +151,7 @@ foreach ($Bread_crumb->get_links() as $key => $array)
 	if ($i == 2)
 		$forum_cats .= '<a class="offload" href="' . $array[1] . '">' . $array[0] . '</a>';
 	elseif ($i > 2)
-		$forum_cats .= ' <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" href="' . $array[1] . '">' . $array[0] . '</a>';
+		$forum_cats .= ' &#47; <a class="offload" href="' . $array[1] . '">' . $array[0] . '</a>';
 	$i++;
 }
 

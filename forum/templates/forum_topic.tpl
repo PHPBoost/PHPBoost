@@ -131,12 +131,15 @@
 				<a href="move{U_TOPIC_MOVE}" data-confirmation="{@forum.alert.move.topic}" aria-label="{@forum.move.topic}"><i class="fa fa-share" aria-hidden="true"></i></a>
 			# ENDIF #
 		</div>
+		<h2 class="flex-between flex-between-large">
+			{TITLE_T}
+			<span id="display_msg_title" class="smaller">{DISPLAY_ISSUE_STATUS}</span>
+		</h2>
 		<div class="flex-between flex-between-large">
-			<h2>
-				{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_ISSUE_STATUS}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span>
-			</h2>
-			# IF C_PAGINATION #<span class="d-inline-block"># INCLUDE PAGINATION #</span># ENDIF #
+			<span class="desc-forum small"><em>{DESCRIPTION}</em></span>
+			<span class="small">{U_CATEGORY}</span>
 		</div>
+		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 	</header>
 
 	# IF C_POLL_EXISTS #
@@ -368,7 +371,7 @@
 		# IF C_PAGINATION ## INCLUDE PAGINATION ## ENDIF #
 	</div>
 	<footer class="footer-forum flex-between">
-		<div>{U_CATEGORY} <i class="fa fa-angle-double-right" aria-hidden="true"></i> <a class="offload" itemscope="name" href="{U_TITLE_T}"><span id="display_msg_title">{DISPLAY_ISSUE_STATUS}</span>{TITLE_T}</a> <span class="desc-forum"><em>{DESCRIPTION}</em></span></div>
+		<div class="small">{U_CATEGORY}</div>
 		<div class="controls">
 			<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 			# IF C_CONTROLS #

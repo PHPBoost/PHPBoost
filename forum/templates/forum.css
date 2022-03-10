@@ -99,11 +99,7 @@ article footer ul.pagination { display: inline; }
 /* --- Page content header --- */
 .forum-content header { margin: 0; }
 
-.forum-content header h2 {
-	border: none;
-	font-weight: 300;
-	font-size: 1.382em;
-}
+.forum-content header h2 { font-weight: 300; }
 
 .footer-forum { padding: 0 0.618em; }
 
