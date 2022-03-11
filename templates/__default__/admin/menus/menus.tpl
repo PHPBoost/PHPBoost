@@ -39,8 +39,7 @@
 	function minimize_container(input, containerName)
 	{
 		let container = document.getElementById('mod_' + containerName);
-		let content = container.querySelector('div');
-
+		let content = container.getElementsByClassName('menus-block-container');
 		if (!container)
 			return;
 
@@ -48,16 +47,20 @@
 		{
 			if(content)
 			{
-				content.style.opacity = 0.5;
-				content.style.filter='alpha(opacity=50)';
+				for(let i=0; i < content.length; i++) {
+					content[i].style.opacity = '0.5';
+					content[i].style.filter = 'alpha(opacity=50)';
+				}
 			}
 		}
 		else
 		{
 			if(content)
 			{
-				content.style.opacity = 1;
-				content.style.filter='alpha(opacity=100)';
+				for(let i=0; i < content.length; i++) {
+					content[i].style.opacity = '1';
+					content[i].style.filter = 'alpha(opacity=100)';
+				}
 			}
 		}
 	}
