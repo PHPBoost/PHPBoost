@@ -17,9 +17,9 @@ body {
     color: var(--txt-main);
 }
 
-.bgc-main	{ background-color: var(--bgc-main); }
-.bgc-sub    { background-color: var(--bgc-sub); }
-.bgc-title	{ background-color: var(--main-light); color: var(--txt-alt); }
+.bgc-main	{ background-color: var(--bgc-main); color: var(--txt-main); }
+.bgc-sub    { background-color: var(--bgc-sub); color: var(--txt-sub); }
+.bgc-alt	{ background-color: var(--bgc-alt); color: var(--txt-alt); }
 
 #footer       { border-color: var(--bdr-alt); }
 .footer-infos { border-color: var(--bdr-alt); }
