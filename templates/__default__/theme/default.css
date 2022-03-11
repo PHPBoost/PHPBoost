@@ -17,8 +17,7 @@
 
 html, body {
 	height: 100%;
-	margin: 0;
-	padding: 0;
+	width: 100%;
 }
 
 img, table, td, blockquote, code, pre, textarea, input, audio, video, object, iframe { max-width: 100%; }
