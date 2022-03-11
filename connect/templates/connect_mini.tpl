@@ -29,35 +29,31 @@
 					<a href="#" class="js-menu-button" onclick="open_submenu('module-connect', 'active-connect');return false;"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> <span>{@user.sign.in}</span></a>
 			# ENDIF #
 					<ul class="connect-container# IF C_HORIZONTAL # connect-container-horizontal# ENDIF #">
-						<li>
-							<form action="{U_SIGN_IN}" method="post" onsubmit="return check_connect();">
-								<ul>
-									<li>
-										<label for="login">
-											<input type="text" id="login" name="login" aria-label="{@user.username.tooltip}" placeholder="{@user.username}">
-											<span class="sr-only">{@user.username}</span>
-										</label>
-									</li>
-									<li>
-										<label for="password">
-											<input type="password" id="password" name="password" placeholder="{@user.password}">
-											<span class="sr-only">{@user.password}</span>
-										</label>
-									</li>
-									<li class="align-center">
-										<label class="checkbox" for="autoconnect">
-											<span>{@user.auto.connect}</span>
-											<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@user.auto.connect}">
-										</label>
-									</li>
-									<li class="align-center">
-										<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
-										<input type="hidden" name="token" value="{TOKEN}">
-										<button type="submit" name="authenticate" value="internal" class="button submit small">{@user.sign.in}</button>
-									</li>
-								</ul>
-							</form>
-						</li>
+						<form action="{U_SIGN_IN}" method="post" onsubmit="return check_connect();">
+							<li>
+								<label for="login">
+									<input type="text" id="login" name="login" aria-label="{@user.username.tooltip}" placeholder="{@user.username}">
+									<span class="sr-only">{@user.username}</span>
+								</label>
+							</li>
+							<li>
+								<label for="password">
+									<input type="password" id="password" name="password" placeholder="{@user.password}">
+									<span class="sr-only">{@user.password}</span>
+								</label>
+							</li>
+							<li class="align-center">
+								<label class="checkbox autoconnect small" for="autoconnect">
+									<span>{@user.auto.connect}</span>
+									<input checked="checked" type="checkbox" id="autoconnect" name="autoconnect" aria-label="{@user.auto.connect}">
+								</label>
+							</li>
+							<li class="align-center">
+								<input type="hidden" name="redirect" value="{SITE_REWRITED_SCRIPT}">
+								<input type="hidden" name="token" value="{TOKEN}">
+								<button type="submit" name="authenticate" value="internal" class="button submit small">{@user.sign.in}</button>
+							</li>
+						</form>
 
 						# IF C_REGISTRATION_DISPLAYED #
 							# IF C_REGISTRATION_ENABLED #
@@ -72,7 +68,7 @@
 							</li>
 						# ENDIF #
 						<li class="align-center">
-							<a class="button smaller offload" href="${relative_url(UserUrlBuilder::forget_password())}">
+							<a class="button smaller offload forget" href="${relative_url(UserUrlBuilder::forget_password())}">
 								<i class="fa fa-question-circle" aria-hidden="true"></i> <span>{@user.forgotten.password}</span>
 							</a>
 						</li>

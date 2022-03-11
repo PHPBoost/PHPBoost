@@ -45,6 +45,7 @@
 	#module-connect .cell-list-inline ul {
 		flex-direction: row;
 		flex-wrap: wrap;
+		align-items: center;
 	}
 
 	#module-connect .li-spaced { width: auto; }
@@ -79,4 +80,9 @@
 	#module-connect .cell-list-inline .connect-container form { display: inline-flex; }
 
 	#module-connect .cell-list .connect-container li { padding: 0.309em; }
+
+	#module-connect .cell-list .connect-container .autoconnect {
+		padding: 0.618em 0;
+		display: inline-block;
+	}
 }
