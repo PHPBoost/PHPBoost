@@ -94,7 +94,7 @@ class FaqSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.phpboost.name']),
 			'name' => $this->messages['default.cat.phpboost.name'],
 			'description' => $this->messages['default.cat.phpboost.description'],
-			'thumbnail' => '/faq/faq.png'
+			'thumbnail' => '/templates/__default__/images/default_category.webp'
 		));
 
 		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
@@ -105,7 +105,7 @@ class FaqSetup extends DefaultModuleSetup
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.dictionary.name']),
 			'name' => $this->messages['default.cat.dictionary.name'],
 			'description' => $this->messages['default.cat.dictionary.description'],
-			'thumbnail' => '/faq/faq.png'
+			'thumbnail' => '/templates/__default__/images/default_category.webp'
 		));
 	}
 

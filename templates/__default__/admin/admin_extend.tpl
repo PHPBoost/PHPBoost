@@ -143,7 +143,15 @@
 					# START modules_extend #
 						<li>
 							<a href="{modules_extend.U_ADMIN_MODULE}">
-								<img src="{modules_extend.IMG}" alt="{modules_extend.NAME}" />
+								# IF modules_extend.C_IMG #
+									<img src="{modules_extend.IMG}" alt="{modules_extend.NAME}" />
+								# ELSE #
+									# IF modules_extend.C_FA_ICON #
+										<i class="{modules_extend.FA_ICON} fa-fw fa-2x"></i>
+									# ELSE #
+										# IF modules_extend.C_HEXA_ICON #<span class="biggest">{modules_extend.HEXA_ICON}</span># ENDIF #
+									# ENDIF #
+								# ENDIF #
 								<p>{modules_extend.NAME}</p>
 							</a>
 						</li>
