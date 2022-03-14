@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 10
+ * @version     PHPBoost 6.0 - last update: 2022 03 14
  * @since       PHPBoost 3.0 - 2010 02 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,45 +65,48 @@ class DefaultTemplateData implements TemplateData
 		}
 
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
-		$menus = $theme ? MenusCache::load()->get_menus() : array();
-		$columns_disabled = $theme ? $theme->get_columns_disabled() : new ColumnsDisabled();
-
-		foreach ($menus as $cached_menu)
+		if ($theme)
 		{
-			$menu = $cached_menu->get_menu();
-			if ($menu->check_auth() && !$columns_disabled->menus_column_is_disabled($menu->get_block()))
+			$menus = MenusCache::load()->get_menus();
+			$columns_disabled = $theme->get_columns_disabled();
+
+			foreach ($menus as $cached_menu)
 			{
-				$display = false;
-				$filters = $menu->get_filters();
-				$nbr_filters = count($filters);
-				foreach ($filters as $filter)
+				$menu = $cached_menu->get_menu();
+				if ($menu->check_auth() && !$columns_disabled->menus_column_is_disabled($menu->get_block()))
 				{
-					if (($nbr_filters > 1 && $filter->get_pattern() != '/') || ($filter->match() && !$display))
-						$display = true;
-				}
+					$display = false;
+					$filters = $menu->get_filters();
+					$nbr_filters = count($filters);
+					foreach ($filters as $filter)
+					{
+						if (($nbr_filters > 1 && $filter->get_pattern() != '/') || ($filter->match() && !$display))
+							$display = true;
+					}
 
-				if ($display)
-				{
-					$this->put_all(array(
-						'C_HAS_TOP_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled(),
-						'C_HAS_HEADER_MENUS'      => !$columns_disabled->header_is_disabled(),
-						'C_HAS_SUB_HEADER_MENUS'  => !$columns_disabled->sub_header_is_disabled(),
-						'C_HAS_SOME_HEADER_MENUS' => !$columns_disabled->top_header_is_disabled() || !$columns_disabled->header_is_disabled() || !$columns_disabled->sub_header_is_disabled(),
-						'C_HAS_ALL_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled() && !$columns_disabled->header_is_disabled() && !$columns_disabled->sub_header_is_disabled(),
+					if ($display)
+					{
+						$this->put_all(array(
+							'C_HAS_TOP_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled(),
+							'C_HAS_HEADER_MENUS'      => !$columns_disabled->header_is_disabled(),
+							'C_HAS_SUB_HEADER_MENUS'  => !$columns_disabled->sub_header_is_disabled(),
+							'C_HAS_SOME_HEADER_MENUS' => !$columns_disabled->top_header_is_disabled() || !$columns_disabled->header_is_disabled() || !$columns_disabled->sub_header_is_disabled(),
+							'C_HAS_ALL_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled() && !$columns_disabled->header_is_disabled() && !$columns_disabled->sub_header_is_disabled(),
 
-						'C_HAS_LEFT_MENUS'     		=> !$columns_disabled->left_columns_is_disabled(),
-						'C_HAS_RIGHT_MENUS'    		=> !$columns_disabled->right_columns_is_disabled(),
-						'C_HAS_SOME_VERTICAL_MENUS' => !$columns_disabled->left_columns_is_disabled() || !$columns_disabled->right_columns_is_disabled(),
-						'C_HAS_ALL_VERTICAL_MENUS'  => !$columns_disabled->left_columns_is_disabled() && !$columns_disabled->right_columns_is_disabled(),
+							'C_HAS_LEFT_MENUS'     		=> !$columns_disabled->left_columns_is_disabled(),
+							'C_HAS_RIGHT_MENUS'    		=> !$columns_disabled->right_columns_is_disabled(),
+							'C_HAS_SOME_VERTICAL_MENUS' => !$columns_disabled->left_columns_is_disabled() || !$columns_disabled->right_columns_is_disabled(),
+							'C_HAS_ALL_VERTICAL_MENUS'  => !$columns_disabled->left_columns_is_disabled() && !$columns_disabled->right_columns_is_disabled(),
 
-						'C_HAS_TOP_CENTRAL_MENUS'    => !$columns_disabled->top_central_is_disabled(),
-						'C_HAS_BOTTOM_CENTRAL_MENUS' => !$columns_disabled->bottom_central_is_disabled(),
-						'C_HAS_SOME_CENTRAL_MENUS'   => !$columns_disabled->top_central_is_disabled() || !$columns_disabled->bottom_central_is_disabled(),
-						'C_HAS_ALL_CENTRAL_MENUS'    => !$columns_disabled->top_central_is_disabled() && !$columns_disabled->bottom_central_is_disabled(),
+							'C_HAS_TOP_CENTRAL_MENUS'    => !$columns_disabled->top_central_is_disabled(),
+							'C_HAS_BOTTOM_CENTRAL_MENUS' => !$columns_disabled->bottom_central_is_disabled(),
+							'C_HAS_SOME_CENTRAL_MENUS'   => !$columns_disabled->top_central_is_disabled() || !$columns_disabled->bottom_central_is_disabled(),
+							'C_HAS_ALL_CENTRAL_MENUS'    => !$columns_disabled->top_central_is_disabled() && !$columns_disabled->bottom_central_is_disabled(),
 
-						'C_HAS_TOP_FOOTER_MENUS' => !$columns_disabled->top_footer_is_disabled(),
-						'C_HAS_FOOTER_MENUS'     => !$columns_disabled->footer_is_disabled(),
-					));
+							'C_HAS_TOP_FOOTER_MENUS' => !$columns_disabled->top_footer_is_disabled(),
+							'C_HAS_FOOTER_MENUS'     => !$columns_disabled->footer_is_disabled(),
+						));
+					}
 				}
 			}
 		}
