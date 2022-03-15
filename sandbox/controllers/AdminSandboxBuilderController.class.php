@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2022 03 14
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -261,7 +261,7 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3', array('data_option_class' => 'indent')),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5', array('data_option_img' => '../templates/__default__/theme/images/logo_mini.png')),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5', array('data_option_img' => '../templates/__default__/theme/images/logo.svg')),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'6', '6')
 				),
 				array('class' => 'css-class', 'multiple_select_to_list' => true)
@@ -410,13 +410,13 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			$buttons->add_element(new FormButtonButton('.warning.bgc-full', '', 'bgc-full-warning-button', 'bgc-full warning'));
 
 			$buttons->add_field(new FormFieldSpacer('alternate_buttons', $this->lang['sandbox.builder.button.link']));
-			$buttons->add_element(new FormButtonLink($this->lang['sandbox.builder.button.picture'], 'https://www.phpboost.com', Url::to_rel('/templates/__default__/theme/images/logo_mini.png'), '', ''));
+			$buttons->add_element(new FormButtonLink($this->lang['sandbox.builder.button.picture'], 'https://www.phpboost.com', Url::to_rel('/templates/__default__/theme/images/logo.svg'), '', ''));
 			$buttons->add_element(new FormButtonLink($this->lang['sandbox.builder.button.confirm'], 'https://www.phpboost.com', '', 'bgc-full question button', $this->lang['sandbox.builder.button.confirm.alert']));
 			$buttons->add_element(new FormButtonLinkCssImg('Button', 'https://www.phpboost.com','fa fa-share', $this->lang['sandbox.builder.button.icon']));
 
 			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', $this->lang['sandbox.builder.button.alternate.send']));
 			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['sandbox.builder.button.icon'], 'fa fa-check', 'Submit', ''));
-			$buttons->add_element(new FormButtonSubmitImg($this->lang['sandbox.builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo_mini.png'), ''));
+			$buttons->add_element(new FormButtonSubmitImg($this->lang['sandbox.builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo.svg'), ''));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');

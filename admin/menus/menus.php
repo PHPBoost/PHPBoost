@@ -211,7 +211,7 @@ foreach ($menus_blocks as $block_id => $menus)
 
 		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
 		$vertical_position = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
-		
+
 		$menu_tpl->put_all(array(
 			'C_DISPLAY'    => $enabled,
 			'C_EDIT'       => !empty($edit_link),

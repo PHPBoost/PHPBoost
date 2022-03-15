@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 03 15
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,14 +92,20 @@ class UserHomeProfileController extends AbstractController
 				$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '.png');
 				$is_picture = false;
 				if($module->get_publications_module_icon() != '')
+				{
 					$thumbnail = $module->get_publications_module_icon();
+				}
 				else if($module_icon->exists())
 				{
 					$thumbnail = Url::to_rel($module_icon->get_path());
 					$is_picture = true;
 				}
+				else if($module->get_publications_module_id() != '')
+				{
+					$thumbnail = ModulesManager::get_module($module->get_publications_module_id())->get_configuration()->get_fa_icon();
+				}
 				else
-					$thumbnail = 'fa fa-cube';
+					$thumbnail = 'fa fa-fw fa-cube';
 
 				$this->view->assign_block_vars('user_publications', array(
 					'C_ICON_IS_PICTURE'   => $is_picture,

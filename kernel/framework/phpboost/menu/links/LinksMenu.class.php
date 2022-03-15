@@ -158,19 +158,21 @@ class LinksMenu extends LinksMenuElement
 			// Menu assignment
 			parent::_assign($tpl, $mode);
 			$tpl->put_all(array(
-				'C_MENU' => true,
-				'C_MENU_WITH_SUBMENU' => $menu_with_submenu,
-				'C_NEXT_MENU' => $this->depth > 0,
-				'C_FIRST_MENU' => $this->depth == 0,
-				'C_HAS_CHILD' => $elements_number,
+				'C_MENU'                      => true,
+				'C_MENU_WITH_SUBMENU'         => $menu_with_submenu,
+				'C_NEXT_MENU'                 => $this->depth > 0,
+				'C_FIRST_MENU'                => $this->depth == 0,
+				'C_HAS_CHILD'                 => $elements_number,
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
-				'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+
+				'C_PUSHMENU_DISABLED_BODY'  => $this->disabled_body,
 				'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
-				'C_FALSE_EXPANDING' => $this->pushmenu_expanding == 'false',
-				'DISABLED_BODY' => $this->disabled_body ? 'true' : 'false',
-				'PUSHED_CONTENT' => $this->pushed_content ? '#push-container' : '',
-				'PUSHMENU_OPENING' => $this->pushmenu_opening,
-				'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
+				'C_FALSE_EXPANDING'         => $this->pushmenu_expanding == 'false',
+				'DISABLED_BODY'             => $this->disabled_body ? 'true' : 'false',
+				'PUSHED_CONTENT'            => $this->pushed_content ? '#push-container' : '',
+				'PUSHMENU_OPENING'          => $this->pushmenu_opening,
+				'PUSHMENU_EXPANDING'        => $this->pushmenu_expanding,
+
 				'DEPTH' => $this->depth
 			));
 
@@ -189,12 +191,12 @@ class LinksMenu extends LinksMenuElement
 			else
 			{
 				$tpl->put_all(array(
-					'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+					'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 					'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
-					'C_MENU_VERTICAL' => $this->type == self::VERTICAL_MENU,
-					'C_MENU_STATIC' => $this->type == self::STATIC_MENU,
-					'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
-					'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+					'C_MENU_VERTICAL'   => $this->type == self::VERTICAL_MENU,
+					'C_MENU_STATIC'     => $this->type == self::STATIC_MENU,
+					'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+					'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
 				));
 			}
 
@@ -240,44 +242,46 @@ class LinksMenu extends LinksMenuElement
 		// Menu assignment
 		parent::_assign($tpl, LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
 		$tpl->put_all(array(
-			'C_MENU' => true,
-			'C_MENU_WITH_SUBMENU' => $menu_with_submenu,
-			'C_NEXT_MENU' => $this->depth > 0,
-			'C_FIRST_MENU' => $this->depth == 0,
-			'C_HAS_CHILD' => $elements_number,
+			'C_MENU'                      => true,
+			'C_MENU_WITH_SUBMENU'         => $menu_with_submenu,
+			'C_NEXT_MENU'                 => $this->depth > 0,
+			'C_FIRST_MENU'                => $this->depth == 0,
+			'C_HAS_CHILD'                 => $elements_number,
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
-			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
+
+			'C_PUSHMENU_DISABLED_BODY'  => $this->disabled_body,
 			'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
-			'C_FALSE_EXPANDING' => $this->pushmenu_expanding == 'false',
-			'DISABLED_BODY' => $this->disabled_body ? 'true' : 'false',
-			'PUSHED_CONTENT' => $this->pushed_content ? '#push-container' : '',
-			'PUSHMENU_OPENING' => $this->pushmenu_opening,
-			'PUSHMENU_EXPANDING' => $this->pushmenu_expanding,
-			'DEPTH' => $this->depth,
-			'ID' => '##.#GET_UID#.##',
+			'C_FALSE_EXPANDING'         => $this->pushmenu_expanding == 'false',
+			'DISABLED_BODY'             => $this->disabled_body ? 'true' : 'false',
+			'PUSHED_CONTENT'            => $this->pushed_content ? '#push-container' : '',
+			'PUSHMENU_OPENING'          => $this->pushmenu_opening,
+			'PUSHMENU_EXPANDING'        => $this->pushmenu_expanding,
+
+			'DEPTH'  => $this->depth,
+			'ID'     => '##.#GET_UID#.##',
 			'ID_VAR' => '##.#GET_UID_VAR#.##'
 		));
 
 		if ($this->type == self::AUTOMATIC_MENU)
 		{
 			$tpl->put_all(array(
-				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
-				'C_MENU_VERTICAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-				'C_MENU_STATIC' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
-				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
-				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+				'C_MENU_VERTICAL'   => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_STATIC'     => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
+				'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+				'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
 			));
 		}
 		else
 		{
 			$tpl->put_all(array(
-				'C_MENU_CONTAINER' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 				'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
-				'C_MENU_VERTICAL' => $this->type == self::VERTICAL_MENU,
-				'C_MENU_STATIC' => $this->type == self::STATIC_MENU,
-				'C_MENU_LEFT' => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
-				'C_MENU_RIGHT' => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
+				'C_MENU_VERTICAL'   => $this->type == self::VERTICAL_MENU,
+				'C_MENU_STATIC'     => $this->type == self::STATIC_MENU,
+				'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
+				'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
 			));
 		}
 

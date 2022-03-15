@@ -1,9 +1,15 @@
 <div class="cell">
 	<div class="cell-header">
-		<div class="cell-name bigger"><a class="offload" href="{MODULE_URL}">{MODULE_NAME}</a></div>
+		<div class="cell-name bigger">
+			<a class="offload" href="{MODULE_URL}">{MODULE_NAME}</a>
+		</div>
 		# IF C_MODULE_ID #
 			<a class="offload" href="{MODULE_URL}">
-				<img src="{PATH_TO_ROOT}/{MODULE_ID}/{MODULE_ID}_mini.png" alt="{MODULE_NAME}" class="valign-middle" />
+				# IF C_ICON_IS_PICTURE #
+					<img src="{PATH_TO_ROOT}/{MODULE_ID}/{MODULE_ID}_mini.png" alt="{MODULE_NAME}" class="valign-middle" />
+				# ELSE #
+					<i class="{FA_ICON}"></i>
+				# ENDIF #
 			</a>
 		# ENDIF #
 	</div>

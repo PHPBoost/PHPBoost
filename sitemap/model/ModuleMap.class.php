@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.0 - last update: 2022 03 15
  * @since       PHPBoost 2.0 - 2008 06 16
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -74,12 +74,19 @@ class ModuleMap extends SitemapSection
 		//We get the stream in which we are going to write
 		$template = $export_config->get_module_map_stream();
 
+		$module_icon = new File(PATH_TO_ROOT . '/' . $this->get_module_id() . '/' . $this->get_module_id() . '.png');
+		$is_picture = false;
+		if($module_icon->exists())
+			$is_picture = true;
+
 		$template->put_all(array(
+			'C_ICON_IS_PICTURE'   => $is_picture,
 			'MODULE_ID' => $this->get_module_id(),
 			'C_MODULE_ID' => $this->get_module_id() != '',
 			'MODULE_NAME' => TextHelper::htmlspecialchars($this->get_name(), ENT_QUOTES),
 			'MODULE_DESCRIPTION' => FormatingHelper::second_parse($this->description),
             'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
+			'FA_ICON' => $this->get_module_id() != '' ? ModulesManager::get_module($this->get_module_id())->get_configuration()->get_fa_icon() : 'fa fa-cube',
 		    'DEPTH' => $this->depth,
             'C_MODULE_MAP' => true
 		));

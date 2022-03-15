@@ -2,12 +2,12 @@
 	<ul>
 		# START action #
 			<li# IF NOT action.C_IS_ACTIVE_MODULE # class="hidden"# ENDIF #>
-				<a href="#">
+				<a href="#"# IF action.C_CSS_CLASS # class="{action.CSS_CLASS}"# ENDIF #>
 					# IF action.C_PICTURE #
 						# IF action.C_IMG #
 							<img src="{action.U_IMG}" alt="{action.TITLE}" />
 						# ELSE #
-							<i class="fa {action.CSS_CLASS}" aria-hidden="true"></i>
+							# IF action.C_FA_ICON #<i class="fa {action.FA_ICON}" aria-hidden="true"></i># ENDIF #
 						# ENDIF #
 					# ENDIF #
 					{action.TITLE}

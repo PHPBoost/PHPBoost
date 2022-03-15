@@ -34,33 +34,30 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.fa-iboost-email:before {
+.fa-iboost-email::before {
     content: "\b900"; }
 
-.fa-iboost-logo:before {
+.fa-iboost-logo::before {
     content: "\e000"; }
 
-.fa-iboost-logo-phpboost:before {
-    content: "\e000"; }
-
-.fa-iboost-phpboost:before {
-  content: "\e000"; }
-.fa-iboost-phpboost-01:before {
+.fa-iboost-logo-phpboost::before,
+.fa-iboost-phpboost::before,
+.fa-iboost-phpboost-01::before {
     content: "\e001"; }
 
-.fa-iboost-phpboost-02:before {
+.fa-iboost-phpboost-02::before {
     content: "\e002"; }
 
-.fa-iboost-phpboost-03:before {
+.fa-iboost-phpboost-03::before {
     content: "\e003"; }
 
-.fa-iboost-tag-51:before {
+.fa-iboost-tag-51::before {
     content: "\e051"; }
 
-.fa-iboost-tag-52:before {
+.fa-iboost-tag-52::before {
     content: "\e052"; }
 
-.fa-iboost-tag-60:before {
+.fa-iboost-tag-60::before {
     content: "\e060"; }
 
 /* Tri colors logo */

@@ -495,12 +495,12 @@
 			if(menusUrl != '') {
 				jQuery('#valid-position-menus button')
 					.addClass('success')
-					.html('<i class="far fa-fw fa-check-square"></i> {@menu.validated.position}');
+					.html('<i class="far fa-fw fa-check-square"></i>' + ${escapejs(@menu.valid.position)});
 				if (performance.navigation.type == performance.navigation.TYPE_RELOAD) { // back to init status on reloading page
 				  	history.pushState('', '', ' ');
 					jQuery('#valid-position-menus button')
 						.removeClass('success')
-						.html('<i class="far fa-fw fa-square"></i> {@menu.position}');
+						.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.position)});
 				}
 			}
 
@@ -512,21 +512,21 @@
 					thisPrev = $this.prev().attr('id'),
 					thisPos = thisParent + '-' + thisPrev;
 				$this.on('mouseup', function() {
+					let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
+						newPrev = $this.siblings('.dropzone').prev().attr('id'),
+						newPos = newParent + '-' + newPrev;
 					if($this.hasClass('dragged')) {
-						let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
-							newPrev = $this.siblings('.dropzone').prev().attr('id'),
-							newPos = newParent + '-' + newPrev;
 						if(newPos != thisPos && newPrev != thisId)
 							jQuery('#valid-position-menus button')
 								.addClass('warning')
-								.html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
+								.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
 					}
 				});
 			});
 
 			// Change validation button on changing checkboxes status
 			jQuery('[type="checkbox"]').on('change', function(){
-				jQuery('#valid-position-menus button').addClass('warning').html('<i class="far fa-fw fa-square"></i> {@menu.valid.position}');
+				jQuery('#valid-position-menus button').addClass('warning').html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
 			});
 
 			// opacity for unchecked block on page loading

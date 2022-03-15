@@ -87,7 +87,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
 				array(
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
 				)
@@ -178,8 +178,8 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 
 			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
 				array(
-					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.icon'], '#', 'far fa-edit'),
-					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.img'], '#', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.icon'], '#', '', '', '', 'far fa-edit'),
+					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.img'], '#', 'sandbox-svg-icon', '/templates/__default__/theme/images/logo.svg'),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 3', '#', ''),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 4', '#', '')
 				),
@@ -213,7 +213,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
 				array(
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
 				)
@@ -277,7 +277,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
 				array(
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'tabs', 'Sandbox_Accordion_tabs_01', 'fa fa-cog'),
-					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/sandbox/sandbox_mini.png'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'tabs', 'Sandbox_Accordion_tabs_03'),
 					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'tabs', 'Sandbox_Accordion_tabs_04', '', '', '', 'bgc warning')
 				)
@@ -340,9 +340,9 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 
 		$fieldset_tab_menu->add_field(new WizardActionLinkList('tab_menu_list',
 			array(
-				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 01', '#', 'fa-cog'),
-				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 02', '#', 'fa-image'),
-				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 03', '#', '', PATH_TO_ROOT . 'articles/articles_mini.png', 'articles'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 01', '#', '', '', '', 'fa fa-cog'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 02', '#', '', '', '', 'fa fa-image'),
+				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 03', '#', 'sandbox-svg-icon', PATH_TO_ROOT . 'templates/__default__/theme/images/logo.svg', 'articles'),
 			)
 		));
 

@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 07 30
+ * @version     PHPBoost 6.0 - last update: 2022 03 15
  * @since       PHPBoost 3.0 - 2010 04 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,6 +20,7 @@ class FormFieldActionLinkElement
 	private $css_class;
 	private $active_module;
 	private $img;
+	private $fa_icon;
 
 	/**
 	 * build an action link
@@ -29,13 +30,14 @@ class FormFieldActionLinkElement
 	 * @param Url $img the action icon url
 	 * @param string $active_module the action active module
 	 */
-	public function __construct($title, $url, $css_class = '', $img = '', $active_module = '')
+	public function __construct($title, $url, $css_class = '', $img = '', $active_module = '', $fa_icon = '')
 	{
 		$this->title = $title;
 		$this->url = $this->convert_url($url);
 		$this->css_class = $css_class;
 		$this->img = !empty($img) ? $this->convert_url($img) : $img;
 		$this->active_module = $active_module;
+		$this->fa_icon = $fa_icon;
 	}
 
 	/**
@@ -100,6 +102,22 @@ class FormFieldActionLinkElement
 	public function get_img()
 	{
 		return $this->img;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function has_fa_icon()
+	{
+		return !empty($this->fa_icon);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public function get_fa_icon()
+	{
+		return $this->fa_icon;
 	}
 
 	private function convert_url($url)

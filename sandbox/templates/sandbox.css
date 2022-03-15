@@ -55,3 +55,10 @@
 	#module-sandbox-lang .lang-file span:first-child { width: calc(100% / 3); }
 	#module-sandbox-lang .lang-file span:last-child { width: calc(100% / 3 * 2); }
 }
+
+/* icons */
+.sandbox-svg-icon img,
+.button.image img {
+	max-width: 16px;
+	vertical-align: sub;
+}

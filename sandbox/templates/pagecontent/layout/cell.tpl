@@ -4,55 +4,104 @@
     </header>
 
     <h6>{@sandbox.layout.cell.columns}</h6>
-    <div class="cell-flex cell-tile layout-content-demo cell-columns-2">
-        <article class="cell">
-            <header class="cell-header">
-                <h2 class="cell-name">{@sandbox.layout.title}</h2>
-            </header>
-            <div class="cell-infos">
-                <div class="more">
-                    <span class="pinned">{@sandbox.layout.item}</span>
-                    <span class="pinned">{@sandbox.layout.item}</span>
+    <div class="layout-content-demo">
+
+        <div class="cell-flex cell-tile cell-columns-2">
+            <article class="cell">
+                <header class="cell-header">
+                    <h2 class="cell-name">{@sandbox.layout.title}</h2>
+                </header>
+                <div class="cell-infos">
+                    <div class="more">
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                    </div>
+                    <div class="controls align-right">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                        <a href="#"><i class="fa fa-trash"></i></a>
+                    </div>
                 </div>
-                <div class="controls align-right">
-                    <a href="#"><i class="fa fa-edit"></i></a>
-                    <a href="#"><i class="fa fa-trash"></i></a>
+                    <div class="cell-thumbnail">
+                        <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
+                        <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+                    </div>
+                <div class="cell-body">
+                    <div class="cell-content">{@sandbox.lorem.short.content}</div>
                 </div>
-            </div>
-            <div class="cell-body">
-                <div class="cell-thumbnail">
-                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
-                    <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+            </article>
+            <article class="cell">
+                <header class="cell-header">
+                    <h2 class="cell-name">{@sandbox.layout.title}</h2>
+                </header>
+                <div class="cell-infos">
+                    <div class="more">
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                    </div>
+                    <div class="controls align-right">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                        <a href="#"><i class="fa fa-trash"></i></a>
+                    </div>
                 </div>
-                <div class="cell-content">{@sandbox.lorem.short.content}</div>
-            </div>
-        </article>
+                    <div class="cell-thumbnail">
+                        <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
+                        <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+                    </div>
+                <div class="cell-body">
+                    <div class="cell-content">{@sandbox.lorem.medium.content}</div>
+                </div>
+            </article>
+        </div>
     </div>
 
     <h6>{@sandbox.layout.cell.row}</h6>
-    <div class="cell-flex cell-tile layout-content-demo cell-row">
-        <article class="cell">
-            <header class="cell-header">
-                <h2 class="cell-name"><a href="#">{@sandbox.layout.title}</a></h2>
-            </header>
-            <div class="cell-infos">
-                <div class="more">
-                    <span class="pinned">{@sandbox.layout.item}</span>
-                    <span class="pinned">{@sandbox.layout.item}</span>
+    <div class="layout-content-demo">
+        <div class="cell-flex cell-tile cell-row">
+            <article class="cell">
+                <header class="cell-header">
+                    <h2 class="cell-name"><a href="#">{@sandbox.layout.title}</a></h2>
+                </header>
+                <div class="cell-infos">
+                    <div class="more">
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                    </div>
+                    <div class="controls align-right">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                        <a href="#"><i class="fa fa-trash"></i></a>
+                    </div>
                 </div>
-                <div class="controls align-right">
-                    <a href="#"><i class="fa fa-edit"></i></a>
-                    <a href="#"><i class="fa fa-trash"></i></a>
-                </div>
-            </div>
-            <div class="cell-body">
-                <div class="cell-thumbnail">
+                <div class="cell-thumbnail cell-center">
                     <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
                     <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
-                <div class="cell-content">{@sandbox.lorem.short.content}</div>
-            </div>
-        </article>
+                <div class="cell-body">
+                    <div class="cell-content">{@sandbox.lorem.short.content}</div>
+                </div>
+            </article>
+            <article class="cell">
+                <header class="cell-header">
+                    <h2 class="cell-name"><a href="#">{@sandbox.layout.title}</a></h2>
+                </header>
+                <div class="cell-infos">
+                    <div class="more">
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                        <span class="pinned">{@sandbox.layout.item}</span>
+                    </div>
+                    <div class="controls align-right">
+                        <a href="#"><i class="fa fa-edit"></i></a>
+                        <a href="#"><i class="fa fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="cell-thumbnail cell-center">
+                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
+                    <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
+                </div>
+                <div class="cell-body">
+                    <div class="cell-content">{@sandbox.lorem.short.content}</div>
+                </div>
+            </article>
+        </div>
     </div>
 
     <h6>{@sandbox.layout.cell.all}</h6>
@@ -250,12 +299,13 @@
         &lt;/fieldset>
     &lt;/form>
 &lt;/div>
+// thumbnail
+&lt;div class="cell-thumbnail">
+    &lt;img src="path-to-picture" alt="text">
+    &lt;a href="" class="cell-thumbnail-caption">&lt;i class="fa fa-eye">&lt;/i>&lt;/a>
+&lt;/div>
 // content
 &lt;div class="cell-body">
-    &lt;div class="cell-thumbnail">
-        &lt;img src="path-to-picture" alt="text">
-        &lt;a href="" class="cell-thumbnail-caption">&lt;i class="fa fa-eye">&lt;/i>&lt;/a>
-    &lt;/div>
     &lt;div class="cell-content">...&lt;/div>
 &lt;/div>
 // list

@@ -28,6 +28,8 @@
 .button:hover  { transition: all 0.3s ease-in-out; text-decoration: none;}
 .button:active { transition: all 0.2s linear; }
 
+.button.image img { vertical-align: sub; }
+
 [disabled],
 [readonly] {
 	cursor: not-allowed;
