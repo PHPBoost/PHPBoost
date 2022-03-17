@@ -1,5 +1,5 @@
 (function() {
-    const pre = document.querySelectorAll('pre.precode'),
+    const pre = document.querySelectorAll('pre.precode:not(.precode-inline)'),
           pl = pre.length;
 
     for (let i = 0; i < pl; i++) {

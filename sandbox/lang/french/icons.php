@@ -34,8 +34,8 @@ $lang['sandbox.icons.fa.howto.css.html.code']         = 'Code HTML :';
 $lang['sandbox.icons.fa.howto.bbcode']                = 'En BBCode';
 $lang['sandbox.icons.fa.howto.bbcode.some.icons']     = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
 $lang['sandbox.icons.fa.howto.bbcode.tag']            = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
-$lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '[fa]nom de l\'icône[/fa]';
-$lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'Par exemple, <code class="language-markup">[fa]cubes[/fa]</code> donnera l\'icône:';
+$lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '<pre class="precode precode-inline"><code>[fa]nom de l\'icône[/fa]</code></pre>';
+$lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'Par exemple, <pre class="precode precode-inline"><code>[fa]cubes[/fa]</code></pre> donnera l\'icône:';
 $lang['sandbox.icons.fa.howto.bbcode.icon.variants']  = 'Les variantes sont possibles en BBCode et sont expliquées dans ';
 $lang['sandbox.icons.fa.howto.variants']              = 'Les variantes';
 $lang['sandbox.icons.fa.howto.variants.clue']         = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
@@ -56,7 +56,7 @@ $lang['sandbox.icons.icomoon.howto.guide'] = '
         Sur <a href="https://icomoon.io/" class="pinned bgc moderator offload" target="_blank" rel="noopener noreferer"><i class="fa fa-share"></i> icomoon.io</a>, cliquer sur <span class="pinned bgc-full moderator"><i class="fa fa-puzzle-piece"></i> IcoMoon App</span>.
         <ul>
             <li>
-                Avec le menu hamburger, choisir autant de <code class="language-markup">New Empty Set</code> que l\'on souhaite (1 par catégorie d\'icônes par exemple).
+                Avec le menu hamburger, choisir autant de <pre class="precode precode-inline"><code>New Empty Set</code></pre> que l\'on souhaite (1 par catégorie d\'icônes par exemple).
             </li>
             <li>
                 Importer les fichiers svg depuis un ordinateur avec le menu hamburger de chaque IconSet, ou avec "Add Icons From Library" pour choisir une librairie disponible sur le site.
@@ -69,7 +69,7 @@ $lang['sandbox.icons.icomoon.howto.guide'] = '
             </li>
             <li>
                 Avant de télécharger le pack, il faut modifier les <span class="pinned bgc administrator"><i class="fa fa-cog"></i>Preferences</span> et, <span class="warning"> à minima</span>,
-                remplir le champ <code class="language-markup">Class Prefix</code> avec <code class="language-css">fa-</code> pour que le bbcode de PHPBoost soit pris en compte
+                remplir le champ <pre class="precode precode-inline"><code>Class Prefix</code></pre> avec <pre class="precode precode-inline"><code>fa-</code></pre> pour que le bbcode de PHPBoost soit pris en compte
                 et que le pack bénéficie de toutes les fonctionnalités et variantes de Font-Awesome. <br />
                 Il est bien sûr conseillé de remplir les autres champs afin de personnaliser au mieux votre pack et ainsi, éviter les conflits entre différentes bibliothèques.
             </li>
@@ -85,10 +85,10 @@ $lang['sandbox.icons.icomoon.howto.integrate'] = '
                 Créer un dossier au nom du pack dans le thème utilisé.
             </li>
             <li>
-                Copier le fichier <code class="language-markup">style.css</code> et le dossier <code class="language-markup">fonts</code> du pack téléchargé depuis icomoon.io
+                Copier le fichier <pre class="precode precode-inline"><code>style.css</code></pre> et le dossier <pre class="precode precode-inline"><code>fonts</code></pre> du pack téléchargé depuis icomoon.io
             </li>
             <li>
-                Déclarer le fichier <code class="language-markup">style.css</code> dans le <code class="language-markup">frame.tpl</code> ou le <code class="language-markup">@import.css</code> du thème.
+                Déclarer le fichier <pre class="precode precode-inline"><code>style.css</code></pre> dans le <pre class="precode precode-inline"><code>frame.tpl</code></pre> ou le <pre class="precode precode-inline"><code>@import.css</code></pre> du thème.
             </li>
         </ul>
     </p>
@@ -99,20 +99,20 @@ $lang['sandbox.icons.icomoon.howto.sample'] = '
         Dans les préférences du pack sur icomoon, il a été choisi :
         <ul>
             <li>
-                <code class="language-markup">fa-iboost-</code> dans le champ <code class="language-markup">Class Prefix</code>
+                <pre class="precode precode-inline"><code>fa-iboost-</code></pre> dans le champ <pre class="precode precode-inline"><code>Class Prefix</code></pre>
             </li>
             <li>
-                <code class="language-markup">.iboost</code> dans <code class="language-markup">CSS Selector/</code><i class="far fa-dot-circle"></i><code class="language-markup"> Use a class</code>
+                <pre class="precode precode-inline"><code>.iboost</code></pre> dans <pre class="precode precode-inline"><code>CSS Selector /</code></pre><pre class="precode precode-inline"><i class="far fa-dot-circle"></i><code> Use a class</code></pre>
             </li>
         </ul>
     </p>
     <h6>En HTML</h6>
     <p>
-        <code class="language-html">&lt;i class="fa iboost fa-iboost-email">&lt;/i></code> <i class="fa iboost fa-iboost-email"></i>
+        <pre class="precode precode-inline"><code>&lt;i class="fa iboost fa-iboost-email">&lt;/i></code></pre> <i class="fa iboost fa-iboost-email"></i>
     </p>
     <h6>En BBCode</h6>
     <p>
-        <code class="language-markup">[fa=iboost]iboost-phpboost[/fa]</code> <i class="fa iboost fa-iboost-phpboost"></i>
+        <pre class="precode precode-inline"><code>[fa=iboost]iboost-phpboost[/fa]</code></pre> <i class="fa iboost fa-iboost-phpboost"></i>
     </p>
 ';
 ?>

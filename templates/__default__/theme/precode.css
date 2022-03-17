@@ -1,7 +1,7 @@
 pre.precode {
     display: flex;
     overflow: auto;
-    padding: 0.228em;
+    padding: 0.1618em 0.228em;
     white-space: pre;
 }
 
