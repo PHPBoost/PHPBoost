@@ -37,11 +37,11 @@
 .fa-iboost-email::before {
     content: "\b900"; }
 
+.fa-iboost-logo-phpboost::before,
+.fa-iboost-phpboost::before,
 .fa-iboost-logo::before {
     content: "\e000"; }
 
-.fa-iboost-logo-phpboost::before,
-.fa-iboost-phpboost::before,
 .fa-iboost-phpboost-01::before {
     content: "\e001"; }
 
