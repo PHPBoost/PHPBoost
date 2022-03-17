@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 02
+ * @version     PHPBoost 6.0 - last update: 2022 03 17
  * @since       PHPBoost 3.0 - 2012 02 01
 */
 
@@ -73,7 +73,7 @@ class OnlineService
 				$user->set_id($row['user_id']);
 				$user->set_display_name($row['display_name']);
 				$user->set_level($row['level']);
-				$user->set_groups(explode('|', $row['user_groups']));
+				$user->set_groups(explode('|', $row['user_groups'] ?? ''));
 				$user->set_last_update(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
 				$user->set_location_script($row['location_script']);
 				$user->set_location_title(stripslashes($row['location_title']));
