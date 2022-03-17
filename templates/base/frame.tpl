@@ -48,6 +48,7 @@
 	</head>
 
 	<body itemscope="itemscope" itemtype="https://schema.org/WebPage">
+		<a href="#global" aria-label="{@common.go.to.content}"></a>
 		<div id="push-container" class="body-wrapper">
 			# INCLUDE BODY #
 		</div>
