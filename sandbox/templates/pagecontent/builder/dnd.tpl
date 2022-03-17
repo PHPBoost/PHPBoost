@@ -1,7 +1,8 @@
 <div class="formatter-container formatter-hide no-js tpl">
     <span class="formatter-title title-perso">{@sandbox.source.code} : drag and drop / upload</span>
     <div class="formatter-content formatter-code">
-        <div class="no-style"><pre class="precode"><code>&lt;div class="dnd-area">
+        <div class="no-style">
+<pre class="precode"><code>&lt;div class="dnd-area">
     &lt;div class="dnd-dropzone">
         &lt;label for="inputfiles" class="dnd-label">
             \# IF C_MULTIPLE \#
@@ -40,7 +41,7 @@
     &lt;/div>
 &lt;/div>
 &lt;ul class="ulist">&lt;/ul>
-
+&nbsp;
 &lt;script>
     jQuery('\#$\{escape(HTML_ID)\}').parents('form').first()[0].enctype = "multipart/form-data";
     jQuery('\#$\{escape(HTML_ID)\}').dndfiles({

@@ -14,7 +14,7 @@
                         <ul class="level-1">
                             <li>
                                 <a class="cssmenu-title" href="#">
-                                    <img src="../../sandbox/sandbox_mini.png" alt="Element" width="16" height="16" />
+                                    <img src="../../templates/__default__/theme/images/logo.svg" alt="Element" width="16" height="18" />
                                     <span>Lorem ipsum dolor sit amet.</span>
                                 </a>
                             </li>

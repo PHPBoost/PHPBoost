@@ -1,9 +1,7 @@
 pre.precode {
     display: flex;
-    background-color: var(--bgc-sub);
     overflow: auto;
-    margin: 0 0 1.228em;
-    padding: 0.618em 1em;
+    padding: 0.228em;
     white-space: pre;
 }
 
@@ -15,7 +13,9 @@ pre.precode .line-number {
 
 pre.precode .line-number {
     margin: 0 1em 0 -1em;
-    border-right: 1px solid var(--bdr-sub);
+    border-width: 0 1px 0 0;
+    border-style: solid;
+    border-color: transparent;
     text-align: right;
     user-select: none;
 }
@@ -24,3 +24,5 @@ pre.precode .line-number span {
     display: block;
     padding: 0 .5em 0 1em;
 }
+
+pre.precode.precode-inline { display: inline-flex; }

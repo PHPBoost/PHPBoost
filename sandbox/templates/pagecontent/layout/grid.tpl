@@ -101,9 +101,7 @@
 &lt;div class="cell-flex ...">
     &lt;article class="cell cell-[RATIO]">... &lt;/article>
     // [RATIO] = 1-4 / 1-3 / 1-2 / 2-3 / 3-4
-&lt;/div>
-
-</code></pre>
+&lt;/div></code></pre>
             </div>
         </div>
     </div>

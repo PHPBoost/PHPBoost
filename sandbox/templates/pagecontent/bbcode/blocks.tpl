@@ -24,7 +24,7 @@
             <div class="no-style">
 <pre class="precode"><code>// {@sandbox.bbcode.block}
 &lt;div class="formatter-container formatter-block">Lorem ipsum&lt;/div>
-<br />
+&nbsp;
 // {@sandbox.bbcode.fieldset}
 &lt;fieldset class="formatter-container formatter-fieldset">
     &lt;legend>{@sandbox.bbcode.legend}&lt;/legend>

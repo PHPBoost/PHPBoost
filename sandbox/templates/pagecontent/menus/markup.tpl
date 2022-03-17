@@ -19,7 +19,7 @@
     &lt;/ul>
 &lt;/nav>
 &lt;script>jQuery("#menu-[ID]").menumaker({ title: "menu-[TITLE]", format: "multitoggle", breakpoint: 768 });&lt;/script> // static: true
-<br />
+&nbsp;
 // Pushmenu
 &lt;a class="toggle-[ID] pushmenu-toggle">
     &lt;span>[TITLE]&lt;/span>
@@ -56,8 +56,7 @@
         insertBack: true,
         labelBack: ${escapejs(@common.back)}
     });
-&lt;/script>
-</code></pre>
+&lt;/script></code></pre>
         </div>
     </div>
 </div>

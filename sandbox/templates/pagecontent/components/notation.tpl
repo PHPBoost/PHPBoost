@@ -30,7 +30,8 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="no-style"><pre class="precode"><code>&lt;div class="notation">
+            <div class="no-style">
+<pre class="precode"><code>&lt;div class="notation">
     &lt;span class="stars">
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-100">&lt;/span>&lt;/a>
         &lt;a href="#" onclick="return false;" class="far star fa-star">&lt;span class="star-width star-width-100">&lt;/span>&lt;/a>

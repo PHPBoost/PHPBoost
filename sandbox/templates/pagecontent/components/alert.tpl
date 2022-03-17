@@ -9,7 +9,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="language-html"><code class="language-html">&lt;div id="msg-helper-{ID}" class="message-helper bgc success">Lorem ipsum&lt;/div>
+<pre class="precode"><code>&lt;div id="msg-helper-{ID}" class="message-helper bgc success">Lorem ipsum&lt;/div>
 &lt;div id="msg-helper-{ID}" class="message-helper bgc notice">Lorem ipsum&lt;/div>
 &lt;div id="msg-helper-{ID}" class="message-helper bgc warning">Lorem ipsum&lt;/div>
 &lt;div id="msg-helper-{ID}" class="message-helper bgc error">Lorem ipsum&lt;/div>

@@ -48,7 +48,7 @@
     &lt;/li>
     &lt;li class="formatter-li">{@sandbox.bbcode.item}&lt;/li>
 &lt;/ul>
-<br />
+&nbsp;
 &lt;ol class="formatter-ol">
     &lt;li class="formatter-li">
         {@sandbox.bbcode.item}

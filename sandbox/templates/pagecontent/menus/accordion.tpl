@@ -12,7 +12,8 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="no-style"><pre class="precode"><code>&lt;div class="accordion-container basic"> // basic|siblings
+            <div class="no-style">
+<pre class="precode"><code>&lt;div class="accordion-container basic"> // basic|siblings
     &lt;div class="accordion-controls">
         &lt;span class="open-all-accordions" aria-label="{@sandbox.menu.accordion.open}">&lt;i class="fa fa-fw fa-chevron-down">&lt;/i>&lt;/span>
         &lt;span class="close-all-accordions" aria-label="{@sandbox.menu.accordion.close}">&lt;i class="fa fa-fw fa-chevron-up">&lt;/i>&lt;/span>

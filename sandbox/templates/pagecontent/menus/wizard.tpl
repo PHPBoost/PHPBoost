@@ -10,7 +10,8 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="no-style"><pre class="precode"><code>&lt;div class="wizard-container">
+            <div class="no-style">
+<pre class="precode"><code>&lt;div class="wizard-container">
     &lt;nav id="lorem" class="wizard-header">
         &lt;ul>
             &lt;li>&lt;a href="#">...&lt;/a>&lt;/li>

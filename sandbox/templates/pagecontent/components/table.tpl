@@ -85,8 +85,7 @@
 &lt;table class="table">...&lt;/table>
 <br />
 // {@sandbox.component.table.responsive.no.header}
-&lt;table class="table-no-header">...&lt;/table>
-</code></pre>
+&lt;table class="table-no-header">...&lt;/table></code></pre>
             </div>
         </div>
     </div>

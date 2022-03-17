@@ -10,7 +10,8 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="no-style"><pre class="precode"><code>&lt;div class="modal-container">
+            <div class="no-style">
+<pre class="precode"><code>&lt;div class="modal-container">
     &lt;span data-modal="" data-target="target-panel">{@sandbox.component.item}&lt;/span>
     &lt;div id="target-panel" class="modal modal-animation">
         &lt;div class="close-modal" aria-label="Fermer">&lt;/div>

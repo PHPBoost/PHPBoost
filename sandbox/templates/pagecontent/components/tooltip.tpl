@@ -24,9 +24,10 @@
     <div class="formatter-container formatter-hide no-js tpl">
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
-            <div class="no-style"><pre class="precode"><code>// {@sandbox.component.tooltip}
+            <div class="no-style">
+<pre class="precode"><code>// {@sandbox.component.tooltip}
 &lt;span aria-label="Lorem ipsum....">Tooltip&lt;/span>
-<br />
+&nbsp;
 // {@sandbox.component.tooltip.custom}
 &lt;span data-tooltip="{@sandbox.component.tooltip.alt.options}" data-tooltip-class="bigger bgc-full error" aria-label="Lorem ipsum....">Tooltip&lt;/span></code></pre>
             </div>

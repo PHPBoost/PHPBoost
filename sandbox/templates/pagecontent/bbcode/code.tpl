@@ -31,7 +31,7 @@
             <span class="formatter-title title-perso">{@sandbox.bbcode.code.php} : CategoriesCache.class.php</span>
             <div class="formatter-content formatter-code">
                 <div class="no-style">
-<pre class="language-php line-numbers"><code class="language-php">&lt;?php
+<pre class="precode"><code>&lt;?php
 abstract class CategoriesCache implements CacheData
 {
     /**
@@ -41,7 +41,7 @@ abstract class CategoriesCache implements CacheData
     protected static $module;
     protected static $module_category;
     protected $categories;
-<br />
+
     public static function __static()
     {
         $module_id = Environment::get_running_module_name();
@@ -71,7 +71,7 @@ abstract class CategoriesCache implements CacheData
         Lorem ipsum
     &lt;/div>
 &lt;/blockquote>
-<br />
+&nbsp;
 // {@sandbox.bbcode.hidden}
 &lt;div class="formatter-container formatter-hide no-js">
     &lt;span class="formatter-title title-perso">Lorem ipsum&lt;/span>
@@ -79,19 +79,17 @@ abstract class CategoriesCache implements CacheData
         Lorem ipsum
     &lt;/div>
 &lt;/div>
-<br />
+&nbsp;     
 // {@sandbox.bbcode.code.php} (php)
 &lt;div class="formatter-container formatter-code">
     &lt;span class="formatter-title">Code : PHP&lt;/span> <em>// file.ext</em>
     &lt;div class="formatter-content formatter-code">
         &lt;div class="no-style">
-&lt;pre class="language-php line-numbers">&lt;code class="language-php"> // class="language-" => php, html, css, bbcode, txt ...
-    ...[code /]...
-&lt;/code>&lt;/pre>
+&lt;pre class="precode">&lt;code> // class="language-" => php, html, css, bbcode, txt ...
+    ...[code /]...&lt;/code>&lt;/pre>
         &lt;/div>
     &lt;/div>
-&lt;/div>
-</code></pre>
+&lt;/div></code></pre>
             </div>
         </div>
     </div>
