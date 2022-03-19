@@ -73,7 +73,7 @@
 					<li>
 						<a href="${relative_url(AdminServerUrlBuilder::system_report())}">
 							<i class="fa fa-building fa-2x" aria-hidden="true"></i>
-							<p>{@.menu.server.system.report}</p>
+							<p>{@menu.server.system.report}</p>
 						</a>
 					</li>
 					<li>
