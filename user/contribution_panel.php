@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -319,7 +319,21 @@ else
 				));
 			}
 
+			$configuration = $module->get_configuration();
+			$img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png';
+			$img = new File($img_url);
+			$thumbnail = $img->exists() ? $img_url : '';
+			$fa_icon = $configuration->get_fa_icon();
+			$hexa_icon = $configuration->get_hexa_icon();
 			$view->assign_block_vars('row.module', array(
+				'C_IMG'       => $img->exists(),
+				'C_FA_ICON'   => !empty($fa_icon),
+				'C_HEXA_ICON' => !empty($hexa_icon),
+
+				'U_IMG'     => $img_url,
+				'FA_ICON'   => $fa_icon,
+				'HEXA_ICON' => $hexa_icon,
+
 				'U_MODULE_LINK' => $contribution_interface,
 				'MODULE_ID'     => $module->get_id(),
 				'MODULE_NAME'   => $module->get_configuration()->get_name(),

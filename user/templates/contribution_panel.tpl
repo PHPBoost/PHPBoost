@@ -19,7 +19,17 @@
 										<div class="cell">
 											<div class="cell-header">
 												<div class="cell-name"><a class="offload" href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
-												<img src="{PATH_TO_ROOT}/{row.module.MODULE_ID}/{row.module.MODULE_ID}_mini.png" alt="{row.module.LINK_TITLE}" />
+												# IF row.module.C_IMG #
+													<img src="{row.module.U_IMG}" alt="{row.module.LINK_TITLE}" />
+												# ELSE #
+													# IF row.module.C_FA_ICON #
+														<i class="{row.module.FA_ICON}"></i>
+													# ELSE #
+														# IF row.module.C_HEXA_ICON # 
+															<span class="bigger">{row.module.HEXA_ICON}</span>
+														# ENDIF #
+													# ENDIF #
+												# ENDIF #
 											</div>
 										</div>
 									# END row.module #
