@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 01
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 4.0 - 2014 06 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,7 +26,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 	 */
 	public function display($content)
 	{
-		$lang = LangLoader::get_kernel_langs();
+		$lang = LangLoader::get_all_langs();
 		$view = new FileTemplate('frame.tpl');
 		$view->add_lang($lang);
 
