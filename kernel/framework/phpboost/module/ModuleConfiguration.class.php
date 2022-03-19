@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 24
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -187,7 +187,7 @@ class ModuleConfiguration
 
 	public function has_categories()
 	{
-		return ($this->feature_is_enabled('categories') || $this->feature_is_enabled('rich_categories') || ClassLoader::has_module_subclass_of($this->module_id, 'CategoriesCache'));
+		return ($this->feature_is_enabled('categories') || $this->feature_is_enabled('rich_categories') || ModuleClassLoader::has_module_subclass_of($this->module_id, 'CategoriesCache'));
 	}
 
 	public function has_contribution()
@@ -259,12 +259,12 @@ class ModuleConfiguration
 
 	private function get_default_configuration_class_name()
 	{
-		return ClassLoader::get_module_subclass_of($this->module_id, 'AbstractConfigData');
+		return ModuleClassLoader::get_module_subclass_of($this->module_id, 'AbstractConfigData');
 	}
 
 	private function get_default_item_class_name()
 	{
-		$item_name = ClassLoader::get_module_subclass_of($this->module_id, 'Item');
+		$item_name = ModuleClassLoader::get_module_subclass_of($this->module_id, 'Item');
 		if (empty($item_name))
 		{
 			if ($this->feature_is_enabled('items'))

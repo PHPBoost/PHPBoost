@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 08
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -187,7 +187,7 @@ class ExtensionPointProviderService
 					$features = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
 					$items_feature = in_array('items', array_map('trim', $features), true) || in_array('rich_items', array_map('trim', $features), true);
 				}
-				if (ClassLoader::has_module_subclass_of($provider_id, 'Item') || $items_feature)
+				if (ModuleClassLoader::has_module_subclass_of($provider_id, 'Item') || $items_feature)
 					return 'ItemsModule' . self::EXTENSION_POINT_PROVIDER_SUFFIX;
 				else
 					return 'Module' . self::EXTENSION_POINT_PROVIDER_SUFFIX;

@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -12,17 +12,18 @@
 
 class ClassLoader
 {
-	private static $cache_file = '/cache/autoload.php';
-	private static $autoload;
-	private static $modules_classlist = array();
-	private static $already_reloaded = false;
-	private static $exclude_paths = array(
+	protected static $cache_file = '/cache/autoload.php';
+	protected static $modules_cache_file = '/cache/autoload_modules.php';
+	protected static $autoload;
+	protected static $modules_classlist = array();
+	protected static $already_reloaded = false;
+	protected static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
 		'/kernel/data', '/kernel/lib/js', '/kernel/lib/flash', '/kernel/lib/css', '/kernel/lib/php/geshi',
 		'/kernel/framework/io/db/dbms/Doctrine', '/test/PHPUnit',
 	);
 
-	private static $exclude_folders_names = array('templates', 'lang');
+	protected static $exclude_folders_names = array('templates', 'lang');
 
 	/**
 	 * initializes the autoload class list
@@ -31,9 +32,7 @@ class ClassLoader
 	{
 		spl_autoload_register(array(get_class(), 'autoload'));
 		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
-		{
 			self::generate_classlist();
-		}
 	}
 
 	/**
@@ -51,34 +50,6 @@ class ClassLoader
 	public static function is_class_registered_and_valid($classname)
 	{
 		return self::is_class_registered($classname) && file_exists(PATH_TO_ROOT . self::$autoload[$classname]);
-	}
-
-	/**
-	 * Check if a module has a subclass of a parent class
-	 */
-	public static function has_module_subclass_of($module_id, $parent_class)
-	{
-		return (bool)self::get_module_subclass_of($module_id, $parent_class);
-	}
-
-	/**
-	 * Get module subclass of a parent class if it has one
-	 */
-	public static function get_module_subclass_of($module_id, $parent_class)
-	{
-		$result = '';
-		if (isset(self::$modules_classlist[$module_id]))
-		{
-			foreach (self::$modules_classlist[$module_id] as $class_name => $class_path)
-			{
-				if (is_subclass_of($class_name, $parent_class))
-				{
-					$result = $class_name;
-					break;
-				}
-			}
-		}
-		return $result;
 	}
 
 	/**
@@ -121,15 +92,17 @@ class ClassLoader
 	{
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		$file->delete();
+		$file = new File(PATH_TO_ROOT . self::$modules_cache_file);
+		$file->delete();
 		self::$already_reloaded = false;
 	}
 
-	private static function is_class_registered($classname)
+	protected static function is_class_registered($classname)
 	{
 		return array_key_exists($classname, self::$autoload);
 	}
 
-	private static function add_classes($directory, $pattern, $recursive = true)
+	protected static function add_classes($directory, $pattern, $recursive = true)
 	{
 		$files = array();
 		$folder = new Folder($directory);
@@ -166,14 +139,23 @@ class ClassLoader
 		}
 	}
 
-	private static function generate_autoload_cache()
+	protected static function generate_autoload_cache()
 	{
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		try
 		{
-		 	$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . ';');
-		 	$file->append('self::$modules_classlist = ' . var_export(self::$modules_classlist, true) . ';');
-			$file->append('?>');
+		 	$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
+		 	$file->close();
+		}
+		catch (IOException $ex)
+		{
+			die('The cache folder is not writeable, please set CHMOD to 777');
+		}
+		
+		$file = new File(PATH_TO_ROOT . self::$modules_cache_file);
+		try
+		{
+		 	$file->write('<?php self::$modules_classlist = ' . var_export(self::$modules_classlist, true) . '; ?>');
 		 	$file->close();
 		}
 		catch (IOException $ex)
@@ -182,12 +164,12 @@ class ClassLoader
 		}
 	}
 
-	private static function inc($file)
+	protected static function inc($file)
 	{
 		return file_exists($file) && @include_once $file;
 	}
 
-	private static function call_static_initializer($classname)
+	protected static function call_static_initializer($classname)
 	{
 		if (method_exists($classname, '__static'))
 		{

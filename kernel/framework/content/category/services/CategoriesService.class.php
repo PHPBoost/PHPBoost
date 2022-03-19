@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 22
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 6.0 - 2019 11 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,7 +38,7 @@ class CategoriesService
 			$module = ModulesManager::get_module($module_id);
 
 			$module_categories_cache_class_name = TextHelper::ucfirst($module_id) . 'CategoriesCache';
-			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) ? $module_categories_cache_class_name : ClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
+			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) ? $module_categories_cache_class_name : ModuleClassLoader::get_module_subclass_of($module_id, 'CategoriesCache');
 			if ($categories_cache_class)
 				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', array($requested_module_id)) : call_user_func($categories_cache_class . '::load');
 			else if ($module->get_configuration()->feature_is_enabled('rich_categories'))
@@ -51,7 +51,7 @@ class CategoriesService
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
 
-			$categories_manager_class = (ClassLoader::has_module_subclass_of($module_id, 'CategoriesManager') ? ClassLoader::get_module_subclass_of($module_id, 'CategoriesManager') : 'CategoriesManager');
+			$categories_manager_class = (ModuleClassLoader::has_module_subclass_of($module_id, 'CategoriesManager') ? ModuleClassLoader::get_module_subclass_of($module_id, 'CategoriesManager') : 'CategoriesManager');
 			self::$categories_manager = new $categories_manager_class($categories_cache, $categories_items_parameters);
 		}
 		return self::$categories_manager;
