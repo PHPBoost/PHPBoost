@@ -60,7 +60,7 @@
 	}
 
 // BBCode block: Code
-// Add button "Copy to clipboard" on Coding block
+	// Add button "Copy to clipboard" on Coding block
 	var add_button_copytoclipboard = (callback) => {
 		if (document.readyState != "loading") callback();
 		else document.addEventListener("DOMContentLoaded", callback);
@@ -91,20 +91,20 @@
 	});
 
 // Function copy_code_clipboard
-//
-// Description :
-// This function copy the content of your specific selection to clipboard.
-//
-// parameters : one
-// {idcode} correspond to the ID selector you want to select.
-//  - if it's a number : ID selector is 'copy-code-{idcode}-content'
-//  - if it's a string : ID selector is '{idcode}'
-//
-// Return : -
-//
-// Comments :
-// if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
-//
+	//
+	// Description :
+	// This function copy the content of your specific selection to clipboard.
+	//
+	// parameters : one
+	// {idcode} correspond to the ID selector you want to select.
+	//  - if it's a number : ID selector is 'copy-code-{idcode}-content'
+	//  - if it's a string : ID selector is '{idcode}'
+	//
+	// Return : -
+	//
+	// Comments :
+	// if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
+	//
 	function copy_code_clipboard(idcode)
 	{
 		if ( Number.isInteger(idcode) )
@@ -126,17 +126,17 @@
 	}
 
 //Function SelectElement
-//
-// Description :
-// The content will be selected on your page as if you had selected it with your mouse
-//
-// parameters : one
-// {element} correspond to the element you want to select
-//
-// Return : -
-//
-// Comments : -
-//
+	//
+	// Description :
+	// The content will be selected on your page as if you had selected it with your mouse
+	//
+	// parameters : one
+	// {element} correspond to the element you want to select
+	//
+	// Return : -
+	//
+	// Comments : -
+	//
 	function SelectElement(element) {
 		var range = document.createRange();
 		range.selectNodeContents(element);
@@ -147,48 +147,54 @@
 	}
 
 //Function copy_to_clipboard
-//
-// Description :
-// This function copy the content of parameter to clipboard.
-//
-// parameters : one
-// {tocopy} correspond to the content you want to copy.
-//
-// Return : -
-//
-// Comments : -
-//
-function copy_to_clipboard(tocopy)
-{
-	var dummy = jQuery('<input>').val(tocopy).appendTo('body').select()
+	//
+	// Description :
+	// This function copy the content of parameter to clipboard.
+	//
+	// parameters : one
+	// {tocopy} correspond to the content you want to copy.
+	//
+	// Return : -
+	//
+	// Comments : -
+	//
+	function copy_to_clipboard(tocopy)
+	{
+		var dummy = jQuery('<input>').val(tocopy).appendTo('body').select()
 
-	try {
-		var successful = document.execCommand('copy');
-		alert(COPIED_TO_CLIPBOARD +'\n' + tocopy);
+		try {
+			var successful = document.execCommand('copy');
+			alert(COPIED_TO_CLIPBOARD +'\n' + tocopy);
+		}
+		catch(err) {
+			alert('Your browser do not authorize this operation');
+		}
 	}
-	catch(err) {
-		alert('Your browser do not authorize this operation');
-	}
-}
 
 // Copy link to clipboard
-document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
-	el.addEventListener('click', event => {
-		event.preventDefault();
+	//
+	// Description :
+	// This function copy the href of a link to clipboard.
+	//
+	// use class 'copy-link-to-clipboard' in the link
+	//
+	document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
+		el.addEventListener('click', event => {
+			event.preventDefault();
 
-		var hrefValue = el.getAttribute('href');
+			var hrefValue = el.getAttribute('href');
 
-		document.addEventListener('copy', function(e) {
-			e.clipboardData.setData('text/plain', hrefValue);
-			e.preventDefault();
-		}, true);
+			document.addEventListener('copy', function(e) {
+				e.clipboardData.setData('text/plain', hrefValue);
+				e.preventDefault();
+			}, true);
 
-		document.execCommand('copy');
-		alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
-  	});
-});
+			document.execCommand('copy');
+			alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
+	  	});
+	});
 
-	// Open submenu
+// Open submenu
 	// Function open_submenu
 	// for links submenu, in HTML onclick attribute
 	//
