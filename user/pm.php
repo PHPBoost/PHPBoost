@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -966,9 +966,9 @@ else // Conversation list in the user email box
 			$last_user_level_class = UserService::get_level_class(User::ADMINISTRATOR_LEVEL);
 		}
 		else {
-			$last_user_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
 			$last_user_level_class = UserService::get_level_class($row['last_level']);
 		}
+		$last_user_group_color = User::get_group_color($row['last_groups'], $row['last_level']);
 
 		$view->assign_block_vars('convers.list', array(
 			'INCR'                           => $i,
