@@ -8,7 +8,7 @@
  * @since       PHPBoost 6.0 - 2022 03 19
 */
 
-class ModuleClassLoader
+class ModuleClassLoader extends ClassLoader
 {
 	public static function __static()
 	{
