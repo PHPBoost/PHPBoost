@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 12 14
+ * @version     PHPBoost 6.0 - last update: 2022 03 19
  * @since       PHPBoost 3.0 - 2010 04 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -26,9 +26,9 @@ class FormFieldActionLink extends AbstractFormField
 	 * @param string $css_class the action font awesome css class
 	 * @param Url $img the action icon url
 	 */
-	public function __construct($id, $title, $url, $css_class = '', $img = '')
+	public function __construct($id, $title, $url, $css_class = '', $img = '', $active_module = '', $fa_icon = '')
 	{
-		$this->action = new FormFieldActionLinkElement($title, $url, $css_class, $img);
+		$this->action = new FormFieldActionLinkElement($title, $url, $css_class, $img, $active_module, $fa_icon);
 		parent::__construct($id, '', '');
 	}
 

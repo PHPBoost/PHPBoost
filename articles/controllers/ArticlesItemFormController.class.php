@@ -15,7 +15,7 @@ class ArticlesItemFormController extends DefaultItemFormController
 {
 	protected function build_post_content_fields(FormFieldset $fieldset)
 	{
-		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.add.page'] , 'javascript:bbcode_page();', 'fa fa-pagebreak'));
+		$fieldset->add_field(new FormFieldActionLink('add_page', $this->lang['articles.add.page'] , 'javascript:bbcode_page();', '', '', '', 'fa fa-pagebreak'));
 
 		// Put the cursor on the good page when we edit an article with several pages
 		if (!$this->is_new_item)
