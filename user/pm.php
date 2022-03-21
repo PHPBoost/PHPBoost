@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 19
+ * @version     PHPBoost 6.0 - last update: 2022 03 21
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -1000,7 +1000,7 @@ else // Conversation list in the user email box
 			'C_PARTICIPANT_GROUP_COLOR'      => !empty($participant_group_color),
 			'PARTICIPANT_GROUP_COLOR'        => $participant_group_color,
 
-			'U_LAST_MSG'                     => "pm" . url('.php?' . $last_page . 'id =' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . "#m" . $row['last_msg_id'],
+			'U_LAST_MSG'                     => "pm" . url('.php?' . $last_page . 'id=' . $row['id'], '-0-' . $row['id'] . $last_page_rewrite) . "#m" . $row['last_msg_id'],
 			'LAST_MSG_DATE'                  => Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'LAST_MSG_DATE_DELAY'            => Date::to_format($row['last_timestamp'], Date::FORMAT_DELAY),
 			'C_LAST_IS_ADMINISTRATOR'        => $row['last_user_id'] == -1,
