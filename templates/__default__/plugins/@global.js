@@ -255,7 +255,7 @@
 		});
 	}
 
-	// Function opensubmenu
+// plugin opensubmenu
 	// for content submenu in javascript script
 	//
 	// Description :
