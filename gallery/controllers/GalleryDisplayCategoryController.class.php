@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 15
+ * @version     PHPBoost 6.0 - last update: 2022 03 21
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -262,7 +262,7 @@ class GalleryDisplayCategoryController extends ModuleController
 							'C_CURRENT_ITEM' => $row['id'] == $g_idpics,
 							'HEIGHT'         => ($config->get_mini_max_height() + 16),
 							'ID'             => $i,
-							'URL'            => 'gallery' . url('.php?cat =' . $row['id_category'] . '&amp;id =' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['id_category'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
+							'URL'            => 'gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;sort=' . $g_sort, '-' . $row['id_category'] . '-' . $row['id'] . '.php?sort=' . $g_sort) . '#pics_max',
 							'NAME'           => stripslashes($row['name']),
 							'PATH'           => $row['path']
 						);
