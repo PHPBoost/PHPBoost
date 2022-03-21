@@ -250,7 +250,7 @@
 								<div class="cell">
 									<div class="cell-body">
 										<div class="cell-content align-center">
-											<a class="offload" href="{U_UPDATE}">
+											<a class="offload" href="{U_EDIT}">
 												<i class="fa fa-check fa-2x success"aria-hidden="true"></i>
 												<span class="d-block">{@contribution.change.status}</span>
 											</a>
@@ -303,14 +303,14 @@
 									<span>{CREATION_DATE}</span>
 								</li>
 								# IF C_CONTRIBUTION_FIXED #
-								<li class="li-stretch">
-									<span class="text-strong">{@user.referee}</span>
-									<span><a href="{U_REFEREE_PROFILE}" class="{REFEREE_LEVEL_CLASS} offload" # IF C_REFEREE_GROUP_COLOR # style="color:{REFEREE_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
-								</li>
-								<li class="li-stretch">
-									<span class="text-strong">{@contribution.closing.date}</span>
-									<span>{FIXING_DATE}</span>
-								</li>
+									<li class="li-stretch">
+										<span class="text-strong">{@user.referee}</span>
+										<span><a href="{U_REFEREE_PROFILE}" class="{REFEREE_LEVEL_CLASS} offload" # IF C_REFEREE_GROUP_COLOR # style="color:{REFEREE_GROUP_COLOR}" # ENDIF #>{FIXER}</a></span>
+									</li>
+									<li class="li-stretch">
+										<span class="text-strong">{@contribution.closing.date}</span>
+										<span>{FIXING_DATE}</span>
+									</li>
 								# ENDIF #
 								<li class="li-stretch">
 									<span class="text-strong">{@common.module}</span>
