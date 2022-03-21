@@ -106,3 +106,5 @@
 	content: "";
 	pointer-events: none;
 }
+
+.message-helper .button { width: auto; }
