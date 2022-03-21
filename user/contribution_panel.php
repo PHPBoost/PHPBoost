@@ -295,11 +295,10 @@ else
 		));
 	else
 		$view->put_all(array(
-			'C_NO_CONTRIBUTION'            => true
+			'C_NO_CONTRIBUTION' => true
 		));
 
 	// List of modules with contribution
-	define('NUMBER_OF_MODULES_PER_LINE', 4);
 	$i_module = 0;
 	foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $name => $module)
 	{
@@ -312,20 +311,13 @@ else
 
 		if (!empty($contribution_interface) && $authorized)
 		{
-			if ($i_module % NUMBER_OF_MODULES_PER_LINE == 0)
-			{
-				$view->assign_block_vars('row', array(
-					'MODULES_PER_ROW' => NUMBER_OF_MODULES_PER_LINE,
-				));
-			}
-
 			$configuration = $module->get_configuration();
 			$img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png';
 			$img = new File($img_url);
 			$thumbnail = $img->exists() ? $img_url : '';
 			$fa_icon = $configuration->get_fa_icon();
 			$hexa_icon = $configuration->get_hexa_icon();
-			$view->assign_block_vars('row.module', array(
+			$view->assign_block_vars('module', array(
 				'C_IMG'       => $img->exists(),
 				'C_FA_ICON'   => !empty($fa_icon),
 				'C_HEXA_ICON' => !empty($hexa_icon),
@@ -344,7 +336,7 @@ else
 	}
 
 	$view->put_all(array(
-		'C_NO_MODULE_IN_WHICH_CONTRIBUTE' => $i_module == 0
+		'C_CONTRIBUTION_MODULE' => $i_module > 0
 	));
 
 	// Sorting management

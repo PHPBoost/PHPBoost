@@ -10,31 +10,32 @@
 						<h2>{@contribution.contribute}</h2>
 					</header>
 					<div class="content">
-						# IF NOT C_NO_MODULE_IN_WHICH_CONTRIBUTE #
+						# IF C_CONTRIBUTION_MODULE #
 							<p>{@contribution.contribute.in.modules}</p>
-
-							# START row #
-								<div class="cell-flex cell-tile cell-columns-{row.MODULES_PER_ROW}">
-									# START row.module #
-										<div class="cell">
-											<div class="cell-header">
-												<div class="cell-name"><a class="offload" href="{row.module.U_MODULE_LINK}">{row.module.MODULE_NAME}</a></div>
-												# IF row.module.C_IMG #
-													<img src="{row.module.U_IMG}" alt="{row.module.LINK_TITLE}" />
-												# ELSE #
-													# IF row.module.C_FA_ICON #
-														<i class="{row.module.FA_ICON} fa-fw fa-2x"></i>
+							<div class="cell-flex cell-tile cell-columns-4">
+								# START module #
+									<div class="cell">
+										<div class="cell-body">
+											<div class="cell-content align-center">
+												<a class="offload" href="{module.U_MODULE_LINK}">
+													# IF module.C_IMG #
+														<img src="{module.U_IMG}" alt="{module.LINK_TITLE}" />
 													# ELSE #
-														# IF row.module.C_HEXA_ICON #
-															<span class="bigger">{row.module.HEXA_ICON}</span>
+														# IF module.C_FA_ICON #
+															<i class="{module.FA_ICON} fa-fw fa-2x"></i>
+														# ELSE #
+															# IF module.C_HEXA_ICON #
+																<span class="bigger">{module.HEXA_ICON}</span>
+															# ENDIF #
 														# ENDIF #
 													# ENDIF #
-												# ENDIF #
+													<span class="d-block">{module.MODULE_NAME}</span>
+												</a>
 											</div>
 										</div>
-									# END row.module #
-								</div>
-							# END row #
+									</div>
+								# END module #
+							</div>
 						# ELSE #
 							<div class="message-helper bgc warning">{@contribution.no.module.to.contribute}</div>
 						# ENDIF #
