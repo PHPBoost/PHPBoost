@@ -1,5 +1,5 @@
 <section id="module-media" class="category-{CATEGORY_ID} single-item">
-	<header class="setion-header">
+	<header class="section-header">
 		<div class="controls align-right">
 			{@media.module.title}# IF NOT C_ROOT_CATEGORY # - {CATEGORY_NAME}# ENDIF # # IF IS_ADMIN #<a class="offload" href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>

@@ -38,7 +38,7 @@
 										</td>
 										<td>
 											# IF list.C_AUTHOR_EXISTS #
-												<a href="{list.U_AUTHOR_PROFILE}" class="{list.AUTHOR_LEVEL_CLASS} offload"# IF list.C_AUTHOR_GROUP_COLOR # style="color: {list.AUTHOR_GROUP_COLOR};"# ENDIF #>{list.AUTHOR_DISPLAY_NAME}</a>
+												<a itemprop="author" href="{list.U_AUTHOR_PROFILE}" class="{list.AUTHOR_LEVEL_CLASS} offload"# IF list.C_AUTHOR_GROUP_COLOR # style="color: {list.AUTHOR_GROUP_COLOR};"# ENDIF #>{list.AUTHOR_DISPLAY_NAME}</a>
 											# ELSE #
 												<span aria-label="{list.AUTHOR_IP}">{@user.guest}</span>
 											# ENDIF #

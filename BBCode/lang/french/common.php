@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 07
+ * @version     PHPBoost 6.0 - last update: 2022 03 22
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,6 +23,8 @@ $lang['bbcode.class']        = 'Classes';
 $lang['bbcode.style']        = 'Style';
 
 // Text formatting
+$lang['bbcode.format'] = 'Formatage du texte';
+
 $lang['bbcode.bold']      = 'Texte en gras';
 $lang['bbcode.italic']    = 'Texte en italique';
 $lang['bbcode.underline'] = 'Texte souligné';
@@ -40,6 +42,9 @@ $lang['bbcode.center']  = 'Centrer';
 $lang['bbcode.right']   = 'Aligner à droite';
 $lang['bbcode.justify'] = 'Justifier';
 
+// HTML formatting
+$lang['bbcode.layout'] = 'Mise en page';
+
 $lang['bbcode.positions']   = 'Positionnement';
 $lang['bbcode.float.left']  = 'Flottant à gauche';
 $lang['bbcode.float.right'] = 'Flottant à droite';
@@ -47,7 +52,6 @@ $lang['bbcode.indent']      = 'Indentation';
 $lang['bbcode.sup']         = 'Exposant';
 $lang['bbcode.sub']         = 'Indice';
 
-// HTML formatting
 $lang['bbcode.title']       = 'Titrage';
 $lang['bbcode.title.label'] = 'Titre';
 
@@ -84,6 +88,8 @@ $lang['bbcode.hide.moderator'] = 'Cacher le contenu aux membres';
 $lang['bbcode.style'] = 'Style';
 
 // Links
+$lang['bbcode.links']      = 'Liens';
+
 $lang['bbcode.link']       = 'Lien';
 $lang['bbcode.link.url']   = 'Adresse du lien';
 $lang['bbcode.link.label'] = 'Texte du lien';
@@ -105,6 +111,9 @@ $lang['bbcode.feed.number'] = 'Nombre d\'éléments à afficher';
 $lang['bbcode.anchor']      = 'Ancre vers un endroit de la page';
 $lang['bbcode.anchor.name'] = 'Nom de l\'ancre';
 $lang['bbcode.anchor.url']  = 'Ajouter le lien vers l\'ancre';
+
+// Files
+$lang['bbcode.files'] = 'Fichiers';
 
 $lang['bbcode.sound']     = 'Son';
 $lang['bbcode.sound.url'] = 'Adresse du fichier audio';
@@ -131,11 +140,18 @@ $lang['bbcode.figure.caption'] = 'Description de l\'image';
 
 $lang['bbcode.upload'] = 'Attacher un fichier';
 
+// Icons
+$lang['bbcode.icons'] = 'Icônes';
+
 $lang['bbcode.smileys']            = 'Smileys';
 $lang['bbcode.emojis']             = 'Emojis HTML';
 $lang['bbcode.emojis.link']        = 'D\'autres emojis sur <a href="https://unicode-table.com/fr/" target="_blank" rel="noopener norefferer">unicode-table.com</a> ou  <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
 $lang['bbcode.fa']                 = 'Icônes Font Awesome';
 $lang['bbcode.fa.tag']             = '[fa=fa-style,fa-option]nom de l\'icône (sans le "fa-")[/fa]';
+
+// Code
+$lang['bbcode.format.code'] = 'Formatage du code';
+
 $lang['bbcode.code']               = 'Code';
 $lang['bbcode.code.custom.name']   = 'Chemin vers un fichier';
 $lang['bbcode.code.name']          = 'Langage';

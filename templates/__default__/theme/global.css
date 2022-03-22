@@ -127,6 +127,8 @@ a.pinned { cursor: pointer; }
 	transform: translate(-50%, -50%);
 }
 
+.stacked .stack-event.small { font-size: 0.618em; padding: 0.228em 0.456em }
+
 .stacked .stack-top-left  	  { top: 0;    left: 0; }
 .stacked .stack-top-center    { top: 0;    left: 50%; }
 .stacked .stack-top-right 	  { top: 0;    left: 100%; }

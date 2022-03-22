@@ -26,8 +26,8 @@
 					<legend>{@forum.edit.in.topic}: {TITLE_T}</legend>
 					<div class="form-element form-element-textarea">
 						<label for="content">* {@user.message}</label>
-						{KERNEL_EDITOR}
-						<div class="form-field-textarea">
+						<div class="form-field form-field-textarea bbcode-sidebar">
+							{KERNEL_EDITOR}
 							<textarea rows="25" cols="66" id="content" name="content">{CONTENT}</textarea>
 						</div>
 					</div>
@@ -50,5 +50,6 @@
 		<a class="offload" href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
+<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 # INCLUDE FORUM_BOTTOM #

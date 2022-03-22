@@ -7,11 +7,10 @@
 		# IF C_DESCRIPTION #<span class="field-description">{DESCRIPTION}</span># ENDIF #
 	</label>
 
-	# IF C_EDITOR_ENABLED #
-		{EDITOR}
-	# ENDIF #
-
-	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field form-field-textarea picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
+	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field form-field-textarea picture-status-constraint# IF C_REQUIRED # field-required # ENDIF ## IF C_EDITOR_ENABLED # bbcode-sidebar# ENDIF #">
+		# IF C_EDITOR_ENABLED #
+			{EDITOR}
+		# ENDIF #
 		<textarea
 			id="${escape(HTML_ID)}"
 			name="${escape(HTML_ID)}"

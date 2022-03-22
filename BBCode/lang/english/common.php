@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 07
+ * @version     PHPBoost 6.0 - last update: 2022 03 22
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,6 +22,8 @@ $lang['bbcode.class']        = 'Classes';
 $lang['bbcode.style']        = 'Style';
 
 // Text formatting
+$lang['bbcode.format'] = 'Text formatting';
+
 $lang['bbcode.bold']      = 'Bold';
 $lang['bbcode.italic']    = 'Italic';
 $lang['bbcode.underline'] = 'Underlined';
@@ -47,6 +49,8 @@ $lang['bbcode.sup']         = 'Sup';
 $lang['bbcode.sub']         = 'Sub';
 
 // HTML formatting
+$lang['bbcode.layout'] = 'Layout';
+
 $lang['bbcode.title']       = 'Titration';
 $lang['bbcode.title.label'] = 'Title';
 
@@ -83,7 +87,9 @@ $lang['bbcode.hide.moderator'] = 'Hiding content to members';
 $lang['bbcode.style'] = 'Style [style=x]text[/style]';
 
 // Links
-$lang['bbcode.link']       = 'Links';
+$lang['bbcode.links'] = 'Links';
+
+$lang['bbcode.link']       = 'Link';
 $lang['bbcode.link.url']   = 'Link address';
 $lang['bbcode.link.label'] = 'Link label';
 
@@ -104,6 +110,9 @@ $lang['bbcode.feed.number'] = 'Items number to display';
 $lang['bbcode.anchor']      = 'Anchor somewhere in the page [anchor =x]text[/anchor]';
 $lang['bbcode.anchor.name'] = 'Anchor name (format : anchor-name)?';
 $lang['bbcode.anchor.url']  = 'Add the link to the anchor';
+
+// Files
+$lang['bbcode.files'] = 'Files';
 
 $lang['bbcode.sound']     = 'Sound';
 $lang['bbcode.sound.url'] = 'Audio file url';
@@ -130,11 +139,17 @@ $lang['bbcode.figure.caption'] = 'Picture description';
 
 $lang['bbcode.upload'] = 'Attach files';
 
-$lang['bbcode.smileys']            = 'Smileys';
+// Icons
+$lang['bbcode.icons'] = 'Icons';
+
 $lang['bbcode.emojis']             = 'HTML Emojis';
 $lang['bbcode.emojis.link']        = 'More emojis at <a href="https://unicode-table.com/en/" target="_blank" rel="noopener norefferer">unicode-table.com</a> or <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
 $lang['bbcode.fa']                 = 'Font Awesome Icon';
 $lang['bbcode.fa.tag']             = '[fa=fa-style,fa-option]codename (without "fa-")[/fa]';
+
+// Code
+$lang['bbcode.format.code'] = 'Code formatting';
+
 $lang['bbcode.code']               = 'Code';
 $lang['bbcode.code.custom.name']   = 'Path to a file';
 $lang['bbcode.code.name']          = 'Language';

@@ -31,8 +31,11 @@
 				</div>
 				<div class="form-element form-element-textarea">
 					<label for="content">* {@forum.report.content}</label>
-					{KERNEL_EDITOR}
-					<textarea rows="15" cols="40" id="content" name="content"></textarea>
+					<div class="form-field form-field-textarea bbcode-sidebar">
+						{KERNEL_EDITOR}
+						<textarea rows="15" cols="40" id="content" name="content"></textarea>
+					</div>
+
 					<input type="hidden" name="id" value="{alert_form.REPORT_ID}">
 				</div>
 			</fieldset>
@@ -44,6 +47,7 @@
 				<input type="hidden" name="token" value="{TOKEN}">
 			</fieldset>
 		</form>
+		<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 	# END alert_form #
 
 	# START alert_confirm #

@@ -108,11 +108,11 @@
 								</div>
 							</div>
 						# END create #
-						<div class="form-element form-element-textarea">
+						<div class="form-element form-element-textarea bbcode-sidebar">
 							<label for="contents">* {@wiki.content}</label>
 							# INCLUDE POST_JS_TOOLS #
-							{KERNEL_EDITOR}
 							<div class="form-field-textarea">
+								{KERNEL_EDITOR}
 								<textarea rows="25" id="contents" name="contents">{CONTENT}</textarea>
 							</div>
 						</div>
@@ -158,3 +158,4 @@
 		</div>
 	</div>
 </section>
+<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>

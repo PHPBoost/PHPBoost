@@ -102,8 +102,8 @@
 					</div>
 					<div class="form-element form-element-textarea">
 						<label for="content">* {@common.message}</label>
-						{KERNEL_EDITOR}
-						<div class="form-field-textarea">
+						<div class="form-field form-field-textarea bbcode-sidebar">
+							{KERNEL_EDITOR}
 							<textarea rows="25" id="content" name="content">{CONTENT}</textarea>
 						</div>
 					</div>
@@ -216,3 +216,4 @@
 </article>
 
 # INCLUDE FORUM_BOTTOM #
+<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>

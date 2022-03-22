@@ -148,7 +148,6 @@ select {
 .form-field-action-link ul li a { text-decoration: none; }
 
 /* --- Textarea --- */
-.bbcode-bar { width: 100% !important; }
 
 .form-element-textarea .form-field-textarea { display: block; }
 

@@ -150,8 +150,10 @@
 										{@user.alternative.pm}
 										<span class="field-description">{@H|user.alternative.pm.clue}</span>
 									</label>
-									{KERNEL_EDITOR}
-									<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
+									<div class="form-field form-field-textarea bbcode-sidebar">
+										{KERNEL_EDITOR}
+										<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
+									</div>
 								</div>
 								<div class="form-element">
 									<label>
@@ -173,6 +175,7 @@
 							<button type="submit" name="valid_user" value="true" class="button submit">{@form.submit}</button>
 						</fieldset>
 					</form>
+					<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 				# ENDIF #
 
 				# IF C_USER_BAN #

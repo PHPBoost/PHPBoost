@@ -115,8 +115,8 @@
 							</div>
 							<div class="form-element form-element-textarea">
 								<label for="content" id="preview_content">{@form.description}</label>
-								{KERNEL_EDITOR}
-								<div class="form-field-textarea">
+								<div class="form-field form-field-textarea bbcode-sidebar">
+									{KERNEL_EDITOR}
 									<textarea rows="10" cols="90" id="content" name="content">{CONTENT}</textarea>
 								</div>
 							</div>

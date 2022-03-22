@@ -391,8 +391,8 @@
 			<form action="post{U_FORUM_ACTION_POST}" method="post" onsubmit="return check_form_msg();">
 				<div class="form-element form-element-textarea">
 					<label for="content" class="text-strong bigger">{@forum.reply}</label>
-					{KERNEL_EDITOR}
-					<div class="form-field-textarea">
+					<div class="form-field form-field-textarea bbcode-sidebar">
+						{KERNEL_EDITOR}
 						<textarea id="content" name="content" rows="15" cols="40">{CONTENT}</textarea>
 					</div>
 				</div>
@@ -406,6 +406,7 @@
 				</fieldset>
 			</form>
 		</div>
+		<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 	# ENDIF #
 
 	# IF C_ERROR_AUTH_WRITE #

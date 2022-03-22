@@ -257,8 +257,8 @@
 						<legend>{@common.respond}</legend>
 						<div class="fieldset-inset">
 							<div class="form-element form-element-textarea">
-								{KERNEL_EDITOR}
-								<div class="form-field-textarea">
+								<div class="form-field-textarea bbcode-sidebar">
+									{KERNEL_EDITOR}
 									<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 								</div>
 							</div>
@@ -301,8 +301,8 @@
 								# END edit_pm.title #
 								<div class="form-element form-element-textarea">
 									<label for="content">* {@user.message}</label>
-									{KERNEL_EDITOR}
-									<div class="form-field form-field-textarea">
+									<div class="form-field form-field-textarea bbcode-sidebar">
+										{KERNEL_EDITOR}
 										<textarea rows="25" id="content" name="contents">{edit_pm.CONTENTS}</textarea>
 									</div>
 								</div>
@@ -361,8 +361,8 @@
 								</div>
 								<div class="form-element form-element-textarea">
 									<label for="contents">* {@user.message}</label>
-									{KERNEL_EDITOR}
-									<div class="form-field form-field-textarea">
+									<div class="form-field form-field-textarea bbcode-sidebar">
+										{KERNEL_EDITOR}
 										<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 									</div>
 								</div>
@@ -384,3 +384,4 @@
 		<footer></footer>
 	</section>
 # END post_convers #
+<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
