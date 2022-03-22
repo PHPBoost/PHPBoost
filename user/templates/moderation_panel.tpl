@@ -175,7 +175,7 @@
 							<button type="submit" name="valid_user" value="true" class="button submit">{@form.submit}</button>
 						</fieldset>
 					</form>
-					<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+					<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 				# ENDIF #
 
 				# IF C_USER_BAN #

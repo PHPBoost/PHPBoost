@@ -1119,7 +1119,7 @@
 		</ul>
 	</nav>
 </div>
-<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script>
 
 	jQuery("#bb_feed_module_name{FIELD}").change(function () {

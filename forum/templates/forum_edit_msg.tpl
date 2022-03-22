@@ -50,6 +50,6 @@
 		<a class="offload" href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
-<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 # INCLUDE FORUM_BOTTOM #

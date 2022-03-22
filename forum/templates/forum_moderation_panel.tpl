@@ -410,7 +410,7 @@
 									{KERNEL_EDITOR}
 									<textarea class="forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
 								</div>
-								<script src="{PATH_TO_ROOT}/bbcode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>								
+								<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>								
 							</td>
 						</tr>
 						<tr>
