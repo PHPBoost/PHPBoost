@@ -143,11 +143,11 @@ $lang['bbcode.upload'] = 'Attacher un fichier';
 // Icons
 $lang['bbcode.icons'] = 'Icônes';
 
-$lang['bbcode.smileys']            = 'Smileys';
-$lang['bbcode.emojis']             = 'Emojis HTML';
-$lang['bbcode.emojis.link']        = 'D\'autres emojis sur <a href="https://unicode-table.com/fr/" target="_blank" rel="noopener norefferer">unicode-table.com</a> ou  <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
-$lang['bbcode.fa']                 = 'Icônes Font Awesome';
-$lang['bbcode.fa.tag']             = '[fa=fa-style,fa-option]nom de l\'icône (sans le "fa-")[/fa]';
+$lang['bbcode.smileys']     = 'Smileys';
+$lang['bbcode.emojis']      = 'Emojis HTML';
+$lang['bbcode.emojis.link'] = 'D\'autres emojis sur <a href="https://unicode-table.com/fr/" target="_blank" rel="noopener norefferer">unicode-table.com</a> ou <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
+$lang['bbcode.fa']          = 'Icônes Font Awesome';
+$lang['bbcode.fa.tag']      = '[fa=fa-style,fa-option]nom de l\'icône (sans le "fa-")[/fa]';
 
 // Code
 $lang['bbcode.format.code'] = 'Formatage du code';

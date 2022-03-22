@@ -142,10 +142,11 @@ $lang['bbcode.upload'] = 'Attach files';
 // Icons
 $lang['bbcode.icons'] = 'Icons';
 
-$lang['bbcode.emojis']             = 'HTML Emojis';
-$lang['bbcode.emojis.link']        = 'More emojis at <a href="https://unicode-table.com/en/" target="_blank" rel="noopener norefferer">unicode-table.com</a> or <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
-$lang['bbcode.fa']                 = 'Font Awesome Icon';
-$lang['bbcode.fa.tag']             = '[fa=fa-style,fa-option]codename (without "fa-")[/fa]';
+$lang['bbcode.smileys']     = 'Smileys';
+$lang['bbcode.emojis']      = 'HTML Emojis';
+$lang['bbcode.emojis.link'] = 'More emojis at <a href="https://unicode-table.com/en/" target="_blank" rel="noopener norefferer">unicode-table.com</a> or <a href="https://www.w3schools.com/charsets/ref_emoji.asp" target="_blank" rel="noopener norefferer">w3c.com</a>';
+$lang['bbcode.fa']          = 'Font Awesome Icon';
+$lang['bbcode.fa.tag']      = '[fa=fa-style,fa-option]codename (without "fa-")[/fa]';
 
 // Code
 $lang['bbcode.format.code'] = 'Code formatting';
