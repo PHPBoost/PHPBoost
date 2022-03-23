@@ -8,59 +8,32 @@
 
 
 // Auto resize textarea on focus
-$.fn.autoResize = function(){
-	let r = e => {
+jQuery.fn.autoResize = function(){
+	let resize = e => {
 		e.style.height = '';
 		e.style.height = e.scrollHeight + 'px'
 	};
 	return this.each((i,e) => {
 		e.style.overflow = 'hidden';
-		r(e);
-		$(e).bind('input', e => {
-			r(e.target);
+		resize(e);
+		jQuery(e).bind('input', e => {
+			resize(e.target);
 		})
 	})
 };
 
-jQuery('.bbcode-sidebar textarea').each(function(){
-	var y,
-		$this = jQuery(this),
-		$thisHeight = jQuery(this).outerHeight(),
-		offset = $this.offset(),
-		tools = $this.closest('.form-field-textarea').find('.bbcode-bar'),
-		sidebar = tools.outerHeight();
-
-	// Sidebar follow the mouse click
-	$this.on('mouseup', function(e) {
-		var container = $this.closest('.form-field-textarea').outerHeight();
-		// mouse coords
-		y = e.pageY - offset.top;
-
-		if(y < sidebar)
-		tools.css({
-			'top': '0.809em',
-			'bottom': 'auto'
-		});
-		else if (y > (container - sidebar))
-		tools.css({
-			'top': 'auto',
-			'bottom': '0.809em'
-		});
-		else
-		tools.css({
-			'top': (y - sidebar/2) + 'px',
-			'bottom': 'auto'
-		});
-	});
-
-	// If focused, textarea resizes
-	jQuery(document).on('click', function(e){
-		if(!jQuery(e.target).is('i'))
-		{
-			if($this.is(':focus'))
-				$this.autoResize();
-			else
-				$this.css('height', $thisHeight + 'px');
-		}
-	})
+jQuery(".bbcode-sidebar textarea").each(function () {
+    var y,
+        $this = jQuery(this),
+        $thisHeight = jQuery(this).outerHeight(),
+        offset = $this.offset(),
+        tools = $this.closest(".form-field-textarea").find(".bbcode-bar"),
+        sidebar = tools.outerHeight();
+    $this.on("mouseup", function (event) {
+        var container = $this.closest(".form-field-textarea").outerHeight();
+        (y = event.pageY - offset.top), sidebar > y ? tools.css({ top: "0.809em", bottom: "auto" }) : y > container - sidebar ? tools.css({ top: "auto", bottom: "0.809em" }) : tools.css({ top: y - sidebar / 2 + "px", bottom: "auto" });
+    }),
+    jQuery(document).on("click", function (event) {
+        jQuery(event.target).is("button") || jQuery(event.target).is("i") || ($this.is(":focus") ? $this.autoResize() : $this.css("height", $thisHeight + "px"));
+    });
 });
