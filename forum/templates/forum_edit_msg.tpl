@@ -27,8 +27,8 @@
 					<div class="form-element form-element-textarea">
 						<label for="content">* {@user.message}</label>
 						<div class="form-field form-field-textarea bbcode-sidebar">
-							{KERNEL_EDITOR}
 							<textarea rows="25" cols="66" id="content" name="content">{CONTENT}</textarea>
+							{KERNEL_EDITOR}
 						</div>
 					</div>
 				</fieldset>
@@ -50,6 +50,5 @@
 		<a class="offload" href="{U_TITLE_T}">{TITLE_T}</a> <span><em>{DESCRIPTION}</em></span>
 	</footer>
 </article>
-<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 # INCLUDE FORUM_BOTTOM #

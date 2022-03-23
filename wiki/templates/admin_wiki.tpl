@@ -87,8 +87,8 @@
 					</div>
 					<div id="xmlhttprequest-preview-contents" class="xmlhttprequest-preview" style="display: none;"></div>
 					<div class="form-field form-field-textarea bbcode-sidebar">
-						{KERNEL_EDITOR}
 						<textarea rows="10" cols="60" id="contents" name="contents">{DESCRIPTION}</textarea>
+						{KERNEL_EDITOR}
 					</div>
 					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview('contents');">{@form.preview}</button></div>
 				</div>
@@ -105,4 +105,3 @@
 		</fieldset>
 	</form>
 </div>
-<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>

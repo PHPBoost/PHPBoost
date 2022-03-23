@@ -156,8 +156,8 @@
 								</div>
 								<div class="form-element form-element-textarea">
 									<div class="form-field form-field-textarea bbcode-sidebar">
-										{KERNEL_EDITOR}
 										<textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea>
+										{KERNEL_EDITOR}
 									</div>
 								</div>
 							</div>
@@ -178,7 +178,6 @@
 		</div>
 		<footer></footer>
 	</section>
-	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # END status #
 
 # START move #

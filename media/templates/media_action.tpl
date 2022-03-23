@@ -116,8 +116,8 @@
 							<div class="form-element form-element-textarea">
 								<label for="content" id="preview_content">{@form.description}</label>
 								<div class="form-field form-field-textarea bbcode-sidebar">
-									{KERNEL_EDITOR}
 									<textarea rows="10" cols="90" id="content" name="content">{CONTENT}</textarea>
+									{KERNEL_EDITOR}
 								</div>
 							</div>
 							# IF C_APPROVAL #
@@ -138,9 +138,9 @@
 								<div class="message-helper bgc warning">{@H|contribution.warning}</div>
 								<div class="form-element form-element-textarea">
 									<label>{@contribution.description} <p class="field-description">{@contribution.description.clue}</p></label>
-									{CONTRIBUTION_EDITOR}
-									<div class="form-field-textarea">
+									<div class="form-fiekd form-field-textarea bbcode-sidebar">
 										<textarea rows="20" cols="40" id="counterpart" name="counterpart"></textarea>
+										{CONTRIBUTION_EDITOR}
 									</div>
 								</div>
 							</fieldset>

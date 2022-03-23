@@ -103,8 +103,8 @@
 					<div class="form-element form-element-textarea">
 						<label for="content">* {@common.message}</label>
 						<div class="form-field form-field-textarea bbcode-sidebar">
-							{KERNEL_EDITOR}
 							<textarea rows="25" id="content" name="content">{CONTENT}</textarea>
+							{KERNEL_EDITOR}
 						</div>
 					</div>
 					# IF C_FORUM_POST_TYPE #
@@ -216,4 +216,3 @@
 </article>
 
 # INCLUDE FORUM_BOTTOM #
-<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
