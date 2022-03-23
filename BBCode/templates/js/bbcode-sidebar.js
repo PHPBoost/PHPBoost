@@ -36,7 +36,7 @@ jQuery('.bbcode-sidebar textarea').each(function(){
 		// mouse coords
 		y = e.pageY - offset.top;
 
-		if(y < (sidebar))
+		if(y < sidebar)
 		tools.css({
 			'top': '0.809em',
 			'bottom': 'auto'
@@ -54,10 +54,13 @@ jQuery('.bbcode-sidebar textarea').each(function(){
 	});
 
 	// If focused, textarea resizes
-	jQuery(document).on('click', function(){
-		if($this.is(':focus'))
-			$this.autoResize();
-		else
-			$this.css('height', $thisHeight + 'px');
+	jQuery(document).on('click', function(e){
+		if(!jQuery(e.target).is('i'))
+		{
+			if($this.is(':focus'))
+				$this.autoResize();
+			else
+				$this.css('height', $thisHeight + 'px');
+		}
 	})
 });

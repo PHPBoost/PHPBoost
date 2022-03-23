@@ -27,6 +27,7 @@
 					},
 					success: function(returnData){
 						jQuery('#' + preview_field).html(returnData);
+						jQuery('html, body').animate({scrollTop: jQuery('#' + preview_field).offset().top - 200});
 						jQuery('#loading-preview-' + field).hide();
 					}
 				});
@@ -38,14 +39,6 @@
 
 	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # ENDIF #
-
-<div id="loading-preview-{FIELD}" class="loading-preview-container" style="display: none;">
-	<div class="loading-preview">
-		<i class="fa fa-spinner fa-2x fa-spin"></i>
-	</div>
-</div>
-
-<div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display: none;"></div>
 
 <div class="bbcode-bar">
 	<nav class="bbcode-containers">

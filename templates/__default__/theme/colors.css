@@ -446,6 +446,8 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 	border-color: rgba(var(--main-rgb-t), 0.4);
 }
 
+.xmlhttprequest-preview { box-shadow: 0 0 1.618em 0.618em rgba(var(--darken), 0.05); }
+
 /* --- Highlighted text --- */
 .highlight-search-word { background-color: var(--star-tone); }
 

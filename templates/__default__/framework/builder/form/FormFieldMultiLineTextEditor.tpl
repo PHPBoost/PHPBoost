@@ -31,6 +31,13 @@
 				<div class="form-element-reset">{RESET_BUTTON}</div>
 			# ENDIF #
 		</div>
+		
+		<div id="loading-preview-${escape(HTML_ID)}" class="loading-preview-container" style="display: none;">
+			<div class="loading-preview">
+				<i class="fa fa-spinner fa-2x fa-spin"></i>
+			</div>
+		</div>
+		<div id="xmlhttprequest-preview${escape(HTML_ID)}" class="xmlhttprequest-preview" style="display: none;"></div>
 	# ENDIF #
 
 </div>
