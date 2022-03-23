@@ -73,12 +73,12 @@
 		plugins: [
 			"advlist autolink autoresize autosave link image lists charmap hr anchor",
 			"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
-			"table contextmenu directionality smileys paste textcolor colorpicker textpattern imagetools"
+			"table directionality emoticons paste textpattern imagetools"
 		],
 
 		# IF C_TOOLBAR #toolbar1: "{TOOLBAR}",# ENDIF #
 
-		menubar: false,
+		branding: false,
 		autoresize_max_height: '500px',
 		advlist_number_styles: 'default',
 		advlist_bullet_styles: 'default',
@@ -88,8 +88,8 @@
 		media_alt_source: false,
 		media_poster: false,
 		content_css: [
-			"{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/all.css",
-			"{PATH_TO_ROOT}/templates/{THEME}/theme/global.css"
+			"{PATH_TO_ROOT}/templates/__default__/theme/font-awesome/css/all.css",
+			"{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css"
 		],
 		style_formats: [
 			{title: ${escapejs(@warning.success)}, inline: 'span', classes: 'success'},
@@ -118,14 +118,6 @@
 				HTMLForms.get("{FORM_NAME}").getField("{FIELD_NAME}").liveValidate();
 				# ENDIF #
 			})
-		},
-
-		smileys: [
-			# START smiley #
-				# IF smiley.C_NEW_ROW #[# ENDIF #
-					{ shortcut: '{smiley.CODE}', url: '{smiley.URL}', title: '{smiley.CODE}' }# IF NOT smiley.C_LAST_OF_THE_ROW #,# ENDIF #
-				# IF smiley.C_END_ROW #]# IF NOT smiley.C_LAST_ROW #,# ENDIF ## ENDIF #
-			# END smiley #
-		]
+		}
 	});
 </script>
