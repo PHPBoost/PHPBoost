@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 19
+ * @version     PHPBoost 6.0 - last update: 2022 03 23
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -64,6 +64,32 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 					'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 					'CODE' => addslashes($code_smile)
 				));
+			}
+
+			$emojis = LangLoader::get_all_langs();
+			foreach ($emojis as $unicode => $values)
+			{
+				$is_emo = TextHelper::substr($unicode, 0, 2) === "U+";
+				$is_category = TextHelper::substr($unicode, 0, 7) === "U+.cat.";
+				$is_sub = TextHelper::substr($unicode, 0, 7) === "U+.sub.";
+				if ($is_emo)
+				{
+					foreach($values as $decimal => $name)
+					{
+						$name = TextHelper::strtolower($name);
+						$name = TextHelper::ucfirst($name);
+						$view->assign_block_vars('emojis', array(
+							'C_CATEGORY'     => $is_category,
+							'C_SUB_CATEGORY' => $is_sub,
+							'C_NAME'  		 => !empty($name),
+
+							'CATEGORY_NAME'     => $name,
+							'SUB_CATEGORY_NAME' => $name,
+							'NAME'              => $name,
+							'DECIMAL'           => $decimal
+						));
+					}
+				}
 			}
 		}
 

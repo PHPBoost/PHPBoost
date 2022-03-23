@@ -33,3 +33,5 @@
 	font-size: 0.809em;
 	margin-bottom: 0.618em;
 }
+
+#shoutbox-messages-container .emoji-tag { font-size: 120%; }
