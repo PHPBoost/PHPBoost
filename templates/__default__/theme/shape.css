@@ -139,7 +139,10 @@ body {
 	order : 1;
 }
 
-.aside-menu { width: 100%; }
+.aside-menu {
+	width: 100%;
+	margin-bottom: 0.618em;
+}
 #menu-left  { order : 2; }
 #menu-right { order : 3; }
 
@@ -164,7 +167,7 @@ body {
 	#menu-right.narrow-menu-right { margin-left: 0.809em; }
 
 	#main {
-		padding: 0 0 1.618em;
+		padding: 0.618em 0 1.618em;
 		order : 2;
 		flex: 1 0 auto;
 	}
