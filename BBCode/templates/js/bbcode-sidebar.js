@@ -22,18 +22,18 @@ jQuery.fn.autoResize = function(){
 	})
 };
 
-jQuery(".bbcode-sidebar textarea").each(function () {
+jQuery('.bbcode-sidebar textarea').each(function () {
     var y,
         $this = jQuery(this),
         $thisHeight = jQuery(this).outerHeight(),
         offset = $this.offset(),
-        tools = $this.closest(".form-field-textarea").find(".bbcode-bar"),
+        tools = $this.closest('.form-field-textarea').find('.bbcode-bar'),
         sidebar = tools.outerHeight();
-    $this.on("mouseup", function (event) {
-        var container = $this.closest(".form-field-textarea").outerHeight();
-        (y = event.pageY - offset.top), sidebar > y ? tools.css({ top: "0.809em", bottom: "auto" }) : y > container - sidebar ? tools.css({ top: "auto", bottom: "0.809em" }) : tools.css({ top: y - sidebar / 2 + "px", bottom: "auto" });
+    $this.on('mouseup', function (event) {
+        var container = $this.closest('.form-field-textarea').outerHeight();
+        (y = event.pageY - offset.top), sidebar > y ? tools.css({ top: '0.809em', bottom: 'auto' }) : y > container - sidebar ? tools.css({ top: 'auto', bottom: '0.809em' }) : tools.css({ top: y - sidebar / 2 + 'px', bottom: 'auto' });
     }),
-    jQuery(document).on("click", function (event) {
-        jQuery(event.target).is("button") || jQuery(event.target).is("i") || ($this.is(":focus") ? $this.autoResize() : $this.css("height", $thisHeight + "px"));
+    jQuery(document).on('click', function (event) {
+        jQuery(event.target).hasClass('auto-resize') || jQuery(event.target).is('button') || jQuery(event.target).is('i') || $this.is(':focus') ? $this.autoResize() : $this.css('height', $thisHeight + 'px');
     });
 });

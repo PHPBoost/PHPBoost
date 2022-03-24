@@ -77,7 +77,7 @@
 
 .form-element-preview, .form-element-reset {
 	margin: 0.309em auto 0 auto;
-	text-align: center;	
+	text-align: center;
 }
 
 @media (min-width: 1025px) {
@@ -109,8 +109,11 @@
 	overflow: auto;
 	height: auto;
 	margin: 0.228em 0;
+	padding: 0.228em 0.456em;
+	overflow: hidden;
 }
 
+.xmlhttprequest-preview p { width: auto; }
 .xmlhttprequest-preview img { max-width: 600px; }
 
 /* --- Input sizes --- */

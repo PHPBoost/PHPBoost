@@ -16,7 +16,7 @@
 			name="${escape(HTML_ID)}"
 			rows="{ROWS}"
 			cols="{COLS}"
-			class="# IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}"
+			class="auto-resize # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}"
 			onblur="{ONBLUR}"
 			# IF C_DISABLED # disabled="disabled"# ENDIF #
 			# IF C_READONLY #readonly="readonly" # ENDIF #
@@ -31,13 +31,13 @@
 				<div class="form-element-reset">{RESET_BUTTON}</div>
 			# ENDIF #
 		</div>
-		
+
 		<div id="loading-preview-${escape(HTML_ID)}" class="loading-preview-container" style="display: none;">
 			<div class="loading-preview">
 				<i class="fa fa-spinner fa-2x fa-spin"></i>
 			</div>
 		</div>
-		<div id="xmlhttprequest-preview${escape(HTML_ID)}" class="xmlhttprequest-preview" style="display: none;"></div>
+		<div id="xmlhttprequest-preview${escape(HTML_ID)}" class="auto-resize xmlhttprequest-preview" style="display: none"></div>
 	# ENDIF #
 
 </div>
