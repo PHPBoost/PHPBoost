@@ -23,11 +23,6 @@ legend,
 	font-size: 1.809em;
 }
 
-fieldset p {
-	margin: 0;
-	padding: 1em 0.618em;
-}
-
 .fieldset-inset { padding: 0.618em 0; }
 
 .fieldset-refresh { text-align: center; }
@@ -35,8 +30,6 @@ fieldset p {
 .fieldset-refresh a:hover { text-decoration: none; }
 
 .fieldset-refresh a:hover span { text-decoration: underline; }
-
-.fieldset-inset p { width: 100%; }
 
 .fieldset-inset h2 { width: 100%; }
 
