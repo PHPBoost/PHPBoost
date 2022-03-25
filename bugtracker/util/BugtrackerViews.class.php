@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2022 03 25
  * @since       PHPBoost 3.0 - 2013 04 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -112,7 +112,7 @@ class BugtrackerViews
 			if (implode('-', $filters_tmp) == implode('-', $row_filters_tmp) && implode('-', $filters_ids_tmp) == implode('-', $row_filters_ids_tmp))
 				$display_save_button = false;
 
-			$filter_not_saved_value = '-------------';
+			$filter_not_saved_value = '-';
 
 			$filter_type_value = in_array('type', $row_filters) && $row_filters_ids[array_search('type', $row_filters)] && isset($types[$row_filters_ids[array_search('type', $row_filters)]]) ? $types[$row_filters_ids[array_search('type', $row_filters)]] : $filter_not_saved_value;
 			$filter_category_value = in_array('category', $row_filters) && $row_filters_ids[array_search('category', $row_filters)] && isset($categories[$row_filters_ids[array_search('category', $row_filters)]]) ? $categories[$row_filters_ids[array_search('category', $row_filters)]] : $filter_not_saved_value;
