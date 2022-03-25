@@ -45,7 +45,10 @@
 
 /* --- Main content --- */
 .cat-description,
-.content { margin-bottom: 0.618em; }
+.content {
+	margin-bottom: 0.618em;
+	padding: 0.456em;
+}
 
 @media (min-width: 769px) {
 	.cat-description,
@@ -90,17 +93,12 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 /* --- Sibling links --- */
-.suggested-links .cell-thumbnail { max-width: 130px; }
-
 .related-item {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
+	flex-wrap: nowrap;
 }
-
-.related-item { flex-direction: row; }
-
-.related-item { flex-wrap: nowrap; }
 
 .suggested-item:hover,
 .related-item:hover { text-decoration: none; }
@@ -113,7 +111,7 @@ aside:not(#menu-left):not(#menu-right)::after {
 .related-item.next-item i 	 { padding: 0 0 0 0.618em;}
 
 @media (min-width: 769px) {
-	.related-item { max-width: 35%; }
+	.related-item { max-width: 45%; }
 }
 
 /* --- Main thumbnail in item --- */

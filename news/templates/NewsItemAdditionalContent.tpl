@@ -1,19 +1,19 @@
 # IF C_SUGGESTED_NEWS #
 	<aside class="suggested-links">
 		<span class="text-strong"><i class="fa fa-lightbulb"></i> {@common.suggestions} :</span>
-		<div class="cell-row">
+		<div class="cell-flex cell-row">
 			# START suggested #
-				<div class="cell">
+				<div class="flex-between flex-between-large">
 					<div class="cell-body">
-						<div class="cell-thumbnail cell-landscape cell-center">
-							# IF suggested.C_HAS_THUMBNAIL #<img src="{suggested.U_THUMBNAIL}" alt="{suggested.TITLE}"># ENDIF #
-						</div>
 						<div class="cell-content">
 							<a href="{suggested.U_CATEGORY}" class="small offload">{suggested.CATEGORY_NAME}</a>
 							<a href="{suggested.U_ITEM}" class="suggested-item offload">
 								<h6>{suggested.TITLE}</h6>
 							</a>
 						</div>
+					</div>
+					<div class="cell-thumbnail cell-landscape cell-center">
+						# IF suggested.C_HAS_THUMBNAIL #<img src="{suggested.U_THUMBNAIL}" alt="{suggested.TITLE}"># ENDIF #
 					</div>
 				</div>
 			# END suggested #
