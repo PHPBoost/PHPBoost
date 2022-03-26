@@ -89,8 +89,8 @@
 							<option value="unlock">{@forum.unlock}</option>
 							<option value="del">{@common.delete}</option>
 						</select>
-						<button type="submit" class="button submit small grouped-element" value="true" name="valid">{@form.submit}</button>
 						<input type="hidden" name="token" value="{TOKEN}">
+						<button type="submit" class="button submit small grouped-element" value="true" name="valid">{@form.submit}</button>
 					</form>
 				# ENDIF #
 

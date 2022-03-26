@@ -318,7 +318,7 @@
 							<button class="button submit" onclick="XMLHttpRequest_search(this.form);" type="button">{@form.search}</button>
 						</div>
 					</div>
-						<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
+					<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 				</fieldset>
 
 			</form>
@@ -409,7 +409,7 @@
 								<div class="form-field form-field-textarea bbcode-sidebar">
 									<textarea class="forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
 									{KERNEL_EDITOR}
-								</div>						
+								</div>
 							</td>
 						</tr>
 						<tr>
