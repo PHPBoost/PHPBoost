@@ -104,7 +104,7 @@
 						</li>
 						<li>
 							<div class="cssmenu-title">
-								<a class="offload" href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i><span id="nbr_unread_topics_top">{UNREAD_MESSAGES_NUMBER}</span><span class="hidden-large-screens">{@forum.unread.messages}</span></a>
+								<a class="offload" href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> <span id="nbr_unread_topics_top">{UNREAD_MESSAGES_NUMBER}</span> <span class="hidden-large-screens">{@forum.unread.messages}</span></a>
 								<div class="forum-refresh">
 									<div id="forum_block_forum_unread_top" style="display: none;"></div>
 								</div>
