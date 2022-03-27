@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -416,7 +416,7 @@ class UpdateServices
 					if (in_array($module_id, array_keys($update_modules_class)))
 					{
 						$module_update = new $update_modules_class[$module_id]();
-						if (ClassLoader::is_class_registered_and_valid($module_update) && is_subclass_of($module_update, 'ModuleUpdateVersion'))
+						if (ClassLoader::is_class_registered_and_valid($update_modules_class[$module_id]) && is_subclass_of($module_update, 'ModuleUpdateVersion'))
 						{
 							$module_update::delete_old_files();
 							$module_update::delete_old_folders();
@@ -451,7 +451,7 @@ class UpdateServices
 						if (in_array($module_id, array_keys($update_modules_class)))
 						{
 							$module_update = new $update_modules_class[$module_id]();
-							if (ClassLoader::is_class_registered_and_valid($module_update) && is_subclass_of($module_update, 'ModuleUpdateVersion'))
+							if (ClassLoader::is_class_registered_and_valid($update_modules_class[$module_id]) && is_subclass_of($module_update, 'ModuleUpdateVersion'))
 							{
 								$module_update::delete_old_files();
 								$module_update::delete_old_folders();
