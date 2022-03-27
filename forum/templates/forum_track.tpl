@@ -105,10 +105,10 @@
 								{topics.VIEWS_NUMBER}
 							</td>
 							<td class="forum-pm">
-								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}" {topics.CHECKED_PM}>
+								<input type="checkbox" id="p{topics.INCR}" name="p{topics.ID}"# IF topics.C_TRACK_PM_SELECTED # checked="checked"# ENDIF #>
 							</td>
 							<td class="forum-mail">
-								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}" {topics.CHECKED_MAIL}>
+								<input type="checkbox" id="m{topics.INCR}" name="m{topics.ID}"# IF topics.C_TRACK_MAIL_SELECTED # checked="checked"# ENDIF #>
 							</td>
 							<td class="forum-delete">
 								<input type="checkbox" id="d{topics.INCR}" name="d{topics.ID}">

@@ -112,15 +112,15 @@
 						<label for="type">* {@common.type}</label>
 						<div class="form-field">
 							<label class="radio">
-								<input type="radio" name="type" id="type" value="0" {CHECKED_NORMAL}>
+								<input type="radio" name="type" id="type" value="0"# IF C_NORMAL_TYPE_SELECTED # checked="checked"# ENDIF #>
 								<span>{@common.default}</span>
 							</label>
 							<label class="radio">
-								<input type="radio" name="type" value="1" {CHECKED_PINNED}>
+								<input type="radio" name="type" value="1"# IF C_PINNED_TYPE_SELECTED # checked="checked"# ENDIF #>
 								<span>{@forum.pinned}</span>
 							</label>
 							<label class="radio">
-								<input type="radio" name="type" value="2" {CHECKED_ANNOUNCE}>
+								<input type="radio" name="type" value="2"# IF C_ANNOUNCE_TYPE_SELECTED # checked="checked"# ENDIF #>
 								<span>{@forum.announce}</span>
 							</label>
 						</div>
@@ -140,11 +140,11 @@
 							<label for="poll_type">{@forum.poll.type}</label>
 							<div class="form-field">
 								<label class="radio">
-									<input type="radio" name="poll_type" id="poll_type" value="0" {SELECTED_SIMPLE}>
+									<input type="radio" name="poll_type" id="poll_type" value="0"# IF C_SIMPLE_POLL_SELECTED # checked="checked"# ENDIF #>
 									<span>{@forum.simple.answer}</span>
 								</label>
 								<label class="radio">
-									<input type="radio" name="poll_type" value="1" {SELECTED_MULTIPLE}>
+									<input type="radio" name="poll_type" value="1"# IF C_MULTIPLE_POLL_SELECTED # checked="checked"# ENDIF #>
 									<span>{@forum.multiple.answer}</span>
 								</label>
 							</div>
@@ -186,10 +186,7 @@
 						</p>
 					</div>
 					<script>
-						if( {NO_DISPLAY_POLL} )
-							document.getElementById('hidepoll').style.display = 'none';
-						else
-							document.getElementById('hidepoll_link').style.display = 'none';
+						document.getElementById('hidepoll# IF C_DISPLAY_POLL # _link# ENDIF #').style.display = 'none';
 					</script>
 				</fieldset>
 

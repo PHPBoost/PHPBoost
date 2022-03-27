@@ -175,8 +175,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
 			{
 				$view->put_all(array(
-					'C_FORUM_POST_TYPE' => true,
-					'CHECKED_NORMAL'    => 'checked="ckecked"',
+					'C_FORUM_POST_TYPE'      => true,
+					'C_NORMAL_TYPE_SELECTED' => true
 				));
 			}
 
@@ -192,23 +192,23 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 
 			$vars_tpl = array(
-				'C_ADD_POLL_FIELD'     => true,
+				'C_ADD_POLL_FIELD'       => true,
+				'C_SIMPLE_POLL_SELECTED' => true,
+				'C_DISPLAY_POLL'         => false,
+				
+				'FORUM_NAME'             => $config->get_forum_name(),
+				'CATEGORY_NAME'          => $category->get_name(),
+				'TITLE'                  => '',
+				'DESCRIPTION'            => '',
+				'IDTOPIC'                => 0,
+				'KERNEL_EDITOR'          => $editor->display(),
+				'NBR_POLL_FIELD'         => $nbr_poll_field,
 
-				'FORUM_NAME'           => $config->get_forum_name(),
-				'CATEGORY_NAME'        => $category->get_name(),
-				'TITLE'                => '',
-				'DESCRIPTION'          => '',
-				'SELECTED_SIMPLE'      => 'checked="ckecked"',
-				'IDTOPIC'              => 0,
-				'KERNEL_EDITOR'        => $editor->display(),
-				'NO_DISPLAY_POLL'      => 'true',
-				'NBR_POLL_FIELD'       => $nbr_poll_field,
+				'U_ACTION'               => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_CATEGORY'             => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+				'U_TITLE_T'              => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
-				'U_ACTION'             => 'post.php' . url('?new=topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_CATEGORY'           => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
-				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
-
-				'L_ACTION'             => $lang['forum.new.topic'],
+				'L_ACTION'               => $lang['forum.new.topic'],
 			);
 
 			$view->put_all($vars_tpl);
@@ -420,11 +420,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				if ($is_modo)
 				{
 					$view->put_all(array(
-						'C_FORUM_POST_TYPE' => true,
-
-						'CHECKED_NORMAL'   => (($topic['type'] == '0') ? 'checked ="ckecked"' : ''),
-						'CHECKED_PINNED'   => (($topic['type'] == '1') ? 'checked ="ckecked"' : ''),
-						'CHECKED_ANNOUNCE' => (($topic['type'] == '2') ? 'checked ="ckecked"' : ''),
+						'C_FORUM_POST_TYPE'        => true,
+						'C_NORMAL_TYPE_SELECTED'   => ($topic['type'] == '0'),
+						'C_PINNED_TYPE_SELECTED'   => ($topic['type'] == '1'),
+						'C_ANNOUNCE_TYPE_SELECTED' => ($topic['type'] == '2')
 					));
 				}
 
@@ -493,43 +492,35 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				}
 
 				$vars_tpl = array(
-					'C_DELETE_POLL'        => $is_modo, //Suppression d'un sondage => modo uniquement.
-					'C_ADD_POLL_FIELD'     => ($nbr_poll_field <= 19),
+					'C_DELETE_POLL'          => $is_modo, //Suppression d'un sondage => modo uniquement.
+					'C_ADD_POLL_FIELD'       => ($nbr_poll_field <= 19),
+					'C_SIMPLE_POLL_SELECTED' => true,
+					'C_DISPLAY_POLL'         => $poll['question'],
 
-					'FORUM_NAME'           => $config->get_forum_name(),
-					'CATEGORY_NAME'        => $category->get_name(),
-					'TITLE'                => stripslashes($topic['title']),
-					'DESCRIPTION'          => stripslashes($topic['subtitle']),
-					'CONTENT'              => FormatingHelper::unparse($content),
-					'POLL_QUESTION'        => !empty($poll['question']) ? stripslashes($poll['question']) : '',
-					'SELECTED_SIMPLE'      => 'checked="ckecked"',
-					'MODULE_DATA_PATH'     => $module_data_path,
-					'IDTOPIC'              => $idt_get,
-					'KERNEL_EDITOR'        => $editor->display(),
-					'NBR_POLL_FIELD'       => $nbr_poll_field,
-					'NO_DISPLAY_POLL'      => !empty($poll['question']) ? 'false' : 'true',
+					'FORUM_NAME'             => $config->get_forum_name(),
+					'CATEGORY_NAME'          => $category->get_name(),
+					'TITLE'                  => stripslashes($topic['title']),
+					'DESCRIPTION'            => stripslashes($topic['subtitle']),
+					'CONTENT'                => FormatingHelper::unparse($content),
+					'POLL_QUESTION'          => !empty($poll['question']) ? stripslashes($poll['question']) : '',
+					'MODULE_DATA_PATH'       => $module_data_path,
+					'IDTOPIC'                => $idt_get,
+					'KERNEL_EDITOR'          => $editor->display(),
+					'NBR_POLL_FIELD'         => $nbr_poll_field,
 
-					'U_ACTION'             => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
-					'U_CATEGORY'           => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
-					'U_TITLE_T'            => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
+					'U_ACTION'               => 'post.php' . url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m . '&amp;token=' . AppContext::get_session()->get_token()),
+					'U_CATEGORY'             => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+					'U_TITLE_T'              => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
 
-					'L_NEW_SUBJECT'        => stripslashes($topic['title']),
-					'L_ACTION'             => $lang['forum.edit.topic'],
+					'L_NEW_SUBJECT'          => stripslashes($topic['title']),
+					'L_ACTION'               => $lang['forum.edit.topic'],
 				);
 
 				//Type de réponses du sondage.
 				if (isset($poll['type']) && $poll['type'] == '0')
-				{
-					$view->put_all(array(
-						'SELECTED_SIMPLE' => 'checked="ckecked"'
-					));
-				}
+					$view->put('C_SIMPLE_POLL_SELECTED', true);
 				elseif (isset($poll['type']) && $poll['type'] == '1')
-				{
-					$view->put_all(array(
-						'SELECTED_MULTIPLE' => 'checked="ckecked"'
-					));
-				}
+					$view->put('C_MULTIPLE_POLL_SELECTED', true);
 
 				$view->put_all($vars_tpl);
 
@@ -683,7 +674,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			{
 				$view->put_all(array(
 					'C_FORUM_POST_TYPE' => true,
-					'CHECKED_NORMAL'    => 'checked="ckecked"',
+					'C_NORMAL_TYPE_SELECTED' => true
 				));
 			}
 
@@ -724,22 +715,22 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			}
 
 			$vars_tpl = array(
-				'C_ADD_POLL_FIELD'     => true,
+				'C_ADD_POLL_FIELD'       => true,
+				'C_SIMPLE_POLL_SELECTED' => true,
+				'C_DISPLAY_POLL'         => false,
 
-				'FORUM_NAME'           => $config->get_forum_name(),
-				'CATEGORY_NAME'        => $category->get_name(),
-				'TITLE'                => '',
-				'SELECTED_SIMPLE'      => 'checked="checked"',
-				'IDTOPIC'              => 0,
-				'KERNEL_EDITOR'        => $editor->display(),
-				'NO_DISPLAY_POLL'      => 'true',
-				'NBR_POLL_FIELD'       => $nbr_poll_field,
+				'FORUM_NAME'             => $config->get_forum_name(),
+				'CATEGORY_NAME'          => $category->get_name(),
+				'TITLE'                  => '',
+				'IDTOPIC'                => 0,
+				'KERNEL_EDITOR'          => $editor->display(),
+				'NBR_POLL_FIELD'         => $nbr_poll_field,
 
-				'U_ACTION'             => 'post.php' . url('?new =topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_CATEGORY'           => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
-				'U_TITLE_T'            => 'post' . url('.php?new=topic&amp;id=' . $id_get),
+				'U_ACTION'               => 'post.php' . url('?new =topic&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_CATEGORY'             => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '.php'),
+				'U_TITLE_T'              => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
-				'L_ACTION'             => $lang['forum.new.topic'],
+				'L_ACTION'               => $lang['forum.new.topic'],
 			);
 		}
 		else

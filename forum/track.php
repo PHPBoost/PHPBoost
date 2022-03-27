@@ -182,11 +182,11 @@ elseif (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affic
 			'C_AUTHOR'                => !empty($row['login']),
 			'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
 			'C_LAST_MESSAGE_GUEST'    => !empty($row['last_login']),
+			'C_TRACK_PM_SELECTED'     => ($row['pm'] == 1),
+			'C_TRACK_MAIL_SELECTED'   => ($row['mail'] == 1),
 
 			'ID'                      => $row['id'],
 			'INCR'                    => $nbr_topics_compt,
-			'CHECKED_PM'              => ($row['pm'] == 1) ? 'checked="checked"' : '',
-			'CHECKED_MAIL'            => ($row['mail'] == 1) ? 'checked="checked"' : '',
 			'TOPIC_ICON'              => $topic_icon,
 			'TYPE'                    => $type[$row['type']],
 			'CATEGORY_ID'             => $row['id_category'],

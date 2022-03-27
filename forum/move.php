@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -251,17 +251,17 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		}
 
 		$view->put_all(array(
-			'C_FORUM_POST_TYPE' => true,
-			'C_ADD_POLL_FIELD'  => true,
+			'C_FORUM_POST_TYPE'      => true,
+			'C_ADD_POLL_FIELD'       => true,
+			'C_SIMPLE_POLL_SELECTED' => true,
+			'C_NORMAL_TYPE_SELECTED' => true,
+			'C_DISPLAY_POLL'         => false,
 
-			'TITLE'             => '',
-			'DESCRIPTION'       => '',
-			'CONTENT'           => FormatingHelper::unparse(stripslashes($msg['content'])),
-			'IDM'               => $id_get_msg,
-			'CHECKED_NORMAL'    => 'checked="checked"',
-			'SELECTED_SIMPLE'   => 'checked="checked"',
-			'NO_DISPLAY_POLL'   => 'true',
-			'NBR_POLL_FIELD'    => $nbr_poll_field,
+			'TITLE'                  => '',
+			'DESCRIPTION'            => '',
+			'CONTENT'                => FormatingHelper::unparse(stripslashes($msg['content'])),
+			'IDM'                    => $id_get_msg,
+			'NBR_POLL_FIELD'         => $nbr_poll_field,
 		));
 	}
 
