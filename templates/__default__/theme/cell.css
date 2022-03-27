@@ -155,6 +155,13 @@ form > [class*="cell-"]:not(.cell-header) { border-width: 0 1px 1px; }
 	align-items: center;
 }
 
+.cell-list ul li.li-stretch.li-stretch-large { flex-direction: column;}
+
+@media (min-width: 769px) {
+	.cell-list ul li.li-stretch.li-stretch-large { flex-direction: row;}
+}
+
+
 .cell-list .button { width: auto; }
 
 .cell-list-inline ul {
