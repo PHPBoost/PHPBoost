@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 09 05
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -22,6 +22,7 @@ class UpdateEnvironment extends Environment
 		Environment::fit_to_php_configuration();
 		Environment::init_http_services();
 		Environment::load_static_constants();
+		ClassLoader::clear_cache();
 		self::load_dynamic_constants();
 		self::init_output_bufferization();
 		self::set_locale();
