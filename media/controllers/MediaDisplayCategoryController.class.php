@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 25
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -202,8 +202,8 @@ class MediaDisplayCategoryController extends DefaultModuleController
 				$picture_url = new Url($row['thumbnail']);
 
 				$poster_infos = array(
-					'C_HAS_PICTURE' => $poster_type->is_picture(),
-					'PICTURE'       => $picture_url->rel()
+					'C_HAS_THUMBNAIL' => $poster_type->is_picture(),
+					'U_THUMBNAIL'       => $picture_url->rel()
 				);
 			}
 
