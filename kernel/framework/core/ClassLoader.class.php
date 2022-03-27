@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 19
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -99,7 +99,7 @@ class ClassLoader
 
 	protected static function is_class_registered($classname)
 	{
-		return array_key_exists($classname, self::$autoload);
+		return array_key_exists((string)$classname, self::$autoload);
 	}
 
 	protected static function add_classes($directory, $pattern, $recursive = true)
