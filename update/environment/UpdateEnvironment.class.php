@@ -23,6 +23,7 @@ class UpdateEnvironment extends Environment
 		Environment::init_http_services();
 		Environment::load_static_constants();
 		ClassLoader::clear_cache();
+		ClassLoader::init_autoload();
 		self::load_dynamic_constants();
 		self::init_output_bufferization();
 		self::set_locale();
