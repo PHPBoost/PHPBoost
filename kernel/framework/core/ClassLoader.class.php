@@ -99,7 +99,7 @@ class ClassLoader
 
 	protected static function is_class_registered($classname)
 	{
-		return array_key_exists((string)$classname, self::$autoload);
+		return array_key_exists($classname, self::$autoload);
 	}
 
 	protected static function add_classes($directory, $pattern, $recursive = true)
