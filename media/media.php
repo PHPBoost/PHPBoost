@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 25
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -103,6 +103,7 @@ elseif ($id_media > 0)
 			'C_AUTHOR_DISPLAYED'   => $config->is_author_displayed(),
 			'C_AUTHOR_EXISTS'      => !empty($media['display_name']),
 			'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
+			'C_HAS_THUMBNAIL'	   => !empty($media['thumbnail']),
 
 			'ID'                  => $id_media,
 			'TITLE'               => $media['title'],
@@ -120,7 +121,8 @@ elseif ($id_media > 0)
 			'U_EDIT'      	   => url('media_action.php?edit=' . $id_media),
 			'U_DELETE'    	   => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($media['user_id'])->rel(),
-			'U_EDIT_CATEGORY'  => $media['id_category'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($media['id_category'], 'media')->rel()
+			'U_EDIT_CATEGORY'  => $media['id_category'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($media['id_category'], 'media')->rel(),
+			'U_THUMBNAIL'      => Url::to_rel($media['thumbnail'])
 		)
 	));
 

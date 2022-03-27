@@ -136,9 +136,9 @@
 										</div>
 									# ENDIF #
 								</div>
-								# IF items.C_HAS_PICTURE #
+								# IF items.C_HAS_THUMBNAIL #
 									<div class="cell-thumbnail cell-landscape cell-center">
-										<img itemprop="thumbnailUrl" src="{items.PICTURE}" alt="{items.TITLE}" />
+										<img itemprop="thumbnailUrl" src="{items.U_THUMBNAIL}" alt="{items.TITLE}" />
 										<a class="cell-thumbnail-caption offload" href="{items.U_ITEM}" aria-label="{@common.see.details}"><i class="fa fa-2x fa-play-circle" aria-hidden="true"></i></a>
 									</div>
 								# ENDIF #
