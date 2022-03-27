@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 21
+ * @version     PHPBoost 6.0 - last update: 2022 03 27
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -422,9 +422,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					$view->put_all(array(
 						'C_FORUM_POST_TYPE' => true,
 
-						'CHECKED_NORMAL'    => (($topic['type'] == '0') ? 'checked ="ckecked"' : ''),
-						'CHECKED_POSTIT'    => (($topic['type'] == '1') ? 'checked ="ckecked"' : ''),
-						'CHECKED_ANNONCE'   => (($topic['type'] == '2') ? 'checked ="ckecked"' : ''),
+						'CHECKED_NORMAL'   => (($topic['type'] == '0') ? 'checked ="ckecked"' : ''),
+						'CHECKED_PINNED'   => (($topic['type'] == '1') ? 'checked ="ckecked"' : ''),
+						'CHECKED_ANNOUNCE' => (($topic['type'] == '2') ? 'checked ="ckecked"' : ''),
 					));
 				}
 

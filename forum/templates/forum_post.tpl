@@ -116,12 +116,12 @@
 								<span>{@common.default}</span>
 							</label>
 							<label class="radio">
-								<input type="radio" name="type" value="1" {CHECKED_ANNONCE}>
-								<span>{@forum.announce}</span>
+								<input type="radio" name="type" value="1" {CHECKED_PINNED}>
+								<span>{@forum.pinned}</span>
 							</label>
 							<label class="radio">
-								<input type="radio" name="type" value="2" {CHECKED_POSTIT}>
-								<span>{@forum.pinned}</span>
+								<input type="radio" name="type" value="2" {CHECKED_ANNOUNCE}>
+								<span>{@forum.announce}</span>
 							</label>
 						</div>
 					</div>
