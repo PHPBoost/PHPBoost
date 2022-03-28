@@ -3,18 +3,21 @@
 		<span class="text-strong"><i class="fa fa-lightbulb"></i> {@common.suggestions} :</span>
 		<div class="cell-flex cell-row">
 			# START suggested #
-				<div class="flex-between flex-between-large">
+				<div class="flex-between flex-between-large cell">
 					<div class="cell-body">
 						<div class="cell-content">
 							<a href="{suggested.U_CATEGORY}" class="small offload">{suggested.CATEGORY_NAME}</a>
 							<a href="{suggested.U_ITEM}" class="suggested-item offload">
 								<h6>{suggested.TITLE}</h6>
 							</a>
+							<span class="more">{suggested.DATE}</span>
 						</div>
 					</div>
-					<div class="cell-thumbnail cell-landscape cell-center">
-						# IF suggested.C_HAS_THUMBNAIL #<img src="{suggested.U_THUMBNAIL}" alt="{suggested.TITLE}"># ENDIF #
-					</div>
+					# IF suggested.C_HAS_THUMBNAIL #
+						<div class="cell-thumbnail cell-landscape cell-center">
+							<img src="{suggested.U_THUMBNAIL}" alt="{suggested.TITLE}">
+						</div>
+					# ENDIF #
 				</div>
 			# END suggested #
 		</div>

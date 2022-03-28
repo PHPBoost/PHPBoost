@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 22
+ * @version     PHPBoost 6.0 - last update: 2022 03 28
  * @since       PHPBoost 4.0 - 2013 02 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,10 +52,12 @@ class NewsItem extends RichItem
 
 		foreach ($suggested_news as $news)
 		{
+			$date = $news['creation_date'] <= $news['update_date'] ? $news['update_date'] : $news['creation_date'];
 			$template->assign_block_vars('suggested', array(
 				'C_HAS_THUMBNAIL' => !empty($news['thumbnail']),
 				'CATEGORY_NAME'   => CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_name(),
 				'TITLE'           => $news['title'],
+				'DATE'			  => Date::to_format($date, Date::FORMAT_DAY_MONTH_YEAR),
 				'U_CATEGORY'      => ItemsUrlBuilder::display_category($news['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_rewrited_name())->rel(),
 				'U_ITEM'          => ItemsUrlBuilder::display($news['id_category'], CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($news['id_category'])->get_rewrited_name(), $news['id'], $news['rewrited_title'], self::$module_id)->rel(),
 				'U_THUMBNAIL'     => $news['thumbnail'] == FormFieldThumbnail::DEFAULT_VALUE ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(RichItem::THUMBNAIL_URL)) : Url::to_rel($news['thumbnail'])

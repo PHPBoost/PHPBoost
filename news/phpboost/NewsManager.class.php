@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 09
+ * @version     PHPBoost 6.0 - last update: 2022 03 28
  * @since       PHPBoost 6.0 - 2021 02 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,7 +18,7 @@ class NewsManager extends ItemsManager
 		$this->get_items_static_sort_field = 'top_list_enabled';
 		$this->get_items_static_sort_mode = 'DESC';
 	}
-	
+
 	 /**
 	 * @desc Return a list of suggested news, related to the consulted one.
 	 * @param string[] $item Item to compare with
@@ -28,7 +28,7 @@ class NewsManager extends ItemsManager
 		$now = new Date();
 		$suggested_news = array();
 
-		$result = self::$db_querier->select('SELECT id, title, id_category, rewrited_title, thumbnail, (2 * FT_SEARCH_RELEVANCE(title, :search_content) + FT_SEARCH_RELEVANCE(content, :search_content) / 3) AS relevance
+		$result = self::$db_querier->select('SELECT id, title, id_category, rewrited_title, thumbnail, creation_date, update_date, (2 * FT_SEARCH_RELEVANCE(title, :search_content) + FT_SEARCH_RELEVANCE(content, :search_content) / 3) AS relevance
 		FROM ' . self::$items_table . '
 		WHERE (FT_SEARCH(title, :search_content) OR FT_SEARCH(content, :search_content)) AND id <> :excluded_id
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
