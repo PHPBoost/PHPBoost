@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 27
+ * @version     PHPBoost 6.0 - last update: 2022 03 28
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -368,21 +368,38 @@ class UpdateServices
 		{
 			if ($folder->get_files('/config\.ini/'))
 			{
+				$has_config_update_class = false;
 				$module_id = $folder->get_name();
 				$module = ModulesManager::get_module($module_id);
-
-				if (ModulesManager::is_module_installed($module_id) && $module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION && in_array($module_id, array_keys($update_modules_configs_class)))
+				
+				$module_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
+				if ($folder->get_folders('/update/'))
 				{
-					$module_config_update = new $update_modules_configs_class[$module_id]();
+					foreach ($this->get_class(PATH_TO_ROOT . '/' . $module_id . '/update/', self::$configuration_pattern, 'config') as $class)
+					{
+						$module_config_update_class = new $class['name']();
+						if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_config_update_class, 'ConfigUpdateVersion'))
+							$has_config_update_class = true;
+					}
+				}
+				else if (in_array($module_id, array_keys($update_modules_configs_class)))
+				{
+					$module_config_update_class = new $update_modules_configs_class[$module_id]();
+					if (ClassLoader::is_class_registered_and_valid($update_modules_configs_class[$module_id]) && is_subclass_of($module_config_update_class, 'ConfigUpdateVersion'))
+						$has_config_update_class = true;
+				}
+
+				if (ModulesManager::is_module_installed($module_id) && $module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION && $has_config_update_class && $module_config_update_class)
+				{
 					try {
-						$module_config_update->execute();
+						$module_config_update_class->execute();
 						$success = true;
 						$message = '';
 					} catch (Exception $e) {
 						$success = false;
 						$message = $e->getMessage();
 					}
-					$this->add_error_to_file($class['type'] . ' ' . $module_config_update->get_module_id(), $success, $message);
+					$this->add_error_to_file($class['type'] . ' ' . $module_config_update_class->get_module_id(), $success, $message);
 				}
 			}
 		}
@@ -408,37 +425,47 @@ class UpdateServices
 		{
 			if ($folder->get_files('/config\.ini/'))
 			{
+				$has_update_class = false;
 				$module_id = $folder->get_name();
 				$module = ModulesManager::get_module($module_id);
-
-				if (!ModulesManager::is_module_installed($module_id))
+				
+				$module_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
+				if ($folder->get_folders('/update/'))
 				{
-					if (in_array($module_id, array_keys($update_modules_class)))
+					foreach ($this->get_class(PATH_TO_ROOT . '/' . $module_id . '/update/', self::$module_pattern, 'module') as $class)
 					{
-						$module_update = new $update_modules_class[$module_id]();
-						if (ClassLoader::is_class_registered_and_valid($update_modules_class[$module_id]) && is_subclass_of($module_update, 'ModuleUpdateVersion'))
-						{
-							$module_update::delete_old_files();
-							$module_update::delete_old_folders();
-						}
+						$module_update_class = new $class['name']();
+						if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_update_class, 'ModuleUpdateVersion'))
+							$has_update_class = true;
 					}
+				}
+				else if (in_array($module_id, array_keys($update_modules_class)))
+				{
+					$module_update_class = new $update_modules_class[$module_id]();
+					if (ClassLoader::is_class_registered_and_valid($update_modules_class[$module_id]) && is_subclass_of($module_update_class, 'ModuleUpdateVersion'))
+						$has_update_class = true;
+				}
+
+				if (!ModulesManager::is_module_installed($module_id) && $has_update_class && $module_update_class)
+				{
+					$module_update_class::delete_old_files();
+					$module_update_class::delete_old_folders();
 				}
 				else
 				{
 					if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
 					{
-						if (in_array($module_id, array_keys($update_modules_class)))
+						if ($has_update_class && $module_update_class)
 						{
-							$module_update = new $update_modules_class[$module_id]();
 							try {
-								$module_update->execute();
+								$module_update_class->execute();
 								$success = true;
 								$message = '';
 							} catch (Exception $e) {
 								$success = false;
 								$message = $e->getMessage();
 							}
-							$this->add_error_to_file($class['type'] . ' ' . $module_update->get_module_id(), $success, $message);
+							$this->add_error_to_file($class['type'] . ' ' . $module_update_class->get_module_id(), $success, $message);
 						}
 						else
 						{
@@ -448,14 +475,10 @@ class UpdateServices
 					}
 					else
 					{
-						if (in_array($module_id, array_keys($update_modules_class)))
+						if ($has_update_class && $module_update_class)
 						{
-							$module_update = new $update_modules_class[$module_id]();
-							if (ClassLoader::is_class_registered_and_valid($update_modules_class[$module_id]) && is_subclass_of($module_update, 'ModuleUpdateVersion'))
-							{
-								$module_update::delete_old_files();
-								$module_update::delete_old_folders();
-							}
+							$module_update_class::delete_old_files();
+							$module_update_class::delete_old_folders();
 						}
 
 						ModulesManager::update_module($module_id, false, false);
