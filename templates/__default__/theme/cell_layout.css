@@ -23,12 +23,12 @@
 }
 
 @media (min-width: 769px) {
-	[class*="cell-column-"] {
+	[class*="cell-columns-"] {
 		flex-direction: row;
 		margin: 0 var(--cell-container-gap) var(--cell-container-gap) 0;
 	}
 
-	[class*="cell-column-"] > * { margin: 0 var(--cell-gap) var(--cell-gap) 0; }
+	[class*="cell-columns-"] > * { margin: 0 var(--cell-gap) var(--cell-gap) 0; }
 
 	.cell-columns-2 > * { width: calc(100% / 2 - var(--cell-gap)); }
 	.cell-columns-3 > * { width: calc(100% / 2 - var(--cell-gap)); }
