@@ -355,12 +355,12 @@ class UpdateServices
 	private function update_modules_configurations()
 	{
 		// Update modules configs
-		$update_modules_configs_class = array();
+		$update_modules_configs_class_list = array();
 
 		foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config') as $class)
 		{
 			$object = new $class['name']();
-			$update_modules_configs_class[$object->get_module_id()] = $class['name'];
+			$update_modules_configs_class_list[$object->get_module_id()] = $class['name'];
 		}
 
 		$modules_folder = new Folder(PATH_TO_ROOT);
@@ -382,10 +382,10 @@ class UpdateServices
 							$has_config_update_class = true;
 					}
 				}
-				else if (in_array($module_id, array_keys($update_modules_configs_class)))
+				else if (in_array($module_id, array_keys($update_modules_configs_class_list)))
 				{
-					$module_config_update_class = new $update_modules_configs_class[$module_id]();
-					if (ClassLoader::is_class_registered_and_valid($update_modules_configs_class[$module_id]) && is_subclass_of($module_config_update_class, 'ConfigUpdateVersion'))
+					$module_config_update_class = new $update_modules_configs_class_list[$module_id]();
+					if (ClassLoader::is_class_registered_and_valid($update_modules_configs_class_list[$module_id]) && is_subclass_of($module_config_update_class, 'ConfigUpdateVersion'))
 						$has_config_update_class = true;
 				}
 
@@ -407,12 +407,12 @@ class UpdateServices
 
 	private function update_modules()
 	{
-		$update_modules_class = array();
+		$update_modules_class_list = array();
 
 		foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module') as $class)
 		{
 			$object = new $class['name']();
-			$update_modules_class[$object->get_module_id()] = $class['name'];
+			$update_modules_class_list[$object->get_module_id()] = $class['name'];
 		}
 
 		$modules_config = ModulesConfig::load();
@@ -439,10 +439,10 @@ class UpdateServices
 							$has_update_class = true;
 					}
 				}
-				else if (in_array($module_id, array_keys($update_modules_class)))
+				else if (in_array($module_id, array_keys($update_modules_class_list)))
 				{
-					$module_update_class = new $update_modules_class[$module_id]();
-					if (ClassLoader::is_class_registered_and_valid($update_modules_class[$module_id]) && is_subclass_of($module_update_class, 'ModuleUpdateVersion'))
+					$module_update_class = new $update_modules_class_list[$module_id]();
+					if (ClassLoader::is_class_registered_and_valid($update_modules_class_list[$module_id]) && is_subclass_of($module_update_class, 'ModuleUpdateVersion'))
 						$has_update_class = true;
 				}
 
