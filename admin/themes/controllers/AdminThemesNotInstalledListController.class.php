@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,7 +65,7 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 				'C_VERSION_COMPAT' => $configuration->get_compatibility() == $phpboost_version,
 				'C_PARENT_THEME'   => $theme_has_parent,
 				'C_PARENT_COMPAT'  => $theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true,
-				'C_THUMBNAIL'       => count($pictures) > 0,
+				'C_THUMBNAIL'      => count($pictures) > 0,
 
 				'THEME_NUMBER'   => $theme_number,
 				'MODULE_ID'      => $theme->get_id(),
@@ -187,7 +187,7 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 
 		if (!is_writable($folder_phpboost_themes))
 		{
-			$is_writable = @chmod($folder_phpboost_themes, 0777);
+			$is_writable = @chmod($folder_phpboost_themes, 0755);
 		}
 		else
 		{

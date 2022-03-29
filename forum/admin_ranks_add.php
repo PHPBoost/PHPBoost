@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -49,11 +49,11 @@ if ($add)
 }
 elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 {
-	//Si le dossier n'est pas en écriture on tente un CHMOD 777
+	//Si le dossier n'est pas en écriture on tente un CHMOD 755
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/forum/templates/images/ranks/';
 	if (!is_writable($dir))
-		$is_writable = @chmod($dir, 0777);
+		$is_writable = @chmod($dir, 0755);
 
 	$error = '';
 	if (is_writable($dir)) //Dossier en écriture, upload possible

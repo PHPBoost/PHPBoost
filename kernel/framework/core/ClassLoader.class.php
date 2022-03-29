@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 27
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -149,7 +149,7 @@ class ClassLoader
 		}
 		catch (IOException $ex)
 		{
-			die('The cache folder is not writeable, please set CHMOD to 777');
+			die('The cache folder is not writeable, please set CHMOD to 755');
 		}
 		
 		$file = new File(PATH_TO_ROOT . self::$modules_cache_file);
@@ -160,7 +160,7 @@ class ClassLoader
 		}
 		catch (IOException $ex)
 		{
-			die('The cache folder is not writeable, please set CHMOD to 777');
+			die('The cache folder is not writeable, please set CHMOD to 755');
 		}
 	}
 

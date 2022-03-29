@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 31
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,11 +65,11 @@ elseif ($home_folder) // Back to root
 	AppContext::get_response()->redirect('/admin/admin_files.php');
 elseif (!empty($_FILES['upload_file']['name'])) // Add file
 {
-	// If folder is not writable, we try CHMOD 777
+	// If folder is not writable, we try CHMOD 755
 	@clearstatcache();
 	$dir = PATH_TO_ROOT . '/upload/';
 	if (!is_writable($dir))
-		$is_writable = (@chmod($dir, 0777));
+		$is_writable = @chmod($dir, 0755);
 
 	@clearstatcache();
 	$error = '';

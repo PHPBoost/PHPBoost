@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 24
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,7 +17,7 @@
 
 $lang['install.chmod.cache.not.writable'] = '
 	<h1>PHPBoost installation</h1>
-	<p><strong>Warning</strong>: the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (777) to be able to continue the installation.</p>
+	<p><strong>Warning</strong>: the folders cache and cache/tpl must exist and be writable. Please create and/or set them the right CHMOD (755) to be able to continue the installation.</p>
 	<p>Once it is done, please refresh the page to continue or click <a href="#">here</a>.</p>
 ';
 

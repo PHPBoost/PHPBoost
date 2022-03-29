@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -147,12 +147,12 @@ elseif ($del_mbr && !empty($user_id) && !empty($idgroup)) // Delete member from 
 }
 elseif (!empty($_FILES['upload_groups']['name'])) // Upload
 {
-	// If the folder is not writable, we try CHMOD 777
+	// If the folder is not writable, we try CHMOD 755
 	@clearstatcache();
 	$dir = PATH_TO_ROOT .'/images/group/';
 	if (!is_writable($dir))
 	{
-		$is_writable = (@chmod($dir, 0777)) ? true : false;
+		$is_writable = @chmod($dir, 0755);
 	}
 
 	@clearstatcache();

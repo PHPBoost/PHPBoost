@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -81,7 +81,7 @@ class AdminSmileysFormController extends DefaultAdminController
 
 		if (!is_writable($folder_phpboost_smileys))
 		{
-			$is_writable = @chmod($folder_phpboost_smileys, 0777);
+			$is_writable = @chmod($folder_phpboost_smileys, 0755);
 		}
 		else
 		{

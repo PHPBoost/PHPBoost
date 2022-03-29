@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 07
+ * @version     PHPBoost 6.0 - last update: 2022 03 28
  * @since       PHPBoost 2.0 - 2008 07 06
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -78,7 +78,7 @@ abstract class FileSystemElement
 
 	/**
 	 * Returns true if the file or the folder is writable.
-	 * @param bool $force_chmod If true, then, chmod will be forced to 777 if not writable.
+	 * @param bool $force_chmod If true, then, chmod will be forced to 755 if not writable.
 	 * @return true if the file or the folder is writable.
 	 */
 	public function is_writable($force_chmod = false)
@@ -93,7 +93,7 @@ abstract class FileSystemElement
 		}
 		else if ($force_chmod)
 		{
-			return $folder->change_chmod(0777) && @is_writable($this->path);
+			return $this->change_chmod(0755) && @is_writable($this->path);
 		}
 		return false;
 	}
