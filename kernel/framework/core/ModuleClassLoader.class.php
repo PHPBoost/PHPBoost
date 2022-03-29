@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 19
+ * @version     PHPBoost 6.0 - last update: 2022 03 29
  * @since       PHPBoost 6.0 - 2022 03 19
 */
 
@@ -34,7 +34,7 @@ class ModuleClassLoader extends ClassLoader
 		{
 			foreach (self::$modules_classlist[$module_id] as $class_name => $class_path)
 			{
-				if (is_subclass_of($class_name, $parent_class))
+				if (self::is_class_registered_and_valid($class_name) && is_subclass_of($class_name, $parent_class))
 				{
 					$result = $class_name;
 					break;
