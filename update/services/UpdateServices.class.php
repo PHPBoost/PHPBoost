@@ -218,6 +218,9 @@ class UpdateServices
 		// Updating content
 		$this->update_content();
 
+		// Clear autoload
+		$this->clear_autoload();
+
 		// Installation of the UrlUpdater module for rewriting the url of updated modules
 		$folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
 		if ($folder->exists())
@@ -739,6 +742,12 @@ class UpdateServices
 	public function add_information_to_file($step_name, $message)
 	{
 		$this->update_log_file->append($step_name . ' ' . $message . "\r\n");
+	}
+
+	private function clear_autoload()
+	{
+		ClassLoader::clear_cache();
+		ClassLoader::init_autoload();
 	}
 
 	public function generate_update_token()
