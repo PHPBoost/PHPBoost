@@ -10,7 +10,7 @@ function insert_wiki_link()
 	if (tinymce_editor)
 		insertTinyMceContent('[link=' + url_encode_rewrite(link_name) + '][/link]'); //insertion pour tinymce.
 	else
-		insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'contents');
+		insertbbcode('[link=' + url_encode_rewrite(link_name) + ']', '[/link]', 'content');
 }
 
 function insert_wiki_paragraph(level)
@@ -20,7 +20,7 @@ function insert_wiki_paragraph(level)
 		return false;
 	for( var i = 1; i <= level; i++)
 		string += "-";
-	insert_wiki_paragraph_title('paragraph', string, string, 'contents');
+	insert_wiki_paragraph_title('paragraph', string, string, 'content');
 }
 
 //Insertion dans le champs.

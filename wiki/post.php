@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 08
+ * @version     PHPBoost 6.0 - last update: 2022 03 30
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -309,7 +309,7 @@ else
 //On travaille uniquement en BBCode, on force le langage de l'éditeur
 $content_editor = AppContext::get_content_formatting_service()->get_default_factory();
 $editor = $content_editor->get_editor();
-$editor->set_identifier('contents');
+$editor->set_identifier('content');
 
 $view->put_all(array(
 	'C_CAPTCHA'       => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
