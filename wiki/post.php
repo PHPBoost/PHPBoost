@@ -33,8 +33,8 @@ $is_cat = $is_cat > 0 ? $is_cat : $is_cat_get;
 $id_edit = (int)retrieve(POST, 'id_edit', 0);
 $title = retrieve(POST, 'title', '');
 $encoded_title = retrieve(GET, 'title', '');
-$contents = wiki_parse(retrieve(POST, 'contents', '', TSTRING_AS_RECEIVED));
-$contents_preview = retrieve(POST, 'contents', '', TSTRING_PARSE);
+$contents = wiki_parse(retrieve(POST, 'content', '', TSTRING_AS_RECEIVED));
+$contents_preview = retrieve(POST, 'content', '', TSTRING_PARSE);
 $change_reason = $id_edit > 0 ? wiki_parse(retrieve(POST, 'change_reason', '', TSTRING_AS_RECEIVED)) : $lang['wiki.item.init'];
 $change_reason_preview = retrieve(POST, 'change_reason', '', TSTRING_PARSE);
 $id_cat = (int)retrieve(GET, 'id_parent', 0);
@@ -121,7 +121,7 @@ if (!empty($contents)) //On enregistre un article
 
             // Feeds Regeneration
             Feed::clear_cache('wiki');
-			HooksService::execute_hook_action('edit', 'wiki', array_merge($article_infos, array('contents' => $contents, 'url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
+			HooksService::execute_hook_action('edit', 'wiki', array_merge($article_infos, array('content' => $contents, 'url' => Url::to_rel('/wiki/' . url('wiki.php?title=' . $article_infos['encoded_title'], $article_infos['encoded_title'])))));
 
 			//On redirige
 			$redirect = $article_infos['encoded_title'];
