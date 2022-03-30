@@ -15,27 +15,6 @@
 </script>
 
 <section id="module-wiki">
-	# START preview #
-		<header class="section-header">
-			<h1>{@form.preview}: {preview.TITLE}</h1>
-		</header>
-		<div class="sub-section">
-			<div class="content-container">
-				<div class="content" id="preview">
-					# START preview.menu #
-						<div class="wiki-summary">
-							<div class="wiki-summary-title">{@wiki.summary.menu}</div>
-							{preview.menu.MENU}
-						</div>
-					# END preview.menu #
-					<br /><br />
-					{preview.CONTENT}
-				</div>
-			</div>
-		</div>
-		<footer></footer>
-	# END preview #
-
 	# INCLUDE MESSAGE_HELPER #
 	<header class="section-header">
 		# IF C_PREVIEW #<h2># ELSE #<h1># ENDIF #
@@ -112,10 +91,34 @@
 							<label for="content">* {@wiki.content}</label>
 							# INCLUDE POST_JS_TOOLS #
 							<div class="form-field form-field-textarea bbcode-sidebar">
-								<textarea rows="25" id="content" name="content">{CONTENT}</textarea>
+								<textarea rows="15" id="content" name="content">{CONTENT}</textarea>
 								{KERNEL_EDITOR}
 							</div>
 						</div>
+
+						# IF C_PREVIEW #
+							# START preview #
+								<header class="section-header">
+									<span>{@form.preview}: </span>
+									<h1>{preview.TITLE}</h1>
+								</header>
+								<div class="sub-section">
+									<div class="content-container">
+										<div class="content" id="preview">
+											# START preview.menu #
+												<div class="wiki-summary">
+													<div class="wiki-summary-title">{@wiki.summary.menu}</div>
+													{preview.menu.MENU}
+												</div>
+											# END preview.menu #
+											<br /><br />
+											{preview.CONTENT}
+										</div>
+									</div>
+								</div>
+								<footer></footer>
+							# END preview #
+						# ENDIF #
 
 						# IF C_EDIT #
 							<div class="form-element form-element-textarea">
