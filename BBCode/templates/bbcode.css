@@ -3,7 +3,7 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.bbcode-sidebar textarea {
+.bbcode-sidebar > textarea {
 	min-height: 340px;
 	padding: 0.309em 1.228em 0.309em 1.618em;
 }
