@@ -182,10 +182,9 @@
 
 # START move #
 	<script>
-		var path = '{PICTURES_DATA_PATH}';
 		var selected_cat = {move.SELECTED_CAT};
 	</script>
-	<script src="{PICTURES_DATA_PATH}/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+	<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 	<section>
 		<header class="section-header">
@@ -392,10 +391,9 @@
 
 # START remove #
 	<script>
-		var path = '{PICTURES_DATA_PATH}';
 		var selected_cat = {remove.SELECTED_CAT};
 	</script>
-	<script src="{PICTURES_DATA_PATH}/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+	<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 	<section>
 		<header class="section-header">
 			<h1>{remove.L_PAGE_TITLE}</h1>
