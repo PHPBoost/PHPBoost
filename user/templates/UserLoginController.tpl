@@ -33,7 +33,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="global" class="global-maintain">
+	<main id="global" class="global-maintain">
 		<div id="global-container">
 			# IF C_MAINTAIN #
 				<div id="maintain" class="align-center">
@@ -112,7 +112,7 @@
 			</div>
 
 		</div>
-		<div id="footer"></div>
-	</div>
-
+	</main>
+	<div id="footer"></div>
+	
 # ENDIF #
