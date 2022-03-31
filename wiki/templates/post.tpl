@@ -91,20 +91,23 @@
 							<label for="content">* {@wiki.content}</label>
 							# INCLUDE POST_JS_TOOLS #
 							<div class="form-field form-field-textarea bbcode-sidebar">
-								<textarea rows="15" id="content" name="content">{CONTENT}</textarea>
+								<textarea class="auto-resize" rows="15" id="content" name="content">{CONTENT}</textarea>
 								{KERNEL_EDITOR}
 							</div>
 						</div>
+						<fieldset class="fieldset-submit">
+							<legend>{@form.preview}</legend>
+							<button type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button>
+						</fieldset>
 
-						# IF C_PREVIEW #
-							# START preview #
+						# START preview #
+							<div class="auto-resize xmlhttprequest-preview" id="preview">
 								<header class="section-header">
-									<span>{@form.preview}: </span>
-									<h1>{preview.TITLE}</h1>
+									<h1># IF C_EDIT_CATEGORY #{TITLE}# ELSE ## IF C_EDIT_ITEM #{TITLE}# ELSE #{preview.TITLE}# ENDIF ## ENDIF #</h1>
 								</header>
 								<div class="sub-section">
 									<div class="content-container">
-										<div class="content" id="preview">
+										<div class="content">
 											# START preview.menu #
 												<div class="wiki-summary">
 													<div class="wiki-summary-title">{@wiki.summary.menu}</div>
@@ -116,9 +119,8 @@
 										</div>
 									</div>
 								</div>
-								<footer></footer>
-							# END preview #
-						# ENDIF #
+							</div>
+						# END preview #
 
 						# IF C_EDIT #
 							<div class="form-element form-element-textarea">
@@ -149,12 +151,14 @@
 					</fieldset>
 					<fieldset class="fieldset-submit">
 						<legend>{@form.submit}</legend>
-						<input type="hidden" name="is_cat" value="{IS_CATEGORY}">
-						<input type="hidden" name="id_edit" value="{ID_EDIT}">
-						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" class="button submit" name="submit">{@form.submit}</button>
-						<button type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button>
-						<button type="reset" class="button reset-button">{@form.reset}</button>
+						<div class="fieldset-inset">
+							<button type="submit" class="button submit" name="submit">{@form.submit}</button>
+							<input type="hidden" name="is_cat" value="{IS_CATEGORY}">
+							<input type="hidden" name="id_edit" value="{ID_EDIT}">
+							<input type="hidden" name="token" value="{TOKEN}">
+							<!-- <button type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button> -->
+							<button type="reset" class="button reset-button">{@form.reset}</button>
+						</div>
 					</fieldset>
 				</form>
 			</div>
