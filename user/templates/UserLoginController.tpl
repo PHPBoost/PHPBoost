@@ -1,26 +1,30 @@
 # IF C_USER_LOGIN #
 	<section id="user-login">
-		<header></header>
-		<article class="">
-			# INCLUDE ERROR_MESSAGE #
-			# INCLUDE LOGIN_FORM #
-			<div class="align-center">
-				# IF C_REGISTRATION_ENABLED #
-					<a class="offload" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@user.sign.up}</a>
-				# ENDIF #
-				# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
-					# START external_auth #
-						<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}">{external_auth.IMAGE_HTML}</a>
-					# END external_auth #
-				# ENDIF #
-				<div class="spacer"></div>
-				<a class="offload" href="{U_FORGOTTEN_PASSWORD}"><i class="fa fa-question-circle" aria-hidden="true"></i> {@user.forgotten.password}</a>
+		<header class="section-header"></header>
+		<div class="sub-section">
+			<div class="content-container">
+				<article class="">
+					# INCLUDE ERROR_MESSAGE #
+					# INCLUDE LOGIN_FORM #
+					<div class="align-center">
+						# IF C_REGISTRATION_ENABLED #
+							<a class="offload" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@user.sign.up}</a>
+						# ENDIF #
+						# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
+							# START external_auth #
+								<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}">{external_auth.IMAGE_HTML}</a>
+							# END external_auth #
+						# ENDIF #
+						<div class="spacer"></div>
+						<a class="offload" href="{U_FORGOTTEN_PASSWORD}"><i class="fa fa-question-circle" aria-hidden="true"></i> {@user.forgotten.password}</a>
+					</div>
+				</article>
 			</div>
-		</article>
+		</div>
 		<footer></footer>
 	</section>
 # ELSE #
-	<div id="header">
+	<header id="header">
 		<div id="inner-header">
 			<div id="inner-header-container" class="content-wrapper">
 				<div id="site-infos" role="banner">
@@ -32,9 +36,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</header>
 	<main id="global" class="global-maintain">
-		<div id="global-container">
+		<div id="global-container" class="content-wrapper">
 			# IF C_MAINTAIN #
 				<div id="maintain" class="align-center">
 					{L_MAINTAIN}
@@ -113,6 +117,6 @@
 
 		</div>
 	</main>
-	<div id="footer"></div>
-	
+	<footer id="footer"></footer>
+
 # ENDIF #
