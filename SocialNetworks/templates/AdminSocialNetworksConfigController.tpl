@@ -102,27 +102,25 @@
 							# ENDIF #
 						</div>
 						<script>
-						<!--
-						jQuery(document).ready(function() {
-							var social_network = new SocialNetwork('{social_networks_list.ID}', SocialNetworks);
+							jQuery(document).ready(function() {
+								var social_network = new SocialNetwork('{social_networks_list.ID}', SocialNetworks);
 
-							jQuery("#change-display-{social_networks_list.ID}").on('click',function(){
-								social_network.change_display();
-							});
+								jQuery("#change-display-{social_networks_list.ID}").on('click',function(){
+									social_network.change_display();
+								});
 
-							jQuery("#move-up-{social_networks_list.ID}").on('click',function(){
-								var li = jQuery(this).closest('li');
-								li.insertBefore( li.prev() );
-								SocialNetworks.change_reposition_pictures();
-							});
+								jQuery("#move-up-{social_networks_list.ID}").on('click',function(){
+									var li = jQuery(this).closest('li');
+									li.insertBefore( li.prev() );
+									SocialNetworks.change_reposition_pictures();
+								});
 
-							jQuery("#move-down-{social_networks_list.ID}").on('click',function(){
-								var li = jQuery(this).closest('li');
-								li.insertAfter( li.next() );
-								SocialNetworks.change_reposition_pictures();
+								jQuery("#move-down-{social_networks_list.ID}").on('click',function(){
+									var li = jQuery(this).closest('li');
+									li.insertAfter( li.next() );
+									SocialNetworks.change_reposition_pictures();
+								});
 							});
-						});
-						-->
 						</script>
 					</li>
 				# END social_networks_list #

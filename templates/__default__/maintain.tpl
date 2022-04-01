@@ -1,15 +1,15 @@
 # IF C_MAINTAIN_DELAY #
 	# IF C_ALERT_MAINTAIN #
-	<div id="message-maintain" class="floating-message-container">
-		<div id="message-helper-maintain" class="floating-element">
-			<div class="message-helper bgc warning">
-				<a id="message-helper-button-maintain" class="bgc-full warning close-message" aria-label="{@common.close}"><i class="fa fa-times" aria-hidden="true"></i></a>
-				{@admin.maintenance.delay}
-				<div id="release">{@common.loading}...</div>
-				# INCLUDE DISABLE_MAINTENANCE #
+		<div id="message-maintain" class="floating-message-container">
+			<div id="message-helper-maintain" class="floating-element">
+				<div class="message-helper bgc warning">
+					<a id="message-helper-button-maintain" class="bgc-full warning close-message" aria-label="{@common.close}"><i class="fa fa-times" aria-hidden="true"></i></a>
+					{@admin.maintenance.delay}
+					<div id="release">{@common.loading}...</div>
+					# INCLUDE DISABLE_MAINTENANCE #
+				</div>
 			</div>
 		</div>
-	</div>
 	# ENDIF #
 	<script>
 		jQuery(function(){
