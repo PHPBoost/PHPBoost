@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 06
+ * @version     PHPBoost 6.0 - last update: 2022 04 01
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -236,7 +236,7 @@ class LangLoader
 
 	public static function get_all_langs($module_id = '')
 	{
-		if(!empty($module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
+		if(!empty($module_id) && !in_array($module_id, array('admin', 'cache', 'images', 'kernel', 'lang', 'repository', 'syndication', 'templates', 'upload', 'user')))
 			return array_merge(self::get_kernel_langs(), self::get_module_langs($module_id), self::get_theme_langs());
 		else
 			return array_merge(self::get_kernel_langs(), self::get_theme_langs());
