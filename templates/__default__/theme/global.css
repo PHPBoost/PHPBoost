@@ -6,6 +6,8 @@
  *
 */
 
+.fade-in { display: none; }
+
 /* --- Sizes --- */
 .smallest { font-size: 0.456em; vertical-align: middle; }
 .smaller  { font-size: 0.618em; vertical-align: middle; }

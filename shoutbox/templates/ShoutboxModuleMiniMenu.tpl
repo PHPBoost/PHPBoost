@@ -212,7 +212,7 @@
 			# ENDIF #
 		</nav>
 		<div class="cell-form grouped-inputs">
-			<button class="button submit flex-wide" onclick="shoutbox_add_message();" type="button">{@form.submit}</button>
+			<button class="button submit flex-wide grouped-element" onclick="shoutbox_add_message();" type="submit">{@form.submit}</button>
 			<input type="hidden" name="token" value="{TOKEN}">
 			<a class="grouped-element" href="#" onclick="shoutbox_refresh_messages_box();return false;" id="shoutbox-refresh" aria-label="{@shoutbox.refresh}"><i class="fa fa-sync" aria-hidden="true"></i></a>
 		</div>

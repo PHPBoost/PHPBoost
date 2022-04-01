@@ -50,11 +50,10 @@
 .constraint-status-right .picture-status-constraint:after {
 	opacity: 1;
 	font-size: 1.5rem;
+	content: "\f00c";
 }
 
 .constraint-status-right .field-required:after { content: " "; }
-
-.constraint-status-right .picture-status-constraint:after { content: "\f00c"; }
 
 .constraint-status-error i.picture-status-constraint { content: "\f056"; }
 

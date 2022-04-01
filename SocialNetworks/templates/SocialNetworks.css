@@ -3,42 +3,11 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.sharing-elements-list {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	flex-wrap: wrap;
-}
-
-@media (min-width: 769px) {
-	.sharing-elements-list { justify-content: flex-start; }
-}
-
-.sharing-element { flex: 0 0 auto; }
-
-@media (min-width: 769px) {
-	.sharing-element { margin: 0 0.309em 0.309em 0; }
-}
-
-.sharing-element a {
-	display: block;
-	padding: 0.618em 1.228em;
-	display: block;
-	margin: 0 0.1em 0.309em 0;
-	border-width: 2px;
-	border-style: solid;
-	border-color: transparent;
-}
-
 /* --- Social Connect --- */
 a.social-connect {
 	display: block;
 	vertical-align: middle;
-	padding: 0.309em;
+	padding: 0.809em 1.618em;
 	text-align: center;
 	font-size: 0.618em;
 }
@@ -54,22 +23,21 @@ a.social-connect.login-page { margin: 0.809em 0; }
 	vertical-align: middle;
 }
 
-a.social-connect i:before { transition: 0.2s ease-out; }
+a.social-connect i:before {
+	transition: 0.2s ease-out;
+	font-size: 1.618em;
+}
 
 a.social-connect:hover i:before { transition: 0.2s ease-out; }
 
 span.social-connect i:before { font-size: 1.618em; }
 span.social-connect { padding: 1em 1.618em; }
 
-a.social-connect i:before { font-size: 1.618em; }
-
-a.social-connect { padding: 0.809em 1.618em; }
-
 a.social-connect span { display: none; }
 
 .social-connect { color: var(--txt-alt); }
 
-.social-connect i:before       { color: var(--txt-alt); }
+.social-connect i:before { color: var(--txt-alt); }
 
 /* --- Color Social network --- */
 .blogger    { background-color: #f57d00; }

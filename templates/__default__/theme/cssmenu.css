@@ -281,7 +281,11 @@
 	margin: 0.809rem 0.809rem 2.809rem 3.618rem;
 }
 
-.cssmenu-actionslinks .menu-button { display: block; }
+.cssmenu-actionslinks .menu-button {
+	display: block;
+	font-size: 0;
+	z-index: 9;
+}
 
 .cssmenu-actionslinks .menu-button::after {
 	position: absolute;
@@ -312,11 +316,6 @@
 .cssmenu-actionslinks .menu-button + ul:hover {
 	left: auto;
 	right: -1px;
-}
-
-.cssmenu-actionslinks .menu-button {
-	font-size: 0;
-	z-index: 9;
 }
 
 .cssmenu-actionslinks.small-screen .menu-button { font-size: 1.228rem; }
@@ -395,19 +394,17 @@
 .cssmenu-static > ul > li {
 	display: inline-block;
 	vertical-align: top;
+	padding: 0 0.618em;
 }
-
-.cssmenu-static > ul > li > .cssmenu-title { text-align: center; }
 
 .cssmenu-static ul li.has-sub > .cssmenu-title::after,
 .cssmenu-static ul li.has-sub > .cssmenu-title:before { display: none; }
-
-.cssmenu-static > ul > li { padding: 0 0.618em; }
 
 .cssmenu-static > ul > li > .cssmenu-title {
 	margin: 0 0 0.618em 0;
 	font-size: 1.618rem;
 	font-weight: bold;
+	text-align: center;
 }
 
 .cssmenu-static ul ul {

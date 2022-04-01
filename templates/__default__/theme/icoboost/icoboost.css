@@ -32,6 +32,11 @@
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* hack position */
+    position: relative;
+    min-width: 1em;
+    min-height: 1em;
 }
 
 .fa-iboost-email::before {
@@ -85,12 +90,6 @@
 .color-tag.fa-iboost-tag-60 { color: #0B72B7; }
 
 /* Hack position */
-.iboost {
-    position: relative;
-    min-width: 1em;
-    min-height: 1em;
-}
-
 .iboost::before {
     position: absolute;
     left: 0;

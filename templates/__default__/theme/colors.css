@@ -489,10 +489,10 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 .cssmenu-select .has-sub:hover > .cssmenu-title { background-color: var(--bgc-sub); }
 
 .small-screen.cssmenu ul ul,
-.small-screen.cssmenu-actionslinks ul { box-shadow: 0 0 0 transparent; }
-
-.small-screen.cssmenu ul ul,
-.small-screen.cssmenu-actionslinks ul { background-color: transparent; }
+.small-screen.cssmenu-actionslinks ul {
+	box-shadow: 0 0 0 transparent;
+	background-color: transparent; 
+}
 
 .cssmenu-actionslinks .menu-button:after {
 	border-color: rgba(var(--main-rgb-t), 0.4);

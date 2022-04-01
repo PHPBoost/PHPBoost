@@ -26,8 +26,6 @@
 
 .form-element [id$="user_avatar"] img { max-width: 200px; }
 
-.form-element > label { padding: 0 0.618em 0.618em 0; }
-
 .subtitle-label { font-size: 1.456em; }
 
 .field-description {
@@ -51,6 +49,7 @@
 .form-field-action-link { text-align: center; }
 
 .form-element > label {
+	padding: 0 0.618em 0.618em 0;
 	display: inline-block;
 	width: 100%;
 	text-align: left;
@@ -87,20 +86,16 @@
 
 /* --- Auto-completion --- */
 .autocomplete-suggestion {
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
-	overflow: auto;
-}
-
-.autocomplete-suggestion strong { font-weight: normal; }
-
-.autocomplete-suggestion {
 	padding: 0.1618em 0.309em;
 	white-space: nowrap;
 	overflow: hidden;
 	cursor: pointer;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
 }
+
+.autocomplete-suggestion strong { font-weight: normal; }
 
 .autocomplete-no-suggestion { text-align: center; }
 
