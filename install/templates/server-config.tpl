@@ -16,7 +16,7 @@
         <fieldset class="fieldset-content">
             <legend>{@install.php.version}</legend>
             <div class="fieldset-inset">
-                <p>${set(@H|install.php.version.check.description, ['min_php_version': MIN_PHP_VERSION])}</p>
+                <div class="form-field-free-large">${set(@H|install.php.version.check.description, ['min_php_version': MIN_PHP_VERSION])}</div>
                 <div class="form-element">
                     <label>${set(@install.php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
                     <div class="form-field"# IF PHP_VERSION_OK # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
@@ -33,7 +33,7 @@
         <fieldset class="fieldset-content">
             <legend>{@install.php.extensions}</legend>
             <div class="fieldset-inset">
-                <p>{@install.php.extensions.check}</p>
+                <div class="form-field-free-large">{@install.php.extensions.check}</div>
                 <div class="form-element">
                     <label>{@install.php.extensions.check.gd} <span class="field-description">{@install.php.extensions.check.gd.clue}</span></label>
                     <div class="form-field"# IF HAS_GD_LIBRARY # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
@@ -84,7 +84,7 @@
         <fieldset class="fieldset-content">
             <legend>{@install.folders.chmod}</legend>
             <div id="chmod" class="fieldset-inset">
-                <p>{@H|install.folders.chmod.check}</p>
+                <div class="form-field-free-large">{@H|install.folders.chmod.check}</div>
                 # START folder #
                     <div class="form-element">
                         <label>{folder.NAME}</label>
