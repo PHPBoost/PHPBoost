@@ -17,8 +17,8 @@
 			</div>
 			<div class="cell cell-1-4">
 				<div class="cell-thumbnail cell-center">
-					<img src="templates/images/mysql.png" alt="MySQL" />
-					<a class="cell-thumbnail-caption" href="https://www./">mysql.com</a>
+					<img src="templates/images/mysql.webp" alt="MySQL" />
+					<a class="cell-thumbnail-caption" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql.com</a>
 				</div>
 			</div>
 		</div>

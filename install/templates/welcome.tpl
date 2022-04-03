@@ -12,7 +12,7 @@
 			</div>
 			<div class="cell align-center">
 				<div class="cell-thumbnail">
-					<img src="templates/images/PHPBoost_car.png" alt="{@install.title}" />
+					<img src="templates/images/PHPBoost_car.webp" alt="{@install.title}" />
 				</div>
 			</div>
 		</div>
@@ -20,7 +20,7 @@
 			<h3>${set(@install.welcome.distribution, ['distribution': @distribution.name])}</h3>
 			<p>${html(@install.welcome.distribution.description)}</p>
 			<p>${html(@distribution.description)}</p>
-		</div>		
+		</div>
 	</div>
 
 	<footer>

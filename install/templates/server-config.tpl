@@ -7,8 +7,8 @@
             </div>
             <div class="cell cell-1-4">
                 <div class="cell-thumbnail cell-center">
-                    <img src="templates/images/php.png" alt="PHP" />
-                    <a href="https://www.php.net/" class="cell-thumbnail-caption">php.net</a>
+                    <img src="templates/images/php.webp" alt="PHP" />
+                    <a class="cell-thumbnail-caption" href="https://www.php.net/" target="_blank" rel="noopener noreferrer">php.net</a>
                 </div>
             </div>
         </div>
