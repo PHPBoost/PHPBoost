@@ -25,6 +25,7 @@
 #cookiebar-container .button {
 	margin-right: 0.456em;
 	border-width: 1px;
+	white-space: nowrap;
 }
 
 #cookiebar-container a.grouped-element {
