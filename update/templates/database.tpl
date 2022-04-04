@@ -4,8 +4,8 @@
 
 	<div class="content">
 		<div class="float-right pbt-box align-center">
-			<a href="https://www.mysql.com/">
-				<img src="templates/images/mysql.png" alt="MySQL" />
+			<a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">
+				<img src="templates/images/mysql.webp" alt="MySQL" />
 			</a>
 		</div>
 		<span class="spacer">&nbsp;</span>

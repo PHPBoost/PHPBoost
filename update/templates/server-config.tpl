@@ -4,8 +4,8 @@
 
 	<div class="content">
 		<div class="float-right pbt-box align-center">
-			<a href="https://www.php.net/">
-				<img src="templates/images/php.png" alt="PHP" class="float-right" />
+			<a href="https://www.php.net/" target="_blank" rel="noopener noreferrer">
+				<img src="templates/images/php.webp" alt="PHP" class="float-right" />
 			</a>
 		</div>
 		<span class="spacer">&nbsp;</span>
