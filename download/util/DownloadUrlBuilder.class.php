@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 04 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -38,8 +38,8 @@ class DownloadUrlBuilder
 		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 || $subcategories_page !== 1 ? $page . '/' : '';
 		$subcategories_page = $subcategories_page !== 1 ? $subcategories_page . '/' : '';
-		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
+		$sort_field = ($sort_field && $sort_field !== $config->get_items_default_sort_field()) ? $sort_field . '/' : '';
+		$sort_mode = ($sort_mode && $sort_mode !== $config->get_items_default_sort_mode()) ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $sort_field . $sort_mode . $page . $subcategories_page);
 	}
 
@@ -50,8 +50,8 @@ class DownloadUrlBuilder
 	{
 		$config = DownloadConfig::load();
 		$page = $page !== 1 ? $page . '/' : '';
-		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
+		$sort_field = ($sort_field && $sort_field !== $config->get_items_default_sort_field()) ? $sort_field . '/' : '';
+		$sort_mode = ($sort_mode && $sort_mode !== $config->get_items_default_sort_mode()) ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
 	}
 
@@ -62,8 +62,8 @@ class DownloadUrlBuilder
 	{
 		$config = DownloadConfig::load();
 		$page = $page !== 1 ? $page . '/' : '';
-		$sort_field = $sort_field !== $config->get_items_default_sort_field() ? $sort_field . '/' : '';
-		$sort_mode = $sort_mode !== $config->get_items_default_sort_mode() ? $sort_mode . '/' : '';
+		$sort_field = ($sort_field && $sort_field !== $config->get_items_default_sort_field()) ? $sort_field . '/' : '';
+		$sort_mode = ($sort_mode && $sort_mode !== $config->get_items_default_sort_mode()) ? $sort_mode . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $sort_field . $sort_mode . $page);
 	}
 
