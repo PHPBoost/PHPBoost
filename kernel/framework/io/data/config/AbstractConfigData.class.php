@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 03
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 3.0 - 2009 09 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -56,6 +56,14 @@ abstract class AbstractConfigData implements ConfigData
 		{
 			return $this->get_default_value($name);
 		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function has_property($name)
+	{
+		return array_key_exists($name, $this->properties_map);
 	}
 
 	/**
