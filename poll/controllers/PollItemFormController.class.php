@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PollItemFormController extends DefaultItemFormController
@@ -128,7 +129,8 @@ class PollItemFormController extends DefaultItemFormController
 			$this->get_item()->set_item_in_mini_module_map();
 		else
 			$this->get_item()->unset_item_in_mini_module_map();
-
+		
+		PollMiniMenuCache::invalidate();
 	}
 }
 ?>

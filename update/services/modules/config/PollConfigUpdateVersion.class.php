@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 03
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2021 04 24
 */
 
@@ -24,8 +24,14 @@ class PollConfigUpdateVersion extends ConfigUpdateVersion
 		{
 			$config = PollConfig::load();
 			$config->set_property('authorizations', $this->build_authorizations($old_config->get_property('authorizations')));
-			$config->set_property('mini_module_selected_items', $old_config->get_property('displayed_in_mini_module_list'));
-			$config->delete_property('displayed_in_mini_module_list');
+			
+			if ($old_config->has_property('displayed_in_mini_module_list'))
+			{
+				$config->set_property('mini_module_selected_items', $old_config->get_property('displayed_in_mini_module_list'));
+				$config->delete_property('displayed_in_mini_module_list');
+			}
+			
+			$config->delete_property('display_results_before_polls_end');
 			$this->save_new_config('poll-config', $config);
 
 			return true;

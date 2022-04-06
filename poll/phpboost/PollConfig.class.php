@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 15
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2020 05 14
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PollConfig extends DefaultRichModuleConfig
@@ -43,26 +44,23 @@ class PollConfig extends DefaultRichModuleConfig
 	
 	public function get_default_mini_module_selected_item_id()
 	{
-	  $install_lang = LangLoader::get('install', self::$module_id);
-	  $install_item_title = $install_lang['items'][0]['item.title'];
-	  
-	  $db_querier  = PersistenceContext::get_querier();
-	  
-	  try 
-	  {
-	    $item = $db_querier->select_single_row(
-			PREFIX . self::$module_id,
-			array('id', 'title'),
-			'WHERE title =:title',
-			array('title' => $install_item_title));
-	  }
-	  catch (RowNotFoundException $e)
-	  {
-	    return '';
-	  }
-	  
-	  return (string) $item['id'];
-	  
+		$selected_id = '';
+		$install_lang = LangLoader::get('install', self::$module_id);
+		$install_item_title = isset($install_lang['items']) && isset($install_lang['items'][0]) && isset($install_lang['items'][0]['item.title']) ? $install_lang['items'][0]['item.title'] : '';
+
+		$db_querier  = PersistenceContext::get_querier();
+
+		if ($install_item_title)
+		{
+			try 
+			{
+				$item = $db_querier->select_single_row(PREFIX . self::$module_id, array('id', 'title'), 'WHERE title =:title', array('title' => $install_item_title));
+				$selected_id = $item['id'];
+			}
+			catch (RowNotFoundException $e) {}
+		}
+
+		return (string)$selected_id;
 	}
 }
 ?>

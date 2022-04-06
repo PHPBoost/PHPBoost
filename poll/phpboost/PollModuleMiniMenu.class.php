@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -20,17 +20,6 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 	private $vote_form;
 	private $vote = array();
 
-	public function get_config()
-	{
-		$poll_manager = ModulesManager::get_module(self::MODULE_ID);
-		return $poll_manager->get_configuration()->get_configuration_parameters();
-	}
-
-	public function get_items_manager()
-	{
-		return ItemsService::get_items_manager(self::MODULE_ID);
-	}
-
 	public function get_default_block()
 	{
 		return self::BLOCK_POSITION__LEFT;
@@ -43,8 +32,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 	public function get_menu_title()
 	{
-		$poll_manager = ModulesManager::get_module(self::MODULE_ID);
-		return $poll_manager->get_configuration()->get_name();
+		return ModulesManager::get_module(self::MODULE_ID)->get_configuration()->get_name();
 	}
 
 	public function default_is_enabled()
@@ -54,8 +42,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 	public function is_displayed()
 	{
-		return  !Url::is_current_url(self::MODULE_ID);
-			//&& ItemsAuthorizationsService::check_authorizations(self::MODULE_ID)->read()
+		return !Url::is_current_url(self::MODULE_ID) && ItemsAuthorizationsService::check_authorizations(self::MODULE_ID)->read();
 	}
 
 	// $msg_return = array(key of var lang => const MessageHelper::[SUCCESS, WARNING etc])
@@ -65,39 +52,36 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		MenuService::assign_positions_conditions($this->view, $this->get_block());
 		$this->lang = LangLoader::get_all_langs(self::MODULE_ID);
 		$this->view->add_lang($this->lang);
+		$cache = PollMiniMenuCache::load();
 
-		$items_ids_for_polls_displaying = array();
-		$items_ids_for_others_polls_not_displaying = array(); //evolution
+		$items_for_polls_displaying = $cache->get_polls_displaying();
+		$items_for_polls_not_displaying = $cache->get_polls_not_displaying(); //evolution
 		$previous_item_id = '';
 		$next_item_id = '';
 		$vote_form_and_result_displaying = true;
 
-		$selected_items_in_config = $this->get_config()->get_mini_module_selected_items();
-		foreach ($selected_items_in_config as $selected_item_id)
-		{
-			$selected_item = $this->get_items_manager()->get_item((int)$selected_item_id);
-			if ($selected_item->user_is_empowered_to_vote())
-				$items_ids_for_polls_displaying[] = (int)$selected_item_id;
-			else
-				$items_ids_for_others_polls_not_displaying[] = (int)$selected_item_id; //evolution
-		}
-
 		if (AppContext::get_current_user()->is_guest())
 		{
 			$this->view->put_all(array(
-				'C_DISPLAYING_POLLS_MAP' => !empty($items_ids_for_polls_displaying),
-				'C_MULTIPLE_POLL_ITEMS' => count($items_ids_for_polls_displaying) > 1
+				'C_DISPLAYING_POLLS_MAP' => !empty($items_for_polls_displaying),
+				'C_MULTIPLE_POLL_ITEMS'  => $cache->get_number_polls_displaying() > 1
 			));
 
-			if (!empty($items_ids_for_polls_displaying))
+			if (!empty($items_for_polls_displaying))
 			{
-				$max_nb_poll_links = count($items_ids_for_polls_displaying) <= 10 ? count($items_ids_for_polls_displaying) : 10;
-				for ($i = 0; $i < $max_nb_poll_links; $i++)
+				$polls_displayed_number = 0;
+				$max_nb_poll_links = min($cache->get_number_polls_displaying(), 10);
+				foreach ($items_for_polls_displaying as $id => $poll_properties)
 				{
-					$this->item = $this->get_items_manager()->get_item($items_ids_for_polls_displaying[$i]);
-					$url = ItemsUrlBuilder::display($this->item->get_id_category(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), $module_id = self::MODULE_ID);
+					if ($polls_displayed_number < $max_nb_poll_links)
+					{
+						$this->item = new PollItem();
+						$this->item->set_properties($poll_properties);
+						$url = ItemsUrlBuilder::display($this->item->get_id_category(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), $module_id = self::MODULE_ID);
 
-					$this->view->assign_block_vars('polls_map', array('TITLE' => $this->item->get_title(), 'U_ITEM' => $url->rel()));
+						$this->view->assign_block_vars('polls_map', array('TITLE' => $this->item->get_title(), 'U_ITEM' => $url->rel()));
+					}
+					$polls_displayed_number++;
 				}
 			}
 		}
@@ -105,14 +89,14 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		{
 			if (empty($item_id))
 			{
-				if (!empty($items_ids_for_polls_displaying))
+				if (!empty($items_for_polls_displaying))
 				{
-					$random_item_id = (int)$this->get_random_item_id($items_ids_for_polls_displaying);
-					$this->item = $this->get_items_manager()->get_item($random_item_id);
-					$this->get_items_manager()->update_views_number($this->item);
+					$random_item_id = $this->get_random_item_id(array_keys($items_for_polls_displaying));
+					$this->item = new PollItem();
+					$this->item->set_properties($items_for_polls_displaying[$random_item_id]);
 
-					$previous_item_id = $this->get_previous_item_id($random_item_id, $items_ids_for_polls_displaying);
-					$next_item_id = $this->get_next_item_id($random_item_id, $items_ids_for_polls_displaying);
+					$previous_item_id = $this->get_previous_item_id($random_item_id, array_keys($items_for_polls_displaying));
+					$next_item_id = $this->get_next_item_id($random_item_id, array_keys($items_for_polls_displaying));
 				}
 				else
 				{
@@ -121,11 +105,16 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			}
 			else
 			{
-				$this->item = $this->get_items_manager()->get_item($item_id);
-				$this->get_items_manager()->update_views_number($this->item);
+				if (isset($items_for_polls_displaying[$item_id]))
+				{
+					$this->item = new PollItem();
+					$this->item->set_properties($items_for_polls_displaying[$item_id]);
+				}
+				else
+					$this->item = ItemsService::get_items_manager(self::MODULE_ID)->get_item($item_id);
 
-				$previous_item_id = $this->get_previous_item_id($item_id, $items_ids_for_polls_displaying);
-				$next_item_id = $this->get_next_item_id($item_id, $items_ids_for_polls_displaying);
+				$previous_item_id = $this->get_previous_item_id($item_id, array_keys($items_for_polls_displaying));
+				$next_item_id = $this->get_next_item_id($item_id, array_keys($items_for_polls_displaying));
 			}
 
 			if(!empty($msg_return))
@@ -138,11 +127,11 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			if ($vote_form_and_result_displaying)
 			{
 				$this->view->put_all(array(
-				'C_VOTE_FORM_AND_RESULTS' => true,
-				'C_ENABLED_COUNTDOWN' 	  => $this->item->is_published() && $this->item->end_date_enabled() && $this->item->get_countdown_display() > 0,
-				'COUNTDOWN'				  => PollCountdownService::display($this->item),
-				'VOTE_FORM'               => $this->build_vote_form($this->item, $previous_item_id, $next_item_id)->display(),
-				'VOTES_RESULT'            => PollVotesResultService::display($this->item)
+					'C_VOTE_FORM_AND_RESULTS' => true,
+					'C_ENABLED_COUNTDOWN' 	  => $this->item->is_published() && $this->item->end_date_enabled() && $this->item->get_countdown_display() > 0,
+					'COUNTDOWN'				  => PollCountdownService::display($this->item),
+					'VOTE_FORM'               => $this->build_vote_form($this->item, $previous_item_id, $next_item_id)->display(),
+					'VOTES_RESULT'            => PollVotesResultService::display($this->item)
 				));
 			}
 		}
@@ -171,10 +160,9 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		return array_search($item_id, $array);
 	}
 
-	public function get_random_item_id(array $selected_items_in_config)
+	public function get_random_item_id(array $poll_ids)
 	{
-		$random_key = array_rand($selected_items_in_config);
-		return $random_item_id = $selected_items_in_config[$random_key];
+		return $poll_ids[array_rand($poll_ids)];
 	}
 
 	public function build_vote_form(Item $item, $previous_item_id = '', $next_item_id = '')

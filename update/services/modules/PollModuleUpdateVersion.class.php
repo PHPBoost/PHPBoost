@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2021 04 06
 */
 
@@ -19,7 +19,6 @@ class PollModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/french/poll_french.php',
 			'/phpboost/PollExtensionPointProvider.class.php',
 			'/phpboost/PollHomePageExtensionPoint.class.php',
-			'/phpboost/PollMiniMenuCache.class.php',
 			'/phpboost/PollTreeLinks.class.php',
 			'/templates/admin_poll_add.tpl',
 			'/templates/admin_poll_config.tpl',
@@ -91,6 +90,7 @@ class PollModuleUpdateVersion extends ModuleUpdateVersion
 			array(
 				'table_name' => PREFIX . 'poll',
 				'keys' => array(
+					'title'       => true,
 					'id_category' => false
 				)
 			)

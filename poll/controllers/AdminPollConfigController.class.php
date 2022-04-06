@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 11
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AdminPollConfigController extends DefaultConfigurationController
@@ -16,12 +17,12 @@ class AdminPollConfigController extends DefaultConfigurationController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['poll.config.cookie.name'], $this->config->get_cookie_name(),
-			array('maxlength' => 25, 'required' => true, 'class' => 'top-field'),
+			array('maxlength' => 25, 'required' => true, 'class' => 'top-field', 'description' => $this->lang['poll.config.cookie.name.clue']),
 			array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu'))
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('cookie_lenght', $this->lang['poll.config.cookie.lenght'], $this->config->get_cookie_lenght(),
-			array('min' => 1, 'required' => true, 'class' => 'top-field'),
+			array('min' => 1, 'required' => true, 'class' => 'top-field', 'description' => $this->lang['poll.config.cookie.lenght.clue']),
 			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
 		));
 
@@ -54,6 +55,7 @@ class AdminPollConfigController extends DefaultConfigurationController
 		$this->config->set_mini_module_selected_items($this->get_selected_items());
 		$this->config->set_cookie_name($this->form->get_value('cookie_name'));
 		$this->config->set_cookie_lenght($this->form->get_value('cookie_lenght'));
+		PollMiniMenuCache::invalidate();
 	}
 
 	protected function get_selected_items()

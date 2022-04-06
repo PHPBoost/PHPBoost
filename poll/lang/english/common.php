@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 02
+ * @version     PHPBoost 6.0 - last update: 2022 04 06
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 #####################################################
@@ -16,16 +17,18 @@
 $lang['items'] = 'polls';
 
 // Labels
-$lang['poll.results']     = 'Results : ';
-$lang['poll.total.votes'] = 'Total votes : ';
+$lang['poll.results']     = 'Results: ';
+$lang['poll.total.votes'] = 'Total votes: ';
 $lang['poll.no.vote']     = 'Nobody has voted yet.';
 
 // Configuration
 $lang['poll.config.advanced.configuration']          = 'Advanced configuration';
 $lang['poll.config.mini.module.selected.items']      = 'Select the items to display';
-$lang['poll.config.mini.module.selected.items.clue'] = 'The items will be displayed randomly.';
+$lang['poll.config.mini.module.selected.items.clue'] = 'The items will be displayed randomly';
 $lang['poll.config.cookie.name']                     = 'Cookie name';
+$lang['poll.config.cookie.name.clue']                = 'Set up when the user has voted';
 $lang['poll.config.cookie.lenght']                   = 'Cookie life length';
+$lang['poll.config.cookie.lenght.clue']              = 'Number of days the cookie is valid';
 $lang['poll.config.vote.authorization']              = 'Vote authorization';
 $lang['poll.config.votes.result.authorization']      = 'Display the result of votes authorization';
 
@@ -47,8 +50,8 @@ $lang['poll.form.force.changes.poll']        = 'The poll contains votes. Changes
 
 // Vote Form
 $lang['poll.vote.submit']          = 'Vote';
-$lang['poll.vote.single.choice']   = 'Choose an answer : ';
-$lang['poll.vote.multiple.choice'] = 'Choose one or more answers : ';
+$lang['poll.vote.single.choice']   = 'Choose an answer: ';
+$lang['poll.vote.multiple.choice'] = 'Choose one or more answers: ';
 $lang['poll.vote.saved']           = 'Your vote is saved';
 
 // Display Countdown
