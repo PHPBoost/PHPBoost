@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2022 04 07
  * @since       PHPBoost 3.0 - 2010 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -66,7 +66,7 @@ class MemberExtendedFieldsService
 				if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_PROFILE_AUTHORIZATION))
 				{
 					$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
-					$extended_field['value'] = $value;
+					$extended_field['value'] = self::unset_protection_for_serialized_string($value);
 
 					$member_extended_field = new MemberExtendedField();
 					$member_extended_field->set_user_id($user_id);
@@ -104,7 +104,7 @@ class MemberExtendedFieldsService
 					$member_extended_field->set_user_id($user_id);
 
 					try {
-						$data[$extended_field['field_name']] = $member_extended_field->get_instance()->get_data($this->form, $member_extended_field);
+						$data[$extended_field['field_name']] = self::set_protection_for_serialized_string($member_extended_field->get_instance()->get_data($this->form, $member_extended_field));
 					} catch (MemberExtendedFieldErrorsMessageException $e) {
 						$has_error = true;
 						$error = $e->getMessage();
@@ -158,7 +158,7 @@ class MemberExtendedFieldsService
 			if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
 			{
 				$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
-				$extended_field['value'] = $value;
+				$extended_field['value'] = self::unset_protection_for_serialized_string($value);
 				$member_extended_field = new MemberExtendedField();
 				$member_extended_field->set_user_id($user_id);
 				$member_extended_field->set_fieldset($fieldset);
@@ -184,7 +184,7 @@ class MemberExtendedFieldsService
 		while ($extended_field = $result->fetch())
 		{
 			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
-			$extended_field['value'] = $value;
+			$extended_field['value'] = self::unset_protection_for_serialized_string($value);
 			$member_extended_field = new MemberExtendedField();
 			$member_extended_field->set_user_id($user_id);
 			$member_extended_field->set_properties($extended_field);
@@ -207,6 +207,22 @@ class MemberExtendedFieldsService
 		} catch (RowNotFoundException $e) {
 			return '';
 		}
+	}
+
+	/**
+	 * This protects the string that will be serialized
+	 */
+	public static function set_protection_for_serialized_string($string)
+	{
+		return str_replace('";', '"\;', $string);
+	}
+
+	/**
+	 * This remove the protection on the string that was serialized
+	 */
+	public static function unset_protection_for_serialized_string($string)
+	{
+		return str_replace('"\;', '";', $string);
 	}
 }
 ?>
