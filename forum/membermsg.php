@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2021 02 04
+ * @version   	PHPBoost 5.2 - last update: 2022 04 07
  * @since   	PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -198,7 +198,7 @@ if (!empty($view_msg)) //Affichage de tous les messages du membre
 				'C_USER_MAIL'      => (!empty($row['email']) && ($row['show_email'] == '1')),
 				'U_USER_MAIL'      => 'mailto:' . $row['email'],
 				'C_USER_SIGN'      => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']),
-				'USER_SIGN'        => FormatingHelper::second_parse($row['user_sign']),
+				'USER_SIGN'        => FormatingHelper::second_parse(MemberExtendedFieldsService::unset_protection_for_serialized_string($row['user_sign'])),
 				'USER_WARNING'     => $row['warning_percentage'],
 				'C_USER_PM'        => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 				'U_USER_PM'        => UserUrlBuilder::personnal_message($row['user_id'])->rel(),

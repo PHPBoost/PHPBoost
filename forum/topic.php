@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 18
+ * @version   	PHPBoost 5.2 - last update: 2022 04 07
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -390,7 +390,7 @@ while ( $row = $result->fetch() )
 		'C_USER_MAIL'                 => (!empty($row['email']) && ($row['show_email'] == '1' ) ),
 		'U_USER_MAIL'                 => 'mailto:' . $row['email'],
 		'C_USER_SIGN'                 => (!empty($row['user_sign']) && !empty($user_sign_field) && $user_sign_field['display']),
-		'USER_SIGN'                   => FormatingHelper::second_parse($row['user_sign']),
+		'USER_SIGN'                   => FormatingHelper::second_parse(MemberExtendedFieldsService::unset_protection_for_serialized_string($row['user_sign'])),
 		'USER_WARNING'                => $row['warning_percentage'],
 		'L_FORUM_QUOTE_LAST_MSG'      => ($quote_last_msg == 1 && $i == 0) ? $LANG['forum_quote_last_msg'] : '', //Reprise du dernier message de la page précédente.
 		'C_USER_ONLINE'               => !empty($row['connect']),
