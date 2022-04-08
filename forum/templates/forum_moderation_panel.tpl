@@ -407,8 +407,8 @@
 							</td>
 							<td>
 								<div class="form-field form-field-textarea bbcode-sidebar">
-									<textarea class="forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
 									{KERNEL_EDITOR}
+									<textarea class="forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
 								</div>
 							</td>
 						</tr>

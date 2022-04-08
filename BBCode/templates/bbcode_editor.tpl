@@ -40,6 +40,13 @@
 	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # ENDIF #
 
+<div id="loading-preview-{FIELD}" class="loading-preview-container" style="display: none;">
+	<div class="loading-preview">
+		<i class="fa fa-spinner fa-2x fa-spin"></i>
+	</div>
+</div>
+<div id="xmlhttprequest-preview{FIELD}" class="auto-resize xmlhttprequest-preview" style="display: none"></div>
+
 <div class="auto-resize bbcode-bar">
 	<nav class="auto-resize bbcode-containers">
 		<ul class="auto-resize bbcode-groups">
@@ -1112,7 +1119,6 @@
 		</ul>
 	</nav>
 </div>
-<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script>
 
 	jQuery("#bb_feed_module_name{FIELD}").change(function () {

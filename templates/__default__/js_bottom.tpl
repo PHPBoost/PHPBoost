@@ -11,6 +11,7 @@
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortable# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/wizard# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 
 <script>
 // Delete confirmation

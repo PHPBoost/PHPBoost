@@ -350,9 +350,10 @@
 							<div class="form-element form-element-textarea">
 								<label for="contents">{@common.description}</label>
 								<div class="form-field form-field-textarea bbcode-sidebar">
-									<textarea rows="15" id="contents" name="contents">{DESCRIPTION}</textarea>
 									{KERNEL_EDITOR}
+									<textarea rows="15" id="contents" name="contents">{DESCRIPTION}</textarea>
 								</div>
+								<button type="button" class="button preview-button" name="preview" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 							</div>
 							<div class="form-element">
 								<label for="status">{@common.status}</label>
@@ -366,10 +367,9 @@
 						</fieldset>
 						<fieldset class="fieldset-submit">
 							<legend class="sr-only">{@form.submit}</legend>
+							<button type="submit" class="button submit" value="true">{@form.submit}</button>
 							<input type="hidden" name="idedit" value="{CONTRIBUTION_ID}">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<button type="submit" class="button submit" value="true">{@form.submit}</button>
-							<button type="button" class="button preview-button" name="preview" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 							<button type="reset" class="button reset-button">{@form.reset}</button>
 						</fieldset>
 					</form>

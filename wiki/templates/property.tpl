@@ -156,19 +156,19 @@
 								</div>
 								<div class="form-element form-element-textarea">
 									<div class="form-field form-field-textarea bbcode-sidebar">
-										<textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea>
 										{KERNEL_EDITOR}
+										<textarea rows="15" cols="66" id="contents" name="contents" {status.SELECTED_TEXTAREA}>{status.UNDEFINED_STATUS}</textarea>
 									</div>
+									<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();">{@form.preview}</button>
 								</div>
 							</div>
 						</fieldset>
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
 							<div class="fieldset-inset">
+								<button type="submit" class="button submit" value="true">{@form.submit}</button>
 								<input type="hidden" name="id_change_status" value="{status.ITEM_ID}">
 								<input type="hidden" name="token" value="{TOKEN}">
-								<button type="submit" class="button submit" value="true">{@form.submit}</button>
-								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();jQuery('#xmlhttprequest_result').fadeOut();">{@form.preview}</button>
 								<button type="reset" class="button reset-button">{@form.reset}</button>
 							</div>
 						</fieldset>

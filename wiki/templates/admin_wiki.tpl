@@ -87,10 +87,10 @@
 					</div>
 					<div id="xmlhttprequest-preview-contents" class="xmlhttprequest-preview" style="display: none;"></div>
 					<div class="form-field form-field-textarea bbcode-sidebar">
-						<textarea rows="10" cols="60" id="contents" name="contents">{DESCRIPTION}</textarea>
 						{KERNEL_EDITOR}
+						<textarea rows="10" cols="60" id="contents" name="contents">{DESCRIPTION}</textarea>
 					</div>
-					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview('contents');">{@form.preview}</button></div>
+					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview('contents');">{@form.preview}</button>
 				</div>
 			</div>
 		</fieldset>

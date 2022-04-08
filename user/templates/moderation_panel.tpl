@@ -151,8 +151,8 @@
 										<span class="field-description">{@H|user.alternative.pm.clue}</span>
 									</label>
 									<div class="form-field form-field-textarea bbcode-sidebar">
-										<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
 										{KERNEL_EDITOR}
+										<textarea name="action_contents" id="action_contents" rows="12">{ALTERNATIVE_PM}</textarea>
 									</div>
 								</div>
 								<div class="form-element">

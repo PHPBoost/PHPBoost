@@ -103,9 +103,10 @@
 					<div class="form-element form-element-textarea">
 						<label for="content">* {@common.message}</label>
 						<div class="form-field form-field-textarea bbcode-sidebar">
-							<textarea rows="25" id="content" name="content">{CONTENT}</textarea>
 							{KERNEL_EDITOR}
+							<textarea rows="15" cols="40" id="content" name="content">{CONTENT}</textarea>
 						</div>
+						<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 					</div>
 					# IF C_FORUM_POST_TYPE #
 					<div class="form-element inline-radio">
@@ -192,10 +193,9 @@
 
 				<fieldset class="fieldset-submit">
 				<legend>{@form.submit}</legend>
+					<button type="submit" class="button submit" name="post_topic" value="true">{@form.submit}</button>
 					<input type="hidden" name="idm" value="{IDM}">
 					<input type="hidden" name="token" value="{TOKEN}">
-					<button type="submit" class="button submit" name="post_topic" value="true">{@form.submit}</button>
-					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 					<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 
 					# IF C_DISPLAY_ISSUE_STATUS #

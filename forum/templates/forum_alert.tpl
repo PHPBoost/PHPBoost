@@ -32,17 +32,17 @@
 				<div class="form-element form-element-textarea">
 					<label for="content">* {@forum.report.content}</label>
 					<div class="form-field form-field-textarea bbcode-sidebar">
-						<textarea rows="15" cols="40" id="content" name="content"></textarea>
 						{KERNEL_EDITOR}
+						<textarea rows="15" cols="40" id="content" name="content"></textarea>
 					</div>
 
 					<input type="hidden" name="id" value="{alert_form.REPORT_ID}">
+					<button onclick="XMLHttpRequest_preview();" class="button preview-button" type="button">{@form.preview}</button>
 				</div>
 			</fieldset>
 
 			<fieldset class="fieldset-submit">
 				<button type="submit" name="edit_msg" value="true" class="button submit">{@form.submit}</button>
-				<button onclick="XMLHttpRequest_preview();" class="button preview-button" type="button">{@form.preview}</button>
 				<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</fieldset>

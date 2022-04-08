@@ -91,15 +91,14 @@
 							<label for="content">* {@wiki.content}</label>
 							# INCLUDE POST_JS_TOOLS #
 							<div class="form-field form-field-textarea bbcode-sidebar">
-								<textarea class="auto-resize" rows="15" id="content" name="content">{CONTENT}</textarea>
 								{KERNEL_EDITOR}
+								<textarea class="auto-resize" rows="15" id="content" name="content">{CONTENT}</textarea>
 							</div>
 						</div>
 						<fieldset class="fieldset-submit">
 							<legend>{@form.preview}</legend>
 							<button type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button>
 						</fieldset>
-
 						# START preview #
 							<div class="auto-resize xmlhttprequest-preview" id="preview">
 								<header class="section-header">

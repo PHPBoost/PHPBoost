@@ -258,17 +258,17 @@
 						<div class="fieldset-inset">
 							<div class="form-element form-element-textarea">
 								<div class="form-field-textarea bbcode-sidebar">
-									<textarea rows="25" cols="66" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 									{KERNEL_EDITOR}
+									<textarea rows="15" cols="40" id="contents" name="contents">{post_pm.CONTENTS}</textarea>
 								</div>
+								<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 							</div>
 						</div>
 					</fieldset>
 					<fieldset id="pm_fbutton" class="fieldset-submit">
 						<div class="fieldset-inset">
-							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" class="button submit" name="pm" value="true">{@form.submit}</button>
-							<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</div>
 					</fieldset>
@@ -302,17 +302,17 @@
 								<div class="form-element form-element-textarea">
 									<label for="content">* {@user.message}</label>
 									<div class="form-field form-field-textarea bbcode-sidebar">
-										<textarea rows="25" id="content" name="contents">{edit_pm.CONTENTS}</textarea>
 										{KERNEL_EDITOR}
+										<textarea rows="15" cols="40" id="contents" name="contents">{edit_pm.CONTENTS}</textarea>
 									</div>
+									<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 								</div>
 							</div>
 						</fieldset>
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
-							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" class="button submit" name="{SUBMIT_NAME}" value="{@form.submit}">{@form.submit}</button>
-							<button type="button" class="button preview-button" name="prw" id="prw_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</fieldset>
 					</form>
@@ -362,9 +362,10 @@
 								<div class="form-element form-element-textarea">
 									<label for="contents">* {@user.message}</label>
 									<div class="form-field form-field-textarea bbcode-sidebar">
-										<textarea rows="25" id="contents" name="contents">{CONTENTS}</textarea>
 										{KERNEL_EDITOR}
+										<textarea rows="15" cols="40" id="contents" name="contents">{CONTENTS}</textarea>
 									</div>
+									<button type="button" class="button preview-button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 								</div>
 
 							</div>
@@ -372,9 +373,8 @@
 
 						<fieldset class="fieldset-submit">
 							<legend>{@form.submit}</legend>
-							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="submit" class="button submit" name="convers" value="true">{@form.submit}</button>
-							<button type="button" class="button preview-button" name="prw_convers" id="prw_convers_pm" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+							<input type="hidden" name="token" value="{TOKEN}">
 							<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 						</fieldset>
 					</form>

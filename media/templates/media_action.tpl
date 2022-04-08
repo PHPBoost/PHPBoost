@@ -116,9 +116,10 @@
 							<div class="form-element form-element-textarea">
 								<label for="content" id="preview_content">{@form.description}</label>
 								<div class="form-field form-field-textarea bbcode-sidebar">
-									<textarea rows="10" cols="90" id="content" name="content">{CONTENT}</textarea>
 									{KERNEL_EDITOR}
+									<textarea rows="10" cols="90" id="content" name="content">{CONTENT}</textarea>
 								</div>
+								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">{@form.preview}</button>
 							</div>
 							# IF C_APPROVAL #
 								<div class="form-element">
@@ -139,9 +140,10 @@
 								<div class="form-element form-element-textarea">
 									<label>{@contribution.description} <p class="field-description">{@contribution.description.clue}</p></label>
 									<div class="form-fiekd form-field-textarea bbcode-sidebar">
-										<textarea rows="20" cols="40" id="counterpart" name="counterpart"></textarea>
 										{CONTRIBUTION_EDITOR}
+										<textarea rows="20" cols="40" id="counterpart" name="counterpart"></textarea>
 									</div>
+									<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">{@form.preview}</button>
 								</div>
 							</fieldset>
 						# ENDIF #
@@ -151,13 +153,10 @@
 								{@form.submit}
 							</legend>
 							<div class="fieldset-inset">
+								<button type="submit" class="button submit" name="submit" value="true">{@form.submit}</button>
 								<input type="hidden" name="idedit" value="{ITEM_ID}" />
 								<input type="hidden" name="contrib" value="{C_CONTRIBUTION}" />
 								<input type="hidden" name="token" value="{TOKEN}" />
-								<button type="submit" class="button submit" name="submit" value="true">
-									{@form.submit}
-								</button>
-								<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;">{@form.preview}</button>
 								<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 							</div>
 						</fieldset>

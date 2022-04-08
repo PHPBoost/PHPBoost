@@ -12,33 +12,28 @@
 			{EDITOR}
 		# ENDIF #
 		<textarea
-			id="${escape(HTML_ID)}"
-			name="${escape(HTML_ID)}"
-			rows="{ROWS}"
-			cols="{COLS}"
-			class="auto-resize # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}"
-			onblur="{ONBLUR}"
-			# IF C_DISABLED # disabled="disabled"# ENDIF #
-			# IF C_READONLY #readonly="readonly" # ENDIF #
-			# IF C_PLACEHOLDER # placeholder="{PLACEHOLDER}"# ENDIF #>{VALUE}</textarea>
+				id="${escape(HTML_ID)}"
+				name="${escape(HTML_ID)}"
+				rows="{ROWS}"
+				cols="{COLS}"
+				class="auto-resize # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}"
+				onblur="{ONBLUR}"
+				# IF C_DISABLED # disabled="disabled"# ENDIF #
+				# IF C_READONLY #readonly="readonly" # ENDIF #
+				# IF C_PLACEHOLDER # placeholder="{PLACEHOLDER}"# ENDIF #>
+			{VALUE}
+		</textarea>
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
-	</div>
 
-	# IF C_EDITOR_ENABLED #
-		<div class="align-center">
-			<div class="form-element-preview">{PREVIEW_BUTTON}</div>
-			# IF C_RESET_BUTTON_ENABLED #
-				<div class="form-element-reset">{RESET_BUTTON}</div>
-			# ENDIF #
-		</div>
-
-		<div id="loading-preview-${escape(HTML_ID)}" class="loading-preview-container" style="display: none;">
-			<div class="loading-preview">
-				<i class="fa fa-spinner fa-2x fa-spin"></i>
+		# IF C_EDITOR_ENABLED #
+			<div class="align-center">
+				<div class="form-element-preview">{PREVIEW_BUTTON}</div>
+				# IF C_RESET_BUTTON_ENABLED #
+					<div class="form-element-reset">{RESET_BUTTON}</div>
+				# ENDIF #
 			</div>
-		</div>
-		<div id="xmlhttprequest-preview${escape(HTML_ID)}" class="auto-resize xmlhttprequest-preview" style="display: none"></div>
-	# ENDIF #
+		# ENDIF #
+	</div>
 
 </div>
 

@@ -61,10 +61,10 @@
 				<div class="form-element form-element-textarea">
 					<label for="contents" id="preview_description">* {@common.content}</label>
 					<div class="form-field form-field-textarea bbcode-sidebar">
-						<textarea rows="15" id="contents" name="contents">{CONTENTS}</textarea>
 						{KERNEL_EDITOR}
+						<textarea class="auto-resize" id="contents" name="contents">{CONTENTS}</textarea>
 					</div>
-					<div class="align-center"><button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;" value="true">{@form.preview}</button></div>
+					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview(); return false;" value="true">{@form.preview}</button>
 				</div>
 				<div class="form-element full-field">
 					<label>{@form.authorizations.read}</label>

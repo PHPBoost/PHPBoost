@@ -392,16 +392,16 @@
 				<div class="form-element form-element-textarea">
 					<label for="content" class="text-strong bigger">{@forum.reply}</label>
 					<div class="form-field form-field-textarea bbcode-sidebar">
-						<textarea id="content" name="content" rows="15" cols="40">{CONTENT}</textarea>
 						{KERNEL_EDITOR}
+						<textarea id="content" name="content" rows="15" cols="40">{CONTENT}</textarea>
 					</div>
+					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
 				</div>
 
 				<fieldset class="fieldset-submit">
 					<legend>{@form.submit}</legend>
-					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="submit" class="button submit" name="valid" value="true">{@form.submit}</button>
-					<button type="button" class="button preview-button" onclick="XMLHttpRequest_preview();">{@form.preview}</button>
+					<input type="hidden" name="token" value="{TOKEN}">
 					<button type="reset" class="button reset-button" value="true">{@form.reset}</button>
 				</fieldset>
 			</form>
