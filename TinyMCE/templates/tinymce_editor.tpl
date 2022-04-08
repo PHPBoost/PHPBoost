@@ -76,8 +76,13 @@
 			"table directionality emoticons paste textpattern imagetools"
 		],
 
-		# IF C_TOOLBAR #toolbar1: "{TOOLBAR}",# ENDIF #
+		# IF C_TOOLBAR #
+		toolbar: '{TOOLBAR}',
+		# ENDIF #
 
+		toolbar_sticky: true,
+		toolbar_mode: 'wrap',
+		menubar: false,
 		branding: false,
 		autoresize_max_height: '500px',
 		advlist_number_styles: 'default',
@@ -101,13 +106,13 @@
 		setup : function(ed) {
 			ed.ui.registry.addButton('insertfile', {
 				icon: 'browse',
-				onclick: function (field_name) {
-					ed.windowManager.open({
+				onAction: function (field_name) {
+					ed.windowManager.openUrl({ 
 						title: '',
-						url: '{PATH_TO_ROOT}/user/upload.php?popup=1&amp;close_button=0&amp;fd=# IF C_HTMLFORM #' + HTMLForms.get("{FORM_NAME}").getId() + '_{FIELD_NAME}# ELSE #{FIELD}# ENDIF #&amp;edt=TinyMCE',
+						url: '{PATH_TO_ROOT}/user/upload.php?popup=1&close_button=0&fd=# IF C_HTMLFORM #' + HTMLForms.get("{FORM_NAME}").getId() + '_{FIELD_NAME}# ELSE #{FIELD}# ENDIF #&edt=TinyMCE',
 						width: 720,
 						height: 500,
-					});
+					}); 
 				},
 				tooltip: 'Insert file'
 			});
