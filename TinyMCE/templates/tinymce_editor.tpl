@@ -41,7 +41,7 @@ function XMLHttpRequest_preview(field)
 		});
 	}
 	else
-		alert("{L_REQUIRE_TEXT}");
+		alert("${LangLoader::get_message('require_text', 'main')}");
 }
 
 function insertTinyMceContent(content)
@@ -77,12 +77,17 @@ tinymce.init({
 	plugins: [
 		"advlist autolink autoresize autosave link image lists charmap hr anchor",
 		"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
-		"table contextmenu directionality smileys paste textcolor colorpicker textpattern imagetools"
+		"table directionality emoticons paste textpattern imagetools"
 	],
-	
-	# IF C_TOOLBAR #toolbar1: "{TOOLBAR}",# ENDIF #
 
+	# IF C_TOOLBAR #
+	toolbar: '{TOOLBAR}',
+	# ENDIF #
+
+	toolbar_sticky: true,
+	toolbar_mode: 'wrap',
 	menubar: false,
+	branding: false,
 	autoresize_max_height: '500px',
 	advlist_number_styles: 'default',
 	advlist_bullet_styles: 'default',
@@ -103,12 +108,12 @@ tinymce.init({
 		{title: ${escapejs(LangLoader::get_message('error', 'status-messages-common'))}, inline: 'span', classes: 'error'}
 	],
 	setup : function(ed) {
-		ed.addButton('insertfile', {
+		ed.ui.registry.addButton('insertfile', {
 			icon: 'browse',
-			onclick: function (field_name) {
-				ed.windowManager.open({ 
+			onAction: function (field_name) {
+				ed.windowManager.openUrl({ 
 					title: '',
-					url: '{PATH_TO_ROOT}/user/upload.php?popup=1&amp;close_button=0&amp;fd=# IF C_HTMLFORM #' + HTMLForms.get("{FORM_NAME}").getId() + '_{FIELD_NAME}# ELSE #{FIELD}# ENDIF #&amp;edt=TinyMCE',
+					url: '{PATH_TO_ROOT}/user/upload.php?popup=1&close_button=0&fd=# IF C_HTMLFORM #' + HTMLForms.get("{FORM_NAME}").getId() + '_{FIELD_NAME}# ELSE #{FIELD}# ENDIF #&edt=TinyMCE',
 					width: 720,
 					height: 500,
 				}); 
@@ -122,15 +127,7 @@ tinymce.init({
 			HTMLForms.get("{FORM_NAME}").getField("{FIELD_NAME}").liveValidate();
 			# ENDIF #
 		})
-	},
-
-	smileys: [
-		# START smiley #
-			# IF smiley.C_NEW_ROW #[# ENDIF #
-				{ shortcut: '{smiley.CODE}', url: '{smiley.URL}', title: '{smiley.CODE}' }# IF NOT smiley.C_LAST_OF_THE_ROW #,# ENDIF #
-			# IF smiley.C_END_ROW #]# IF NOT smiley.C_LAST_ROW #,# ENDIF ## ENDIF #
-		# END smiley #
-	]
+	}
 });
 -->
 </script>
