@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 24
+ * @version     PHPBoost 6.0 - last update: 2022 04 09
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,7 +21,7 @@ class FaqExtensionPointProvider extends ExtensionPointProvider
 	public function css_files()
 	{
 		$module_css_files = new ModuleCssFiles();
-		$module_css_files->adding_always_displayed_file('faq-mini.css');
+		$module_css_files->adding_always_displayed_file('faq_mini.css');
 		$module_css_files->adding_running_module_displayed_file('faq.css');
 		return $module_css_files;
 	}

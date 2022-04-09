@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 25
+ * @version     PHPBoost 6.0 - last update: 2022 04 09
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,8 +31,9 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/FaqHomePageExtensionPoint.class.php',
 			'/services/FaqAuthorizationsService.class.php',
 			'/services/FaqQuestion.class.php',
-			'/templates/FaqReorderCategoryQuestionsController.class.php',
-			'/templates/FaqDisplaySeveralFaqQuestionsController.class.php',
+			'/templates/FaqReorderCategoryQuestionsController.tpl',
+			'/templates/FaqDisplaySeveralFaqQuestionsController.tpl',
+			'/templates/faq-mini.css',
 			'/util/AdminFaqDisplayResponse.class.php'
 		);
 		self::$delete_old_folders_list = array(
