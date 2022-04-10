@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 10
  * @since       PHPBoost 3.0 - 2009 10 05
 */
 
@@ -77,6 +77,7 @@ class SelectQueryResultMapper implements SelectQueryResult
 		return $this->query_result->valid();
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		return $this->model->new_instance($this->query_result->current());
