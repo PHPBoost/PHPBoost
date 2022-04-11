@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 12
+ * @version     PHPBoost 6.0 - last update: 2022 04 12
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -21,7 +21,7 @@ class PollManager extends ItemsManager
 		self::$db_querier->update(
 			self::$items_table,
 			array(
-				'votes' => TextHelper::serialize($vote),
+				'votes'        => TextHelper::serialize($vote),
 				'votes_number' => $current_votes_number + 1
 			),
 			'WHERE id=:id',
@@ -37,9 +37,9 @@ class PollManager extends ItemsManager
 	public function insert_voter(int $item_id)
 	{
 		$properties = array(
-			'poll_id' => $item_id,
-			'voter_user_id' => AppContext::get_current_user()->get_id(),
-			'voter_ip' => AppContext::get_request()->get_ip_address() ? AppContext::get_request()->get_ip_address() : '0.0.0.0',
+			'poll_id'        => $item_id,
+			'voter_user_id'  => AppContext::get_current_user()->get_id(),
+			'voter_ip'       => AppContext::get_request()->get_ip_address() ? AppContext::get_request()->get_ip_address() : '0.0.0.0',
 			'vote_timestamp' => time()
 		);
 		self::$db_querier->insert(PREFIX . 'poll_voters', $properties);
@@ -92,10 +92,10 @@ class PollManager extends ItemsManager
 		self::$db_querier->delete(PREFIX . 'poll_voters', 'WHERE poll_id =:poll_id', array('poll_id' => $item_id));
 	}
 
-	public function user_has_voted (int $voter_user_id, int $item_id)
+	public function user_has_voted(int $voter_user_id, int $item_id)
 	{
 		$request = AppContext::get_request();
-	  
+		
 		if ($voter_user_id == -1)
 		{
 			return $this->check_user_by_cookie($request, $item_id) || $this->check_user_by_ip($request, $voter_user_id, $item_id);
@@ -110,9 +110,9 @@ class PollManager extends ItemsManager
 			return $check_member_by_id || $this->check_user_by_cookie($request, $item_id) || $this->check_user_by_ip($request, $voter_user_id, $item_id);
 		}
 	}
-  
-        public function check_user_by_ip(HTTPRequestCustom $request, int $voter_user_id, int $item_id)
-        {
+
+		public function check_user_by_ip(HTTPRequestCustom $request, int $voter_user_id, int $item_id)
+		{
 			if ($voter_user_id == -1)
 			{
 				return self::$db_querier->count(

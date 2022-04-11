@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 06
+ * @version     PHPBoost 6.0 - last update: 2022 04 12
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -23,7 +23,7 @@ $lang['poll.no.vote']     = 'Nobody has voted yet.';
 
 // Configuration
 $lang['poll.config.advanced.configuration']          = 'Advanced configuration';
-$lang['poll.config.mini.module.selected.items']      = 'Select the items to display';
+$lang['poll.config.mini.module.selected.items']      = 'Select the items to display in the menu';
 $lang['poll.config.mini.module.selected.items.clue'] = 'The items will be displayed randomly';
 $lang['poll.config.cookie.name']                     = 'Cookie name';
 $lang['poll.config.cookie.name.clue']                = 'Set up when the user has voted';
@@ -40,7 +40,7 @@ $lang['poll.form.multiple']                  = 'Multiple';
 $lang['poll.form.answers']                   = 'Answers';
 $lang['poll.form.answer.placeholder']        = 'Answer';
 $lang['poll.form.close.poll']                = 'Close the poll';
-$lang['poll.form.display.poll.in.mini']      = 'Display the poll in mini module';
+$lang['poll.form.display.poll.in.mini']      = 'Display the poll in poll menu';
 $lang['poll.form.countdown.parameters']      = 'Countdown parameters';
 $lang['poll.form.countdown.parameters.clue'] = 'Possibility to countdown display with days-h-mn-s';
 $lang['poll.form.countdown.without.seconds'] = 'Countdown without seconds';
