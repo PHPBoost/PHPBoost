@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 01 25
+ * @version   	PHPBoost 5.2 - last update: 2022 04 12
  * @since   	PHPBoost 4.1 - 2014 08 21
 */
 
@@ -22,10 +22,11 @@ class WebCache implements CacheData
 		$config = WebConfig::load();
 
 		$result = PersistenceContext::get_querier()->select('
-			SELECT web.id, web.name, web.partner_picture
+			SELECT web.id, web.name, web.rewrited_name, web.id_category, cats.rewrited_name AS category_rewrited_name, web.partner_picture
 			FROM ' . WebSetup::$web_table . ' web
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = web.id AND com.module_id = \'web\'
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = web.id AND notes.module_name = \'web\'
+			LEFT JOIN ' . WebSetup::$web_cats_table . ' cats ON cats.id = web.id_category
 			WHERE (partner = 1 OR privileged_partner = 1) AND (web.approbation_type = 1 OR (web.approbation_type = 2 AND (web.start_date > :timestamp_now OR (end_date != 0 AND end_date < :timestamp_now))))
 			ORDER BY web.privileged_partner DESC, ' . $config->get_partners_sort_field() . ' ' . $config->get_partners_sort_mode() . '
 			LIMIT :partners_number_in_menu OFFSET 0', array(
