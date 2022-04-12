@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 12
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -60,9 +60,9 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 
 			$view->assign_block_vars('items', array(
 				'C_HAS_PARTNER_THUMBNAIL' => !empty($thumbnail),
-				'NAME' => $partner['title'],
-				'U_PARTNER_THUMBNAIL' => $thumbnail,
-				'U_VISIT' => WebUrlBuilder::visit($partner['id'])->rel()
+				'NAME'                    => $partner['title'],
+				'U_PARTNER_THUMBNAIL'     => $thumbnail,
+				'U_VISIT'                 => WebUrlBuilder::display($partner['id_category'], $partner['category_rewrited_name'], $partner['id'], $partner['rewrited_title'])->rel()
 			));
 		}
 
