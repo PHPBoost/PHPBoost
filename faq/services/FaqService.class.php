@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2022 04 13
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Mipel <mipel@phpboost.com>
 */
@@ -73,7 +73,7 @@ class FaqService
 		$row = self::$db_querier->select_single_row_query('SELECT *
 		FROM ' . FaqSetup::$faq_table . ' faq
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id
-		WHERE ' . self::$module_id . '.id=:id', array(
+		WHERE faq.id=:id', array(
 			'id' => $id
 		));
 
