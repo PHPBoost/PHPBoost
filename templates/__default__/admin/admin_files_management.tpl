@@ -259,7 +259,7 @@
 	</ul>
 </nav>
 
-<div id="admin-contents">
+<div id="admin-contents" class="user-upload-files">
 	<div id="new-multiple-files">
 		# INCLUDE message_helper #
 		<form action="admin_files.php?f={FOLDER_ID}&amp;fm={USER_ID}&amp;token={TOKEN}" enctype="multipart/form-data" method="post">

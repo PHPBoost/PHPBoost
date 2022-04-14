@@ -354,7 +354,7 @@
     }
 </script>
 
-<section id="module-user-upload">
+<section id="module-user-upload" class="user-upload-files">
     <header class="section-header">
         <h1>{@upload.files.management}</h1>
     </header>

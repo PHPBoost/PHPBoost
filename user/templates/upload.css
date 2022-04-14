@@ -4,6 +4,10 @@
  *     - files management
 */
 
+@media (min-width: 769px) {
+	.user-upload-files .cell-inline > * { width: 220px; }
+}
+
 /* --- Drag and Drop -------------------------------------------------------- */
 .dnd-area { position: relative;}
 

@@ -22,12 +22,16 @@
 	margin: 0 0 var(--cell-gap);
 }
 
+.cell-inline > * { width: auto; }
+
 @media (min-width: 769px) {
+	.cell-inline,
 	[class*="cell-columns-"] {
 		flex-direction: row;
-		margin: 0 var(--cell-container-gap) var(--cell-container-gap) 0;
+		margin: 0 var(--cell-container-gap) 0 0;
 	}
 
+	.cell-inline > *,
 	[class*="cell-columns-"] > * { margin: 0 var(--cell-gap) var(--cell-gap) 0; }
 
 	.cell-columns-2 > * { width: calc(100% / 2 - var(--cell-gap)); }
@@ -130,13 +134,6 @@
 		min-width: 235px;
 		max-width: 50%;
 	}
-}
-
-/* --- Inline --------------------------------------------------------------- */
-.cell-inline > * { width: auto; }
-
-@media (min-width: 769px) {
-	.cell-inline > * { max-width: 234px; }
 }
 
 /* --- Mini module ---------------------------------------------------------- */
