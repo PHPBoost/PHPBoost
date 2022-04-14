@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -73,6 +73,16 @@ class FaqItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '', array('description' => $this->lang['contribution.description.clue'])));
+		}
+		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
+		{
+			$fieldset = new FormFieldsetHTML('member_edition', $this->lang['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
+			$form->add_fieldset($fieldset);
+
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
+				array('description' => $this->lang['contribution.edition.description.clue'])
+			));
 		}
 	}
 
@@ -170,44 +180,44 @@ class FaqItemFormController extends DefaultModuleController
 		}
 		else
 		{
-			$id = $item->get_id();
 			FaqService::update($item);
 
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 
-		$this->contribution_actions($item, $id);
+		$this->contribution_actions($item);
 
 		FaqService::clear_cache();
 	}
 
-	private function contribution_actions(FaqItem $item, $id)
+	private function contribution_actions(FaqItem $item)
 	{
-		if ($item->get_id() === null)
+		if ($this->is_contributor_member())
 		{
-			if ($this->is_contributor_member())
-			{
-				$contribution = new Contribution();
-				$contribution->set_id_in_module($id);
+			$contribution = new Contribution();
+			$contribution->set_id_in_module($item->get_id());
+			if ($this->is_new_item)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
-				$contribution->set_entitled($item->get_title());
-				$contribution->set_fixing_url(FaqUrlBuilder::edit($id)->relative());
-				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
-				$contribution->set_module('faq');
-				$contribution->set_auth(
-					Authorizations::capture_and_shift_bit_auth(
-						CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
-						Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
-					)
-				);
-				ContributionService::save_contribution($contribution);
-				HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
-			}
+			else
+				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
+			
+			$contribution->set_entitled($item->get_title());
+			$contribution->set_fixing_url(FaqUrlBuilder::edit($item->get_id())->relative());
+			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
+			$contribution->set_module('faq');
+			$contribution->set_auth(
+				Authorizations::capture_and_shift_bit_auth(
+					CategoriesService::get_categories_manager()->get_heritated_authorizations($item->get_id_category(), Category::MODERATION_AUTHORIZATIONS, Authorizations::AUTH_CHILD_PRIORITY),
+					Category::MODERATION_AUTHORIZATIONS, Contribution::CONTRIBUTION_AUTH_BIT
+				)
+			);
+			ContributionService::save_contribution($contribution);
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('faq', $id);
+			$corresponding_contributions = ContributionService::find_by_criteria('faq', $item->get_id());
 			if (count($corresponding_contributions) > 0)
 			{
 				foreach ($corresponding_contributions as $contribution)
