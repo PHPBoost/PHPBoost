@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 08
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -301,8 +301,9 @@ elseif ($submit)
 	{
 		$url_media = preg_replace('`\?.*`u', '', $media['file_url']->relative());
 		$pathinfo = pathinfo($url_media);
+		$url_parsed = parse_url($media['file_url']->relative());
 
-		if (($url_parsed = parse_url($media['file_url']->relative())) && in_array($url_parsed['host'], $host_ok) && (strpos($pathinfo['dirname'], 'soundcloud') !== false) && in_array('audio/host', $mime_type))
+		if (isset($url_parsed['host']) ?? in_array($url_parsed['host'], $host_ok) && (strpos($pathinfo['dirname'], 'soundcloud') !== false) && in_array('audio/host', $mime_type))
 		{
 			$media['mime_type'] = 'audio/host';
 		}
@@ -320,7 +321,7 @@ elseif ($submit)
 					DispatchManager::redirect($controller);
 				}
 			}
-			elseif (($url_parsed = parse_url($media['file_url']->relative())) && in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
+			elseif (isset($url_parsed['host']) ?? in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
 			{
 				$media['mime_type'] = 'video/host';
 			}
