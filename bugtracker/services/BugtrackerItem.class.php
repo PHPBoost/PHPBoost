@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -281,8 +281,8 @@ class BugtrackerItem
 			'title' => $this->get_title(),
 			'content' => $this->get_content(),
 			'author_id' => $this->get_author_user()->get_id(),
-			'submit_date' => $this->get_submit_date() ? $this->get_submit_date()->get_timestamp() : '',
-			'fix_date' => $this->get_fix_date() ? $this->get_fix_date()->get_timestamp() : '',
+			'submit_date' => $this->get_submit_date() ? $this->get_submit_date()->get_timestamp() : 0,
+			'fix_date' => $this->get_fix_date() ? $this->get_fix_date()->get_timestamp() : 0,
 			'status' => $this->get_status(),
 			'type' => $this->get_type(),
 			'category' => $this->get_category(),
