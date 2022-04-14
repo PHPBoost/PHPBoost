@@ -228,7 +228,6 @@ class FaqItemFormController extends DefaultModuleController
 				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 			}
 		}
-		$item->set_id($id);
 	}
 
 	private function redirect()
