@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 3.0 - 2012 11 30
 */
 
@@ -33,17 +33,19 @@ class GuestbookService
 		self::$db_querier->update(GuestbookSetup::$guestbook_table, $message->get_properties(), 'WHERE id=:id', array('id' => $message->get_id()));
 	}
 
-	public static function delete($condition, array $parameters)
+	public static function delete(int $id)
 	{
-		self::$db_querier->delete(GuestbookSetup::$guestbook_table, $condition, $parameters);
+		self::$db_querier->delete(GuestbookSetup::$guestbook_table, 'WHERE id=:id', array('id' => $id));
 	}
 
-	public static function get_item($condition, array $parameters)
+	public static function get_item(int $id)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT member.*, guestbook.*, guestbook.login as glogin
 		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
-		' . $condition, $parameters);
+		WHERE guestbook.id=:id', array(
+			'id' => $id
+		));
 
 		$message = new GuestbookMessage();
 		$message->set_properties($row);

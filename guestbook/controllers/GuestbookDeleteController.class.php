@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 24
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 3.0 - 2012 11 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -14,15 +14,15 @@ class GuestbookDeleteController extends ModuleController
 	{
 		AppContext::get_session()->csrf_get_protect();
 
-		$message = $this->get_item($request);
+		$item = $this->get_item($request);
 
-		$this->check_authorizations($message);
+		$this->check_authorizations($item);
 
-		GuestbookService::delete('WHERE id=:id', array('id' => $message->get_id()));
+		GuestbookService::delete($item->get_id());
 
 		GuestbookCache::invalidate();
 
-		HooksService::execute_hook_action('delete', self::$module_id, $message->get_properties());
+		HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 
 		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : GuestbookUrlBuilder::home()), LangLoader::get_message('guestbook.message.success.delete', 'common', 'guestbook'));
 	}
@@ -31,14 +31,11 @@ class GuestbookDeleteController extends ModuleController
 	{
 		$id = $request->get_getint('id', 0);
 
-		if (!empty($id))
-		{
-			try {
-				return GuestbookService::get_item('WHERE id=:id', array('id' => $id));
-			} catch (RowNotFoundException $e) {
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
+		try {
+			return GuestbookService::get_item($id);
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
 		}
 	}
 
