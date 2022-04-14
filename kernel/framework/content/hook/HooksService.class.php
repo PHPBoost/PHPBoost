@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 05
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -87,7 +87,8 @@ class HooksService
 		
 		foreach (self::get_hooks() as $hook)
 		{
-			if (method_exists($hook->get_hook_name(), $action_function) && is_callable(array($hook->get_hook_name(), $action_function)))
+			$hook_name = $hook->get_hook_name();
+			if (method_exists($hook_name, $action_function) && is_callable(array(new $hook_name(), $action_function)))
 				$hook->$action_function($module_id, $properties, $description);
 			else if (in_array($action, self::get_modules_specific_hooks_actions()) && ModulesManager::is_module_installed($module_id) && ModulesManager::is_module_activated($module_id))
 				$hook->execute_module_specific_hook_action($action, $module_id, $properties, $description);
@@ -108,7 +109,8 @@ class HooksService
 		
 		foreach (self::get_hooks() as $hook)
 		{
-			if (method_exists($hook->get_hook_name(), $action_function) && is_callable(array($hook->get_hook_name(), $action_function)))
+			$hook_name = $hook->get_hook_name();
+			if (method_exists($hook_name, $action_function) && is_callable(array(new $hook_name(), $action_function)))
 				$hook->$action_function($type, $element_id, $properties, $description);
 		}
 	}
@@ -124,7 +126,8 @@ class HooksService
 	{
 		foreach (self::get_hooks() as $hook)
 		{
-			if (method_exists($hook->get_hook_name(), 'on_display_action') && is_callable(array($hook->get_hook_name(), 'on_display_action')))
+			$hook_name = $hook->get_hook_name();
+			if (method_exists($hook_name, 'on_display_action') && is_callable(array(new $hook_name(), 'on_display_action')))
 			{
 				$content = $hook->on_display_action($module_id, $content, $properties);
 			}
