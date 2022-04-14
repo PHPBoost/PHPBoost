@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 13
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Mipel <mipel@phpboost.com>
 */
@@ -28,28 +28,27 @@ class FaqService
 
 	 /**
 	 * @desc Create a new entry in the database table.
-	 * @param string[] $faq_question : new FaqItem
+	 * @param string[] $item : new FaqItem
 	 */
-	public static function add(FaqItem $faq_question)
+	public static function add(FaqItem $item)
 	{
-		$result = self::$db_querier->insert(FaqSetup::$faq_table, $faq_question->get_properties());
+		$result = self::$db_querier->insert(FaqSetup::$faq_table, $item->get_properties());
 
 		return $result->get_last_inserted_id();
 	}
 
 	 /**
 	 * @desc Update an entry.
-	 * @param string[] $faq_question : FaqQuestion to update
+	 * @param string[] $item : FaqItem to update
 	 */
-	public static function update(FaqItem $faq_question)
+	public static function update(FaqItem $item)
 	{
-		self::$db_querier->update(FaqSetup::$faq_table, $faq_question->get_properties(), 'WHERE id=:id', array('id' => $faq_question->get_id()));
+		self::$db_querier->update(FaqSetup::$faq_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
 	 /**
 	 * @desc Delete an entry.
-	 * @param string $condition : Restriction to apply to the list
-	 * @param string[] $parameters : Parameters of the condition
+	 * @param int $id Item identifier
 	 */
 	public static function delete(int $id)
 	{
@@ -77,9 +76,9 @@ class FaqService
 			'id' => $id
 		));
 
-		$faq_question = new FaqItem();
-		$faq_question->set_properties($row);
-		return $faq_question;
+		$item = new FaqItem();
+		$item->set_properties($row);
+		return $item;
 	}
 
 	public static function clear_cache()
