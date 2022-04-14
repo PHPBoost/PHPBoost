@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 6.0 - last update: 2022 04 06
+ * @version   	PHPBoost 6.0 - last update: 2022 04 14
  * @since   	PHPBoost 4.1 - 2015 06 29
 */
 
@@ -25,11 +25,11 @@ class PollMiniMenuCache implements CacheData
 		{
 			foreach ($selected_items_in_config as $selected_item_id)
 			{
-				$selected_item = $this->get_items_manager()->get_item((int)$selected_item_id);
+				$selected_item = ItemsService::get_items_manager('poll')->get_item((int)$selected_item_id);
 				if ($selected_item->user_is_empowered_to_vote())
-					$this->polls_displaying[$selected_item->get_id()] = $selected_item->get_properties();
+					$this->polls_displaying[$selected_item->get_id()] = $selected_item;
 				else
-					$this->polls_not_displaying[$selected_item->get_id()] = $selected_item->get_properties(); //evolution
+					$this->polls_not_displaying[$selected_item->get_id()] = $selected_item; //evolution
 			}
 		}
 	}
@@ -80,11 +80,6 @@ class PollMiniMenuCache implements CacheData
 	public function get_number_polls_not_displaying()
 	{
 		return count($this->polls_not_displaying);
-	}
-
-	public function get_items_manager()
-	{
-		return ItemsService::get_items_manager('poll');
 	}
 
 	/**
