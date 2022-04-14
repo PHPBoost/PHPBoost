@@ -74,7 +74,7 @@ class FaqItemFormController extends DefaultModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '', array('description' => $this->lang['contribution.description.clue'])));
 		}
-		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
+		elseif ($this->get_item()->is_approved() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $this->lang['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
