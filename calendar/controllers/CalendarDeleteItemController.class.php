@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 12
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -60,14 +60,11 @@ class CalendarDeleteItemController extends DefaultModuleController
 	{
 		$id = $request->get_getint('id', 0);
 
-		if (!empty($id))
-		{
-			try {
-				$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $id));
-			} catch (RowNotFoundException $e) {
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
+		try {
+			$this->item = CalendarService::get_item($id);
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
 		}
 	}
 

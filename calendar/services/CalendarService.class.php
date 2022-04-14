@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -147,16 +147,17 @@ class CalendarService
 
 	 /**
 	 * @desc Return the content of an item.
-	 * @param string $condition Restriction to apply to the list of items
-	 * @param string[] $parameters Parameters of the condition
+	 * @param int $id Item identifier
 	 */
-	public static function get_item($condition, array $parameters)
+	public static function get_item(int $id)
 	{
 		$row = self::$db_querier->select_single_row_query('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_user_id
-		' . $condition, $parameters);
+		WHERE event.id_event=:id', array(
+			'id' => $id
+		));
 
 		$item = new CalendarItem();
 		$item->set_properties($row);

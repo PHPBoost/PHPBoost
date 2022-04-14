@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 12
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2013 07 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -113,8 +113,9 @@ class CalendarItemsManagerController extends DefaultModuleController
 				{
 					if (isset($this->ids[$i]))
 					{
+						$item = '';
 						try {
-							$item = CalendarService::get_item('WHERE id_event = :id', array('id' => $this->ids[$i]));
+							$item = CalendarService::get_item($this->ids[$i]);
 						} catch (RowNotFoundException $e) {}
 
 						if ($item)

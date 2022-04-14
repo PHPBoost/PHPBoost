@@ -237,7 +237,7 @@ class CalendarItemFormController extends DefaultModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $id));
+					$this->item = CalendarService::get_item($id);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);

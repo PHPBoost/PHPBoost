@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 10
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2013 11 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,10 +38,10 @@ class CalendarUnsuscribeController extends DefaultModuleController
 		}
 	}
 
-	private function get_item($item_id)
+	private function get_item($id)
 	{
 		try {
-			$this->item = CalendarService::get_item('WHERE id_event = :id', array('id' => $item_id));
+			$this->item = CalendarService::get_item($id);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
