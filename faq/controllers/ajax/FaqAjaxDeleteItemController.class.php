@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2014 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,7 +33,7 @@ class FaqAjaxDeleteItemController extends AbstractController
 
 		FaqService::delete($this->item->get_id());
 		
-        if (!FaqAuthorizationsService::check_authorizations()->write() && FaqAuthorizationsService::check_authorizations()->contribution())
+        if (!CategoriesAuthorizationsService::check_authorizations()->write() && CategoriesAuthorizationsService::check_authorizations()->contribution())
 			ContributionService::generate_cache();
 
 		FaqService::clear_cache();
