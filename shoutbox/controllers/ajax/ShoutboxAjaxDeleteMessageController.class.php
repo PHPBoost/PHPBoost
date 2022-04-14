@@ -3,22 +3,22 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.1 - 2014 12 01
 */
 
 class ShoutboxAjaxDeleteMessageController extends AbstractController
 {
-	private $shoutbox_message;
+	private $item;
 
 	public function execute(HTTPRequestCustom $request)
 	{
-		$this->get_shoutbox_message($request);
+		$this->get_item($request);
 
-		if ($this->shoutbox_message !== null && $this->check_authorizations())
+		if ($this->item !== null && $this->check_authorizations())
 		{
 			$this->delete_message();
-			$code = $this->shoutbox_message->get_id();
+			$code = $this->item->get_id();
 		}
 		else
 			$code = -1;
@@ -30,27 +30,24 @@ class ShoutboxAjaxDeleteMessageController extends AbstractController
 	{
 		AppContext::get_session()->csrf_post_protect();
 
-		ShoutboxService::delete('WHERE id=:id', array('id' => $this->shoutbox_message->get_id()));
+		ShoutboxService::delete($this->item->get_id());
 		
-		HooksService::execute_hook_action('delete', 'shoutbox', $this->shoutbox_message->get_properties());
+		HooksService::execute_hook_action('delete', 'shoutbox', $this->item->get_properties());
 	}
 
-	private function get_shoutbox_message(HTTPRequestCustom $request)
+	private function get_item(HTTPRequestCustom $request)
 	{
 		$id = $request->get_int('id', 0);
 
-		if (!empty($id))
-		{
-			try {
-				$this->shoutbox_message = ShoutboxService::get_message('WHERE id=:id', array('id' => $id));
-			} catch (RowNotFoundException $e) {
-			}
+		try {
+			$this->item = ShoutboxService::get_item($id);
+		} catch (RowNotFoundException $e) {
 		}
 	}
 
 	private function check_authorizations()
 	{
-		return $this->shoutbox_message->is_authorized_to_delete() && !AppContext::get_current_user()->is_readonly();
+		return $this->item->is_authorized_to_delete() && !AppContext::get_current_user()->is_readonly();
 	}
 }
 ?>

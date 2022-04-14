@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -63,16 +63,16 @@ class ShoutboxFormController extends DefaultModuleController
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['form.name'], $this->get_message()->get_login(), array(
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['form.name'], $this->get_item()->get_login(), array(
 				'required' => true, 'maxlength' => 25)
 			));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', LangLoader::get_message('common.message', 'common-lang'), $this->get_message()->get_content(),
+		$fieldset->add_field(new FormFieldRichTextEditor('content', LangLoader::get_message('common.message', 'common-lang'), $this->get_item()->get_content(),
 			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true),
 			array(
 				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($config->get_max_links_number_per_message(), true) : ''),
-				new FormFieldConstraintAntiFlood(ShoutboxService::get_last_message_timestamp_from_user($this->get_message()->get_author_user()->get_id())
+				new FormFieldConstraintAntiFlood(ShoutboxService::get_last_message_timestamp_from_user($this->get_item()->get_author_user()->get_id())
 			))
 		));
 
@@ -85,7 +85,7 @@ class ShoutboxFormController extends DefaultModuleController
 		$this->form = $form;
 	}
 
-	private function get_message()
+	private function get_item()
 	{
 		if ($this->item === null)
 		{
@@ -93,7 +93,7 @@ class ShoutboxFormController extends DefaultModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->item = ShoutboxService::get_message('WHERE id=:id', array('id' => $id));
+					$this->item = ShoutboxService::get_item($id);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
    					DispatchManager::redirect($error_controller);
@@ -111,9 +111,9 @@ class ShoutboxFormController extends DefaultModuleController
 
 	private function check_authorizations()
 	{
-		$message = $this->get_message();
+		$item = $this->get_item();
 
-		if ($message->get_id() === null)
+		if ($item->get_id() === null)
 		{
 			if (!ShoutboxAuthorizationsService::check_authorizations()->write())
 			{
@@ -123,7 +123,7 @@ class ShoutboxFormController extends DefaultModuleController
 		}
 		else
 		{
-			if (!$message->is_authorized_to_edit())
+			if (!$item->is_authorized_to_edit())
 			{
 				$error_controller = PHPBoostErrors::user_not_authorized();
 				DispatchManager::redirect($error_controller);
@@ -138,35 +138,35 @@ class ShoutboxFormController extends DefaultModuleController
 
 	private function save()
 	{
-		$message = $this->get_message();
+		$item = $this->get_item();
 
 		if ($this->form->has_field('pseudo'))
-			$message->set_login($this->form->get_value('pseudo'));
-		$message->set_content($this->form->get_value('content'));
+			$item->set_login($this->form->get_value('pseudo'));
+		$item->set_content($this->form->get_value('content'));
 
-		if ($message->get_id() === null)
+		if ($item->get_id() === null)
 		{
-			$message->set_creation_date(new Date());
-			$id_message = ShoutboxService::add($message);
-			$message->set_id($id_message);
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($message->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(1, $id_message)->rel())));
+			$item->set_creation_date(new Date());
+			$id = ShoutboxService::add($item);
+			$item->set_id($id);
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(1, $id)->rel())));
 		}
 		else
 		{
-			$id_message = $message->get_id();
-			ShoutboxService::update($message);
-			HooksService::execute_hook_action('edit', self::$module_id, array_merge($message->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id_message)->rel())));
+			$id = $item->get_id();
+			ShoutboxService::update($item);
+			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id)->rel())));
 		}
 
-		return $id_message;
+		return $id;
 	}
 
 	private function generate_response(View $tpl)
 	{
-		$message = $this->get_message();
+		$item = $this->get_item();
 		$page = AppContext::get_request()->get_getint('page', 1);
 
-		$location_id = $message->get_id() ? 'shoutbox-edit-'. $message->get_id() : '';
+		$location_id = $item->get_id() ? 'shoutbox-edit-'. $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($tpl, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -174,7 +174,7 @@ class ShoutboxFormController extends DefaultModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['shoutbox.module.title'], ShoutboxUrlBuilder::home($page));
 
-		if ($message->get_id() === null)
+		if ($item->get_id() === null)
 		{
 			$graphical_environment->set_page_title($this->lang['shoutbox.add.item'], $this->lang['shoutbox.module.title']);
 			$breadcrumb->add($this->lang['shoutbox.add.item'], ShoutboxUrlBuilder::add());
@@ -186,8 +186,8 @@ class ShoutboxFormController extends DefaultModuleController
 				$graphical_environment->set_location_id($location_id);
 
 			$graphical_environment->set_page_title($this->lang['shoutbox.edit.item'], $this->lang['shoutbox.module.title']);
-			$breadcrumb->add($this->lang['shoutbox.edit.item'], ShoutboxUrlBuilder::edit($message->get_id(), $page));
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::edit($message->get_id(), $page));
+			$breadcrumb->add($this->lang['shoutbox.edit.item'], ShoutboxUrlBuilder::edit($item->get_id(), $page));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::edit($item->get_id(), $page));
 		}
 
 		return $response;
