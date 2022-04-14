@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -437,17 +437,16 @@ class DefaultItemFormController extends AbstractItemController
 		else
 		{
 			$this->get_item()->set_update_date(new Date());
-			$id = $this->get_item()->get_id();
 			self::get_items_manager()->update($this->get_item());
 
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
 
-		$this->contribution_actions($this->get_item(), $id);
+		$this->contribution_actions($this->get_item());
 
 		if (self::get_module_configuration()->feature_is_enabled('keywords'))
-			KeywordsService::get_keywords_manager()->put_relations($id, $this->form->get_value('keywords'));
+			KeywordsService::get_keywords_manager()->put_relations($this->get_item()->get_id(), $this->form->get_value('keywords'));
 
 		self::get_items_manager()->clear_cache();
 	}
@@ -469,7 +468,7 @@ class DefaultItemFormController extends AbstractItemController
 				array('description' => $this->lang['contribution.description.clue'])
 			));
 		}
-		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
+		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $this->lang['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
@@ -481,19 +480,19 @@ class DefaultItemFormController extends AbstractItemController
 		}
 	}
 
-	protected function contribution_actions(Item $item, $id)
+	protected function contribution_actions(Item $item)
 	{
 		if ($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
-			$contribution->set_id_in_module($id);
+			$contribution->set_id_in_module($item->get_id());
 			if ($this->is_new_item)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
 			$contribution->set_entitled($item->get_title());
-			$contribution->set_fixing_url(ItemsUrlBuilder::edit($id)->relative());
+			$contribution->set_fixing_url(ItemsUrlBuilder::edit($item->get_id())->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module(self::$module_id);
 
@@ -521,7 +520,7 @@ class DefaultItemFormController extends AbstractItemController
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria(self::$module_id, $id);
+			$corresponding_contributions = ContributionService::find_by_criteria(self::$module_id, $item->get_id());
 			if (!$this->is_contributor_member() && count($corresponding_contributions) > 0)
 			{
 				foreach ($corresponding_contributions as $contribution)

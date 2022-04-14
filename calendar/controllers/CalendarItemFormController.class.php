@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 21
+ * @version     PHPBoost 6.0 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -211,7 +211,7 @@ class CalendarItemFormController extends DefaultModuleController
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '', array('description' => $this->lang['contribution.description.clue'])));
 		}
-		elseif ($this->get_item()->is_authorized_to_edit() && !AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
+		elseif ($this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('member_edition', $this->lang['contribution.member.edition']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
@@ -452,7 +452,7 @@ class CalendarItemFormController extends DefaultModuleController
 			}
 		}
 
-		$this->contribution_actions($item, $item_id);
+		$this->contribution_actions($item);
 
 		CalendarService::clear_cache();
 	}
@@ -508,19 +508,19 @@ class CalendarItemFormController extends DefaultModuleController
 		return $item;
 	}
 
-	private function contribution_actions(CalendarItem $item, $id)
+	private function contribution_actions(CalendarItem $item)
 	{
 		if($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
-			$contribution->set_id_in_module($id);
+			$contribution->set_id_in_module($item->get_id());
 			if ($this->is_new_item)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
 			$contribution->set_entitled($item->get_content()->get_title());
-			$contribution->set_fixing_url(CalendarUrlBuilder::edit_item($id)->relative());
+			$contribution->set_fixing_url(CalendarUrlBuilder::edit_item($item->get_id())->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('calendar');
 			$contribution->set_auth(
@@ -534,7 +534,7 @@ class CalendarItemFormController extends DefaultModuleController
 		}
 		else
 		{
-			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $id);
+			$corresponding_contributions = ContributionService::find_by_criteria('calendar', $item->get_id());
 			if (count($corresponding_contributions) > 0)
 			{
 				foreach ($corresponding_contributions as $contribution)
