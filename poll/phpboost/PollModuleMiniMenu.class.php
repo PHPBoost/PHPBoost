@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 15
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -71,11 +71,12 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			{
 				$polls_displayed_number = 0;
 				$max_nb_poll_links = min($cache->get_number_polls_displaying(), 10);
-				foreach ($items_for_polls_displaying as $id => $poll)
+				foreach ($items_for_polls_displaying as $id => $poll_properties)
 				{
 					if ($polls_displayed_number < $max_nb_poll_links)
 					{
-						$this->item = $poll;
+						$this->item = new PollItem();
+						$this->item->set_properties($poll_properties);
 						$url = ItemsUrlBuilder::display($this->item->get_id_category(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), $module_id = self::MODULE_ID);
 
 						$this->view->assign_block_vars('polls_map', array('TITLE' => $this->item->get_title(), 'U_ITEM' => $url->rel()));
@@ -91,7 +92,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 				if (!empty($items_for_polls_displaying))
 				{
 					$random_item_id = $this->get_random_item_id(array_keys($items_for_polls_displaying));
-					$this->item = $items_for_polls_displaying[$random_item_id];
+					$this->item = new PollItem();
+					$this->item->set_properties($items_for_polls_displaying[$random_item_id]);
 
 					$previous_item_id = $this->get_previous_item_id($random_item_id, array_keys($items_for_polls_displaying));
 					$next_item_id = $this->get_next_item_id($random_item_id, array_keys($items_for_polls_displaying));
@@ -105,7 +107,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			{
 				if (isset($items_for_polls_displaying[$item_id]))
 				{
-					$this->item = $items_for_polls_displaying[$item_id];
+					$this->item = new PollItem();
+					$this->item->set_properties($items_for_polls_displaying[$item_id]);
 				}
 				else
 					$this->item = ItemsService::get_items_manager(self::MODULE_ID)->get_item($item_id);
