@@ -33,7 +33,7 @@
 		# IF C_CSS_CACHE_ENABLED #
 			<link rel="stylesheet" href="${CSSCacheManager::get_css_path('/templates/{THEME}/theme/@import.css')}" type="text/css" media="screen, print" />
 		# ELSE #
-			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css" type="text/css" />
+			<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css" type="text/css" media="screen, print" />
 		# ENDIF #
 		# IF C_CSS_LOGIN_DISPLAYED #<link rel="stylesheet" href="{PATH_TO_ROOT}/templates/__default__/theme/login.css" type="text/css" media="screen" /># ENDIF #
 

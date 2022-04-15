@@ -56,7 +56,7 @@
 	<div class="spacer"></div>
 </header>
 
-<main id="global" role="main">
+<main id="global" class="content-preloader" role="main">
 	<div id="global-container" class="content-wrapper">
 		# IF C_MENUS_LEFT_CONTENT #
 			<aside id="menu-left" class="aside-menu# IF C_MENUS_RIGHT_CONTENT # narrow-menu narrow-menu-left# ENDIF #">
