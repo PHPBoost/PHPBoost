@@ -336,21 +336,19 @@
 
 	<fieldset class="upload-elements-container">
 		<legend>{@upload.folder.content} : {URL}# IF C_SHOW_SHARED_FILES # {@upload.shared.files}# ENDIF #</legend>
-		# IF C_PERSONAL_SUMMARY #
-			<div class="cell align-right">
+		<div class="fieldset-inset align-right">
+			# IF C_PERSONAL_SUMMARY #
 				<span class="pinned question"><span id="total-folder">{@upload.folders} :</span> <strong>{TOTAL_FOLDERS}</strong></span>
 				<span class="pinned question"><span>{@upload.files} :</span> <strong>{TOTAL_PERSONAL_FILES}</strong></span>
 				<span class="pinned question"><span>{@upload.folder.size} :</span> <strong>{TOTAL_FOLDER_SIZE}</strong></span>
 				<span class="pinned moderator"><span>{@upload.total.datas} :</span> <strong>{TOTAL_SIZE}</strong></span>
-			</div>
-		# ENDIF #
-		# IF C_SHOW_SHARED_FILES #
-			<div class="cell align-right">
+			# ENDIF #
+			# IF C_SHOW_SHARED_FILES #
 				<span class="pinned question"><span>{@upload.files} :</span> <strong>{TOTAL_SHARED_FILES}</strong></span>
 				<span class="pinned question"><span>{@upload.folder.size} :</span> <strong>{TOTAL_SHARED_SIZE}</strong></span>
 				<span class="pinned moderator"><span>{@upload.total.datas} :</span> <strong>{TOTAL_SIZE}</strong></span>
-			</div>
-		# ENDIF #
+			# ENDIF #
+		</div>
 
 		<div class="fieldset-inset">
 			# IF C_EMPTY_FOLDER #
