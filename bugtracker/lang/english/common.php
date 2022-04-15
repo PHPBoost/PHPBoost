@@ -303,7 +303,7 @@ $lang['config.auth.moderate'] = 'Permission to moderate the Bugtracker';
 
 //Hooks
 $lang['bugtracker.specific_hook.bugtracker_change_status'] = 'Ticket status change';
-$lang['bugtracker.specific_hook.bugtracker_change_status.description'] = 'Ticket #:id status changed from :old_status to :new_status';
+$lang['bugtracker.specific_hook.bugtracker_change_status.description'] = 'Ticket #:id status changed from <b>:old_status</b> to <b>:new_status</b>';
 
 // Errors
 $lang['error.e_unexist_bug'] = 'This ticket does not exist';
