@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 25
+ * @version     PHPBoost 6.0 - last update: 2022 04 15
  * @since       PHPBoost 4.1 - 2014 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -227,7 +227,8 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 			}
 		}
 
-		if ($status != $this->bug->get_status())
+		$old_status = $this->bug->get_status();
+		if ($status != $old_status)
 		{
 			//Bug history update
 			BugtrackerService::add_history(array(
@@ -235,7 +236,7 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 				'updater_id'	=> $this->current_user->get_id(),
 				'update_date'	=> $now->get_timestamp(),
 				'updated_field'	=> 'status',
-				'old_value'		=> $this->bug->get_status(),
+				'old_value'		=> $old_status,
 				'new_value'		=> $status
 			));
 
@@ -325,7 +326,8 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		BugtrackerStatsCache::invalidate();
 
 		$status_list = $this->get_status_list();
-		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(array('url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()), $this->bug->get_properties()), '#' . $this->bug->get_id() . isset($status_list[$this->bug->get_status()]) ? ' : ' . $status_list[$this->bug->get_status()] : '');
+		$hook_description = StringVars::replace_vars($this->lang['bugtracker.specific_hook.bugtracker_change_status.description'], array('id' => $this->bug->get_id(), 'old_status' => (isset($status_list[$old_status]) ? $status_list[$old_status] : $old_status), 'new_status' => (isset($status_list[$this->bug->get_status()]) ? $status_list[$this->bug->get_status()] : $this->bug->get_status())));
+		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(array('url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()), $this->bug->get_properties()), $hook_description);
 	}
 
 	private function build_response(View $view)
