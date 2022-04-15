@@ -7,7 +7,7 @@
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" class="offload" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1 itemprop="name">{TITLE}</h1>
-		# IF C_COMPLETED #<div class="message-helper bgc error">{@completed.item}</div># ENDIF #
+		# IF C_COMPLETED #<div class="message-helper bgc success">{@completed.item}</div># ENDIF #
 	</header>
 	<div class="sub-section">
 		<div class="content-container">
