@@ -502,9 +502,9 @@ class Item
 			$notation = new Notation();
 			$notation->set_module_name(self::$module_id);
 			$notation->set_id_in_module($properties['id']);
-			$notation->set_notes_number($properties['notes_number']);
-			$notation->set_average_notes($properties['average_notes']);
-			$notation->set_user_already_noted(!empty($properties['note']));
+			$notation->set_notes_number(isset($properties['notes_number']) ? $properties['notes_number'] : 0);
+			$notation->set_average_notes(isset($properties['average_notes']) ? $properties['average_notes'] : 0);
+			$notation->set_user_already_noted(isset($properties['note']) && !empty($properties['note']));
 			$this->notation = $notation;
 		}
 
