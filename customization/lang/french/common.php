@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 03
+ * @version     PHPBoost 6.0 - last update: 2022 04 16
  * @since       PHPBoost 3.0 - 2011 08 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -44,4 +44,6 @@ $lang['customization.editor.css.files'] = 'Editeur de fichiers CSS';
 
 $lang['customization.tpl.files'] = 'Fichiers TPL';
 $lang['customization.editor.tpl.files'] = 'Editeur de fichiers TPL';
+
+$lang['customization.default.theme'] = 'Thème par défaut';
 ?>
