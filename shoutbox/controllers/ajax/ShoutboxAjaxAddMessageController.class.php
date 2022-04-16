@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 16
  * @since       PHPBoost 4.1 - 2014 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,7 +33,7 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				if (!TextHelper::check_nbr_links($content, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 					$code = -2;
 
-				$shoutbox_message = new ShoutboxMessage();
+				$shoutbox_message = new ShoutboxItem();
 				$shoutbox_message->init_default_properties();
 				$shoutbox_message->set_login($pseudo);
 				$shoutbox_message->set_user_id(AppContext::get_current_user()->get_id());

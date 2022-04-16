@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 16
  * @since       PHPBoost 3.0 - 2012 11 30
 */
 
@@ -21,14 +21,14 @@ class GuestbookService
 		return self::$db_querier->count(GuestbookSetup::$guestbook_table, $condition);
 	}
 
-	public static function add(GuestbookMessage $message)
+	public static function add(GuestbookItem $message)
 	{
 		$result = self::$db_querier->insert(GuestbookSetup::$guestbook_table, $message->get_properties());
 
 		return $result->get_last_inserted_id();
 	}
 
-	public static function update(GuestbookMessage $message)
+	public static function update(GuestbookItem $message)
 	{
 		self::$db_querier->update(GuestbookSetup::$guestbook_table, $message->get_properties(), 'WHERE id=:id', array('id' => $message->get_id()));
 	}
@@ -47,7 +47,7 @@ class GuestbookService
 			'id' => $id
 		));
 
-		$message = new GuestbookMessage();
+		$message = new GuestbookItem();
 		$message->set_properties($row);
 		return $message;
 	}

@@ -89,9 +89,9 @@
 				# IF C_WRITE #
 				    <div id="add-message" class="tabs tabs-animation">
 				        <div class="content-panel">
-								<div id="comment-form">
-									# INCLUDE FORM #
-								</div>
+							<div id="comment-form">
+								# INCLUDE FORM #
+							</div>
 				        </div>
 				    </div>
 				# ENDIF #
