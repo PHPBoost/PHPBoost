@@ -46,4 +46,5 @@ $lang['customization.tpl.files'] = 'Fichiers TPL';
 $lang['customization.editor.tpl.files'] = 'Editeur de fichiers TPL';
 
 $lang['customization.default.theme'] = 'Thème par défaut';
+$lang['customization.remove.override'] = 'Supprimer la surcharge du fichier dans le thème';
 ?>

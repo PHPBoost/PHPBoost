@@ -45,4 +45,5 @@ $lang['customization.tpl.files'] = 'TPL Files';
 $lang['customization.editor.tpl.files'] = 'TPL Files Editor';
 
 $lang['customization.default.theme'] = 'Default theme';
+$lang['customization.remove.override'] = 'Remove file override in the theme';
 ?>
