@@ -20,8 +20,10 @@
 
 	# IF C_CATEGORY_DESCRIPTION #
 		<div class="sub-section">
-			<div class="cat-description">
-				{CATEGORY_DESCRIPTION}
+			<div class="content-container">
+				<div class="cat-description">
+					{CATEGORY_DESCRIPTION}
+				</div>
 			</div>
 		</div>
 	# ENDIF #
