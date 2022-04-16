@@ -104,7 +104,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 				
 				if ($file_name != '@import.css')
 				{
-					$file_editor_fieldset->add_field(new FormFieldCheckbox('remove_override', 'remove_override', false,
+					$file_editor_fieldset->add_field(new FormFieldCheckbox('remove_override', $this->lang['customization.remove.override'], false,
 						array('class' => 'third-field custom-checkbox')
 					));
 				}
