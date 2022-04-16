@@ -102,7 +102,21 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 					));
 				}
 				
-				if ($file_name != '@import.css')
+				$display_remove_override_button = false;
+				if (!empty($module_selected) && $module_selected != '__default__')
+				{
+					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module_selected . '/' . $file_name);
+					if ($css_file->exists())
+						$display_remove_override_button = true;
+				}
+				else
+				{
+					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_name);
+					if ($file_name != '@import.css' && $css_file->exists())
+						$display_remove_override_button = true;
+				}
+
+				if ($display_remove_override_button)
 				{
 					$file_editor_fieldset->add_field(new FormFieldCheckbox('remove_override', $this->lang['customization.remove.override'], false,
 						array('class' => 'third-field custom-checkbox')
@@ -150,15 +164,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 				if ($css_file->exists())
 				{
 					$css_file->delete();
-
-					$import_css_file_path = PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . '@import.css';
-					$import_css_file = new File($import_css_file_path);
-					if ($import_css_file->exists())
-					{
-						$content = str_replace($theme_selected . $this->css_files_path . $file_name, '__default__' . $this->css_files_path . $file_name, $import_css_file->read());
-						$import_css_file->erase();
-						$import_css_file->write($content);
-					}
+					$this->update_import_css($theme_selected, $theme_selected . $this->css_files_path . $file_name, '__default__' . $this->css_files_path . $file_name);
 				}
 				
 				$redirect_url = AdminCustomizeUrlBuilder::editor_css_file($theme_selected, '__default__/' . str_replace('@', '', $file_name));
@@ -190,15 +196,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 				if (!$css_file->exists())
 				{
 					copy(PATH_TO_ROOT . $this->templates_path . $this->default_css_files_path . $file_name, PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_name);
-					
-					$import_css_file_path = PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . '@import.css';
-					$import_css_file = new File($import_css_file_path);
-					if ($import_css_file->exists())
-					{
-						$content = str_replace('__default__' . $this->css_files_path . $file_name, $theme_selected . $this->css_files_path . $file_name, $import_css_file->read());
-						$import_css_file->erase();
-						$import_css_file->write($content);
-					}
+					$this->update_import_css($theme_selected, '__default__' . $this->css_files_path . $file_name, $theme_selected . $this->css_files_path . $file_name);
 				}
 
 				$redirect_url = AdminCustomizeUrlBuilder::editor_css_file($theme_selected, str_replace('@', '', $file_name));
@@ -264,6 +262,18 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 		}
 
 		return $files;
+	}
+
+	private function update_import_css($theme_selected, $old_file_path, $new_file_path)
+	{
+		$import_css_file_path = PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . '@import.css';
+		$import_css_file = new File($import_css_file_path);
+		if ($import_css_file->exists())
+		{
+			$content = str_replace($old_file_path, $new_file_path, $import_css_file->read());
+			$import_css_file->erase();
+			$import_css_file->write($content);
+		}
 	}
 }
 ?>
