@@ -112,7 +112,8 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 				else
 				{
 					$css_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_files_path . $file_name);
-					if ($file_name != '@import.css' && $css_file->exists())
+					$default_css_file = new File(PATH_TO_ROOT . $this->templates_path . $this->default_css_files_path . $file_name);
+					if ($file_name != '@import.css' && $css_file->exists() && $default_css_file->exists())
 						$display_remove_override_button = true;
 				}
 
