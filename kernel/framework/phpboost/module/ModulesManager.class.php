@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 04 17
  * @since       PHPBoost 2.0 - 2008 10 12
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -45,10 +45,10 @@ class ModulesManager
 	public static function get_activated_modules_map()
 	{
 		$activated_modules = array();
-		foreach (ModulesConfig::load()->get_modules() as $module) {
-			if ($module->is_activated()) {
+		foreach (ModulesConfig::load()->get_modules() as $module)
+		{
+			if ($module->is_activated())
 				$activated_modules[$module->get_id()] = $module;
-			}
 		}
 		return $activated_modules;
 	}
@@ -58,7 +58,7 @@ class ModulesManager
 	 */
 	public static function get_uninstalled_modules_map()
 	{
-        throw new NotYetImplementedException();
+		throw new NotYetImplementedException();
 	}
 
 	/**
@@ -115,20 +115,17 @@ class ModulesManager
 	}
 
 	/**
-	 * @return string[]
+	 * @return string[] the list of modules that have the requested feature
 	 */
-	public static function get_activated_feature_modules($feature_id)
+	public static function get_activated_feature_modules($feature)
 	{
-		$activated_feature_modules = array();
-		foreach (ModulesConfig::load()->get_modules() as $module) {
-			if ($module->is_activated()) {
-				if ($module->get_configuration()->feature_is_enabled($feature_id))
-				{
-					$activated_feature_modules[$module->get_id()] = $module;
-				}
-			}
+		$modules = array();
+		foreach (self::get_activated_modules_map() as $module)
+		{
+			if ($module->get_configuration()->feature_is_enabled($feature))
+				$modules[$module->get_id()] = $module;
 		}
-		return $activated_feature_modules;
+		return $modules;
 	}
 
 	/**
@@ -554,15 +551,14 @@ class ModulesManager
 
 	/**
 	 * @return string[] the names list of the modules for unauthorized FormFieldSelectChoiceOption
+	 * @param string $feature Feature for which display the modules list.
 	 */
-	public static function generate_unauthorized_module_option($type)
+	public static function generate_unauthorized_module_option($feature)
 	{
 		$options = array();
 
-		$modules = self::get_activated_feature_modules($type);
-		foreach ($modules as $id => $module)
+		foreach (self::get_activated_feature_modules($feature) as $id => $module)
 		{
-
 			$options[] = new FormFieldSelectChoiceOption($module->get_configuration()->get_name(), $module->get_id());
 		}
 		return $options;
