@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 17
  * @since       PHPBoost 4.1 - 2014 10 14
 */
 
@@ -13,36 +13,32 @@ class ShoutboxDeleteController extends ModuleController
 	{
 		AppContext::get_session()->csrf_get_protect();
 
-		$message = $this->get_message($request);
+		$item = $this->get_item($request);
 
-		$this->check_authorizations($message);
+		$this->check_authorizations($item);
 
-		ShoutboxService::delete('WHERE id=:id', array('id' => $message->get_id()));
-
-		HooksService::execute_hook_action('delete', self::$module_id, $message->get_properties());
+		ShoutboxService::delete($item->get_id());
+		
+		HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 
 		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : ShoutboxUrlBuilder::home()), LangLoader::get_message('shoutbox.message.success.delete', 'common', 'shoutbox'));
-
 	}
 
-	private function get_message(HTTPRequestCustom $request)
+	private function get_item(HTTPRequestCustom $request)
 	{
 		$id = $request->get_getint('id', 0);
 
-		if (!empty($id))
-		{
-			try {
-				return ShoutboxService::get_message('WHERE id=:id', array('id' => $id));
-			} catch (RowNotFoundException $e) {
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
+		try {
+			return ShoutboxService::get_message($id);
+		} catch (RowNotFoundException $e) {
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
 		}
 	}
 
-	private function check_authorizations(ShoutboxItem $message)
+	private function check_authorizations(ShoutboxMessage $item)
 	{
-		if (!$message->is_authorized_to_delete())
+		if (!$item->is_authorized_to_delete())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

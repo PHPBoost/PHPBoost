@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 16
+ * @version     PHPBoost 6.0 - last update: 2021 11 17
  * @since       PHPBoost 4.1 - 2014 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,15 +33,15 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				if (!TextHelper::check_nbr_links($content, $config_shoutbox->get_max_links_number_per_message(), true)) //Nombre de liens max dans le message.
 					$code = -2;
 
-				$shoutbox_message = new ShoutboxItem();
-				$shoutbox_message->init_default_properties();
-				$shoutbox_message->set_login($pseudo);
-				$shoutbox_message->set_user_id(AppContext::get_current_user()->get_id());
-				$shoutbox_message->set_content(stripslashes($content));
-				$shoutbox_message->set_creation_date(new Date());
-				$code = ShoutboxService::add($shoutbox_message);
-				$shoutbox_message->set_id($code);
-				HooksService::execute_hook_action('add', 'shoutbox', array_merge($shoutbox_message->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(1, $code)->rel())));
+				$item = new ShoutboxItem();
+				$item->init_default_properties();
+				$item->set_login($pseudo);
+				$item->set_user_id(AppContext::get_current_user()->get_id());
+				$item->set_content(stripslashes($content));
+				$item->set_creation_date(new Date());
+				$code = ShoutboxService::add($item);
+				$item->set_id($code);
+				HooksService::execute_hook_action('add', 'shoutbox', array_merge($item->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(1, $code)->rel())));
 			}
 			else
 				$code = -3;
