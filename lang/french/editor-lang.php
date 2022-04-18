@@ -57,7 +57,7 @@ $lang['editor.lightbox']  = 'LightBox';
 $lang['editor.charmap']   = 'Caractères spéciaux';
 $lang['editor.date.time'] = 'Insérer date/heure';
 $lang['editor.fa']        = 'Icône Font Awesome';
-$lang['editor.emojis']    = 'Emojis HTML';
+$lang['editor.emoji']     = 'Emojis HTML';
 
 $lang['editor.code.tag'] = 'Code : ';
 $lang['editor.code.language'] = 'Code %s : ';
