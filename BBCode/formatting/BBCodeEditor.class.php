@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 07
+ * @version     PHPBoost 6.0 - last update: 2022 04 19
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -110,7 +110,7 @@ class BBCodeEditor extends ContentEditor
 			));
 		}
 
-		$emojis = LangLoader::get_all_langs();
+		$emojis = LangLoader::get('emojis');
 		foreach ($emojis as $unicode => $values)
 		{
 			$is_emo = TextHelper::substr($unicode, 0, 2) === "U+";
