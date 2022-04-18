@@ -249,7 +249,7 @@ class AdminCustomizeEditorTPLFilesController extends DefaultAdminModuleControlle
 				foreach ($folder->get_files('`\.tpl$`') as $file)
 				{
 					$is_override = false;
-					$tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . $module->get_id() . '/' . $file->get_name());
+					$tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . $module->get_id() . '/' . $file->get_name());
 					if ($tpl_file->exists())
 						$is_override = true;
 					
@@ -265,7 +265,7 @@ class AdminCustomizeEditorTPLFilesController extends DefaultAdminModuleControlle
 			foreach ($folder->get_files('`\.tpl$`') as $file)
 			{
 				$is_override = false;
-				$tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->css_modules_files_path . 'user/' . $file->get_name());
+				$tpl_file = new File(PATH_TO_ROOT . $this->templates_path . $theme_selected . $this->tpl_modules_files_path . 'user/' . $file->get_name());
 				if ($tpl_file->exists())
 					$is_override = true;
 				
