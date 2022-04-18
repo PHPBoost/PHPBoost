@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 23
+ * @version     PHPBoost 6.0 - last update: 2022 04 19
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -41,7 +41,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$view->add_lang(array_merge(LangLoader::get_all_langs('shoutbox'), LangLoader::get_module_langs('BBCode')));
+		$view->add_lang(LangLoader::get_all_langs());
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());
@@ -66,7 +66,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 				));
 			}
 
-			$emojis = LangLoader::get_all_langs();
+			$emojis = LangLoader::get('emojis');
 			foreach ($emojis as $unicode => $values)
 			{
 				$is_emo = TextHelper::substr($unicode, 0, 2) === "U+";
@@ -102,6 +102,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'C_ITALIC_DISABLED' => isset($forbidden_tags['i']),
 			'C_UNDERLINE_DISABLED' => isset($forbidden_tags['u']),
 			'C_STRIKE_DISABLED' => isset($forbidden_tags['s']),
+			'C_EMOJIS_DISABLED' => isset($forbidden_tags['emojis']),
 			'C_AUTOMATIC_REFRESH_ENABLED' => $config->is_automatic_refresh_enabled(),
 			'C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE' => $config->is_no_write_authorization_message_displayed(),
 			'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),

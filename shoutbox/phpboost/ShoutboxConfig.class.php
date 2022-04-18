@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2022 04 19
  * @since       PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -217,18 +217,18 @@ class ShoutboxConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 
-	// private function get_default_forbidden_formatting_tags()
-	// {
-		// $tags_list = array();
+	private function get_default_forbidden_formatting_tags()
+	{
+		$tags_list = array();
 
-		// foreach (ContentFormattingService::get_tags_list() as $tag => $parameters)
-		// {
-			// if (!in_array($tag, array('b', 'i', 'fa', 'p', 's', 'u')))
-				// $tags_list[] = $tag;
-		// }
+		foreach (AppContext::get_content_formatting_service()->get_available_tags() as $tag => $parameters)
+		{
+			if (!in_array($tag, array('b', 'i', 'fa', 'p', 's', 'u', 'emoji')))
+				$tags_list[] = $tag;
+		}
 
-		// return $tags_list;
-	// }
+		return $tags_list;
+	}
 
 	public function get_default_values()
 	{
@@ -239,16 +239,7 @@ class ShoutboxConfig extends AbstractConfigData
 			self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED => true,
 			self::MAX_LINKS_NUMBER_PER_MESSAGE => 2,
 			self::NO_WRITE_AUTHORIZATION_MESSAGE_DISPLAYED => true,
-			self::FORBIDDEN_FORMATTING_TAGS => array(
-				'title', 'style', 'url', 'img','quote',
-				'hide', 'list', 'color', 'bgcolor', 'font',
-				'size', 'align', 'float', 'sup', 'sub',
-				'indent', 'pre', 'table', 'swf', 'movie',
-				'sound', 'code', 'math', 'anchor', 'acronym',
-				'block', 'fieldset', 'mail', 'line', 'wikipedia',
-				'html', 'feed', 'youtube', 'lightbox', 'charmap', 'insertdatetime'
-			),
-			//self::FORBIDDEN_FORMATTING_TAGS => $this->get_default_forbidden_formatting_tags(),
+			self::FORBIDDEN_FORMATTING_TAGS => $this->get_default_forbidden_formatting_tags(),
 			self::AUTOMATIC_REFRESH_ENABLED => true,
 			self::REFRESH_DELAY => 60000,
 			self::DATE_DISPLAYED => false,
