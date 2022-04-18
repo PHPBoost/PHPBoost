@@ -41,7 +41,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$view->add_lang(LangLoader::get_all_langs());
+		$view->add_lang(array_merge(LangLoader::get_all_langs('shoutbox'), LangLoader::get_module_langs('BBCode')));
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());
