@@ -102,7 +102,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'C_ITALIC_DISABLED' => isset($forbidden_tags['i']),
 			'C_UNDERLINE_DISABLED' => isset($forbidden_tags['u']),
 			'C_STRIKE_DISABLED' => isset($forbidden_tags['s']),
-			'C_EMOJIS_DISABLED' => isset($forbidden_tags['emojis']),
+			'C_EMOJIS_DISABLED' => isset($forbidden_tags['emoji']),
 			'C_AUTOMATIC_REFRESH_ENABLED' => $config->is_automatic_refresh_enabled(),
 			'C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE' => $config->is_no_write_authorization_message_displayed(),
 			'SHOUTBOX_PSEUDO' => AppContext::get_current_user()->get_display_name(),
