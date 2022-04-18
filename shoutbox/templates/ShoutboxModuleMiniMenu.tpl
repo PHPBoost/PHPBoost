@@ -149,7 +149,7 @@
 						</div>
 					</li>
 					<li id="emojis" class="bbcode-elements bbcode-block-shoutbox">
-						<span class="bbcode-button {AUTH_EMOJI}" # IF NOT C_EMOJIS_DISABLED #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
+						<span class="bbcode-button # IF C_EMOJIS_DISABLED # icon-disabled# ENDIF #" # IF NOT C_EMOJIS_DISABLED #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
 							<span class="stacked">
 								<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 								<span class="stack-event stack-top-right small">
