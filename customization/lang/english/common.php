@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 16
+ * @version     PHPBoost 6.0 - last update: 2022 04 18
  * @since       PHPBoost 3.0 - 2011 08 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -36,6 +36,7 @@ $lang['customization.favicon.current.erased'] = 'The favicon that you saved is v
 $lang['customization.favicon.error'] = 'The favicon could not be changed';
 
 $lang['customization.editor.files.select'] = 'Select the file you want to edit';
+$lang['customization.editor.files.select.clue'] = 'Filename ending with a * indicates there is an override in the selected theme';
 $lang['customization.editor.files.content'] = 'File Contents';
 
 $lang['customization.css.files'] = 'CSS Files';
