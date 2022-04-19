@@ -94,7 +94,7 @@
 									<span class="d-block">
 										<i class="far fa-user fa-fw"></i>
 										# IF forums_list.subcats.C_LAST_MESSAGE_GUEST #
-											<a href="{forums_list.subcats.U_LAST_USER_PROFILE}" class="small{forums_list.subcats.LAST_USER_LEVEL} offload"# IF forums_list.subcats.C_LAST_USER_GROUP_COLOR # style="color:{forums_list.subcats.LAST_USER_GROUP_COLOR}"# ENDIF #>{forums_list.subcats.LAST_USER_LOGIN}</a>
+											<a href="{forums_list.subcats.U_LAST_USER_PROFILE}" class="{forums_list.subcats.LAST_USER_LEVEL} offload"# IF forums_list.subcats.C_LAST_USER_GROUP_COLOR # style="color:{forums_list.subcats.LAST_USER_GROUP_COLOR}"# ENDIF #>{forums_list.subcats.LAST_USER_LOGIN}</a>
 										# ELSE #
 											<span class="small">{@user.guest}</span>
 										# ENDIF #
