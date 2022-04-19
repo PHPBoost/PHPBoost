@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost - 2019 babsolune
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 10 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 19
  * @since       PHPBoost 6.0 - 2020 01 20
 */
 
@@ -116,7 +116,7 @@
                         jQuery(this).closest('nav').find(selectedIcon).removeClass();
 
                     // Change val() of the real select
-                    jQuery(select).val(newOption).change();
+                    jQuery(this).closest('nav').siblings('select').val(newOption).change();
 
                     // Remove selected class from all other items
                     jQuery(this).parent().siblings().removeClass('selected-option');
