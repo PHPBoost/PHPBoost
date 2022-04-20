@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 19
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 2.0 - 2008 08 29
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -72,7 +72,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'youtube', 'fa');
+		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'abbr', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'swf', 'youtube', 'fa');
 
 		foreach ($tags_with_simple_property as $tag)
 		{
