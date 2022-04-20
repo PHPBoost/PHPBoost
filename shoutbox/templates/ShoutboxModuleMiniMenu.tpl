@@ -125,7 +125,7 @@
 			# IF C_DISPLAY_SHOUT_BBCODE #
 				<ul class="bbcode-container modal-container cell-list cell-inline-list cell-modal cell-tile">
 					<li class="bbcode-elements bbcode-block-shoutbox">
-						<span class="bbcode-button" data-modal data-target="bb-shoutbox-smileys" aria-label="{@bbcode.smileys}">
+						<span class="bbcode-button# IF C_SMILEYS_DISABLED # icon-disabled# ENDIF #" # IF NOT C_SMILEYS_DISABLED #data-modal# ENDIF # data-target="bb-shoutbox-smileys" aria-label="{@bbcode.smileys}">
 							<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 						</span>
 						<div id="bb-shoutbox-smileys" class="modal modal-animation">
@@ -149,7 +149,7 @@
 						</div>
 					</li>
 					<li id="emojis" class="bbcode-elements bbcode-block-shoutbox">
-						<span class="bbcode-button # IF C_EMOJIS_DISABLED # icon-disabled# ENDIF #" # IF NOT C_EMOJIS_DISABLED #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
+						<span class="bbcode-button# IF C_EMOJIS_DISABLED # icon-disabled# ENDIF #" # IF NOT C_EMOJIS_DISABLED #data-modal# ENDIF # data-target="block-emojis" role="button" aria-label="{@bbcode.emojis}">
 							<span class="stacked">
 								<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 								<span class="stack-event stack-top-right small">

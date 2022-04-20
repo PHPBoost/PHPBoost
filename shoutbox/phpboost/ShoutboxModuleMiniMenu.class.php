@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 19
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -102,6 +102,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'C_ITALIC_DISABLED' => isset($forbidden_tags['i']),
 			'C_UNDERLINE_DISABLED' => isset($forbidden_tags['u']),
 			'C_STRIKE_DISABLED' => isset($forbidden_tags['s']),
+			'C_SMILEYS_DISABLED' => isset($forbidden_tags['smileys']),
 			'C_EMOJIS_DISABLED' => isset($forbidden_tags['emoji']),
 			'C_AUTOMATIC_REFRESH_ENABLED' => $config->is_automatic_refresh_enabled(),
 			'C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE' => $config->is_no_write_authorization_message_displayed(),
