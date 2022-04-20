@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 10
+ * @version     PHPBoost 6.0 - last update: 2022 04 20
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -226,7 +226,7 @@ if (!empty($id_get))
 					'LAST_USER_LEVEL'         => UserService::get_level_class($row['user_level']),
 					'LAST_USER_GROUP_COLOR'   => $last_group_color,
 
-					'U_LINK'                  => $row['url'],
+					'U_LINK'                  => Url::to_rel($row['url']),
 					'U_CATEGORY'              => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
 					'U_LAST_TOPIC'            => "topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 					'U_LAST_MESSAGE'          => !empty($row['last_topic_id']) ? "topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',

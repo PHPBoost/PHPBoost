@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 08
+ * @version     PHPBoost 6.0 - last update: 2022 04 20
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -230,7 +230,7 @@ class ForumHomeController extends DefaultModuleController
 						'U_LAST_TOPIC'         => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
 						'U_LAST_MESSAGE'       => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
 						'U_LAST_USER_PROFILE'  => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-						'U_LINK'               => $row['url'],
+						'U_LINK'               => Url::to_rel($row['url']),
 						'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
 						'U_CATEGORY'           => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 					)));
