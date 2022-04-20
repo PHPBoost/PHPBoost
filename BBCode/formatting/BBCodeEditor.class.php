@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 19
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -73,35 +73,36 @@ class BBCodeEditor extends ContentEditor
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{
-
-			if ($forbidden_tag == 'float' && $forbidden_tag == 'indent' && $forbidden_tag == 'sup' && $forbidden_tag == 'sub')
-			{
-				$template->put_all(array(
-					'AUTH_POSITIONS' => ' bbcode-forbidden',
-					'C_DISABLED_POSITIONS' => true
-				));
-			}
-			if ($forbidden_tag == 'p' && $forbidden_tag == 'block' && $forbidden_tag == 'container' && $forbidden_tag == 'fieldset' && $forbidden_tag == 'abbr')
-			{
-				$template->put_all(array(
-					'AUTH_CONTAINERS' => ' bbcode-forbidden',
-					'C_DISABLED_CONTAINERS' => true
-				));
-			}
-			if ($forbidden_tag == 'hide' && $forbidden_tag == 'member' && $forbidden_tag == 'moderator')
-			{
-				$template->put_all(array(
-					'AUTH_HIDDEN' => ' bbcode-forbidden',
-					'C_DISABLED_HIDDEN' => true
-				));
-			}
-
 			$template->put_all(array(
 				'AUTH_' . TextHelper::strtoupper($forbidden_tag) => ' bbcode-forbidden',
 				'C_DISABLED_' . TextHelper::strtoupper($forbidden_tag) => true
 			));
 		}
 
+		if (in_array('float', $this->forbidden_tags) && in_array('indent', $this->forbidden_tags) && in_array('sup', $this->forbidden_tags) && in_array('sub', $this->forbidden_tags))
+		{
+			$template->put_all(array(
+				'AUTH_POSITIONS' => ' bbcode-forbidden',
+				'C_DISABLED_POSITIONS' => true
+			));
+		}
+		
+		if (in_array('p', $this->forbidden_tags) && in_array('block', $this->forbidden_tags) && in_array('container', $this->forbidden_tags) && in_array('fieldset', $this->forbidden_tags) && in_array('abbr', $this->forbidden_tags))
+		{
+			$template->put_all(array(
+				'AUTH_CONTAINERS' => ' bbcode-forbidden',
+				'C_DISABLED_CONTAINERS' => true
+			));
+		}
+		
+		if (in_array('hide', $this->forbidden_tags) && in_array('member', $this->forbidden_tags) && in_array('teaser', $this->forbidden_tags) && in_array('moderator', $this->forbidden_tags))
+		{
+			$template->put_all(array(
+				'AUTH_HIDDEN' => ' bbcode-forbidden',
+				'C_DISABLED_HIDDEN' => true
+			));
+		}
+		
 		foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
 		{
 			$template->assign_block_vars('smileys', array(

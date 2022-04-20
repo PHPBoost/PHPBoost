@@ -212,25 +212,25 @@
 								</div>
 								<div class="auto-resize cell-list">
 									<ul>
-										<li class="auto-resize li-stretch">
+										<li class="auto-resize li-stretch{AUTH_FLOAT}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[float=left]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_FLOAT# onclick="insertbbcode('[float=left]', '[/float]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
-										<li class="auto-resize li-stretch">
+										<li class="auto-resize li-stretch{AUTH_FLOAT}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[float=right]', '[/float]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_FLOAT# onclick="insertbbcode('[float=right]', '[/float]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
-										<li class="auto-resize li-stretch">
+										<li class="auto-resize li-stretch{AUTH_INDENT}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[indent]', '[/indent]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_INDENT# onclick="insertbbcode('[indent]', '[/indent]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
-										<li class="auto-resize li-stretch">
+										<li class="auto-resize li-stretch{AUTH_SUP}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[sup]', '[/sup]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_SUP# onclick="insertbbcode('[sup]', '[/sup]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
-										<li class="auto-resize li-stretch">
+										<li class="auto-resize li-stretch{AUTH_SUB}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[sub]', '[/sub]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_SUB# onclick="insertbbcode('[sub]', '[/sub]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 									</ul>
 								</div>
@@ -910,7 +910,7 @@
 					</li>
 					# IF C_UPLOAD_MANAGEMENT #
 						<li id="link-upload" class="auto-resize bbcode-elements">
-							<a class="auto-resize bbcode-button" href="#" aria-label="{@bbcode.upload}" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+							<a class="auto-resize bbcode-button{AUTH_UPLOAD}" href="#" aria-label="{@bbcode.upload}" # IF NOT C_DISABLED_UPLOAD #onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"# ENDIF #>
 								<i class="auto-resize fa fa-fw fa-cloud-upload-alt" aria-hidden="true"></i>
 							</a>
 						</li>
@@ -947,7 +947,7 @@
 						</div>
 					</li>
 					<li id="emojis" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button {AUTH_EMOJI}" # IF NOT C_DISABLED_FA #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
+						<span class="auto-resize bbcode-button {AUTH_EMOJI}" # IF NOT C_DISABLED_EMOJI #data-modal# ENDIF # data-target="block-emojis{FIELD}" role="button" aria-label="{@bbcode.emojis}">
 							<span class="auto-resize stacked">
 								<i class="auto-resize far fa-fw fa-smile" aria-hidden="true"></i>
 								<span class="auto-resize stack-event stack-top-right small">
