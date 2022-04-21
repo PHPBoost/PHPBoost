@@ -86,7 +86,9 @@
 
 @media (min-width: 769px) {
     [class^="message-actions-container"] .controls a { padding: 0 0.456em; }
+    
     [class^="message-actions-toggle-"] { display: none; }
+    
     [class^="message-actions-content"] {
         opacity: 1;
     	visibility: visible;
