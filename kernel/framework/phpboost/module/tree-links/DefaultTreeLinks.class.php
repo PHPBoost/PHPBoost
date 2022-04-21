@@ -72,8 +72,8 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 			if ($module_configuration->has_items())
 				$tree->add_link(new ModuleLink($lang['my.items'], ItemsUrlBuilder::display_member_items(AppContext::get_current_user()->get_id(), $this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
 
-			if (!if ($module_configuration->feature_is_enabled('messages')))
-			$tree->add_link(new ModuleLink($lang['pending.items'], ItemsUrlBuilder::display_pending($this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
+			if (!$module_configuration->feature_is_enabled('messages'))
+				$tree->add_link(new ModuleLink($lang['pending.items'], ItemsUrlBuilder::display_pending($this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
 		}
 
 		$this->get_module_additional_actions_tree_links($tree);
