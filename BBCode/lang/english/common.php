@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -84,7 +84,9 @@ $lang['bbcode.hide.member']    = 'Hiding content to visitors';
 $lang['bbcode.hide.teaser']    = 'Hiding end of content to visitors';
 $lang['bbcode.hide.moderator'] = 'Hiding content to members';
 
-$lang['bbcode.style'] = 'Style [style=x]text[/style]';
+$lang['bbcode.style'] = 'Style';
+
+$lang['bbcode.line'] = 'Dividing line';
 
 // Links
 $lang['bbcode.links'] = 'Links';
@@ -107,8 +109,8 @@ $lang['bbcode.feed.module'] = 'Module name';
 $lang['bbcode.feed.select'] = 'Pick a module';
 $lang['bbcode.feed.number'] = 'Items number to display';
 
-$lang['bbcode.anchor']      = 'Anchor somewhere in the page [anchor =x]text[/anchor]';
-$lang['bbcode.anchor.name'] = 'Anchor name (format : anchor-name)?';
+$lang['bbcode.anchor']      = 'Anchor somewhere in the page';
+$lang['bbcode.anchor.name'] = 'Anchor name';
 $lang['bbcode.anchor.url']  = 'Add the link to the anchor';
 
 // Files

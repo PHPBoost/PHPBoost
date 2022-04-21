@@ -65,12 +65,12 @@
 					</li>
 					<li id="format-underline" class="auto-resize bbcode-elements">
 						<span class="auto-resize bbcode-button{AUTH_U}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.underline}">
-							<i class="auto-resize fa fa-fw fa-underline{AUTH_U}" aria-hidden="true"></i>
+							<i class="auto-resize fa fa-fw fa-underline" aria-hidden="true"></i>
 						</span>
 					</li>
 					<li id="format-strike" class="auto-resize bbcode-elements">
 						<span class="auto-resize bbcode-button{AUTH_S}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[s]', '[/s]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.strike}">
-							<i class="auto-resize fa fa-fw fa-strikethrough{AUTH_S}" aria-hidden="true"></i>
+							<i class="auto-resize fa fa-fw fa-strikethrough" aria-hidden="true"></i>
 						</span>
 					</li>
 					<li id="format-color" class="auto-resize bbcode-elements">
@@ -565,6 +565,11 @@
 								</div>
 							</div>
 						</div>
+					</li>
+					<li id="html-hr" class="auto-resize bbcode-elements">
+						<span class="auto-resize bbcode-button{AUTH_LINE}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[line]', '', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.line}">
+							<i class="auto-resize fa fa-fw fa-arrow-down-up-across-line {AUTH_LINE}" aria-hidden="true"></i>
+						</span>
 					</li>
 				</ul>
 			</li>
