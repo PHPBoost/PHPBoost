@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 30
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -93,7 +93,7 @@ if (!empty($contents)) //On enregistre un article
 		if ($id_edit > 0)//On édite un article
 		{
 			try {
-				$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_edit));
+				$article_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . "wiki_articles", array('title', 'encoded_title', 'auth'), 'WHERE id = :id', array('id' => $id_edit));
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
