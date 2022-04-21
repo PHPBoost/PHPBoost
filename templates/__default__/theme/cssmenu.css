@@ -111,7 +111,7 @@
 	content: '\f067';
 }
 
-.cssmenu ul li.has-sub:hover > .cssmenu-title:after {
+.cssmenu ul li.has-sub:hover > .cssmenu-title::after {
 	content: '\f068';
 	transition: 0.2s;
 }
