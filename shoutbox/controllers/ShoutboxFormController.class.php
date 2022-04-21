@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 17
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -149,13 +149,13 @@ class ShoutboxFormController extends DefaultModuleController
 			$item->set_creation_date(new Date());
 			$id = ShoutboxService::add($item);
 			$item->set_id($id);
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(1, $id)->rel())));
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('title' => $this->lang['item'], 'item_url' => ShoutboxUrlBuilder::home(1, $id)->rel())));
 		}
 		else
 		{
 			$id = $item->get_id();
 			ShoutboxService::update($item);
-			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => ShoutboxUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id)->rel())));
+			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('title' => $this->lang['item'], 'item_url' => ShoutboxUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id)->rel())));
 		}
 
 		return $id;
