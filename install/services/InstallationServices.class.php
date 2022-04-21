@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 21
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -69,9 +69,20 @@ class InstallationServices
 
 	public static function get_default_lang()
 	{
+		$browser_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 		$distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
 		$langs = self::get_available_langs();
-		if (!in_array($distribution_config['default_lang'], $langs))
+		
+		if ($browser_lang)
+		{
+			foreach ($langs as $lang)
+			{
+				$lang_config = parse_ini_file(PATH_TO_ROOT . '/lang/' . $lang . '/config.ini');
+				if (($lang == 'english' && $browser_lang == 'en') || (isset($lang_config['identifier']) && $lang_config['identifier'] == $browser_lang))
+					$distribution_config['default_lang'] = $lang;
+			}
+		}
+		else if (!in_array($distribution_config['default_lang'], $langs))
 			$distribution_config['default_lang'] = $langs[0];
 		return $distribution_config['default_lang'];
 	}

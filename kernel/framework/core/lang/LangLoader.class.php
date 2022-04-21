@@ -54,8 +54,20 @@ class LangLoader
 
 	public static function get_default_lang()
 	{
+		$browser_lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 		$langs = self::get_available_langs();
-		return $langs[0];
+		
+		if ($browser_lang)
+		{
+			foreach ($langs as $lang)
+			{
+				$lang_config = parse_ini_file(PATH_TO_ROOT . '/lang/' . $lang . '/config.ini');
+				if (($lang == 'english' && $browser_lang == 'en') || (isset($lang_config['identifier']) && $lang_config['identifier'] == $browser_lang))
+					return $lang;
+			}
+		}
+		else
+			return $langs[0];
 	}
 
 	/**
