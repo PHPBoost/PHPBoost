@@ -201,9 +201,6 @@ class ContentFormattingService
 			'code'           => $lang['editor.code'],
 			'math'           => $lang['editor.math'],
 			'html'           => $lang['editor.html'],
-			'pre'            => $lang['editor.pre'],
-			'acronym'        => $lang['editor.acronym'],
-			'youtube'        => $lang['editor.youtube'],
 			'charmap'        => $lang['editor.charmap'],
 			'insertdatetime' => $lang['editor.date.time'],
 		);
