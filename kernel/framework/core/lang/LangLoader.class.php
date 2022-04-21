@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 01
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -33,9 +33,9 @@ class LangLoader
 	 * Returns the current language locale
 	 * @return string the current language locale
 	 */
-	public static function get_locale()
+	public static function get_locale($locale = '')
 	{
-		return self::$locale ? self::$locale : self::get_default_lang();
+		return in_array($locale, self::get_available_langs()) ? $locale : (self::$locale ? self::$locale : self::get_default_lang());
 	}
 
 	public static function get_available_langs()
@@ -176,9 +176,9 @@ class LangLoader
 			return false;
 	}
 
-	public static function get_kernel_langs()
+	public static function get_kernel_langs($locale = '')
 	{
-		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale());
+		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale($locale));
 		$files = $lang_directory->get_files();
 		$langloader = array();
 		foreach($files as $file)
@@ -195,10 +195,10 @@ class LangLoader
 		return $langloader;
 	}
 
-	public static function get_theme_langs()
+	public static function get_theme_langs($locale = '')
 	{
 		$current_theme = AppContext::get_current_user()->get_theme();
-		$theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale());
+		$theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale($locale));
 		$files = $theme_lang_directory->get_files();
 		$theme_langloader = array();
 		foreach($files as $file)
@@ -215,9 +215,9 @@ class LangLoader
 		return $theme_langloader;
 	}
 
-	public static function get_module_langs($module_id)
+	public static function get_module_langs($module_id, $locale = '')
     {
-		$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale());
+		$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale($locale));
 		$files = $module_lang_directory->get_files();
 		$module_langloader = array();
 		foreach($files as $file)
@@ -234,12 +234,12 @@ class LangLoader
 		return $module_langloader;
     }
 
-	public static function get_all_langs($module_id = '')
+	public static function get_all_langs($module_id = '', $locale = '')
 	{
 		if(!empty($module_id) && !in_array($module_id, array('admin', 'cache', 'images', 'kernel', 'lang', 'repository', 'syndication', 'templates', 'upload', 'user')))
-			return array_merge(self::get_kernel_langs(), self::get_module_langs($module_id), self::get_theme_langs());
+			return array_merge(self::get_kernel_langs($locale), self::get_module_langs($module_id, $locale), self::get_theme_langs($locale));
 		else
-			return array_merge(self::get_kernel_langs(), self::get_theme_langs());
+			return array_merge(self::get_kernel_langs($locale), self::get_theme_langs($locale));
 	}
 
 	/**
