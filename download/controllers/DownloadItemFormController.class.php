@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 21
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -335,7 +335,7 @@ class DownloadItemFormController extends DefaultModuleController
 		}
 		else
 		{
-			$units = array($this->lang['unit.bytes'], $this->lang['unit.kilobytes'], $this->lang['unit.megabytes'], $this->lang['unit.gigabytes']);
+			$units = array($this->lang['common.unit.bytes'], $this->lang['common.unit.kilobytes'], $this->lang['common.unit.megabytes'], $this->lang['common.unit.gigabytes']);
 			$power = array_search($this->form->get_value('file_size_unit')->get_raw_value(), $units);
 			$file_size = (int)($this->form->get_value('file_size') * pow(1024, $power));
 		}
