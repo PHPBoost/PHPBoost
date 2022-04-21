@@ -22,16 +22,16 @@
 				# IF C_READONLY #readonly="readonly" # ENDIF #
 				# IF C_PLACEHOLDER # placeholder="{PLACEHOLDER}"# ENDIF #>{VALUE}</textarea>
 		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
-
-		# IF C_EDITOR_ENABLED #
-			<div class="align-center">
-				<div class="form-element-preview">{PREVIEW_BUTTON}</div>
-				# IF C_RESET_BUTTON_ENABLED #
-					<div class="form-element-reset">{RESET_BUTTON}</div>
-				# ENDIF #
-			</div>
-		# ENDIF #
 	</div>
+
+	# IF C_EDITOR_ENABLED #
+		<div class="align-center">
+			<div class="form-element-preview">{PREVIEW_BUTTON}</div>
+			# IF C_RESET_BUTTON_ENABLED #
+				<div class="form-element-reset">{RESET_BUTTON}</div>
+			# ENDIF #
+		</div>
+	# ENDIF #
 
 </div>
 

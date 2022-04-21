@@ -41,7 +41,7 @@ jQuery('.bbcode-sidebar > textarea').each(function () {
 			y > container - sidebar ?
 				tools.css({ top: 'auto', bottom: '0.809em' }) :
 				tools.css({ top: y - sidebar / 2 + 'px', bottom: 'auto' });
-		console.log(preview.outerHeight());
+		console.log(container + ' ' + sidebar);
     }),
 
     jQuery(document).on('click', function (event) {
