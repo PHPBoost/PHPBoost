@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 24
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 3.0 - 2012 08 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -136,7 +136,7 @@ $lang = array(
 							<legend>PHPBoost is now updated and ready to run!</legend>
 							<div class="fielset-inset">
 								<p class="message-helper bgc success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
-								<p class="message-helper bgc warning">Please download the <a href="' . GeneralConfig::load()->get_complete_site_url() . '/update/update_log.txt" download>log file</a> of your update, it could be required on PHPBoost forum if you ask for support.</p>
+								<p class="message-helper bgc warning">Please download the <a href="' . GeneralConfig::load()->get_complete_site_url() . '/cache/update.log" download>log file</a> of your update, it could be required on PHPBoost forum if you ask for support.</p>
 								<p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="https://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
 								<p class="message-helper bgc warning">For security reasons we also recommand you to delete the <b>update</b> folder and all its contents, hackers could manage to run the update script and you could lose data! An option will be offered once connected to the site to perform this deletion.</p>
 								<p>Don\'t forget the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><acronym aria-label="Frequently Asked Questions">FAQ</acronym></a>.</p>

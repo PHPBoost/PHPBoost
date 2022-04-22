@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 24
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 3.0 - 2012 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -136,7 +136,7 @@ $lang = array(
 							<legend>PHPBoost est désormais mis à jour !</legend>
 							<div class="fielset-inset">
 								<p class="message-helper bgc success">La mise à jour de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
-								<p class="message-helper bgc warning">Merci de récupérer le <a href="' . GeneralConfig::load()->get_complete_site_url() . '/update/update_log.txt" download>fichier de log</a> de votre migration, il pourra vous être demandé sur le forum PHPBoost en cas de demande de support sur votre migration.</p>
+								<p class="message-helper bgc warning">Merci de récupérer le <a href="' . GeneralConfig::load()->get_complete_site_url() . '/cache/update.log" download>fichier de log</a> de votre migration, il pourra vous être demandé sur le forum PHPBoost en cas de demande de support sur votre migration.</p>
 								<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="https://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
 								<p class="message-helper bgc warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>update</b> et tout ce qu\'il contient, des personnes mal intentionnées pourraient relancer le script de mise à jour et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
 								<p>N\'oubliez pas la <a href="https://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="https://www.phpboost.com/faq/"><acronym aria-label="Foire Aux Questions">FAQ</acronym></a> qui répond aux questions les plus fréquentes.</p>
