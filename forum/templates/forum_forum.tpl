@@ -10,7 +10,15 @@
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-subforum" class="forum-content">
 		<header class="flex-between">
 			<h2>
-				# IF C_THUMBNAILS_DISPLAYED ## IF C_HAS_THUMBNAIL#<img class="forum-category-thumbnail" src="{U_CATEGORY_THUMBNAIL}" alt="{CURRENT_SUBCAT_NAME}" /># ENDIF ## ENDIF # {CURRENT_SUBCAT_NAME}
+				# IF C_THUMBNAILS_DISPLAYED #
+					# IF C_HAS_THUMBNAIL #
+						<img class="forum-category-thumbnail" src="{U_CATEGORY_THUMBNAIL}" alt="{CURRENT_SUBCAT_NAME}" />
+					# ELSE #
+						# IF C_HAS_CATEGORY_ICON #
+							<i class="{CATEGORY_ICON}" aria-hidden="true"></i>
+						# ENDIF #
+					# ENDIF #
+				# ENDIF # {CURRENT_SUBCAT_NAME}
 				{@forum.sub.forums}
 			</h2>
 			<div class="controls">
@@ -38,7 +46,13 @@
 								</td>
 								# IF C_THUMBNAILS_DISPLAYED #
 									<td class="forum-thumbnail">
-										# IF subcats.C_HAS_THUMBNAIL #<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" /># ENDIF #
+										# IF subcats.C_HAS_THUMBNAIL #
+											<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" />
+										# ELSE #
+											# IF subcats.C_HAS_CATEGORY_ICON #
+												<i class="{subcats.CATEGORY_ICON}" aria-hidden="true"></i>
+											# ENDIF #
+										# ENDIF #
 									</td>
 								# ENDIF #
 								<td class="forum-topic" colspan="4">

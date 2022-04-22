@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 08
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -93,7 +93,25 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
 		));
 
-		$fieldset->add_field(new FormFieldThumbnail('thumbnail', self::$lang['form.thumbnail'], $this->get_category()->get_thumbnail()->relative(), ForumCategory::THUMBNAIL_URL));
+		$fieldset->add_field(new FormFieldThumbnail('thumbnail', self::$lang['form.thumbnail'], $this->get_category()->get_thumbnail()->relative(), ForumCategory::THUMBNAIL_URL,
+			array(
+				// 'events' => array('click' => '
+				// 	if (HTMLForms.getField("thumbnail").getValue() == ' . FormFieldThumbnail::NONE . ') {
+				// 		HTMLForms.getField("icon").enable();
+				// 	} else {
+				// 		HTMLForms.getField("icon").disable();
+				// 	}'
+				// )
+			)
+		));
+
+		$fieldset->add_field(new FormFieldTextEditor('icon', self::$lang['forum.category.icon'], $this->get_category()->get_icon(),
+			array(
+				'description' => self::$lang['forum.category.icon.clue'],
+				'placeholder' => self::$lang['forum.category.icon.placeholder'],
+				// 'hidden' => !$this->get_category()->get_thumbnail()->relative() == FormFieldThumbnail::NONE
+			)
+		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$lang['form.description'], $this->get_category()->get_description(),
 			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
@@ -162,6 +180,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		parent::set_properties();
 		$this->get_category()->set_type($this->form->get_value('type')->get_raw_value());
 		$this->get_category()->set_additional_property('description', $this->form->get_value('description'));
+		$this->get_category()->set_additional_property('icon', $this->form->get_value('icon'));
 		$this->get_category()->set_additional_property('thumbnail', $this->form->get_value('thumbnail'));
 
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL)

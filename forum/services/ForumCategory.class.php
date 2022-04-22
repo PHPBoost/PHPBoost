@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 08
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
@@ -28,6 +28,7 @@ class ForumCategory extends Category
 		$this->set_additional_property('status', self::STATUS_UNLOCKED);
 		$this->set_additional_property('last_topic_id', 0);
 		$this->set_additional_property('url', '');
+		$this->set_additional_property('icon', '');
 		$this->set_additional_property('thumbnail', FormFieldThumbnail::DEFAULT_VALUE);
 	}
 
@@ -37,6 +38,7 @@ class ForumCategory extends Category
 		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
 		$this->add_additional_attribute('last_topic_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'key' => true));
 		$this->add_additional_attribute('url', array('type' => 'string', 'length' => 255, 'default' => "''"));
+		$this->add_additional_attribute('icon', array('type' => 'string', 'length' => 255, 'default' => "''"));
 		$this->add_additional_attribute('thumbnail', array(
 			'type'    => 'string',
 			'length'  => 255,
@@ -79,6 +81,11 @@ class ForumCategory extends Category
 	public function get_url()
 	{
 		return $this->get_additional_property('url');
+	}
+
+	public function get_icon()
+	{
+		return $this->get_additional_property('icon');
 	}
 
 	public function get_thumbnail()

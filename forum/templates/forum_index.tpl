@@ -22,7 +22,15 @@
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-{forums_list.cats.CATEGORY_ID}" class="forum-content">
 		<header class="flex-between">
 			<h2>
-				# IF C_THUMBNAILS_DISPLAYED ## IF forums_list.cats.C_HAS_THUMBNAIL#<img class="forum-category-thumbnail" src="{forums_list.cats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.cats.CATEGORY_NAME}" /># ENDIF ## ENDIF #
+				# IF C_THUMBNAILS_DISPLAYED #
+					# IF forums_list.cats.C_HAS_THUMBNAIL #
+						<img class="forum-category-thumbnail" src="{forums_list.cats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.cats.CATEGORY_NAME}" />
+					# ELSE #
+						# IF forums_list.cats.C_HAS_CATEGORY_ICON #
+							<i class="{forums_list.cats.CATEGORY_ICON}"></i>
+						# ENDIF #
+					# ENDIF #
+				# ENDIF #
 				<a href="{forums_list.cats.U_CATEGORY}" class="forum-link-cat offload">{forums_list.cats.CATEGORY_NAME}</a>
 			</h2>
 			<div class="controls">
@@ -54,7 +62,13 @@
 							</td>
 							# IF C_THUMBNAILS_DISPLAYED #
 								<td class="forum-thumbnail">
-									# IF forums_list.subcats.C_HAS_THUMBNAIL #<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" /># ENDIF #
+									# IF forums_list.subcats.C_HAS_THUMBNAIL #
+										<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" />
+									# ELSE #
+										# IF forums_list.subcats.C_HAS_CATEGORY_ICON #
+											<i class="{forums_list.subcats.CATEGORY_ICON}"></i>
+										# ENDIF #
+									# ENDIF #
 								</td>
 							# ENDIF #
 							<td class="forum-topic" colspan="4">
@@ -67,7 +81,13 @@
 							</td>
 							# IF C_THUMBNAILS_DISPLAYED #
 								<td class="forum-thumbnail">
-									# IF forums_list.subcats.C_HAS_THUMBNAIL #<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" /># ENDIF #
+									# IF forums_list.subcats.C_HAS_THUMBNAIL #
+										<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" />
+									# ELSE #
+										# IF forums_list.subcats.C_HAS_CATEGORY_ICON #
+											<i class="{forums_list.subcats.CATEGORY_ICON}"></i>
+										# ENDIF #
+									# ENDIF #
 								</td>
 							# ENDIF #
 							<td class="forum-topic">

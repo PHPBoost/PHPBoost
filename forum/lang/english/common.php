@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 08
+ * @version     PHPBoost 6.0 - last update: 2022 04 22
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,7 +26,10 @@ $lang['forum.authorizations.unlimited.topics.tracking'] = 'Deactivate topics sub
 $lang['forum.authorizations.multiple.posts']            = 'Users authorized to post several consecutive messages';
 
 // Categories
-$lang['forum.category.status.locked'] = 'Locked';
+$lang['forum.category.status.locked']    = 'Locked';
+$lang['forum.category.icon']             = 'Font-Awesome icon';
+$lang['forum.category.icon.clue']        = 'Displayed on forum pages only if no thumbnail is selected.';
+$lang['forum.category.icon.placeholder'] = 'fa{b,r,s,t} fa-{icon-name} fa-{options} ...';
 
 // Configuration
 $lang['forum.config.forum.name']                   = 'Forum name';
