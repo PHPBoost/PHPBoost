@@ -65,7 +65,13 @@
 								</td>
 								# IF C_THUMBNAILS_DISPLAYED #
 									<td class="forum-thumbnail">
-										# IF subcats.C_HAS_THUMBNAIL #<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" /># ENDIF #
+										# IF subcats.C_HAS_THUMBNAIL #
+											<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" />
+										# ELSE #
+											# IF subcats.C_HAS_CATEGORY_ICON #
+												<i class="{subcats.CATEGORY_ICON}" aria-hidden="true"></i>
+											# ENDIF #
+										# ENDIF #
 									</td>
 								# ENDIF #
 								<td class="forum-topic">

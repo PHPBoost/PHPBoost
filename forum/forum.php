@@ -292,26 +292,28 @@ if (!empty($id_get))
 	$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
 	$vars_tpl = array(
-		'C_THUMBNAILS_DISPLAYED'     => $config->are_thumbnails_displayed(),
-		'C_PAGINATION'               => $pagination->has_several_pages(),
-		'C_CONTROLS'                 => $check_group_edit_auth,
-		'C_POST_NEW_TOPIC'           => $check_group_write_auth,
-		'C_HAS_THUMBNAIL'           => !empty($categories_cache->get_category($id_get)->get_thumbnail()),
+		'C_THUMBNAILS_DISPLAYED' => $config->are_thumbnails_displayed(),
+		'C_PAGINATION'           => $pagination->has_several_pages(),
+		'C_CONTROLS'             => $check_group_edit_auth,
+		'C_POST_NEW_TOPIC'       => $check_group_write_auth,
+		'C_HAS_THUMBNAIL'        => !empty($categories_cache->get_category($id_get)->get_thumbnail()->rel()),
+		'C_HAS_CATEGORY_ICON'    => !empty($categories_cache->get_category($id_get)->get_icon()),
 
-		'FORUM_NAME'                 => $config->get_forum_name(),
-		'PAGINATION'                 => $pagination->display(),
-		'CATEGORY_ID'                => $id_get,
-		'CATEGORY_NAME'              => $category->get_name(),
-		'CURRENT_SUBCAT_NAME'        => $current_subcat,
+		'FORUM_NAME'          => $config->get_forum_name(),
+		'PAGINATION'          => $pagination->display(),
+		'CATEGORY_ID'         => $id_get,
+		'CATEGORY_NAME'       => $category->get_name(),
+		'CATEGORY_ICON'       => $category->get_icon(),
+		'CURRENT_SUBCAT_NAME' => $current_subcat,
 
-		'U_MARK_AS_READ'             => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $id_get, '')),
+		'U_MARK_AS_READ'       => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $id_get, '')),
 		'U_CATEGORY_THUMBNAIL' => $categories_cache->get_category($id_get)->get_thumbnail()->rel(),
-		'U_CHANGE_CAT'               => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
-		'U_ONCHANGE'                 => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
-		'U_ONCHANGE_CAT'             => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
-		'U_POST_NEW_SUBJECT'         => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
+		'U_CHANGE_CAT'         => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
+		'U_ONCHANGE'           => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
+		'U_ONCHANGE_CAT'       => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
+		'U_POST_NEW_SUBJECT'   => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 
-		'L_CHANGE_STATUT_TO'         => sprintf($lang['forum.change.issue.status.to'], $config->get_message_before_topic_title()),
+		'L_CHANGE_STATUT_TO' => sprintf($lang['forum.change.issue.status.to'], $config->get_message_before_topic_title()),
 	);
 
 	$nbr_topics_display = 0;
