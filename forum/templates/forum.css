@@ -165,13 +165,6 @@ ul.pagination a { padding: 0.309em; }
 	margin: 0.309em 0;
 }
 
-.forum-textarea,
-.forum-textarea:focus,
-.forum-textarea:hover  {
-	padding: 0.228em 0.309em;
-	min-height: 150px;
-}
-
 /* --- Columns sizes --- */
 @media (min-width: 980px) {
 

@@ -97,23 +97,25 @@
 					# IF C_FORUM_NO_ACTION #
 						<tr>
 							<td colspan="4">
-								{@forum.no.action}
+								<span class="message-helper bgc notice">{@common.no.item.now}</span>
 							</td>
 						</tr>
 					# ENDIF #
 					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="4">
-								# IF C_FORUM_ADMIN #
-									<span class="float-left"><button type="submit" name="valid" value="true" class="button submit">{@common.delete}</button></span>
-								# ENDIF #
-								# IF C_DISPLAY_LINK_MORE_ACTION #
-									<a class="offload" href="moderation_forum{U_MORE_ACTION}">{@more_action}</a>
-								# ENDIF #
-							</td>
-						</tr>
-					</tfoot>
+					# IF NOT C_FORUM_NO_ACTION #
+						<tfoot>
+							<tr>
+								<td colspan="4">
+									# IF C_FORUM_ADMIN #
+										<span class="float-left"><button type="submit" name="valid" value="true" class="button submit">{@common.delete}</button></span>
+									# ENDIF #
+									# IF C_DISPLAY_LINK_MORE_ACTION #
+										<a class="offload" href="moderation_forum{U_MORE_ACTION}">{@more_action}</a>
+									# ENDIF #
+								</td>
+							</tr>
+						</tfoot>
+					# ENDIF #
 				</table>
 				<input type="hidden" name="token" value="{TOKEN}">
 			</form>
@@ -408,7 +410,7 @@
 							<td>
 								<div class="form-field form-field-textarea bbcode-sidebar">
 									{KERNEL_EDITOR}
-									<textarea class="forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
+									<textarea class="auto-resize forum-textarea" name="action_content" id="action_content">{ALTERNATIVE_PM}</textarea>
 								</div>
 							</td>
 						</tr>

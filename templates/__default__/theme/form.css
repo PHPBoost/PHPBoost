@@ -68,7 +68,6 @@
 /* --- Textarea --- */
 .form-field-textarea {
 	position: relative;
-	display: inline;
 	width: 100%;
 }
 
@@ -81,7 +80,7 @@
 
 @media (min-width: 1025px) {
 	.form-element-preview, .form-element-reset { display: inline; }
-	
+
 	.form-element-textarea > label { width: 100%; }
 
 	.form-element-textarea .preview-button { margin: 0.618em auto; }
