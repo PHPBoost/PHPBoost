@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 23
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -190,6 +190,9 @@ class LangLoader
 
 	public static function get_kernel_langs($locale = '')
 	{
+		if ($locale)
+			self::set_locale($locale);
+		
 		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale($locale));
 		$files = $lang_directory->get_files();
 		$langloader = array();
@@ -209,6 +212,9 @@ class LangLoader
 
 	public static function get_theme_langs($locale = '')
 	{
+		if ($locale)
+			self::set_locale($locale);
+		
 		$current_theme = AppContext::get_current_user()->get_theme();
 		$theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale($locale));
 		$files = $theme_lang_directory->get_files();
@@ -229,6 +235,9 @@ class LangLoader
 
 	public static function get_module_langs($module_id, $locale = '')
     {
+		if ($locale)
+			self::set_locale($locale);
+		
 		$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale($locale));
 		$files = $module_lang_directory->get_files();
 		$module_langloader = array();
