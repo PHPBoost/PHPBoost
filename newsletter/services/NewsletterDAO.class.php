@@ -79,7 +79,7 @@ class NewsletterDAO
 			$user = UserService::get_user($user_id);
 			$lang = LangLoader::get_module_langs('newsletter');
 			$hook_description = StringVars::replace_vars($lang['newsletter.specific_hook.newsletter_subscribe.description' . (count($subscribed_streams_list) == 1 ? '.single' : '')], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel(), 'streams_list' => implode(', ', $subscribed_streams_list)));
-			HooksService::execute_hook_action('newsletter_subscribe', 'newsletter', array('title' => $lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+			HooksService::execute_hook_action('newsletter_subscribe', 'newsletter', array('title' => $lang['newsletter.module.title'], 'url' => NewsletterUrlBuilder::home()->rel()), $hook_description);
 		}
 	}
 
@@ -120,12 +120,12 @@ class NewsletterDAO
 		if ($added_streams_list)
 		{
 			$hook_description = StringVars::replace_vars($lang['newsletter.specific_hook.newsletter_subscribe.description' . (count($added_streams_list) == 1 ? '.single' : '')], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel(), 'streams_list' => implode(', ', $added_streams_list)));
-			HooksService::execute_hook_action('newsletter_subscribe', 'newsletter', array('title' => $lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+			HooksService::execute_hook_action('newsletter_subscribe', 'newsletter', array('title' => $lang['newsletter.module.title'], 'url' => NewsletterUrlBuilder::home()->rel()), $hook_description);
 		}
 		if ($removed_streams_list)
 		{
 			$hook_description = StringVars::replace_vars($lang['newsletter.specific_hook.newsletter_unsubscribe.description' . (count($removed_streams_list) == 1 ? '.single' : '')], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel(), 'streams_list' => implode(', ', $removed_streams_list)));
-			HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+			HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $lang['newsletter.module.title'], 'url' => NewsletterUrlBuilder::home()->rel()), $hook_description);
 		}
 	}
 
@@ -207,7 +207,7 @@ class NewsletterDAO
 		$user = UserService::get_user($user_id);
 		$lang = LangLoader::get_module_langs('newsletter');
 		$hook_description = StringVars::replace_vars($lang['newsletter.specific_hook.newsletter_unsubscribe.all'], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel()));
-		HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+		HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $lang['newsletter.module.title'], 'url' => NewsletterUrlBuilder::home()->rel()), $hook_description);
 	}
 
 	public static function unsubscriber_all_streams_visitor($mail)
