@@ -69,7 +69,7 @@
 											<img src="{subcats.U_CATEGORY_THUMBNAIL}" alt="{subcats.CATEGORY_NAME}" />
 										# ELSE #
 											# IF subcats.C_HAS_CATEGORY_ICON #
-												<i class="{subcats.CATEGORY_ICON}" aria-hidden="true"></i>
+												<i class="{subcats.CATEGORY_ICON}" aria-hidden="true"# IF subcats.C_HAS_CATEGORY_COLOR # style="color: {subcats.CATEGORY_COLOR}"# ENDIF #></i>
 											# ENDIF #
 										# ENDIF #
 									</td>

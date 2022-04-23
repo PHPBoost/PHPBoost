@@ -108,7 +108,6 @@ class ForumHomeController extends DefaultModuleController
 
 			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
-
 				$this->view->assign_block_vars('forums_list.cats', array(
 					'C_HAS_THUMBNAIL'      => !empty($row['thumbnail']),
 					'C_HAS_CATEGORY_ICON'  => !empty($row['icon']),

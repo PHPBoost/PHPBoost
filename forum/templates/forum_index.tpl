@@ -85,7 +85,7 @@
 										<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" />
 									# ELSE #
 										# IF forums_list.subcats.C_HAS_CATEGORY_ICON #
-											<i class="{forums_list.subcats.CATEGORY_ICON}"></i>
+											<i class="{forums_list.subcats.CATEGORY_ICON}" aria-hidden="true"# IF forums_list.subcats.C_HAS_CATEGORY_COLOR # style="color: {forums_list.subcats.CATEGORY_COLOR}"# ENDIF #></i>
 										# ENDIF #
 									# ENDIF #
 								</td>
