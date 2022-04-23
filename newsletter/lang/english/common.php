@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 28
+ * @version     PHPBoost 6.0 - last update: 2022 04 23
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,6 +42,15 @@ $lang['newsletter.stream.edit']        = 'Edit Feed';
 $lang['newsletter.stream.delete']      = 'Delete feed';
 $lang['newsletter.stream.delete.clue'] = 'You are about to delete the stream. Two solutions are available to you. You can either move all of its content (newsletters and streams) in another stream or delete the whole stream. <strong>Note that this action is irreversible!</ strong>';
 $lang['newsletter.items.list']         = 'List of newsletters';
+
+//Hooks
+$lang['newsletter.specific_hook.newsletter_subscribe'] = 'Newsletters subscription';
+$lang['newsletter.specific_hook.newsletter_subscribe.description.single'] = 'User <a href=":user_profile_url">:user_display_name</a> subscribed to newsletter :streams_list';
+$lang['newsletter.specific_hook.newsletter_subscribe.description'] = 'User <a href=":user_profile_url">:user_display_name</a> subscribed to the following newsletters: :streams_list';
+$lang['newsletter.specific_hook.newsletter_unsubscribe'] = 'Newsletters unsubscription';
+$lang['newsletter.specific_hook.newsletter_unsubscribe.description.single'] = 'User <a href=":user_profile_url">:user_display_name</a> unsubscribed to newsletter :streams_list';
+$lang['newsletter.specific_hook.newsletter_unsubscribe.description'] = 'User <a href=":user_profile_url">:user_display_name</a> unsubscribed to the following newsletters: :streams_list';
+$lang['newsletter.specific_hook.newsletter_unsubscribe.all'] = 'User <a href=":user_profile_url">:user_display_name</a> unsubscribed from all newsletters';
 
 // Subscription
 $lang['newsletter.subscribe.streams']     = 'Subscribe to newsletters';

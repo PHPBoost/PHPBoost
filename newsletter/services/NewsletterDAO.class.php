@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 26
+ * @version     PHPBoost 6.0 - last update: 2022 04 23
  * @since       PHPBoost 3.0 - 2011 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -43,6 +43,9 @@ class NewsletterDAO
 
 	public static function insert_subscriptions_member_registered($user_id, Array $streams)
 	{
+		$streams_list = NewsletterStreamsCache::load()->get_streams();
+		$subscribed_streams_list = array();
+		
 		//Inject user in subscribers table
 		$now = new Date();
 		$columns = array(
@@ -66,12 +69,26 @@ class NewsletterDAO
 				'subscriber_id' => $subscriber_id
 			);
 			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscriptions, $columns);
+			if (isset($streams_list[$value]))
+				$subscribed_streams_list[] = $streams_list[$value]->get_name();
 		}
 		NewsletterStreamsCache::invalidate();
+
+		if ($subscribed_streams_list)
+		{
+			$user = UserService::get_user($user_id);
+			$hook_description = StringVars::replace_vars($this->lang['newsletter.specific_hook.newsletter_subscribe.description' . (count($subscribed_streams_list) == 1 ? '.single' : '')], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel(), 'streams_list' => implode(', ', $subscribed_streams_list)));
+			HooksService::execute_hook_action('newsletter_subscribe', 'newsletter', array('title' => $this->lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+		}
 	}
 
 	public static function update_subscriptions_member_registered($user_id, Array $streams)
 	{
+		$previous_streams_ids_list = NewsletterService::get_member_id_streams($user_id);
+		$new_streams_ids_list = $added_streams_list = $removed_streams_list = array();
+		$streams_list = NewsletterStreamsCache::load()->get_streams();
+		$subscribed_streams_list = array();
+		
 		$subscriber_id = self::$db_querier->get_column_value(NewsletterSetup::$newsletter_table_subscribers, 'id', "WHERE user_id = '". $user_id ."'");
 
 		//Delete all entries in subscriber id
@@ -86,8 +103,28 @@ class NewsletterDAO
 				'subscriber_id' => $subscriber_id
 			);
 			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscriptions, $columns);
+			$new_streams_ids_list[] = $value;
+			if (isset($streams_list[$value]) && !in_array($value, $previous_streams_ids_list))
+				$added_streams_list[] = $streams_list[$value]->get_name();
+		}
+		foreach ($streams_list as $id => $stream)
+		{
+			if (in_array($id, $previous_streams_ids_list) && !in_array($id, $new_streams_ids_list))
+				$removed_streams_list[] = $stream->get_name();
 		}
 		NewsletterStreamsCache::invalidate();
+
+		$user = UserService::get_user($user_id);
+		if ($added_streams_list)
+		{
+			$hook_description = StringVars::replace_vars($this->lang['newsletter.specific_hook.newsletter_subscribe.description' . (count($added_streams_list) == 1 ? '.single' : '')], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel(), 'streams_list' => implode(', ', $added_streams_list)));
+			HooksService::execute_hook_action('newsletter_subscribe', 'newsletter', array('title' => $this->lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+		}
+		if ($removed_streams_list)
+		{
+			$hook_description = StringVars::replace_vars($this->lang['newsletter.specific_hook.newsletter_unsubscribe.description' . (count($removed_streams_list) == 1 ? '.single' : '')], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel(), 'streams_list' => implode(', ', $removed_streams_list)));
+			HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $this->lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
+		}
 	}
 
 	public static function insert_subscriptions_visitor($mail, Array $streams)
@@ -132,7 +169,7 @@ class NewsletterDAO
 		{
 			//Insert user and stream_id in the subscriptions table
 			$columns = array(
-                'stream_id' => $value,
+				'stream_id' => $value,
 				'subscriber_id' => $subscriber_id
 			);
 			self::$db_querier->insert(NewsletterSetup::$newsletter_table_subscriptions, $columns);
@@ -164,6 +201,10 @@ class NewsletterDAO
 			'user_id' => $user_id
 		);
 		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
+
+		$user = UserService::get_user($user_id);
+		$hook_description = StringVars::replace_vars($this->lang['newsletter.specific_hook.newsletter_unsubscribe.all'], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel()));
+		HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $this->lang['newsletter.subscriber.edit'], 'url' => NewsletterUrlBuilder::edit_subscriber($user_id)->rel()), $hook_description);
 	}
 
 	public static function unsubscriber_all_streams_visitor($mail)

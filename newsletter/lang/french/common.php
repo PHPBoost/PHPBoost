@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 28
+ * @version     PHPBoost 6.0 - last update: 2022 04 23
  * @since       PHPBoost 3.0 - 2011 03 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,6 +42,15 @@ $lang['newsletter.stream.edit']        = 'Modification d\'un flux';
 $lang['newsletter.stream.delete']      = 'Suppression d\'un flux';
 $lang['newsletter.stream.delete.clue'] = 'Vous êtes sur le point de supprimer le flux. Deux solutions s\'offrent à vous. Vous pouvez soit déplacer l\'ensemble de son contenu (newsletters et flux) dans un autre flux soit supprimer l\'ensemble du flux. <strong>Attention, cette action est irréversible !</strong>';
 $lang['newsletter.items.list']         = 'Liste des newsletters';
+
+//Hooks
+$lang['newsletter.specific_hook.newsletter_subscribe'] = 'Inscription aux newsletters';
+$lang['newsletter.specific_hook.newsletter_subscribe.description.single'] = 'L\'utilisateur <a href=":user_profile_url">:user_display_name</a> s\'est inscrit à la newsletter :streams_list';
+$lang['newsletter.specific_hook.newsletter_subscribe.description'] = 'L\'utilisateur <a href=":user_profile_url">:user_display_name</a> s\'est inscrit aux newsletters suivantes : :streams_list';
+$lang['newsletter.specific_hook.newsletter_unsubscribe'] = 'Désinscription des newsletters';
+$lang['newsletter.specific_hook.newsletter_unsubscribe.description.single'] = 'L\'utilisateur <a href=":user_profile_url">:user_display_name</a> s\'est désinscrit de la newsletter :streams_list';
+$lang['newsletter.specific_hook.newsletter_unsubscribe.description'] = 'L\'utilisateur <a href=":user_profile_url">:user_display_name</a> s\'est désinscrit des newsletters suivantes : :streams_list';
+$lang['newsletter.specific_hook.newsletter_unsubscribe.all'] = 'L\'utilisateur <a href=":user_profile_url">:user_display_name</a> s\'est désinscrit de toutes les newsletters';
 
 // Subscription
 $lang['newsletter.subscribe.streams']     = 'S\'abonner aux newsletters';
