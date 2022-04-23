@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -1070,6 +1070,12 @@ class UpdateServices
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/templates/base/theme/images/admin.jpg');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/body.tpl');
+		$file->delete();
+
+		$file = new File(PATH_TO_ROOT . '/templates/base/frame.tpl');
 		$file->delete();
 	}
 
