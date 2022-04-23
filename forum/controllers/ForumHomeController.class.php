@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 23
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -62,7 +62,7 @@ class ForumHomeController extends DefaultModuleController
 
 		//On liste les catégories et sous-catégories.
 		$result = PersistenceContext::get_querier()->select('SELECT
-			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description AS subname, c.url, c.thumbnail, c.icon, c.last_topic_id, c.status AS cat_status,
+			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description AS subname, c.url, c.thumbnail, c.icon, c.color, c.last_topic_id, c.status AS cat_status,
 			t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status,
 			m.user_id, m.display_name as login, m.level as user_level, m.user_groups,
 			v.last_view_id
@@ -110,13 +110,15 @@ class ForumHomeController extends DefaultModuleController
 			{
 
 				$this->view->assign_block_vars('forums_list.cats', array(
-					'C_HAS_THUMBNAIL'     => !empty($row['thumbnail']),
-					'C_HAS_CATEGORY_ICON' => !empty($row['icon']),
+					'C_HAS_THUMBNAIL'      => !empty($row['thumbnail']),
+					'C_HAS_CATEGORY_ICON'  => !empty($row['icon']),
+					'C_HAS_CATEGORY_COLOR' => !empty($row['color']),
 
-					'CATEGORY_ID'   => $row['cid'],
-					'CATEGORY_NAME' => $row['name'],
-					'CATEGORY_ICON' => $row['icon'],
-					'REWRITED_NAME' => $row['rewrited_name'],
+					'CATEGORY_ID'    => $row['cid'],
+					'CATEGORY_NAME'  => $row['name'],
+					'CATEGORY_ICON'  => $row['icon'],
+					'CATEGORY_COLOR' => $row['color'],
+					'REWRITED_NAME'  => $row['rewrited_name'],
 
 					'U_CATEGORY'           => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel(),
 					'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
@@ -220,12 +222,14 @@ class ForumHomeController extends DefaultModuleController
 						'C_LAST_TOPIC_MSG'        => !empty($row['last_topic_id']),
 						'C_HAS_THUMBNAIL'         => !empty($row['thumbnail']),
 						'C_HAS_CATEGORY_ICON'     => !empty($row['icon']),
+						'C_HAS_CATEGORY_COLOR'    => !empty($row['color']),
 						'C_LAST_MESSAGE_GUEST'    => ($row['last_user_id']) != '-1',
 
 						'TOPIC_ICON'            => $topic_icon,
 						'CATEGORY_ID'           => $row['cid'],
 						'CATEGORY_NAME'         => $row['name'],
 						'CATEGORY_ICON'         => $row['icon'],
+						'CATEGORY_COLOR'        => $row['color'],
 						'REWRITED_NAME'         => $row['rewrited_name'],
 						'DESCRIPTION'           => FormatingHelper::second_parse($row['subname']),
 						'SUBFORUMS'             => $subforums,

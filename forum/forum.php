@@ -111,7 +111,7 @@ if (!empty($id_get))
 
 		//On liste les sous-catégories.
 		$result = PersistenceContext::get_querier()->select('SELECT
-			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.thumbnail, c.icon, c.last_topic_id, c.status AS cat_status,
+			c.id AS cid, c.id_parent, c.name, c.rewrited_name, c.description as subname, c.url, c.thumbnail, c.icon, c.color, c.last_topic_id, c.status AS cat_status,
 			t.id AS tid, t.id_category, t.title, t.last_timestamp, t.last_user_id, t.last_msg_id, t.nbr_msg AS t_nbr_msg, t.display_msg, t.status,
 			m.user_id, m.display_name, m.level AS user_level, m.user_groups,
 			v.last_view_id
@@ -212,12 +212,14 @@ if (!empty($id_get))
 					'C_LAST_MESSAGE_GUEST'    => !empty($row['display_name']),
 					'C_HAS_THUMBNAIL'         => !empty($row['thumbnail']),
 					'C_HAS_CATEGORY_ICON'     => !empty($row['icon']),
+					'C_HAS_CATEGORY_COLOR'    => !empty($row['color']),
 					'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
 
 					'TOPIC_ICON'              => $topic_icon,
 					'CATEGORY_ID'             => $row['cid'],
 					'CATEGORY_NAME'           => stripslashes($row['name']),
 					'CATEGORY_ICON'           => $row['icon'],
+					'CATEGORY_COLOR'          => $row['color'],
 					'DESCRIPTION'             => stripslashes($row['subname']),
 					'REWRITED_NAME'           => $row['rewrited_name'],
 					'SUBFORUMS'               => !empty($subforums) && !empty($row['subname']) ? $subforums : $subforums,
@@ -298,12 +300,14 @@ if (!empty($id_get))
 		'C_POST_NEW_TOPIC'       => $check_group_write_auth,
 		'C_HAS_THUMBNAIL'        => !empty($categories_cache->get_category($id_get)->get_thumbnail()->rel()),
 		'C_HAS_CATEGORY_ICON'    => !empty($categories_cache->get_category($id_get)->get_icon()),
+		'C_HAS_CATEGORY_COLOR'   => !empty($categories_cache->get_category($id_get)->get_color()),
 
 		'FORUM_NAME'          => $config->get_forum_name(),
 		'PAGINATION'          => $pagination->display(),
 		'CATEGORY_ID'         => $id_get,
 		'CATEGORY_NAME'       => $category->get_name(),
 		'CATEGORY_ICON'       => $category->get_icon(),
+		'CATEGORY_COLOR'      => $category->get_color(),
 		'CURRENT_SUBCAT_NAME' => $current_subcat,
 
 		'U_MARK_AS_READ'       => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $id_get, '')),

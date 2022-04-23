@@ -27,7 +27,7 @@
 						<img class="forum-category-thumbnail" src="{forums_list.cats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.cats.CATEGORY_NAME}" />
 					# ELSE #
 						# IF forums_list.cats.C_HAS_CATEGORY_ICON #
-							<i class="{forums_list.cats.CATEGORY_ICON}"></i>
+							<i class="{forums_list.cats.CATEGORY_ICON}" aria-hidden="true"# IF forums_list.cats.C_HAS_CATEGORY_COLOR # style="color: {forums_list.cats.CATEGORY_COLOR}"# ENDIF #></i>
 						# ENDIF #
 					# ENDIF #
 				# ENDIF #
@@ -66,7 +66,7 @@
 										<img src="{forums_list.subcats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.subcats.CATEGORY_NAME}" />
 									# ELSE #
 										# IF forums_list.subcats.C_HAS_CATEGORY_ICON #
-											<i class="{forums_list.subcats.CATEGORY_ICON}"></i>
+											<i class="{forums_list.subcats.CATEGORY_ICON}" aria-hidden="true"# IF forums_list.subcats.C_HAS_CATEGORY_COLOR # style="color: {forums_list.subcats.CATEGORY_COLOR}"# ENDIF #></i>
 										# ENDIF #
 									# ENDIF #
 								</td>

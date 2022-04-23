@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 23
  * @since       PHPBoost 4.1 - 2015 05 15
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -113,6 +113,8 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			)
 		));
 
+		$fieldset->add_field(new FormFieldColorPicker('color', self::$lang['common.color'], $this->get_category()->get_color()));
+
 		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$lang['form.description'], $this->get_category()->get_description(),
 			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
 		));
@@ -182,6 +184,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$this->get_category()->set_additional_property('description', $this->form->get_value('description'));
 		$this->get_category()->set_additional_property('icon', $this->form->get_value('icon'));
 		$this->get_category()->set_additional_property('thumbnail', $this->form->get_value('thumbnail'));
+		$this->get_category()->set_additional_property('color', $this->form->get_value('color'));
 
 		if ($this->get_category()->get_type() == ForumCategory::TYPE_URL)
 			$this->get_category()->set_additional_property('url', $this->form->get_value('url'));
