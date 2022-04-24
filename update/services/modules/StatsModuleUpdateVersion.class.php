@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 21
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 5.2 - 2019 12 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -17,7 +17,6 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_files_list = array(
 			'/lang/french/stats_french.php',
 			'/lang/english/stats_english.php',
-			'/phpboost/StatsExtensionPointProvider.class.php',
 			'/phpboost/StatsHomePageExtensionPoint.class.php',
 			'/phpboost/StatsMenusExtensionPoint.class.php',
 			'/templates/admin_stats_management.tpl',
