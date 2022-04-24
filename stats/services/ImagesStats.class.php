@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 06 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -149,7 +149,7 @@ class ImagesStats
 
 					$text_x = $x_string - ($text_width/2);
 					$text_y = ($angle_tmp >= 0 && $angle_tmp <= 180 ) ? $y_string + ($text_height/2) + $height_3d : $y_string + ($text_height/2);
-					imagettftext($image, $font_size, 0, $text_x, $text_y, $black, $font, $text);
+					imagettftext($image, $font_size, 0, intval($text_x), intval($text_y), $black, $font, $text);
 
 					$angle += $angle_value;
 				}
@@ -186,7 +186,7 @@ class ImagesStats
 						//Texte
 						$text = TextHelper::ucfirst(TextHelper::substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 
-						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
+						imagettftext($image, $font_size, 0, intval($x_legend_extend + 24), intval($y_legend_extend + (16*$i) + 17), $black, $font, $text);
 						$i++;
 					}
 					else
@@ -268,7 +268,7 @@ class ImagesStats
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 
 						//Texte
-						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $name_value);
+						imagettftext($image, $font_size, 0, intval($x_legend_extend + 24), intval($y_legend_extend + (16*$i) + 17), $black, $font, $name_value);
 						$i++;
 					}
 					else
@@ -311,7 +311,7 @@ class ImagesStats
 					$array_size_ttf = imagettfbbox($font_size, 0, $font, $array_scale[$j]);
 					$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]) + 6;
 					$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-					imagettftext($image, $font_size, 0, $x_histo - $x_text, $scale_pos + ($y_text/2), $black, $font, $array_scale[$j]);
+					imagettftext($image, $font_size, 0, intval($x_histo - $x_text), intval($scale_pos + ($y_text/2)), $black, $font, $array_scale[$j]);
 
 					$j++;
 					$separator = 3;
@@ -379,14 +379,14 @@ class ImagesStats
 						$array_size_ttf = imagettfbbox($font_size, 0, $font, $value);
 						$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 						$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-						imagettftext($image, $font_size, 0, ($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2), $y_bar - $y_text, $black, $font, $value);
+						imagettftext($image, $font_size, 0, intval(($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2)), intval( $y_bar - $y_text), $black, $font, $value);
 					}
 				}
 				//Texte, info
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $name_value);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-				imagettftext($image, $font_size, 0, ($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2), $margin + $h_histo_content + $y_text + 4, $black, $font, $name_value);
+				imagettftext($image, $font_size, 0, intval(($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2)), intval($margin + $h_histo_content + $y_text + 4), $black, $font, $name_value);
 
 				$i++;
 			}
@@ -399,14 +399,14 @@ class ImagesStats
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[0]);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-				imagettftext($image, $font_size, 0, $x_histo + $w_histo_content - $x_text + $margin/2, $w_histo - $h_histo_content + $y_text/2, $black, $font, $scale_legend[0]);
+				imagettftext($image, $font_size, 0, intval($x_histo + $w_histo_content - $x_text + ($margin/2)), intval($w_histo - $h_histo_content + ($y_text/2)), $black, $font, $scale_legend[0]);
 			}
 			if (isset($scale_legend[1]))
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[1]);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-				imagettftext($image, $font_size, 0, $margin/2, $y_text, $black, $font, $scale_legend[1]);
+				imagettftext($image, $font_size, 0, intval($margin/2), intval($y_text), $black, $font, $scale_legend[1]);
 			}
 
 			//Affichage de l'image
@@ -545,7 +545,7 @@ class ImagesStats
 		$text_y = ($height/2) + ($text_height/2);
 
 		//Ecriture du code.
-		@imagettftext($thumbtail, $font_size, 0, $text_x, $text_y, $text_color, $font, 'Error Image');
+		@imagettftext($thumbtail, $font_size, 0, intval($text_x), intval($text_y), $text_color, $font, 'Error Image');
 
 		//Affichage de l'image
 		header('Content-type: image/png');
