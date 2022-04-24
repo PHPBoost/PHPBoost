@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -401,7 +401,7 @@ elseif ($submit)
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', 'media', array_merge($contribution->get_properties(), $properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
+				HooksService::execute_hook_action('process_contribution', 'media', array_merge($contribution->get_properties(), $properties, array('url' => Url::to_rel('/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php')))));
 			}
 		}
 
@@ -410,7 +410,7 @@ elseif ($submit)
 
 		MediaCategoriesCache::invalidate();
 
-		HooksService::execute_hook_action('edit', 'media', array_merge($properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
+		HooksService::execute_hook_action('edit', 'media', array_merge($properties, array('url' => Url::to_rel('/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php')))));
 
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
@@ -458,26 +458,26 @@ elseif ($submit)
 			);
 
 			ContributionService::save_contribution($media_contribution);
-			HooksService::execute_hook_action('add_contribution', 'media', array_merge($media_contribution->get_properties(), $properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
+			HooksService::execute_hook_action('add_contribution', 'media', array_merge($media_contribution->get_properties(), $properties, array('url' => Url::to_rel('/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php')))));
 
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
 		else
 		{
-			HooksService::execute_hook_action('add', 'media', array_merge($properties, array('item_url' => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'))));
+			HooksService::execute_hook_action('add', 'media', array_merge($properties, array('url' => Url::to_rel('/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php')))));
 			AppContext::get_response()->redirect('media' . url('.php?id=' . $new_id_media));
 		}
 	}
 	else
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
-        DispatchManager::redirect($error_controller);
+		DispatchManager::redirect($error_controller);
 	}
 }
 else
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
-    DispatchManager::redirect($error_controller);
+	DispatchManager::redirect($error_controller);
 }
 
 $view->display();
