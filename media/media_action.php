@@ -307,7 +307,7 @@ elseif ($submit)
 		{
 			$media['mime_type'] = 'audio/host';
 		}
-		elseif(Url::check_url_validity($media['file_url']))
+		else if(Url::check_wellformness($media['file_url']))
 		{
 			if (!empty($pathinfo['extension']))
 			{
@@ -321,17 +321,17 @@ elseif ($submit)
 					DispatchManager::redirect($controller);
 				}
 			}
-			elseif (isset($url_parsed['host']) && in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
+			else if (isset($url_parsed['host']) && in_array($url_parsed['host'], $host_ok) && in_array('video/host', $mime_type))
 			{
 				$media['mime_type'] = 'video/host';
 			}
-			elseif (function_exists('get_headers') && ($headers = get_headers($media['file_url']->relative(), 1)) && !empty($headers['Content-Type']))
+			else if (function_exists('get_headers') && ($headers = get_headers($media['file_url']->relative(), 1)) && !empty($headers['Content-Type']))
 			{
 				if (!is_array($headers['Content-Type']) && in_array($headers['Content-Type'], $mime_type))
 				{
 					$media['mime_type'] = $headers['Content-Type'];
 				}
-				elseif (is_array($headers['Content-Type']))
+				else if (is_array($headers['Content-Type']))
 				{
 					foreach ($headers['Content-Type'] as $type)
 					{
@@ -415,7 +415,7 @@ elseif ($submit)
 		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
 	}
 	// Add
-	elseif (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
+	else if (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
 	{
 		$properties = array(
 			'id_category'    => $media['id_category'],
