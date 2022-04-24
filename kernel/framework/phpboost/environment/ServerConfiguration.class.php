@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 11 09
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -14,7 +14,7 @@
 class ServerConfiguration
 {
 	const MIN_PHP_VERSION = '7.0';
-	const RECOMMENDED_PHP_VERSION = '7.3';
+	const RECOMMENDED_PHP_VERSION = '7.4';
 	private static $mod_rewrite = 'mod_rewrite';
 
 	/**
@@ -100,6 +100,14 @@ class ServerConfiguration
 	public function has_zip_library()
 	{
 		return @extension_loaded('zip');
+	}
+
+	/**
+	 * @return true if allow_url_fopen directive is enabled, else false.
+	 */
+	public function has_allow_url_fopen()
+	{
+		return ini_get('allow_url_fopen');
 	}
 
 	/**

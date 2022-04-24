@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -113,9 +113,11 @@ else
 	));
 }
 
+$server_configuration = new ServerConfiguration();
 $view->put_all(array(
-	'C_UPDATES' => $updates_availables,
-	'U_CHECK' => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
+	'C_AUTOMATIC_UPDATE_CHECK_AVAILABLE' => ((function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen()) || (function_exists('simplexml_load_string') && $server_configuration->has_curl_library())),
+	'C_UPDATES'                          => $updates_availables,
+	'U_CHECK'                            => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
 ));
 
 $view->display();

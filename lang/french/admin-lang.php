@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -256,5 +256,6 @@ $lang['admin.update.php.version']     = '
     Veuillez utiliser la version %s ou ultérieure de PHP.<br />
     Si vous ne pouvez utiliser PHP5, veuillez vérifier la présence de ces mises à jour sur notre <a href="https://www.phpboost.com">site officiel</a>.
 ';
+$lang['admin.update.verification.impossible'] = 'La vérification de présence de mises à jour est impossible, la fonction n\'est pas disponible sur votre serveur.<br/>Activez l\'extension Curl dans les options PHP de votre serveur pour faire fonctionner la vérification de disponibilité de mises à jour.';
 
 ?>

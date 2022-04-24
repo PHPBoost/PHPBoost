@@ -41,11 +41,17 @@
 					</article>
 				# END apps #
 			# ELSE #
-				<div class="message-helper bgc success message-helper-small">{@admin.no.available.update}</div>
+				# IF C_AUTOMATIC_UPDATE_CHECK_AVAILABLE #
+					<div class="message-helper bgc success message-helper-small">{@admin.no.available.update}</div>
+				# ELSE #
+					<div class="message-helper bgc warning message-helper-small">{@H|admin.update.verification.impossible}</div>
+				# ENDIF #
 			# ENDIF #
+			# IF C_AUTOMATIC_UPDATE_CHECK_AVAILABLE #
 			<p class="align-center">
 				<a href="{U_CHECK}" class="button link-color"><i class="fa fa-download" aria-hidden="true"></i> {@admin.updates.check}</a>
 			</p>
+			# ENDIF #
 		# ENDIF #
 		</div>
 	</fieldset>
