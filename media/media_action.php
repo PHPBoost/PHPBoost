@@ -51,7 +51,7 @@ if ($invisible > 0)
 		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
-	elseif (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
+	else if (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -70,7 +70,7 @@ if ($invisible > 0)
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
 }
 // Delete a file
-elseif ($delete > 0)
+else if ($delete > 0)
 {
 	AppContext::get_session()->csrf_get_protect();
 
@@ -86,7 +86,7 @@ elseif ($delete > 0)
 		$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'), $lang['e_unexist_media']);
 		DispatchManager::redirect($controller);
 	}
-	elseif (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
+	else if (!CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation())
 	{
 		$error_controller = PHPBoostErrors::user_not_authorized();
 		DispatchManager::redirect($error_controller);
@@ -114,7 +114,7 @@ elseif ($delete > 0)
 	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
 }
 // Add/edit form
-elseif ($add >= 0 && !$submit || $edit > 0)
+else if ($add >= 0 && !$submit || $edit > 0)
 {
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('content');
@@ -190,7 +190,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 		$location_id = 'media-edit-'. $edit;
 	}
 	// Add
-	elseif (($write = CategoriesAuthorizationsService::check_authorizations()->write()) || CategoriesAuthorizationsService::check_authorizations()->contribution())
+	else if (($write = CategoriesAuthorizationsService::check_authorizations()->write()) || CategoriesAuthorizationsService::check_authorizations()->contribution())
 	{
 		bread_crumb($add);
 
@@ -286,7 +286,7 @@ elseif ($submit)
 		$mime_type = $mime_type['audio'];
 		$host_ok = $host_ok['audio'];
 	}
-	elseif ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
+	else if ($category->get_content_type() == MediaConfig::CONTENT_TYPE_VIDEO)
 	{
 		$mime_type = $mime_type['video'];
 		$host_ok = $host_ok['video'];
@@ -307,7 +307,7 @@ elseif ($submit)
 		{
 			$media['mime_type'] = 'audio/host';
 		}
-		else if(Url::check_wellformness($media['file_url']))
+		else if(filter_var($media['file_url'], FILTER_VALIDATE_URL))
 		{
 			if (!empty($pathinfo['extension']))
 			{
