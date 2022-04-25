@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 09 09
+ * @version     PHPBoost 6.0 - last update: 2022 04 25
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -28,8 +28,9 @@ class MySQLDBConnection implements DBConnection
 		{
 			throw new DBConnectionException('Unable to load mysqli extension');
 		}
+		mysqli_report(MYSQLI_REPORT_OFF);
 
-		$mysqli_link = @mysqli_connect(
+		$mysqli_link = mysqli_connect(
 			$db_connection_data['host'],
 			$db_connection_data['login'],
 			$db_connection_data['password'],
@@ -58,7 +59,7 @@ class MySQLDBConnection implements DBConnection
 	{
 		if ($this->link !== null)
 		{
-			if (!@mysqli_close($this->link))
+			if (!mysqli_close($this->link))
 			{
 				throw new MySQLDBConnectionException('can\'t close database connection');
 			}
@@ -95,7 +96,7 @@ class MySQLDBConnection implements DBConnection
 
 	private function select_database($database)
 	{
-		if (!@mysqli_select_db($this->link, $database))
+		if (!mysqli_select_db($this->link, $database))
 		{
 			throw new MySQLUnexistingDatabaseException();
 		}
