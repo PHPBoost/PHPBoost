@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 24
+ * @version     PHPBoost 6.0 - last update: 2022 04 25
  * @since       PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -79,8 +79,8 @@ class ImagesStats
 	{
 		if (@extension_loaded('gd'))
 		{
-			$w_ellipse = $w_arc/2;
-			$h_ellipse = $h_arc/2;
+			$w_ellipse = (int)($w_arc/2);
+			$h_ellipse = (int)($h_arc/2);
 
 			list($x_ellipse, $y_ellipse, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
 			if ($draw_legend) //Tracé de la légende de l'ellipse.
@@ -91,9 +91,9 @@ class ImagesStats
 			if ($draw_percent) //Tracé des pourcentages autour de l'ellipse, calcul du décallage horizontal/vertical de l'ellipse.
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, '99.9%');
-				$x_ellipse = abs($array_size_ttf[2] - $array_size_ttf[0]) + 5;
+				$x_ellipse = (int)abs($array_size_ttf[2] - $array_size_ttf[0]) + 5;
 				$x_ellipse += ($x_ellipse * 10)/100; //Marge de 10% supplémentaire.
-				$y_ellipse = abs($array_size_ttf[7] - $array_size_ttf[1]) + 30;
+				$y_ellipse = (int)abs($array_size_ttf[7] - $array_size_ttf[1]) + 30;
 				$y_ellipse += ($y_ellipse * 12)/100;
 			}
 
@@ -134,10 +134,10 @@ class ImagesStats
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
 
 					//Calcul des coordonées cartésiennes.
-					$angle_tmp = (2*$angle + $angle_value) / 2;
+					$angle_tmp = (int)((2*$angle + $angle_value) / 2);
 					$angle_string = deg2rad($angle_tmp);
-					$x_string = ($w_ellipse * 1.2) * cos($angle_string) + $w_ellipse + $x_ellipse;
-					$y_string = ($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse;
+					$x_string =(int)(($w_ellipse * 1.2) * cos($angle_string) + $w_ellipse + $x_ellipse);
+					$y_string = (int)(($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse);
 
 					//Texte
 					$text = ($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%';
@@ -279,8 +279,8 @@ class ImagesStats
 			//Génération de l'histogramme.
 			$margin = 21;
 			$array_size_ttf = imagettfbbox($font_size, 0, $font, $max_element);
-			$x_histo = abs($array_size_ttf[2] - $array_size_ttf[0]) + $margin;
-			$y_histo = abs($array_size_ttf[7] - $array_size_ttf[1]) + $margin;
+			$x_histo = (int)(abs($array_size_ttf[2] - $array_size_ttf[0]) + $margin);
+			$y_histo = (int)(abs($array_size_ttf[7] - $array_size_ttf[1]) + $margin);
 			$h_histo_content = $h_histo - $y_histo - $margin;
 			$w_histo_content = $w_histo - $margin - $x_histo;
 
@@ -351,24 +351,24 @@ class ImagesStats
 				if ($value != 0)
 				{
 					//Bordure.
-					imagerectangle($image, $x_bar + $width_bar/3, $y_bar - 4, $x2_bar + $width_bar/3 + 1, $y2_bar, $black);
+					imagerectangle($image, intval($x_bar + $width_bar/3), $y_bar - 4, intval($x2_bar + $width_bar/3 + 1), $y2_bar, $black);
 					//Barre sombre
-					imagefilledrectangle($image, $x_bar + $width_bar/3, $y_bar - 3, $x2_bar + $width_bar/3, $y2_bar, $color_bar_dark);
+					imagefilledrectangle($image, intval($x_bar + $width_bar/3), $y_bar - 3, intval($x2_bar + $width_bar/3), $y2_bar, $color_bar_dark);
 					//Bordure.
 					imagerectangle($image, $x_bar - 1, $y_bar - 1, $x2_bar + 1, $y2_bar + 1, $black);
 					//Barre
 					imagefilledrectangle($image, $x_bar, $y_bar, $x2_bar, $y2_bar, $color_bar);
 					//Chapeau
 					$polygon_point = array(
-						$x_bar + $width_bar/3, $y_bar - 4,
-						$x2_bar + $width_bar/3 + 1, $y_bar - 4,
+						intval($x_bar + $width_bar/3), $y_bar - 4,
+						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
 					imagefilledpolygon($image, $polygon_point, 4, $color_bar_dark);
 					$polygon_point = array(
-						$x_bar + $width_bar/3, $y_bar - 4,
-						$x2_bar + $width_bar/3 + 1, $y_bar - 4,
+						intval($x_bar + $width_bar/3), $y_bar - 4,
+						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
@@ -482,7 +482,7 @@ class ImagesStats
 			$max_element++;
 
 		$scale = $max_element;
-		$scale_iteration = $max_element/3;
+		$scale_iteration = (int)($max_element/3);
 		for ($i = 0; $i < 4; $i++)
 		{
 			$array_scale[$i] = NumberHelper::round(abs($scale), 0);
