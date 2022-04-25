@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 26
  * @since       PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -111,7 +111,7 @@ class InstallWebsiteConfigController extends InstallController
 			$this->form->add_fieldset($fieldset);
 
 			$default_captcha = $this->distribution_config['default_captcha'];
-			$default_captcha::display_config_form_fields($fieldset);
+			$default_captcha::display_config_form_fields($fieldset, $this->locale);
 		}
 
 		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
