@@ -307,7 +307,7 @@ elseif ($submit)
 		{
 			$media['mime_type'] = 'audio/host';
 		}
-		else if(filter_var($media['file_url'], FILTER_VALIDATE_URL))
+		else if(!filter_var($media['file_url'], FILTER_VALIDATE_URL) == false)
 		{
 			if (!empty($pathinfo['extension']))
 			{
