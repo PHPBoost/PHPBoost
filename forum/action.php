@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 004 27
+ * @version     PHPBoost 6.0 - last update: 2022 04 27
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -13,7 +13,7 @@ require_once('../forum/forum_begin.php');
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 require_once('../kernel/header_no_display.php');
 
-//Variable GET.
+// Variable GET.
 $idt_get = (int)retrieve(GET, 'id', 0);
 $idm_get = (int)retrieve(GET, 'idm', 0);
 $del = (bool)retrieve(GET, 'del', false);
@@ -22,7 +22,7 @@ $read = (bool)retrieve(GET, 'read', false);
 $msg_d = (bool)retrieve(GET, 'msg_d', false);
 $lock_get = retrieve(GET, 'lock', '');
 $page_get = (int)retrieve(GET, 'p', 1);
-$selected = (string) retrieve(GET, 'selected', '');
+$selected = (bool)retrieve(GET, 'selected', '');
 
 $track = retrieve(GET, 't', '');
 $untrack = retrieve(GET, 'ut', '');
