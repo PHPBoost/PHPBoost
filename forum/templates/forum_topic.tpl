@@ -208,11 +208,6 @@
 				<div class="message-header-infos">
 					<div class="message-user-container">
 						<h3 class="message-user-name">
-							<span
-								class="smaller"
-								aria-label="# IF msg.C_USER_ONLINE #{@user.online}# ELSE #{@user.offline}# ENDIF #">
-								<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
-							</span>
 							# IF msg.C_FORUM_USER_LOGIN #
 								<span class="{msg.FORUM_USER_LEVEL}" # IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>
 									{msg.FORUM_USER_LOGIN}
@@ -231,6 +226,9 @@
 									<a href="{msg.usergroups.U_USERGROUP}" class="user-group small group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
 								# END msg.usergroups #
 							# ENDIF #
+							<span aria-label="# IF msg.C_USER_ONLINE #{@user.online}# ELSE #{@user.offline}# ENDIF #">
+								<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
+							</span>
 							# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL} small">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
 						</div>
 					</div>
