@@ -247,7 +247,7 @@
 
 								  	# IF msg.C_AUTHORIZE_SELECTED #
 									   	# IF msg.C_IS_SELECTED #
-									   		<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-circle" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
+									   		<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-check" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
 									   	# ELSE #
 									   		<a href="action{msg.U_SET_MSG_AS_SELECTED}"><i class="fa fa-check-circle" aria-hidden="true" aria-label="{@forum.set.as.selected}"></i></a>
 									   	# END IF #
