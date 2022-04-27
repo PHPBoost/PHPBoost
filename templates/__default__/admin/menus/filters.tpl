@@ -36,7 +36,7 @@
 								<label for="filter_module{filters.ID}" class="label-sup grouped-element"><span>{@common.module}</span>
 									<select name="filter_module{filters.ID}" id="filter_module{filters.ID}">
 										# START filters.modules #
-											<option value="{filters.modules.ID}"{filters.modules.SELECTED}>{filters.modules.ID}</option>
+											<option value="{filters.modules.ID}"{filters.modules.SELECTED}>{filters.modules.NAME}</option>
 										# END filters.modules #
 									</select>
 								</label>

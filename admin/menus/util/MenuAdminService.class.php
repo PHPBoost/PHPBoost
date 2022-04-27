@@ -92,6 +92,7 @@ class MenuAdminService
 				{
 					$filter_tpl->assign_block_vars('filters.modules', array(
 						'ID' => $module->get_id(),
+						'NAME' => $configuration->get_name(),
 						'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
 					));
 				}
