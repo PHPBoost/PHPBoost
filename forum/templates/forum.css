@@ -2,6 +2,7 @@
 * Copy this file into your theme to customize the module.
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
+
 /* thumbnail */
 .forum-thumbnail img,
 .forum-category-thumbnail {
@@ -45,6 +46,8 @@ article header ul.pagination,
 article footer ul.pagination { display: inline; }
 
 /*--- Topic details --- */
+.selected-message { background-color: rgba(var(--success-rgb-t), 0.2);}
+
 .user-group { display: block; }
 
 .forum-post-form .fieldset-submit {

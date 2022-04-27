@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 07
+ * @version     PHPBoost 6.0 - last update: 2022 04 27
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -192,7 +192,7 @@ $quote_last_msg = ($page > 1) ? 1 : 0; //On enlève 1 au limite si on est sur un
 $i = 0;
 $j = 0;
 $result = PersistenceContext::get_querier()->select("SELECT
-	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content,
+	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content, msg.selected,
 	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.user_groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
 	p.question, p.answers, p.voter_id, p.votes, p.type,
 	ext_field.user_avatar,
@@ -380,6 +380,8 @@ while ( $row = $result->fetch() )
 		'C_CONTROLS'                  => $moderator,
 		'C_USER_PM'                   => !$is_guest && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'C_QUOTE_LAST_MESSAGE'        => $quote_last_msg == 1 && $i == 0,
+        'C_IS_SELECTED'               => $row['selected'] == 1,
+        'C_AUTHORIZE_SELECTED' 		  => $topic['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL),
 
 		'ID'                          => $row['id'],
 		'CLASS_COLOR'                 => ($j%2 == 0) ? '' : 2,
@@ -407,7 +409,9 @@ while ( $row = $result->fetch() )
 		'U_CUT_TOPIC'                 => url('.php?idm=' . $row['id']),
 		'U_VARS_ANCHOR'               => Url::to_rel('/forum/topic.php?id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '/forum/topic-' . $id_get . (!empty($page) ? '-' . $page : '') . $rewrited_title . '.php'),
 		'U_QUOTE'                     => url('.php?quote=' . $row['id'] . '&amp;id=' . $id_get . (!empty($page) ? '&amp;pt=' . $page : ''), '-' . $id_get . (!empty($page) ? '-' . $page : '-0') . '-0-' . $row['id'] . $rewrited_title . '.php'),
-		'U_USER_PM'                   => UserUrlBuilder::personnal_message($row['user_id'])->rel()
+		'U_USER_PM'                   => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
+		'U_SET_MSG_AS_SELECTED'   	  => url('.php?selected=true&idm=' . $row['id']),
+		'U_SET_MSG_AS_UNSELECTED' 	  => url('.php?selected=false&idm=' . $row['id']),
 	)));
 
 	//Affichage des groupes du membre.

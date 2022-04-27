@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 04 27
  * @since       PHPBoost 3.0 - 2010 05 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -143,7 +143,8 @@ class ForumSetup extends DefaultModuleSetup
 			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'timestamp_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
 			'user_id_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_ip' => array('type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''")
+			'user_ip' => array('type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''"),
+			'selected' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 		);
 		$options = array(
 			'primary' => array('id'),
@@ -361,7 +362,8 @@ class ForumSetup extends DefaultModuleSetup
 			'timestamp'      => time(),
 			'timestamp_edit' => 0,
 			'user_id_edit'   => 0,
-			'user_ip'        => AppContext::get_request()->get_ip_address()
+			'user_ip'        => AppContext::get_request()->get_ip_address(),
+			'selected'       => 0,
 		));
 
 		//Mise à jour du nombre de messages du membre.

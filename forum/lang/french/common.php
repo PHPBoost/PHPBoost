@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 27
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -162,6 +162,8 @@ $lang['forum.for.selection']          = 'Pour la sélection';
 $lang['forum.change.issue.status.to'] = 'Mettre le statut: %s';
 $lang['forum.default.issue.status']   = 'Mettre le statut par défaut';
 $lang['forum.no.moderation']          = 'Aucune action';
+$lang['forum.set.as.selected']        = 'Sélectionner comme meilleure réponse';
+$lang['forum.set.as.unselected']      = 'Désélectionner comme meilleure réponse';
     // Reports
         // User reports
 $lang['forum.reports.management']        = 'Gestion des signalements';

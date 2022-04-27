@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 23
+ * @version     PHPBoost 6.0 - last update: 2022 04 27
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -33,6 +33,12 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 					'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 					'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
 					'color' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
+				)
+			),
+			array(
+				'table_name' => PREFIX . 'forum_msg',
+				'columns' => array(
+					'selected' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
 				)
 			),
 		);

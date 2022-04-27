@@ -247,6 +247,14 @@
 									# IF C_AUTH_POST #<a class="offload" href="topic{msg.U_QUOTE}#go-bottom" aria-label="{@forum.quote.message}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT #<a class="offload" href="post{msg.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 
+								  	# IF msg.C_AUTHORIZE_SELECTED #
+									   	# IF msg.C_IS_SELECTED #
+									   		<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-circle" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
+									   	# ELSE #
+									   		<a href="action{msg.U_SET_MSG_AS_SELECTED}"><i class="fa fa-check-circle" aria-hidden="true" aria-label="{@forum.set.as.selected}"></i></a>
+									   	# END IF #
+								   	# END IF #
+
 									# IF msg.C_DELETE #
 										# IF msg.C_DELETE_MESSAGE #
 											<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" id="dimgnojs{msg.ID}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
@@ -346,7 +354,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="message-content">
+			<div class="message-content# IF msg.C_IS_SELECTED # selected-message# ENDIF #">
 
 				# IF msg.C_QUOTE_LAST_MESSAGE # <p class="message-helper bgc notice">{@forum.quote.last.message}</p> # ENDIF #
 

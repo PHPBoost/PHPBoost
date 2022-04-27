@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 27
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -157,11 +157,13 @@ $lang['forum.reload.unread.messages'] = 'Reload unread messages';
 $lang['forum.mark.topics.as.read']    = 'Mark all topics as read';
 
 // Moderation
-$lang['forum.moderation.forum'] = 'Forum moderation';
-$lang['forum.for.selection'] = 'For the selection';
+$lang['forum.moderation.forum']       = 'Forum moderation';
+$lang['forum.for.selection']          = 'For the selection';
 $lang['forum.change.issue.status.to'] = 'Set status: %s';
-$lang['forum.default.issue.status'] = 'Set default status';
-$lang['forum.no.moderation'] = 'No action';
+$lang['forum.default.issue.status']   = 'Set default status';
+$lang['forum.no.moderation']          = 'No action';
+$lang['forum.set.as.selected']        = 'Set as best answer';
+$lang['forum.set.as.unselected']      = 'Unset as best answer';
     // Reports
         // User reports
 $lang['forum.reports.management']        = 'Reports management';
