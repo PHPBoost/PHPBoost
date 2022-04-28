@@ -226,10 +226,10 @@
 									<a href="{msg.usergroups.U_USERGROUP}" class="user-group small group-{msg.usergroups.USERGROUP_ID} offload"# IF msg.usergroups.C_USERGROUP_COLOR # style="color: {msg.usergroups.USERGROUP_COLOR}"# ENDIF #>{msg.usergroups.USERGROUP_NAME}</a>
 								# END msg.usergroups #
 							# ENDIF #
+							# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL} small">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
 							<span aria-label="# IF msg.C_USER_ONLINE #{@user.online}# ELSE #{@user.offline}# ENDIF #">
 								<i class="fa # IF msg.C_USER_ONLINE #fa-user-check success# ELSE #fa-user-times error# ENDIF #" aria-hidden="true"></i>
 							</span>
-							# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL} small">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
 						</div>
 					</div>
 					<div class="message-infos">
@@ -247,9 +247,9 @@
 
 								  	# IF msg.C_AUTHORIZE_SELECTED #
 									   	# IF msg.C_IS_SELECTED #
-									   		<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-check" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
+									   		<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-check-circle success" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
 									   	# ELSE #
-									   		<a href="action{msg.U_SET_MSG_AS_SELECTED}"><i class="fa fa-check-circle" aria-hidden="true" aria-label="{@forum.set.as.selected}"></i></a>
+									   		<a href="action{msg.U_SET_MSG_AS_SELECTED}"><i class="fa fa-check" aria-hidden="true" aria-label="{@forum.set.as.selected}"></i></a>
 									   	# END IF #
 								   	# END IF #
 
