@@ -9,7 +9,7 @@
 # IF C_FORUM_SUB_CATS #
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-subforum" class="forum-content">
 		<header class="flex-between">
-			<h2>
+			<div class="forum-category-title">
 				# IF C_THUMBNAILS_DISPLAYED #
 					# IF C_HAS_THUMBNAIL #
 						<img class="forum-category-thumbnail" src="{U_CATEGORY_THUMBNAIL}" alt="{CURRENT_SUBCAT_NAME}" />
@@ -18,9 +18,11 @@
 							<i class="{CATEGORY_ICON}" aria-hidden="true"# IF C_HAS_CATEGORY_COLOR # style="color: {CATEGORY_COLOR}"# ENDIF #></i>
 						# ENDIF #
 					# ENDIF #
-				# ENDIF # {CURRENT_SUBCAT_NAME}
-				{@forum.sub.forums}
-			</h2>
+				# ENDIF #
+				<h2 class="d-inline-block">
+					{CURRENT_SUBCAT_NAME} <span class="smaller">{@forum.sub.forums}</span>
+				</h2>
+			</div>
 			<div class="controls">
 				<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}"><i class="fa fa-rss warning" aria-hidden="true"></i><span class="sr-only">{@common.syndication}</span></a>
 			</div>

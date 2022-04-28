@@ -21,7 +21,7 @@
 	</script>
 	<article itemscope="itemscope" itemtype="https://schema.org/Creativework" id="article-forum-{forums_list.cats.CATEGORY_ID}" class="forum-content">
 		<header class="flex-between">
-			<h2>
+			<div class="forum-category-title">
 				# IF C_THUMBNAILS_DISPLAYED #
 					# IF forums_list.cats.C_HAS_THUMBNAIL #
 						<img class="forum-category-thumbnail" src="{forums_list.cats.U_CATEGORY_THUMBNAIL}" alt="{forums_list.cats.CATEGORY_NAME}" />
@@ -31,8 +31,10 @@
 						# ENDIF #
 					# ENDIF #
 				# ENDIF #
-				<a href="{forums_list.cats.U_CATEGORY}" class="forum-link-cat offload">{forums_list.cats.CATEGORY_NAME}</a>
-			</h2>
+				<h2 class="d-inline-block">
+					<a href="{forums_list.cats.U_CATEGORY}" class="forum-link-cat offload">{forums_list.cats.CATEGORY_NAME}</a>
+				</h2>
+			</div>
 			<div class="controls">
 				<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',forums_list.cats.CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning" aria-hidden="true"></i></a>
 				# IF C_DISPLAY_UNREAD_DETAILS #
