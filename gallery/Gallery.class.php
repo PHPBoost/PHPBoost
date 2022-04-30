@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 05 01
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -269,6 +269,7 @@ class Gallery
 	{
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
 		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, array('id_category' => $id_category, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
+		HooksService::execute_hook_action('add', 'gallery', array('id' => $result->get_last_inserted_id(), 'title' => ($name ? $name : $path), 'url' => Url::to_rel('/gallery/gallery' . url('.php?cat=' . $id_category . '&amp;id=' . $result->get_last_inserted_id(), '-' . $id_category . '-' . $result->get_last_inserted_id() . '.php'))));
 		return $result->get_last_inserted_id();
 	}
 
@@ -276,7 +277,7 @@ class Gallery
 	public function Del_pics($id_pics)
 	{
 		try {
-			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('path', 'id_category', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
+			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('name', 'path', 'id_category', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -296,6 +297,7 @@ class Gallery
 			NotationService::delete_notes_id_in_module('gallery', $id_pics);
 
 			CommentsService::delete_comments_topic_module('gallery', $id_pics);
+			HooksService::execute_hook_action('delete', 'gallery', array('id' => $id_pics, 'title' => ($info_pics['name'] ? $info_pics['name'] : $info_pics['path'])));
 		}
 	}
 
