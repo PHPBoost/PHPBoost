@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 22
+ * @version     PHPBoost 6.0 - last update: 2022 04 30
  * @since       PHPBoost 2.0 - 2008 07 08
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -191,6 +191,7 @@ class LinksMenu extends LinksMenuElement
 			else
 			{
 				$tpl->put_all(array(
+					'C_MENU_HEADER'     => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER)),
 					'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
 					'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
 					'C_MENU_VERTICAL'   => $this->type == self::VERTICAL_MENU,
