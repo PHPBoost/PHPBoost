@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 24
+ * @version     PHPBoost 6.0 - last update: 2022 04 30
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -23,15 +23,15 @@ class Repository
 	{
 		$this->url = $url;
 		$server_configuration = new ServerConfiguration();
-		if (function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen())
+		if (function_exists('simplexml_load_string') && $server_configuration->has_curl_library())
 		{
-			$this->xml = simplexml_load_file($this->url);
+			$this->xml = simplexml_load_string($this->get_xml_content_with_curl($this->url));
 			if ($this->xml == false)
 				$this->xml = null;
 		}
-		else if (function_exists('simplexml_load_string') && $server_configuration->has_curl_library())
+		else if (function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen())
 		{
-			$this->xml = simplexml_load_string($this->get_xml_content_with_curl($this->url));
+			$this->xml = simplexml_load_file($this->url);
 			if ($this->xml == false)
 				$this->xml = null;
 		}
