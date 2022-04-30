@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 25
+ * @version     PHPBoost 6.0 - last update: 2022 04 30
  * @since       PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -79,8 +79,11 @@ class ImagesStats
 	{
 		if (@extension_loaded('gd'))
 		{
+			$w_arc = (int)$w_arc;
+			$h_arc = (int)$h_arc;
 			$w_ellipse = (int)($w_arc/2);
 			$h_ellipse = (int)($h_arc/2);
+			$height_3d = (int)$height_3d;
 
 			list($x_ellipse, $y_ellipse, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
 			if ($draw_legend) //Tracé de la légende de l'ellipse.
@@ -226,6 +229,8 @@ class ImagesStats
 	{
 		if (@extension_loaded('gd'))
 		{
+			$w_histo = (int)$w_histo;
+			$h_histo = (int)$h_histo;
 			$max_element = max($this->data_stats);
 			$max_element = max(array($max_element, 1));
 			list($x_histo, $y_histo, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
