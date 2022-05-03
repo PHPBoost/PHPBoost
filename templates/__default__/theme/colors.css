@@ -22,7 +22,7 @@ body {
 .bgc-alt	{ background-color: var(--bgc-alt); color: var(--txt-alt); }
 
 #footer       { border-color: var(--bdr-alt); }
-.footer-infos { border-color: var(--bdr-alt); }
+#footer-infos { border-color: var(--bdr-alt); }
 
 .scroll-to   	 { background-color: var(--bgc-alt); }
 .scroll-to:hover { background-color: var(--main-light); }
@@ -491,7 +491,7 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 .small-screen.cssmenu ul ul,
 .small-screen.cssmenu-actionslinks ul {
 	box-shadow: 0 0 0 transparent;
-	background-color: transparent; 
+	background-color: transparent;
 }
 
 .cssmenu-actionslinks .menu-button:after {

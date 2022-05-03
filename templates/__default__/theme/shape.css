@@ -173,10 +173,6 @@ body {
 	}
 
 	#main.main-with-left,
-	#main.main-with-right,
-	#main.main-with-left.main-with-right { flex: 1 0 auto; }
-
-	#main.main-with-left,
 	#main.main-with-right { width: calc(100% - (100% / 13 * 5)); }
 
 	#main.main-with-left.main-with-right { width: calc(100% - (100% / 13 * 8)); }
