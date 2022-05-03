@@ -55,7 +55,8 @@ body {
 #visit-counter {
 	position: absolute;
 	right: 1.618em;
-	top : 92.5%;
+	top : 100%;
+	transform: translateY(-50%);
 	font-size: 0.9em;
 	text-align: right;
 	min-width: 150px;
