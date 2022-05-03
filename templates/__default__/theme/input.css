@@ -183,7 +183,7 @@ a.grouped-element,
 }
 
 .grouped-inputs label,
-.grouped-inputs button,
+.grouped-inputs .button,
 .grouped-inputs span,
 .grouped-inputs a {
 	display: flex;
@@ -192,12 +192,12 @@ a.grouped-element,
 	align-items: center;
 }
 
-.grouped-inputs button {
+.grouped-inputs .button {
 	justify-content: center;
 	width: auto;
 }
 
-.grouped-inputs .cssmenu-select button {
+.grouped-inputs .cssmenu-select .button {
 	justify-content: center;
 }
 
@@ -217,9 +217,9 @@ a.grouped-element,
 
 .grouped-inputs .cssmenu-select span { padding: 0; }
 
-.grouped-inputs button i,
+.grouped-inputs .button i,
 .grouped-inputs a i,
-.grouped-inputs button span,
+.grouped-inputs .button span,
 .grouped-inputs a span {
 	align-self: center;
 }
