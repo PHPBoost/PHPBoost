@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2022 05 05
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -133,6 +133,9 @@ $lang['menu.push.expansion.type']         = 'Type of tab expansion';
 $lang['menu.push.expansion.type.overlap'] = 'Overlap';
 $lang['menu.push.expansion.type.expand']  = 'Expand';
 $lang['menu.push.expansion.type.none']    = 'None';
+$lang['menu.push.open']    = 'Open menu';
+$lang['menu.push.close']   = 'Close menu';
+$lang['menu.push.submenu'] = 'Submenu';
     // Links menu form
 $lang['menu.add.item']     = 'Add item';
 $lang['menu.add.sub.menu'] = 'Add submenu';

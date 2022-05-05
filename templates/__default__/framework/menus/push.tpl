@@ -25,6 +25,7 @@
 
 <script>
     jQuery('#pushmenu-{ID}').pushmenu({
+		open: 'Menu',
 		customToggle: jQuery('.toggle-{ID}'), // null
 		navTitle: '{TITLE}', // null
 		pushContent: '{PUSHED_CONTENT}',
@@ -42,7 +43,12 @@
 		insertClose: true,
 		labelClose: ${escapejs(LangLoader::get_message('common.close', 'common-lang'))},
 		insertBack: true,
-		labelBack: ${escapejs(LangLoader::get_message('common.back', 'common-lang'))}
+		labelBack: ${escapejs(LangLoader::get_message('common.back', 'common-lang'))},
+		ariaLabels: {
+		 	open:    ${escapejs(LangLoader::get_message('menu.push.open', 'menu-lang'))},
+		  	close:   ${escapejs(LangLoader::get_message('menu.push.close', 'menu-lang'))},
+		  	submenu: ${escapejs(LangLoader::get_message('menu.push.submenu', 'menu-lang'))}
+		}
     });
 </script>
 

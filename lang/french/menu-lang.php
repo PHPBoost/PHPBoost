@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 11
+ * @version     PHPBoost 6.0 - last update: 2022 05 05
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -133,6 +133,9 @@ $lang['menu.push.expansion.type']         = 'Déploiement des onglets';
 $lang['menu.push.expansion.type.overlap'] = 'Par chevauchement';
 $lang['menu.push.expansion.type.expand']  = 'Par en dessous';
 $lang['menu.push.expansion.type.none']    = 'Aucun';
+$lang['menu.push.open']    = 'Ouvrir le menu';
+$lang['menu.push.close']   = 'Fermer le menu';
+$lang['menu.push.submenu'] = 'Sous-menu';
     // Links menu form
 $lang['menu.add.item']     = 'Ajouter un élément';
 $lang['menu.add.sub.menu'] = 'Ajouter un sous-menu';
