@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2022 05 11
  * @since       PHPBoost 3.0 - 2010 03 02
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class HTMLTableLikeTextSQLFilter extends HTMLTableTextFilter implements SQLFragmentBuilder
@@ -28,7 +29,15 @@ class HTMLTableLikeTextSQLFilter extends HTMLTableTextFilter implements SQLFragm
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' LIKE :' . $parameter_name;
-		$parameters = array($parameter_name => $this->get_value());
+		
+		if (strpos($this->get_value(), '*') === false && strpos($this->get_value(), '%') === false)
+			$value = '%' . $this->get_value() . '%';
+		else if (strpos($this->get_value(), '*') !== false)
+			$value = str_replace('*', '%', $this->get_value());
+		else
+			$value = $this->get_value();
+		
+		$parameters = array($parameter_name => $value);
 		return new SQLFragment($query, $parameters);
 	}
 
