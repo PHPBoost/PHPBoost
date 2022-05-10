@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 05 10
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -227,6 +227,7 @@ class UserRegistrationController extends AbstractController
 
 		if (!$has_error && $user_id)
 		{
+			HooksService::execute_hook_action('user_registration', 'user', array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())));
 			UserRegistrationService::send_email_confirmation($user_id, $user->get_email(), $this->form->get_value('display_name'), $login, $this->form->get_value('password'), $registration_pass);
 
 			$this->confirm_registration($user_id);

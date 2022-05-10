@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 22
+ * @version     PHPBoost 6.0 - last update: 2022 05 10
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -241,6 +241,8 @@ $lang['user.associate.account']          = 'Associate your account';
 $lang['user.associate.account.admin']    = 'Associate an account';
 $lang['user.dissociate.account']         = 'Dissociate your account';
 $lang['user.dissociate.account.admin']   = 'Dissociate the account';
+
+$lang['user.change.profile.field.description'] = 'Field :field was changed from :old_value to :new_value.';
 
 // Registration
 $lang['user.registered']    = 'Registered';

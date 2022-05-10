@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 04
+ * @version     PHPBoost 6.0 - last update: 2022 05 10
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -171,6 +171,39 @@ abstract class Hook implements ExtensionPoint
 	 * @param string $description Optional description of the action
 	 */
 	public function on_user_change_level_action($user_id, array $properties, $description = '')
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after user email change if needed.
+	 * @param string $user_id Id of the user whom email is changed
+	 * @param string[] $properties Properties of the user (id, display_name, ...)
+	 * @param string $description Optional description of the action
+	 */
+	public function on_user_change_email_action($user_id, array $properties, $description = '')
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after user display name change if needed.
+	 * @param string $user_id Id of the user whom display name is changed
+	 * @param string[] $properties Properties of the user (id, display_name, ...)
+	 * @param string $description Optional description of the action
+	 */
+	public function on_user_change_display_name_action($user_id, array $properties, $description = '')
+	{
+		return true;
+	}
+
+	/**
+	 * @desc Execute action after a new user registration if needed.
+	 * @param string $user_id Id of the user who just registered
+	 * @param string[] $properties Properties of the user (id, display_name, ...)
+	 * @param string $description Optional description of the action
+	 */
+	public function on_user_registration_action($user_id, array $properties, $description = '')
 	{
 		return true;
 	}

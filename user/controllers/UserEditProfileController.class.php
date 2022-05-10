@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 05
+ * @version     PHPBoost 6.0 - last update: 2022 05 10
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -310,6 +310,7 @@ class UserEditProfileController extends AbstractController
 		$has_error = false;
 
 		$user_id = $this->user->get_id();
+		$user_properties = array_merge($this->user->get_properties(), array('email' => $this->user->get_email()));
 
 		$approbation = $this->internal_auth_infos ? $this->internal_auth_infos['approved'] : true;
 		if (AppContext::get_current_user()->is_admin())
@@ -332,7 +333,7 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_level($level);
 			
 			if ($old_level != $level)
-				HooksService::execute_hook_action('user_change_level', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())), UserService::get_level_lang($this->user->get_level()));
+				HooksService::execute_hook_action('user_change_level', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())), UserService::get_level_lang($this->user->get_level()));
 		}
 
 		if ($this->form->has_field('theme'))
@@ -340,7 +341,6 @@ class UserEditProfileController extends AbstractController
 			$this->user->set_theme($this->form->get_value('theme')->get_raw_value());
 		}
 
-		$this->user->set_locale($this->form->get_value('lang')->get_raw_value());
 		$this->form->get_field_by_id('display_name')->enable();
 		$this->user->set_display_name($this->form->get_value('display_name'));
 		$this->form->get_field_by_id('email')->enable();
@@ -429,7 +429,7 @@ class UserEditProfileController extends AbstractController
 			if (!empty($user_warning) && $user_warning != $this->user->get_warning_percentage())
 			{
 				MemberSanctionManager::caution($user_id, $user_warning, MemberSanctionManager::SEND_MP, str_replace('%level%', $user_warning, $this->lang['user.warning.level.changed']));
-				HooksService::execute_hook_action('user_warning', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'warning_percentage' => $user_warning)), $user_warning . ' %');
+				HooksService::execute_hook_action('user_warning', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'warning_percentage' => $user_warning)), $user_warning . ' %');
 			}
 			elseif (empty($user_warning))
 			{
@@ -440,7 +440,7 @@ class UserEditProfileController extends AbstractController
 			if (!empty($user_readonly) && $user_readonly != $this->user->get_delay_readonly())
 			{
 				MemberSanctionManager::remove_write_permissions($user_id, time() + $user_readonly, MemberSanctionManager::SEND_MP, str_replace('%date%', $this->form->get_value('user_readonly')->get_label(), $this->lang['user.readonly.changed']));
-				HooksService::execute_hook_action('user_punishment', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_readonly' => $user_readonly)), isset($sanctions_duration[$user_readonly]) ? $sanctions_duration[$user_readonly] : '');
+				HooksService::execute_hook_action('user_punishment', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_readonly' => $user_readonly)), isset($sanctions_duration[$user_readonly]) ? $sanctions_duration[$user_readonly] : '');
 			}
 			elseif (empty($user_readonly))
 			{
@@ -451,7 +451,7 @@ class UserEditProfileController extends AbstractController
 			if (!empty($user_ban) && $user_ban != $this->user->get_delay_banned())
 			{
 				MemberSanctionManager::banish($user_id, time() + $user_ban, MemberSanctionManager::SEND_MAIL);
-				HooksService::execute_hook_action('user_ban', $user_id, array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_banned' => $user_ban)), isset($sanctions_duration[$user_ban]) ? $sanctions_duration[$user_ban] : '');
+				HooksService::execute_hook_action('user_ban', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel(), 'delay_banned' => $user_ban)), isset($sanctions_duration[$user_ban]) ? $sanctions_duration[$user_ban] : '');
 			}
 			elseif ($user_ban != $this->user->get_delay_banned())
 			{
@@ -460,6 +460,18 @@ class UserEditProfileController extends AbstractController
 		}
 		SessionData::recheck_cached_data_from_user_id($user_id);
 
+		if ($this->user->get_display_name() != $user_properties['display_name'])
+		{
+			$description = StringVars::replace_vars($this->lang['user.change.profile.field.description'], array('field' => $this->lang['user.display.name'], 'old_value' => $user_properties['display_name'], 'new_value' => $this->user->get_display_name()));
+			HooksService::execute_hook_action('user_change_display_name', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())),$description);
+		}
+
+		if ($this->user->get_email() != $user_properties['email'])
+		{
+			$description = StringVars::replace_vars($this->lang['user.change.profile.field.description'], array('field' => $this->lang['user.email'], 'old_value' => $user_properties['email'], 'new_value' => $this->user->get_email()));
+			HooksService::execute_hook_action('user_change_email', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())),$description);
+		}
+		
 		if (!$has_error)
 		{
 			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : UserUrlBuilder::edit_profile($user_id)), $this->lang['user.message.success.edit']);
