@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 09
+ * @version     PHPBoost 6.0 - last update: 2022 05 13
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -98,11 +98,12 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'USER_LEVEL_CLASS'            => UserService::get_level_class($user->get_level()),
 					'USER_GROUP_COLOR'            => $user_group_color,
 
-					'U_USER_PROFILE' => UserUrlBuilder::profile($user->get_id())->rel(),
-					'U_USER_PM'      => UserUrlBuilder::personnal_message($user->get_id())->rel(),
-					'U_USER_AVATAR'  => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
+					'U_USER_PUBLICATIONS' => UserUrlBuilder::publications($user->get_id())->rel(),
+					'U_USER_PROFILE'      => UserUrlBuilder::profile($user->get_id())->rel(),
+					'U_USER_PM'           => UserUrlBuilder::personnal_message($user->get_id())->rel(),
+					'U_USER_AVATAR'       => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
 				));
-				
+
 				$this->display_additional_menus($view, $user);
 			}
 			else
