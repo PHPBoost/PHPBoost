@@ -33,10 +33,12 @@
 						# ENDIF #
 					</a>
 				# ELSE #
-					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" class="cssmenu-img cssmenu-img-level-{DEPTH}" /># ENDIF #
-					# IF C_ICON #
-						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON} # ENDIF #
-					# ENDIF #
+					<span class="cssmenu-img cssmenu-img-level-{DEPTH}">
+						# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" class="cssmenu-img cssmenu-img-level-{DEPTH}" /># ENDIF #
+						# IF C_ICON #
+							# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #{ICON} # ENDIF #
+						# ENDIF #
+					</span>
 				# ENDIF #
 			# ENDIF #
 			<ul class="level-{DEPTH}# IF NOT C_MENU_CONTAINER ## IF C_IMG # menu-with-img# ENDIF ## ENDIF #"># START elements #{elements.DISPLAY}# END elements #</ul>
