@@ -4,24 +4,7 @@
  *
 */
 
-.explorer .cats,
-.explorer .files {
-	width: 100%;
-	display: inline-block;
-	vertical-align: top;
-}
-
 .explorer h2 { font-size: 1.618em; }
-
-@media (min-width: 481px) {
-	.explorer .cats,
-	.explorer .files { width: calc(100% / 2.1); }
-}
-
-.explorer .cats { min-width: 200px; }
-
-.form-field .explorer,
-.form-field .explorer .cats { width: 100%; }
 
 .explorer .content {
 	padding: 0;
