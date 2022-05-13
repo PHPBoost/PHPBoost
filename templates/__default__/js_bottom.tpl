@@ -140,7 +140,7 @@
 
 // Display the page only when it's loaded
 	jQuery(window).ready(function() {
-  		jQuery('.content-preloader').animate({opacity: 1, visibility: 'visible'}, 300);
+  		jQuery('.content-preloader').animate({opacity: 1}, 300);
 	});
 </script>
 

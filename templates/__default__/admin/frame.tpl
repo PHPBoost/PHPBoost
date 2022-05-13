@@ -29,7 +29,9 @@
 
 		<script>
 			jQuery(window).ready(function() {
-				jQuery('#preloader-status').animate({opacity: 0}, 100).animate({height: 0}, 200);
+				jQuery('#preloader-status').animate({opacity: 0}, 100).animate({height: 0}, 200, function(){
+					jQuery('#preloader-status').css('visibility', 'hidden');
+				});
 			});
 		</script>
 		# INCLUDE JS_BOTTOM #
