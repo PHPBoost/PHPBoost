@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2021 02 16
+ * @version     PHPBoost 5.2 - last update: 2022 05 13
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -101,7 +101,9 @@ class Url
 				$url = 'http://' . $url;
 			}
 
-			$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`uUi', '', self::compress($url));
+			if (AppContext::get_request()->get_site_domain_name())
+				$url = preg_replace('`^https?://' . AppContext::get_request()->get_site_domain_name() . GeneralConfig::load()->get_site_path() . '`uUi', '', self::compress($url));
+			
 			if (!TextHelper::strpos($url, '://') && TextHelper::substr($url, 0, 2) != '//')
 			{
 				$this->is_relative = true;
