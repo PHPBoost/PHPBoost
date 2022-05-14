@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 23
+ * @version     PHPBoost 6.0 - last update: 2022 05 14
  * @since       PHPBoost 3.0 - 2011 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -196,6 +196,7 @@ class NewsletterDAO
 		$parameters = array(
 			'subscriber_id' => $subscriber_id
 		);
+		$subscriptions_number = self::$db_querier->count(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters);
 		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscriptions, $condition, $parameters);
 
 		$condition = "WHERE user_id = :user_id";
@@ -204,10 +205,13 @@ class NewsletterDAO
 		);
 		self::$db_querier->delete(NewsletterSetup::$newsletter_table_subscribers, $condition, $parameters);
 
-		$user = UserService::get_user($user_id);
-		$lang = LangLoader::get_module_langs('newsletter');
-		$hook_description = StringVars::replace_vars($lang['newsletter.specific_hook.newsletter_unsubscribe.all'], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel()));
-		HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $lang['newsletter.module.title'], 'url' => NewsletterUrlBuilder::home()->rel()), $hook_description);
+		if ($subscriptions_number)
+		{
+			$user = UserService::get_user($user_id);
+			$lang = LangLoader::get_module_langs('newsletter');
+			$hook_description = StringVars::replace_vars($lang['newsletter.specific_hook.newsletter_unsubscribe.all'], array('user_display_name' => $user->get_display_name(), 'user_profile_url' => UserUrlBuilder::profile($user->get_id())->rel()));
+			HooksService::execute_hook_action('newsletter_unsubscribe', 'newsletter', array('title' => $lang['newsletter.module.title'], 'url' => NewsletterUrlBuilder::home()->rel()), $hook_description);
+		}
 	}
 
 	public static function unsubscriber_all_streams_visitor($mail)
