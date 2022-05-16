@@ -165,7 +165,7 @@ body {
 	.narrow-menu { width: calc(100% / 13 * 2.5); }
 
 	#menu-left.narrow-menu-left   { margin-right: 0.809em; }
-	#menu-right.narrow-menu-right { margin-left: 0.809em; }
+	#menu-right.narrow-menu-right { margin-left: 0.809em;  }
 
 	#main {
 		padding: 0.618em 0 1.618em;

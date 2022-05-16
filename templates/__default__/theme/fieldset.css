@@ -64,7 +64,7 @@ fieldset[id*="_captcha_fieldset"] .fieldset-inset {
 	align-items: center;
 }
 
-.horizontal-fieldset .horizontal-fieldset-element { align-self: stretch;}
+.horizontal-fieldset .horizontal-fieldset-element { align-self: stretch; }
 
 .horizontal-fieldset-desc,
 .grouped-inputs .horizontal-fieldset-desc { padding: 0.618em; }

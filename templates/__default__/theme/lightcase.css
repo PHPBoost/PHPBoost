@@ -20,11 +20,11 @@
 }
 
 .lightcase-icon-play:before  { content: '\f04b'; }
-.lightcase-icon-pause:before { content: '\f04c';}
-.lightcase-icon-close:before {content: '\f057';}
-.lightcase-icon-prev:before  {content: '\f137';}
-.lightcase-icon-next:before  {content: '\f138';}
-.lightcase-icon-spin:before  {content: '\f110';}
+.lightcase-icon-pause:before { content: '\f04c'; }
+.lightcase-icon-close:before { content: '\f057'; }
+.lightcase-icon-prev:before  { content: '\f137'; }
+.lightcase-icon-next:before  { content: '\f138'; }
+.lightcase-icon-spin:before  { content: '\f110'; }
 
 a[class*='lightcase-icon-'] {
     position: fixed;
@@ -130,7 +130,6 @@ a[class*='lightcase-icon-'].lightcase-icon-play {
 }
 
 @media screen and (max-width: 768px) {
-
     html[data-lc-type=inline] #lightcase-case,
     html[data-lc-type=ajax] #lightcase-case {
         position: fixed !important;
@@ -157,9 +156,7 @@ a[class*='lightcase-icon-'].lightcase-icon-play {
 
 html[data-lc-type=inline] #lightcase-content,
 html[data-lc-type=ajax] #lightcase-content,
-html[data-lc-type=error] #lightcase-content {
-    box-shadow: none;
-}
+html[data-lc-type=error] #lightcase-content { box-shadow: none; }
 
 @media screen and (max-width: 768px) {
     html[data-lc-type=inline] #lightcase-content,
@@ -180,7 +177,7 @@ html[data-lc-type=error] #lightcase-content {
 @media screen and (max-width: 768px) {
     html[data-lc-type=inline] #lightcase-content .lightcase-contentInner,
     html[data-lc-type=ajax] #lightcase-content .lightcase-contentInner,
-    html[data-lc-type=error] #lightcase-content .lightcase-contentInner {padding: 15px;}
+    html[data-lc-type=error] #lightcase-content .lightcase-contentInner { padding: 15px; }
 
     html[data-lc-type=inline] #lightcase-content .lightcase-contentInner,
     html[data-lc-type=inline] #lightcase-content .lightcase-contentInner > *,

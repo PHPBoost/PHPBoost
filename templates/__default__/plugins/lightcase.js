@@ -12,7 +12,7 @@
  *
  * @patch       1 : jQuery 3.1
  * @patch       2 : Take into account show_pics.php?...&ext= for module gallery
- * @patch       3 : Font Awesome 5 for icon then leave the lightcase font
+ * @patch       3 : Font Awesome 6 for icon then leave the lightcase font
  * @patch       title => aria-label
 */
 

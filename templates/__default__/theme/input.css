@@ -25,17 +25,15 @@
 	}
 }
 
-.button:hover  { transition: all 0.3s ease-in-out; text-decoration: none;}
+.button:hover  { transition: all 0.3s ease-in-out; text-decoration: none; }
 .button:active { transition: all 0.2s linear; }
 
 .button.image img { vertical-align: sub; }
 
 [disabled],
-[readonly] {
-	cursor: not-allowed;
-}
+[readonly] { cursor: not-allowed; }
 
-[disabled]{ opacity: 0.8; }
+[disabled] { opacity: 0.8; }
 
 [type="text"],
 [type="email"],
@@ -71,14 +69,10 @@ textarea {
 	resize: vertical;
 }
 
-.form-element-textarea textarea {
-	width: 100%;
-}
+.form-element-textarea textarea { width: 100%; }
 
 .form-field-select select,
-.form-field-multi-select select {
-	max-width: 100%;
-}
+.form-field-multi-select select { max-width: 100%; }
 
 .multiple-select-list {
 	border-width: 1px;
@@ -95,9 +89,7 @@ optgroup {
 	font-weight: bold;
 }
 
-option {
-	padding: 0 0.228em;
-}
+option { padding: 0 0.228em; }
 
 @media (min-width: 769px) {
 	[type="text"],
@@ -167,9 +159,7 @@ option {
 	border-style: solid;
 }
 
-.grouped-auto .grouped-element {
-	border-width: 1px;
-}
+.grouped-auto .grouped-element { border-width: 1px; }
 
 a.grouped-element,
 .grouped-element:last-child,
@@ -178,9 +168,7 @@ a.grouped-element,
 	border-style: solid;
 }
 
-.grouped-element * {
-	border: none;
-}
+.grouped-element * { border: none; }
 
 .grouped-inputs label,
 .grouped-inputs .button,
@@ -197,41 +185,29 @@ a.grouped-element,
 	width: auto;
 }
 
-.grouped-inputs .cssmenu-select .button {
-	justify-content: center;
-}
+.grouped-inputs .cssmenu-select .button { justify-content: center; }
 
 .grouped-inputs .grouped-element input:not([type="checkbox"]):not([type="radio"]),
-.grouped-inputs .grouped-element select {
-	width: 100%;
-}
+.grouped-inputs .grouped-element select { width: 100%; }
 
-.grouped-inputs span {
-	padding: 0.228em 0.618em;
-}
+.grouped-inputs span { padding: 0.228em 0.618em; }
 
 .grouped-inputs .cssmenu-select span,
-.grouped-inputs .cssmenu-select a {
-	justify-content: flex-start;
-}
+.grouped-inputs .cssmenu-select a { justify-content: flex-start; }
 
 .grouped-inputs .cssmenu-select span { padding: 0; }
 
 .grouped-inputs .button i,
 .grouped-inputs a i,
 .grouped-inputs .button span,
-.grouped-inputs a span {
-	align-self: center;
-}
+.grouped-inputs a span { align-self: center; }
 
 .grouped-inputs a {
 	text-decoration: none;
 	padding: 0 0.618em;
 }
 
-.grouped-inputs a:hover {
-	text-decoration: none;
-}
+.grouped-inputs a:hover { text-decoration: none; }
 
 .grouped-area {
 	margin: 0;
@@ -239,23 +215,17 @@ a.grouped-element,
 }
 
 .grouped-inputs .input-hours,
-.grouped-inputs .input-minutes {
-    padding-left: 0.618em;
-}
+.grouped-inputs .input-minutes { padding-left: 0.618em; }
 
 /* --- inputs with sup labels --- */
-.grouped-inputs.large-inputs-group {
-	flex-wrap: wrap;
-}
+.grouped-inputs.large-inputs-group { flex-wrap: wrap; }
 
 .inputs-with-sup > span {
 	width: 100%;
 	border-width: 1px;
 }
 
-.inputs-with-sup .label-sup {
-	position: relative;
-}
+.inputs-with-sup .label-sup { position: relative; }
 
 .inputs-with-sup .label-sup span {
 	display: none;
@@ -272,18 +242,14 @@ a.grouped-element,
 		min-width: 100%;
 	}
 
-	.grouped-inputs.inputs-with-sup {
-		margin: 1.228em 0 0;
-	}
+	.grouped-inputs.inputs-with-sup { margin: 1.228em 0 0; }
 
 	.inputs-with-sup > span {
 		width: auto;
 		border-width: 1px 0 1px 1px;
 	}
 
-	.inputs-with-sup .label-sup span {
-		display: inline-block;
-	}
+	.inputs-with-sup .label-sup span { display: inline-block; }
 }
 
 /* --- Fake select with pictures -------------------------------------------- */

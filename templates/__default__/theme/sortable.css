@@ -80,10 +80,6 @@
 
 .sortable-block .sortable-element hr { margin-top: 0.309em; }
 
-.sortable-block .sortable-element label {
-	/* margin-left: 0.809em; */
-}
-
 .sortable-block .sortable-actions img,
 .sortable-block .sortable-element:hover label,
 .sortable-block .sortable-element .fa:hover { cursor: pointer; }

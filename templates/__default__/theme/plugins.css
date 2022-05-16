@@ -15,6 +15,7 @@
 [data-accordion],
 [data-modal],
 [data-tabs] { cursor: pointer; }
+
 .content-panel { padding: 0.618em; }
 
 /* --- Multitabs Accordion -------------------------------------------------- */
@@ -49,7 +50,7 @@
 
 .accordion-container > .accordion-nav > ul > li > a:after {
     position: absolute;
-    font-family: 'Font Awesome 6 free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     top: 50%;
     transform: translateY(-50%);
@@ -98,7 +99,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 
 .modal-btn:after {
     position: absolute;
-    font-family: 'Font Awesome 6 free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     top: 50%;
     transform: translateY(-50%);
@@ -121,13 +122,13 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 .modal-animation {
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s;
+    transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5) 0.3s;
 }
 
 .modal-animation.active-panel {
     opacity: 1;
     visibility: visible;
-    transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5);
+    transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
 }
 
 .modal .content-panel {
@@ -137,12 +138,12 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     width: 100%;
     left: 50%;
     transform: translateX(-50%);
-    transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5);
+    transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
 }
 
 .modal.active-panel .content-panel {
     top: 2.618em;
-    transition: all 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s;
+    transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5) 0.3s;
 }
 
 .modal .content-panel .button { padding: 0.228em 0.618em; }
@@ -161,7 +162,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     top: 0.309em;
     right: 0.309em;
     font-size: 1.608em;
-    font-family: 'Font Awesome 6 free';
+    font-family: 'Font Awesome 6 Free';
     font-weight: 400;
     content: '\f057';
 }
@@ -214,7 +215,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 .tabs-animation.active-panel {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s cubic-bezier(0.5,0.5,0.5,0.5) 0.3s, height 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5) 0.3s, height 0.3s ease;
 }
 
 /* --- tooltip -------------------------------------------------------------- */

@@ -197,9 +197,9 @@ a.pinned { cursor: pointer; }
 .d-block 	    { display: block; }
 .d-inline-block { display: inline-block; }
 
-.span-mobile { display: block;}
+.span-mobile { display: block; }
 @media (min-width:769px) {
-	.span-mobile { display: inline;}
+	.span-mobile { display: inline; }
 }
 
 /* --- Sizes --- */
@@ -209,11 +209,11 @@ a.pinned { cursor: pointer; }
 	.w20  { width: 20% !important;  }
 	.w25  { width: 25% !important;  }
 	.w30  { width: 30% !important;  }
-	.w33  { width: calc(100% / 3) !important;  }
+	.w33  { width: calc(100% / 3) !important; }
 	.w40  { width: 40% !important;  }
 	.w50  { width: 50% !important;  }
 	.w60  { width: 60% !important;  }
-	.w66  { width: calc(100% / 3 * 2) !important;  }
+	.w66  { width: calc(100% / 3 * 2) !important; }
 	.w70  { width: 70% !important;  }
 	.w75  { width: 75% !important;  }
 	.w80  { width: 80% !important;  }
@@ -296,8 +296,7 @@ strong,
 .flag-icon { margin: 0 0.309em 0 0; }
 
 /* --- Opacity --- */
-.low-opacity {
-	opacity: 0.40; }
+.low-opacity { opacity: 0.40; }
 
 /* --- Debug --- */
 .error-handler {
@@ -328,12 +327,12 @@ strong,
 
 /* --- Announces & messaging icons ------------------------------------------ */
 .fa-announce:before,
-.fa-announce-new:before 		{ content: "\f075"; } /* copy comment */
+.fa-announce-new:before 	 { content: "\f075"; } /* copy comment */
 .fa-announce-hot:before,
-.fa-announce-new-hot:before 	{ content: "\f086"; } /* copy comments */
+.fa-announce-new-hot:before  { content: "\f086"; } /* copy comments */
 .fa-announce-lock:before,
-.fa-announce-new-lock:before 	{ content: "\f023"; } /* copy lock */
+.fa-announce-new-lock:before { content: "\f023"; } /* copy lock */
 .fa-announce-post:before,
-.fa-announce-new-post:before 	{ content: "\f08d"; } /* copy exclamation-triangle */
+.fa-announce-new-post:before { content: "\f08d"; } /* copy exclamation-triangle */
 .fa-announce-top:before,
-.fa-announce-new-top:before 	{ content: "\f0a1"; } /* copy exclamation-circle */
+.fa-announce-new-top:before  { content: "\f0a1"; } /* copy exclamation-circle */

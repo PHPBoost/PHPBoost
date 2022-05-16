@@ -33,7 +33,7 @@ body {
 /* --- Content -------------------------------------------------------------- */
 /* Item thumbnail */
 @media (min-width: 769px) {
-	.item-thumbnail { background-color: var(--bgc-main); }
+	.item-thumbnail 			{ background-color: var(--bgc-main); }
 	.prime-item .item-thumbnail { background-color: var(--bgc-sub); }
 }
 
@@ -42,7 +42,7 @@ body {
 
 /* --- Prime item --- */
 table tbody tr.prime-item td,
-.prime-item { background-color: var(--bgc-sub);}
+.prime-item { background-color: var(--bgc-sub); }
 
 /* --- Pagination --- */
 .pagination-item a { border-color: var(--bdr-main); }
@@ -92,7 +92,7 @@ table tbody tr.prime-item td,
 .static-notation .star { color: var(--star-tone); }
 
 /* --- Sortables --- */
-.sortable-element { border-color: var(--bdr-main); }
+.sortable-element 		{ border-color: var(--bdr-main); }
 .sortable-element:hover { background-color: rgba(var(--main-rgb-t), 0.05); }
 
 .sortable-selector:after { color: var(--main-tone); }
@@ -435,7 +435,7 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 pre[style*="display:inline"] { background-color: var(--bgc-sub); }
 
-pre.precode { background-color: var(--bgc-sub); }
+pre.precode 			 { background-color: var(--bgc-sub); }
 pre.precode .line-number { border-color: var(--bdr-sub); }
 
 h2.formatter-title,
@@ -453,21 +453,19 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 
 /* -- cssmenu.css ----------------------------------------------------------- */
 .cssmenu ul ul,
-.cssmenu-actionslinks > ul  {
-	background-color: var(--bgc-main);
-}
+.cssmenu-actionslinks > ul  { background-color: var(--bgc-main); }
 
-.cssmenu-horizontal ul ul { box-shadow: 0 7px 10px rgba(var(--main-rgb-t), 0.15); }
+.cssmenu-horizontal ul ul 	 { box-shadow: 0 7px 10px rgba(var(--main-rgb-t), 0.15); }
 .cssmenu-horizontal ul ul ul { box-shadow: 7px 0 10px rgba(var(--main-rgb-t), 0.15); }
 
-.cssmenu-vertical.cssmenu-left ul ul { box-shadow: 7px 0 10px rgba(var(--main-rgb-t), 0.15); }
+.cssmenu-vertical.cssmenu-left ul ul  { box-shadow: 7px 0 10px rgba(var(--main-rgb-t), 0.15); }
 .cssmenu-vertical.cssmenu-right ul ul { box-shadow: -7px 0 10px rgba(var(--main-rgb-t), 0.15); }
 
-.cssmenu-actionslinks > ul { box-shadow: 0 7px 10px rgba(var(--main-rgb-t), 0.15); }
+.cssmenu-actionslinks > ul 	  { box-shadow: 0 7px 10px rgba(var(--main-rgb-t), 0.15); }
 .cssmenu-actionslinks > ul ul { box-shadow: -7px 0 10px rgba(var(--main-rgb-t), 0.15); }
 
 @media (min-width: 769px) {
-	.cssmenu ul > li:hover > .cssmenu-title  { background-color: rgba(var(--main-rgb-t), 0.1); }
+	.cssmenu ul > li:hover > .cssmenu-title    { background-color: rgba(var(--main-rgb-t), 0.1); }
 	.cssmenu ul > li.current > .cssmenu-title  { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 	.cssmenu-group .cssmenu-title { border-color: var(--bdr-alt); }
@@ -516,9 +514,6 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 .small-screen .submenu-button.submenu-opened:after { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 /* --- pushmenu ------------------------------------------------------------- */
-
-/* .pushmenu h2 { color: var(--txt-main); } */
-
 .pushmenu::after,
 .pushmenu .nav-wrapper::after { background-color: rgba(var(--darken), 0.3); }
 
@@ -540,9 +535,7 @@ a.nav-next { border-color: var(--bdr-main); }
 .pushmenu:not(.touch-device) .nav-item-link:hover { background-color: rgba(var(--main-rgb-t), 0.1); }
 
 .pushmenu .nav-close a,
-.pushmenu .nav-back a {
-    background-color: rgba(var(--main-rgb-t), 0.2);
-}
+.pushmenu .nav-back a { background-color: rgba(var(--main-rgb-t), 0.2); }
 
 .pushmenu .nav-close span::before,
 .pushmenu .nav-close span::after { border-color: var(--txt-main); }
@@ -653,9 +646,7 @@ a[class*='lightcase-icon-']:hover {
 
 .wizard-container .wizard-header li .active-step { background-color: rgba(var(--main-rgb-t), 0.1); }
 
-.wizard-container .wizard-header a:hover {
-    color: var(--main-tone);
-}
+.wizard-container .wizard-header a:hover { color: var(--main-tone); }
 
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
@@ -693,7 +684,7 @@ a,
 	border-color: var(--bdr-alt);
 }
 
-.bgc.link-color { background-color: rgba(var(--main-rgb-t), 0.2);}
+.bgc.link-color { background-color: rgba(var(--main-rgb-t), 0.2); }
 
 .bgc-full.link-color {
 	background-color: var(--bgc-alt);
@@ -705,7 +696,7 @@ a,
 	border-color: var(--logo-tone);
 }
 
-.bgc.logo-color { background-color: rgba(var(--logo-rgb-t), 0.2);}
+.bgc.logo-color { background-color: rgba(var(--logo-rgb-t), 0.2); }
 
 .bgc-full.logo-color {
 	background-color: var(--logo-tone);
@@ -723,9 +714,9 @@ a:hover,
 	border-color: var(--star-tone);
 }
 
-.bgc-full:hover.link-color { color: var(--txt-alt)}
+.bgc-full:hover.link-color { color: var(--txt-alt); }
 
-.bgc.link-color-alt { background-color: rgba(var(--star-rgb-t), 0.2);}
+.bgc.link-color-alt { background-color: rgba(var(--star-rgb-t), 0.2); }
 
 .bgc-full.link-color-alt {
 	background-color: var(--star-tone);
@@ -737,7 +728,7 @@ a:hover,
 	border-color: var(--star-tone);
 }
 
-.bgc-full:hover.link-color-alt { color: var(--txt-alt)}
+.bgc-full:hover.link-color-alt { color: var(--txt-alt); }
 
 .dropdown-container {
 	background-color: var(--bgc-main);
@@ -756,7 +747,7 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 
 /* --- Colors classes --------------------------------------------------------------- */
 .floating-element,
-.message-helper { background-color: var(--bgc-main) }
+.message-helper { background-color: var(--bgc-main); }
 
 .button.notice, .notice 			  { color: var(--notice-tone); 	 	  border-color: var(--notice-tone); }
 .button.question, .question 		  { color: var(--question-tone); 	  border-color: var(--question-tone); }
@@ -769,16 +760,16 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .button.moderator, .moderator 		  { color: var(--moderator-tone); 	  border-color: var(--moderator-tone); }
 .button.administrator, .administrator { color: var(--administrator-tone); border-color: var(--administrator-tone); }
 
-.button.notice:hover        { color: var(--notice-light); 		 border-color: var(--notice-light);}
-.button.question:hover      { color: var(--question-light); 	 border-color: var(--question-light);}
-.button.success:hover       { color: var(--success-light); 		 border-color: var(--success-light);}
-.button.warning:hover       { color: var(--warning-light); 		 border-color: var(--warning-light);}
-.button.error:hover         { color: var(--error-light); 		 border-color: var(--error-light);}
-.button.visitor:hover       { color: var(--visitor-light); 		 border-color: var(--visitor-light);}
-.button.custom-author:hover { color: var(--custom-author-light); border-color: var(--custom-author-light);}
-.button.member:hover        { color: var(--member-light); 		 border-color: var(--member-light);}
-.button.moderator:hover     { color: var(--moderator-light); 	 border-color: var(--moderator-light);}
-.button.administrator:hover { color: var(--administrator-light); border-color: var(--administrator-light);}
+.button.notice:hover        { color: var(--notice-light); 		 border-color: var(--notice-light); }
+.button.question:hover      { color: var(--question-light); 	 border-color: var(--question-light); }
+.button.success:hover       { color: var(--success-light); 		 border-color: var(--success-light); }
+.button.warning:hover       { color: var(--warning-light); 		 border-color: var(--warning-light); }
+.button.error:hover         { color: var(--error-light); 		 border-color: var(--error-light); }
+.button.visitor:hover       { color: var(--visitor-light); 		 border-color: var(--visitor-light); }
+.button.custom-author:hover { color: var(--custom-author-light); border-color: var(--custom-author-light); }
+.button.member:hover        { color: var(--member-light); 		 border-color: var(--member-light); }
+.button.moderator:hover     { color: var(--moderator-light); 	 border-color: var(--moderator-light); }
+.button.administrator:hover { color: var(--administrator-light); border-color: var(--administrator-light); }
 
 .bgc.notice        { background-color: rgba(var(--notice-rgb-t), 0.2); }
 .bgc.question      { background-color: rgba(var(--question-rgb-t), 0.2); }
@@ -797,16 +788,16 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc-full a,
 .bgc-full:hover a { color: rgba(var(--txt-rgb-a), 0.5) !important; }
 
-.bgc-full.notice        { background-color: var(--notice-tone); 	   border-color: var(--notice-tone);}
-.bgc-full.question      { background-color: var(--question-tone); 	   border-color: var(--question-tone);}
-.bgc-full.success       { background-color: var(--success-tone); 	   border-color: var(--success-tone);}
-.bgc-full.warning       { background-color: var(--warning-tone); 	   border-color: var(--warning-tone);}
-.bgc-full.error         { background-color: var(--error-tone); 		   border-color: var(--error-tone);}
-.bgc-full.visitor       { background-color: var(--visitor-tone); 	   border-color: var(--visitor-tone);}
-.bgc-full.custom-author { background-color: var(--custom-author-tone); border-color: var(--custom-author-tone);}
-.bgc-full.member        { background-color: var(--member-tone); 	   border-color: var(--member-tone);}
-.bgc-full.moderator     { background-color: var(--moderator-tone); 	   border-color: var(--moderator-tone);}
-.bgc-full.administrator { background-color: var(--administrator-tone); border-color: var(--administrator-tone);}
+.bgc-full.notice        { background-color: var(--notice-tone); 	   border-color: var(--notice-tone); }
+.bgc-full.question      { background-color: var(--question-tone); 	   border-color: var(--question-tone); }
+.bgc-full.success       { background-color: var(--success-tone); 	   border-color: var(--success-tone); }
+.bgc-full.warning       { background-color: var(--warning-tone); 	   border-color: var(--warning-tone); }
+.bgc-full.error         { background-color: var(--error-tone); 		   border-color: var(--error-tone); }
+.bgc-full.visitor       { background-color: var(--visitor-tone); 	   border-color: var(--visitor-tone); }
+.bgc-full.custom-author { background-color: var(--custom-author-tone); border-color: var(--custom-author-tone); }
+.bgc-full.member        { background-color: var(--member-tone); 	   border-color: var(--member-tone); }
+.bgc-full.moderator     { background-color: var(--moderator-tone); 	   border-color: var(--moderator-tone); }
+.bgc-full.administrator { background-color: var(--administrator-tone); border-color: var(--administrator-tone); }
 
 .bgc-full:hover.notice        { background-color: var(--notice-light); }
 .bgc-full:hover.question      { background-color: var(--question-light); }
@@ -819,6 +810,6 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc-full:hover.moderator     { background-color: var(--moderator-light); }
 .bgc-full:hover.administrator { background-color: var(--administrator-light); }
 
-.member-only    { border-color: var(--member-tone);}
-.moderator-only { border-color: var(--moderator-tone);}
-.teaser::after  { background-image: linear-gradient(to top, rgba(var(--lighten), 1) 0%, rgba(var(--lighten), 0) 100%);}
+.member-only    { border-color: var(--member-tone); }
+.moderator-only { border-color: var(--moderator-tone); }
+.teaser::after  { background-image: linear-gradient(to top, rgba(var(--lighten), 1) 0%, rgba(var(--lighten), 0) 100%); }

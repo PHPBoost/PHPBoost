@@ -141,7 +141,7 @@ tfoot td select { padding: 0.1618em 0.309em; }
 .bt tfoot td .bt-content,
 .bt tbody td .bt-content { vertical-align: top; }
 
-.bt thead th:first-child{ display: block; }
+.bt thead th:first-child { display: block; }
 
 .bt tbody td {
 	display: block;

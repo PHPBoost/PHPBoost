@@ -54,7 +54,7 @@
 }
 
 @media (min-width: 769px) {
-	.floating-message-container {top: 3.228em;}
+	.floating-message-container { top: 3.228em; }
 }
 
 .floating-message-container.active-message { z-index: 1000; }

@@ -108,9 +108,9 @@ aside:not(#menu-left):not(#menu-right)::after {
 .related-item img { max-height: 80px; }
 
 .related-item.previous-item img,
-.related-item.previous-item i { padding: 0 0.618em 0 0;}
+.related-item.previous-item i { padding: 0 0.618em 0 0; }
 .related-item.next-item img,
-.related-item.next-item i 	 { padding: 0 0 0 0.618em;}
+.related-item.next-item i 	  { padding: 0 0 0 0.618em; }
 
 @media (min-width: 769px) {
 	.related-item { max-width: 45%; }
@@ -282,8 +282,8 @@ a.wikipedia-link:after {
 	top: 1px;
 	right: 0;
 	content: "\f266" ;
-	font-family: 'Font Awesome 5 Brands';
-	font-weight: 900;
+	font-family: 'Font Awesome 6 Brands';
+	font-weight: 400;
 	font-size: 0.618em;
 }
 

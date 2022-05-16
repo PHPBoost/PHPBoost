@@ -424,5 +424,5 @@
 	margin: 0;
 }
 
-.cssmenu-static.small-screen .submenu-button::after { content: '\f0d8'}
-.cssmenu-static.small-screen .submenu-button.submenu-opened::after { content: '\f0d7'}
+.cssmenu-static.small-screen .submenu-button::after { content: '\f0d8'; }
+.cssmenu-static.small-screen .submenu-button.submenu-opened::after { content: '\f0d7'; }

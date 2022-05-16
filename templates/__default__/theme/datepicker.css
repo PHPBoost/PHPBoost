@@ -30,7 +30,7 @@
     content: attr(data-time);
     padding: 0.228em;
     line-height: 0.5;
-    font-size: 0.809em
+    font-size: 0.809em;
 }
 
 .form-element .fa-calendar-alt { cursor: pointer; }
@@ -38,7 +38,7 @@
 /* --- Grouped input --- */
 .calendar-container > a {
     height: 100%;
-    font-size: 1.309em
+    font-size: 1.309em;
 }
 
 /* --- calendar block ------------------------------------------------------- */
