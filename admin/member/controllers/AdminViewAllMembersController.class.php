@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 05 19
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -132,6 +132,7 @@ class AdminViewAllMembersController extends DefaultAdminController
 								UserService::delete_by_id($user->get_id());
 							}
 							catch (RowNotFoundException $ex) {}
+							HooksService::execute_hook_action('delete_user', 'user', array_merge($user->get_properties(), array('title' => $user->get_display_name())));
 						}
 						if ($user->is_admin() && UserService::count_admin_members() == 1)
 							$last_admin_delete = true;

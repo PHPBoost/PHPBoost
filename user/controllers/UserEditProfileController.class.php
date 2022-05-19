@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 10
+ * @version     PHPBoost 6.0 - last update: 2022 05 19
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -297,6 +297,7 @@ class UserEditProfileController extends AbstractController
 		if ($this->user->get_level() != User::ADMINISTRATOR_LEVEL || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
 			UserService::delete_by_id($this->user->get_id());
+			HooksService::execute_hook_action('delete_user', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name())));
 		}
 
 		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
@@ -463,13 +464,13 @@ class UserEditProfileController extends AbstractController
 		if ($this->user->get_display_name() != $user_properties['display_name'])
 		{
 			$description = StringVars::replace_vars($this->lang['user.change.profile.field.description'], array('field' => $this->lang['user.display.name'], 'old_value' => $user_properties['display_name'], 'new_value' => $this->user->get_display_name()));
-			HooksService::execute_hook_action('user_change_display_name', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())),$description);
+			HooksService::execute_hook_action('user_change_display_name', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())), $description);
 		}
 
 		if ($this->user->get_email() != $user_properties['email'])
 		{
 			$description = StringVars::replace_vars($this->lang['user.change.profile.field.description'], array('field' => $this->lang['user.email'], 'old_value' => $user_properties['email'], 'new_value' => $this->user->get_email()));
-			HooksService::execute_hook_action('user_change_email', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())),$description);
+			HooksService::execute_hook_action('user_change_email', 'user', array_merge($this->user->get_properties(), array('title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel())), $description);
 		}
 		
 		if (!$has_error)
