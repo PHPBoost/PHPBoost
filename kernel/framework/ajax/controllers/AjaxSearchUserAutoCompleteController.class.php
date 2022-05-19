@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2022 05 19
  * @since       PHPBoost 4.0 - 2013 06 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,7 +34,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
 					$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']));
 
 					if ($row['level'] != User::ADMINISTRATOR_LEVEL || ($row['level'] == User::ADMINISTRATOR_LEVEL && $number_admins > 1))
-						$delete_link = new DeleteLinkHTMLElement($row['user_id']);
+						$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '', array('title' => $lang['delete'], 'data-confirmation' => 'delete-element'), 'fa fa-delete');
 					else
 						$delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');
 
