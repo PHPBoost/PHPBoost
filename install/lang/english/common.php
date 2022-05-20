@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 29
+ * @version     PHPBoost 6.0 - last update: 2022 05 20
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,6 +69,7 @@ $lang['install.server.description'] = '
 
 $lang['install.php.version']                         = 'PHP version';
 $lang['install.php.version.check']                   = 'PHP minimum version :min_php_version';
+$lang['install.php.version.check.clue']              = 'Your PHP version is <b>:php_version</b>';
 $lang['install.php.version.check.description']       = '<span class="text-strong error">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.';
 $lang['install.php.extensions']                      = 'Extensions';
 $lang['install.php.extensions.check']                = 'The activation of these extensions will provide additional features but it is not essential to its operation except Mbstring library.';
@@ -207,7 +208,7 @@ $lang['install.finish.message'] = '
 		<div class="fielset-inset">
 			<h2>Members</h2>
 			<p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
-			<p>Thanks to the members of our teams and particulary to <strong>benflovideo</strong> for communication team, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>benflovideo</strong>, <strong>mipel</strong> and <strong>olivierb</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
+			<p>Thanks to the members of our teams and particulary to <strong>mipel</strong> for communication team, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>babsolune</strong> and <strong>xela</strong> for the development help, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>mipel</strong> and <strong>olivierb</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
 			<h2>Other projects</h2>
 			<p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools under GNU/GPL license come from <a href="https://github.com/">Github</a>.</p>
 			<ul>
@@ -242,7 +243,7 @@ $lang['install.finish.message'] = '
 				<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
 				<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
 				<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-				<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer</li>
+				<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
 				<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
 			</ul>
 		</div>

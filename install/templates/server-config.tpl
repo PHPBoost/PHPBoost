@@ -18,7 +18,7 @@
             <div class="fieldset-inset">
                 <div class="form-field-free-large">${set(@H|install.php.version.check.description, ['min_php_version': MIN_PHP_VERSION])}</div>
                 <div class="form-element">
-                    <label>${set(@install.php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
+                    <label>${set(@install.php.version.check, ['min_php_version': MIN_PHP_VERSION])} <span class="field-description">${set(@H|install.php.version.check.clue, ['php_version': PHP_VERSION])}</span></label>
                     <div class="form-field"# IF PHP_VERSION_OK # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                     # IF PHP_VERSION_OK #
                         <i class="fa fa-check fa-2x success" aria-hidden="true"></i>
