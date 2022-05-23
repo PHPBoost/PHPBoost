@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 13
+ * @version     PHPBoost 6.0 - last update: 2022 05 23
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -233,19 +233,8 @@ class Url
 			// Remove all illegal characters from a url
 			$url = filter_var($url, FILTER_SANITIZE_URL);
 
-			if ($url[0] == '/' && file_exists(PATH_TO_ROOT . $url))
-				return true;
-
 			$url = new Url($url);
 		}
-
-		$file = new File($url->relative());
-		$folder = new Folder($url->relative());
-		if ($file->exists() || $folder->exists())
-			return true;
-
-		// if ($url->is_relative() && !($file->exists() || $folder->exists()))
-		  	// return false;
 
 		if ($url->absolute())
 		{
@@ -253,32 +242,48 @@ class Url
 			if (filter_var($url->absolute(), FILTER_VALIDATE_URL) === FALSE	|| !in_array(strtolower(parse_url($url->absolute(), PHP_URL_SCHEME)), ['http','https'], true )) // check only for http/https schemes.
 				return false;
 
-			if (function_exists('stream_context_set_default'))
-				stream_context_set_default(array('http' => array('method' => 'HEAD', 'timeout' => 1)));
-
-			if (function_exists('get_headers'))
+			$server_configuration = new ServerConfiguration();
+			if ($server_configuration->has_curl_library())
 			{
-				$file_headers = @get_headers($url->absolute(), true);
+				$curl = curl_init($url->absolute());
+				curl_setopt($curl, CURLOPT_NOBODY, true);
+				$result = curl_exec($curl);
 
-				if (is_array($file_headers))
+				if ($result !== false)
 				{
-					$status_list = array();
-					foreach ($file_headers as $header)
+					$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+				}
+				curl_close($curl);
+			}
+			else
+			{
+				if (function_exists('stream_context_set_default'))
+					stream_context_set_default(array('http' => array('method' => 'HEAD', 'timeout' => 1)));
+
+				if (function_exists('get_headers'))
+				{
+					$file_headers = @get_headers($url->absolute(), true);
+
+					if (is_array($file_headers))
 					{
-						if (!is_array($header) && preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $header, $matches))
-							$status_list[] = (int)$matches[1];
+						$status_list = array();
+						foreach ($file_headers as $header)
+						{
+							if (!is_array($header) && preg_match('/^HTTP\/[12]\.[01] (\d\d\d)/u', $header, $matches))
+								$status_list[] = (int)$matches[1];
+						}
+						if ($status_list)
+							$status = end($status_list);
 					}
-					if ($status_list)
-						$status = end($status_list);
+					else
+						$status = self::STATUS_OK;
 				}
 				else
 					$status = self::STATUS_OK;
 			}
-			else
-				$status = self::STATUS_OK;
 		}
 
-		return $status == self::STATUS_OK || ($status > 200 && $status < 400) || $status == 429; // 429 status code for Youtube video sometimes
+		return $status == self::STATUS_OK || ($status > self::STATUS_OK && $status < 400) || $status == 429; // 429 status code for Youtube video sometimes
 	}
 
 	/**
