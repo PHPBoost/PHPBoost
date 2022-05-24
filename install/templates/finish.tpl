@@ -12,13 +12,13 @@
 		<nav class="finish-menu">
 			<ul>
 				<li>
-					<a href="{PATH_TO_ROOT}/">
+					<a href="{PATH_TO_ROOT}/" onclick="location.reload(true);return true;">
 						<i class="fa fa-home fa-2x" aria-hidden="true"></i>
 						<span>{@install.site.index}</span>
 					</a>
 				</li>
 				<li>
-					<a href="{PATH_TO_ROOT}/admin">
+					<a href="{PATH_TO_ROOT}/admin" onclick="location.reload(true);return true;">
 						<i class="fa fa-cogs fa-2x" aria-hidden="true"></i>
 						<span>{@install.admin.index}</span>
 					</a>

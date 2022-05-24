@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 26
+ * @version     PHPBoost 6.0 - last update: 2022 05 24
  * @since       PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -43,7 +43,7 @@ class InstallWebsiteConfigController extends InstallController
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
-			$this->handle_form();
+			$this->handle_form($request);
 		}
 		return $this->create_response();
 	}
@@ -122,7 +122,7 @@ class InstallWebsiteConfigController extends InstallController
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	private function handle_form()
+	private function handle_form(HTTPRequestCustom $request)
 	{
 		$installation_services = new InstallationServices($this->locale);
 		$installation_services->configure_website(
@@ -139,6 +139,13 @@ class InstallWebsiteConfigController extends InstallController
 			$this->security_config->allow_login_and_email_in_password();
 
 		SecurityConfig::save();
+		
+		if ($request->get_is_https())
+		{
+			$server_environment_config = ServerEnvironmentConfig::load();
+			$server_environment_config->enable_redirection_https();
+			ServerEnvironmentConfig::save();
+		}
 
 		$default_captcha = $this->distribution_config['default_captcha'];
 		if ($default_captcha)
