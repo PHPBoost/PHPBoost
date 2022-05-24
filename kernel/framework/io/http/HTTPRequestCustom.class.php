@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 08
+ * @version     PHPBoost 6.0 - last update: 2022 05 24
  * @since       PHPBoost 3.0 - 2009 10 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -424,53 +424,43 @@ class HTTPRequestCustom
 				if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') !== false)
 				{
 					$iplist = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-					$ip=$iplist[0]; // we keep only the first, "normally" it's the client IP if the header was not forged
+					$ip = $iplist[0]; // we keep only the first, "normally" it's the client IP if the header was not forged
 				}
-				else {
-					$ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-				}
+				else
+					$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 			}
-			elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-			{
+			else if (isset($_SERVER['HTTP_CLIENT_IP']))
 				$ip = $_SERVER['HTTP_CLIENT_IP'];
-			}
-			elseif(isset($_SERVER['HTTP_REMOTE_IP']))
-			{
-				$ip=$_SERVER['HTTP_REMOTE_IP'];
-			}
+			else if(isset($_SERVER['HTTP_REMOTE_IP']))
+				$ip = $_SERVER['HTTP_REMOTE_IP'];
 			else
-			{
 				$ip = $_SERVER['REMOTE_ADDR'];
-			}
 		}
 		else
 		{
 			if (getenv('HTTP_X_FORWARDED_FOR'))
-			{
 				$ip = getenv('HTTP_X_FORWARDED_FOR');
-			}
 			elseif (getenv('HTTP_CLIENT_IP'))
-			{
 				$ip = getenv('HTTP_CLIENT_IP');
-			}
 			elseif(getenv('HTTP_REMOTE_IP'))
-			{
 				$ip=getenv('HTTP_REMOTE_IP');
-			}
 			else
-			{
 				$ip = getenv('REMOTE_ADDR');
-			}
 		}
 
 		if (filter_var($ip, FILTER_VALIDATE_IP))
-		{
 			return $ip;
-		}
 		else
-		{
 			return '0.0.0.0';
-		}
+	}
+	
+	public function get_location_info_by_ip()
+	{
+		$ip_data = @json_decode(file_get_contents('http://www.geoplugin.net/json.gp?ip=' . $this->get_ip_address()));
+		if($ip_data && $ip_data->geoplugin_countryName != null)
+			return $ip_data->geoplugin_countryCode;
+		
+		return '';
 	}
 }
 ?>
