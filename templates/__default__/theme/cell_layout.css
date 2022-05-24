@@ -109,6 +109,7 @@
 }
 
 .cell-row .cell-body .cell-content { width: 100%; }
+.id-card .cell-body .cell-content  { width: auto; }
 
 @media (min-width: 769px) {
 	.cell-row .cell-thumbnail {
