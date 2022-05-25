@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 25
+ * @version     PHPBoost 6.0 - last update: 2022 05 25
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -307,7 +307,7 @@ elseif ($submit)
 		{
 			$media['mime_type'] = 'audio/host';
 		}
-		else if(!filter_var($media['file_url'], FILTER_VALIDATE_URL) == false)
+		else if ($media['file_url']->relative())
 		{
 			if (!empty($pathinfo['extension']))
 			{
