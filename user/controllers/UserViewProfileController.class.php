@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 05 25
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -48,6 +48,7 @@ class UserViewProfileController extends AbstractController
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never'];
 		$has_groups = $this->build_groups(explode('|', $this->user_infos['user_groups']));
 		$extended_fields_number = 0;
+		$user_additional_informations = HooksService::execute_hook_display_user_additional_informations_action('user', $this->user_infos);
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)
 		{
@@ -60,6 +61,13 @@ class UserViewProfileController extends AbstractController
 			$extended_fields_number++;
 		}
 
+		foreach ($user_additional_informations as $info)
+		{
+			$this->view->assign_block_vars('additional_informations', array(
+				'VALUE' => $info
+			));
+		}
+
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 		$contributions_number = 0;
 		foreach ($modules as $module)
@@ -68,12 +76,12 @@ class UserViewProfileController extends AbstractController
 		}
 
 		$this->view->put_all(array(
-			'C_DISPLAY_EDIT_LINK' => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL),
-			'C_IS_BANNED'         => $this->user->is_banned(),
-			'C_GROUPS'            => $has_groups,
-			'C_DISPLAY_MAIL_LINK' => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
-			'C_DISPLAY_PM_LINK'   => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
-			'C_EXTENDED_FIELDS'   => $extended_fields_number,
+			'C_DISPLAY_EDIT_LINK'          => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL),
+			'C_IS_BANNED'                  => $this->user->is_banned(),
+			'C_GROUPS'                     => $has_groups,
+			'C_DISPLAY_MAIL_LINK'          => AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT) && $this->user_infos['show_email'],
+			'C_DISPLAY_PM_LINK'            => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
+			'C_DISPLAY_OTHER_INFORMATIONS' => $extended_fields_number || $user_additional_informations,
 
 			'TITLE_PROFILE'       => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name'])),
 			'DISPLAY_NAME'        => $this->user_infos['display_name'],

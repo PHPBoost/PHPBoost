@@ -64,7 +64,7 @@
 					</ul>
 				</div>
 			</article>
-			# IF C_EXTENDED_FIELDS #
+			# IF C_DISPLAY_OTHER_INFORMATIONS #
 				<article class="user-profil-item several-items cell cell-tile">
 					<header class="cell-header"><h5>{@common.other}</h5></header>
 					<div class="cell-list member-view-extand-fieldset">
@@ -75,6 +75,11 @@
 									<span>{extended_fields.VALUE}</span>
 								</li>
 							# END extended_fields #
+							# START additional_informations #
+								<li>
+									<span>{additional_informations.VALUE}</span>
+								</li>
+							# END additional_informations #
 						</ul>
 					</div>
 				</article>

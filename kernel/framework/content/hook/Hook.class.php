@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 19
+ * @version     PHPBoost 6.0 - last update: 2022 05 24
  * @since       PHPBoost 6.0 - 2021 09 14
 */
 
@@ -330,6 +330,16 @@ abstract class Hook implements ExtensionPoint
 	public function on_display_action($module_id, $content, array $properties = array())
 	{
 		return $content;
+	}
+
+	/**
+	 * @desc Modify content before display if needed.
+	 * @param string $module_id Name of the current module
+	 * @param string[] $properties (optional) Properties of the user (display_name, ...)
+	 */
+	public function on_display_user_additional_informations_action($module_id, array $properties = array())
+	{
+		return '';
 	}
 
 	/**

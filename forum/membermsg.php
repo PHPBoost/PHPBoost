@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 07
+ * @version     PHPBoost 6.0 - last update: 2022 05 25
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -160,6 +160,15 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		$user_accounts_config = UserAccountsConfig::load();
 
 		$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
+	
+		$user_additional_informations = HooksService::execute_hook_display_user_additional_informations_action('forum', $row);
+
+		foreach ($user_additional_informations as $info)
+		{
+			$this->view->assign_block_vars('list.additional_informations', array(
+				'VALUE' => $info
+			));
+		}
 
 		$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 		$user_registered_date = new Date($row['registered'], Timezone::SERVER_TIMEZONE);

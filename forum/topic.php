@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 27
+ * @version     PHPBoost 6.0 - last update: 2022 05 25
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -193,7 +193,7 @@ $i = 0;
 $j = 0;
 $result = PersistenceContext::get_querier()->select("SELECT
 	msg.id, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content, msg.selected,
-	m.user_id, m.delay_readonly, m.delay_banned, m.display_name as login, m.level, m.user_groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
+	m.user_id, m.delay_readonly, m.delay_banned, m.display_name, m.display_name as login, m.level, m.user_groups, m.email, m.show_email, m.registration_date AS registered, m.posted_msg,
 	p.question, p.answers, p.voter_id, p.votes, p.type,
 	ext_field.user_avatar,
 	m2.display_name as login_edit,
@@ -351,6 +351,15 @@ while ( $row = $result->fetch() )
 	$user_group_color     = User::get_group_color($row['user_groups'], $row['level']);
 
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
+	
+	$user_additional_informations = HooksService::execute_hook_display_user_additional_informations_action('forum', $row);
+
+	foreach ($user_additional_informations as $info)
+	{
+		$this->view->assign_block_vars('msg.additional_informations', array(
+			'VALUE' => $info
+		));
+	}
 
 	$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 	$topic_edit_date      = new Date($row['timestamp_edit'], Timezone::SERVER_TIMEZONE);
