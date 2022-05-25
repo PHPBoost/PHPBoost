@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 19
+ * @version     PHPBoost 6.0 - last update: 2022 05 25
  * @since       PHPBoost 6.0 - 2021 10 22
 */
 
@@ -322,7 +322,7 @@ class HistoryHook extends Hook
 				'description'   => $description
 			);
 			
-			if (!HistoryManager::count('WHERE module_id = :module_id AND action = :action and creation_date = :creation_date and user_id = :user_id', $parameters))
+			if (!HistoryManager::count('WHERE module_id = :module_id AND action = :action and creation_date = :creation_date and title = :title and user_id = :user_id', $parameters))
 				return HistoryManager::add($parameters);
 		}
 		return false;
