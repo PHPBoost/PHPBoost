@@ -120,6 +120,11 @@
 						</div>
 					</div>
 					<div class="message-content" >
+						<div class="float-right badges">
+							# START list.additional_informations #
+								<span>{list.additional_informations.VALUE}</span>
+							# END list.additional_informations #
+						</div>
 						{list.CONTENT}
 					</div>
 				</article>

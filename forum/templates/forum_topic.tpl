@@ -353,6 +353,11 @@
 				</div>
 			</div>
 			<div class="message-content# IF msg.C_IS_SELECTED # selected-message# ENDIF #">
+				<div class="float-right badges">
+					# START msg.additional_informations #
+						<span>{msg.additional_informations.VALUE}</span>
+					# END msg.additional_informations #
+				</div>
 
 				# IF msg.C_QUOTE_LAST_MESSAGE # <p class="message-helper bgc notice">{@forum.quote.last.message}</p> # ENDIF #
 
