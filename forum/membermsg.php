@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 25
+ * @version     PHPBoost 6.0 - last update: 2022 05 29
  * @since       PHPBoost 1.6 - 2007 04 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -165,7 +165,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 
 		foreach ($user_additional_informations as $info)
 		{
-			$this->view->assign_block_vars('list.additional_informations', array(
+			$view->assign_block_vars('list.additional_informations', array(
 				'VALUE' => $info
 			));
 		}
