@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 29
+ * @version     PHPBoost 6.0 - last update: 2022 05 30
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -351,15 +351,6 @@ while ( $row = $result->fetch() )
 	$user_group_color     = User::get_group_color($row['user_groups'], $row['level']);
 
 	$user_sign_field = $extended_fields_cache->get_extended_field_by_field_name('user_sign');
-	
-	$user_additional_informations = HooksService::execute_hook_display_user_additional_informations_action('forum', $row);
-
-	foreach ($user_additional_informations as $info)
-	{
-		$view->assign_block_vars('msg.additional_informations', array(
-			'VALUE' => $info
-		));
-	}
 
 	$topic_date           = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 	$topic_edit_date      = new Date($row['timestamp_edit'], Timezone::SERVER_TIMEZONE);
@@ -510,6 +501,15 @@ while ( $row = $result->fetch() )
 				'ICON_FA'    => $icon_fa
 			));
 		}
+	}
+	
+	$user_additional_informations = HooksService::execute_hook_display_user_additional_informations_action('forum', $row);
+
+	foreach ($user_additional_informations as $info)
+	{
+		$view->assign_block_vars('msg.additional_informations', array(
+			'VALUE' => $info
+		));
 	}
 
 	//Marqueur de suivis du sujet.
