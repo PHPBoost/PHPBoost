@@ -4,10 +4,10 @@
 # ENDIF #
 		<form action="{REWRITED_SCRIPT}" method="get" class="cell-form# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF #">
 			<div class="# IF C_HORIZONTAL #grouped-inputs grouped-auto grouped-left# ELSE #cell-input# ENDIF #">
-				<label for="switchtheme" class="grouped-element# IF C_VERTICAL # sr-only# ENDIF #">
+				<label for="switchtheme" class="# IF C_VERTICAL #sr-only# ELSE #grouped-element# ENDIF #">
 					<span>{@ts.switch.theme}</span>
 				</label>
-				<select id="switchtheme" class="grouped-element" name="switchtheme" onchange="document.location = '{U_ITEM}' + this.options[this.selectedIndex].value;">
+				<select id="switchtheme" # IF C_HORIZONTAL #class="grouped-element"# ENDIF # name="switchtheme" onchange="document.location = '{U_ITEM}' + this.options[this.selectedIndex].value;">
 					# START items #
 						<option value="{items.ITEM_ID}"# IF items.C_SELECTED# selected="selected"# ENDIF #>{items.ITEM_NAME}</option>
 					# END items #
