@@ -8,14 +8,16 @@
         <div class="content">
             <h5>{@sandbox.layout.grid.free}</h5>
             <p>{@sandbox.layout.grid.free.clue}</p>
-            <div class="cell-flex layout-content-demo">
+            <p><code>.cell-inline</code></p>
+            <div class="cell-flex cell-inline layout-content-demo">
                 <article class="cell" style="width: 140px;"><div class="cell-grid-demo">140px</div></article>
                 <article class="cell" style="width: 240px;"><div class="cell-grid-demo">240px</div></article>
                 <article class="cell" style="width: 340px;"><div class="cell-grid-demo">340px</div></article>
                 <article class="cell" style="width: 440px;"><div class="cell-grid-demo">440px</div></article>
             </div>
             <p>{@H|sandbox.layout.grid.free.forced.clue}</p>
-            <div class="cell-flex layout-content-demo">
+            <p><code>.cell-inline</code></p>
+            <div class="cell-flex cell-inline layout-content-demo">
                 <article class="cell cell-100"><div class="cell-grid-demo">100%</div></article>
                 <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
                 <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
@@ -65,7 +67,7 @@
 
         <h5>{@sandbox.layout.grid.list}</h5>
         <p>{@sandbox.layout.grid.list.clue}</p>
-        <p><code class="language-css">.cell-row</code></p>
+        <p><code>.cell-row</code></p>
         <div class="cell-flex cell-row layout-content-demo">
             <article class="cell"><div class="cell-grid-demo"></div></article>
             <article class="cell"><div class="cell-grid-demo"></div></article>

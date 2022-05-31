@@ -392,15 +392,16 @@ class SandboxBuilderController extends DefaultModuleController
 		$vertical_fieldset = new FormFieldsetVertical('vertical_fieldset');
 			$vertical_fieldset->set_description($this->lang['sandbox.builder.vertical.clue']);
 			$form->add_fieldset($vertical_fieldset);
-			$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], array('class' => 'css-class')));
 			$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::UNCHECKED, array('class' => 'css-class')));
+			$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], array('class' => 'css-class')));
 
 		// HORIZONTAL FIELDSET
 		$horizontal_fieldset = new FormFieldsetHorizontal('horizontal_fieldset');
 			$horizontal_fieldset->set_description($this->lang['sandbox.builder.horizontal.clue']);
 			$form->add_fieldset($horizontal_fieldset);
-			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], array('required' => true, 'class' => 'css-class')));
 			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
+			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert2', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
+			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], array('required' => true, 'class' => 'css-class')));
 
 		// CAPTCHA
 			$captcha = new FormFieldsetHTML('captcha', 'Captchas');
@@ -441,7 +442,7 @@ class SandboxBuilderController extends DefaultModuleController
 			$buttons_fieldset->add_element($this->preview_button);
 			$this->submit_button = new FormButtonDefaultSubmit();
 			$buttons_fieldset->add_element($this->submit_button);
-			$buttons_fieldset->add_element(new FormButtonButton($this->lang['sandbox.builder.button'], 'alert("Hello world");', '', 'button'));
+			$buttons_fieldset->add_element(new FormButtonButton($this->lang['sandbox.builder.button'], 'alert("Hello world");', 'default-button'));
 			$form->add_fieldset($buttons_fieldset);
 
 		// FORM CONSTRAINTS
