@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 07
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -430,11 +430,6 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->content = preg_replace_callback('`&lt;iframe src="https://player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
 			$this->content = preg_replace_callback('`&lt;iframe src="https://vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
 		}
-		//Flash tag
-		if (!in_array('swf', $this->forbidden_tags))
-		{
-			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*).flv" /&gt;&lt;/video&gt;`isu', array($this, 'parse_swf_tag'), $this->content);
-		}
 		//Movie tag
 		if (!in_array('movie', $this->forbidden_tags))
 		{
@@ -637,7 +632,6 @@ class TinyMCEParser extends ContentFormattingParser
 			'abbr'      => '`\[abbr\](.*)\[/abbr\]`isuU',
 			'abbr2'     => '`\[abbr=([^\n[\]<]+)\](.*)\[/abbr\]`isuU',
 			'style'     => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isuU',
-			'swf'       => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/swf\]`iuU',
 			'movie'     => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
 			'movie2'    => '`\[movie=([0-9]{1,3}),([0-9]{1,3}),([a-z0-9_+.:?/=#%@&;,-]*)\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
 			'sound'     => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iuU',
@@ -670,7 +664,6 @@ class TinyMCEParser extends ContentFormattingParser
 			'abbr'      => "<abbr class=\"formatter-abbr\">$1</abbr>",
 			'abbr2'     => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
 			'style'     => "<span class=\"$1\">$2</span>",
-			'swf'       => "[[MEDIA]]insertSwfPlayer('$3', $1, $2);[[/MEDIA]]",
 			'movie'     => "[[MEDIA]]insertMoviePlayer('$3', $1, $2);[[/MEDIA]]",
 			'movie2'    => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, \'$3\');[[/MEDIA]]',
 			'sound'     => "[[MEDIA]]insertSoundPlayer('$1');[[/MEDIA]]",
@@ -901,31 +894,6 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_vimeo_tag($matches)
 	{
 		return '[[MEDIA]]insertVimeoPlayer(\'https://player.vimeo.com/video/' . $matches[1] . '\', ' . $matches[2] . ', ' . $matches[3] . ');[[/MEDIA]]';
-	}
-
-	private function parse_swf_tag($matches)
-	{
-		$video = '[[MEDIA]]insertSwfPlayer(\'' . $matches[6] . '.flv\', ' . $matches[3] . ', ' . $matches[4] . ');[[/MEDIA]]';
-		if (!empty($matches[1]))
-		{
-			$style = trim($matches[1]);
-			switch ($style)
-			{
-				case 'float: left;':
-					$style = 'class="float-left"';
-					break;
-				case 'float: right;':
-					$style = 'class="float-right"';
-					break;
-				case 'display: block; margin-left: auto; margin-right: auto;':
-					$style = 'style="text-align: center;"';
-					break;
-				default:
-					break;
-			}
-			$video = '<p ' . $style . '>' . $video . '</p>';
-		}
-		return $video;
 	}
 
 	private function parse_movie_tag($matches)

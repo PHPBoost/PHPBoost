@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 07
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -167,7 +167,6 @@ class BBCodeParser extends ContentFormattingParser
 			'abbr' => '`\[abbr\](.*)\[/abbr\]`isuU',
 			'abbr2' => '`\[abbr=([^\n[\]<]+)\](.*)\[/abbr\]`isuU',
 			'style' => '`\[style=(success|question|notice|warning|error)\](.+)\[/style\]`isuU',
-			'swf' => '`\[swf=([0-9]{1,3}),([0-9]{1,3})\](((?:[./]+|(?:https?|ftps?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4})+(?:[a-z0-9~_-]+/)*[a-z0-9_+.:?/=#%@&;,-]*))\[/swf\]`iuU',
 			'movie' => '`\[movie=([0-9]{1,3}),([0-9]{1,3})\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
 			'movie2' => '`\[movie=([0-9]{1,3}),([0-9]{1,3}),([a-z0-9_+.:?/=#%@&;,-]*)\]([a-z0-9_+.:?/=#%@&;,-]*)\[/movie\]`iuU',
 			'sound' => '`\[sound\]([a-z0-9_+.:?/=#%@&;,-]*)\[/sound\]`iuU',
@@ -215,7 +214,6 @@ class BBCodeParser extends ContentFormattingParser
 			'abbr' => "<abbr class=\"formatter-abbr\">$1</abbr>",
 			'abbr2' => "<abbr title=\"$1\" class=\"formatter-abbr\">$2</abbr>",
 			'style' => "<span class=\"message-helper bgc $1\">$2</span>",
-			'swf' => '[[MEDIA]]insertSwfPlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie' => '[[MEDIA]]insertMoviePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'movie2' => '[[MEDIA]]insertMoviePlayer(\'$4\', $1, $2, \'$3\');[[/MEDIA]]',
 			'sound' => '[[MEDIA]]insertSoundPlayer(\'$1\');[[/MEDIA]]',

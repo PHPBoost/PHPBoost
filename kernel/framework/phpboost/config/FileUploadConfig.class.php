@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 01 05
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 3.0 - 2010 08 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -100,7 +100,7 @@ class FileUploadConfig extends AbstractConfigData
 				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef',
 				'rar', 'zip', 'gz', '7z',
 				'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv',
-				'mp3','ogg', 'mpg', 'mov','swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv',
+				'mp3','ogg', 'mpg', 'mov', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv',
 				'ttf', 'tex', 'rtf', 'psd', 'iso'
 			)
 		);

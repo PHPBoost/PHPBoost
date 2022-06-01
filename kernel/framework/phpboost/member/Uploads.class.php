@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 1.6 - 2007 04 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -372,7 +372,6 @@ class Uploads
 			case 'css':
 			case 'js':
 			case 'php':
-			case 'swf':
 				$img = 'far fa-file-code';
 				break;
 			// Video

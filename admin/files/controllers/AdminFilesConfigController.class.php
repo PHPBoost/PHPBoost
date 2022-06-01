@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -142,7 +142,7 @@ class AdminFilesConfigController extends DefaultAdminController
 			$this->lang['upload.option.image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef'),
 			$this->lang['upload.option.archives'] => array('rar', 'zip', 'gz', '7z'),
 			$this->lang['upload.option.text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'),
-			$this->lang['upload.option.media'] => array('mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'),
+			$this->lang['upload.option.media'] => array('mp3', 'ogg', 'mpg', 'mov', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'),
 			$this->lang['upload.option.miscellaneous'] => array('ttf', 'tex', 'rtf', 'psd', 'iso')
 		);
 

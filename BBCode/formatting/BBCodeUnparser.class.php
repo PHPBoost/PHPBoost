@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 24
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -104,9 +104,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<script><!--\s{1,5}insertMoviePlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`suU',
 			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
 			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3}), \'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isuU',
-			'`<script><!--\s{1,5}insertSwfPlayer\("([^"]+)", (\d{1,3}), (\d{1,3})\);\s{1,5}--></script>`suU',
-			'`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
 			'`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
 			'`\[\[MEDIA\]\]insertDailymotionPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
 			'`\[\[MEDIA\]\]insertVimeoPlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
@@ -150,9 +147,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3,$4]$1[/movie]",
-			"[swf=$2,$3]$1[/swf]",
-			"[swf=$2,$3]$1[/swf]",
-			"[swf=$2,$3]$1[/swf]",
 			"[youtube=$2,$3]$1[/youtube]",
 			"[dailymotion=$2,$3]$1[/dailymotion]",
 			"[vimeo=$2,$3]$1[/vimeo]",

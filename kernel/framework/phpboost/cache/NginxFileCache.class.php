@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 22
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 5.2 - 2019 10 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -308,7 +308,7 @@ class NginxFileCache implements CacheData
 			$this->add_line('}');
 			$this->add_empty_line();
 			$this->add_section('Stop hotlinking');
-			$this->add_line('location ~ ^/.+\.(?:ico|css|js|bmp|gif|webp|jpe?g|png|swf)$ {');
+			$this->add_line('location ~ ^/.+\.(?:ico|css|js|bmp|gif|webp|jpe?g|png)$ {');
 			$this->add_line('	if ($http_referer !~ "^' . $this->general_config->get_site_url() . '"){');
 			$this->add_line('		return 403;');
 			$this->add_line('	}');

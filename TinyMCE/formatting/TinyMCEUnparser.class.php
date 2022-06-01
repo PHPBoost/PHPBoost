@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 23
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -141,7 +141,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<span style="background-color: ?([^;]+);?">(.+)</span>`isuU',
 			'`<span style="color: ?([^;]+);?">(.+)</span>`isuU',
 			'`<p style="text-align: ?(left|center|right|justify);?">(.*)</p>`isuU',
-			'`<object type="application/x-shockwave-flash" data="([^"]+)" width="([^"]+)" height="([^"]+)">(.*)</object>`isuU',
 			'`<td(?: class="([^"]+)?")?></td>`isuU',
 			'`<th(?: class="([^"]+)?")?></th>`isuU'
 			);
@@ -158,7 +157,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'<span style="background-color: $1;">$2</span>',
 			'<span style="color: $1;">$2</span>',
 			"<p style=\"text-align: $1;\">$2</p>",
-			"<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$2\" height=\"$3\"><param name=\"movie\" value=\"$1\" /><param name=\"quality\" value=\"high\" /><param name=\"menu\" value=\"false\" /><param name=\"wmode\" value=\"\" /><embed src=\"$1\" wmode=\"\" quality=\"high\" menu=\"false\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$2\" height=\"$3\"></embed></object>",
 			'<td> </td>',
 			'<th> </th>'
 			);
@@ -226,9 +224,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
 			'`<audio controls><source src="(.*)" /></audio>`isuU',
 			'`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`suU',
-			'`<p class="float-(left|right)"><object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object></p>`isuU',
-			'`<p style="text-align: ?center;?"><object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object></p>`isuU',
-			'`<object type="application/x-shockwave-flash" data="(?:\.\.)?/(?:kernel|includes)/data/movieplayer\.swf" width="([^"]+)" height="([^"]+)">(?:\s|(?:<br />))*<param name="FlashVars" value="flv=(.+)&width=[0-9]+&height=[0-9]+" />.*</object>`isuU',
 			'`<p class="float-(left|right)">\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`suU',
 			'`<p style="text-align: ?center;?">\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]</p>`suU',
 			'`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', (\d{1,3}), (\d{1,3})\);\[\[/MEDIA\]\]`suU',
@@ -264,9 +259,6 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"[mail=$1]$2[/mail]",
 			"[sound]$1[/sound]",
 			"[sound]$1[/sound]",
-			"<video style=\"float: $1;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$4\" /></video>",
-			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$1\" height=\"$2\" controls=\"controls\"><source src=\"$3\" /></video>",
-			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$4\" /></video>",
 			"<video style=\"float: $1;\" width=\"$3\" height=\"$4\" controls=\"controls\"><source src=\"$2\" /></video>",
 			"<video style=\"display: block; margin-left: auto; margin-right: auto;\" width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",
 			"<video width=\"$2\" height=\"$3\" controls=\"controls\"><source src=\"$1\" /></video>",

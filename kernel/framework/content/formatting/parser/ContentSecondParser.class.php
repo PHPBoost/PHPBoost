@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 19
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -320,8 +320,6 @@ class ContentSecondParser extends AbstractParser
 	 */
 	private function process_media_insertion()
 	{
-		// Swf
-		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSwfPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_swf_tag'), $this->content);
 		// Sound
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
 		// Movie
@@ -334,36 +332,6 @@ class ContentSecondParser extends AbstractParser
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertDailymotionPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_dailymotion_tag'), $this->content);
 		// Vimeo
 		$this->content = preg_replace_callback('`\[\[MEDIA\]\]insertVimeoPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_vimeo_tag'), $this->content);
-	}
-
-	/**
-	 * Inserts the javascript calls for the swf tag.
-	 * @param $matches The matched elements
-	 * @return The movie insertion code containing javascrpt calls
-	 */
-	private static function process_swf_tag($matches)
-	{
-		if (pathinfo($matches[1], PATHINFO_EXTENSION) == 'flv')
-		{
-			$id = 'movie_' . AppContext::get_uid();
-			return '<div class="media-content" style="width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" id="' . $id .  '"></a></div><br />' .
-			'<script><!--' . "\n" .
-			'insertMoviePlayer(\'' . $id . '\');' .
-			"\n" . '--></script>';
-		}
-		else
-		{
-			return "<div class=\"media-content\" style=\"width: " . $matches[2] . "px; height: " . $matches[3] . "px\"><object type=\"application/x-shockwave-flash\" data=\"" . $matches[1] . "\">" .
-			"<param name=\"allowScriptAccess\" value=\"never\" />" .
-			"<param name=\"play\" value=\"true\" />" .
-			"<param name=\"movie\" value=\"" . Url::to_rel($matches[1]) . "\" />" .
-			"<param name=\"menu\" value=\"false\" />" .
-			"<param name=\"quality\" value=\"high\" />" .
-			"<param name=\"scalemode\" value=\"noborder\" />" .
-			"<param name=\"wmode\" value=\"transparent\" />" .
-			"<param name=\"bgcolor\" value=\"#000000\" />" .
-			"</object></div>";
-		}
 	}
 
 	/**
