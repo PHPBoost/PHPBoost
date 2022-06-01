@@ -8,19 +8,6 @@
 		}
 		return true;
 	}
-	function XMLHttpRequest_del(idmsg)
-	{
-		var xhr_object = xmlhttprequest_init('{PATH_TO_ROOT}/forum/xmlhttprequest.php?token={TOKEN}&del=1&idm=' + idmsg);
-		xhr_object.onreadystatechange = function()
-		{
-			if( xhr_object.readyState == 4 && xhr_object.status == 200 && xhr_object.responseText != '-1' )
-			{
-				if( document.getElementById('d' + idmsg) )
-					document.getElementById('d' + idmsg).style.display = 'none';
-			}
-		}
-		xmlhttprequest_sender(xhr_object, null);
-	}
 	function XMLHttpRequest_change_statut()
 	{
 		var idtopic = {IDTOPIC};
@@ -103,13 +90,6 @@
 		}
 		xmlhttprequest_sender(xhr_object, null);
 	}
-
-	function del_msg(idmsg)
-	{
-		if( confirm('{@forum.alert.delete.topic}') )
-			XMLHttpRequest_del(idmsg);
-	}
-
 	# IF C_FOCUS_CONTENT #
 		jQuery(document).ready(function() {
 			document.getElementById('content').focus();
@@ -254,16 +234,7 @@
 								   	# END IF #
 
 									# IF msg.C_DELETE #
-										# IF msg.C_DELETE_MESSAGE #
-											<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" id="dimgnojs{msg.ID}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-											<a onclick="del_msg('{msg.ID}');" id="dimg{msg.ID}" aria-label="{@common.delete}" class="delete-message" data-confirmation="{@forum.alert.delete.message}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-											<script>
-												document.getElementById('dimgnojs{msg.ID}').style.display = 'none';
-												document.getElementById('dimg{msg.ID}').style.display = 'inline';
-											</script>
-										# ELSE #
-											<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" data-confirmation="{@forum.alert.delete.topic}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-										# ENDIF #
+										<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" class="delete-message" data-confirmation="# IF msg.C_DELETE_MESSAGE #{@forum.alert.delete.message}# ELSE #{@forum.alert.delete.topic}# ENDIF #"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 									# ENDIF #
 
 									# IF msg.C_CUT # <a href="move{msg.U_CUT_TOPIC}" aria-label="{@forum.cut.topic}" data-confirmation="{@forum.alert.cut.topic}"><i class="fa fa-cut" aria-hidden="true"></i></a> # ENDIF #

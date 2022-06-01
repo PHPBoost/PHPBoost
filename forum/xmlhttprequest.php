@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 06 01
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -85,45 +85,6 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 	}
 	else
 		echo '';
-}
-elseif (retrieve(GET, 'del', false)) //Suppression d'un message.
-{
-	AppContext::get_session()->csrf_get_protect(); //Protection csrf
-
-	//Instanciation de la class du forum.
-	$Forumfct = new Forum();
-
-	$idm_get = retrieve(GET, 'idm', '');
-	$msg = $topic = array();
-
-	//Info sur le message.
-	try {
-		$msg = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, idtopic FROM ' . PREFIX . 'forum_msg WHERE id=:id', array('id' => $idm_get));
-	} catch (RowNotFoundException $e) {}
-
-	//On va chercher les infos sur le topic
-	if ($msg)
-	{
-		try {
-			$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id, user_id, id_category, first_msg_id, last_msg_id, last_timestamp FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg['idtopic']));
-		} catch (RowNotFoundException $e) {}
-	}
-
-	if ($msg && $topic && !empty($msg['idtopic']) && $topic['first_msg_id'] != $idm_get) //Suppression d'un message.
-	{
-		if (!empty($topic['id_category']) && (ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation() || AppContext::get_current_user()->get_id() == $msg['user_id'])) //Autorisé à supprimer?
-		{
-			list($nbr_msg, $previous_msg_id) = $Forumfct->Del_msg($idm_get, $msg['idtopic'], $topic['id_category'], $topic['first_msg_id'], $topic['last_msg_id'], $topic['last_timestamp'], $msg['user_id']); //Suppression du message.
-			if ($nbr_msg === false && $previous_msg_id === false) //Echec de la suppression.
-				echo '-1';
-			else
-				echo '1';
-		}
-		else
-			echo '-1';
-	}
-	else
-		echo '-1';
 }
 elseif (!empty($track) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
