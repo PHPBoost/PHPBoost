@@ -2,7 +2,7 @@
 	<script>
 		function check_form()
 		{
-			if (document.getElementById('name').value == "")
+			if (document.getElementById('title').value == "")
 			{
 				alert ("{@warning.title}");
 				return false;
