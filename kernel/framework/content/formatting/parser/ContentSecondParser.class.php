@@ -96,21 +96,6 @@ class ContentSecondParser extends AbstractParser
 	 */
 	public static function export_html_text($html_content)
 	{
-		//Balise vidéo
-		$html_content = preg_replace('`<a href="([^"]+)" style="display:block;margin:auto;width:([0-9]+)px;height:([0-9]+)px;" id="movie_[0-9]+"></a><br /><script><!--\s*insertMoviePlayer\(\'movie_[0-9]+\'\);\s*--></script>`isU',
-			'<object type="application/x-shockwave-flash" width="$2" height="$3">
-				<param name="FlashVars" value="flv=$1&width=$2&height=$3" />
-				<param name="allowScriptAccess" value="never" />
-				<param name="play" value="true" />
-				<param name="movie" value="$1" />
-				<param name="menu" value="false" />
-				<param name="quality" value="high" />
-				<param name="scalemode" value="noborder" />
-				<param name="wmode" value="transparent" />
-				<param name="bgcolor" value="#FFFFFF" />
-			</object>',
-		$html_content);
-
 		return Url::html_convert_root_relative2absolute(FormatingHelper::second_parse($html_content));
 	}
 
@@ -344,33 +329,22 @@ class ContentSecondParser extends AbstractParser
 		$sources = '';
 		$video_files = explode(',', $matches[1]);
 
-		if (pathinfo($video_files[0], PATHINFO_EXTENSION) == 'flv')
+		$poster = '';
+		if (!empty($matches[4]))
 		{
-			$id = 'movie_' . AppContext::get_uid();
-			return '<div class="media-content" style="width:' . $matches[2] . 'px;height:' . $matches[3] . 'px;"><a class="video-player" href="' . Url::to_rel($matches[1]) . '" id="' . $id .  '"></a></div><br />' .
-			'<script><!--' . "\n" .
-			'insertMoviePlayer(\'' . $id . '\');' .
-			"\n" . '--></script>';
+			$poster_type = new FileType(new File($matches[4]));
+			$poster = $poster_type->is_picture() ? ' poster="' . Url::to_rel($matches[4]) . '"' : '';
 		}
-		else
+
+		foreach ($video_files as $video)
 		{
-			$poster = '';
-			if (!empty($matches[4]))
-			{
-				$poster_type = new FileType(new File($matches[4]));
-				$poster = $poster_type->is_picture() ? ' poster="' . Url::to_rel($matches[4]) . '"' : '';
-			}
-
-			foreach ($video_files as $video)
-			{
-				$video_file = new File($video);
-				$type = new FileType($video_file);
-				if ($type->is_video())
-					$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
-			}
-
-			return '<div class="media-content" style="width: ' . $matches[2] . 'px; height: ' . $matches[3] . 'px;"><video class="video-player"' . $poster . ' controls>' . $sources . '</video></div>';
+			$video_file = new File($video);
+			$type = new FileType($video_file);
+			if ($type->is_video())
+				$sources .= '<source src="' . Url::to_rel($video) . '" type="video/' . pathinfo($video, PATHINFO_EXTENSION) . '" />';
 		}
+
+		return '<div class="media-content" style="width: ' . $matches[2] . 'px; height: ' . $matches[3] . 'px;"><video class="video-player"' . $poster . ' controls>' . $sources . '</video></div>';
 	}
 
 	/**
