@@ -928,6 +928,29 @@ textarea#writing_pad_content {
 	border-width: 0 1px 1px 1px;
 }
 
+.bbcode-block .form-element {
+	width: 100% !important;
+	margin: 0 !important;
+	padding: 0.309em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.bbcode-block .form-element > label,
+.bbcode-block .form-element > .form-field {
+	display: inline-block;
+	border-width: 0;
+	margin: 0 !important;
+}
+
+.bbcode-form-element-text {
+	margin: 0 !important;
+	padding: 10px !important;
+	border-top: none !important;
+}
+
 /* --- CSS appliques aux écrans PC --- */
 @media (min-width: 769px) {
 	.form-element-textarea-small {
