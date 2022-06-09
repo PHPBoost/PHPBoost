@@ -650,15 +650,17 @@ a[class*='lightcase-icon-']:hover {
 
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
-.cell-tile .cell > [class*="cell-"] {
+.cell-tile .cell {
 	background-color: var(--bgc-sub);
 	border-color: var(--bdr-main);
 }
 
+.cell-tile .cell-header:not(:only-child) { border-bottom-color: var(--bdr-main); }
+
 .cell-list li:hover,
 .cell-list .current { background-color: rgba(var(--main-rgb-t), 0.1); }
 
-.cell-mini .cell > [class*="cell-"] { background-color: transparent; }
+.cell-mini .cell { background-color: transparent; }
 
 .no-style {
 	background-color: transparent !important;
@@ -666,11 +668,6 @@ a[class*='lightcase-icon-']:hover {
 }
 
 .new-content.cell .cell-header { border-left-color: var(--member-tone); }
-
-.not-compatible .cell-header,
-.not-compatible .cell-body,
-.not-compatible .cell-list,
-.not-compatible .cell-footer { border-color: var(--error-tone); }
 
 .cell-thumbnail-caption { background-color: rgba(var(--darken), 0.5); }
 
