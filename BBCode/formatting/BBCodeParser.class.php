@@ -6,7 +6,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2022 04 07
+ * @version   	PHPBoost 5.2 - last update: 2022 06 12
  * @since   	PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -321,7 +321,7 @@ class BBCodeParser extends ContentFormattingParser
 			//Quote tag
 			if (!in_array('quote', $this->forbidden_tags))
 			{
-				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('quotation', 'common') . ' :</span><div class="formatter-content">$1</div></div>');
+				$this->_parse_imbricated('[quote]', '`\[quote\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title">' . LangLoader::get_message('quotation', 'main') . ' :</span><div class="formatter-content">$1</div></div>');
 				$this->_parse_imbricated('[quote=', '`\[quote=([^\]]+)\](.+)\[/quote\]`suU', '<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">$1 :</span><div class="formatter-content">$2</div></div>');
 			}
 
