@@ -52,7 +52,6 @@
     .message-infos { flex-direction: row; }
 }
 
-
 .message-container .checkbox input { margin-top: -0.228em; }
 
 /* message actions */
@@ -97,7 +96,6 @@
     	visibility: visible;
     }
 }
-
 
 /* User datas */
 .message-container .button { width: auto; }
