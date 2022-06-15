@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 08
+ * @version     PHPBoost 6.0 - last update: 2022 06 15
  * @since       PHPBoost 5.2 - 2019 02 14
 */
 
@@ -134,9 +134,13 @@ class FileSystemHelper
 					if ($server_configuration->has_zip_library())
 					{
 						$zip_archive = new ZipArchive();
-						$zip_archive->open($file_name);
-						$zip_archive->extractTo($destination_path);
-						$zip_archive->close();
+						if ($zip_archive->open($file_name))
+						{
+							$zip_archive->extractTo($destination_path);
+							$zip_archive->close();
+						}
+						else
+							return false;
 					}
 					else
 					{
