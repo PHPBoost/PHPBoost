@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 03 27
+ * @version     PHPBoost 5.2 - last update: 2022 06 15
  * @since       PHPBoost 5.2 - 2019 02 14
 */
 
@@ -131,10 +131,23 @@ class FileSystemHelper
 				
 				if ($extract_archive && $file_extension == 'zip')
 				{
-					$zip_archive = new ZipArchive();
-					$zip_archive->open($file_name);
-					$zip_archive->extractTo($destination_path);
-					$zip_archive->close();
+					if ($server_configuration->has_zip_library())
+					{
+						$zip_archive = new ZipArchive();
+						if ($zip_archive->open($file_name))
+						{
+							$zip_archive->extractTo($destination_path);
+							$zip_archive->close();
+						}
+						else
+							return false;
+					}
+					else
+					{
+						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+						$zip = new PclZip($file_name);
+						$zip->extract(PCLZIP_OPT_PATH, $destination_path, PCLZIP_OPT_SET_CHMOD, 0755);
+					}
 					unlink($file_name);
 				}
 				
