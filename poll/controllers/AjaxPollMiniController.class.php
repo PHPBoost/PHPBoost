@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2022 06 15
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -33,7 +33,8 @@ class AjaxPollMiniController extends AbstractController
 		{
 			$json_response = array(
 				'validated' => 0,
-				'html' 		=> $this->set_view($this->get_pollminimenu(), !empty($previous_item_id) ? $previous_item_id : $next_item_id)
+				'message'   => '',
+				'html'      => $this->set_view($this->get_pollminimenu(), !empty($previous_item_id) ? $previous_item_id : $next_item_id)
 			);
 		}
 		else
@@ -50,7 +51,8 @@ class AjaxPollMiniController extends AbstractController
 
 					$json_response = array(
 						'validated' => 1,
-						'html' 		=> $this->set_view($this->get_pollminimenu(), '', array('poll.vote.saved' => MessageHelper::SUCCESS))
+						'message'   => LangLoader::get_message('poll.vote.saved', 'common', 'poll'),
+						'html'      => $this->set_view($this->get_pollminimenu(), '', array('poll.vote.saved' => MessageHelper::SUCCESS))
 					);
 
 				}
@@ -58,14 +60,16 @@ class AjaxPollMiniController extends AbstractController
 				{
 					$json_response = array(
 						'validated' => 0,
-						'html' 		=> $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.have.to.choose' => MessageHelper::NOTICE))
+						'message'   => LangLoader::get_message('poll.mini.have.to.choose', 'common', 'poll'),
+						'html'      => $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.have.to.choose' => MessageHelper::NOTICE))
 					);
 				}
 				elseif (!$this->form_has_been_submited() && !$this->form_is_validated())
 				{
 					$json_response = array(
 						'validated' => 0,
-						'html' 		=> $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('form_error.poll_mini' => MessageHelper::WARNING))
+						'message'   => LangLoader::get_message('poll.mini.form.error', 'common', 'poll'),
+						'html' 	    => $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.form.error' => MessageHelper::WARNING))
 					);
 				}
 			}

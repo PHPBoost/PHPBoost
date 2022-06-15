@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 12
+ * @version     PHPBoost 6.0 - last update: 2022 06 15
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -59,12 +59,12 @@ $lang['poll.mini.more']                 = 'Plus de sondages';
 $lang['poll.mini.participate.single']   = 'Participez au sondage suivant : ';
 $lang['poll.mini.participate.multiple'] = 'Participez aux sondages suivants : ';
 $lang['poll.mini.no.poll.available']    = 'Pas de sondage disponible';
-$lang['poll.mini.have.to.choose']       = 'Faîtes votre choix parmi les réponses';
+$lang['poll.mini.have.to.choose']       = 'Faites votre choix parmi les réponses';
 $lang['poll.mini.form.error']           = 'Erreur dans le formulaire';
 
 // Message helper
 $lang['poll.message.no.mini']       = 'Cette option est désactivée car vous n\'avez aucun sondage déclaré dans le mini module.';
-$lang['completed.item'] 	    = 'Ce sondage est clos';
+$lang['completed.item'] 	        = 'Ce sondage est clos';
 $lang['poll.message.not.allowed']   = 'Vous n\'avez pas l\'autorisation de voter.';
 $lang['poll.message.already.voted'] = 'Votre vote est enregistré.';
 

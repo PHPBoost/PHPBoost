@@ -43,7 +43,9 @@
 							$("#poll-mini").html(returnData.html);
 						}
 						else {
-							alert('Error');
+							if(returnData.message) {
+								alert(returnData.message);
+							}
 						}
 					}
 				});
@@ -69,7 +71,9 @@
 							$("#poll-mini").html(returnData.html);
 						}
 						else {
-							alert('Error');
+							if(returnData.message) {
+								alert(returnData.message);
+							}
 						}
 					}
 				});
@@ -95,7 +99,9 @@
 							$("#poll-mini").html(returnData.html);
 						}
 						else {
-							alert('Error');
+							if(returnData.message) {
+								alert(returnData.message);
+							}
 						}
 					}
 				});
