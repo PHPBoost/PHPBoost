@@ -98,6 +98,7 @@ class AjaxPollMiniController extends AbstractController
 		$items_manager->update_votes($this->retrieve_vote(), $this->item->get_votes_number(), $this->item->get_id());
 		$items_manager->insert_voter($this->item->get_id());
 		$items_manager->set_cookie($this->item->get_id());
+		PollMiniMenuCache::invalidate();
 	}
 
 	//Si pas encore de vote, retourne un tableau avec pour clés les réponses et pour valeurs 0
