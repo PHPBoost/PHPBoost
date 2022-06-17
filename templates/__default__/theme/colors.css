@@ -673,10 +673,6 @@ a[class*='lightcase-icon-']:hover {
 
 .cell-thumbnail-caption:hover { color: var(--txt-alt); }
 
-.cell-modal .content-panel.cell { background-color: transparent; }
-
-.message-container .content-panel.cell { background-color: var(--bgc-main); }
-
 a,
 .link-color {
 	color: var(--main-tone);
