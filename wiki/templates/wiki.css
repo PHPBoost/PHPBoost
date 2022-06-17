@@ -3,12 +3,6 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.wiki-paragraph-1 {}
-.wiki-paragraph-2 {}
-.wiki-paragraph-3 {}
-.wiki-paragraph-4 {}
-.wiki-paragraph-5 {}
-
 .wiki-list { margin: 0.456em 0 0 2.618em; }
 
 .wiki-list-1 > li { margin: 0.3em 0 0 0; }
@@ -61,11 +55,7 @@ ul.no-list a i.fa { width: 1.228em; }
 
 .wiki-extended-bbcode { margin-bottom: 0.382em; }
 
-.stacked .stack-event.stack-wiki {
-	font-size: 0.456em;
-	bottom: 0;
-	left: calc(100% - 1.309em);
-}
+.stacked .stack-event.stack-wiki { font-size: 0.618em; }
 
 .wiki-bbcode .bbcode-containers { border-top: none; }
 

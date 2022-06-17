@@ -9,9 +9,9 @@
 			var filename = PATH_TO_ROOT + "/wiki/xmlhttprequest.php" + (display_select_link != 0 ? "?display_select_link=1&token=" + TOKEN : "?token=" + TOKEN);
 
 			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
+			    xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+			    xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 			else // XMLHttpRequest non supporté par le navigateur
 			    return;
 
@@ -64,9 +64,9 @@
 			var filename = PATH_TO_ROOT + "/wiki/xmlhttprequest.php?select_cat=1&token=" + TOKEN;
 
 			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
+			    xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+			    xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 			else // XMLHttpRequest non supporté par le navigateur
 			    return;
 
@@ -237,9 +237,9 @@
 			var filename = PATH_TO_ROOT + "/wiki/xmlhttprequest.php?select_cat=1&display_select_link=0" + (id_cat == 0 ? "&root=1" : "") + "&token=" + TOKEN;
 
 			if(window.XMLHttpRequest) // Firefox
-			   xhr_object = new XMLHttpRequest();
+			    xhr_object = new XMLHttpRequest();
 			else if(window.ActiveXObject) // Internet Explorer
-			   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+			    xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 			else // XMLHttpRequest non supporté par le navigateur
 			    return;
 
