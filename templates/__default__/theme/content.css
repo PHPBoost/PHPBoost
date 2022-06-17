@@ -126,7 +126,7 @@ aside:not(#menu-left):not(#menu-right)::after {
 	.item-thumbnail {
 		max-width: 38%;
 		float: left;
-		padding: 0.309em 0 0.309em 0.618em;
+		padding: 0.309em 0.309em 0.618em 0;
 		position: relative;
 		z-index: 2;
 	}
