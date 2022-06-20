@@ -37,11 +37,7 @@
 											{list.DATE}
 										</td>
 										<td>
-											# IF list.C_AUTHOR_EXISTS #
-												<a itemprop="author" href="{list.U_AUTHOR_PROFILE}" class="{list.AUTHOR_LEVEL_CLASS} offload"# IF list.C_AUTHOR_GROUP_COLOR # style="color: {list.AUTHOR_GROUP_COLOR};"# ENDIF #>{list.AUTHOR_DISPLAY_NAME}</a>
-											# ELSE #
-												<span aria-label="{list.AUTHOR_IP}">{@user.guest}</span>
-											# ENDIF #
+											{list.AUTHOR}
 										</td>
 										<td>
 											{list.L_CHANGE_REASON}
@@ -102,7 +98,11 @@
 											{list.LAST_UPDATE}
 										</td>
 										<td>
-											{list.AUTHOR}
+											# IF list.C_AUTHOR_EXISTS #
+												<a itemprop="author" href="{list.U_AUTHOR_PROFILE}" class="{list.AUTHOR_LEVEL_CLASS} offload" # IF list.C_AUTHOR_GROUP_COLOR # style="color: {list.AUTHOR_GROUP_COLOR};" # ENDIF #>{list.AUTHOR_DISPLAY_NAME}</a>
+											# ELSE #
+												<span aria-label="{list.AUTHOR_IP}">{@user.guest}</span>
+											# ENDIF #
 										</td>
 									</tr>
 								# END list #
