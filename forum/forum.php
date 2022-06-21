@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 22
+ * @version     PHPBoost 6.0 - last update: 2022 06 21
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -415,6 +415,7 @@ if (!empty($id_get))
 			'C_LAST_MESSAGE_GUEST'    => !empty($row['last_login']),
 			'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
 
+			'ID'              		  => $row['id'],
 			'TOPIC_ICON'              => $topic_icon,
 			'U_ANCHOR'                => $new_anchor,
 			'TYPE'                    => $type[$row['type']],

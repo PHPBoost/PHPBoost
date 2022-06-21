@@ -204,6 +204,8 @@ a.pinned { cursor: pointer; }
 
 /* --- Sizes --- */
 @media (min-width: 769px) {
+	.wmodo { width: 2.809em !important;   }
+	
 	.w5   { width: 5% !important;   }
 	.w10  { width: 10% !important;  }
 	.w20  { width: 20% !important;  }
