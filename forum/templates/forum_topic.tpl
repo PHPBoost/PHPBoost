@@ -170,9 +170,9 @@
 
 				# IF C_POLL_QUESTION #
 					<fieldset class="fieldset-submit">
-						<legend>{@forum.cast.vote}</legend>
+						<legend>{@forum.poll.cast.vote}</legend>
 						<input type="hidden" name="token" value="{TOKEN}">
-						<button type="submit" name="valid_forum_poll" value="true" class="button submit">{@forum.cast.vote}</button>
+						<button type="submit" name="valid_forum_poll" value="true" class="button submit">{@forum.poll.cast.vote}</button>
 						<div class="spacer"></div>
 						<a class="small offload" href="topic{U_POLL_RESULT}">{@forum.poll.results}</a>
 					</fieldset>

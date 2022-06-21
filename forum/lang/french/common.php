@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 10
+ * @version     PHPBoost 6.0 - last update: 2022 06 21
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -224,6 +224,7 @@ $lang['forum.simple.answer']      = 'Réponse simple';
 $lang['forum.multiple.answer']    = 'Réponses multiples';
 $lang['forum.delete.poll']        = 'Supprimer le sondage';
 $lang['forum.require.poll.title'] = 'Veuillez entrer un titre pour le sondage !';
+$lang['forum.poll.results']       = 'Résultats du sondage';
 
 // Ranks
 $lang['forum.ranks.management']             = 'Gestion des rangs du forum';
