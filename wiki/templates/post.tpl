@@ -164,3 +164,4 @@
 		</div>
 	</div>
 </section>
+<script>jQuery('.bbcode-bar > nav > ul').prepend(jQuery('.wikibar'));</script>

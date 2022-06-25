@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2022 06 25
  * @since       PHPBoost 1.6 - 2006 12 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -125,6 +125,7 @@ $lang['wiki.contribute']      = 'Contribuer au wiki';
 $lang['wiki.edit.item']       = 'Edition de l\'article';
 $lang['wiki.category.edit']   = 'Edition de la catégorie';
 	// js_tools
+$lang['wiki.bbcode.wiki.icon']  = 'BBCode wiki';
 $lang['wiki.warning.link.name'] = 'Veuillez entrer un nom de lien';
 $lang['wiki.insert.link']       = 'Insérer un lien vers un article';
 $lang['wiki.link.title']        = 'Titre de l\'article';
