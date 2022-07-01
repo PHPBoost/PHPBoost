@@ -24,7 +24,7 @@
 
 @media (min-width: 769px) {
     .advanced-auth-container {
-    	display: flex;
+        display: flex;
         flex-direction: row;
     }
 

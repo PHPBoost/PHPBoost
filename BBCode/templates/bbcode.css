@@ -53,7 +53,7 @@
 	background-color: var(--bgc-main);
 }
 
-.bbcode-group:hover > ul {
+.bbcode-group.bbcode-sub > ul {
     top: 0;
     opacity: 1;
     visibility: visible;

@@ -13,8 +13,8 @@
 	<nav class="bbcode-containers">
 		<ul>
 			<li class="auto-resize bbcode-group bbcode-text wikibar">
-				<span data-modal data-target="block-link" class="bbcode-button" aria-label="{@wiki.bbcode.wiki.icon}">
-					<i class="fa fa-w"></i>
+				<span data-modal data-target="block-link" class="auto-resize bbcode-group-title bbcode-button" aria-label="{@wiki.bbcode.wiki.icon}">
+					<i class="fa fa-fw fa-w"></i>
 				</span>
 				<ul id="wiki-paragraph-container" class="bbcode-container cell-list cell-list-inline cell-tile cell-modal modal-container">
 					<li class="bbcode-elements">

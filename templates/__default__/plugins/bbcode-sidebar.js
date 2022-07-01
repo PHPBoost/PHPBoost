@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 22
+ * @version     PHPBoost 6.0 - last update: 2022 07 01
  * @since       PHPBoost 1.2 - 2022 03 22
 */
 
@@ -46,4 +46,25 @@ jQuery('.bbcode-sidebar > textarea').each(function () {
     jQuery(document).on('click', function (event) {
         jQuery(event.target).hasClass('auto-resize') || jQuery(event.target).is('button') || jQuery(event.target).is('i') || $this.is(':focus') ? $this.autoResize() : $this.css('height', $thisHeight + 'px');
     });
+});
+
+jQuery('.bbcode-group-title').each(function(){
+	var mainButtonParent = jQuery(this).closest('.bbcode-group');
+	jQuery(this).on('click', function(e) {
+		e.preventDefault();
+		mainButtonParent.toggleClass('bbcode-sub');
+		e.stopPropagation();
+	});
+});
+
+jQuery('.hide-modal').each(function(){
+	var mainButtonParent = jQuery(this).closest('.bbcode-group');
+	jQuery(this).on('click', function(){
+		if(mainButtonParent.hasClass('bbcode-sub'))
+		{
+			console.log('boo');
+			mainButtonParent.removeClass('bbcode-sub');
+		}
+			
+	});
 });
