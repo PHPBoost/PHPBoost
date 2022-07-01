@@ -61,10 +61,6 @@ jQuery('.hide-modal').each(function(){
 	var mainButtonParent = jQuery(this).closest('.bbcode-group');
 	jQuery(this).on('click', function(){
 		if(mainButtonParent.hasClass('bbcode-sub'))
-		{
-			console.log('boo');
 			mainButtonParent.removeClass('bbcode-sub');
-		}
-			
 	});
 });
