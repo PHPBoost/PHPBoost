@@ -61,7 +61,7 @@
 						</div>
 					</li> -->
 					<li class="bbcode-elements">
-						<a href="javascript:insert_paragraph(1);" class="bbcode-button close-bbcode-sub" aria-label="{L_PARAGRAPH_1}">
+						<a href="javascript:insert_paragraph(1);" class="bbcode-button" aria-label="{L_PARAGRAPH_1}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
 								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">1</span>
@@ -69,7 +69,7 @@
 						</a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="javascript:insert_paragraph(2);" class="bbcode-button close-bbcode-sub" aria-label="{L_PARAGRAPH_2}">
+						<a href="javascript:insert_paragraph(2);" class="bbcode-button" aria-label="{L_PARAGRAPH_2}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
 								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">2</span>
@@ -77,7 +77,7 @@
 						</a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="javascript:insert_paragraph(3);" class="bbcode-button close-bbcode-sub" aria-label="{L_PARAGRAPH_3}">
+						<a href="javascript:insert_paragraph(3);" class="bbcode-button" aria-label="{L_PARAGRAPH_3}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
 								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">3</span>
@@ -85,7 +85,7 @@
 						</a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="javascript:insert_paragraph(4);" class="bbcode-button close-bbcode-sub" aria-label="{L_PARAGRAPH_4}">
+						<a href="javascript:insert_paragraph(4);" class="bbcode-button" aria-label="{L_PARAGRAPH_4}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
 								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">4</span>
@@ -93,7 +93,7 @@
 						</a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="javascript:insert_paragraph(5);" class="bbcode-button close-bbcode-sub" aria-label="{L_PARAGRAPH_5}">
+						<a href="javascript:insert_paragraph(5);" class="bbcode-button" aria-label="{L_PARAGRAPH_5}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
 								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">5</span>
@@ -101,7 +101,7 @@
 						</a>
 					</li>
 					<li class="bbcode-elements">
-						<a href="https://www.phpboost.com/wiki/utilisation-du-module-wiki#paragraph-creer-un-sommaire" class="bbcode-button offload close-bbcode-sub" aria-label="{@wiki.help.tags}"><i class="far fa-fw fa-question-circle" aria-hidden="true"></i></a>
+						<a href="https://www.phpboost.com/wiki/utilisation-du-module-wiki#paragraph-creer-un-sommaire" class="bbcode-button offload" aria-label="{@wiki.help.tags}"><i class="far fa-fw fa-question-circle" aria-hidden="true"></i></a>
 					</li>
 				</ul>
 			</li>			
