@@ -54,22 +54,22 @@
 				<span class="auto-resize bbcode-group-title bbcode-button" aria-label="{@bbcode.format}"><i class="auto-resize fa fa-fw fa-font" aria-hidden="true"></i></span>
 				<ul class="auto-resize bbcode-container modal-container cell-modal cell-tile">
 					<li id="format-bold" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_B}" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.bold}">
+						<span class="auto-resize bbcode-button{AUTH_B} close-bbcode-sub" # IF NOT C_DISABLED_B #onclick="insertbbcode('[b]', '[/b]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.bold}">
 							<i class="auto-resize fa fa-fw fa-bold" aria-hidden="true"></i>
 						</span>
 					</li>
 					<li id="format-italic" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_I}" # IF NOT C_DISABLED_I #onclick="insertbbcode('[i]', '[/i]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.italic}">
+						<span class="auto-resize bbcode-button{AUTH_I} close-bbcode-sub" # IF NOT C_DISABLED_I #onclick="insertbbcode('[i]', '[/i]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.italic}">
 							<i class="auto-resize fa fa-fw fa-italic" aria-hidden="true"></i>
 						</span>
 					</li>
 					<li id="format-underline" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_U}" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.underline}">
+						<span class="auto-resize bbcode-button{AUTH_U} close-bbcode-sub" # IF NOT C_DISABLED_U #onclick="insertbbcode('[u]', '[/u]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.underline}">
 							<i class="auto-resize fa fa-fw fa-underline" aria-hidden="true"></i>
 						</span>
 					</li>
 					<li id="format-strike" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_S}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[s]', '[/s]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.strike}">
+						<span class="auto-resize bbcode-button{AUTH_S} close-bbcode-sub" # IF NOT C_DISABLED_S #onclick="insertbbcode('[s]', '[/s]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.strike}">
 							<i class="auto-resize fa fa-fw fa-strikethrough" aria-hidden="true"></i>
 						</span>
 					</li>
@@ -83,7 +83,7 @@
 								<div class="auto-resize cell-header">
 									<div class="auto-resize cell-name">{@bbcode.color}</div>
 								</div>
-								<div id="bb-color{FIELD}" class="auto-resize cell-table color-table"></div>
+								<div id="bb-color{FIELD}" class="auto-resize cell-table color-table close-bbcode-sub"></div>
 							</div>
 						</div>
 					</li>
@@ -97,7 +97,7 @@
 								<div class="auto-resize cell-header">
 									<div class="auto-resize cell-name">{@bbcode.bgcolor}</div>
 								</div>
-								<div id="bb-bgcolor{FIELD}" class="auto-resize cell-table color-table"></div>
+								<div id="bb-bgcolor{FIELD}" class="auto-resize cell-table color-table close-bbcode-sub"></div>
 							</div>
 						</div>
 					</li>
@@ -123,7 +123,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_size('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_size('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -140,23 +140,23 @@
 								</div>
 								<nav class="auto-resize cell-list cell-list-inline">
 									<ul>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');"> <span style="font-family: andale mono;">Andale Mono</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=arial]', '[/font]', '{FIELD}');"> <span style="font-family: arial;">Arial</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=arial black]', '[/font]', '{FIELD}');"> <span style="font-family: arial black;">Arial Black</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');"> <span style="font-family: book antiqua;">Book Antiqua</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');"> <span style="font-family: comic sans ms;">Comic Sans MS</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=courier new]', '[/font]', '{FIELD}');"> <span style="font-family: courier new;">Courier New</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=georgia]', '[/font]', '{FIELD}');"> <span style="font-family: georgia;">Georgia</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');"> <span style="font-family: helvetica;">Helvetica</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=impact]', '[/font]', '{FIELD}');"> <span style="font-family: impact;">Impact</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=symbol]', '[/font]', '{FIELD}');"> <span style="font-family: symbol;">Symbol</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');"> <span style="font-family: tahoma;">Tahoma</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=terminal]', '[/font]', '{FIELD}');"> <span style="font-family: terminal;">Terminal</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');"> <span style="font-family: times new roman;">Times New Roman</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');"> <span style="font-family: trebuchet ms;">Trebuchet MS</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=verdana]', '[/font]', '{FIELD}');"> <span style="font-family: verdana;">Verdana</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=webdings]', '[/font]', '{FIELD}');"> <span style="font-family: webdings;">Webdings</span></li>
-										<li class="auto-resize hide-modal" onclick="insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');"> <span style="font-family: wingdings;">Wingdings</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=andale mono]', '[/font]', '{FIELD}');"> <span style="font-family: andale mono;">Andale Mono</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=arial]', '[/font]', '{FIELD}');"> <span style="font-family: arial;">Arial</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=arial black]', '[/font]', '{FIELD}');"> <span style="font-family: arial black;">Arial Black</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=book antiqua]', '[/font]', '{FIELD}');"> <span style="font-family: book antiqua;">Book Antiqua</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=comic sans ms]', '[/font]', '{FIELD}');"> <span style="font-family: comic sans ms;">Comic Sans MS</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=courier new]', '[/font]', '{FIELD}');"> <span style="font-family: courier new;">Courier New</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=georgia]', '[/font]', '{FIELD}');"> <span style="font-family: georgia;">Georgia</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=helvetica]', '[/font]', '{FIELD}');"> <span style="font-family: helvetica;">Helvetica</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=impact]', '[/font]', '{FIELD}');"> <span style="font-family: impact;">Impact</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=symbol]', '[/font]', '{FIELD}');"> <span style="font-family: symbol;">Symbol</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=tahoma]', '[/font]', '{FIELD}');"> <span style="font-family: tahoma;">Tahoma</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=terminal]', '[/font]', '{FIELD}');"> <span style="font-family: terminal;">Terminal</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=times new roman]', '[/font]', '{FIELD}');"> <span style="font-family: times new roman;">Times New Roman</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=trebuchet ms]', '[/font]', '{FIELD}');"> <span style="font-family: trebuchet ms;">Trebuchet MS</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=verdana]', '[/font]', '{FIELD}');"> <span style="font-family: verdana;">Verdana</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=webdings]', '[/font]', '{FIELD}');"> <span style="font-family: webdings;">Webdings</span></li>
+										<li class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[font=wingdings]', '[/font]', '{FIELD}');"> <span style="font-family: wingdings;">Wingdings</span></li>
 									</ul>
 								</nav>
 							</div>
@@ -181,19 +181,19 @@
 									<ul>
 										<li class="auto-resize li-stretch">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-align-left"></i> {@bbcode.left} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[align=left]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[align=left]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-align-center"></i> {@bbcode.center} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[align=center]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[align=center]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-align-right"></i> {@bbcode.right} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[align=right]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[align=right]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-align-justify"></i> {@bbcode.justify} </span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[align=justify]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[align=justify]', '[/align]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 									</ul>
 								</nav>
@@ -214,23 +214,23 @@
 									<ul>
 										<li class="auto-resize li-stretch{AUTH_FLOAT}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-step-backward"></i> {@bbcode.float.left} </span>
-											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_FLOAT# onclick="insertbbcode('[float=left]', '[/float]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub"# IF NOT C_DISABLED_FLOAT# onclick="insertbbcode('[float=left]', '[/float]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_FLOAT}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-step-forward"></i>  {@bbcode.float.right} </span>
-											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_FLOAT# onclick="insertbbcode('[float=right]', '[/float]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub"# IF NOT C_DISABLED_FLOAT# onclick="insertbbcode('[float=right]', '[/float]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_INDENT}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-indent"></i> {@bbcode.indent} </span>
-											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_INDENT# onclick="insertbbcode('[indent]', '[/indent]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub"# IF NOT C_DISABLED_INDENT# onclick="insertbbcode('[indent]', '[/indent]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_SUP}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-superscript"></i> {@bbcode.sup}</span>
-											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_SUP# onclick="insertbbcode('[sup]', '[/sup]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub"# IF NOT C_DISABLED_SUP# onclick="insertbbcode('[sup]', '[/sup]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_SUB}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-subscript"></i>  {@bbcode.sub} </span>
-											<span class="auto-resize button hide-modal"# IF NOT C_DISABLED_SUB# onclick="insertbbcode('[sub]', '[/sub]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub"# IF NOT C_DISABLED_SUB# onclick="insertbbcode('[sub]', '[/sub]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 									</ul>
 								</div>
@@ -251,31 +251,31 @@
 								<div class="auto-resize cell-body">
 									<div class="auto-resize cell-content flex-between">
 										<h2 class="auto-resize formatter-title">{@bbcode.title.label} 1</h2>
-										<span class="auto-resize button hide-modal" onclick="insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+										<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[title=1]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 								<div class="auto-resize cell-body">
 									<div class="auto-resize cell-content flex-between">
 										<h3 class="auto-resize formatter-title">{@bbcode.title.label} 2</h3>
-										<span class="auto-resize button hide-modal" onclick="insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+										<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[title=2]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 								<div class="auto-resize cell-body">
 									<div class="auto-resize cell-content flex-between">
 										<h4 class="auto-resize formatter-title">{@bbcode.title.label} 3</h4>
-										<span class="auto-resize button hide-modal" onclick="insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+										<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[title=3]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 								<div class="auto-resize cell-body">
 									<div class="auto-resize cell-content flex-between">
 										<h5 class="auto-resize formatter-title">{@bbcode.title.label} 4</h5>
-										<span class="auto-resize button hide-modal" onclick="insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+										<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[title=4]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 								<div class="auto-resize cell-body">
 									<div class="auto-resize cell-content flex-between">
 										<h6 class="auto-resize formatter-title">{@bbcode.title.label} 5</h6>
-										<span class="auto-resize button hide-modal" onclick="insertbbcode('[title=5]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
+										<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[title=5]', '[/title]', '{FIELD}');">{@bbcode.tags.add}</span>
 									</div>
 								</div>
 							</div>
@@ -307,7 +307,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_list('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_list('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -344,7 +344,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_table('{FIELD}');">{@bbcode.insert.table}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_table('{FIELD}');">{@bbcode.insert.table}</span>
 								</div>
 							</div>
 						</div>
@@ -363,11 +363,11 @@
 									<ul>
 										<li id="html-paragraph" class="auto-resize li-stretch{AUTH_P}">
 											<span class="auto-resize bbcode-label"> {@bbcode.paragraph} </span>
-											<span class="auto-resize button hide-modal" # IF NOT C_DISABLED_P#onclick="insertbbcode('[p]', '[/p]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" # IF NOT C_DISABLED_P#onclick="insertbbcode('[p]', '[/p]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 										<li id="html-div-block" class="auto-resize li-stretch{AUTH_BLOCK}">
 											<span class="auto-resize bbcode-label"> {@bbcode.block} </span>
-											<span class="auto-resize button hide-modal" # IF NOT C_DISABLED_BLOCK #onclick="insertbbcode('[block]', '[/block]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" # IF NOT C_DISABLED_BLOCK #onclick="insertbbcode('[block]', '[/block]', '{FIELD}');"# ENDIF #>{@bbcode.tags.add}</span>
 										</li>
 										<li id="html-div-custom" class="auto-resize li-stretch{AUTH_CONTAINER}">
 											<span class="auto-resize bbcode-label"> {@bbcode.custom.div} </span>
@@ -409,7 +409,7 @@
 									<div class="auto-resize cell-input"><textarea class="auto-resize " id="bb_cd_style{FIELD}" rows="3" cols="32"></textarea></div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_custom_div('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_custom_div('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -428,7 +428,7 @@
 									<div class="auto-resize cell-input"><textarea class="auto-resize " id="bb_fieldset_style{FIELD}" rows="3" cols="32"></textarea></div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -447,7 +447,7 @@
 									<div class="auto-resize cell-input"><input class="auto-resize " type="text" id="bb_abbr_desc{FIELD}"></div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -475,7 +475,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_quote('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_quote('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -494,19 +494,19 @@
 									<ul>
 										<li class="auto-resize li-stretch{AUTH_HIDE}">
 											<span class="auto-resize "><i class="auto-resize far fa-fw fa-eye-slash" role="contentinfo"></i> {@bbcode.hide.all}</span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[hide]', '[/hide]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_MEMBER}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-user-friends" role="contentinfo"></i> {@bbcode.hide.member}</span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[member]', '[/member]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_TEASER}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-user" role="contentinfo"></i> {@bbcode.hide.teaser}</span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[teaser]', '[/teaser]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[teaser]', '[/teaser]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 										<li class="auto-resize li-stretch{AUTH_MODERATOR}">
 											<span class="auto-resize "><i class="auto-resize fa fa-fw fa-user-shield" role="contentinfo"></i> {@bbcode.hide.moderator}</span>
-											<span class="auto-resize button hide-modal" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insertbbcode('[moderator]', '[/moderator]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</li>
 									</ul>
 								</div>
@@ -527,7 +527,7 @@
 									<div class="auto-resize cell-content">
 										<div class="auto-resize message-helper bgc notice flex-between">
 											<span class="auto-resize ">{@common.notice}</span>
-											<span class="auto-resize button bgc-full notice hide-modal" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button bgc-full notice hide-modal close-bbcode-sub" onclick="insertbbcode('[style=notice]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</div>
 									</div>
 								</div>
@@ -535,7 +535,7 @@
 									<div class="auto-resize cell-content">
 										<div class="auto-resize message-helper bgc question flex-between">
 											<span class="auto-resize ">{@common.question}</span>
-											<span class="auto-resize button bgc-full question hide-modal" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button bgc-full question hide-modal close-bbcode-sub" onclick="insertbbcode('[style=question]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</div>
 									</div>
 								</div>
@@ -543,7 +543,7 @@
 									<div class="auto-resize cell-content">
 										<div class="auto-resize message-helper bgc success flex-between">
 											<span class="auto-resize ">{@common.success}</span>
-											<span class="auto-resize button bgc-full success hide-modal" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button bgc-full success hide-modal close-bbcode-sub" onclick="insertbbcode('[style=success]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</div>
 									</div>
 								</div>
@@ -551,7 +551,7 @@
 									<div class="auto-resize cell-content">
 										<div class="auto-resize message-helper bgc warning flex-between">
 											<span class="auto-resize ">{@common.warning}</span>
-											<span class="auto-resize button bgc-full warning hide-modal" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button bgc-full warning hide-modal close-bbcode-sub" onclick="insertbbcode('[style=warning]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</div>
 									</div>
 								</div>
@@ -559,7 +559,7 @@
 									<div class="auto-resize cell-content">
 										<div class="auto-resize message-helper bgc error flex-between">
 											<span class="auto-resize ">{@common.error}</span>
-											<span class="auto-resize button bgc-full error hide-modal" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
+											<span class="auto-resize button bgc-full error hide-modal close-bbcode-sub" onclick="insertbbcode('[style=error]', '[/style]', '{FIELD}');">{@bbcode.tags.add}</span>
 										</div>
 									</div>
 								</div>
@@ -567,7 +567,7 @@
 						</div>
 					</li>
 					<li id="html-hr" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_LINE}" # IF NOT C_DISABLED_S #onclick="insertbbcode('[line]', '', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.line}">
+						<span class="auto-resize bbcode-button{AUTH_LINE} close-bbcode-sub" # IF NOT C_DISABLED_S #onclick="insertbbcode('[line]', '', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.line}">
 							<i class="auto-resize fa fa-fw fa-arrow-down-up-across-line {AUTH_LINE}" aria-hidden="true"></i>
 						</span>
 					</li>
@@ -599,7 +599,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -627,7 +627,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_mail('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -671,7 +671,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_wikipedia('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_wikipedia('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -710,7 +710,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_feed('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_feed('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -741,7 +741,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_anchor('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_anchor('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -771,7 +771,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_sound('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_sound('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -830,7 +830,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_movie('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_movie('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -865,7 +865,7 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_lightbox('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_lightbox('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
@@ -908,14 +908,14 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_figure('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_figure('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
 					</li>
 					# IF C_UPLOAD_MANAGEMENT #
 						<li id="link-upload" class="auto-resize bbcode-elements">
-							<a class="auto-resize bbcode-button{AUTH_UPLOAD}" href="#" aria-label="{@bbcode.upload}" # IF NOT C_DISABLED_UPLOAD #onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"# ENDIF #>
+							<a class="auto-resize bbcode-button{AUTH_UPLOAD} close-bbcode-sub" href="#" aria-label="{@bbcode.upload}" # IF NOT C_DISABLED_UPLOAD #onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"# ENDIF #>
 								<i class="auto-resize fa fa-fw fa-cloud-upload-alt" aria-hidden="true"></i>
 							</a>
 						</li>
@@ -941,7 +941,7 @@
 									<ul>
 										# START smileys #
 											<li>
-												<span class="auto-resize hide-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" role="button" aria-label="{smileys.CODE}">
+												<span class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('{smileys.CODE}', 'smile', '{FIELD}');" role="button" aria-label="{smileys.CODE}">
 													<img src="{smileys.URL}" alt="{smileys.CODE}" aria-hidden="true" class="auto-resize smiley" />
 												</span>
 											</li>
@@ -987,7 +987,7 @@
 													<ul class="auto-resize flex-start">
 												# ELSE #
 													<li# IF emojis.C_END_LINE # class="auto-resize hidden"# ENDIF #>
-														<span class="auto-resize hide-modal bigger emoji-tag" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
+														<span class="auto-resize hide-modal close-bbcode-sub bigger emoji-tag" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
 															{emojis.DECIMAL}
 														</span>
 													</li>
@@ -1016,7 +1016,7 @@
 									<ul>
 										# START code_fa #
 											<li>
-												<span class="auto-resize hide-modal" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
+												<span class="auto-resize hide-modal close-bbcode-sub" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
 													<i class="auto-resize {code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
 												</span>
 											</li>
@@ -1099,18 +1099,18 @@
 									</div>
 								</div>
 								<div class="auto-resize cell-footer cell-input">
-									<span class="auto-resize button hide-modal" onclick="bbcode_code('{FIELD}');">{@bbcode.tags.add}</span>
+									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="bbcode_code('{FIELD}');">{@bbcode.tags.add}</span>
 								</div>
 							</div>
 						</div>
 					</li>
 					<li id="code-math" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_MATH}" # IF NOT C_DISABLED_MATH #onclick="insertbbcode('[math]', '[/math]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.math}">
+						<span class="auto-resize bbcode-button{AUTH_MATH} close-bbcode-sub" # IF NOT C_DISABLED_MATH #onclick="insertbbcode('[math]', '[/math]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.math}">
 							<i class="auto-resize fa fa-fw fa-calculator" aria-hidden="true"></i>
 						</span>
 					</li>
 					<li id="code-html" class="auto-resize bbcode-elements">
-						<span class="auto-resize bbcode-button{AUTH_HTML}" # IF NOT C_DISABLED_HTML #onclick="insertbbcode('[html]', '[/html]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.html}">
+						<span class="auto-resize bbcode-button{AUTH_HTML} close-bbcode-sub" # IF NOT C_DISABLED_HTML #onclick="insertbbcode('[html]', '[/html]', '{FIELD}');"# ENDIF # role="button" aria-label="{@bbcode.html}">
 							<i class="auto-resize fab fa-fw fa-html5" aria-hidden="true"></i>
 						</span>
 					</li>

@@ -48,19 +48,13 @@ jQuery('.bbcode-sidebar > textarea').each(function () {
     });
 });
 
-jQuery('.bbcode-group-title').each(function(){
+jQuery('.bbcode-group-title, .close-bbcode-sub').each(function(){
 	var mainButtonParent = jQuery(this).closest('.bbcode-group');
 	jQuery(this).on('click', function(e) {
 		e.preventDefault();
 		mainButtonParent.toggleClass('bbcode-sub');
+		if(mainButtonParent.siblings().hasClass('bbcode-sub')) 
+			mainButtonParent.siblings().removeClass('bbcode-sub');
 		e.stopPropagation();
-	});
-});
-
-jQuery('.hide-modal').each(function(){
-	var mainButtonParent = jQuery(this).closest('.bbcode-group');
-	jQuery(this).on('click', function(){
-		if(mainButtonParent.hasClass('bbcode-sub'))
-			mainButtonParent.removeClass('bbcode-sub');
 	});
 });
