@@ -45,7 +45,7 @@
 .bbcode-group > ul {
     position: absolute;
     top: 50%;
-    right: calc(100% - 1px);
+    right: calc(100% + 1px);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s;
@@ -58,6 +58,11 @@
     opacity: 1;
     visibility: visible;
     transition: all 0.3s
+}
+
+.bbcode-sub > span {
+	color: var(--main-light);
+	background-color: rgba(var(--main-rgb-t), 0.2);
 }
 
 /* --- content of elements --- */
