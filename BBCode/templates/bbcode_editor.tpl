@@ -663,9 +663,9 @@
 								<div class="auto-resize cell-form cell-hidden hidden">
 									<label for="bb_wikipedia_lang{FIELD}" class="auto-resize cell-label">{@bbcode.wikipedia.lang}</label>
 									<div class="auto-resize cell-input">
-										<select id="bb_wikipedia_lang{FIELD}">
+										<select class="auto-resize" id="bb_wikipedia_lang{FIELD}">
 											# START countries #
-												<option value="{countries.ID}">{countries.NAME}</option>
+												<option class="auto-resize" value="{countries.ID}">{countries.NAME}</option>
 											# END countries #
 										</select>
 									</div>
@@ -689,10 +689,10 @@
 								<div class="auto-resize cell-form">
 									<label for="bb_feed_module_name{FIELD}" class="auto-resize cell-label">{@bbcode.feed.module}</label>
 									<div class="auto-resize cell-input">
-										<select id="bb_feed_module_name{FIELD}">
-											<option value="">{@bbcode.feed.select}</option>
+										<select class="auto-resize" id="bb_feed_module_name{FIELD}">
+											<option class="auto-resize" value="">{@bbcode.feed.select}</option>
 											# START feeds_modules #
-												<option value="{feeds_modules.VALUE}">{feeds_modules.NAME}</option>
+												<option class="auto-resize" value="{feeds_modules.VALUE}">{feeds_modules.NAME}</option>
 											# END feeds_modules #
 										</select>
 									</div>
@@ -700,7 +700,7 @@
 								<div class="auto-resize cell-form">
 									<label for="bb_feed_category{FIELD}" class="auto-resize cell-label">{@common.category}</label>
 									<div class="auto-resize cell-input">
-										<select id="bb_feed_category{FIELD}" disabled="disabled"></select>
+										<select class="auto-resize" id="bb_feed_category{FIELD}" disabled="disabled"></select>
 									</div>
 								</div>
 								<div class="auto-resize cell-form">
@@ -800,11 +800,11 @@
 								<div class="auto-resize cell-form">
 									<label for="bb_movie_host{FIELD}" class="auto-resize cell-label">{@bbcode.movie.host}</label>
 									<div class="auto-resize cell-input">
-										<select name="bb_movie_host{FIELD}" id="bb_movie_host{FIELD}">
-											<option value="local">{@bbcode.movie.host.local}</option>
-											<option value="youtube">{@bbcode.movie.host.youtube}</option>
-											<option value="dailymotion">{@bbcode.movie.host.dailymotion}</option>
-											<option value="vimeo">{@bbcode.movie.host.vimeo}</option>
+										<select class="auto-resize" name="bb_movie_host{FIELD}" id="bb_movie_host{FIELD}">
+											<option class="auto-resize" value="local">{@bbcode.movie.host.local}</option>
+											<option class="auto-resize" value="youtube">{@bbcode.movie.host.youtube}</option>
+											<option class="auto-resize" value="dailymotion">{@bbcode.movie.host.dailymotion}</option>
+											<option class="auto-resize" value="vimeo">{@bbcode.movie.host.vimeo}</option>
 										</select>
 									</div>
 								</div>
@@ -1050,41 +1050,41 @@
 								<div class="auto-resize cell-form">
 									<label for="bb_code_name{FIELD}" class="auto-resize cell-label">{@bbcode.code.name}</label>
 									<div class="auto-resize cell-input">
-										<select name="bb_code_name{FIELD}" id="bb_code_name{FIELD}">
-											<optgroup label="{@bbcode.text}">
-												<option value="text">Text</option>
-												<option value="sql">Sql</option>
-												<option value="xml">Xml</option>
+										<select class="auto-resize" name="bb_code_name{FIELD}" id="bb_code_name{FIELD}">
+											<optgroup class="auto-resize" label="{@bbcode.text}">
+												<option class="auto-resize" value="text">Text</option>
+												<option class="auto-resize" value="sql">Sql</option>
+												<option class="auto-resize" value="xml">Xml</option>
 											</optgroup>
-											<optgroup label="{@bbcode.phpboost.languages}">
-												<option value="bbcode">BBCode</option>
-												<option value="tpl">Template</option>
+											<optgroup class="auto-resize" label="{@bbcode.phpboost.languages}">
+												<option class="auto-resize" value="bbcode">BBCode</option>
+												<option class="auto-resize" value="tpl">Template</option>
 											</optgroup>
-											<optgroup label="{@bbcode.web}">
-												<option value="html">HTML</option>
-												<option value="css">CSS</option>
-												<option value="javascript">Javascript</option>
-												<option value="php">PHP</option>
+											<optgroup class="auto-resize" label="{@bbcode.web}">
+												<option class="auto-resize" value="html">HTML</option>
+												<option class="auto-resize" value="css">CSS</option>
+												<option class="auto-resize" value="javascript">Javascript</option>
+												<option class="auto-resize" value="php">PHP</option>
 											</optgroup>
-											<optgroup label="{@bbcode.script}">
-												<option value="asp">Asp</option>
-												<option value="python">Python</option>
-												<option value="pearl">Pearl</option>
-												<option value="ruby">Ruby</option>
-												<option value="bash">Bash</option>
+											<optgroup class="auto-resize" label="{@bbcode.script}">
+												<option class="auto-resize" value="asp">Asp</option>
+												<option class="auto-resize" value="python">Python</option>
+												<option class="auto-resize" value="pearl">Pearl</option>
+												<option class="auto-resize" value="ruby">Ruby</option>
+												<option class="auto-resize" value="bash">Bash</option>
 											</optgroup>
-											<optgroup label="{@bbcode.prog}">
-												<option value="c">C</option>
-												<option value="cpp">C++</option>
-												<option value="c#">C#</option>
-												<option value="d">D</option>
-												<option value="go">Go</option>
-												<option value="java">Java</option>
-												<option value="pascal">Pascal++</option>
-												<option value="delphi#">Delphi</option>
-												<option value="fortran">Fortran</option>
-												<option value="vb">Vb</option>
-												<option value="asm">Asm</option>
+											<optgroup class="auto-resize" label="{@bbcode.prog}">
+												<option class="auto-resize" value="c">C</option>
+												<option class="auto-resize" value="cpp">C++</option>
+												<option class="auto-resize" value="c#">C#</option>
+												<option class="auto-resize" value="d">D</option>
+												<option class="auto-resize" value="go">Go</option>
+												<option class="auto-resize" value="java">Java</option>
+												<option class="auto-resize" value="pascal">Pascal++</option>
+												<option class="auto-resize" value="delphi#">Delphi</option>
+												<option class="auto-resize" value="fortran">Fortran</option>
+												<option class="auto-resize" value="vb">Vb</option>
+												<option class="auto-resize" value="asm">Asm</option>
 											</optgroup>
 										</select>
 									</div>
