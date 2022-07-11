@@ -9,6 +9,7 @@
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortable# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/theia-sticky-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/wizard# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/bbcode-sidebar# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
@@ -59,7 +60,7 @@
 // All tables
 	jQuery('.table').basictable();
 	jQuery('.table-no-header').basictable({
-	    header: false
+		header: false
 	});
 
 // line numbers in <code>
@@ -117,10 +118,10 @@
 	});
 
 // Add a colored square to the element and color its borders if it has
- 	jQuery('[data-color-surround]').colorSurround();
+	jQuery('[data-color-surround]').colorSurround();
 
 // Owl Carousel
- 	jQuery('[id*="slideboost"] > br').remove();
+	jQuery('[id*="slideboost"] > br').remove();
 	jQuery('[id*="slideboost"]')
 		.addClass('owl-carousel')
 		.owlCarousel({
@@ -138,9 +139,12 @@
 			}
 	});
 
+// Sidebar behaviour - needed to fix the BBCode troubles on long texts
+jQuery('#menu-left, #menu-right, #main').theiaStickySidebar();
+
 // Display the page only when it's loaded
 	jQuery(window).ready(function() {
-  		jQuery('.content-preloader').animate({opacity: 1}, 300);
+		jQuery('.content-preloader').animate({opacity: 1}, 300);
 	});
 </script>
 
