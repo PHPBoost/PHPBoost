@@ -20,7 +20,7 @@
 				</ul>
 			</div>
 		# ELSE #
-		  	<div class="cell-content">{@poll.mini.no.poll.available}</div>
+			<div class="cell-content">{@poll.mini.no.poll.available}</div>
 		# ENDIF #
 	# ELSE #
 		<script>
@@ -28,9 +28,9 @@
 				var sendFormData = $("#poll_vote_form").serialize();
 
 				$.ajax({
-				  beforeSend : function(){
-				    $("#pollmini_loading").css("visibility", "visible");
-				  },
+					beforeSend : function(){
+						$("#pollmini_loading").css("display", "block");
+					},
 					url: '${relative_url(PollUrlBuilder::ajax_send())}',
 					type: 'post',
 					data: {
