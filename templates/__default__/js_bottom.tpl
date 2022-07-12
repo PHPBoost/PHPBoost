@@ -140,7 +140,7 @@
 	});
 
 // Sidebar behaviour - needed to fix the BBCode troubles on long texts
-jQuery('#menu-left, #menu-right, #main').theiaStickySidebar();
+	jQuery('#menu-left, #menu-right').theiaStickySidebar();
 
 // Display the page only when it's loaded
 	jQuery(window).ready(function() {
