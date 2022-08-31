@@ -5,24 +5,24 @@
 
 		if (page) {
 			# IF C_TINYMCE_EDITOR #
-			tinymce.activeEditor.execCommand('mceInsertContent', false, '[page]' + page + '[/page]');
+				tinymce.activeEditor.execCommand('mceInsertContent', false, '[page]' + page + '[/page]');
 			# ELSE #
-			var textarea = document.getElementById('articles_form_content');
-			var start = textarea.selectionStart;
-			var end = textarea.selectionEnd;
+				var textarea = document.getElementById('articles_form_content');
+				var start = textarea.selectionStart;
+				var end = textarea.selectionEnd;
 
-			if (start == end) {
-				var insert_value = '[page]' + page + '[/page]';
-				textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
-			}
-			else {
-				var value = textarea.value;
-				var insert_value = '[page]' + value.substring(start, end) + '[/page]';
-				textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
-			}
+				if (start == end) {
+					var insert_value = '[page]' + page + '[/page]';
+					textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+				}
+				else {
+					var value = textarea.value;
+					var insert_value = '[page]' + value.substring(start, end) + '[/page]';
+					textarea.value = textarea.value.substr(0, start) + insert_value + textarea.value.substr(end);
+				}
 
-			textarea.selectionStart = start + insert_value.length;
-			textarea.selectionEnd = start + insert_value.length;
+				textarea.selectionStart = start + insert_value.length;
+				textarea.selectionEnd = start + insert_value.length;
 			# ENDIF #
 		}
 	}
@@ -47,7 +47,7 @@
 	}
 
 	# IF C_PAGE #
-	window.onload = function(){setPagePosition({PAGE})};
+		window.onload = function(){setPagePosition({PAGE})};
 	# ENDIF #
 </script>
 # INCLUDE MESSAGE_HELPER # # INCLUDE CONTENT #

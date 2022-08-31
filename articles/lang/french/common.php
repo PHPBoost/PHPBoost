@@ -15,9 +15,9 @@
 #####################################################
 
 $lang['articles.table.of.contents'] = 'Sommaire :';
-$lang['articles.print.item'] = 'Impression d\'un article';
+$lang['articles.print.item']        = 'Impression d\'un article';
 
 // Form
-$lang['articles.add.page'] = 'Insérer une page';
+$lang['articles.add.page']       = 'Insérer une page';
 $lang['articles.add.page.title'] = 'Titre de la nouvelle page';
 ?>

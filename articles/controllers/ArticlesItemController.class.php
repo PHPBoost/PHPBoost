@@ -90,10 +90,10 @@ class ArticlesItemController extends DefaultDisplayItemController
 			}
 
 			$this->view->put_all(array(
-				'C_PAGINATION' => true,
-				'C_FIRST_PAGE' => $current_page == 1,
+				'C_PAGINATION'	  => true,
+				'C_FIRST_PAGE' 	  => $current_page == 1,
 				'C_PREVIOUS_PAGE' => $current_page != 1,
-				'C_NEXT_PAGE' => $current_page != $pages_number,
+				'C_NEXT_PAGE' 	  => $current_page != $pages_number,
 				'PAGINATION_ARTICLES' => $pagination->display()
 			));
 		}

@@ -42,8 +42,8 @@ class ArticlesPrintItemController extends AbstractItemController
 		$content = preg_replace('`\[page\](.*)\[/page\]`u', '<h2>$1</h2>', $this->item->get_content());
 		$this->view->put_all(array(
 			'PAGE_TITLE' => $this->lang['articles.print.item'] . ' - ' . $this->item->get_title() . ' - ' . GeneralConfig::load()->get_site_name(),
-			'TITLE' => $this->item->get_title(),
-			'CONTENT' => FormatingHelper::second_parse($content)
+			'TITLE' 	 => $this->item->get_title(),
+			'CONTENT' 	 => FormatingHelper::second_parse($content)
 		));
 	}
 
