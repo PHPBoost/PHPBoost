@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 25
+ * @version     PHPBoost 6.0 - last update: 2022 09 03
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -157,7 +157,7 @@ elseif ($id_media > 0)
 		{
 			// Youtube
 			$watch = 'watch?v=';
-		    if(strpos($media_id, $watch) !== false) {
+			if(strpos($media_id, $watch) !== false) {
 				$media_id = substr_replace($media_id, '', 0, 8);
 				list($media_id) = explode('&', $media_id);
 			}
@@ -185,11 +185,11 @@ elseif ($id_media > 0)
 			$sliced_name = array_slice($peertube_host_player, 0, -1);
 			$peertube_player = implode('.', $sliced_name);
 			$player_is_peertube =  strpos($dirname, $peertube_player) !== false;
-			$peertube_videos_link = strpos($dirname, 'videos') !== false;
-			$peertube_watch_link = strpos($dirname, 'watch') !== false;
+			$peertube_watch_link = strpos($dirname, '/w') !== false;
 			$peertube_embed_link = strpos($dirname, 'embed') !== false;
+			
 			if($player_is_peertube) {
-				if(!$peertube_videos_link && (!$peertube_embed_link || !$peertube_watch_link)) {
+				if(!$peertube_embed_link && !$peertube_watch_link) {
 					$controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
 					$lang['e_bad_url_peertube']);
 					DispatchManager::redirect($controller);
