@@ -49,22 +49,22 @@ $lang['forum.config.status.message.unsolved']      = 'Message explanation to mem
 $lang['forum.config.status.message.solved']        = 'Message explanation to members if topic status is solved';
 $lang['forum.config.display.issue.status.icon']    = 'Display associated icon';
     // Default
-$lang['forum.config.default.forum.name']   = GeneralConfig::load()->get_site_name() . ' forum';
+$lang['forum.config.default.forum.name']    = GeneralConfig::load()->get_site_name() . ' forum';
 $lang['forum.config.issue.status']          = '[Solved]';
 $lang['forum.config.issue.status.unsolved'] = 'Solved topic?';
 $lang['forum.config.issue.status.solved']   = 'Unsolved topic?';
 
 // Hooks
-$lang['forum.specific_hook.forum_add_topic'] = 'Topic add';
-$lang['forum.specific_hook.forum_edit_topic'] = 'Topic edit';
-$lang['forum.specific_hook.forum_delete_topic'] = 'Topic delete';
-$lang['forum.specific_hook.forum_lock_topic'] = 'Topic lock';
-$lang['forum.specific_hook.forum_unlock_topic'] = 'Topic unlock';
-$lang['forum.specific_hook.forum_move_topic'] = 'Topic move';
+$lang['forum.specific_hook.forum_add_topic']              = 'Topic add';
+$lang['forum.specific_hook.forum_edit_topic']             = 'Topic edit';
+$lang['forum.specific_hook.forum_delete_topic']           = 'Topic delete';
+$lang['forum.specific_hook.forum_lock_topic']             = 'Topic lock';
+$lang['forum.specific_hook.forum_unlock_topic']           = 'Topic unlock';
+$lang['forum.specific_hook.forum_move_topic']             = 'Topic move';
 $lang['forum.specific_hook.forum_move_topic.description'] = 'Topic moved from :old_category to :new_category.';
-$lang['forum.specific_hook.forum_add_poll'] = 'Poll add';
-$lang['forum.specific_hook.forum_edit_poll'] = 'Poll edit';
-$lang['forum.specific_hook.forum_answer_poll'] = 'Poll answer';
+$lang['forum.specific_hook.forum_add_poll']               = 'Poll add';
+$lang['forum.specific_hook.forum_edit_poll']              = 'Poll edit';
+$lang['forum.specific_hook.forum_answer_poll']            = 'Poll answer';
 
 // Email
 $lang['forum.email.title.new.post'] = 'New post on the forum';
@@ -127,24 +127,24 @@ $lang['forum.no.unread.message'] = 'There are no unread messages';
 $lang['forum.history']        = 'Actions history';
 $lang['forum.concerned.user'] = 'Concerned Member ';
     // actions
-$lang['no_action']            = 'No action in database';
-$lang['delete_msg']           = 'Delete message';
-$lang['delete_topic']         = 'Delete thread';
-$lang['lock_topic']           = 'Lock thread';
-$lang['unlock_topic']         = 'Unlock thread';
-$lang['move_topic']           = 'Move thread';
-$lang['cut_topic']            = 'Cut thread';
-$lang['warning_on_user']      = '+10% to member';
-$lang['warning_off_user']     = '-10% to member';
-$lang['set_warning_user']     = 'Warning percent modification';
-$lang['more_action']          = 'Show 100 more action ';
-$lang['ban_user']             = 'Ban member';
-$lang['readonly_user']        = 'Ready only user';
-$lang['edit_msg']             = 'Edit member\'s message ';
-$lang['edit_topic']           = 'Edit member\'s thread';
-$lang['solve_alert']          = 'Set alert status to solve';
-$lang['wait_alert']           = 'Set alert status to standby';
-$lang['del_alert']            = 'Delete alert';
+$lang['no_action']        = 'No action in database';
+$lang['delete_msg']       = 'Delete message';
+$lang['delete_topic']     = 'Delete thread';
+$lang['lock_topic']       = 'Lock thread';
+$lang['unlock_topic']     = 'Unlock thread';
+$lang['move_topic']       = 'Move thread';
+$lang['cut_topic']        = 'Cut thread';
+$lang['warning_on_user']  = '+10% to member';
+$lang['warning_off_user'] = '-10% to member';
+$lang['set_warning_user'] = 'Warning percent modification';
+$lang['more_action']      = 'Show 100 more action ';
+$lang['ban_user']         = 'Ban member';
+$lang['readonly_user']    = 'Ready only user';
+$lang['edit_msg']         = 'Edit member\'s message ';
+$lang['edit_topic']       = 'Edit member\'s thread';
+$lang['solve_alert']      = 'Set alert status to solve';
+$lang['wait_alert']       = 'Set alert status to standby';
+$lang['del_alert']        = 'Delete alert';
 
 // Links (top | bottom)
 $lang['forum.links']                  = 'Links';
@@ -190,7 +190,7 @@ $lang['forum.report.clue'] = '
     <br /><br />
     You wish to report to the moderators about a problem on the following topic:
 ';
-$lang['forum.report.title'] = 'Short description';
+$lang['forum.report.title']   = 'Short description';
 $lang['forum.report.content'] = 'Thanks for detailing the problem more in order to help the moderating team';
 $lang['forum.report.success'] = 'You successfully reported the nonconformity of the topic <em>%title</em>, the moderating team thanks you for helping it.';
 $lang['forum.report.topic.already.done'] = 'We thank you for taking the initiative to help the moderating team, but a member already reported a nonconformity of this topic.';
@@ -284,12 +284,12 @@ $lang['forum.see.member.datas']     = 'See member\'s datas';
 $lang['forum.registred.on']         = 'Registred on';
 $lang['forum.show.member.messages'] = 'Show all member\'s messages';
     // Controls
-$lang['forum.message.controls']   = 'Message management';
-$lang['forum.quote.message']   = 'Quote this message';
-$lang['forum.edit.topic']      = 'Edit topic';
-$lang['forum.move.topic']      = 'Move topic';
-$lang['forum.cut.topic']       = 'Divide this topic starting from this message';
-$lang['forum.alert.cut.topic'] = 'Do you want to cut the topic from this message?';
+$lang['forum.message.controls'] = 'Message management';
+$lang['forum.quote.message']    = 'Quote this message';
+$lang['forum.edit.topic']       = 'Edit topic';
+$lang['forum.move.topic']       = 'Move topic';
+$lang['forum.cut.topic']        = 'Divide this topic starting from this message';
+$lang['forum.alert.cut.topic']  = 'Do you want to cut the topic from this message?';
 
 // Track
 $lang['forum.track.topic']         = 'Set to favorite';
@@ -301,7 +301,7 @@ $lang['forum.track.topic.email']   = 'Track by email';
 $lang['forum.untrack.topic.email'] = 'Stop email tracking';
 $lang['forum.track.clue'] = '
     Check the PM box far a private message,
-     the Email box (<i class="fa iboost fa-iboost-email"></i>) for an email, in case of reply in this topic.
+    the Email box (<i class="fa iboost fa-iboost-email"></i>) for an email, in case of reply in this topic.
     <br />Check the Delete box (<i class="far fa-trash-alt"></i>) to stop tracking this topic.
 ';
 

@@ -82,7 +82,6 @@ elseif (!empty($_FILES['upload_ranks']['name'])) //Upload
 //On recupère les images des groupes
 $rank_options = '<option value="">--</option>';
 
-
 $image_folder_path = new Folder(PATH_TO_ROOT . '/forum/templates/images/ranks/');
 foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 {

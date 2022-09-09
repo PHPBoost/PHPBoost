@@ -296,57 +296,57 @@ elseif ($read) //Marquer comme lu.
 
 elseif (!empty($selected) && !empty($idm_get)) {
    	if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) { //Réservé aux membres.
-	   	AppContext::get_response()->redirect(UserUrlBuilder::connect());
-   	}
-   	try {
-	   	$message_selected = PersistenceContext::get_querier()->select_single_row(ForumSetup::$forum_message_table, array('*'), 'WHERE id=:id', array(
-		   	'id' => $idm_get
-	   	));
-   	} catch (RowNotFoundException $e) {
-	   	$error_controller = PHPBoostErrors::unexisting_element();
-	   	DispatchManager::redirect($error);
+		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 	}
 	try {
-	   	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id'), 'WHERE id=:id', array('id' => $message_selected['idtopic']));
+		$message_selected = PersistenceContext::get_querier()->select_single_row(ForumSetup::$forum_message_table, array('*'), 'WHERE id=:id', array(
+			'id' => $idm_get
+		));
 	} catch (RowNotFoundException $e) {
-	   	$error_controller = PHPBoostErrors::unexisting_element();
-	   	DispatchManager::redirect($error_controller);
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error);
+	}
+	try {
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id'), 'WHERE id=:id', array('id' => $message_selected['idtopic']));
+	} catch (RowNotFoundException $e) {
+		$error_controller = PHPBoostErrors::unexisting_element();
+		DispatchManager::redirect($error_controller);
 	}
 
 	// Set/unset best answer
 	if ($topic['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL))
 	{
-	   	if ($selected == "true")
+		if ($selected == "true")
 		{
-		   	PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, array(
-			   	'selected' => 1,
-		   	), 'WHERE id=:id', array('id' => $idm_get));
-		   	header('Location: ' . $_SERVER["HTTP_REFERER"]);
-		   	exit();
-	   	}
+			PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, array(
+				'selected' => 1,
+			), 'WHERE id=:id', array('id' => $idm_get));
+			header('Location: ' . $_SERVER["HTTP_REFERER"]);
+			exit();
+		}
 		else if ($selected == "false")
 		{
-		   	PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, array(
-			   	'selected' => 0,
-		   	), 'WHERE id=:id', array('id' => $idm_get));
-		   	header('Location: ' . $_SERVER["HTTP_REFERER"]);
-		   	exit();
-	   	}
+			PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, array(
+				'selected' => 0,
+			), 'WHERE id=:id', array('id' => $idm_get));
+			header('Location: ' . $_SERVER["HTTP_REFERER"]);
+			exit();
+		}
 		else
 		{
-		   	$error_controller = PHPBoostErrors::unexisting_element();
-		   	DispatchManager::redirect($error_controller);
-	   	}
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
+		}
 	}
 	else
 	{
-	   $error_controller = PHPBoostErrors::user_not_authorized();
-	   DispatchManager::redirect($error_controller);
+		$error_controller = PHPBoostErrors::user_not_authorized();
+		DispatchManager::redirect($error_controller);
 	}
 }
 else
 {
-   	AppContext::get_response()->redirect('/forum/index.php');
+	AppContext::get_response()->redirect('/forum/index.php');
 }
 
 require_once('../kernel/footer_no_display.php');

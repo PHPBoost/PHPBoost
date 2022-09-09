@@ -151,16 +151,17 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 
 		// Autorisations cachées à l'édition Si le type est catégorie ou url
 		$fieldset_authorizations->add_field(new FormFieldFree('hide_authorizations', '', '
-		<script>
-		<!--
-		jQuery(document).ready(function() {
-			if (HTMLForms.getField("special_authorizations").getValue() && (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ' || HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_URL . ')) {
-				jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).hide();
-				jQuery("#' . __CLASS__ . '_authorizations > div").eq(2).hide();
-			}
-			});
-		-->
-		</script>'));
+			<script>
+				<!--
+					jQuery(document).ready(function() {
+						if (HTMLForms.getField("special_authorizations").getValue() && (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ' || HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_URL . ')) {
+							jQuery("#' . __CLASS__ . '_authorizations > div").eq(1).hide();
+							jQuery("#' . __CLASS__ . '_authorizations > div").eq(2).hide();
+						}
+					});
+				-->
+			</script>'
+		));
 
 		$auth_settings = new AuthorizationsSettings($this->get_authorizations_settings());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth)));

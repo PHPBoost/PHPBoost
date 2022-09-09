@@ -49,22 +49,22 @@ $lang['forum.config.status.message.unsolved']      = 'Message devant le titre du
 $lang['forum.config.status.message.solved']        = 'Message devant le titre du topic si statut changé';
 $lang['forum.config.display.issue.status.icon']    = 'Afficher l\'icône associée';
     // Default
-$lang['forum.config.default.forum.name']   = GeneralConfig::load()->get_site_name() . ' forum';
-$lang['forum.config.issue.status']         = '[Réglé]';
+$lang['forum.config.default.forum.name']    = GeneralConfig::load()->get_site_name() . ' forum';
+$lang['forum.config.issue.status']          = '[Réglé]';
 $lang['forum.config.issue.status.unsolved'] = 'Sujet réglé ?';
-$lang['forum.config.issue.status.solved']  = 'Sujet non réglé ?';
+$lang['forum.config.issue.status.solved']   = 'Sujet non réglé ?';
 
 // Hooks
-$lang['forum.specific_hook.forum_add_topic'] = 'Ajout d\'un sujet';
-$lang['forum.specific_hook.forum_edit_topic'] = 'Modification d\'un sujet';
-$lang['forum.specific_hook.forum_delete_topic'] = 'Suppression d\'un sujet';
-$lang['forum.specific_hook.forum_lock_topic'] = 'Verrouillage d\'un sujet';
-$lang['forum.specific_hook.forum_unlock_topic'] = 'Déverrouillage d\'un sujet';
-$lang['forum.specific_hook.forum_move_topic'] = 'Déplacement d\'un sujet';
+$lang['forum.specific_hook.forum_add_topic']              = 'Ajout d\'un sujet';
+$lang['forum.specific_hook.forum_edit_topic']             = 'Modification d\'un sujet';
+$lang['forum.specific_hook.forum_delete_topic']           = 'Suppression d\'un sujet';
+$lang['forum.specific_hook.forum_lock_topic']             = 'Verrouillage d\'un sujet';
+$lang['forum.specific_hook.forum_unlock_topic']           = 'Déverrouillage d\'un sujet';
+$lang['forum.specific_hook.forum_move_topic']             = 'Déplacement d\'un sujet';
 $lang['forum.specific_hook.forum_move_topic.description'] = 'Sujet déplacé de :old_category à :new_category.';
-$lang['forum.specific_hook.forum_add_poll'] = 'Ajout d\'un sondage';
-$lang['forum.specific_hook.forum_edit_poll'] = 'Modification d\'un sondage';
-$lang['forum.specific_hook.forum_answer_poll'] = 'Réponse à un sondage';
+$lang['forum.specific_hook.forum_add_poll']               = 'Ajout d\'un sondage';
+$lang['forum.specific_hook.forum_edit_poll']              = 'Modification d\'un sondage';
+$lang['forum.specific_hook.forum_answer_poll']            = 'Réponse à un sondage';
 
 // Email
 $lang['forum.email.title.new.post'] = 'Nouveau message sur le forum';
@@ -127,24 +127,24 @@ $lang['forum.no.unread.message'] = 'Aucun message non lu';
 $lang['forum.history']        = 'Historique des actions';
 $lang['forum.concerned.user'] = 'Membre concerné';
     // actions
-$lang['no_action']            = 'Aucune action enregistrée';
-$lang['delete_msg']           = 'Suppression d\'un message';
-$lang['delete_topic']         = 'Suppression d\'un sujet';
-$lang['lock_topic']           = 'Verrouillage d\'un sujet';
-$lang['unlock_topic']         = 'Déverrouillage d\'un sujet';
-$lang['move_topic']           = 'Déplacement d\'un sujet';
-$lang['cut_topic']            = 'Scindement d\'un sujet';
-$lang['warning_on_user']      = '+10% à un membre';
-$lang['warning_off_user']     = '-10% à un membre';
-$lang['set_warning_user']     = 'Modification du % d\'avertissement';
-$lang['more_action']          = 'Voir 100 actions en plus';
-$lang['ban_user']             = 'Bannissement d\'un membre';
-$lang['readonly_user']        = 'Membre en lecture seule';
-$lang['edit_msg']             = 'Edition message d\'un membre';
-$lang['edit_topic']           = 'Edition sujet d\'un membre';
-$lang['solve_alert']          = 'Résolution d\'une alerte';
-$lang['wait_alert']           = 'Mise en attente d\'une alerte';
-$lang['del_alert']            = 'Suppression d\'une alerte';
+$lang['no_action']        = 'Aucune action enregistrée';
+$lang['delete_msg']       = 'Suppression d\'un message';
+$lang['delete_topic']     = 'Suppression d\'un sujet';
+$lang['lock_topic']       = 'Verrouillage d\'un sujet';
+$lang['unlock_topic']     = 'Déverrouillage d\'un sujet';
+$lang['move_topic']       = 'Déplacement d\'un sujet';
+$lang['cut_topic']        = 'Scindement d\'un sujet';
+$lang['warning_on_user']  = '+10% à un membre';
+$lang['warning_off_user'] = '-10% à un membre';
+$lang['set_warning_user'] = 'Modification du % d\'avertissement';
+$lang['more_action']      = 'Voir 100 actions en plus';
+$lang['ban_user']         = 'Bannissement d\'un membre';
+$lang['readonly_user']    = 'Membre en lecture seule';
+$lang['edit_msg']         = 'Edition message d\'un membre';
+$lang['edit_topic']       = 'Edition sujet d\'un membre';
+$lang['solve_alert']      = 'Résolution d\'une alerte';
+$lang['wait_alert']       = 'Mise en attente d\'une alerte';
+$lang['del_alert']        = 'Suppression d\'une alerte';
 
 // Links (top | bottom)
 $lang['forum.links']                  = 'Liens';

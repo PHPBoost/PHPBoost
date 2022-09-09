@@ -64,7 +64,7 @@ if (!empty($alert) && empty($alert_post))
 		$editor->set_identifier('content');
 
 		$view->put_all(array(
-			'KERNEL_EDITOR'    => $editor->display()
+			'KERNEL_EDITOR' => $editor->display()
 		));
 
 		$view->assign_block_vars('alert_form', array(

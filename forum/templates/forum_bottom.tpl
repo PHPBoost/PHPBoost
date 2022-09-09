@@ -76,7 +76,7 @@
 					# IF C_FORUM_CONNEXION #jQuery("#cssmenu-sign-in-bottom-link").menumaker({ title: " {@forum.links} ", format: "multitoggle", breakpoint: 768, menu_static: false });# ENDIF #
 				</script>
 
-				# IF C_CONTROLS #
+				<!-- # IF C_CONTROLS #
 					<h6>{@forum.moderation.forum}</h6>
 					<form action="action.php" class="grouped-inputs">
 						<span class="grouped-element">{@forum.for.selection}</span>
@@ -90,7 +90,7 @@
 						<input type="hidden" name="token" value="{TOKEN}">
 						<button type="submit" class="button submit small grouped-element" value="true" name="valid">{@form.submit}</button>
 					</form>
-				# ENDIF #
+				# ENDIF # -->
 
 				<div class="forum-online">
 					# IF ONLINE_USERS_LIST #

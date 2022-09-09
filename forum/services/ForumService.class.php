@@ -16,7 +16,7 @@ class ForumService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	 /**
+	/**
 	 * @desc Count topics number.
 	 * @param string $condition (optional) : Restriction to apply to the list of topics
 	 */
@@ -25,7 +25,7 @@ class ForumService
 		return self::$db_querier->count(ForumSetup::$forum_topics_table, $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Count messages number.
 	 * @param string $condition (optional) : Restriction to apply to the list of messages
 	 */
