@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 28
+ * @version     PHPBoost 6.0 - last update: 2022 09 09
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -32,7 +32,7 @@ $track_mail = retrieve(GET, 'tm', '');
 $untrack_mail = retrieve(GET, 'utm', '');
 
 $poll = (bool)retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
-$massive_action_type = retrieve(POST, 'action_type', ''); //Opération de masse.
+$massive_action_type = retrieve(POST, 'massive_action_type', ''); //Opération de masse.
 
 $Forumfct = new Forum();
 

@@ -81,10 +81,8 @@
 					<form action="action.php" class="grouped-inputs">
 						<span class="grouped-element">{@forum.for.selection}</span>
 						<select class="grouped-element" name="massive_action_type" placeholder="">
-							<option value="">{@forum.no.moderation}</option>
 							<option value="change">{L_CHANGE_STATUT_TO}</option>
 							<option value="changebis">{@forum.default.issue.status}</option>
-							<option value="move">{@common.move.to}</option>
 							<option value="lock">{@forum.lock}</option>
 							<option value="unlock">{@forum.unlock}</option>
 							<option value="del">{@common.delete}</option>
