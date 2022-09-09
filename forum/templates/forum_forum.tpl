@@ -145,7 +145,7 @@
 		<table class="table forum-table">
 			<thead>
 				<tr>
-					# IF C_CONTROLS #<th class="wmodo" aria-label="{@common.moderation}"><i class="fa fa-gavel" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th># ENDIF #
+					<!-- # IF C_CONTROLS #<th class="wmodo" aria-label="{@common.moderation}"><i class="fa fa-gavel" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th># ENDIF # -->
 					<th class="forum-announce-topic w5" aria-label="{@forum.topic.status}"><i class="far fa-flag" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th>
 					<th class="forum-fixed-topic" aria-label="{@forum.topic.options}"><i class="fa fa-check success" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topic.options}</span></th>
 					<th class="forum-topic" aria-label="{@forum.topics}"><i class="far fa-file hidden-small-screens" aria-hidden="true"></i><span class="hidden-large-screens">{@forum.topics}</span></th>
@@ -166,14 +166,14 @@
 
 				# START topics #
 					<tr class="category-{topics.CATEGORY_ID}">
-						# IF C_CONTROLS #
+						<!-- # IF C_CONTROLS #
 							<td class="forum-mass-modo">
 								<label class="checkbox" for="modo{topics.ID}">
 									<input id="modo{topics.ID}" type="checkbox" name="ck{topics.ID}">
 									<span>&nbsp;</span>
 								</label>
 							</td>
-						# ENDIF #
+						# ENDIF # -->
 						<td class="forum-announce-topic">
 							# IF NOT topics.C_HOT_TOPIC #
 								<i class="fa {topics.TOPIC_ICON}" aria-hidden="true"></i>
