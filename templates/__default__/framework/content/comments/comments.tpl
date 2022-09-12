@@ -24,15 +24,26 @@
 <hr />
 # INCLUDE KEEP_MESSAGE #
 <div id="comments-list" class="tabs-container">
-    # IF C_DISPLAY_FORM #
+    <!-- # IF C_DISPLAY_FORM #
 		<nav class="tabs-nav">
-	        <ul class="flex-between flex-between-large">
-	            <li><a href="#" data-tabs="" data-target="comments-section"><h5>{@comment.comments}</h5></a></li>
-	            # IF NOT C_IS_LOCKED #<li><a class="pinned question" href="#" data-tabs="" data-target="add-comment">{@comment.add}</a></li># ENDIF #
-	        </ul>
-	    </nav>
+			<ul class="flex-between flex-between-large">
+				<li><a href="#" data-tabs="" data-target="comments-section"><h5>{@comment.comments}</h5></a></li>
+				# IF NOT C_IS_LOCKED #<li><a class="pinned question" href="#" data-tabs="" data-target="add-comment">{@comment.add}</a></li># ENDIF #
+			</ul>
+		</nav>
+	# ENDIF # -->
+	# IF NOT C_IS_LOCKED #
+		# IF C_DISPLAY_FORM #
+			<div id="add-comment"> <!--  class="tabs tabs-animation" -->
+				<div class="content-panel">
+						<div id="comment-form">
+							# INCLUDE COMMENT_FORM #
+						</div>
+				</div>
+			</div>
+		# ENDIF #
 	# ENDIF #
-    <div id="comments-section" class="first-tab tabs tabs-animation">
+    <div id="comments-section"> <!-- class="first-tab tabs tabs-animation" -->
         <div class="content-panel">
 			# IF C_COMMENTS #
 				# IF C_DISPLAY_DELETE_FORM #
@@ -66,17 +77,6 @@
 			# ENDIF #
 		</div>
     </div>
-	# IF NOT C_IS_LOCKED #
-    	# IF C_DISPLAY_FORM #
-		    <div id="add-comment" class="tabs tabs-animation">
-		        <div class="content-panel">
-						<div id="comment-form">
-							# INCLUDE COMMENT_FORM #
-						</div>
-		        </div>
-		    </div>
-		# ENDIF #
-	# ENDIF #
 </div>
 
 # IF C_DISPLAY_VIEW_ALL_COMMENTS #

@@ -5,7 +5,7 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<div class="content">
-				<div class="tabs-container">
+				<div> <!-- class="tabs-container" -->
 					# IF NOT C_WRITE #
 						<div class="content"># INCLUDE MESSAGE_HELPER #</div>
 					# ENDIF #
@@ -13,13 +13,22 @@
 					# IF C_PAGINATION #
 						<div class="align-center"># INCLUDE PAGINATION #</div>
 					# ENDIF #
-					<nav class="tabs-nav">
-				        <ul class="flex-between">
-				            <li><a href="#" data-tabs="" data-target="message-list">{@guestbook.items}</a></li>
-				            # IF C_WRITE #<li><a class="pinned question" href="#" data-tabs="" data-target="add-message">{@guestbook.add.item}</a></li># ENDIF #
-				        </ul>
-				    </nav>
-					<div id="message-list" class="first-tab tabs tabs-animation">
+					<!-- <nav class="tabs-nav">
+						<ul class="flex-between">
+							<li><a href="#" data-tabs="" data-target="message-list">{@guestbook.items}</a></li>
+							# IF C_WRITE #<li><a class="pinned question" href="#" data-tabs="" data-target="add-message">{@guestbook.add.item}</a></li># ENDIF #
+						</ul>
+					</nav> -->
+					# IF C_WRITE #
+						<div id="add-message"> <!-- class="tabs tabs-animation" -->
+							<div class="content-panel">
+									<div id="comment-form">
+										# INCLUDE FORM #
+									</div>
+							</div>
+						</div>
+					# ENDIF #
+					<div id="message-list"> <!-- class="first-tab tabs tabs-animation" -->
 						<div class="content-panel">
 							# IF C_NO_MESSAGE #
 								<div class="message-helper bgc notice message-helper-small align-center">{@common.no.item.now}</div>
@@ -86,15 +95,6 @@
 							</form>
 						</div>
 					</div>
-					# IF C_WRITE #
-						<div id="add-message" class="tabs tabs-animation">
-							<div class="content-panel">
-									<div id="comment-form">
-										# INCLUDE FORM #
-									</div>
-							</div>
-						</div>
-					# ENDIF #
 				</div>
 			</div>
 		</div>

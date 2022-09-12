@@ -13,13 +13,22 @@
 				# ENDIF #
 			# ENDIF #
 			<div class="content tabs-container">
-				<nav class="tabs-nav">
-			        <ul class="flex-between">
-			            <li><a data-tabs="" data-target="message-list">{@common.messages}</a></li>
-			            # IF C_WRITE #<li><a class="pinned question" data-tabs="" data-target="add-message">{@shoutbox.add.item}</a></li># ENDIF #
-			        </ul>
-			    </nav>
-				<div id="message-list" class="first-tab tabs tabs-animation">
+				<!-- <nav class="tabs-nav">
+					<ul class="flex-between">
+						<li><a data-tabs="" data-target="message-list">{@common.messages}</a></li>
+						# IF C_WRITE #<li><a class="pinned question" data-tabs="" data-target="add-message">{@shoutbox.add.item}</a></li># ENDIF #
+					</ul>
+				</nav> -->
+				# IF C_WRITE #
+					<div id="add-message"> <!-- class="tabs tabs-animation" -->
+						<div class="content-panel">
+							<div id="comment-form">
+								# INCLUDE FORM #
+							</div>
+						</div>
+					</div>
+				# ENDIF #
+				<div id="message-list"> <!-- class="first-tab tabs tabs-animation" -->
 					<div class="content-panel">
 						# IF C_NO_MESSAGE #
 							<div class="message-helper bgc notice message-helper-small align-center">{@common.no.item.now}</div>
@@ -86,15 +95,6 @@
 						# ENDIF #
 					</div>
 				</div>
-				# IF C_WRITE #
-				    <div id="add-message" class="tabs tabs-animation">
-				        <div class="content-panel">
-							<div id="comment-form">
-								# INCLUDE FORM #
-							</div>
-				        </div>
-				    </div>
-				# ENDIF #
 			</div>
 
 		</div>
