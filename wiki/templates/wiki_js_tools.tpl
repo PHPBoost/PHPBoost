@@ -26,9 +26,9 @@
 							<div class="content-panel cell">
 								<div class="cell-header"><span class="cell-name">{@wiki.insert.link}</span></div>
 								<div class="cell-form">
-									<label for="bb_wiki_link" class="cell-label">{@wiki.link.title}</label>
+									<label for="bb_wiki_link" class="auto-resize cell-label">{@wiki.link.title}</label>
 									<div class="cell-input">
-										<input id="bb_wiki_link" type="text">
+										<input class="auto-resize" id="bb_wiki_link" type="text">
 									</div>
 								</div>
 								<div class="cell-footer cell-input">
