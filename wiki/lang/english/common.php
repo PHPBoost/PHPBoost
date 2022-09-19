@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 25
+ * @version     PHPBoost 6.0 - last update: 2022 09 19
  * @since       PHPBoost 1.6 - 2007 10 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,7 +21,6 @@ $lang['wiki.page.views.number'] = 'This page has been seen %d times';
 $lang['wiki.contribution']      = 'Contribute';
 $lang['wiki.tools']             = 'Tools';
 $lang['wiki.author']            = 'Author';
-$lang['wiki.empty.index']       = 'The wiki is empty. If you have an administrator account you can create pages and edit the wiki index into the administration panel.';
 $lang['wiki.summary.menu']      = 'Table of contents';
 $lang['wiki.random.page']       = 'Random page';
 $lang['wiki.restriction.level'] = 'Permission level';

@@ -9,14 +9,16 @@
 	</header>
 
 	# INCLUDE WIKI_TOOLS #
-
-	<div class="sub-section">
-		<div class="content-container">
-			<div class="content">
-				{INDEX_TEXT}
+	
+	# IF C_HAS_ROOT_DESCRIPTION #
+		<div class="sub-section">
+			<div class="content-container">
+				<div class="content">
+					{ROOT_DESCRIPTION}
+				</div>
 			</div>
 		</div>
-	</div>
+	# ENDIF #
 
 	<div class="sub-section">
 		<div class="content-container">

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 09 19
  * @since       PHPBoost 3.0 - 2012 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,9 +94,10 @@ class WikiHomePageExtensionPoint implements HomePageExtensionPoint
 		}
 
 		$view->put_all(array(
-			'TITLE'      => $config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title'],
-			'INDEX_TEXT' => $config->get_index_text() ? FormatingHelper::second_parse(wiki_no_rewrite($config->get_index_text())) : $lang['wiki.empty.index'],
-			'U_EXPLORER' => url('explorer.php'),
+			'C_HAS_ROOT_DESCRIPTION' => !empty($config->get_index_text()),
+			'TITLE'      	   => $config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title'],
+			'ROOT_DESCRIPTION' => FormatingHelper::second_parse(wiki_no_rewrite($config->get_index_text())),
+			'U_EXPLORER' 	   => url('explorer.php'),
 		));
 
 		$page_type = 'index';
