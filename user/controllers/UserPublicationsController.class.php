@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 09 20
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,6 +65,10 @@ class UserPublicationsController extends AbstractController
 				{
 					$thumbnail = Url::to_rel($module_icon->get_path());
 					$is_picture = true;
+				}
+				else if($module->get_publications_module_id() != '')
+				{
+					$thumbnail = ModulesManager::get_module($module->get_publications_module_id())->get_configuration()->get_fa_icon();
 				}
 				else
 					$thumbnail = 'fa fa-cube';

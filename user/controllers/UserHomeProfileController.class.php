@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 15
+ * @version     PHPBoost 6.0 - last update: 2022 09 20
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -70,6 +70,7 @@ class UserHomeProfileController extends AbstractController
 			'U_MODERATION_PANEL'                    => UserUrlBuilder::moderation_panel()->rel(),
 			'U_UPLOAD'                              => UserUrlBuilder::upload_files_panel()->rel(),
 			'U_VIEW_PROFILE'                        => UserUrlBuilder::profile($this->user->get_id())->rel(),
+			'U_USER_PUBLICATIONS' 					=> UserUrlBuilder::publications($this->user->get_id())->rel(),
 
 			'C_AVATAR_IMG'                          => !empty($user_avatar) || $user_accounts_config->is_default_avatar_enabled(),
 			'U_AVATAR_IMG'                          => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
