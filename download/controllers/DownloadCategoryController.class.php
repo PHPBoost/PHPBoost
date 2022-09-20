@@ -61,12 +61,13 @@ class DownloadCategoryController extends DefaultModuleController
 
 				$this->view->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
-					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
-					'CATEGORY_ID' => $category->get_id(),
-					'CATEGORY_NAME' => $category->get_name(),
+					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
+
+					'CATEGORY_ID'          => $category->get_id(),
+					'CATEGORY_NAME'        => $category->get_name(),
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-					'ITEMS_NUMBER' => $category->get_elements_number(),
-					'U_CATEGORY' => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
+					'ITEMS_NUMBER'         => $category->get_elements_number(),
+					'U_CATEGORY'           => DownloadUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
 		}
@@ -240,7 +241,7 @@ class DownloadCategoryController extends DefaultModuleController
 					$this->category = CategoriesService::get_categories_manager('download')->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
@@ -261,7 +262,7 @@ class DownloadCategoryController extends DefaultModuleController
 			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
-				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
+				'URL'  => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
 		}

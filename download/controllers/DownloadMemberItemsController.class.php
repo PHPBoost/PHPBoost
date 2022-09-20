@@ -14,7 +14,7 @@ class DownloadMemberItemsController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('download/DownloadSeveralItemsController.tpl');
+		return new FileTemplate('download/DownloadSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -68,15 +68,16 @@ class DownloadMemberItemsController extends DefaultModuleController
 			'C_TABLE_VIEW'           => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
 			'C_FULL_ITEM_DISPLAY'    => $this->config->is_full_item_displayed(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'CATEGORIES_PER_ROW'     => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW'          => $this->config->get_items_per_row(),
 			'C_ENABLED_COMMENTS'     => $comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION'     => $content_management_config->module_notation_is_enabled('download'),
 			'C_AUTHOR_DISPLAYED'     => $this->config->is_author_displayed(),
 			'C_PAGINATION'           => $pagination->has_several_pages(),
-			'PAGINATION'             => $pagination->display(),
-			'TABLE_COLSPAN'          => 4 + (int)$comments_config->module_comments_is_enabled('download') + (int)$content_management_config->module_notation_is_enabled('download'),
-			'MEMBER_NAME'            => $this->get_member()->get_display_name()
+			
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
+			'PAGINATION'         => $pagination->display(),
+			'TABLE_COLSPAN'      => 4 + (int)$comments_config->module_comments_is_enabled('download') + (int)$content_management_config->module_notation_is_enabled('download'),
+			'MEMBER_NAME'        => $this->get_member()->get_display_name()
 		));
 
 		while ($row = $result->fetch())
@@ -144,7 +145,7 @@ class DownloadMemberItemsController extends DefaultModuleController
 			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
-				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
+				'URL'  => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
 		}

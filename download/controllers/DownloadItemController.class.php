@@ -14,7 +14,7 @@ class DownloadItemController extends DefaultModuleController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('download/DownloadItemController.tpl');
+		return new FileTemplate('download/DownloadItemController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -74,12 +74,12 @@ class DownloadItemController extends DefaultModuleController
 		$has_keywords = count($keywords) > 0;
 
 		$this->view->put_all(array_merge($item->get_template_vars(), array(
-			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
-			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('download'),
-			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('download'),
-			'C_KEYWORDS' => $has_keywords,
+			'C_AUTHOR_DISPLAYED'      => $config->is_author_displayed(),
+			'C_ENABLED_COMMENTS'      => $comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION'      => $content_management_config->module_notation_is_enabled('download'),
+			'C_KEYWORDS'              => $has_keywords,
 			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
-			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
+			'NOT_VISIBLE_MESSAGE'              => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.download'], MessageHelper::WARNING)
 		)));
 
@@ -111,7 +111,7 @@ class DownloadItemController extends DefaultModuleController
 			$this->view->assign_block_vars('keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
-				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
+				'URL'  => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
 		}

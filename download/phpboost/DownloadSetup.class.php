@@ -102,39 +102,39 @@ class DownloadSetup extends DefaultModuleSetup
 	private function insert_download_cats_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$download_cats_table, array(
-			'id' => 1,
-			'id_parent' => 0,
-			'c_order' => 1,
-			'auth' => '',
+			'id'            => 1,
+			'id_parent'     => 0,
+			'c_order'       => 1,
+			'auth'          => '',
 			'rewrited_name' => Url::encode_rewrite($this->messages['default.cat.name']),
-			'name' => $this->messages['default.cat.name'],
-			'description' => $this->messages['default.cat.description'],
-			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE
+			'name'          => $this->messages['default.cat.name'],
+			'description'   => $this->messages['default.cat.description'],
+			'thumbnail'     => FormFieldThumbnail::DEFAULT_VALUE
 		));
 	}
 
 	private function insert_download_data()
 	{
 		PersistenceContext::get_querier()->insert(self::$download_table, array(
-			'id' => 1,
-			'id_category' => 1,
-			'title' => $this->messages['default.downloadfile.name'],
-			'rewrited_title' => Url::encode_rewrite($this->messages['default.downloadfile.name']),
-			'file_url' => '/templates/__default__/theme/images/logo.svg',
-			'size' => 1430,
-			'content' => $this->messages['default.downloadfile.content'],
-			'summary' => '',
-			'published' => DownloadItem::PUBLISHED,
+			'id'                    => 1,
+			'id_category'           => 1,
+			'title'                 => $this->messages['default.downloadfile.name'],
+			'rewrited_title'        => Url::encode_rewrite($this->messages['default.downloadfile.name']),
+			'file_url'              => '/templates/__default__/theme/images/logo.svg',
+			'size'                  => 1430,
+			'content'               => $this->messages['default.downloadfile.content'],
+			'summary'               => '',
+			'published'             => DownloadItem::PUBLISHED,
 			'publishing_start_date' => 0,
-			'publishing_end_date' => 0,
-			'creation_date' => time(),
-			'update_date' => time(),
-			'author_custom_name' => '',
-			'author_user_id' => 1,
-			'downloads_number' => 0,
-			'views_number' => 0,
-			'sources' => TextHelper::serialize(array()),
-			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE
+			'publishing_end_date'   => 0,
+			'creation_date'         => time(),
+			'update_date'           => time(),
+			'author_custom_name'    => '',
+			'author_user_id'        => 1,
+			'downloads_number'      => 0,
+			'views_number'          => 0,
+			'sources'               => TextHelper::serialize(array()),
+			'thumbnail'             => FormFieldThumbnail::DEFAULT_VALUE
 		));
 	}
 }

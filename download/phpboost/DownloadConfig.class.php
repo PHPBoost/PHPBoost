@@ -12,30 +12,30 @@
 
 class DownloadConfig extends AbstractConfigData
 {
-	const CATEGORIES_PER_PAGE = 'categories_per_page';
-	const CATEGORIES_PER_ROW = 'categories_per_row';
-	const ITEMS_PER_PAGE = 'items_per_page';
-	const ITEMS_PER_ROW = 'items_per_row';
+	const CATEGORIES_PER_PAGE      = 'categories_per_page';
+	const CATEGORIES_PER_ROW       = 'categories_per_row';
+	const ITEMS_PER_PAGE           = 'items_per_page';
+	const ITEMS_PER_ROW            = 'items_per_row';
 	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
-	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
+	const ITEMS_DEFAULT_SORT_MODE  = 'items_default_sort_mode';
 
 	const DEFAULT_CONTENT = 'default_content';
 
-	const FULL_ITEM_DISPLAY = 'full_item_display';
-	const SUMMARY_DISPLAYED_TO_GUESTS = 'summary_displayed_to_guests';
-	const AUTHOR_DISPLAYED = 'author_displayed';
-	const NB_VIEW_ENABLED = 'nb_view_enabled';
-	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const SORT_TYPE = 'sort_type';
-	const FILES_NUMBER_IN_MENU = 'files_number_in_menu';
+	const FULL_ITEM_DISPLAY                     = 'full_item_display';
+	const SUMMARY_DISPLAYED_TO_GUESTS           = 'summary_displayed_to_guests';
+	const AUTHOR_DISPLAYED                      = 'author_displayed';
+	const NB_VIEW_ENABLED                       = 'nb_view_enabled';
+	const ROOT_CATEGORY_DESCRIPTION             = 'root_category_description';
+	const SORT_TYPE                             = 'sort_type';
+	const FILES_NUMBER_IN_MENU                  = 'files_number_in_menu';
 	const LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED = 'limit_oldest_file_day_in_menu_enabled';
-	const OLDEST_FILE_DAY_IN_MENU = 'oldest_file_day_in_menu';
-	const AUTHORIZATIONS = 'authorizations';
+	const OLDEST_FILE_DAY_IN_MENU               = 'oldest_file_day_in_menu';
+	const AUTHORIZATIONS                        = 'authorizations';
 
 	const DISPLAY_TYPE = 'display_type';
-	const GRID_VIEW = 'grid_view';
-	const LIST_VIEW = 'list_view';
-	const TABLE_VIEW = 'table_view';
+	const GRID_VIEW    = 'grid_view';
+	const LIST_VIEW    = 'list_view';
+	const TABLE_VIEW   = 'table_view';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 
@@ -287,26 +287,26 @@ class DownloadConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array(
-			self::CATEGORIES_PER_PAGE => 10,
-			self::CATEGORIES_PER_ROW => 3,
-			self::ITEMS_PER_PAGE => 15,
-			self::ITEMS_PER_ROW => 2,
-			self::FULL_ITEM_DISPLAY => false,
-			self::DISPLAY_TYPE => self::GRID_VIEW,
-			self::ITEMS_DEFAULT_SORT_FIELD => DownloadItem::SORT_UPDATE_DATE,
-			self::ITEMS_DEFAULT_SORT_MODE => DownloadItem::DESC,
-			self::DEFAULT_CONTENT => '',
-			self::SUMMARY_DISPLAYED_TO_GUESTS => false,
-			self::AUTHOR_DISPLAYED => true,
-			self::NB_VIEW_ENABLED => false,
-			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('download'),
-			self::SORT_TYPE => DownloadItem::SORT_DOWNLOADS_NUMBER,
-			self::FILES_NUMBER_IN_MENU => 5,
+			self::CATEGORIES_PER_PAGE                   => 10,
+			self::CATEGORIES_PER_ROW                    => 3,
+			self::ITEMS_PER_PAGE                        => 15,
+			self::ITEMS_PER_ROW                         => 2,
+			self::FULL_ITEM_DISPLAY                     => false,
+			self::DISPLAY_TYPE                          => self::GRID_VIEW,
+			self::ITEMS_DEFAULT_SORT_FIELD              => DownloadItem::SORT_UPDATE_DATE,
+			self::ITEMS_DEFAULT_SORT_MODE               => DownloadItem::DESC,
+			self::DEFAULT_CONTENT                       => '',
+			self::SUMMARY_DISPLAYED_TO_GUESTS           => false,
+			self::AUTHOR_DISPLAYED                      => true,
+			self::NB_VIEW_ENABLED                       => false,
+			self::ROOT_CATEGORY_DESCRIPTION             => CategoriesService::get_default_root_category_description('download'),
+			self::SORT_TYPE                             => DownloadItem::SORT_DOWNLOADS_NUMBER,
+			self::FILES_NUMBER_IN_MENU                  => 5,
 			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
-			self::OLDEST_FILE_DAY_IN_MENU => 30,
-			self::AUTO_CUT_CHARACTERS_NUMBER => 128,
-			self::AUTHORIZATIONS => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
-			self::DEFERRED_OPERATIONS => array()
+			self::OLDEST_FILE_DAY_IN_MENU               => 30,
+			self::AUTO_CUT_CHARACTERS_NUMBER            => 128,
+			self::AUTHORIZATIONS                        => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
+			self::DEFERRED_OPERATIONS                   => array()
 		);
 	}
 

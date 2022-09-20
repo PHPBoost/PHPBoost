@@ -523,7 +523,7 @@ class DownloadItem
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
 			array(
 				// Conditions
-	 			'C_VISIBLE'              => $this->is_published(),
+				'C_VISIBLE'              => $this->is_published(),
 				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_EDIT'                 => $this->is_authorized_to_edit(),
 				'C_DELETE'               => $this->is_authorized_to_delete(),
@@ -533,7 +533,7 @@ class DownloadItem
 				'C_VERSION_NUMBER'       => !empty($this->version_number),
 				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
 				'C_ENABLED_VIEWS_NUMBER' => $config->get_enabled_views_number(),
-				'C_AUTHOR_GROUP_COLOR'     => !empty($user_group_color),
+				'C_AUTHOR_GROUP_COLOR'   => !empty($user_group_color),
 				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
 				'C_SOURCES'              => $nbr_sources > 0,
 				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
@@ -550,7 +550,7 @@ class DownloadItem
 				'C_AUTHOR_EXISTS'     => $user->get_id() !== User::VISITOR_LEVEL,
 				'AUTHOR_DISPLAY_NAME' => $user->get_display_name(),
 				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
-				'AUTHOR_GROUP_COLOR'    => $user_group_color,
+				'AUTHOR_GROUP_COLOR'  => $user_group_color,
 				'VERSION_NUMBER'      => $this->version_number,
 				'DOWNLOADS_NUMBER'    => $this->downloads_number,
 				'VIEWS_NUMBER'        => $this->get_views_number(),
@@ -594,7 +594,7 @@ class DownloadItem
 			$vars = array(
 				'C_SEPARATOR' => array_search($source_name, array_keys($sources)) < count($sources) - 1,
 				'NAME' => $source_name,
-				'URL' => $sources[$source_name]
+				'URL'  => $sources[$source_name]
 			);
 		}
 

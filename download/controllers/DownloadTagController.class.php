@@ -18,7 +18,7 @@ class DownloadTagController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('download/DownloadSeveralItemsController.tpl');
+		return new FileTemplate('download/DownloadSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -82,24 +82,24 @@ class DownloadTagController extends DefaultModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_TAG_ITEMS'         => true,
-			'C_ITEMS'             => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
-			'C_GRID_VIEW'         => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
-			'C_LIST_VIEW'         => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
-			'C_TABLE_VIEW'        => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
-			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
-			'ITEMS_PER_ROW'       => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS'  => $this->comments_config->module_comments_is_enabled('download'),
-			'C_ENABLED_NOTATION'  => $this->content_management_config->module_notation_is_enabled('download'),
-			'C_AUTHOR_DISPLAYED'  => $this->config->is_author_displayed(),
-			'C_PAGINATION'        => $pagination->has_several_pages(),
-
+			'C_TAG_ITEMS'            => true,
+			'C_ITEMS'                => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'        => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'            => $this->config->get_display_type() == DownloadConfig::GRID_VIEW,
+			'C_LIST_VIEW'            => $this->config->get_display_type() == DownloadConfig::LIST_VIEW,
+			'C_TABLE_VIEW'           => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW,
+			'C_FULL_ITEM_DISPLAY'    => $this->config->is_full_item_displayed(),
+			'C_ENABLED_COMMENTS'     => $this->comments_config->module_comments_is_enabled('download'),
+			'C_ENABLED_NOTATION'     => $this->content_management_config->module_notation_is_enabled('download'),
+			'C_AUTHOR_DISPLAYED'     => $this->config->is_author_displayed(),
+			'C_PAGINATION'           => $pagination->has_several_pages(),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'CATEGORIES_PER_ROW'     => $this->config->get_categories_per_row(),
-			'PAGINATION'             => $pagination->display(),
-			'TABLE_COLSPAN'          => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
-			'CATEGORY_NAME'          => $this->get_keyword()->get_name()
+
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
+			'PAGINATION'         => $pagination->display(),
+			'TABLE_COLSPAN'      => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
+			'CATEGORY_NAME'      => $this->get_keyword()->get_name()
 		));
 
 		while ($row = $result->fetch())
@@ -175,13 +175,13 @@ class DownloadTagController extends DefaultModuleController
 					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
 			{
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 		return $this->keyword;
@@ -216,7 +216,7 @@ class DownloadTagController extends DefaultModuleController
 			$this->view->assign_block_vars('items.keywords', array(
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
-				'URL' => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
+				'URL'  => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
 			));
 			$i++;
 		}
