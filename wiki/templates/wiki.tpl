@@ -74,6 +74,7 @@
 						{status.ARTICLE_STATUS}
 					# END status #
 
+					<div class="more">{@common.last.update} : {DATE_FULL}</div>
 					# START menu #
 						# IF C_STICKY_MENU #
 							<span class="wiki-sticky-title blink">{@wiki.summary.menu}</span>
