@@ -179,11 +179,11 @@
 													# ENDIF #
 												# ENDIF #
 												<td >
-													{contributions.CREATION_DATE}
+													{contributions.CREATION_DATE_FULL}
 												</td>
 												<td >
 													# IF contributions.C_FIXED #
-														{contributions.FIXING_DATE}
+														{contributions.FIXING_DATE_FULL}
 													# ELSE #
 														-
 													# ENDIF #
