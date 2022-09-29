@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 29
+ * @version     PHPBoost 6.0 - last update: 2022 09 29
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -513,7 +513,9 @@ else
 			}
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$view->assign_block_vars($loop_id, array(
+			$view->assign_block_vars($loop_id, array_merge(
+				Date::get_array_tpl_vars(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
+				array(
 				'C_FILE_EXISTS'        => $file->exists(),
 				'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
 				'C_IMG'                => $get_img_mimetype['img'] == 'far fa-file-image',
@@ -533,13 +535,13 @@ else
 				'FILETYPE'              => $get_img_mimetype['filetype'] . $size_img,
 				'BBCODE'                => '<input readonly="readonly" type="text" onclick="select_div(\'text_' . $row['id'] . '\');" id="text_' . $row['id'] . '" value="' . $bbcode . '">',
 				'DISPLAYED_CODE'        => '/upload/' . $row['path'],
-                'SIZE'                  => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . $lang['common.unit.megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $lang['common.unit.kilobytes'],
+				'SIZE'                  => ($row['size'] > 1024) ? NumberHelper::round($row['size'] / 1024, 2) . ' ' . $lang['common.unit.megabytes'] : NumberHelper::round($row['size'], 0) . ' ' . $lang['common.unit.kilobytes'],
 
 				'LIGHTBOX'         => !empty($size_img) ? ' data-lightbox ="1" data-rel="lightcase:collection"' : '',
 				'URL'              => $link,
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_MOVE'           => '.php?movefi=' . $row['id'] . '&amp;f=' . $folder . '&amp;fm=' . $row['user_id']
-			));
+			)));
 			if ($loop_id == 'shared_files')
 			{
 				$total_shared_files ++;
