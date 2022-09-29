@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 29
+ * @version     PHPBoost 6.0 - last update: 2022 09 29
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,6 +30,7 @@ $request = AppContext::get_request();
 $is_shared_checkbox = ($request->get_postvalue('is_shared_checkbox', 'off') == 'on' ? 1 : 0);
 $item_id = $request->get_int('item_id', 0);
 $status = $request->get_int('status', 0);
+
 if ($item_id)
 {
     PersistenceContext::get_querier()->update(PREFIX . "upload", array('shared' => $status), 'WHERE id = :id', array('id' => $item_id));
@@ -430,10 +431,10 @@ else
     {
         // Display files inside folder
         $result = PersistenceContext::get_querier()->select("SELECT up.id, up.shared, up.name, up.path, up.size, up.type, up.timestamp, m.user_id
-    	FROM " . DB_TABLE_UPLOAD . " up
-    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+        FROM " . DB_TABLE_UPLOAD . " up
+        LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
         WHERE " . $where_clause . "
-    	ORDER BY up.name", array(
+        ORDER BY up.name", array(
             'idcat' => $folder,
             'user_id' => AppContext::get_current_user()->get_id()
         ));
@@ -489,7 +490,9 @@ else
             $displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
             $inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
 
-            $view->assign_block_vars($loop_id, array(
+            $view->assign_block_vars($loop_id, array_merge(
+                Date::get_array_tpl_vars(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
+                array(
                 'C_FILE_EXISTS' => $file->exists(),
                 'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
                 'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
@@ -509,7 +512,7 @@ else
                 'LIGHTBOX'       => !empty($size_img) ? ' data-lightbox="1"' : '',
 
                 'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
-            ));
+            )));
 
             if ($loop_id == 'shared_files')
             {

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Mipel <mipel@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.0 - last update: 2022 08 29
  * @since       PHPBoost 6.0 - 2019 11 27
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -31,6 +31,7 @@ $lang['upload.zip.type']         = 'Archive %s';
 $lang['upload.adobe.pdf']        = 'Adobe Document';
 $lang['upload.document.type']    = 'Document %s';
 $lang['upload.popup.insert']     = 'Insert code into the form';
+$lang['upload.file.date']        = 'File date';
 
 $lang['upload.shared.checkbox']    = 'Check this box for files to be saved as shared';
 $lang['upload.shared.files']       = 'Shared Files';
