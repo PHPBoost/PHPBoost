@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 30
+ * @version     PHPBoost 6.0 - last update: 2022 10 03
  * @since       PHPBoost 2.0 - 2008 06 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -89,10 +89,7 @@ class FeedData
     ## Getters ##
     public function get_title() { return $this->title; }
     public function get_link() { return $this->link; }
-    public function get_date() { return $this->date->format(Date::FORMAT_DAY_MONTH, Timezone::USER_TIMEZONE); }
-    public function get_date_rfc2822() { return $this->date->format(Date::FORMAT_RFC2822, Timezone::USER_TIMEZONE); }
-    public function get_date_iso8601() { return $this->date->format(Date::FORMAT_ISO8601, Timezone::USER_TIMEZONE); }
-	public function get_date_text() { return $this->date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG, Timezone::USER_TIMEZONE); }
+    public function get_date() { return $this->date; }
     public function get_desc() { return $this->desc; }
     public function get_lang() { return $this->lang; }
     public function get_host() { return $this->host; }

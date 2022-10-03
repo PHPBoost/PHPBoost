@@ -57,14 +57,14 @@ class ATOM extends Feed
                     $item->set_desc(preg_match('`<summary>(.*)</summary>`isu', $expParsed[$i], $desc) ? $desc[1] : '');
                     $item->set_date(preg_match('`<updated>(.*)</updated>`isu', $expParsed[$i], $date) ? new Date(strtotime($date[1]), Timezone::SERVER_TIMEZONE) : null);
 
-                 	$enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`isu', $expParsed[$i]);
+                    $enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`isu', $expParsed[$i]);
                     if ($enclosure)
                     {
-                    	$enclosure_item = new FeedItemEnclosure();
-                    	$enclosure_item->set_lenght($enclosure[2]);
-                    	$enclosure_item->set_type($enclosure[3]);
-                    	$enclosure_item->set_url($enclosure[1]);
-                    	$item->set_enclosure($enclosure_item);
+                        $enclosure_item = new FeedItemEnclosure();
+                        $enclosure_item->set_lenght($enclosure[2]);
+                        $enclosure_item->set_type($enclosure[3]);
+                        $enclosure_item->set_url($enclosure[1]);
+                        $item->set_enclosure($enclosure_item);
                     }
 
                     $this->data->add_item($item);
