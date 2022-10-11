@@ -947,6 +947,7 @@ class UpdateServices
 		$file = new File(PATH_TO_ROOT . '/lang/english/admin-langs-common.php');
 		$file->delete();
 		$file = new File(PATH_TO_ROOT . '/lang/french/admin-langs-common.php');
+		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/lang/english/admin-links-common.php');
 		$file->delete();
