@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Bruno MERCIER <aiglobulles@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2022 10 11
  * @since       PHPBoost 3.0 - 2012 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LangConfiguration
@@ -93,7 +94,7 @@ class LangConfiguration
 		$this->author_name = $config['author'];
 		$this->author_mail = $config['author_mail'];
 		$this->author_link = $config['author_link'];
-		$this->date = $config['date'];
+		$this->date = $config['creation_date'];
 		$this->version = $config['version'];
 		$this->compatibility = $config['compatibility'];
 		$this->identifier = $config['identifier'];
