@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 06
+ * @version     PHPBoost 6.0 - last update: 2022 10 14
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -28,8 +28,8 @@ class AdminMemberConfigController extends DefaultAdminController
 
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_accounts_config->is_registration_enabled());
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
-			$this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
-
+			// $this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
+			UserCache::invalidate();
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
 
@@ -107,38 +107,38 @@ class AdminMemberConfigController extends DefaultAdminController
 			array('class' => 'custom-checkbox')
 		));
 
-		$fieldset = new FormFieldsetHTML('display_view', $this->lang['user.display.type']);
-		$form->add_fieldset($fieldset);
+		// $fieldset = new FormFieldsetHTML('display_view', $this->lang['user.display.type']);
+		// $form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->user_accounts_config->get_display_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
-			),
-			array(
-				'select_to_list' => true,
-				'events' => array('change' => '
-				if (HTMLForms.getField("display_type").getValue() == \'' . UserAccountsConfig::GRID_VIEW . '\') {
-					HTMLForms.getField("items_per_row").enable();
-				} else {
-					HTMLForms.getField("items_per_row").disable();
-				}'
-			))
-		));
+		// $fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->user_accounts_config->get_display_type(),
+		// 	array(
+		// 		new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], UserAccountsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
+		// 		new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], UserAccountsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+		// 	),
+		// 	array(
+		// 		'select_to_list' => true,
+		// 		'events' => array('change' => '
+		// 		if (HTMLForms.getField("display_type").getValue() == \'' . UserAccountsConfig::GRID_VIEW . '\') {
+		// 			HTMLForms.getField("items_per_row").enable();
+		// 		} else {
+		// 			HTMLForms.getField("items_per_row").disable();
+		// 		}'
+		// 	))
+		// ));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->user_accounts_config->get_items_per_page(),
-			array(
-				'min' => 1, 'max' => 50, 'required' => true,
-			),
-			array(new FormFieldConstraintIntegerRange(1, 50))
-		));
+		// $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->user_accounts_config->get_items_per_page(),
+		// 	array(
+		// 		'min' => 1, 'max' => 50, 'required' => true,
+		// 	),
+		// 	array(new FormFieldConstraintIntegerRange(1, 50))
+		// ));
 
-		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->user_accounts_config->get_items_per_row(),
-			array(
-				'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
-				'min' => 1, 'max' => 4, 'required' => true),
-				array(new FormFieldConstraintIntegerRange(1, 4))
-		));
+		// $fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->user_accounts_config->get_items_per_row(),
+		// 	array(
+		// 		'hidden' => $this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW,
+		// 		'min' => 1, 'max' => 4, 'required' => true),
+		// 		array(new FormFieldConstraintIntegerRange(1, 4))
+		// ));
 
 		$fieldset = new FormFieldsetHTML('security_config', $this->lang['user.security']);
 		$form->add_fieldset($fieldset);
@@ -232,10 +232,10 @@ class AdminMemberConfigController extends DefaultAdminController
 
 	private function save()
 	{
-		$this->user_accounts_config->set_display_type($this->form->get_value('display_type')->get_raw_value());
-		$this->user_accounts_config->set_items_per_page($this->form->get_value('items_per_page'));
-		if($this->form->get_value('display_type')->get_raw_value() == UserAccountsConfig::GRID_VIEW)
-			$this->user_accounts_config->set_items_per_row($this->form->get_value('items_per_row'));
+		// $this->user_accounts_config->set_display_type($this->form->get_value('display_type')->get_raw_value());
+		// $this->user_accounts_config->set_items_per_page($this->form->get_value('items_per_page'));
+		// if($this->form->get_value('display_type')->get_raw_value() == UserAccountsConfig::GRID_VIEW)
+		// 	$this->user_accounts_config->set_items_per_row($this->form->get_value('items_per_row'));
 
 		$this->user_accounts_config->set_registration_enabled($this->form->get_value('members_activation'));
 
