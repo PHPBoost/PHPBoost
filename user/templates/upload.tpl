@@ -585,7 +585,7 @@
 											<div class="cell-form grouped-inputs">
 												<input type="text" readonly="readonly" onclick="select_div(text_{shared_files.ID});" id="text_{shared_files.ID}" class="grouped-element" value="{shared_files.DISPLAYED_CODE}">
 												# IF C_POPUP #
-													<a class="grouped-element" href="javascript:insert_popup('{shared_files.INSERTED_CODE}')" aria-label="{@upload.popup.insert}"><i class="fa fa-clipboard" aria-hidden="true"></i></a>
+													<a class="grouped-element" href="javascript:insert_popup('{shared_files.INSERTED_CODE}')" aria-label="{@upload.popup.insert}"><i class="fa fa-file-export" aria-hidden="true"></i></a>
 												# ELSE #
 													<a class="grouped-element" href="#" onclick="copy_to_clipboard('{shared_files.DISPLAYED_CODE}'); return false;" aria-label="{@common.copy.to.clipboard}"><i class="fa fa-copy" aria-hidden="true"></i></a>
 												# ENDIF #
