@@ -212,13 +212,13 @@
 						<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 							<a href="admin_database.php#tables" itemprop="item">
 								<span itemprop="name">{@database.management}</span>
-	    						<meta itemprop="position" content="1" />
+								<meta itemprop="position" content="1" />
 							</a>
 						</li>
 						<li class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=structure" itemprop="item">
 								<span itemprop="name">{TABLE_NAME}</span>
-	    						<meta itemprop="position" content="2" />
+								<meta itemprop="position" content="2" />
 							</a>
 						</li>
 					</ol>
@@ -299,7 +299,7 @@
 						</div>
 						<p class="align-center">
 							<a href="javascript:check_select_all_tables(true);">{@common.select.all}</a>
-							 /
+							/
 							<a href="javascript:check_select_all_tables(false);">{@common.deselect.all}</a>
 						</p>
 					</div>
