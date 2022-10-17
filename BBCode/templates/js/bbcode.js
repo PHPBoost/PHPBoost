@@ -416,7 +416,7 @@ function bbcode_code(field)
 function checkbox_revealer()
 {
 	var checked = jQuery('.checkbox-revealer:checked').length;
-  	if(checked >= 1)
+	if(checked >= 1)
 		jQuery('.checkbox-revealer').closest('.cell').find('.cell-hidden').removeClass('hidden');
 	else
 		jQuery('.checkbox-revealer').closest('.cell').find('.cell-hidden').addClass('hidden');

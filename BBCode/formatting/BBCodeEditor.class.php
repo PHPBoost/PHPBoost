@@ -55,7 +55,7 @@ class BBCodeEditor extends ContentEditor
 		foreach ($countries as $id => $name)
 		{
 			$template->assign_block_vars('countries', array(
-				'ID' => $id,
+				'ID'   => $id,
 				'NAME' => $name,
 			));
 		}
@@ -74,7 +74,7 @@ class BBCodeEditor extends ContentEditor
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{
 			$template->put_all(array(
-				'AUTH_' . TextHelper::strtoupper($forbidden_tag) => ' bbcode-forbidden',
+				'AUTH_' . TextHelper::strtoupper($forbidden_tag) 	   => ' bbcode-forbidden',
 				'C_DISABLED_' . TextHelper::strtoupper($forbidden_tag) => true
 			));
 		}
@@ -106,7 +106,7 @@ class BBCodeEditor extends ContentEditor
 		foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
 		{
 			$template->assign_block_vars('smileys', array(
-				'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
+				'URL'  => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
 			));
 		}
@@ -152,7 +152,7 @@ class BBCodeEditor extends ContentEditor
 			if (array_key_exists($module->get_id(), $feeds_modules))
 			{
 				$template->assign_block_vars('feeds_modules', array(
-					'NAME' => $module->get_configuration()->get_name(),
+					'NAME'  => $module->get_configuration()->get_name(),
 					'VALUE' => $module->get_id()
 				));
 			}
