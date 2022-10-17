@@ -18,7 +18,7 @@ class CalendarService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	 /**
+	/**
 	 * @desc Create a new item.
 	 * @param string[] $item new CalendarItem
 	 */
@@ -29,7 +29,7 @@ class CalendarService
 		return $result->get_last_inserted_id();
 	}
 
-	 /**
+	/**
 	 * @desc Create a new item content.
 	 * @param string[] $item_content new CalendarItemContent
 	 */
@@ -40,7 +40,7 @@ class CalendarService
 		return $result->get_last_inserted_id();
 	}
 
-	 /**
+	/**
 	 * @desc Add a participant of an item.
 	 * @param int $item_id id of the item
 	 * @param int $user_id id of the participant to add
@@ -53,7 +53,7 @@ class CalendarService
 		));
 	}
 
-	 /**
+	/**
 	 * @desc Update an item.
 	 * @param string[] $item CalendarItem to update
 	 */
@@ -66,7 +66,7 @@ class CalendarService
 		return $item->get_id();
 	}
 
-	 /**
+	/**
 	 * @desc Update the content of an item.
 	 * @param string[] $item_content CalendarItemContent to update
 	 */
@@ -77,7 +77,7 @@ class CalendarService
 		));
 	}
 
-	 /**
+	/**
 	 * @desc Delete an item.
 	 * @param int $id id of the item
 	 * @param bool $has_parent Complete delete if event doesn't have a parent (complete delete), false per default
@@ -102,7 +102,7 @@ class CalendarService
 		self::delete_all_participants($id);
 	}
 
-	 /**
+	/**
 	 * @desc Delete the content of an item.
 	 * @param int $id id of the content of the item
 	 */
@@ -111,7 +111,7 @@ class CalendarService
 		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, 'WHERE id = :id', array('id' => $id));
 	}
 
-	 /**
+	/**
 	 * @desc Delete a serie of items.
 	 * @param int $content_id id of the content of the item
 	 */
@@ -121,7 +121,7 @@ class CalendarService
 		self::delete_item($content_id, false, 'content_id');
 	}
 
-	 /**
+	/**
 	 * @desc Delete the participants of an item.
 	 * @param int $item_id id of the item
 	 */
@@ -132,7 +132,7 @@ class CalendarService
 		));
 	}
 
-	 /**
+	/**
 	 * @desc Delete a participant of an item.
 	 * @param int $item_id id of the item
 	 * @param int $user_id id of the participant to delete
@@ -145,7 +145,7 @@ class CalendarService
 		));
 	}
 
-	 /**
+	/**
 	 * @desc Return the content of an item.
 	 * @param int $id Item identifier
 	 */
@@ -166,7 +166,7 @@ class CalendarService
 		return $item;
 	}
 
-	 /**
+	/**
 	 * @desc Return the participants of an item.
 	 * @param int $item_id id of the item
 	 */
@@ -195,7 +195,7 @@ class CalendarService
 		return $participants;
 	}
 
-	 /**
+	/**
 	 * @desc Return the items of a serie.
 	 * @param int $content_id id of the content of the item
 	 */
@@ -222,7 +222,7 @@ class CalendarService
 		return $items;
 	}
 
-	 /**
+	/**
 	 * @desc Clears all module elements in cache.
 	 */
 	public static function clear_cache()
@@ -231,7 +231,7 @@ class CalendarService
 		CalendarCache::invalidate();
 	}
 
-	 /**
+	/**
 	 * @desc Return all the items of the requested month.
 	 * @param int $month Month of the request
 	 * @param int $year Year of the request
