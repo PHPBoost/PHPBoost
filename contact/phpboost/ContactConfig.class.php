@@ -233,7 +233,7 @@ class ContactConfig extends AbstractConfigData
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	 /**
+	/**
 	 * @method Set authorizations
 	 * @params string[] $array Array of authorizations
 	 */

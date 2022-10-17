@@ -45,21 +45,21 @@
 </script>
 
 <div id="input_fields_${escape(HTML_ID)}">
-<span class="text-strong is-default-title">{@form.is.default}</span>
-# START fieldelements #
-	<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values mini-checkbox">
-		<div class="form-field-checkbox">
-			<label class="checkbox" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
-				<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
-				<span>&nbsp;</span>
-			</label>
+	<span class="text-strong is-default-title">{@form.is.default}</span>
+	# START fieldelements #
+		<div id="${escape(HTML_ID)}_{fieldelements.ID}" class="possible-values mini-checkbox">
+			<div class="form-field-checkbox">
+				<label class="checkbox" for="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}">
+					<input type="checkbox" name="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" id="field_is_default_${escape(HTML_ID)}_{fieldelements.ID}" value="1"# IF fieldelements.IS_DEFAULT # checked="checked"# ENDIF # class="per-default">
+					<span>&nbsp;</span>
+				</label>
+			</div>
+			<div class="grouped-inputs">
+				<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.name}">
+				<input class="grouped-element" type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="{@contact.possible.values.email}" multiple="multiple"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>
+				# IF fieldelements.C_DELETABLE #<a class="grouped-element" href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+			</div>
 		</div>
-		<div class="grouped-inputs">
-			<input class="grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.name}">
-			<input class="grouped-element" type="email" name="field_email_${escape(HTML_ID)}_{fieldelements.ID}" id="field_email_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.EMAIL}" placeholder="{@contact.possible.values.email}" multiple="multiple"# IF NOT fieldelements.C_DELETABLE # disabled="disabled"# ENDIF #>
-			# IF fieldelements.C_DELETABLE #<a class="grouped-element" href="javascript:ContactFormFieldRecipientsPossibleValues.delete({fieldelements.ID});" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-		</div>
-	</div>
-# END fieldelements #
+	# END fieldelements #
 </div>
 <a href="javascript:ContactFormFieldRecipientsPossibleValues.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more-value" aria-label="{@common.add}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>

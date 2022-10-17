@@ -51,7 +51,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
-		 	'NBR_FIELDS' => $i,
+			'NBR_FIELDS' => $i,
 			'C_HAS_DEFAULT_VALUE' => $has_default
 		));
 
@@ -108,7 +108,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
-				 case 'max_input':
+				case 'max_input':
 					$this->max_input = $value;
 					unset($field_options['max_input']);
 					break;
