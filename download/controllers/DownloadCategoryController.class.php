@@ -19,7 +19,7 @@ class DownloadCategoryController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('download/DownloadSeveralItemsController.tpl');
+		return new FileTemplate('download/DownloadSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
