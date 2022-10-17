@@ -152,7 +152,7 @@
 							<a href="admin_database_tools.php?table={TABLE_NAME}&amp;action=optimize">
 								<i class="fa fa-chart-bar" aria-hidden="true"></i> {@database.optimize}
 							</a>
-					    </td>
+						</td>
 					# ENDIF #
 				</tr>
 			</tbody>
