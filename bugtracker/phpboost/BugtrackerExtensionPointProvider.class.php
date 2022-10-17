@@ -15,7 +15,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		parent::__construct('bugtracker');
 	}
 
-	 /**
+	/**
 	 * @method Get comments
 	 */
 	public function comments()
@@ -23,7 +23,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new CommentsTopics(array(new BugtrackerCommentsTopic()));
 	}
 
-	 /**
+	/**
 	 * @method Get css files
 	 */
 	public function css_files()
@@ -33,7 +33,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return $module_css_files;
 	}
 
-	 /**
+	/**
 	 * @method Get feeds
 	 */
 	public function feeds()
@@ -41,7 +41,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new BugtrackerFeedProvider();
 	}
 
-	 /**
+	/**
 	 * @method Get home page
 	 */
 	public function home_page()
@@ -49,7 +49,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new DefaultHomePageDisplay($this->get_id(), BugtrackerUnsolvedListController::get_view());
 	}
 
-	 /**
+	/**
 	 * @method Get search form
 	 */
 	public function search()
@@ -57,7 +57,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new BugtrackerSearchable();
 	}
 
-	 /**
+	/**
 	 * @method Get sitemap
 	 */
 	public function sitemap()
@@ -65,7 +65,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new BugtrackerSitemapExtensionPoint();
 	}
 
-	 /**
+	/**
 	 * @method Get tree links
 	 */
 	public function tree_links()
@@ -73,7 +73,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		return new BugtrackerTreeLinks();
 	}
 
-	 /**
+	/**
 	 * @method Get url mappings
 	 */
 	public function url_mappings()

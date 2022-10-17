@@ -14,10 +14,10 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 	private $bug;
 	private $current_user;
 
-   	protected function get_template_to_use()
-   	{
-	   	return new FileTemplate('bugtracker/BugtrackerChangeBugStatusController.tpl');
-   	}
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('bugtracker/BugtrackerChangeBugStatusController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{

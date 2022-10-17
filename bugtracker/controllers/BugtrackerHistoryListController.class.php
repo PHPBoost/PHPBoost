@@ -13,10 +13,10 @@ class BugtrackerHistoryListController extends DefaultModuleController
 {
 	private $bug;
 
-   	protected function get_template_to_use()
-   	{
-	   	return new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
-   	}
+	protected function get_template_to_use()
+	{
+		return new FileTemplate('bugtracker/BugtrackerHistoryListController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{

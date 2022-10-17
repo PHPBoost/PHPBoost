@@ -9,7 +9,7 @@
 
 class BugtrackerSearchable extends AbstractSearchableExtensionPoint
 {
-	 /**
+	/**
 	 * @method Return the search request.
 	 * @param string[] $args Search arguments
 	 */

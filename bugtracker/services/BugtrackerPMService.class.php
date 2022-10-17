@@ -44,7 +44,7 @@ class BugtrackerPMService
 		}
 	}
 
-	 /**
+	/**
 	 * @desc Send a PM to a list of members.
 	 * @param string $pm_type Type of PM ('assigned', 'pending', 'in_progress', 'comment', 'delete', 'edit', 'fixed', 'rejected', 'reopen')
 	 * @param int $bug_id ID of the bug which is concerned

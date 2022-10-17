@@ -410,7 +410,7 @@ class AdminBugtrackerConfigController extends DefaultAdminModuleController
 			'C_TYPES'						  => !empty($types),
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_type(),
 			'MAX_INPUT'						  => $this->max_input,
-		 	'NEXT_ID'						  => $key + 1,
+			'NEXT_ID'						  => $key + 1,
 			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('type')->rel()
 		));
 
@@ -438,7 +438,7 @@ class AdminBugtrackerConfigController extends DefaultAdminModuleController
 		$categories_table->put_all(array(
 			'C_CATEGORIES'					  => !empty($categories),
 			'MAX_INPUT'						  => $this->max_input,
-		 	'NEXT_ID'						  => $key + 1,
+			'NEXT_ID'						  => $key + 1,
 			'C_DISPLAY_DEFAULT_DELETE_BUTTON' => $this->config->get_default_category(),
 			'LINK_DELETE_DEFAULT'			  => BugtrackerUrlBuilder::delete_default_parameter('category')->rel()
 		));
@@ -527,7 +527,7 @@ class AdminBugtrackerConfigController extends DefaultAdminModuleController
 		$versions_table->put_all(array(
 			'C_VERSIONS'					  => !empty($versions),
 			'MAX_INPUT'						  => $this->max_input,
-		 	'NEXT_ID'						  => $key + 1,
+			'NEXT_ID'						  => $key + 1,
 			'DAY'							  => date('j'),
 			'MONTH'							  => date('n'),
 			'YEAR'							  => date('Y'),

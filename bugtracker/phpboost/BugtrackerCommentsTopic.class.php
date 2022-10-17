@@ -15,7 +15,7 @@ class BugtrackerCommentsTopic extends CommentsTopic
 		parent::__construct('bugtracker');
 	}
 
-	 /**
+	/**
 	 * @method Get comments authorizations
 	 */
 	public function get_authorizations()
@@ -25,7 +25,7 @@ class BugtrackerCommentsTopic extends CommentsTopic
 		return $authorizations;
 	}
 
-	 /**
+	/**
 	 * @method Get comments events
 	 */
 	public function get_events()
@@ -33,7 +33,7 @@ class BugtrackerCommentsTopic extends CommentsTopic
 		return new BugtrackerCommentsTopicEvents($this);
 	}
 
-	 /**
+	/**
 	 * @method Display comments
 	 */
 	public function is_displayed()

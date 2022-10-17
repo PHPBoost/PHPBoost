@@ -12,24 +12,24 @@
 ####################################################
 
 //Types
-$lang['types.anomaly'] = 'Anomaly';
+$lang['types.anomaly']   = 'Anomaly';
 $lang['types.evolution'] = 'Evolution';
 
 //Categories
-$lang['categories.kernel'] = 'Kernel';
-$lang['categories.module'] = 'Module';
-$lang['categories.graphism'] = 'Graphism';
+$lang['categories.kernel']       = 'Kernel';
+$lang['categories.module']       = 'Module';
+$lang['categories.graphism']     = 'Graphism';
 $lang['categories.installation'] = 'Installation';
 
 //Severities
-$lang['severities.minor'] = 'Minor';
-$lang['severities.major'] = 'Major';
+$lang['severities.minor']    = 'Minor';
+$lang['severities.major']    = 'Major';
 $lang['severities.critical'] = 'Critical';
 
 //Priorities
 $lang['priorities.very_low'] = 'Very low';
-$lang['priorities.low'] = 'Low';
-$lang['priorities.normal'] = 'Normal';
-$lang['priorities.high'] = 'High';
-$lang['priorities.urgent'] = 'Urgent';
+$lang['priorities.low']      = 'Low';
+$lang['priorities.normal']   = 'Normal';
+$lang['priorities.high']     = 'High';
+$lang['priorities.urgent']   = 'Urgent';
 ?>

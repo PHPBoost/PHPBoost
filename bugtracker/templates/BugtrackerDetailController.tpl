@@ -18,7 +18,7 @@
 </nav>
 <script>
 	jQuery("#cssmenu-bugtrackeractions").menumaker({
-		title: "{@common.options')}",
+		title: ${escapejs(@common.options)},
 		format: "multitoggle",
 		breakpoint: 768
 	});

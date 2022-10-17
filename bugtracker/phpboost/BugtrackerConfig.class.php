@@ -61,7 +61,7 @@ class BugtrackerConfig extends AbstractConfigData
 	const FIX = 'fix';
 	const DELETE = 'delete';
 
-	 /**
+	/**
 	 * @method Get items per page
 	 */
 	public function get_items_per_page()
@@ -69,7 +69,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	 /**
+	/**
 	 * @method Set items per page
 	 * @params int $value Number of items to display per page
 	 */
@@ -78,7 +78,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get the color of a rejected bug
 	 */
 	public function get_rejected_bug_color()
@@ -86,7 +86,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::REJECTED_BUG_COLOR);
 	}
 
-	 /**
+	/**
 	 * @method Set the color of a rejected bug
 	 * @params string $value Rejected bug color
 	 */
@@ -95,7 +95,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::REJECTED_BUG_COLOR, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get the color of a fixed bug
 	 */
 	public function get_fixed_bug_color()
@@ -103,7 +103,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::FIXED_BUG_COLOR);
 	}
 
-	 /**
+	/**
 	 * @method Set the color of a fixed bug
 	 * @params string $value Fixed bug color
 	 */
@@ -177,7 +177,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::STATS_TOP_POSTERS_ENABLED);
 	}
 
-	 /**
+	/**
 	 * @method Get number of posters displayed in the stats list
 	 */
 	public function get_stats_top_posters_number()
@@ -185,7 +185,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::STATS_TOP_POSTERS_NUMBER);
 	}
 
-	 /**
+	/**
 	 * @method Set number of posters displayed in the stats list
 	 * @params int $value Number of posters
 	 */
@@ -234,7 +234,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::ADMIN_ALERTS_LEVELS, $array);
 	}
 
-	 /**
+	/**
 	 * @method Check the action when closing the admin alert (delete or fix)
 	 */
 	public function get_admin_alerts_fix_action()
@@ -242,7 +242,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::ADMIN_ALERTS_FIX_ACTION);
 	}
 
-	 /**
+	/**
 	 * @method Set the action when closing the admin alert
 	 * @params string $value Admin alerts fix action
 	 */
@@ -251,7 +251,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::ADMIN_ALERTS_FIX_ACTION, $value);
 	}
 
-	 /**
+	/**
 	 * @method Check if the action when closing the admin alert is fix
 	 */
 	public function is_admin_alerts_fix_action_fix()
@@ -409,7 +409,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::PM_DELETE_ENABLED);
 	}
 
-	 /**
+	/**
 	 * @method Get the default content of a bug
 	 */
 	public function get_content_value()
@@ -417,7 +417,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::CONTENT_VALUE);
 	}
 
-	 /**
+	/**
 	 * @method Set the default content of a bug
 	 * @params string $value Default content
 	 */
@@ -426,7 +426,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::CONTENT_VALUE, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get types
 	 */
 	public function get_types()
@@ -434,7 +434,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::TYPES);
 	}
 
-	 /**
+	/**
 	 * @method Set types
 	 * @params string[] $array Array of types
 	 */
@@ -443,7 +443,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::TYPES, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get categories
 	 */
 	public function get_categories()
@@ -451,7 +451,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::CATEGORIES);
 	}
 
-	 /**
+	/**
 	 * @method Set categories
 	 * @params string[] $array Array of categories
 	 */
@@ -460,7 +460,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::CATEGORIES, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get severities
 	 */
 	public function get_severities()
@@ -468,7 +468,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::SEVERITIES);
 	}
 
-	 /**
+	/**
 	 * @method Set severities
 	 * @params string[] $array Array of severities
 	 */
@@ -477,7 +477,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::SEVERITIES, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get priorities
 	 */
 	public function get_priorities()
@@ -485,7 +485,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::PRIORITIES);
 	}
 
-	 /**
+	/**
 	 * @method Set priorities
 	 * @params string[] $array Array of priorities
 	 */
@@ -494,7 +494,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::PRIORITIES, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get detected versions
 	 */
 	public function get_versions_detected()
@@ -509,7 +509,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $versions_detected_in;
 	}
 
-	 /**
+	/**
 	 * @method Get fix versions
 	 */
 	public function get_versions_fix()
@@ -527,7 +527,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $versions_fix;
 	}
 
-	 /**
+	/**
 	 * @method Get versions
 	 */
 	public function get_versions()
@@ -535,7 +535,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::VERSIONS);
 	}
 
-	 /**
+	/**
 	 * @method Set versions
 	 * @params string[] $array Array of versions
 	 */
@@ -544,7 +544,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::VERSIONS, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get default type
 	 */
 	public function get_default_type()
@@ -552,7 +552,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DEFAULT_TYPE);
 	}
 
-	 /**
+	/**
 	 * @method Set default type
 	 * @params int $value Default type id
 	 */
@@ -561,7 +561,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::DEFAULT_TYPE, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get default category
 	 */
 	public function get_default_category()
@@ -569,7 +569,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DEFAULT_CATEGORY);
 	}
 
-	 /**
+	/**
 	 * @method Set default category
 	 * @params int $value Default category id
 	 */
@@ -578,7 +578,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::DEFAULT_CATEGORY, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get default severity
 	 */
 	public function get_default_severity()
@@ -586,7 +586,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DEFAULT_SEVERITY);
 	}
 
-	 /**
+	/**
 	 * @method Set default severity
 	 * @params int $value Default severity id
 	 */
@@ -595,7 +595,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::DEFAULT_SEVERITY, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get default priority
 	 */
 	public function get_default_priority()
@@ -603,7 +603,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DEFAULT_PRIORITY);
 	}
 
-	 /**
+	/**
 	 * @method Set default priority
 	 * @params int $value Default priority id
 	 */
@@ -612,7 +612,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::DEFAULT_PRIORITY, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get default version
 	 */
 	public function get_default_version()
@@ -620,7 +620,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DEFAULT_VERSION);
 	}
 
-	 /**
+	/**
 	 * @method Set default version
 	 * @params int $value Default version id
 	 */
@@ -764,7 +764,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::DISPLAY_DETECTED_IN_COLUMN);
 	}
 
-	 /**
+	/**
 	 * @method Get authorizations
 	 */
 	public function get_authorizations()
@@ -772,7 +772,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	 /**
+	/**
 	 * @method Set authorizations
 	 * @params string[] $array Array of authorizations
 	 */
@@ -781,7 +781,7 @@ class BugtrackerConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get the status list
 	 */
 	public function get_status_list()
@@ -789,7 +789,7 @@ class BugtrackerConfig extends AbstractConfigData
 		return $this->get_property(self::STATUS_LIST);
 	}
 
-	 /**
+	/**
 	 * @method Set the status list
 	 * @params string[] $array Array of status
 	 */

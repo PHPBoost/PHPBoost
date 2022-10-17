@@ -12,12 +12,12 @@
 #                    French                        #
 ####################################################
 
-$lang['bug.1.title'] = 'Bug de test 1';
+$lang['bug.1.title']   = 'Bug de test 1';
 $lang['bug.1.content'] = 'Contenu du bug de test 1';
 
-$lang['bug.2.title'] = 'Bug de test 2';
+$lang['bug.2.title']   = 'Bug de test 2';
 $lang['bug.2.content'] = 'Contenu du bug de test 2';
 
-$lang['bug.3.title'] = 'Bug de test 3';
+$lang['bug.3.title']   = 'Bug de test 3';
 $lang['bug.3.content'] = 'Contenu du bug de test 3';
 ?>
