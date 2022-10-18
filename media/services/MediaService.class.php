@@ -16,7 +16,7 @@ class MediaService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	 /**
+	/**
 	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */

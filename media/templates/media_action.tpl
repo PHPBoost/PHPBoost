@@ -6,12 +6,12 @@
 			{
 				alert ("{@warning.title}");
 				return false;
-		    }
+			}
 			if (document.getElementById('u_media').value == "" || document.getElementById('u_media').value == "http://")
 			{
 				alert ("{@warning.url}");
 				return false;
-		    }
+			}
 			return true;
 		}
 

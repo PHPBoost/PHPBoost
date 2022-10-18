@@ -52,11 +52,11 @@ $lang['media.invisible.description']    = 'Fichier approuvé mais masqué';
 $lang['media.visible.description']      = 'Fichier approuvé et visible';
 
 // Configuration
-$lang['media.max.video.width'] = 'Largeur maximale d\'une vidéo';
-$lang['media.max.video.height'] = 'Hauteur maximale d\'une vidéo';
-$lang['media.root.content.type'] = 'Types de fichiers autorisés dans la racine des fichiers';
-$lang['media.constant.host'] = 'Hébergeurs de confiance';
-$lang['media.constant.host.peertube'] = 'Peertube';
+$lang['media.max.video.width']             = 'Largeur maximale d\'une vidéo';
+$lang['media.max.video.height']            = 'Hauteur maximale d\'une vidéo';
+$lang['media.root.content.type']           = 'Types de fichiers autorisés dans la racine des fichiers';
+$lang['media.constant.host']               = 'Hébergeurs de confiance';
+$lang['media.constant.host.peertube']      = 'Peertube';
 $lang['media.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">Liste des instances</a>';
 
 // S.E.O.
@@ -64,10 +64,10 @@ $lang['media.seo.description.root'] = 'Tous les fichiers du site :site.';
 
 // Message helper
 $lang['e_mime_disable_media'] = 'Le type de fichier que vous souhaitez proposer est désactivé !';
-$lang['e_mime_unknow_media'] = 'Impossible de déterminer le type de ce fichier !';
-$lang['e_link_empty_media'] = 'Veuillez renseigner le lien de votre fichier !';
+$lang['e_mime_unknow_media']  = 'Impossible de déterminer le type de ce fichier !';
+$lang['e_link_empty_media']   = 'Veuillez renseigner le lien de votre fichier !';
 $lang['e_link_invalid_media'] = 'Veuillez renseigner un lien valide pour votre fichier !';
-$lang['e_unexist_media'] = 'Le fichier demandé n\'existe pas !';
+$lang['e_unexist_media']      = 'Le fichier demandé n\'existe pas !';
 $lang['e_bad_url_odysee'] = '
     L\'url Odysee renseignée n\'est pas valide. <br />
     Dans l\'onglet <span class="pinned question">Partager</span> sous la vidéo, choisir une des deux url suivantes:

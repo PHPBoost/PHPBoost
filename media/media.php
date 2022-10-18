@@ -53,7 +53,7 @@ elseif ($id_media > 0)
 		));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
-   		DispatchManager::redirect($error_controller);
+		DispatchManager::redirect($error_controller);
 	}
 
 	if (($media['published'] & MEDIA_STATUS_INVISIBLE) !== 0)

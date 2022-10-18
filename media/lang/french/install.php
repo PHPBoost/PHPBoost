@@ -14,14 +14,14 @@
 #                      French                      #
 ####################################################
 
-$lang['media.title'] = 'Vidéo - Big Buck Bunny';
+$lang['media.title']   = 'Vidéo - Big Buck Bunny';
 $lang['media.content'] = '
 	Vidéo de démonstration.<br /><br />
 	Voici une vidéo de démonstration illustrant le fonctionnement de ce module.<br /><br />
 	Bonne visualisation !
 ';
-$lang['media.file.url'] = 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t=363s';
-$lang['media.cat.name'] = 'Vidéos';
+$lang['media.file.url']    = 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t=363s';
+$lang['media.cat.name']    = 'Vidéos';
 $lang['media.cat.content'] = 'Cette catégorie contient une vidéo de démonstration.';
 
 ?>

@@ -16,7 +16,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('media/MediaSeveralItemsController.tpl');
+		return new FileTemplate('media/MediaSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -253,7 +253,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 					$this->category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else

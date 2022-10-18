@@ -38,24 +38,24 @@ $lang['media.height']   = 'Height video';
 $lang['media.width']    = 'Width video';
 
 // Moderation
-$lang['media.all.files'] = 'All files';
+$lang['media.all.files']                = 'All files';
 $lang['media.confirm.delete.all.files'] = 'Do you really want to delete this file?';
-$lang['media.display.files'] = 'Display the files';
-$lang['media.filter'] = 'Filter';
-$lang['media.include.sub.categories'] = ', include the sub-categories:';
-$lang['media.visible'] = 'Approved';
-$lang['media.invisible'] = 'Invisibles';
-$lang['media.disapproved'] = 'Disapproved';
-$lang['media.disapproved.description'] = 'File disapproved';
-$lang['media.invisible.description'] = 'Hidden file';
-$lang['media.visible.description'] = 'Approved and visible file';
+$lang['media.display.files']            = 'Display the files';
+$lang['media.filter']                   = 'Filter';
+$lang['media.include.sub.categories']   = ', include the sub-categories:';
+$lang['media.visible']                  = 'Approved';
+$lang['media.invisible']                = 'Invisibles';
+$lang['media.disapproved']              = 'Disapproved';
+$lang['media.disapproved.description']  = 'File disapproved';
+$lang['media.invisible.description']    = 'Hidden file';
+$lang['media.visible.description']      = 'Approved and visible file';
 
 // Configuration
-$lang['media.max.video.width'] = 'Maximum video width';
-$lang['media.max.video.height'] = 'Maximum video height';
-$lang['media.root.content.type'] = 'Multimedia root category type of files allowed';
-$lang['media.constant.host'] = 'Trusted hosts';
-$lang['media.constant.host.peertube'] = 'Peertube';
+$lang['media.max.video.width']             = 'Maximum video width';
+$lang['media.max.video.height']            = 'Maximum video height';
+$lang['media.root.content.type']           = 'Multimedia root category type of files allowed';
+$lang['media.constant.host']               = 'Trusted hosts';
+$lang['media.constant.host.peertube']      = 'Peertube';
 $lang['media.constant.host.peertube.desc'] = '<a href="https://joinpeertube.org">Joinpeertube.org</a> - <a href="https://instances.joinpeertube.org/instances/">List of instances</a>';
 
 // SEO
@@ -63,10 +63,10 @@ $lang['media.seo.description.root'] = 'All :site\'s files.';
 
 // Message helper
 $lang['e_mime_disable_media'] = 'The type of is disabled!';
-$lang['e_mime_unknow_media'] = 'The type of file could not be determined!';
-$lang['e_link_empty_media'] = 'Please enter a link for your file!';
+$lang['e_mime_unknow_media']  = 'The type of file could not be determined!';
+$lang['e_link_empty_media']   = 'Please enter a link for your file!';
 $lang['e_link_invalid_media'] = 'Please enter a valid link for your file!';
-$lang['e_unexist_media'] = 'The file requested doesn\'t exist!';
+$lang['e_unexist_media']      = 'The file requested doesn\'t exist!';
 $lang['e_bad_url_odysee'] = '
     The Odysee url entered is not valid. <br />
     In the share tab

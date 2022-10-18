@@ -14,14 +14,14 @@
 #                      English                     #
 ####################################################
 
-$lang['media.title'] = 'Video - Big Buck Bunny';
+$lang['media.title']   = 'Video - Big Buck Bunny';
 $lang['media.content'] = '
 	Demonstration video.<br /><br />
 	Here is a demonstration video file illustrating how this module works.<br /><br />
 	Enjoy video !
 ';
-$lang['media.file.url'] = 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t=363s';
-$lang['media.cat.name'] = 'Videos';
+$lang['media.file.url']    = 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t=363s';
+$lang['media.cat.name']    = 'Videos';
 $lang['media.cat.content'] = 'This category contains a demonstration video file.';
 
 ?>
