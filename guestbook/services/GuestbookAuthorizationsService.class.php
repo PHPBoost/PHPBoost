@@ -9,8 +9,8 @@
 
 class GuestbookAuthorizationsService
 {
-	const READ_AUTHORIZATIONS = 1;
-	const WRITE_AUTHORIZATIONS = 2;
+	const READ_AUTHORIZATIONS       = 1;
+	const WRITE_AUTHORIZATIONS      = 2;
 	const MODERATION_AUTHORIZATIONS = 4;
 
 	public static function check_authorizations()

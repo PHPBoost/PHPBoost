@@ -16,7 +16,7 @@ class GuestbookConfig extends AbstractConfigData
 	const MAXIMUM_LINKS_MESSAGE = 'maximum_links_message';
 	const AUTHORIZATIONS = 'authorizations';
 
-	 /**
+	/**
 	 * @method Get items per page
 	 */
 	public function get_items_per_page()
@@ -24,7 +24,7 @@ class GuestbookConfig extends AbstractConfigData
 		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	 /**
+	/**
 	 * @method Set items per page
 	 * @params int $value Number of items to display per page
 	 */
@@ -33,7 +33,7 @@ class GuestbookConfig extends AbstractConfigData
 		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get forbidden tags
 	 */
 	public function get_forbidden_tags()
@@ -41,7 +41,7 @@ class GuestbookConfig extends AbstractConfigData
 		return $this->get_property(self::FORBIDDEN_TAGS);
 	}
 
-	 /**
+	/**
 	 * @method Set forbidden tags
 	 * @params string[] $array Array of forbidden tags
 	 */
@@ -65,7 +65,7 @@ class GuestbookConfig extends AbstractConfigData
 			return $this->get_property(self::MAX_LINKS_NUMBER_PER_MESSAGE_ENABLED);
 	}
 
-	 /**
+	/**
 	 * @method Get maximum links number in a message
 	 */
 	public function get_maximum_links_message()
@@ -73,7 +73,7 @@ class GuestbookConfig extends AbstractConfigData
 		return $this->get_property(self::MAXIMUM_LINKS_MESSAGE);
 	}
 
-	 /**
+	/**
 	 * @method Set maximum links number in a message
 	 * @params int $value Links number
 	 */
@@ -82,7 +82,7 @@ class GuestbookConfig extends AbstractConfigData
 		$this->set_property(self::MAXIMUM_LINKS_MESSAGE, $value);
 	}
 
-	 /**
+	/**
 	 * @method Get authorizations
 	 */
 	public function get_authorizations()
@@ -90,7 +90,7 @@ class GuestbookConfig extends AbstractConfigData
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	 /**
+	/**
 	 * @method Set authorizations
 	 * @params string[] $array Array of authorizations
 	 */
@@ -99,7 +99,7 @@ class GuestbookConfig extends AbstractConfigData
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get default values.
 	 */
 	public function get_default_values()

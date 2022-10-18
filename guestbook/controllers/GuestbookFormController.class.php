@@ -95,7 +95,7 @@ class GuestbookFormController extends DefaultModuleController
 					$this->item = GuestbookService::get_item($id);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
