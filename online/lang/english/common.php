@@ -15,7 +15,7 @@
 ####################################################
 
 $lang['online.module.title'] = 'Online';
-$lang['online.who.is'] = 'Who is online ?';
+$lang['online.who.is']       = 'Who is online ?';
 
 // S.E.O.
 $lang['online.seo.description'] = 'Online users list.';
