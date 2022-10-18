@@ -13,7 +13,7 @@ class OnlineHomeController extends DefaultModuleController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('online/OnlineHomeController.tpl');
+		return new FileTemplate('online/OnlineHomeController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
