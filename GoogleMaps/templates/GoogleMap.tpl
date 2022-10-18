@@ -1,5 +1,5 @@
 # IF C_INCLUDE_API #
-<script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
+	<script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
 # ENDIF #
 
 <div id="{MAP_ID}" class="googlemap"></div>

@@ -131,7 +131,7 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 			'C_READONLY' => $this->is_readonly(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
-		 	'NBR_FIELDS' => $i
+			'NBR_FIELDS' => $i
 		));
 
 		$template->assign_block_vars('fieldelements', array(
