@@ -16,7 +16,7 @@ class InstallUrlBuilder
 
     public static function set_locale($locale)
     {
-    	self::$locale = $locale;
+        self::$locale = $locale;
     }
 
     /**
@@ -81,10 +81,10 @@ class InstallUrlBuilder
      */
     private static function url($path)
     {
-    	if (self::$locale  != InstallationServices::get_default_lang())
-    	{
-    		$path .= '?lang=' . self::$locale;
-    	}
+        if (self::$locale  != InstallationServices::get_default_lang())
+        {
+            $path .= '?lang=' . self::$locale;
+        }
 		return DispatchManager::get_url(self::$dispatcher, $path, true);
     }
 }
