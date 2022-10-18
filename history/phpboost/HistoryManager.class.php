@@ -16,7 +16,7 @@ class HistoryManager
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	 /**
+	/**
 	 * @desc Count history lines number.
 	 * @param string $condition (optional) : Restriction to apply to the history list
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
@@ -26,7 +26,7 @@ class HistoryManager
 		return self::$db_querier->count(HistorySetup::$history_table, $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Create a line in the history list.
 	 * @param string[] $columns Values of the history
 	 */
@@ -37,7 +37,7 @@ class HistoryManager
 		return $result->get_last_inserted_id();
 	}
 
-	 /**
+	/**
 	 * @desc Update a history line.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
@@ -47,7 +47,7 @@ class HistoryManager
 		self::$db_querier->update(HistorySetup::$history_table, $columns, $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Delete a line in the history list.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
