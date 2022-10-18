@@ -15,7 +15,7 @@ class FaqCategoryController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('faq/FaqSeveralItemsController.tpl');
+		return new FileTemplate('faq/FaqSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -129,7 +129,7 @@ class FaqCategoryController extends DefaultModuleController
 					$this->category = CategoriesService::get_categories_manager('faq')->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else

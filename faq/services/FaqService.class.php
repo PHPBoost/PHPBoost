@@ -17,7 +17,7 @@ class FaqService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	 /**
+	/**
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
@@ -26,7 +26,7 @@ class FaqService
 		return self::$db_querier->count(FaqSetup::$faq_table, $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Create a new entry in the database table.
 	 * @param string[] $item : new FaqItem
 	 */
@@ -37,7 +37,7 @@ class FaqService
 		return $result->get_last_inserted_id();
 	}
 
-	 /**
+	/**
 	 * @desc Update an entry.
 	 * @param string[] $item : FaqItem to update
 	 */
@@ -46,7 +46,7 @@ class FaqService
 		self::$db_querier->update(FaqSetup::$faq_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	 /**
+	/**
 	 * @desc Delete an entry.
 	 * @param int $id Item identifier
 	 */
@@ -63,7 +63,7 @@ class FaqService
 		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'faq', 'id' => $id));
 	}
 
-	 /**
+	/**
 	 * @desc Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
@@ -88,7 +88,7 @@ class FaqService
 		FaqCategoriesCache::invalidate();
 	}
 
-	 /**
+	/**
 	 * @desc Update the position of a question.
 	 * @param string[] $id_question : id of the question to update
 	 * @param string[] $position : new question position

@@ -12,7 +12,7 @@ class FaqPendingItemsController extends DefaultModuleController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('faq/FaqSeveralItemsController.tpl');
+		return new FileTemplate('faq/FaqSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
