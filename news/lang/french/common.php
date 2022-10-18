@@ -22,5 +22,5 @@ $lang['form.top.list.enabled'] = 'Placer l\'actualité en tête de liste';
 
 // Configuration
 $lang['config.items.suggestions.enabled'] = 'Activer l\'affichage des suggestions';
-$lang['config.items.navigation.enabled'] = 'Activer l\'affichage de la navigation';
+$lang['config.items.navigation.enabled']  = 'Activer l\'affichage de la navigation';
 ?>

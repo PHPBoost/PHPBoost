@@ -22,5 +22,5 @@ $lang['form.top.list.enabled'] = 'Put the news on the top of the list';
 
 // Configuration
 $lang['config.items.suggestions.enabled'] = 'Enable suggestions display';
-$lang['config.items.navigation.enabled'] = 'Enable navigation display';
+$lang['config.items.navigation.enabled']  = 'Enable navigation display';
 ?>

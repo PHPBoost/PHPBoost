@@ -10,7 +10,7 @@
 
 class NewsManager extends ItemsManager
 {
-	 /**
+	/**
 	 * @desc Initialize the additional parameters to custom the request to get items to sort by prioritized items.
 	 */
 	protected function init_get_items_additional_parameters()
@@ -19,7 +19,7 @@ class NewsManager extends ItemsManager
 		$this->get_items_static_sort_mode = 'DESC';
 	}
 
-	 /**
+	/**
 	 * @desc Return a list of suggested news, related to the consulted one.
 	 * @param string[] $item Item to compare with
 	 */
@@ -48,7 +48,7 @@ class NewsManager extends ItemsManager
 		return $suggested_news;
 	}
 
-	 /**
+	/**	
 	 * @desc Return the previous and the next news from the consulted one.
 	 * @param string[] $item Item the current news
 	 */
