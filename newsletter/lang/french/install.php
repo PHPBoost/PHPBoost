@@ -11,6 +11,6 @@
 #                    French                        #
 ####################################################
 
-$lang['stream.name'] = 'Actualités du site ' . GeneralConfig::load()->get_site_name();
+$lang['stream.name']        = 'Actualités du site ' . GeneralConfig::load()->get_site_name();
 $lang['stream.description'] = 'Newsletter mensuelle';
 ?>

@@ -16,7 +16,7 @@ class NewsletterHomeController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('newsletter/NewsletterHomeController.tpl');
+		return new FileTemplate('newsletter/NewsletterHomeController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)

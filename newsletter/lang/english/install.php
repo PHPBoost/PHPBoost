@@ -11,6 +11,6 @@
 #                    English                       #
 ####################################################
 
-$lang['stream.name'] = GeneralConfig::load()->get_site_name() . ' site newsletter';
+$lang['stream.name']        = GeneralConfig::load()->get_site_name() . ' site newsletter';
 $lang['stream.description'] = 'Monthly newsletter';
 ?>
