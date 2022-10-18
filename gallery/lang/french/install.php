@@ -11,7 +11,7 @@
 #                       French                     #
 ####################################################
 
-$lang['default.cat.name'] = 'Test';
-$lang['default.cat.description'] = 'Galerie de test';
+$lang['default.cat.name']            = 'Test';
+$lang['default.cat.description']     = 'Galerie de test';
 $lang['default.gallerypicture.name'] = 'Logo PHPBoost';
 ?>

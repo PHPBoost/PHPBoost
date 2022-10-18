@@ -11,7 +11,7 @@
 #                       English                    #
 ####################################################
 
-$lang['default.cat.name'] = 'Test';
-$lang['default.cat.description'] = 'Demonstration of a Gallery Category';
+$lang['default.cat.name']            = 'Test';
+$lang['default.cat.description']     = 'Demonstration of a Gallery Category';
 $lang['default.gallerypicture.name'] = 'PHPBoost logo';
 ?>

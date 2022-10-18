@@ -209,7 +209,7 @@ class Gallery
 					$destination_y =  $height - $height_s - $config->get_logo_vertical_distance();
 
 					// Création d'une nouvelle image
-       				$image_with_logo = imagecreatetruecolor($width, $height);
+					$image_with_logo = imagecreatetruecolor($width, $height);
 
 					//Sauvegarde des informations de transparences
 					imagesavealpha($image_with_logo, true);

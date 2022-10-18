@@ -158,8 +158,8 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 
 		$view->put_all(array(
 			'C_NO_ITEM' => count($gallery_mini) == 0,
+			
 			'SCROLL_DELAY'  => $config->get_mini_pics_speed()*1000,
-			//
 			'ARRAY_PICS'    => $array_pics_mini,
 			'HEIGHT_DIV'    => $config->get_mini_max_height(),
 			'SUM_HEIGHT'    => $sum_height + 10,

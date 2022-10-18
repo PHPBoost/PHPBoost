@@ -178,33 +178,33 @@ class GalleryDisplayCategoryController extends ModuleController
 			switch ($g_type)
 			{
 				case 'name' :
-				$sort_type = 'g.name';
-				break;
+					$sort_type = 'g.name';
+					break;
 				case 'date' :
-				$sort_type = 'g.timestamp';
-				break;
+					$sort_type = 'g.timestamp';
+					break;
 				case 'views' :
-				$sort_type = 'g.views';
-				break;
+					$sort_type = 'g.views';
+					break;
 				case 'notes' :
-				$sort_type = 'notes.average_notes';
-				break;
+					$sort_type = 'notes.average_notes';
+					break;
 				case 'com' :
-				$sort_type = 'com.comments_number';
-				break;
+					$sort_type = 'com.comments_number';
+					break;
 				default :
-				$sort_type = 'g.timestamp';
+					$sort_type = 'g.timestamp';
 			}
 			switch ($g_mode)
 			{
 				case 'desc' :
-				$sort_mode = 'DESC';
-				break;
+					$sort_mode = 'DESC';
+					break;
 				case 'asc' :
-				$sort_mode = 'ASC';
-				break;
+					$sort_mode = 'ASC';
+					break;
 				default:
-				$sort_mode = 'DESC';
+					$sort_mode = 'DESC';
 			}
 			$g_sql_sort = ' ORDER BY ' . $sort_type . ' ' . $sort_mode;
 			if ($g_views)
@@ -566,7 +566,7 @@ class GalleryDisplayCategoryController extends ModuleController
 					$this->category = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_category($id);
 				} catch (CategoryNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
