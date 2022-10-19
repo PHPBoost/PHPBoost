@@ -18,7 +18,7 @@ class SocialNetworksConfig extends AbstractConfigData
 	const SOCIAL_NETWORKS_ORDER        = 'social_networks_order';
 	const ADDITIONAL_SOCIAL_NETWORKS   = 'additional_social_networks';
 
-	 /**
+	/**
 	 * @method Get enabled authentications
 	 */
 	public function get_enabled_authentications()
@@ -26,7 +26,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return $this->get_property(self::AUTHENTICATIONS_ENABLED);
 	}
 
-	 /**
+	/**
 	 * @method Set enabled authentications
 	 * @params string[] $array Array of enabled authentications
 	 */
@@ -35,7 +35,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::AUTHENTICATIONS_ENABLED, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get check if social network authentication is enabled
 	 */
 	public function is_authentication_enabled($social_network_id)
@@ -43,7 +43,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return in_array($social_network_id, $this->get_enabled_authentications());
 	}
 
-	 /**
+	/**
 	 * @method Get check if social network authentication is available
 	 */
 	public function is_authentication_available($social_network_id)
@@ -52,7 +52,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return in_array($social_network_id, $this->get_enabled_authentications()) && $server_configuration->has_curl_library();
 	}
 
-	 /**
+	/**
 	 * @method Get client ids
 	 */
 	public function get_client_ids()
@@ -60,7 +60,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return $this->get_property(self::CLIENT_IDS);
 	}
 
-	 /**
+	/**
 	 * @method Set client ids
 	 * @params string[] $array Array of client ids
 	 */
@@ -69,7 +69,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::CLIENT_IDS, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get the client id of a social network
 	 */
 	public function get_client_id($social_network_id)
@@ -78,7 +78,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return isset($client_ids[$social_network_id]) ? $client_ids[$social_network_id] : '';
 	}
 
-	 /**
+	/**
 	 * @method Get client secrets
 	 */
 	public function get_client_secrets()
@@ -86,7 +86,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return $this->get_property(self::CLIENT_SECRETS);
 	}
 
-	 /**
+	/**
 	 * @method Set client secrets
 	 * @params string[] $array Array of client secrets
 	 */
@@ -95,7 +95,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::CLIENT_SECRETS, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get the client secret of a social network
 	 */
 	public function get_client_secret($social_network_id)
@@ -104,7 +104,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return isset($client_secrets[$social_network_id]) ? $client_secrets[$social_network_id] : '';
 	}
 
-	 /**
+	/**
 	 * @method Get enabled content sharing
 	 */
 	public function get_enabled_content_sharing()
@@ -112,7 +112,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return $this->get_property(self::CONTENT_SHARING_ENABLED);
 	}
 
-	 /**
+	/**
 	 * @method Set enabled content sharing
 	 * @params string[] $array Array of enabled content sharing
 	 */
@@ -121,7 +121,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::CONTENT_SHARING_ENABLED, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get check if social network content sharing is enabled
 	 */
 	public function is_content_sharing_enabled($social_network_id)
@@ -129,7 +129,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return in_array($social_network_id, $this->get_enabled_content_sharing());
 	}
 
-	 /**
+	/**
 	 * @method Get social networks order
 	 */
 	public function get_social_networks_order()
@@ -137,7 +137,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return $this->get_property(self::SOCIAL_NETWORKS_ORDER);
 	}
 
-	 /**
+	/**
 	 * @method Set social networks order
 	 * @params string[] $array Array of social networks ids
 	 */
@@ -146,7 +146,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::SOCIAL_NETWORKS_ORDER, $array);
 	}
 
-	 /**
+	/**
 	 * @method Get additional social networks (from other modules)
 	 */
 	public function get_additional_social_networks()
@@ -154,7 +154,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		return $this->get_property(self::ADDITIONAL_SOCIAL_NETWORKS);
 	}
 
-	 /**
+	/**
 	 * @method Add additional social network
 	 * @params string $value additional social network
 	 */
@@ -165,7 +165,7 @@ class SocialNetworksConfig extends AbstractConfigData
 		$this->set_property(self::ADDITIONAL_SOCIAL_NETWORKS, $additional_social_networks);
 	}
 
-	 /**
+	/**
 	 * @method Remove additional social network
 	 * @params string $value additional social network
 	 */
