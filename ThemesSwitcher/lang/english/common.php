@@ -12,6 +12,6 @@
 #                    English                       #
 ####################################################
 
-$lang['ts.switch.theme'] = 'Switch theme';
+$lang['ts.switch.theme']  = 'Switch theme';
 $lang['ts.default.theme'] = 'Default theme';
 ?>
