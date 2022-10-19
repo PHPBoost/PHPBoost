@@ -640,7 +640,7 @@ a[class*='lightcase-icon-']:hover {
 }
 
 .wizard-container .wizard-header li .completed-step {
-  	background-color: var(--success-tone);
+	background-color: var(--success-tone);
 	color: var(--txt-alt);
 }
 

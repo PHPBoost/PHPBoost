@@ -79,39 +79,39 @@ function notEmptyFormFieldValidator(field_id, message)
 
 function MinPossibleValuesFormFieldValidator(html_id, min_input, message)
 {
-  var fields_input = [];
+	var fields_input = [];
 	jQuery("input[id^=field_name_"+html_id+"]").each(function() {
-	  jQuery(this).val() ? fields_input.push(jQuery(this).val()) : '';
+		jQuery(this).val() ? fields_input.push(jQuery(this).val()) : '';
 	});
 	if (fields_input.length < min_input)
-	  return message;
+		return message;
 	else
-	  return '';
+		return '';
 }
 
 function MaxPossibleValuesFormFieldValidator(html_id, max_input, message)
 {
-  var fields_input = [];
+	var fields_input = [];
 	jQuery("input[id^=field_name_"+html_id+"]").each(function() {
-	  jQuery(this).val() ? fields_input.push(jQuery(this).val()) : '';
+		jQuery(this).val() ? fields_input.push(jQuery(this).val()) : '';
 	});
 	if (fields_input.length > max_input)
-	  return message;
+		return message;
 	else
-	  return '';
+		return '';
 }
 
 function UniquePossibleValuesFormFieldValidator(html_id, message)
 {
-  var fields_input = [];
+	var fields_input = [];
 	jQuery("input[id^=field_name_"+html_id+"]").each(function() {
-	  jQuery(this).val() ? fields_input.push(jQuery(this).val()) : '';
+		jQuery(this).val() ? fields_input.push(jQuery(this).val()) : '';
 	});
 	var unique_fields_input = Array.from(new Set(fields_input));
 	if (fields_input.length !== unique_fields_input.length)
-	  return message;
+		return message;
 	else
-	  return '';
+		return '';
 }
 
 function regexFormFieldValidator(field_id, regexPattern, options, message)
