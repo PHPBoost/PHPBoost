@@ -31,7 +31,7 @@ class WikiSitemapExtensionPoint implements SitemapExtensionPoint
 		$module_map = new ModuleMap($wiki_link, 'wiki');
 
 		$id_cat = 0;
-	    $keys = array_keys($categories);
+		$keys = array_keys($categories);
 		$num_cats = $categories_cache->get_number_categories();
 		$properties = array();
 

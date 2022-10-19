@@ -127,9 +127,9 @@ body {
 .wiki-sticky {
 	padding: 0.382em 0.809em;
 	left: -9000px;
-  	top: 1.618em;
-  	position: fixed;
-  	overflow-y: auto;
+	top: 1.618em;
+	position: fixed;
+	overflow-y: auto;
 	background-color: var(--bgc-main);
 	margin-bottom: 2.618em;
 	height: 100%;

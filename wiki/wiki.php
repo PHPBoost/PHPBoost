@@ -236,7 +236,7 @@ if ((!empty($encoded_title) || !empty($id_contents)) && $num_rows > 0)
 elseif (!empty($encoded_title) && $num_rows == 0)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
-   	DispatchManager::redirect($error_controller);
+	DispatchManager::redirect($error_controller);
 }
 //Sinon c'est l'accueil
 else

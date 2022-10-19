@@ -221,8 +221,8 @@ elseif ($id_to_rename > 0 && !empty($new_title)) //Renommer un article
 			}
 			WikiCategoriesCache::invalidate();
 			 // Feeds Regeneration
-			 Feed::clear_cache('wiki');
-		   AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
+			Feed::clear_cache('wiki');
+			AppContext::get_response()->redirect('/wiki/' . url('wiki.php?title=' . Url::encode_rewrite($new_title), Url::encode_rewrite($new_title), '&'));
 		}
 		else //On met à jour l'article
 		{
@@ -399,7 +399,7 @@ elseif ($del_article > 0) //Suppression d'un article
 
 	// Feeds Regeneration
 	Feed::clear_cache('wiki');
-	 
+
 	HooksService::execute_hook_action('delete', 'wiki', $article_infos);
 
 	if (array_key_exists($article_infos['id_cat'], $categories))//Si elle  a une catégorie parente
