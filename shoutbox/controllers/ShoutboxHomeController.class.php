@@ -19,7 +19,7 @@ class ShoutboxHomeController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
+		return new FileTemplate('shoutbox/ShoutboxHomeController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)

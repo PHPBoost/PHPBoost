@@ -205,7 +205,7 @@ class AdminShoutboxConfigController extends DefaultAdminModuleController
 			$forbidden_formatting_tags[] = $option->get_raw_value();
 		}
 
-	 	$this->config->set_forbidden_formatting_tags($forbidden_formatting_tags);
+		$this->config->set_forbidden_formatting_tags($forbidden_formatting_tags);
 
 		if ($this->form->get_value('automatic_refresh_enabled'))
 		{

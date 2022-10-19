@@ -96,7 +96,7 @@ class ShoutboxFormController extends DefaultModuleController
 					$this->item = ShoutboxService::get_item($id);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else

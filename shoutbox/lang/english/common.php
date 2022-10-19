@@ -18,17 +18,17 @@ $lang['shoutbox.module.title'] = 'Shoutbox';
 // TreeLinks
 $lang['item']  = 'message';
 
-$lang['shoutbox.archives'] = 'Archives';
-$lang['shoutbox.add.item'] = 'Add a message';
+$lang['shoutbox.archives']  = 'Archives';
+$lang['shoutbox.add.item']  = 'Add a message';
 $lang['shoutbox.edit.item'] = 'Message edition';
 $lang['shoutbox.refresh']   = 'Vérifier les nouveaux messages';
 
 // Configuration
-$lang['shoutbox.enable.max.messages.number'] = 'Limit messages number in the archives';
-$lang['shoutbox.max.messages.number'] = 'Maximum number of message to keep';
+$lang['shoutbox.enable.max.messages.number']   = 'Limit messages number in the archives';
+$lang['shoutbox.max.messages.number']          = 'Maximum number of message to keep';
 $lang['shoutbox.enable.max.links.per.message'] = 'Limit links number in messages';
-$lang['shoutbox.max.links.per.message'] = 'Max links number in a message';
-$lang['shoutbox.display.no.write.message'] = 'Display a message to users who do not have write rights';
+$lang['shoutbox.max.links.per.message']        = 'Max links number in a message';
+$lang['shoutbox.display.no.write.message']     = 'Display a message to users who do not have write rights';
 
 $lang['shoutbox.shoutbox.menu']                      = 'Shoutbox mini module';
 $lang['shoutbox.enable.automatic.refresh']           = 'Enable the automatic refresh of the discussion';
