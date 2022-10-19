@@ -39,7 +39,7 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 		if ($all_categories_option)
 			self::$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('category.all.categories', 'category-lang'), 'all');
 
-    	if (!$search_category_children_options->category_is_excluded($root_category))
+		if (!$search_category_children_options->category_is_excluded($root_category))
 			self::$options[] = new FormFieldSelectChoiceOption($root_category->get_name(), $root_category->get_id());
 
 		return self::build_children_map($id_category, $categories, Category::ROOT_CATEGORY, $search_category_children_options);

@@ -96,7 +96,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 
 	private function is_authorized_access()
 	{
-		 return $this->get_authorizations()->is_authorized_access_module();
+		return $this->get_authorizations()->is_authorized_access_module();
 	}
 
 	private function regenerate_cache()

@@ -16,7 +16,7 @@
 
 class CommentsUrlBuilder
 {
-	 /**
+	/**
 	 * @param string $comment_path
 	 * @param integer $id
 	 * @return Url
@@ -26,7 +26,7 @@ class CommentsUrlBuilder
 		return self::build_url($comment_path, 'edit_comment=' . $id . '#add-comment');
 	}
 
-	 /**
+	/**
 	 * @param string $comment_path
 	 * @param integer $id
 	 * @return Url

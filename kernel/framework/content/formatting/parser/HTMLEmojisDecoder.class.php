@@ -13,51 +13,51 @@
 class HTMLEmojisDecoder
 {
 	public static function decode_html_emojis( $string ) {
-	    $stringBuilder = "";
-	    $offset = 0;
+		$stringBuilder = "";
+		$offset = 0;
 
-	    if ( empty( $string ) ) {
-	        return "";
-	    }
+		if ( empty( $string ) ) {
+			return "";
+		}
 
-	    while ( $offset >= 0 ) {
-	        $decValue = self::ordutf8( $string, $offset );
-	        $char = self::unichr($decValue);
+		while ( $offset >= 0 ) {
+			$decValue = self::ordutf8( $string, $offset );
+			$char = self::unichr($decValue);
 
-	        $htmlEntited = htmlentities( $char );
-	        if( $char != $htmlEntited ){
-	            $stringBuilder .= $htmlEntited;
-	        } elseif( $decValue >= 128 ){
-	            $stringBuilder .= "&#" . $decValue;
-	        } else {
-	            $stringBuilder .= $char;
-	        }
-	    }
+			$htmlEntited = htmlentities( $char );
+			if( $char != $htmlEntited ){
+				$stringBuilder .= $htmlEntited;
+			} elseif( $decValue >= 128 ){
+				$stringBuilder .= "&#" . $decValue;
+			} else {
+				$stringBuilder .= $char;
+			}
+		}
 
-	    return $stringBuilder;
+		return $stringBuilder;
 	}
 
 	public static function ordutf8($string, &$offset) {
-	    $code = ord(substr($string, $offset,1));
-	    if ($code >= 128) {
-	        if ($code < 224) $bytesnumber = 2;
-	        else if ($code < 240) $bytesnumber = 3;
-	        else if ($code < 248) $bytesnumber = 4;
-	        $codetemp = $code - 192 - ($bytesnumber > 2 ? 32 : 0) - ($bytesnumber > 3 ? 16 : 0);
-	        for ($i = 2; $i <= $bytesnumber; $i++) {
-	            $offset ++;
-	            $code2 = ord(substr($string, $offset, 1)) - 128; 
-	            $codetemp = $codetemp*64 + $code2;
-	        }
-	        $code = $codetemp;
-	    }
-	    $offset += 1;
-	    if ($offset >= strlen($string)) $offset = -1;
-	    return $code;
+		$code = ord(substr($string, $offset,1));
+		if ($code >= 128) {
+			if ($code < 224) $bytesnumber = 2;
+			else if ($code < 240) $bytesnumber = 3;
+			else if ($code < 248) $bytesnumber = 4;
+			$codetemp = $code - 192 - ($bytesnumber > 2 ? 32 : 0) - ($bytesnumber > 3 ? 16 : 0);
+			for ($i = 2; $i <= $bytesnumber; $i++) {
+				$offset ++;
+				$code2 = ord(substr($string, $offset, 1)) - 128; 
+				$codetemp = $codetemp*64 + $code2;
+			}
+			$code = $codetemp;
+		}
+		$offset += 1;
+		if ($offset >= strlen($string)) $offset = -1;
+		return $code;
 	}
 
 	public static function unichr($u) {
-	    return mb_convert_encoding('&#' . intval($u) . ';', 'UTF-8', 'HTML-ENTITIES');
+		return mb_convert_encoding('&#' . intval($u) . ';', 'UTF-8', 'HTML-ENTITIES');
 	}
 }
 ?>

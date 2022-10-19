@@ -43,7 +43,7 @@ class FeedItem
      * @param string $value the picture url
      */
     public function set_image_url($value) { $this->image_url = $value; }
- 	/**
+    /**
      * Sets the feed item enclosure
      * @param FeedItemEnclosure $value the enclosure
      */

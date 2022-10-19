@@ -65,11 +65,11 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 
 			if($this->comments_configuration->is_visitor_email_enabled())
 				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $lang['form.email'], '',
-				 	array(
+					array(
 						'maxlength' => 25, 'required' => true,
 						'placeholder' => $lang['comment.form.visitor.email'],
 						'description' => $lang['comment.form.visitor.email.clue'])
-			 	));
+				));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], '', array(

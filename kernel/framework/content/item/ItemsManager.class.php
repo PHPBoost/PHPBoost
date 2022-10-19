@@ -39,7 +39,7 @@ class ItemsManager
 		$this->init_get_items_additional_parameters();
 	}
 
-	 /**
+	/**
 	 * @desc Initialize the additional parameters to custom the request to get items. Possibility to modify this part only in modules to change the behaviour of the multiple select request.
 	 */
 	protected function init_get_items_additional_parameters()
@@ -51,7 +51,7 @@ class ItemsManager
 		$this->get_items_static_sort_mode = 'ASC';
 	}
 
-	 /**
+	/**
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
@@ -61,7 +61,7 @@ class ItemsManager
 		return self::$db_querier->count(self::$items_table, $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Count items number having a specific keyword.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
@@ -74,7 +74,7 @@ class ItemsManager
 		' . $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Create a new item.
 	 * @param string[] $item new Item
 	 */
@@ -84,7 +84,7 @@ class ItemsManager
 		return $result->get_last_inserted_id();
 	}
 
-	 /**
+	/**
 	 * @desc Update an item.
 	 * @param string[] $item Item to update
 	 */
@@ -93,7 +93,7 @@ class ItemsManager
 		self::$db_querier->update(self::$items_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	 /**
+	/**
 	 * @desc Delete an item.
 	 * @param string[] $item Item to delete
 	 */
@@ -114,7 +114,7 @@ class ItemsManager
 		NotationService::delete_notes_id_in_module(self::$module_id, $item->get_id());
 	}
 
-	 /**
+	/**
 	 * @desc Delete an item from its id.
 	 * @param int $id Item identifier
 	 */
@@ -123,7 +123,7 @@ class ItemsManager
 		$this->delete($this->get_item($id));
 	}
 
-	 /**
+	/**
 	 * @desc Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
@@ -145,7 +145,7 @@ class ItemsManager
 		return $item;
 	}
 
-	 /**
+	/**
 	 * @desc Updates the views number of the item.
 	 * @param string[] $item Item to update
 	 */
@@ -154,7 +154,7 @@ class ItemsManager
 		self::$db_querier->update(self::$items_table, array('views_number' => $item->get_views_number() + 1), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	 /**
+	/**
 	 * @desc Return the list of items corresponding to the condition.
 	 * @param string $condition Restriction to apply to the item
 	 * @param array $parameters Parameters of the condition
@@ -198,7 +198,7 @@ class ItemsManager
 		return $items;
 	}
 
-	 /**
+	/**
 	 * @desc Clear caches files
 	 */
 	public function clear_cache()
@@ -212,7 +212,7 @@ class ItemsManager
 		$this->clear_module_cache();
 	}
 
-	 /**
+	/**
 	 * @desc Clear module caches files if needed
 	 */
 	protected function clear_module_cache()
