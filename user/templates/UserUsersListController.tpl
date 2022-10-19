@@ -234,35 +234,35 @@
 		<div class="sub-section items-pagination">
 			<div class="content-container">
 				<nav
-				   	class="pagination listorder-pagination"
-				   	data-listorder-control="pagination"
-			        data-group="users-items"
-			        data-items-per-page="{ITEMS_PER_PAGE}"
-			        data-current-page="0"
-			        data-name="pagination1"
-				   	data-name="paging">
+						class="pagination listorder-pagination"
+						data-listorder-control="pagination"
+						data-group="users-items"
+						data-items-per-page="{ITEMS_PER_PAGE}"
+						data-current-page="0"
+						data-name="pagination1"
+						data-name="paging">
 					<p data-type="info" class="align-center">
 						{@common.listorder.item.start} - {@common.listorder.item.end} / {@common.listorder.items.number} ${TextHelper::lcfirst(@user.users)}
 					</p>
 					<ul>
 						<li class="pagination-item" data-type="first" aria-label="{@common.pagination.first}"><a href="#"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></a> </li>
-					    <li class="pagination-item" data-type="prev" aria-label="{@common.pagination.previous}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
+						<li class="pagination-item" data-type="prev" aria-label="{@common.pagination.previous}"><a href="#"><i class="fa fa-chevron-left" aria-hidden="true"></i></a> </li>
 
-					    <ul class="listorder-holder" data-type="pages">
-					        <li class="pagination-item" data-type="page"><a href="#">{@common.listorder.page.number}</a></li>
-					    </ul>
+						<ul class="listorder-holder" data-type="pages">
+							<li class="pagination-item" data-type="page"><a href="#">{@common.listorder.page.number}</a></li>
+						</ul>
 
-					    <li class="pagination-item" data-type="next" aria-label="{@common.pagination.next}"><a href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a> </li>
-					    <li class="pagination-item" data-type="last" aria-label="{@common.pagination.last}"><a href="#"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a> </li>
+						<li class="pagination-item" data-type="next" aria-label="{@common.pagination.next}"><a href="#"><i class="fa fa-chevron-right" aria-hidden="true"></i></a> </li>
+						<li class="pagination-item" data-type="last" aria-label="{@common.pagination.last}"><a href="#"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a> </li>
 					</ul>
 				</nav>
 				<div class="align-center">
 					<select data-type="items-per-page">
-		                <option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} {@common.pagination.per}</option>
-		                <option value="50"> 50 {@common.pagination.per}</option>
-		                <option value="100"> 100 {@common.pagination.per}</option>
-		                <option value="0"> {@user.members.all} </option>
-		            </select>
+						<option value="{ITEMS_PER_PAGE}"> {ITEMS_PER_PAGE} {@common.pagination.per}</option>
+						<option value="50"> 50 {@common.pagination.per}</option>
+						<option value="100"> 100 {@common.pagination.per}</option>
+						<option value="0"> {@user.members.all} </option>
+					</select>
 				</div>
 			</div>
 		</div>
@@ -288,17 +288,17 @@
 			// toggle sub-menu on click (close on click outside)
 		jQuery('.selected-label').on('click', function(e){
 			jQuery('.label-list').toggleClass('reveal-list');
-    		e.stopPropagation();
+			e.stopPropagation();
 		});
 		jQuery(document).click(function(e) {
-		    if (jQuery(e.target).is('.selected-label') === false) {
-		      jQuery('.label-list').removeClass('reveal-list');
-		    }
+			if (jQuery(e.target).is('.selected-label') === false) {
+				jQuery('.label-list').removeClass('reveal-list');
+			}
 		});
 			// send label text of selected input to title on click
 		jQuery('.label-list input').on('click', function(e) {
-		    var radioText = e.currentTarget.nextSibling.data;
-		    jQuery('.selected-label span').html(radioText);
+			var radioText = e.currentTarget.nextSibling.data;
+			jQuery('.selected-label span').html(radioText);
 		});
 	});
 </script>

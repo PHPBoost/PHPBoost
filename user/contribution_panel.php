@@ -51,8 +51,8 @@ elseif ($id_update > 0)
 	// Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if (($contribution = ContributionService::find_by_id($id_update)) == null || !AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 	{
-    	$error_controller = PHPBoostErrors::unexisting_page();
-	   DispatchManager::redirect($error_controller);
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
     }
 
 	$Bread_crumb->add($lang['user.user'], UserUrlBuilder::home()->rel());
@@ -69,8 +69,8 @@ elseif ($id_to_update > 0)
 
 	if (($contribution = ContributionService::find_by_id($id_to_update)) == null || !AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT))
 	{
-	   $error_controller = PHPBoostErrors::unexisting_page();
-	   DispatchManager::redirect($error_controller);
+		$error_controller = PHPBoostErrors::unexisting_page();
+		DispatchManager::redirect($error_controller);
     }
 
 	// Retriving parts of contribution

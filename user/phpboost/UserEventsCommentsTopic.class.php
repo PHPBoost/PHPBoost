@@ -18,7 +18,7 @@ class UserEventsCommentsTopic extends CommentsTopic
 		parent::__construct('user', self::TOPIC_IDENTIFIER);
 	}
 
-	 /**
+	/**
 	 * @method Get comments events
 	 */
 	public function get_events()
@@ -26,7 +26,7 @@ class UserEventsCommentsTopic extends CommentsTopic
 		return new UserEventsCommentsTopicEvents($this);
 	}
 
-	 /**
+	/**
 	 * @method Display comments
 	 */
 	public function is_displayed()

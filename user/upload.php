@@ -354,7 +354,7 @@ elseif (!empty($move_folder) || !empty($move_file))
             'FILETYPE'  => $get_img_mimetype['filetype'] . $size_img,
             'SIZE'      => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
             'FILE_ICON' => FileUploadConfig::load()->get_display_file_thumbnail() ? ($display_real_img ? $info_move['path'] : $get_img_mimetype['img']) : $get_img_mimetype['img']
-    	));
+        ));
 
         $view->put_all(array(
             'SELECTED_CAT' => $info_move['idcat'],

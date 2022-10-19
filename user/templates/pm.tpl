@@ -3,22 +3,22 @@
 		if(document.getElementById('login').value == "") {
 			alert("{@warning.recipient}");
 			return false;
-	    }
+		}
 		if(document.getElementById('contents').value == "") {
 			alert("{@warning.text}");
 			return false;
-	    }
+		}
 		if(document.getElementById('title').value == "") {
 			alert("{@warning.title}");
 			return false;
-	    }
+		}
 		return true;
 	}
 	function check_form_pm() {
 		if(document.getElementById('contents').value == "") {
 			alert("{@warning.text}");
 			return false;
-	    }
+		}
 		return true;
 	}
 	function Confirm_pm() {
@@ -205,11 +205,11 @@
 					# START pm.msg #
 						<article id="article-pm-{pm.msg.ID}" class="pm-item several-items message-container message-small message-offset" itemscope="itemscope" itemtype="https://schema.org/Comment">
 							<span id="m{pm.msg.ID}"></span>
-						    <header class="message-header-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+							<header class="message-header-container# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 								# IF pm.msg.C_AVATAR #<img src="{pm.msg.USER_AVATAR}" alt="{pm.msg.USER_PSEUDO}" class="message-user-avatar" /># ENDIF #
-						        <div class="message-header-infos">
-						            <div class="message-user-container">
-						                <h3 class="message-user-pseudo">
+								<div class="message-header-infos">
+									<div class="message-user-container">
+										<h3 class="message-user-pseudo">
 											# IF pm.msg.C_NOT_USER #
 												<span class="{pm.msg.LEVEL_CLASS}">{pm.msg.PSEUDO}</span>
 											# ELSE #
@@ -217,24 +217,24 @@
 													{pm.msg.PSEUDO}
 												</a>
 											# ENDIF #
-						                </h3>
-						                <div class="controls message-user-infos-preview">
+										</h3>
+										<div class="controls message-user-infos-preview">
 											# IF pm.msg.C_MODERATION_TOOLS #
 												<a href="pm.php?edit={pm.msg.ID}" class="offload" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 												<a href="pm.php?del={pm.msg.ID}&amp;token={TOKEN}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 											# ENDIF #
 											{pm.msg.WARNING_LEVEL}
-						            	</div>
-						            </div>
-						            <div class="message-infos">
-						                <time datetime="Date" itemprop="{pm.msg.DATE_FULL}">{@common.on.date} {pm.msg.DATE_FULL}</time>
-						                <a href="#article-pm-{pm.msg.ID}" aria-label="{@common.link.to.anchor}">\#{pm.msg.ID}</a>
-						            </div>
-						        </div>
-						    </header>
-						    <div class="message-content# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
-						        {pm.msg.CONTENTS}
-						    </div>
+										</div>
+									</div>
+									<div class="message-infos">
+										<time datetime="Date" itemprop="{pm.msg.DATE_FULL}">{@common.on.date} {pm.msg.DATE_FULL}</time>
+										<a href="#article-pm-{pm.msg.ID}" aria-label="{@common.link.to.anchor}">\#{pm.msg.ID}</a>
+									</div>
+								</div>
+							</header>
+							<div class="message-content# IF pm.msg.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
+								{pm.msg.CONTENTS}
+							</div>
 						</article>
 					# END pm.msg #
 				</div>

@@ -25,7 +25,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 		return true;
 	}
 
-	 /**
+	/**
 	 * @desc Return the list of members which commented the contribution.
 	 * @param string[] $contribution Contribution which is concerned
 	 */
@@ -94,7 +94,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 		}
 	}
 
-	 /**
+	/**
 	 * @desc Send a PM to a list of members.
 	 * @param string[] $contribution Contribution which is concerned
 	 * @param string $message Message to include in the PM
