@@ -61,23 +61,23 @@
 	var FormFieldPossibleValues = new FormFieldPossibleValues();
 
 	jQuery("#${escape(HTML_ID)}_field").on("focusout", function() {
-	  jQuery("input[id^=field_name_${escape(HTML_ID)}]").each(function() {
-		  var html_id = "${escape(HTML_ID)}";
-		  var message = "error";
-		  var validation = [];
+		jQuery("input[id^=field_name_${escape(HTML_ID)}]").each(function() {
+			var html_id = "${escape(HTML_ID)}";
+			var message = "error";
+			var validation = [];
 
-		  # IF C_REQUIRED #
+			# IF C_REQUIRED #
 			if ({MIN_INPUT})
-			  validation.push(MinPossibleValuesFormFieldValidator(html_id, {MIN_INPUT}, message));
+				validation.push(MinPossibleValuesFormFieldValidator(html_id, {MIN_INPUT}, message));
 			if ({MAX_INPUT})
-			  validation.push(MaxPossibleValuesFormFieldValidator(html_id, {MAX_INPUT}, message));
-		  # ENDIF #
+				validation.push(MaxPossibleValuesFormFieldValidator(html_id, {MAX_INPUT}, message));
+			# ENDIF #
 
-		  # IF C_UNIQUE_INPUT_VALUE #
+			# IF C_UNIQUE_INPUT_VALUE #
 			validation.push(UniquePossibleValuesFormFieldValidator(html_id, message));
-		  # ENDIF #
+			# ENDIF #
 
-		  if (!jQuery.isEmptyObject(validation)) {
+			if (!jQuery.isEmptyObject(validation)) {
 			if (validation.indexOf(message) !== -1) {
 				jQuery('#'+html_id+'_field').removeClass('constraint-status-right').addClass('constraint-status-error');
 			}
@@ -85,8 +85,8 @@
 				jQuery('#'+html_id+'_field').removeClass('constraint-status-error').addClass('constraint-status-right');
 				jQuery("#onblurMessageResponse" +html_id).hide();
 			}
-		  }
-	  });
+			}
+		});
 	});
 </script>
 

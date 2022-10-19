@@ -12,8 +12,8 @@
 				# IF C_ICON #
 					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #
 				# ENDIF #
-	            <span>{TITLE}</span>
-          	</a>
+				<span>{TITLE}</span>
+			</a>
 			<nav id="pushmenu-{ID}" class="pushnav# IF C_HIDDEN_WITH_SMALL_SCREENS # hidden-small-screens# ENDIF ## IF C_MENU_WITH_SUBMENU # pushmenu-with-submenu# ENDIF #">
 				<ul class=""># START elements #{elements.DISPLAY}# END elements #</ul>
 			</nav>
@@ -45,9 +45,9 @@
 		insertBack: true,
 		labelBack: ${escapejs(LangLoader::get_message('common.back', 'common-lang'))},
 		ariaLabels: {
-		 	open:    ${escapejs(LangLoader::get_message('menu.push.open', 'menu-lang'))},
-		  	close:   ${escapejs(LangLoader::get_message('menu.push.close', 'menu-lang'))},
-		  	submenu: ${escapejs(LangLoader::get_message('menu.push.submenu', 'menu-lang'))}
+			open:    ${escapejs(LangLoader::get_message('menu.push.open', 'menu-lang'))},
+			close:   ${escapejs(LangLoader::get_message('menu.push.close', 'menu-lang'))},
+			submenu: ${escapejs(LangLoader::get_message('menu.push.submenu', 'menu-lang'))}
 		}
     });
 </script>
