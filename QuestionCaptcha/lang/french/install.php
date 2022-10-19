@@ -12,8 +12,8 @@
 #                    French                         #
 #####################################################
 
-$lang['item.1.label'] = 'Combien font 4 + cinq ?';
+$lang['item.1.label']   = 'Combien font 4 + cinq ?';
 $lang['item.1.answers'] = '9;neuf';
-$lang['item.2.label'] = 'Combien y a-t-il de voyelles dans le mot ordinateur ?';
+$lang['item.2.label']   = 'Combien y a-t-il de voyelles dans le mot ordinateur ?';
 $lang['item.2.answers'] = '5;cinq';
 ?>

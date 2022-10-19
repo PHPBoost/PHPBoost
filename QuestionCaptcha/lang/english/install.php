@@ -12,8 +12,8 @@
 #                    English                        #
 #####################################################
 
-$lang['item.1.label'] = 'How much is 4 + five?';
+$lang['item.1.label']   = 'How much is 4 + five?';
 $lang['item.1.answers'] = '9;nine';
-$lang['item.2.label'] = 'How many vowels are in the word computer?';
+$lang['item.2.label']   = 'How many vowels are in the word computer?';
 $lang['item.2.answers'] = '3;three';
 ?>

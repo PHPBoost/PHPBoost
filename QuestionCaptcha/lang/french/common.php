@@ -12,12 +12,12 @@
 #                    French                         #
 #####################################################
 
-$lang['questioncaptcha.config.label'] = 'Questions';
-$lang['questioncaptcha.config.label.description'] = 'Séparez les réponses par le symbole ; quand plusieurs réponses sont possibles';
-$lang['questioncaptcha.config.label.placeholder'] = 'Question';
+$lang['questioncaptcha.config.label']               = 'Questions';
+$lang['questioncaptcha.config.label.description']   = 'Séparez les réponses par le symbole ; quand plusieurs réponses sont possibles';
+$lang['questioncaptcha.config.label.placeholder']   = 'Question';
 $lang['questioncaptcha.config.answers.placeholder'] = 'Réponse(s)';
-$lang['questioncaptcha.config.delete'] = 'Supprimer la question';
-$lang['questioncaptcha.config.add'] = 'Ajouter une question';
+$lang['questioncaptcha.config.delete']              = 'Supprimer la question';
+$lang['questioncaptcha.config.add']                 = 'Ajouter une question';
 
 $lang['advices.questioncaptcha.items.number'] = 'Le captcha QuestionCaptcha est utilisé pour sécuriser les formulaires, pensez à <a href="'.QuestionCaptchaUrlBuilder::configuration()-> rel().'">Ajouter des questions </a>pour renforcer la sécurité.';
 
