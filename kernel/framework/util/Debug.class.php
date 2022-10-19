@@ -70,9 +70,9 @@ class Debug
     {
         $file = new File(PATH_TO_ROOT . '/cache/debug.php');
         $file->write('<?php ' . "\n" .
-	        '$enabled = ' . var_export(self::$enabled, true) . ';' . "\n" .
-	        '$options = ' . var_export(self::$options, true) . ';' . "\n" .
-	        ' ?>');
+			'$enabled = ' . var_export(self::$enabled, true) . ';' . "\n" .
+			'$options = ' . var_export(self::$options, true) . ';' . "\n" .
+			' ?>');
         $file->close();
     }
 
