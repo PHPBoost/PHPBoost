@@ -313,58 +313,58 @@ class TextHelper
 	*/
 	public static function is_serialized( $string, $strict = true )
 	{
-	    if (!is_string($string))
-	        return false;
+		if (!is_string($string))
+			return false;
 
-	    $string = trim($string);
-	    if ('N;' === $string)
-	        return true;
+		$string = trim($string);
+		if ('N;' === $string)
+			return true;
 
-	    if (strlen($string) < 4 )
-	        return false;
+		if (strlen($string) < 4 )
+			return false;
 
-	    if (':' !== $string[1])
-	        return false;
+		if (':' !== $string[1])
+			return false;
 
-	    if ($strict)
+		if ($strict)
 		{
-	        $lastc = substr( $string, -1 );
-	        if (';' !== $lastc && '}' !== $lastc)
-	            return false;
-	    }
+			$lastc = substr( $string, -1 );
+			if (';' !== $lastc && '}' !== $lastc)
+				return false;
+		}
 		else
 		{
-	        $semicolon = strpos($string, ';');
-	        $brace     = strpos($string, '}');
+			$semicolon = strpos($string, ';');
+			$brace     = strpos($string, '}');
 
-	        if (false === $semicolon && false === $brace)
-	            return false;
+			if (false === $semicolon && false === $brace)
+				return false;
 
-	        if (false !== $semicolon && $semicolon < 3)
-	            return false;
+			if (false !== $semicolon && $semicolon < 3)
+				return false;
 
-	        if (false !== $brace && $brace < 4)
-	            return false;
-	    }
-	    $token = $string[0];
-	    switch ($token) {
-	        case 's':
-	            if ($strict) {
-	                if ('"' !== substr($string, -2, 1))
-	                    return false;
-	            }
+			if (false !== $brace && $brace < 4)
+				return false;
+		}
+		$token = $string[0];
+		switch ($token) {
+			case 's':
+				if ($strict) {
+					if ('"' !== substr($string, -2, 1))
+						return false;
+				}
 				elseif (false === strpos($string, '"'))
-	                return false;
-	        case 'a':
-	        case 'O':
-	            return (bool)preg_match("/^{$token}:[0-9]+:/s", $string);
-	        case 'b':
-	        case 'i':
-	        case 'd':
-	            $end = $strict ? '$' : '';
-	            return (bool)preg_match("/^{$token}:[0-9.E+-]+;$end/", $string);
-	    }
-	    return false;
+					return false;
+			case 'a':
+			case 'O':
+				return (bool)preg_match("/^{$token}:[0-9]+:/s", $string);
+			case 'b':
+			case 'i':
+			case 'd':
+				$end = $strict ? '$' : '';
+				return (bool)preg_match("/^{$token}:[0-9.E+-]+;$end/", $string);
+		}
+		return false;
 	}
 
 	public static function deserialize($string)
