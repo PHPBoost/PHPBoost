@@ -19,7 +19,7 @@ class WebTagController extends DefaultModuleController
 
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('web/WebSeveralItemsController.tpl');
+		return new FileTemplate('web/WebSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -164,13 +164,13 @@ class WebTagController extends DefaultModuleController
 					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
-   					DispatchManager::redirect($error_controller);
+					DispatchManager::redirect($error_controller);
 				}
 			}
 			else
 			{
 				$error_controller = PHPBoostErrors::unexisting_page();
-   				DispatchManager::redirect($error_controller);
+				DispatchManager::redirect($error_controller);
 			}
 		}
 		return $this->keyword;

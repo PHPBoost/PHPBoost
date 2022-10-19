@@ -19,7 +19,7 @@ class WebService
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	 /**
+	/**
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
@@ -28,7 +28,7 @@ class WebService
 		return self::$db_querier->count(WebSetup::$web_table, $condition, $parameters);
 	}
 
-	 /**
+	/**
 	 * @desc Create a new entry in the database table.
 	 * @param string[] $item : new WebLink
 	 */
@@ -39,7 +39,7 @@ class WebService
 		return $result->get_last_inserted_id();
 	}
 
-	 /**
+	/**
 	 * @desc Update an entry.
 	 * @param string[] $item : WebLink to update
 	 */
@@ -48,7 +48,7 @@ class WebService
 		self::$db_querier->update(WebSetup::$web_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	 /**
+	/**
 	 * @desc Update the number of views of a link.
 	 * @param string[] $item : WebLink to update
 	 */
@@ -57,7 +57,7 @@ class WebService
 		self::$db_querier->update(WebSetup::$web_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
 	}
 
-	 /**
+	/**
 	 * @desc Delete an entry.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
@@ -78,7 +78,7 @@ class WebService
 			NotationService::delete_notes_id_in_module('web', $id);
 	}
 
-	 /**
+	/**
 	 * @desc Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */

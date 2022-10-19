@@ -14,7 +14,7 @@ class WebPendingItemsController extends DefaultModuleController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('web/WebSeveralItemsController.tpl');
+		return new FileTemplate('web/WebSeveralItemsController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)

@@ -104,7 +104,7 @@ class WebItemsManagerController extends DefaultModuleController
 		return $table->get_page_number();
 	}
 
-	    private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
+	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
     {
         if ($request->get_string('delete-selected-elements', false))
         {
