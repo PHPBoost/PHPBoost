@@ -53,10 +53,10 @@
 							# END root_items #
 						</ul>
 
-					    <nav id="category-nav" class="pages-list">
-					        <ul>
+						<nav id="category-nav" class="pages-list">
+							<ul>
 								# START categories #
-					            	<li
+									<li
 											data_id="{categories.CATEGORY_ID}"
 											data_p_id="{categories.CATEGORY_PARENT_ID}"
 											data_order_id="{categories.CATEGORY_SUB_ORDER}">
@@ -89,8 +89,8 @@
 										# ENDIF #
 									</li>
 								# END categories #
-					        </ul>
-					    </nav>
+							</ul>
+						</nav>
 					</div>
 				</article>
 

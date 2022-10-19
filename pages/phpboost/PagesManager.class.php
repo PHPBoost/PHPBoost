@@ -9,7 +9,7 @@
 
 class PagesManager extends ItemsManager
 {
-	 /**
+	/**
 	 * @desc Initialize the additional parameters to custom the request to get items in the order set on the reorder page.
 	 */
 	protected function init_get_items_additional_parameters()
@@ -17,7 +17,7 @@ class PagesManager extends ItemsManager
 		$this->get_items_static_sort_field = 'i_order';
 	}
 	
-	 /**
+	/**
 	 * @desc Update the position of an item.
 	 * @param string[] $id_item : id of the item to update
 	 * @param string[] $position : new item position

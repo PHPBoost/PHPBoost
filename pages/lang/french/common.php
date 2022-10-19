@@ -17,10 +17,10 @@
 
 $lang['an.item'] = 'une page';
 
-$lang['items.reorder'] = 'Réorganiser les pages';
+$lang['items.reorder']    = 'Réorganiser les pages';
 $lang['items.reordering'] = 'Réorganisation des pages';
 
 // Configuration
-$lang['config.left.column.disabled'] = 'Masquer les blocs de gauche';
+$lang['config.left.column.disabled']  = 'Masquer les blocs de gauche';
 $lang['config.right.column.disabled'] = 'Masquer les blocs de droite';
 ?>

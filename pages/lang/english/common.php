@@ -14,10 +14,10 @@
 #                       English                    #
 ####################################################
 
-$lang['items.reorder'] = 'Reorder pages';
+$lang['items.reorder']    = 'Reorder pages';
 $lang['items.reordering'] = 'Pages reordering';
 
 // Configuration
-$lang['config.left.column.disabled'] = 'Hide left column';
+$lang['config.left.column.disabled']  = 'Hide left column';
 $lang['config.right.column.disabled'] = 'Hide right column';
 ?>
