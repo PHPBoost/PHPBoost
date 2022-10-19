@@ -36,7 +36,7 @@ class CLICommandsList implements CLICommands
     public function execute($cmd, array $args)
     {
         $command = $this->get_command($cmd);
-    	$command->execute($args);
+        $command->execute($args);
     }
 
     /**
@@ -45,11 +45,11 @@ class CLICommandsList implements CLICommands
      */
     private function get_command($command)
     {
-    	if (!array_key_exists($command, $this->commands))
-    	{
-    		throw new CommandNotFoundException($command);
-    	}
-    	return new $this->commands[$command]();
+        if (!array_key_exists($command, $this->commands))
+        {
+            throw new CommandNotFoundException($command);
+        }
+        return new $this->commands[$command]();
     }
 }
 ?>

@@ -17,7 +17,7 @@ class AdminSessionData extends SessionData
 		$this->token = '42';
 		$this->expiry = time() + SessionsConfig::load()->get_session_duration();
 		$this->ip = '0000:0000:0000:0000:0000:0000:0000:0001';
-			$user_accounts_config = UserAccountsConfig::load();
+		$user_accounts_config = UserAccountsConfig::load();
 		$this->cached_data = array(
 			'level' => User::ADMINISTRATOR_LEVEL,
 			'login' => 'Admin',
