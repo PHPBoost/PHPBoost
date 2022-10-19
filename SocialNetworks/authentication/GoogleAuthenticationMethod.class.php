@@ -34,9 +34,9 @@ class GoogleAuthenticationMethod extends AbstractSocialNetworkAuthenticationMeth
 		$this->google_client->setClientSecret($config->get_client_secret(GoogleSocialNetwork::SOCIAL_NETWORK_ID));
 		$this->google_client->setRedirectUri(UserUrlBuilder::connect(GoogleSocialNetwork::SOCIAL_NETWORK_ID)->absolute());
 		$this->google_client->setScopes(array(
-			  'https://www.googleapis.com/auth/userinfo.profile',
-			  'https://www.googleapis.com/auth/userinfo.email',
-		  ));
+			'https://www.googleapis.com/auth/userinfo.profile',
+			'https://www.googleapis.com/auth/userinfo.email',
+		));
 		$this->google_auth = new Google_Oauth2Service($this->google_client);
 	}
 

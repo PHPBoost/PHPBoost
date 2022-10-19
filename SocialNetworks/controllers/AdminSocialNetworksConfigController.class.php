@@ -15,9 +15,9 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 	private $social_networks;
 
 	protected function get_template_to_use()
-   	{
-	   	return new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
-   	}
+	{
+		return new FileTemplate('SocialNetworks/AdminSocialNetworksConfigController.tpl');
+	}
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -31,9 +31,9 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 			$this->save();
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
-
+		// Debug::dump(array_keys($this->social_networks));
 		$social_networks_number = 0;
-		$social_networks_order = array_unique(array_merge($this->config->get_social_networks_order(), array_keys($this->social_networks)));
+		$social_networks_order = array_unique($this->config->get_social_networks_order() ? array_merge($this->config->get_social_networks_order(), array_keys($this->social_networks)) : array());
 		foreach ($social_networks_order as $id)
 		{
 			if (isset($this->social_networks[$id]))
@@ -41,12 +41,12 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 				$sn = new $this->social_networks[$id]();
 
 				$this->view->assign_block_vars('social_networks_list', array(
-					'C_MOBILE_ONLY' => $sn->is_mobile_only(),
-					'C_DESKTOP_ONLY' => $sn->is_desktop_only(),
+					'C_MOBILE_ONLY'     => $sn->is_mobile_only(),
+					'C_DESKTOP_ONLY'    => $sn->is_desktop_only(),
 					'C_SHARING_CONTENT' => $sn->has_content_sharing_url() || $sn->has_mobile_content_sharing_url(),
-					'C_DISPLAY' => $this->config->is_content_sharing_enabled($id),
-					'ID' => $id,
-					'NAME' => $sn->get_name(),
+					'C_DISPLAY'         => $this->config->is_content_sharing_enabled($id),
+					'ID'        => $id,
+					'NAME'      => $sn->get_name(),
 					'ICON_NAME' => $sn->get_icon_name(),
 					'CSS_CLASS' => $sn->get_css_class()
 				));
