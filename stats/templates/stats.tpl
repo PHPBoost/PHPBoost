@@ -118,7 +118,7 @@
 								<td>
 									<a href="{U_LAST_USER_PROFILE}" class="{LAST_USER_LEVEL_CLASS} offload" # IF C_LAST_USER_GROUP_COLOR # style="color:{LAST_USER_GROUP_COLOR}" # ENDIF #>{LAST_USER_DISPLAY_NAME}</a>
 								</td>
-							 </tr>
+							</tr>
 						</tbody>
 					</table>
 
@@ -501,9 +501,9 @@
 							var data = null;
 
 							if (window.XMLHttpRequest) // Firefox
-							   xhr_object = new XMLHttpRequest();
+								xhr_object = new XMLHttpRequest();
 							else if (window.ActiveXObject) // Internet Explorer
-							   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+								xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 							else // XMLHttpRequest non support? par le navigateur
 								return;
 

@@ -15,6 +15,7 @@
 $lang = array(
 	'macintosh'    => array('Mac OS', 'mac.png'),
 
+	'windows11'    => array('Windows 11', 'windows11.png'),
 	'windows10'    => array('Windows 10', 'windows10.png'),
 	'windows8.1'   => array('Windows 8.1', 'windows8.png'),
 	'windows8'     => array('Windows 8', 'windows8.png'),

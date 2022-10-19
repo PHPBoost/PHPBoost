@@ -36,7 +36,7 @@ class ImagesStats
 	 * @param string $draw_type Type of chart.
 	 * @param int $decimal Round precision.
 	 */
- 	public function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
+	public function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
 		$this->decimal = $decimal;
 		if ($draw_type == 'ellipse')
@@ -225,7 +225,7 @@ class ImagesStats
 	 * @param string $font Font type used for the legend.
 	 * @return Return true if image has been succefully created, false otherwise and create an error image.
 	 */
-	 public function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	public function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if (@extension_loaded('gd'))
 		{
@@ -502,7 +502,7 @@ class ImagesStats
 	 * @param boolean $demi_dozen Round to the half dozen.
 	 * @return int The number rounded.
 	 */
-	 private function number_round_dozen($number, $demi_dozen = true)
+	private function number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
 		$number = NumberHelper::round($number, 1) * 10;
