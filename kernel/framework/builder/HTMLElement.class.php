@@ -12,7 +12,7 @@
 
 interface HTMLElement
 {
-	 /**
+     /**
      * Return the element
      * @return string
      */
