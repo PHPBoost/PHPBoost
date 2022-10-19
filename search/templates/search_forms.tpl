@@ -35,7 +35,7 @@
 </script>
 
 <section id="module-search">
-   <header>
+	<header>
 		<h1>{@search.module.title}</h1>
 	</header>
 	<div class="sub-section">
@@ -99,7 +99,7 @@
 
 		</div>
 	</div>
-	 <footer></footer>
+	<footer></footer>
 </section>
 <script>
 	ChangeForm('{MODULE_MODE}');
