@@ -99,7 +99,7 @@ class SitemapSection extends SitemapElement
 		$template->put_all(array(
 			'SECTION_NAME' => TextHelper::htmlspecialchars($this->get_name(), ENT_QUOTES),
             'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
-		    'DEPTH' => $this->depth,
+			'DEPTH' => $this->depth,
             'C_SECTION' => true
 		));
 

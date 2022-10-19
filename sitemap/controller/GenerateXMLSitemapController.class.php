@@ -12,7 +12,7 @@ class GenerateXMLSitemapController extends DefaultAdminModuleController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('sitemap/GenerateXMLSitemapController.tpl');
+		return new FileTemplate('sitemap/GenerateXMLSitemapController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)

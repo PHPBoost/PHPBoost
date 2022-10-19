@@ -126,7 +126,7 @@ class Sitemap
 		$template = $export_config->get_site_map_stream();
 
 		$template->put_all(array(
-		    'C_SITE_MAP' => true,
+			'C_SITE_MAP' => true,
 
             'SITE_NAME' => TextHelper::htmlspecialchars($this->site_name, ENT_QUOTES)
 		));

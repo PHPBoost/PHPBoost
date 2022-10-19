@@ -87,7 +87,7 @@ class ModuleMap extends SitemapSection
 			'MODULE_DESCRIPTION' => FormatingHelper::second_parse($this->description),
             'MODULE_URL' => !empty($this->link) ? $this->link->get_url() : '',
 			'FA_ICON' => $this->get_module_id() != '' ? ModulesManager::get_module($this->get_module_id())->get_configuration()->get_fa_icon() : 'fa fa-cube',
-		    'DEPTH' => $this->depth,
+			'DEPTH' => $this->depth,
             'C_MODULE_MAP' => true
 		));
 
