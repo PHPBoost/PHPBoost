@@ -54,10 +54,10 @@ $lang['sandbox.cssmenu.warning'] = '
 
 // Links
 $lang['sandbox.menu.management'] = 'Gestion des menus';
-$lang['sandbox.menu.link.icon'] = 'Item avec icône';
-$lang['sandbox.menu.link.img']  = 'Item avec image';
-$lang['sandbox.menu.link']      = 'Item de Liste';
-$lang['sandbox.menu.panel']     = 'Panneau';
+$lang['sandbox.menu.link.icon']  = 'Item avec icône';
+$lang['sandbox.menu.link.img']   = 'Item avec image';
+$lang['sandbox.menu.link']       = 'Item de Liste';
+$lang['sandbox.menu.panel']      = 'Panneau';
 // Basic
 $lang['sandbox.menu.basic'] = 'Menu de liens';
 // Accordion

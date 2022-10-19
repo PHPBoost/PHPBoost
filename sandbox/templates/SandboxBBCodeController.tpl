@@ -38,7 +38,7 @@
 							</div>
 						</article>
 					# ELSE #
-					 	{@sandbox.bbcode.wiki.disabled}
+						{@sandbox.bbcode.wiki.disabled}
 					# ENDIF #
 				</div>
 			</div>

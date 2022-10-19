@@ -5,8 +5,8 @@
 	# INCLUDE SANDBOX_SUBMENU #
 
 	<p>
-	    <input type="text" id="filtersearch" value="" placeholder="{@sandbox.lang.search}"  />
-  	</p>
+		<input type="text" id="filtersearch" value="" placeholder="{@sandbox.lang.search}"  />
+	</p>
 
 	<div class="sub-section">
 		<div class="content-container">
@@ -116,24 +116,24 @@
 		})
 
 		// Reveal searched text
-	    jQuery('input#filtersearch').bind('keyup change', function () {
-	        if (jQuery(this).val().trim().length !== 0) {
-	            jQuery('.search-text').show().hide().each(function () {
-	                if (jQuery(this).children('.search-target').is(':icontains(' + jQuery('input#filtersearch').val() + ')'))
+		jQuery('input#filtersearch').bind('keyup change', function () {
+			if (jQuery(this).val().trim().length !== 0) {
+				jQuery('.search-text').show().hide().each(function () {
+					if (jQuery(this).children('.search-target').is(':icontains(' + jQuery('input#filtersearch').val() + ')'))
 					{
 						jQuery(this).show();
 					}
-	            });
-	        }
-	        else {
-	            jQuery('.search-text').show().hide().each(function () {
-	                jQuery(this).show();
-	            });
-	        }
-	    });
+				});
+			}
+			else {
+				jQuery('.search-text').show().hide().each(function () {
+					jQuery(this).show();
+				});
+			}
+		});
 
-	    jQuery.expr[':'].icontains = function (obj, index, meta, stack) {
-	        return (obj.textContent || obj.innerText || jQuery(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
-	    };
+		jQuery.expr[':'].icontains = function (obj, index, meta, stack) {
+			return (obj.textContent || obj.innerText || jQuery(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
+		};
 	});
 </script>

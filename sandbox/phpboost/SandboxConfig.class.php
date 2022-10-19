@@ -90,7 +90,7 @@ class SandboxConfig extends AbstractConfigData
 		$this->set_property(self::PUSHED_CONTENT, $pushed_content);
 	}
 
-	 /**
+	/**
 	 * @method Get authorizations
 	 */
 	public function get_authorizations()
@@ -98,7 +98,7 @@ class SandboxConfig extends AbstractConfigData
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	 /**
+	/**
 	 * @method Set authorizations
 	 * @params string[] $array Array of authorizations
 	 */

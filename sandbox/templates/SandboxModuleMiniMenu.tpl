@@ -392,16 +392,16 @@
 			labelClose: ${escapejs(@common.close)},
 			insertBack: true,
 			labelBack: ${escapejs(@common.back)}
-	    });
+		});
 
 		// get window sizes on resize
 		jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
 		jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
 		jQuery(window).on('resize', function() {
-		    jQuery('#window-width').empty();
-		    jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
-		    jQuery('#window-height').empty();
-		    jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
+			jQuery('#window-width').empty();
+			jQuery('#window-width').append(jQuery(window).innerWidth() + 'px');
+			jQuery('#window-height').empty();
+			jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
 		});
 	</script>
 	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form/validator# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>

@@ -41,36 +41,36 @@ class SandboxIconsController extends DefaultModuleController
 		$view->add_lang($this->lang);
 
 		$css_file = file_get_contents($file);
-	    $properties_list = explode('}', $css_file);
+		$properties_list = explode('}', $css_file);
         foreach($properties_list as $property)
         {
 			$icon = $code = '';
 			$contents = explode('{', $property);
-	        foreach($contents as $pseudo_class)
-	        {
+			foreach($contents as $pseudo_class)
+			{
 				if (TextHelper::strpos($pseudo_class, 'content') !== false)
-	            {
-	                $content = explode('"', $pseudo_class);
-	                foreach($content as $row)
-	                {
-	                    if (TextHelper::strpos($row, '\\') !== false)
-	                    $code = $row;
-	                }
-	            }
-	            else
-	            {
-	                $classes = explode(':', $pseudo_class);
-	                foreach($classes as $class)
-	                {
-	                    if (TextHelper::strpos($class, 'fa-') !== false) {
-	                        $icon = str_replace('.', '',$class);
-	                        if (TextHelper::strpos($class, 'fa-') !== false) {
-	                            $fa = $icon;
-	                        }
-	                    }
-	                }
-	            }
-	        }
+				{
+					$content = explode('"', $pseudo_class);
+					foreach($content as $row)
+					{
+						if (TextHelper::strpos($row, '\\') !== false)
+						$code = $row;
+					}
+				}
+				else
+				{
+					$classes = explode(':', $pseudo_class);
+					foreach($classes as $class)
+					{
+						if (TextHelper::strpos($class, 'fa-') !== false) {
+							$icon = str_replace('.', '',$class);
+							if (TextHelper::strpos($class, 'fa-') !== false) {
+								$fa = $icon;
+							}
+						}
+					}
+				}
+			}
 			$view->assign_block_vars('fa_icons', array(
 				'PREFIX' => $prefix,
 				'FA'     => $icon,

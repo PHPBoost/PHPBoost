@@ -12,10 +12,12 @@
 		</p>
 		<p>
 			<span
-		        data-tooltip="{@sandbox.component.tooltip.alt.options}"
-		        data-tooltip-class="bigger bgc-full error"
-		        aria-label="{@sandbox.component.tooltip.label.basic}"
-				class="pinned moderator">Lorem ipsum</span>
+                    data-tooltip="{@sandbox.component.tooltip.alt.options}"
+                    data-tooltip-class="bigger bgc-full error"
+                    aria-label="{@sandbox.component.tooltip.label.basic}"
+                    class="pinned moderator">
+                Lorem ipsum
+            </span>
             {@sandbox.component.tooltip.eg.options}
 		</p>
 		{@H|sandbox.component.tooltip.options}

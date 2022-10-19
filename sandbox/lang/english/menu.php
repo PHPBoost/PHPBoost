@@ -54,10 +54,10 @@ $lang['sandbox.cssmenu.warning'] = '
 
 // Links
 $lang['sandbox.menu.management'] = 'Menus managment';
-$lang['sandbox.menu.link.icon'] = 'Item with icon';
-$lang['sandbox.menu.link.img']  = 'Item with picture';
-$lang['sandbox.menu.link']      = 'List item';
-$lang['sandbox.menu.panel']     = 'Panel';
+$lang['sandbox.menu.link.icon']  = 'Item with icon';
+$lang['sandbox.menu.link.img']   = 'Item with picture';
+$lang['sandbox.menu.link']       = 'List item';
+$lang['sandbox.menu.panel']      = 'Panel';
 // Basic
 $lang['sandbox.menu.basic'] = 'Links menu';
 // Accordion
@@ -71,13 +71,13 @@ $lang['sandbox.menu.tabs.title']  = 'Tabs menu';
 
 // Wizard
 $lang['sandbox.menu.wizard.title']  = 'Wizard menu';
-$lang['sandbox.menu.last.step']  = 'Panneau final';
+$lang['sandbox.menu.last.step']     = 'Panneau final';
 
 $lang['sandbox.menu.title.html']  = 'HTML markup';
 $lang['sandbox.menu.title.form']  = 'PHP form markup';
 
-$lang['sandbox.menu.panel']  = 'Panel';
-$lang['sandbox.menu.panel.title']  = 'Panel title';
-$lang['sandbox.menu.panel.subtitle']  = 'Sub title';
-$lang['sandbox.menu.panel.input']  = 'Text field';
+$lang['sandbox.menu.panel']          = 'Panel';
+$lang['sandbox.menu.panel.title']    = 'Panel title';
+$lang['sandbox.menu.panel.subtitle'] = 'Sub title';
+$lang['sandbox.menu.panel.input']    = 'Text field';
 ?>

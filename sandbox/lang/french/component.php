@@ -15,7 +15,7 @@
 ####################################################
 
 // Typogrphy
-$lang['sandbox.typography'] = 'Typographie';
+$lang['sandbox.typography']         = 'Typographie';
 $lang['sandbox.component.titles']   = 'Titres';
 $lang['sandbox.component.title']    = 'Titre';
 $lang['sandbox.component.items']    = 'Éléments';

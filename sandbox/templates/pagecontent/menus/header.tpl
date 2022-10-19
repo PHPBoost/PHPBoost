@@ -75,7 +75,7 @@
 </nav>
 <script>jQuery("#cssmenu-top-header").menumaker({ title: "cssmenu-top-header", format: "multitoggle", breakpoint: 768 });</script>
 <script>
-// add picture width
+    // add picture width
     jQuery('.cssmenu-title').each(function(){
         if(jQuery(this).children('img').length) {
             var imgWidth = jQuery(this).children('img').outerWidth(),

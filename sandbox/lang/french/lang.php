@@ -11,9 +11,9 @@
 #                    French                        #
 ####################################################
 
-$lang['sandbox.lang.title'] = 'Langages';
-$lang['sandbox.lang.search'] = 'Chercher du texte';
-$lang['sandbox.lang.kernel'] = 'Fichiers de langue du noyau';
+$lang['sandbox.lang.title']   = 'Langages';
+$lang['sandbox.lang.search']  = 'Chercher du texte';
+$lang['sandbox.lang.kernel']  = 'Fichiers de langue du noyau';
 $lang['sandbox.lang.modules'] = 'Fichiers de langue des modules installés';
 
 ?>
