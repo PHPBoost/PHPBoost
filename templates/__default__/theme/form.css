@@ -126,8 +126,8 @@
 .inline-radio .form-field-radio,
 .inline-checkbox .checkbox,
 .inline-checkbox .form-field-checkbox {
-   display: inline-block;
- 	margin: 0 0.456em 0 0;
+	display: inline-block;
+	margin: 0 0.456em 0 0;
 }
 
 label[for="delete-all-checkbox"] { position: relative; }

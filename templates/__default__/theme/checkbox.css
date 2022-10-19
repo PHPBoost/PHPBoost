@@ -11,8 +11,8 @@
 
 .inline-checkbox .checkbox,
 .inline-checkbox .form-field-checkbox {
-   display: inline-block;
- 	margin: 0 0.456em 0 0;
+	display: inline-block;
+	margin: 0 0.456em 0 0;
 }
 
  /* --- Mini checkbox ------------------------------------------------------- */
@@ -72,7 +72,7 @@
 }
 
 /* --- mini-checkbox in table */
- td .checkbox { margin: auto; }
+td .checkbox { margin: auto; }
 
  /* --- Custom checkbox ----------------------------------------------------- */
 .custom-checkbox .checkbox {

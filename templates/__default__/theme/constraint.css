@@ -66,13 +66,13 @@
 
 /* --- checkbox/radio --- */
 .checkbox .text-status-constraint {
-   top: 1.618em;
-   left: -0.309em;
+	top: 1.618em;
+	left: -0.309em;
 }
 
 .custom-checkbox .checkbox .text-status-constraint {
-   top: 70%;
-   left: -0.309em;
+	top: 70%;
+	left: -0.309em;
 }
 
 .form-field-radio-button.field-required,
