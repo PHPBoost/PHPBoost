@@ -15,32 +15,32 @@
 	add_icon_bbcodeblockhide(() => {
 		Array.prototype.forEach.call( document.querySelectorAll(".formatter-hide") , function (el, i) {
 			if ( el.classList.contains('no-js') )
-	   		{
+			{
 				el.setAttribute('id', "formatter-hide-container-" + i);
 				el.classList.remove('no-js');
 				el.setAttribute('onClick', "bb_hide(" + i + ", 1, event);");
 
-	   			var parent1 = document.createElement("span");
-	   			parent1.setAttribute('id', "formatter-hide-message-" + i);
-	   			parent1.setAttribute('class', "formatter-hide-message");
+				var parent1 = document.createElement("span");
+				parent1.setAttribute('id', "formatter-hide-message-" + i);
+				parent1.setAttribute('class', "formatter-hide-message");
 				var content1 = document.createTextNode(L_HIDE_MESSAGE);
-	   			parent1.appendChild(content1);
+				parent1.appendChild(content1);
 
-	   			el.insertBefore(parent1, el.childNodes[1].nextSibling);
+				el.insertBefore(parent1, el.childNodes[1].nextSibling);
 
 				var parent2 = document.createElement("span");
-	   			parent2.setAttribute('id', "formatter-hide-close-button-" + i);
-	   			parent2.setAttribute('class', "formatter-hide-close-button pinned error");
-	   			parent2.setAttribute('aria-label', L_HIDE_HIDEBLOCK);
-	   			parent2.setAttribute('onclick', "bb_hide(" + i + ", 0, event)");
+				parent2.setAttribute('id', "formatter-hide-close-button-" + i);
+				parent2.setAttribute('class', "formatter-hide-close-button pinned error");
+				parent2.setAttribute('aria-label', L_HIDE_HIDEBLOCK);
+				parent2.setAttribute('onclick', "bb_hide(" + i + ", 0, event)");
 
-	   			var child2 = document.createElement("i");
-	   			child2.setAttribute('class', "fa fa-times");
+				var child2 = document.createElement("i");
+				child2.setAttribute('class', "fa fa-times");
 
-	   			parent2.appendChild(child2);
+				parent2.appendChild(child2);
 
-	   			el.insertBefore(parent2, el.childNodes[2]);
-	   		}
+				el.insertBefore(parent2, el.childNodes[2]);
+			}
 		})
 	});
 
@@ -191,7 +191,7 @@
 
 			document.execCommand('copy');
 			alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
-	  	});
+		});
 	});
 
 // Open submenu
@@ -230,7 +230,7 @@
 			}
 			else {
 				closeother_submenu(elems, myclass);
-  				elem.classList.add(myclass);
+				elem.classList.add(myclass);
 			}
 		}
 	}

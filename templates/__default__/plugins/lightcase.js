@@ -142,7 +142,7 @@
 					'close': 'Close',
 					'navigator.prev': 'Prev',
 					'navigator.next': 'Next',
- 					'navigator.play': 'Play',
+					'navigator.play': 'Play',
 					'navigator.pause': 'Pause'
 				},
 				markup: function () {
@@ -228,7 +228,7 @@
 		 * @return	{object}	objectData
 		 */
 		_setObjectData: function (object) {
-		 	var $object = $(object),
+			var $object = $(object),
 				objectData = {
 				this: $(object),
 				title: _self.settings.title || $object.attr(_self._prefixAttributeName('aria-label')) || $object.attr('aria-label'),
@@ -951,7 +951,7 @@
 			// Fade in the info with delay
 			_self.objects.info.hide();
 			setTimeout(function () {
-			  _self.transition.fade(_self.objects.info, 'in', _self.settings.speedIn);
+				_self.transition.fade(_self.objects.info, 'in', _self.settings.speedIn);
 			}, _self.settings.speedIn);
 
 			// Call onFinish hook functions

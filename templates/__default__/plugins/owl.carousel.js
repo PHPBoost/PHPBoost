@@ -1923,9 +1923,9 @@
 						n += settings.lazyLoadEager;
 						// If the carousel is looping also preload images that are to the "left"
 						if (settings.loop) {
-              position -= settings.lazyLoadEager;
-              n++;
-            }
+							position -= settings.lazyLoadEager;
+							n++;
+						}
 					}
 
 					while (i++ < n) {

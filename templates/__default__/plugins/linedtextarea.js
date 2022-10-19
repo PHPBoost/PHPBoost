@@ -92,8 +92,8 @@
 	};
 
   // default options
-  $.fn.linedtextarea.defaults = {
-  	selectedLine: -1,
-  	selectedClass: 'lineselect'
-  };
+	$.fn.linedtextarea.defaults = {
+		selectedLine: -1,
+		selectedClass: 'lineselect'
+	};
 })(jQuery);

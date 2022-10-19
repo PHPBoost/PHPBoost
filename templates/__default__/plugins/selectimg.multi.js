@@ -42,7 +42,7 @@
                             .attr('data-name', valueOption)
                             .appendTo(optionLi),
                         optionText = jQuery('<span/>')
-                           	.text(textOption)
+                            .text(textOption)
                             .appendTo(optionItem);
 
                     if(classOption)

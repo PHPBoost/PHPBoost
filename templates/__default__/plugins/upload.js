@@ -9,11 +9,11 @@ function show_cat_contents(id_cat, display_select_link)
 	var filename = PATH_TO_ROOT + "/user/xmlhttprequest.php?token=" + TOKEN + (display_select_link != 0 ? "&display_select_link=1" : "");
 
 	if(window.XMLHttpRequest) // Firefox
-	   xhr_object = new XMLHttpRequest();
+		xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
-	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+		xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 	else // XMLHttpRequest non supporté par le navigateur
-	    return;
+		return;
 
 	if( id_cat > 0 )
 	{
@@ -65,11 +65,11 @@ function select_cat(id_cat)
 	var filename = PATH_TO_ROOT + "/user/xmlhttprequest.php?select_cat=1&token=" + TOKEN;
 
 	if(window.XMLHttpRequest) // Firefox
-	   xhr_object = new XMLHttpRequest();
+		xhr_object = new XMLHttpRequest();
 	else if(window.ActiveXObject) // Internet Explorer
-	   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+		xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 	else // XMLHttpRequest non supporté par le navigateur
-	    return;
+		return;
 
 	if( id_cat >= 0 && id_cat != selected_cat )
 	{

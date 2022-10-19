@@ -63,7 +63,7 @@
                             .attr('data-name', valueOption)
                             .appendTo(optionLi),
                         optionText = jQuery('<span/>')
-                           	.text(textOption)
+                            .text(textOption)
                             .appendTo(optionItem);
 
                     if(selectedOption) optionLi.addClass('selected-option'); // Add current class to the selected option

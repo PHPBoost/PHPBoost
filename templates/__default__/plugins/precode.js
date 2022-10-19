@@ -1,6 +1,6 @@
 (function() {
     const pre = document.querySelectorAll('pre.precode:not(.precode-inline)'),
-          pl = pre.length;
+        pl = pre.length;
 
     for (let i = 0; i < pl; i++) {
         pre[i].innerHTML = `<span class="line-number"></span>${pre[i].innerHTML}`;

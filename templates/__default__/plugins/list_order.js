@@ -33,11 +33,11 @@
             var t =
                 e && e.__esModule
                     ? function () {
-                          return e.default;
-                      }
-                    : function () {
-                          return e;
-                      };
+                        return e.default;
+                    }
+                : function () {
+                        return e;
+                    };
             return r.d(t, "a", t), t;
         }),
         (r.o = function (e, t) {
@@ -4945,13 +4945,13 @@
                         value: function (t, r) {
                             return !r || r.length <= 0
                                 ? (t.sort(function (t, r) {
-                                      return e.sortByIndex(t, r);
-                                  }),
-                                  t)
+                                    return e.sortByIndex(t, r);
+                                }),
+                                t)
                                 : (t.sort(function (t, n) {
-                                      return e.sortHelper(t, n, r, 0);
-                                  }),
-                                  t);
+                                    return e.sortHelper(t, n, r, 0);
+                                }),
+                                t);
                         },
                     },
                     {
@@ -5075,10 +5075,10 @@
                             var r = Number(t);
                             return isNaN(r)
                                 ? e.months.findIndex(function (e) {
-                                      return e.find(function (e) {
-                                          return e.trim() === t;
-                                      });
-                                  })
+                                    return e.find(function (e) {
+                                        return e.trim() === t;
+                                    });
+                                })
                                 : r - 1 < 0
                                 ? -1
                                 : r - 1;

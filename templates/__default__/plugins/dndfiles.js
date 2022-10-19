@@ -30,7 +30,7 @@
             param = $.extend(settings, options);
 
             // init vars
-    		var $input = $(this),
+            var $input = $(this),
                 extension,
                 fileSize,
                 fileName,
@@ -69,8 +69,8 @@
                 // init vars
     			var filesNbr = $input[0].files.length, // count number of files
                     totalWeight = 0,
-    				items = $input[0].files,
-    				item = '';
+                    items = $input[0].files,
+                    item = '';
 
                 if ($input.attr('multiple')) { // if multiple parameter is true
                     $input.closest('.dnd-area').find(param.filesNbr).append(filesNbr); // send number of files to the icon and...
@@ -119,19 +119,19 @@
                         $input.closest('.dnd-area').find('label .d-block').append('<span class="filename">'+fileName+'</span>', param.warningFileSize); // send the weight warning text
 
                     // set the appropriate html depending of the mime type
-    				if(fileType.indexOf('image/') === 0)
-			            item += '<li class="'+warningClass+'" data-file="'+fileName+'"><img src="' + URL.createObjectURL(items[i]) + '" /> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    				else if(fileType.indexOf('audio/') === 0)
-    					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    				else if(fileType.indexOf('video/') === 0)
-    					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    				else if(fileType.indexOf('application/zip') === 0)
-    					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file-archive"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    				else if(fileType.indexOf('application/pdf') === 0)
-    					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file-pdf"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    				else
-    					item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
-    			}
+                    if(fileType.indexOf('image/') === 0)
+                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><img src="' + URL.createObjectURL(items[i]) + '" /> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+                    else if(fileType.indexOf('audio/') === 0)
+                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+                    else if(fileType.indexOf('video/') === 0)
+                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+                    else if(fileType.indexOf('application/zip') === 0)
+                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file-archive"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+                    else if(fileType.indexOf('application/pdf') === 0)
+                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file-pdf"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+                    else
+                        item += '<li class="'+warningClass+'" data-file="'+fileName+'"><i class="far fa-file"></i> '+fileName+'&nbsp;<sup>'+formatBytes(fileSize)+'</sup><span class="fa fa-times-circle fa-lg close-item"></span></li>';
+                }
     			$($input).closest('.dnd-area').siblings(param.filesList).append(item); // send the list to the page (bellow the dropzone)
 
                 if($input.closest('form').find('button[type="submit"]').attr('disabled')) // if there's a wrong file
@@ -166,7 +166,7 @@
                     $input.closest('.dnd-area').find('.clear-list').css('display', 'none');
                 });
 
-    		})
+            })
         }
     });
 })(jQuery);
