@@ -28,7 +28,7 @@ class ContentMenu extends Menu
 
 	public function __construct($title)
 	{
-	   parent::__construct($title);
+		parent::__construct($title);
 	}
 
 	/**

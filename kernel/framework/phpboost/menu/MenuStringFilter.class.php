@@ -16,7 +16,7 @@ class MenuStringFilter extends Filter
 {
 	public function __construct($pattern)
 	{
-	   parent::__construct($pattern);
+		parent::__construct($pattern);
 	}
 
 	public function match()

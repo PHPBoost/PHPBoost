@@ -303,7 +303,7 @@ abstract class Menu
 	*/
 	public function set_filters($filters) { $this->filters = $filters; }
 
-	 /**
+	/**
 	* Sets the template of the menu
 	*
 	* @param Template $template Template of the menu

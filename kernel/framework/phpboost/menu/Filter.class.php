@@ -21,7 +21,7 @@ abstract class Filter
 	 */
     public function __construct($pattern)
     {
-       $this->pattern = $pattern;
+		$this->pattern = $pattern;
     }
 
 	function get_pattern()

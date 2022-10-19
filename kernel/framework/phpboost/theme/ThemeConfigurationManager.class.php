@@ -68,8 +68,7 @@ class ThemeConfigurationManager
 				return $desc_ini_file;
 			}
 		}
-		throw new IOException('Theme "' . $theme_id . '" desc.ini not found in' .
-			    '/' . $theme_id . '/lang/');
+		throw new IOException('Theme "' . $theme_id . '" desc.ini not found in' . '/' . $theme_id . '/lang/');
 	}
 }
 ?>

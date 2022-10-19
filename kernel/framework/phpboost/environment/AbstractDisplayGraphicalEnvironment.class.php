@@ -14,7 +14,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
- abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
+abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
 {
 	/**
 	 * @var SEOMetaData

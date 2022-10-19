@@ -34,7 +34,7 @@ class Lang
 
     public function get_identifier()
     {
-    	return TextHelper::substr($this->id, 1, 2);
+        return TextHelper::substr($this->id, 1, 2);
     }
 
     public function is_activated()
@@ -67,11 +67,11 @@ class Lang
 
     public function check_auth()
     {
-    	if ($this->id == UserAccountsConfig::load()->get_default_lang())
-    	{
-    		return true;
-    	}
-    	return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCES_LANG);
+        if ($this->id == UserAccountsConfig::load()->get_default_lang())
+        {
+            return true;
+        }
+        return AppContext::get_current_user()->check_auth($this->authorizations, self::ACCES_LANG);
     }
 }
 ?>

@@ -255,7 +255,7 @@ class UserService
 				return $lang['user.member'];
 			break;
 			case User::MODERATOR_LEVEL:
-			 	return $lang['user.moderator'];
+				return $lang['user.moderator'];
 			break;
 			case User::ADMINISTRATOR_LEVEL:
 				return $lang['user.administrator'];

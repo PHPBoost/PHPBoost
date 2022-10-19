@@ -96,7 +96,7 @@ class BreadCrumb
 		$this->array_links = array();
 	}
 
-	 /**
+	/**
 	 * Get all links of the list
 	 */
 	public function get_links()
