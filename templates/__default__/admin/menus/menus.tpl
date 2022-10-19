@@ -497,7 +497,7 @@
 					.addClass('success')
 					.html('<i class="far fa-fw fa-check-square"></i>' + ${escapejs(@menu.valid.position)});
 				if (performance.navigation.type == performance.navigation.TYPE_RELOAD) { // back to init status on reloading page
-				  	history.pushState('', '', ' ');
+					history.pushState('', '', ' ');
 					jQuery('#valid-position-menus button')
 						.removeClass('success')
 						.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.position)});

@@ -3,7 +3,7 @@
 		if(document.getElementById('login_mbr').value == "") {
 			alert("{@warning.username}");
 			return false;
-	    }
+		}
 		return true;
 	}
 
@@ -11,7 +11,7 @@
 		if(document.getElementById('name').value == "") {
 			alert("{@warning.title}");
 			return false;
-	    }
+		}
 		return true;
 	}
 

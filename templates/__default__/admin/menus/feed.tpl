@@ -1,24 +1,22 @@
 <script>
-<!--
-function CheckForm() {
-	if (jQuery('#name').val() == '') {
-		jQuery('#name').focus();
-		window.alert(${escapejs(@warning.title)});
-		return false;
+	function CheckForm() {
+		if (jQuery('#name').val() == '') {
+			jQuery('#name').focus();
+			window.alert(${escapejs(@warning.title)});
+			return false;
+		}
+		if (jQuery('#feed_url').val() == "null" || jQuery('#feed_url').val() == '') {
+			jQuery('#feed_url').focus();
+			window.alert(${escapejs(@menu.warning.feed)});
+			return false;
+		}
+		if (jQuery('#items_number').val() == '' || jQuery('#items_number').val() == 0) {
+			jQuery('#items_number').focus();
+			window.alert(${escapejs(@warning.items.number)});
+			return false;
+		}
+		return true;
 	}
-	if (jQuery('#feed_url').val() == "null" || jQuery('#feed_url').val() == '') {
-		jQuery('#feed_url').focus();
-		window.alert(${escapejs(@menu.warning.feed)});
-		return false;
-	}
-	if (jQuery('#items_number').val() == '' || jQuery('#items_number').val() == 0) {
-		jQuery('#items_number').focus();
-		window.alert(${escapejs(@warning.items.number)});
-		return false;
-	}
-	return true;
-}
--->
 </script>
 <div id="admin-contents">
 	<form action="feed.php" method="post" class="fieldset-content" onsubmit="return CheckForm();">
@@ -44,10 +42,10 @@ function CheckForm() {
 						# START modules #
 							<optgroup label="{modules.NAME}">
 							# START modules.feeds_urls #
-								 <option value="{modules.feeds_urls.URL}"{modules.feeds_urls.SELECTED}>
-								 	{modules.feeds_urls.SPACE} {modules.feeds_urls.NAME}
-								 	# IF modules.feeds_urls.FEED_NAME #({modules.feeds_urls.FEED_NAME})# ENDIF #
-							 	</option>
+								<option value="{modules.feeds_urls.URL}"{modules.feeds_urls.SELECTED}>
+									{modules.feeds_urls.SPACE} {modules.feeds_urls.NAME}
+									# IF modules.feeds_urls.FEED_NAME #({modules.feeds_urls.FEED_NAME})# ENDIF #
+								</option>
 							# END modules.feeds_urls #
 							</optgroup>
 							<option value="null" class="align-center">-----------------------------</option>

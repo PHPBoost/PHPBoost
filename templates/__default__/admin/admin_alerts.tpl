@@ -61,9 +61,9 @@
 		var filename = PATH_TO_ROOT + '/kernel/framework/ajax/admin_alerts.php?delete=' + id + '&token={TOKEN}';
 
 		if(window.XMLHttpRequest) // Firefox
-		   xhr_object = new XMLHttpRequest();
+			xhr_object = new XMLHttpRequest();
 		else if(window.ActiveXObject) // Internet Explorer
-		   xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+			xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
 		else // XMLHttpRequest non support� par le navigateur
 			return;
 
