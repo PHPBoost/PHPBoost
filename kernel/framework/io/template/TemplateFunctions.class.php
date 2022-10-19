@@ -89,12 +89,12 @@ class TemplateFunctions
      */
     public function escapejscharacters($string)
     {
-    	return strtr(Url::encode_rewrite($string), '-', '_');
+        return strtr(Url::encode_rewrite($string), '-', '_');
     }
 
     public function set($string, array $parameters)
     {
-    	return StringVars::replace_vars($string, $parameters);
+        return StringVars::replace_vars($string, $parameters);
     }
 
 	public function relative_url(Url $url)

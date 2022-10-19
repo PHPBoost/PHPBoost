@@ -203,9 +203,9 @@ class PostgreSqlPlatform extends AbstractPlatform
 	 * @return string           parsed boolean value
 	 */
 	/*public function parseBoolean($value)
-	 {
-	 return $value;
-	 }*/
+	{
+	return $value;
+	}*/
 
 	/**
 	 * Whether the platform supports sequences.
@@ -274,7 +274,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 		return "SELECT
                     relname
                 FROM
-                   pg_class
+					pg_class
                 WHERE relkind = 'S' AND relnamespace IN
                     (SELECT oid FROM pg_namespace
                         WHERE nspname NOT LIKE 'pg_%' AND nspname != 'information_schema')";
@@ -307,8 +307,8 @@ class PostgreSqlPlatform extends AbstractPlatform
 	{
 		$sql = 'SELECT trg.tgname AS trigger_name
                     FROM pg_trigger trg,
-                         pg_class tbl
-                   WHERE trg.tgrelid = tbl.oid';
+						pg_class tbl
+					WHERE trg.tgrelid = tbl.oid';
 
 		if ( ! is_null($table)) {
 			$sql .= " AND tbl.relname = " . $table;
@@ -325,15 +325,15 @@ class PostgreSqlPlatform extends AbstractPlatform
 	public function getListTableForeignKeysSql($table, $database = null)
 	{
 		return "SELECT pg_catalog.pg_get_constraintdef(oid, true) as condef
-                  FROM pg_catalog.pg_constraint r
-                  WHERE r.conrelid =
-                  (
-                      SELECT c.oid
-                      FROM pg_catalog.pg_class c
-                      LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
-                      WHERE c.relname = '" . $table . "' AND pg_catalog.pg_table_is_visible(c.oid)
-                  )
-                  AND r.contype = 'f'";
+				FROM pg_catalog.pg_constraint r
+				WHERE r.conrelid =
+				(
+					SELECT c.oid
+					FROM pg_catalog.pg_class c
+					LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+					WHERE c.relname = '" . $table . "' AND pg_catalog.pg_table_is_visible(c.oid)
+				)
+				AND r.contype = 'f'";
 	}
 
 	public function getCreateViewSql($name, $sql)
@@ -390,14 +390,14 @@ class PostgreSqlPlatform extends AbstractPlatform
                     format_type(a.atttypid, a.atttypmod) AS complete_type,
                     a.attnotnull AS isnotnull,
                     (SELECT 't'
-                     FROM pg_index
-                     WHERE c.oid = pg_index.indrelid
+						FROM pg_index
+						WHERE c.oid = pg_index.indrelid
                         AND pg_index.indkey[0] = a.attnum
                         AND pg_index.indisprimary = 't'
                     ) AS pri,
                     (SELECT pg_attrdef.adsrc
-                     FROM pg_attrdef
-                     WHERE c.oid = pg_attrdef.adrelid
+						FROM pg_attrdef
+						WHERE c.oid = pg_attrdef.adrelid
                         AND pg_attrdef.adnum=a.attnum
                     ) AS default
                     FROM pg_attribute a, pg_class c, pg_type t

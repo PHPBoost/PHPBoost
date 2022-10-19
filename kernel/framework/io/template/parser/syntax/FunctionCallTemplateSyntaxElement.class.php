@@ -46,15 +46,15 @@ class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     private function process_expression_content()
     {
-    	try
-    	{
-	        $this->parse_elt(new FunctionTemplateSyntaxElement());
-    	}
-    	catch (InvalidTemplateFunctionCallException $ex)
-    	{
-    		$encountered = $this->encountered();
+        try
+        {
+            $this->parse_elt(new FunctionTemplateSyntaxElement());
+        }
+        catch (InvalidTemplateFunctionCallException $ex)
+        {
+            $encountered = $this->encountered();
             throw new TemplateRenderingException('Invalid function call, expecting #{aFunction()} but was ' . $encountered, $this->input);
-    	}
+        }
     }
 
     private function missing_expression_end()
@@ -64,10 +64,10 @@ class FunctionCallTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     private function encountered()
     {
-    	$this->input->consume_next('.*\}', 'U');
+        $this->input->consume_next('.*\}', 'U');
         $end_pos = $this->input->tell();
         $length = $end_pos - $this->begin_pos;
-    	return $this->input->to_string(-$length, $length + 1);
+        return $this->input->to_string(-$length, $length + 1);
     }
 }
 ?>

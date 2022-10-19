@@ -24,14 +24,14 @@ class I18NMessages
     {
         if (is_string($resources))
         {
-        	$this->add_resource($resources);
+            $this->add_resource($resources);
         }
         elseif (is_array($resources))
         {
-        	foreach ($resources as $resource)
-        	{
-        		$this->add_resource($resource);
-        	}
+            foreach ($resources as $resource)
+            {
+                $this->add_resource($resource);
+            }
         }
     }
 
@@ -55,14 +55,14 @@ class I18NMessages
 
     public function add_language_maps(array $lang)
     {
-    	if (empty($this->messages))
-    	{
-    		$this->messages = $lang;
-    	}
-    	else
-    	{
-    		$this->messages = array_merge($lang, $this->messages);
-    	}
+        if (empty($this->messages))
+        {
+            $this->messages = $lang;
+        }
+        else
+        {
+            $this->messages = array_merge($lang, $this->messages);
+        }
     }
 
     public function i18n($key, $parameters)
@@ -84,7 +84,7 @@ class I18NMessages
     {
         if (!empty($parameters))
         {
-        	StringVars::replace_vars($this->messages[$key], $parameters);
+            StringVars::replace_vars($this->messages[$key], $parameters);
         }
         return $this->messages[$key];
     }

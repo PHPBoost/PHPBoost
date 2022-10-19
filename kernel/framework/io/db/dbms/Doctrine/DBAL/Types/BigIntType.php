@@ -24,7 +24,7 @@ class BigIntType extends Type
 
     public function getTypeCode()
     {
-    	return self::CODE_INT;
+        return self::CODE_INT;
     }
 }
 

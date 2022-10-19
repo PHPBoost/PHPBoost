@@ -79,17 +79,17 @@ class MySQLDBMSUtils implements DBMSUtils
 		foreach ($results as $table)
 		{
 			$tables[$table['Name']] = array(
-			  'name' => $table['Name'],
-			  'engine' => $table['Engine'],
-			  'row_format' => $table['Row_format'],
-			  'rows' => $table['Rows'],
-			  'data_length' => $table['Data_length'],
-			  'index_length' => $table['Index_length'],
-			  'data_free' => $table['Data_free'],
-			  'auto_increment' => $table['Auto_increment'],
-			  'create_time' => $table['Create_time'],
-			  'update_time' => $table['Update_time'],
-			  'collation' => $table['Collation'],
+				'name' => $table['Name'],
+				'engine' => $table['Engine'],
+				'row_format' => $table['Row_format'],
+				'rows' => $table['Rows'],
+				'data_length' => $table['Data_length'],
+				'index_length' => $table['Index_length'],
+				'data_free' => $table['Data_free'],
+				'auto_increment' => $table['Auto_increment'],
+				'create_time' => $table['Create_time'],
+				'update_time' => $table['Update_time'],
+				'collation' => $table['Collation'],
 			);
 
 		}

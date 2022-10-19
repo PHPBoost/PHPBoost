@@ -747,10 +747,10 @@ class MySqlPlatform extends AbstractPlatform
     /** @override */
     protected function _getCommonIntegerTypeDeclarationSql(array $columnDef)
     {
-    	$length = '';
-    	if (isset($columnDef['length'])) {
-    		$length = '(' . $columnDef['length'] . ')';
-    	}
+        $length = '';
+        if (isset($columnDef['length'])) {
+            $length = '(' . $columnDef['length'] . ')';
+        }
         $autoinc = '';
         if ( ! empty($columnDef['autoincrement'])) {
             $autoinc = ' AUTO_INCREMENT';
@@ -777,13 +777,13 @@ class MySqlPlatform extends AbstractPlatform
             switch (TextHelper::strtolower($definition['type'])) {
                 case 'fulltext':
                     $type = 'FULLTEXT KEY';
-               		break;
+                    break;
                 case 'unique':
                     $type = 'UNIQUE INDEX';
-                	break;
+                    break;
                 case 'key':
-                	$type = 'KEY';
-                	break;
+                    $type = 'KEY';
+                    break;
                 default:
                     throw DoctrineException::invalidIndexType($definition['type']);
             }

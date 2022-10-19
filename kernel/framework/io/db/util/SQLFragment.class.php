@@ -42,10 +42,10 @@ class SQLFragment
      */
     public function add_parameters_to_map(array & $parameters)
     {
-    	foreach ($this->parameters as $parameter_name => $parameter_value)
-    	{
-    		$parameters[$parameter_name] = $parameter_value;
-    	}
+		foreach ($this->parameters as $parameter_name => $parameter_value)
+		{
+			$parameters[$parameter_name] = $parameter_value;
+		}
     }
 }
 ?>

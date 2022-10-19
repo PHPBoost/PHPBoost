@@ -46,7 +46,7 @@ class DefaultTemplateRenderer implements TemplateRenderer
      */
     public function add_lang(array $lang)
     {
-    	$this->functions->add_language_maps($lang);
+		$this->functions->add_language_maps($lang);
     }
 
 	private function parse(TemplateLoader $loader, TemplateData $data)

@@ -40,7 +40,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		{
 			throw new TemplateRenderingException('Variable {' . $loop . '.' . $var .
                 '} is outsite of loop "' . $loop . '" scope.' . "\n" . 'loops scopes: ' .
-			    '[' . implode(', ', $this->context->loops_scopes()) . ']', $this->input);
+				'[' . implode(', ', $this->context->loops_scopes()) . ']', $this->input);
 		}
 	}
 }

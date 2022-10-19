@@ -202,8 +202,7 @@ class Upload
 		if (!empty($regexp))
 		{
 			//Valide, sinon supprimé
-			if (preg_match($regexp, $this->original_filename) && TextHelper::strpos($this->original_filename, '.php') === false
-				 && TextHelper::strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimé
+			if (preg_match($regexp, $this->original_filename) && TextHelper::strpos($this->original_filename, '.php') === false && TextHelper::strpos($this->original_filename, '.phtml') === false) {//Valide, sinon supprimé
 				return true;
 			}
 			return false;

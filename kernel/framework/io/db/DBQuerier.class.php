@@ -81,8 +81,7 @@ class DBQuerier implements SQLQuerier
 	public function insert($table_name, array $columns)
 	{
 		$columns_names = array_keys($columns);
-		$query = 'INSERT INTO ' . $table_name . ' (`' . implode('`, `', $columns_names) .
-		  '`) VALUES (:' . implode(', :', $columns_names) . ');';
+		$query = 'INSERT INTO ' . $table_name . ' (`' . implode('`, `', $columns_names) . '`) VALUES (:' . implode(', :', $columns_names) . ');';
 		return $this->querier->inject($query, $columns);
 	}
 

@@ -28,7 +28,7 @@ class SmallIntType
 
     public function getTypeCode()
     {
-    	return self::CODE_INT;
+        return self::CODE_INT;
     }
 }
 

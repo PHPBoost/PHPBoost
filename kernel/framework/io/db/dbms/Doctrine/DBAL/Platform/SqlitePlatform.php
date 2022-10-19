@@ -381,8 +381,8 @@ class SqlitePlatform extends AbstractPlatform
     public function getListTablesSql()
     {
         return "SELECT name FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' "
-             . "UNION ALL SELECT name FROM sqlite_temp_master "
-             . "WHERE type = 'table' ORDER BY name";
+            . "UNION ALL SELECT name FROM sqlite_temp_master "
+            . "WHERE type = 'table' ORDER BY name";
     }
 
     public function getListTableViews()

@@ -19,11 +19,11 @@ class ParametersTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 			$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
             if ($input->consume_next('\s*,\s*'))
             {
-            	$output->write(', ');
+                $output->write(', ');
             }
             else if (!$input->assert_next('\s*\)\s*'))
             {
-            	throw new TemplateRenderingException('invalid function call, missing "," or ")"', $input);
+                throw new TemplateRenderingException('invalid function call, missing "," or ")"', $input);
             }
 		}
 	}

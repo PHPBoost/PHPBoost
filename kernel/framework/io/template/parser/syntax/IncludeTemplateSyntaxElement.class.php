@@ -41,14 +41,14 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         }
         else
         {
-        	throw new TemplateRenderingException('invalid include template name', $this->input);
+            throw new TemplateRenderingException('invalid include template name', $this->input);
         }
         $this->output->write(TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
 	private function write_includefile(array $matches)
     {
-    	$this->output->write(self::$subtpl . '=new FileTemplate(\'' . $matches['file'] . '\');');
+        $this->output->write(self::$subtpl . '=new FileTemplate(\'' . $matches['file'] . '\');');
         $this->output->write(self::$subtpl . '->set_data(' . TemplateSyntaxElement::DATA . ');');
         $this->output->write(TemplateSyntaxElement::RESULT . '.=' . self::$subtpl . '->render();');
     }
@@ -69,7 +69,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     private function write_block_subtemplate_initialization($name, $block)
     {
-    	$blocks = explode('.', $block);
+        $blocks = explode('.', $block);
         $block_var = '$_tmp_' . array_pop($blocks);
         $this->output->write(self::$subtpl . '=' . TemplateSyntaxElement::DATA . '->get_from_list(\'' . $name . '\', ' . $block_var . ');');
     }

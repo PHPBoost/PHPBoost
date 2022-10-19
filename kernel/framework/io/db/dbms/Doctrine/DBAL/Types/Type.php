@@ -41,7 +41,7 @@ abstract class Type
         'time' => 'TimeType',
         'decimal' => 'DecimalType',
         'double' => 'DoubleType',
-    	'float' => 'FloatType',
+        'float' => 'FloatType',
     );
 
     /* Prevent instantiation and force use of the factory method. */

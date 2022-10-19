@@ -70,7 +70,7 @@ class CSSCacheManager
 		$url_pattern     = '(([^\\\\\'", \(\)]*(\\\\.)?)+)';
 		$urlfunc_pattern = 'url\(\s*[\'"]?' . $url_pattern . '[\'"]?\s*\)';
 		$pattern         = '/(' .
-			 '(@import\s*[\'"]' . $url_pattern     . '[\'"])' .
+			'(@import\s*[\'"]' . $url_pattern     . '[\'"])' .
 			'|(@import\s*'      . $urlfunc_pattern . ')'      .
 			'|('                . $urlfunc_pattern . ')'      .  ')/iu';
 		if ( !preg_match_all( $pattern, $text, $matches ) )

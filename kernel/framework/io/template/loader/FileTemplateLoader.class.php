@@ -135,13 +135,13 @@ class FileTemplateLoader implements TemplateLoader
 		}
 
 		/*
-		 Samples :
-		 $this->filepath = /forum/forum_topic.tpl
-		 $this->filepath = forum/forum_topic.tpl
-		 $module = forum
-		 $filename = forum_topic.tpl
-		 $file = forum_topic.tpl
-		 */
+		Samples :
+		$this->filepath = /forum/forum_topic.tpl
+		$this->filepath = forum/forum_topic.tpl
+		$module = forum
+		$filename = forum_topic.tpl
+		$file = forum_topic.tpl
+		*/
 
 		$i = TextHelper::strpos($this->filepath, '/');
 		$this->module = TextHelper::substr($this->filepath, 0, $i);

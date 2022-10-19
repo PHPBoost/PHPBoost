@@ -99,8 +99,7 @@ class DoctrineException extends Exception
         } else {
             $dumper  = 'string_var_export';
             $message = TextHelper::strtolower(preg_replace('~(?<=\\w)([A-Z])~u', '_$1', $method));
-            $message = TextHelper::ucfirst(str_replace('_', ' ', $message))
-                     . ' (' . implode(', ', array_map($dumper, $arguments)) . ')';
+            $message = TextHelper::ucfirst(str_replace('_', ' ', $message)) . ' (' . implode(', ', array_map($dumper, $arguments)) . ')';
         }
 
         return new $class($message, $innerException);
@@ -136,11 +135,11 @@ class DoctrineException extends Exception
 
     public static function unknownColumnType($type)
     {
-    	return new DoctrineException('Unknown column type "' . $type . '"');
+        return new DoctrineException('Unknown column type "' . $type . '"');
     }
 
     public static function typeExists($type)
     {
-    	return new DoctrineException('Unknown column type "' . $type . '"');
+        return new DoctrineException('Unknown column type "' . $type . '"');
     }
 }
