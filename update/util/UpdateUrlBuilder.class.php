@@ -15,7 +15,7 @@ class UpdateUrlBuilder
 
     public static function set_locale($locale)
     {
-    	self::$locale = $locale;
+        self::$locale = $locale;
     }
 
     /**
@@ -72,10 +72,10 @@ class UpdateUrlBuilder
      */
     private static function url($path)
     {
-    	if (self::$locale  != UpdateController::DEFAULT_LOCALE)
-    	{
-    		$path .= '?lang=' . self::$locale;
-    	}
+        if (self::$locale  != UpdateController::DEFAULT_LOCALE)
+        {
+            $path .= '?lang=' . self::$locale;
+        }
 		return DispatchManager::get_url(self::$dispatcher, $path, true);
     }
 }

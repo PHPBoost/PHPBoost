@@ -110,9 +110,9 @@ class UpdateServerConfigController extends UpdateController
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
 		{
 			$folders[] = array(
-			   'NAME' => $folder_name,
-			   'EXISTS' => $folder->exists(),
-			   'IS_WRITABLE' => $folder->is_writable(),
+				'NAME' => $folder_name,
+				'EXISTS' => $folder->exists(),
+				'IS_WRITABLE' => $folder->is_writable(),
 			);
 		}
 		$this->view->put('folder', $folders);

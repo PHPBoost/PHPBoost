@@ -10,7 +10,6 @@
     background-color: rgba(var(--main-rgb-t), 0.5);
 }
 
-.row-next .cssmenu-title {}
 .row-success .cssmenu-title {
 	border-color: var(--success-tone);
 	background-color: rgba(var(--main-rgb-t), 0.5);
