@@ -73,13 +73,11 @@ class DispatchManager
 			{
 				$exploded = explode('?', $url, 2);
 				$exploded[1] = str_replace('?', '&', $exploded[1]);
-				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME .
-				    '=/' . $exploded[0] . '&' . $exploded[1]);
+				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME . '=/' . $exploded[0] . '&' . $exploded[1]);
 			}
 			else
 			{
-				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME .
-				    '=/' . $url);
+				return new Url($dispatcher . '?' . Dispatcher::URL_PARAM_NAME . '=/' . $url);
 			}
 		}
 	}

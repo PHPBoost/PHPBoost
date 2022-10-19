@@ -132,7 +132,7 @@ abstract class SQLDAO implements DAO
 
 	public function delete_all($where = DAO::WHERE_ALL, array $parameters = array())
     {
-    	$this->querier->delete($this->table, $where, $parameters);
+		$this->querier->delete($this->table, $where, $parameters);
     }
 
     public function count($where = DAO::WHERE_ALL, array $parameters = array())
@@ -194,8 +194,7 @@ abstract class SQLDAO implements DAO
 
 		foreach ($this->model->get_fields() as $field)
 		{
-			$this->fields_mapping[$field->get_property_name()] = $this->table .
-			    '.' . $field->get_db_field_name();
+			$this->fields_mapping[$field->get_property_name()] = $this->table . '.' . $field->get_db_field_name();
 		}
 	}
 
@@ -229,8 +228,7 @@ abstract class SQLDAO implements DAO
 		if ($this->find_by_id_query === null)
 		{
 			$this->compute_find_by_criteria_query();
-			$this->find_by_id_query = $this->find_by_criteria_query .
-			    'WHERE ' . $this->pk_db_field . '=:id;';
+			$this->find_by_id_query = $this->find_by_criteria_query . 'WHERE ' . $this->pk_db_field . '=:id;';
 		}
 	}
 
