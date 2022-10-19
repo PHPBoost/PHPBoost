@@ -15,7 +15,7 @@ class FormFieldsetHidden extends AbstractFormFieldset
 
     public function __construct($id, $options = array())
     {
-    	parent::__construct($id, $options);
+        parent::__construct($id, $options);
     }
 
     /**

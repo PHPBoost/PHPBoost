@@ -34,40 +34,40 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 		$view->add_lang(LangLoader::get_all_langs());
         $this->assign_common_template_variables($template);
 
-    	if (empty($this->file))
+		if (empty($this->file))
 		{
 			throw new Exception('Add file options containing file url');
 		}
 
-        $i = 0;
-   		foreach ($this->get_value() as $value)
+		$i = 0;
+		foreach ($this->get_value() as $value)
 		{
-	        $view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
-	        	'VALUE' => $value
-	        ));
-	        $i++;
+				'VALUE' => $value
+			));
+			$i++;
 		}
 
 		if ($i == 0)
 		{
 			$view->assign_block_vars('fieldelements', array(
 				'ID' => $i,
-	        	'VALUE' => ''
-	        ));
+				'VALUE' => ''
+			));
 		}
 
-		 $view->put_all(array(
+		$view->put_all(array(
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
-        	'MAX_INPUT' => $this->max_input,
-		 	'FIELDS_NUMBER' => $i == 0 ? 1 : $i,
-		 	'SIZE' => $this->size,
-		 	'METHOD' =>  $this->method,
+			'MAX_INPUT' => $this->max_input,
+			'FIELDS_NUMBER' => $i == 0 ? 1 : $i,
+			'SIZE' => $this->size,
+			'METHOD' =>  $this->method,
 			'NAME_PARAMETER' =>  $this->name_parameter,
-		 	'FILE' =>  $this->file,
+			'FILE' =>  $this->file,
         ));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -80,7 +80,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 	public function retrieve_value()
     {
 		$request = AppContext::get_request();
-	    $values = array();
+		$values = array();
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$id = 'field_' . $this->get_html_id() . '_' . $i;
@@ -99,7 +99,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
             $attribute = TextHelper::strtolower($attribute);
             switch ($attribute)
             {
-				 case 'max_input':
+				case 'max_input':
                     $this->max_input = $value;
                     unset($field_options['max_input']);
                     break;
@@ -124,7 +124,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
         parent::compute_options($field_options);
     }
 
- 	protected function get_default_template()
+	protected function get_default_template()
     {
         return new FileTemplate('framework/builder/form/FormField.tpl');
     }

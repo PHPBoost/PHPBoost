@@ -24,7 +24,7 @@ class FormFieldMemberSanction extends FormFieldSimpleSelectChoice
      */
     public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
     {
-    	$this->timestamp = $value;
+		$this->timestamp = $value;
         parent::__construct($id, $label, $this->get_time_value(), $this->generate_options(), $field_options, $constraints);
     }
 

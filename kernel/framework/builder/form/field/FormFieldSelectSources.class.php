@@ -98,7 +98,7 @@ class FormFieldSelectSources extends AbstractFormField
 			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
-				 case 'max_input':
+				case 'max_input':
 					$this->max_input = $value;
 					unset($field_options['max_input']);
 					break;

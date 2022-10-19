@@ -26,11 +26,11 @@ class FormFieldPossibleValues extends AbstractFormField
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		if ($this->is_required())
 		{
-		  $this->add_constraint(new FormFieldConstraintPossibleValuesMin());
-		  $this->add_constraint(new FormFieldConstraintPossibleValuesMax());
+			$this->add_constraint(new FormFieldConstraintPossibleValuesMin());
+			$this->add_constraint(new FormFieldConstraintPossibleValuesMax());
 		}
 		if ($this->unique_input_value)
-		  $this->add_constraint(new FormFieldConstraintPossibleValuesUnique());
+			$this->add_constraint(new FormFieldConstraintPossibleValuesUnique());
 
 	}
 
@@ -88,7 +88,7 @@ class FormFieldPossibleValues extends AbstractFormField
 			'MIN_INPUT'     => $this->min_input,
 			'MAX_INPUT'     => $this->max_input,
 			'PLACEHOLDER'   => $this->placeholder ? $this->placeholder : $lang['form.name'],
-		 	'FIELDS_NUMBER' => $i,
+			'FIELDS_NUMBER' => $i,
 		));
 
 		$template->assign_block_vars('fieldelements', array(
@@ -128,11 +128,11 @@ class FormFieldPossibleValues extends AbstractFormField
 			$attribute = TextHelper::strtolower($attribute);
 			switch ($attribute)
 			{
-			 	case 'min_input':
+				case 'min_input':
 					$this->min_input = $value;
 					unset($field_options['min_input']);
 					break;
-			 	case 'max_input':
+				case 'max_input':
 					$this->max_input = $value;
 					unset($field_options['max_input']);
 					break;
@@ -140,11 +140,11 @@ class FormFieldPossibleValues extends AbstractFormField
 					$this->display_default = (bool)$value;
 					unset($field_options['display_default']);
 					break;
-			 	case 'placeholder':
+				case 'placeholder':
 					$this->placeholder = $value;
 					unset($field_options['placeholder']);
 					break;
-			 	case 'unique_input_value':
+				case 'unique_input_value':
 					$this->unique_input_value = (bool)$value;
 					$this->unique_input_value ? $this->add_constraint(new FormFieldConstraintPossibleValuesUnique()) : '';
 					unset($field_options['unique_input_value']);
@@ -154,20 +154,20 @@ class FormFieldPossibleValues extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-  public function get_min_input()
-  {
-    return $this->min_input;
-  }
+	public function get_min_input()
+	{
+		return $this->min_input;
+	}
 
-  public function get_max_input()
-  {
-    return $this->max_input;
-  }
+	public function get_max_input()
+	{
+		return $this->max_input;
+	}
 
-  public function get_unique_input_value()
-  {
-    return $this->unique_input_value;
-  }
+	public function get_unique_input_value()
+	{
+		return $this->unique_input_value;
+	}
 
 	protected function get_default_template()
 	{

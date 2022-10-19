@@ -23,7 +23,7 @@ class FormFieldAjaxSearchUserAutoComplete extends FormFieldAjaxCompleter
 	// Show results if no suggestion
 	protected $no_suggestion_notice = 'true';
 
-	 /**
+	/**
 	 * Constructs a FormFieldAjaxCompleter.
 	 * It has these options in addition to the AbstractFormField ones:
 	 * <ul>
