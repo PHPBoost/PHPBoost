@@ -38,16 +38,16 @@ class HTMLTableapprovedSQLFilter extends HTMLTableCheckboxFilter implements SQLF
 	/**
 	 * {@inheritdoc}
 	 */
-	  public function is_value_allowed($value)
+	public function is_value_allowed($value)
     {
         if (!is_numeric($value))
             return false;
         else
         {
-          $this->parameter_value = empty($value) ? 1 : 0;
-          $this->set_value($value);
-          
-          return true;
+			$this->parameter_value = empty($value) ? 1 : 0;
+			$this->set_value($value);
+			
+			return true;
         }
     }
 

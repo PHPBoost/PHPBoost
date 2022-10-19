@@ -8,12 +8,12 @@
 	width:auto;
 	height:3px;
 	overflow:hidden;
-	background-color:rgb(1,72,119);
+	background-color:var(--logo-dark);
 	margin:auto;
 }
 
 .pollmini_loadingprogress{
-	background-color:rgb(2,125,184);
+	background-color:var(--logo-tone);
 	margin-top:0;
 	margin-left:-300px;
 	animation-name:bounce_pollmini_loadingprogress;
@@ -23,8 +23,6 @@
 	width:300px;
 	height:3px;
 }
-
-
 
 @keyframes bounce_pollmini_loadingprogress{
 	0%{

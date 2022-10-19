@@ -2,10 +2,10 @@
 	# IF NOT IS_USER_CONNECTED #
 		# IF C_DISPLAYING_POLLS_MAP #
 			<div class="cell-content">
-			  	# IF C_MULTIPLE_POLL_ITEMS #
-				  	{@poll.mini.participate.multiple}
+				# IF C_MULTIPLE_POLL_ITEMS #
+					{@poll.mini.participate.multiple}
 				# ELSE #
-				  	{@poll.mini.participate.single}
+					{@poll.mini.participate.single}
 				# ENDIF #
 			</div>
 			<div class="cell-list">
@@ -56,9 +56,9 @@
 					var previous_id = parseInt($("#poll_vote_form_previous").text());
 
 				$.ajax({
-				  beforeSend : function(){
-				    $("#pollmini_loading").css("visibility", "visible");
-				  },
+					beforeSend : function(){
+						$("#pollmini_loading").css("visibility", "visible");
+					},
 					url: '${relative_url(PollUrlBuilder::ajax_send())}',
 					type: 'post',
 					data: {
@@ -84,9 +84,9 @@
 					var next_id = parseInt($("#poll_vote_form_next").text());
 
 				$.ajax({
-				  beforeSend : function(){
-				    $("#pollmini_loading").css("visibility", "visible");
-				  },
+					beforeSend : function(){
+						$("#pollmini_loading").css("visibility", "visible");
+					},
 					url: '${relative_url(PollUrlBuilder::ajax_send())}',
 					type: 'post',
 					data: {
@@ -110,8 +110,8 @@
 		</script>
 		# INCLUDE POLL_MINI_MSG #
 		<div id="pollmini_loading">
-		    <div id="pollmini_loading_1" class="pollmini_loadingprogress"></div>
-	    </div>
+			<div id="pollmini_loading_1" class="pollmini_loadingprogress"></div>
+		</div>
 		# IF C_ENABLED_COUNTDOWN #
 			<div class="cell-content"># INCLUDE COUNTDOWN #</div>
 		# ENDIF #

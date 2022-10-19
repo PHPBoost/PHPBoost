@@ -23,16 +23,16 @@ $lang['items'][] = array(
 	'item.title'   => 'Critique du site',
 	'item.additional_fields.question' => 'Comment trouvez-vous notre site ?',
 	'item.additional_fields.answers_type' => 1,
-  	'item.additional_fields.answers' => TextHelper::serialize(array(
-	    'Supersite'    => array('is_default' => false, 'title' => 'Super site'),
-	    'Pasmal'       => array('is_default' => false, 'title' => 'Pas mal'),
-	    'Plutôtmoyen'  => array('is_default' => false, 'title' => 'Plutôt moyen'),
-	    'Bof'          => array('is_default' => false, 'title' => 'Bof')
+	'item.additional_fields.answers' => TextHelper::serialize(array(
+		'Supersite'    => array('is_default' => false, 'title' => 'Super site'),
+		'Pasmal'       => array('is_default' => false, 'title' => 'Pas mal'),
+		'Plutôtmoyen'  => array('is_default' => false, 'title' => 'Plutôt moyen'),
+		'Bof'          => array('is_default' => false, 'title' => 'Bof')
 	)),
-  	'item.additional_fields.votes' => TextHelper::serialize(array('Super site' => 15, 'Pas mal' => 3, 'Plutôt moyen' => 6, 'Bof' => 0)),
-  	'item.additional_fields.votes_number' => 24,
-  	'item.additional_fields.close_poll' => 0,
-  	'item.additional_fields.countdown_display' => 0,
+	'item.additional_fields.votes' => TextHelper::serialize(array('Super site' => 15, 'Pas mal' => 3, 'Plutôt moyen' => 6, 'Bof' => 0)),
+	'item.additional_fields.votes_number' => 24,
+	'item.additional_fields.close_poll' => 0,
+	'item.additional_fields.countdown_display' => 0,
 
 	'item.content' => '',
 	'item.summary' => ''

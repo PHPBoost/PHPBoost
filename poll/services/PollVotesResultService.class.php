@@ -17,7 +17,7 @@ class PollVotesResultService
 			$tpl->add_lang(LangLoader::get_all_langs('poll'));
 
 			$tpl->put_all(array(
-				'C_HAS_VOTES'        => $item->has_votes(),
+				'C_HAS_VOTES' => $item->has_votes(),
 				'TOTAL_VOTES_NUMBER' => $item->get_votes_number()
 			));
 

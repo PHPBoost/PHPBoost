@@ -210,7 +210,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$fieldset->add_field(new FormFieldHidden('item_id', $item->get_id()));
 
 		if (!empty($previous_item_id))
-		  $vote_form->add_button(new FormButtonButtonCssImg($previous_item_id, 'poll_mini_previous_nav(); return false;', 'previous', 'fas fa-arrow-alt-circle-left', '', 'previous', '', 'previous_id'));
+			$vote_form->add_button(new FormButtonButtonCssImg($previous_item_id, 'poll_mini_previous_nav(); return false;', 'previous', 'fas fa-arrow-alt-circle-left', '', 'previous', '', 'previous_id'));
 
 		$submit_button = new FormButtonSubmit($this->lang['poll.vote.submit'], 'submit', 'poll_submit(); return false;');
 		$vote_form->add_button($submit_button);

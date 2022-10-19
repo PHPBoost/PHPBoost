@@ -80,7 +80,7 @@ class AjaxPollMiniController extends AbstractController
 
 	protected function init(HTTPRequestCustom $request)
 	{
-	  $this->request = $request;
+		$this->request = $request;
 	}
 
 	private function save_vote()

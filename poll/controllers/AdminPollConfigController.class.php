@@ -45,8 +45,8 @@ class AdminPollConfigController extends DefaultConfigurationController
 	protected function add_additional_actions_authorization()
 	{
 		return array(
-		  new ActionAuthorization($this->lang['poll.config.vote.authorization'], PollConfig::VOTE_AUTHORIZATIONS),
-		  new ActionAuthorization($this->lang['poll.config.votes.result.authorization'], PollConfig::DISPLAY_VOTES_RESULT_AUTHORIZATIONS
+			new ActionAuthorization($this->lang['poll.config.vote.authorization'], PollConfig::VOTE_AUTHORIZATIONS),
+			new ActionAuthorization($this->lang['poll.config.votes.result.authorization'], PollConfig::DISPLAY_VOTES_RESULT_AUTHORIZATIONS
 		));
 	}
 

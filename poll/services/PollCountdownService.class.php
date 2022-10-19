@@ -20,8 +20,8 @@ class PollCountdownService
 			$end = $item->get_publishing_end_date();
 
 			$view->put_all(array(
-				'PUBLISHING_END_DATE' 		=> $end->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) . ' ' . $end->get_date_time()->format('H:i:s'),
-				'C_COUNTDOWN_WITH_S' 		=> ((string) $item->get_countdown_display()) == $item::COUNTDOWN_DISPLAY_WITH_S
+				'C_COUNTDOWN_WITH_S' => ((string) $item->get_countdown_display()) == $item::COUNTDOWN_DISPLAY_WITH_S,
+				'PUBLISHING_END_DATE' => $end->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) . ' ' . $end->get_date_time()->format('H:i:s')
 			));
 		}
 

@@ -128,7 +128,7 @@ class PollManager extends ItemsManager
 					array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
 			}
         }
-  
+
 	public function check_user_by_cookie(HTTPRequestCustom $request, int $item_id)
 	{
 		$cookie_name = self::$module->get_configuration()->get_configuration_parameters()->get_cookie_name();
@@ -140,7 +140,7 @@ class PollManager extends ItemsManager
 		else
 			return false;
 	}
-	
+
 	public function set_cookie(int $item_id)
 	{
 		$request = AppContext::get_request();
