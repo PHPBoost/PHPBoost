@@ -153,7 +153,7 @@ class ErrorHandler
 		echo '<div class="message-helper bgc ' . $this->errclass . ' error-handler">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
                 <em>' . $this->get_stackstrace_as_string(6) . '</em>
-              </div>';
+			</div>';
 	}
 
 	protected function display_fatal()
@@ -230,7 +230,7 @@ class ErrorHandler
                 return 'error';
             default: //Erreur inconnue.
                 return 'question';
-         }
+		}
 	}
 }
 ?>

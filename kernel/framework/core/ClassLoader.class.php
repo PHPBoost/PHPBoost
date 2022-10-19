@@ -148,8 +148,8 @@ class ClassLoader
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		try
 		{
-		 	$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
-		 	$file->close();
+			$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
+			$file->close();
 		}
 		catch (IOException $ex)
 		{
@@ -159,8 +159,8 @@ class ClassLoader
 		$file = new File(PATH_TO_ROOT . self::$modules_cache_file);
 		try
 		{
-		 	$file->write('<?php self::$modules_classlist = ' . var_export(self::$modules_classlist, true) . '; ?>');
-		 	$file->close();
+			$file->write('<?php self::$modules_classlist = ' . var_export(self::$modules_classlist, true) . '; ?>');
+			$file->close();
 		}
 		catch (IOException $ex)
 		{
