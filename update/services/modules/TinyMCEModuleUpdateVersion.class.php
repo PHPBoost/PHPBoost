@@ -16,5 +16,6 @@ class TinyMCEModuleUpdateVersion extends ModuleUpdateVersion
 		self::$delete_old_folders_list = array(
 			'/templates/js/tinymce/plugins/smileys',
 		);
+    }
 }
 ?>
