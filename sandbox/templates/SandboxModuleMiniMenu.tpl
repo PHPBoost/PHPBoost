@@ -25,7 +25,7 @@
 						<li># INCLUDE CLEAN_RSS_CACHE #</li>
 						# IF C_HISTORY #
 							<li>
-								<a href="${relative_url(HistoryUrlBuilder::display_history())}">
+								<a href="{PATH_TO_ROOT}/history/">
 									<span><i class="fa fa-fw fa-clock-rotate-left" aria-hidden="true"></i> <span>{@sandbox.mini.history}</span></span>
 								</a>
 							</li>
@@ -51,7 +51,7 @@
 						# ENDIF #
 						# IF C_REVIEW #
 							<li>
-								<a href="${relative_url(ReviewUrlBuilder::home('home'))}">
+								<a href="{PATH_TO_ROOT}/review/index.php?url=/home/">
 									<i class="fa fa-fw fa-magnifying-glass-location" aria-hidden="true"></i> <span>{@sandbox.mini.review}</span>
 								</a>
 							</li>
