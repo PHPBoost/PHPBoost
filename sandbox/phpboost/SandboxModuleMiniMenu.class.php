@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2022 10 24
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -128,6 +128,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			));
 		}
 
+
 		$view->put_all(array(
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_LEFT_ENABLED'      => !$menus_status->left_columns_is_disabled(),
@@ -137,6 +138,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			'C_LOGGED_ERRORS'     => ((bool)count($this->get_logged_errors_nb())),
 			'C_404_ERRORS'        => (bool)$nb_404,
 			'C_NO_EXPANSION'      => $config->get_expansion_type() == SandboxConfig::NO_EXPANSION,
+			'C_HISTORY'		      => ModulesManager::is_module_installed('history') && ModulesManager::is_module_activated('history'),
+			'C_DATABASE'	      => ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database'),
+			'C_REVIEW'		      => ModulesManager::is_module_installed('review') && ModulesManager::is_module_activated('review'),
 
 			'PUSHED_CONTENT' => $config->get_pushed_content() ? '#push-container' : '',
 			'DISABLED_BODY'  => $config->get_disabled_body() ? 'true' : 'false',

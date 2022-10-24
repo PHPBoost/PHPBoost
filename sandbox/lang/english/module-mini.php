@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 23
+ * @version     PHPBoost 6.0 - last update: 2022 10 24
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,10 +23,12 @@ $lang['sandbox.mini.viewport.v']   = 'Height of viewport';
 $lang['sandbox.mini.viewport.h']   = 'Width of viewport';
 
 $lang['sandbox.mini.tools']             = 'Tools';
+$lang['sandbox.mini.history']           = 'History';
 $lang['sandbox.mini.errors']            = 'Archived errors';
 $lang['sandbox.mini.404']               = '404 errors';
 $lang['sandbox.mini.coms']              = 'Comments';
 $lang['sandbox.mini.database']          = 'Database';
+$lang['sandbox.mini.review']            = 'Files review';
 $lang['sandbox.mini.enable.css.cache']  = 'Enable the css cache';
 $lang['sandbox.mini.disable.css.cache'] = 'Disable the css cache';
 $lang['sandbox.mini.clean.css.cache']   = 'Refresh the css cache';

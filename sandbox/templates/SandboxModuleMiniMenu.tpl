@@ -23,6 +23,13 @@
 						<li># INCLUDE CLEAN_CSS_CACHE #</li>
 						<li># INCLUDE CLEAN_TPL_CACHE #</li>
 						<li># INCLUDE CLEAN_RSS_CACHE #</li>
+						# IF C_HISTORY #
+							<li>
+								<a href="${relative_url(HistoryUrlBuilder::display_history())}">
+									<span><i class="fa fa-fw fa-clock-rotate-left" aria-hidden="true"></i> <span>{@sandbox.mini.history}</span></span>
+								</a>
+							</li>
+						# ENDIF #
 						<li>
 							<a class="flex-between" href="${relative_url(AdminErrorsUrlBuilder::logged_errors())}">
 								<span><i class="fa fa-fw fa-terminal# IF C_LOGGED_ERRORS # warning blink# ENDIF #" aria-hidden="true"></i> <span>{@sandbox.mini.errors}</span></span>
@@ -35,11 +42,20 @@
 								<span# IF C_404_ERRORS # class="warning blink"# ENDIF #>{404_NB}</span>
 							</a>
 						</li>
-						<li>
-							<a href="{PATH_TO_ROOT}/database/admin_database.php">
-								<i class="fa fa-fw fa-database" aria-hidden="true"></i> <span>{@sandbox.mini.database}</span>
-							</a>
-						</li>
+						# IF C_DATABASE #
+							<li>
+								<a href="{PATH_TO_ROOT}/database/admin_database.php">
+									<i class="fa fa-fw fa-database" aria-hidden="true"></i> <span>{@sandbox.mini.database}</span>
+								</a>
+							</li>
+						# ENDIF #
+						# IF C_REVIEW #
+							<li>
+								<a href="${relative_url(ReviewUrlBuilder::home('home'))}">
+									<i class="fa fa-fw fa-magnifying-glass-location" aria-hidden="true"></i> <span>{@sandbox.mini.review}</span>
+								</a>
+							</li>
+						# ENDIF #
 						<li>
 							<a class="flex-between" href="${relative_url(UserUrlBuilder::comments())}">
 								<span><i class="fa fa-fw fa-comments" aria-hidden="true"></i> <span>{@sandbox.mini.coms}</span></span>
