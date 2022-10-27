@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 20
+ * @version     PHPBoost 6.0 - last update: 2022 10 27
  * @since       PHPBoost 4.1 - 2015 09 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -100,7 +100,7 @@ $lang['database.file.name']           = 'File';
 $lang['database.file.weight']         = 'File size';
 
 // Message helper
-$lang['database.backup.success']         = 'Your database was successfully saved. You can download it trough this link : <a href ="admin_database.php?read_file =%s">%s</a>';
+$lang['database.backup.success']         = 'Your database was successfully saved. You can download it trough this link : <a href="admin_database.php?read_file=%s">%s</a>';
 $lang['database.restore.success']        = 'The restoration query has been executed successfully';
 $lang['database.restore.error']          = 'An error occurred while restoring the database.';
 $lang['database.upload.error']           = 'An error occured during file transfert from it you wish import your database';
