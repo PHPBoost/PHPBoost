@@ -204,7 +204,7 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	{
 		foreach (self::$delete_old_files_list as $file_name)
 		{
-			$file_name = !preg_match('~/' . self::$module_id . '/~', $file_name) ? PATH_TO_ROOT . '/' . self::$module_id . $file_name : $filename;
+			$file_name = !preg_match('~/' . self::$module_id . '/~', $file_name) ? PATH_TO_ROOT . '/' . self::$module_id . $file_name : $file_name;
 			$file = new File($file_name);
 			$file->delete();
 		}
