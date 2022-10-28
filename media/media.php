@@ -116,7 +116,7 @@ elseif ($id_media > 0)
 			'AUTHOR_GROUP_COLOR'  => $group_color,
 			'CATEGORY_ID'         => $media['id_category'],
 			'CATEGORY_NAME'       => $media['id_category'] == Category::ROOT_CATEGORY ? $lang['media.module.title'] : CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category'])->get_name(),
-
+			
 			'U_STATUS' 		   => url('media_action.php?invisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_EDIT'      	   => url('media_action.php?edit=' . $id_media),
 			'U_DELETE'    	   => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),

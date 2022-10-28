@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 23
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -113,11 +113,12 @@ class ForumHomeController extends DefaultModuleController
 					'C_HAS_CATEGORY_ICON'  => !empty($row['icon']),
 					'C_HAS_CATEGORY_COLOR' => !empty($row['color']),
 
-					'CATEGORY_ID'    => $row['cid'],
-					'CATEGORY_NAME'  => $row['name'],
-					'CATEGORY_ICON'  => $row['icon'],
-					'CATEGORY_COLOR' => $row['color'],
-					'REWRITED_NAME'  => $row['rewrited_name'],
+					'CATEGORY_ID'        => $row['cid'],
+					'CATEGORY_NAME'      => $row['name'],
+					'CATEGORY_PARENT_ID' => $row['id_parent'],
+					'CATEGORY_ICON'      => $row['icon'],
+					'CATEGORY_COLOR'     => $row['color'],
+					'REWRITED_NAME'      => $row['rewrited_name'],
 
 					'U_CATEGORY'           => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel(),
 					'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
@@ -137,10 +138,12 @@ class ForumHomeController extends DefaultModuleController
 							'C_HAS_THUMBNAIL'     => !empty($this->category->get_thumbnail()->rel()),
 							'C_HAS_CATEGORY_ICON' => !empty($this->category->get_icon()),
 
-							'CATEGORY_ID'   => $this->category->get_id(),
-							'CATEGORY_NAME' => $this->category->get_name(),
-							'CATEGORY_ICON' => $this->category->get_icon(),
-							'REWRITED_NAME' => $this->category->get_rewrited_name(),
+							'CATEGORY_ID'        => $this->category->get_id(),
+							'CATEGORY_NAME'      => $this->category->get_name(),
+							'CATEGORY_PARENT_ID' => $this->category->get_id_parent(),
+							'CATEGORY_SUB_ORDER' => $this->category->get_order(),
+							'CATEGORY_ICON'      => $this->category->get_icon(),
+							'REWRITED_NAME'      => $this->category->get_rewrited_name(),
 
 							'U_CATEGORY'           => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php'),
 							'U_CATEGORY_THUMBNAIL' => Url::to_rel($this->category->get_thumbnail()),
@@ -227,6 +230,7 @@ class ForumHomeController extends DefaultModuleController
 						'TOPIC_ICON'            => $topic_icon,
 						'CATEGORY_ID'           => $row['cid'],
 						'CATEGORY_NAME'         => $row['name'],
+						'CATEGORY_PARENT_ID'  	=> $row['id_parent'],
 						'CATEGORY_ICON'         => $row['icon'],
 						'CATEGORY_COLOR'        => $row['color'],
 						'REWRITED_NAME'         => $row['rewrited_name'],

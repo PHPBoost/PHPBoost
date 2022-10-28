@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 19
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -45,9 +45,11 @@ class FaqCategoryController extends DefaultModuleController
 					'C_CATEGORY_THUMBNAIL' => !empty($category->get_thumbnail()),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
 
-					'CATEGORY_ID'    => $category->get_id(),
-					'CATEGORY_NAME'  => $category->get_name(),
-					'ITEMS_NUMBER' 	 => $category->get_elements_number(),
+					'CATEGORY_ID'        => $category->get_id(),
+					'CATEGORY_NAME'      => $category->get_name(),
+					'CATEGORY_PARENT_ID' => $category->get_id_parent(),
+					'CATEGORY_SUB_ORDER' => $category->get_order(),
+					'ITEMS_NUMBER' 	     => $category->get_elements_number(),
 
 					'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 					'U_CATEGORY'           => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
@@ -86,6 +88,8 @@ class FaqCategoryController extends DefaultModuleController
 			'CATEGORIES_NUMBER'        => $categories_per_row,
 			'ID_CAT'                   => $this->get_category()->get_id(),
 			'CATEGORY_NAME'            => $this->get_category()->get_name(),
+			'CATEGORY_PARENT_ID'   	   => $this->get_category()->get_id_parent(),
+			'CATEGORY_SUB_ORDER'   	   => $this->get_category()->get_order(),
 			'CATEGORY_DESCRIPTION'     => $category_description,
 			'ITEMS_NUMBER'             => $result->get_rows_count(),
 

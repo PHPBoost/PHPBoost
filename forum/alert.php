@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -125,6 +125,8 @@ $vars_tpl = array(
 	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
 	'CATEGORY_NAME'         => $category->get_name(),
+	'CATEGORY_PARENT'       => $category->get_id_parent(),
+	'CATEGORY_SUB_ORDER'    => $category->get_order(),
 	'FORUM_NAME'            => $config->get_forum_name(),
 	'TITLE_T'               => stripslashes($topic['title']),
 	'TOTAL_ONLINE'          => $total_online,

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 21
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -133,6 +133,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'C_SEVERAL_ITEMS'      => $elements_number['pics_aprob'] > 1,
 						'CATEGORY_ID'          => $category->get_id(),
 						'CATEGORY_NAME'        => $cat->get_name(),
+						'CATEGORY_PARENT_ID'   => $cat->get_id_parent(),
 						'ITEMS_NUMBER'         => sprintf($elements_number['pics_aprob']),
 						'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 						'U_CATEGORY'           => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_name())
@@ -148,6 +149,8 @@ class GalleryDisplayCategoryController extends ModuleController
 			'C_SUB_CATEGORIES'           => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $pagination->has_several_pages(),
 			'CATEGORY_NAME'              => $category->get_name(),
+			'CATEGORY_PARENT_ID'  		 => $category->get_id_parent(),
+			'CATEGORY_SUB_ORDER'   		 => $category->get_order(),
 
 			'ID_CATEGORY'              => $category->get_id(),
 			'DISPLAY_MODE'             => $config->get_pics_enlargement_mode(),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 21
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -218,6 +218,7 @@ if (!empty($id_get))
 					'TOPIC_ICON'              => $topic_icon,
 					'CATEGORY_ID'             => $row['cid'],
 					'CATEGORY_NAME'           => stripslashes($row['name']),
+					'CATEGORY_PARENT_ID'      => $row['id_parent'],
 					'CATEGORY_ICON'           => $row['icon'],
 					'CATEGORY_COLOR'          => $row['color'],
 					'DESCRIPTION'             => stripslashes($row['subname']),
@@ -306,6 +307,8 @@ if (!empty($id_get))
 		'PAGINATION'          => $pagination->display(),
 		'CATEGORY_ID'         => $id_get,
 		'CATEGORY_NAME'       => $category->get_name(),
+		'CATEGORY_PARENT_ID'  => $category->get_id_parent(),
+		'CATEGORY_SUB_ORDER'  => $category->get_order(),
 		'CATEGORY_ICON'       => $category->get_icon(),
 		'CATEGORY_COLOR'      => $category->get_color(),
 		'CURRENT_SUBCAT_NAME' => $current_subcat,

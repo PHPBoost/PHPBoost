@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 27
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -66,11 +66,13 @@ class MediaDisplayCategoryController extends DefaultModuleController
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
 
-					'CATEGORY_ID'          => $category->get_id(),
-					'CATEGORY_NAME'        => $category->get_name(),
-					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-					'ITEMS_NUMBER'         => sprintf($category->get_elements_number()),
+					'CATEGORY_ID'     	 => $category->get_id(),
+					'CATEGORY_NAME'   	 => $category->get_name(),
+					'CATEGORY_PARENT_ID' => $category->get_id_parent(),
+					'CATEGORY_SUB_ORDER' => $category->get_order(),
+					'ITEMS_NUMBER'    	 => sprintf($category->get_elements_number()),
 
+					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'U_CATEGORY'           => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
 			}
@@ -89,6 +91,8 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
 			'ITEMS_PER_ROW'            => $this->config->get_items_per_row(),
 			'CATEGORY_NAME'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? $this->lang['media.module.title'] : $this->get_category()->get_name(),
+			'CATEGORY_PARENT_ID'   	   => $this->get_category()->get_id_parent(),
+			'CATEGORY_SUB_ORDER'   	   => $this->get_category()->get_order(),
 			'CATEGORY_DESCRIPTION'     => $category_description,
 			'CATEGORY_ID'              => $this->get_category()->get_id(),
 

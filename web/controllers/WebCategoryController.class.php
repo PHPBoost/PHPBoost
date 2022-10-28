@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 19
+ * @version     PHPBoost 6.0 - last update: 2022 10 28
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,9 +63,13 @@ class WebCategoryController extends DefaultModuleController
 				$this->view->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
-					'CATEGORY_ID'          => $category->get_id(),
-					'CATEGORY_NAME'        => $category->get_name(),
-					'ITEMS_NUMBER'         => $category->get_elements_number(),
+					
+					'CATEGORY_ID'        => $category->get_id(),
+					'CATEGORY_NAME'      => $category->get_name(),
+					'CATEGORY_PARENT_ID' => $category->get_id_parent(),
+					'CATEGORY_SUB_ORDER' => $category->get_order(),
+					'ITEMS_NUMBER'       => $category->get_elements_number(),
+
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'U_CATEGORY'           => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
 				));
@@ -112,9 +116,7 @@ class WebCategoryController extends DefaultModuleController
 			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
 			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
+			'C_CATEGORY_DESCRIPTION' => !empty($category_description),	
 			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('web'),
 			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('web'),
 			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
@@ -124,12 +126,18 @@ class WebCategoryController extends DefaultModuleController
 			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
 			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
+					
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'PAGINATION' => $pagination->display(),
 			'ID_CAT' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
+			'CATEGORY_PARENT_ID'   	   => $this->get_category()->get_id_parent(),
+			'CATEGORY_SUB_ORDER'   	   => $this->get_category()->get_order(),
 			'CATEGORY_DESCRIPTION' => $category_description,
+
+			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'web')->rel()
 		));
 
