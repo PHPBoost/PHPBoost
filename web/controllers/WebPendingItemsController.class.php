@@ -69,20 +69,21 @@ class WebPendingItemsController extends DefaultModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_PENDING_ITEMS' => true,
-			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
-			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
-			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
-			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations()->moderation(),
+			'C_ITEMS'             => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
+			'C_PENDING_ITEMS'     => true,
+			'C_GRID_VIEW'         => $this->config->get_display_type() == WebConfig::GRID_VIEW,
+			'C_LIST_VIEW'         => $this->config->get_display_type() == WebConfig::LIST_VIEW,
+			'C_TABLE_VIEW'        => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
+			'C_CONTROLS'          => CategoriesAuthorizationsService::check_authorizations()->moderation(),
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
+			'C_ENABLED_COMMENTS'  => $comments_config->module_comments_is_enabled('web'),
+			'C_ENABLED_NOTATION'  => $content_management_config->module_notation_is_enabled('web'),
+			'C_PAGINATION'        => $pagination->has_several_pages(),
+
 			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
-			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display(),
+			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
+			'PAGINATION'         => $pagination->display(),
 		));
 
 		while ($row = $result->fetch())

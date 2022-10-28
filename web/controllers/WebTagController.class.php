@@ -83,19 +83,20 @@ class WebTagController extends DefaultModuleController
 		)));
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
-			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
-			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
-			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations()->moderation(),
+			'C_ITEMS'             => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'         => $this->config->get_display_type() == WebConfig::GRID_VIEW,
+			'C_LIST_VIEW'         => $this->config->get_display_type() == WebConfig::LIST_VIEW,
+			'C_TABLE_VIEW'        => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
+			'C_CONTROLS'          => CategoriesAuthorizationsService::check_authorizations()->moderation(),
 			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'CATEGORIES_PER_ROW'  => $this->config->get_categories_per_row(),
+			'C_ENABLED_COMMENTS'  => $this->comments_config->module_comments_is_enabled('web'),
+			'C_ENABLED_NOTATION'  => $this->content_management_config->module_notation_is_enabled('web'),
+			'C_PAGINATION'        => $pagination->has_several_pages(),
+
 			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
-			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('web'),
-			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('web'),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'PAGINATION' => $pagination->display(),
+			'PAGINATION'    => $pagination->display(),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
 		));
 

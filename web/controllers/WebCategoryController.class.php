@@ -63,7 +63,7 @@ class WebCategoryController extends DefaultModuleController
 				$this->view->assign_block_vars('sub_categories_list', array(
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
-					
+
 					'CATEGORY_ID'        => $category->get_id(),
 					'CATEGORY_NAME'      => $category->get_name(),
 					'CATEGORY_PARENT_ID' => $category->get_id_parent(),
@@ -110,35 +110,35 @@ class WebCategoryController extends DefaultModuleController
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
 		$this->view->put_all(array(
-			'C_ITEMS' => $result->get_rows_count() > 0,
-			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
-			'C_GRID_VIEW' => $this->config->get_display_type() == WebConfig::GRID_VIEW,
-			'C_LIST_VIEW' => $this->config->get_display_type() == WebConfig::LIST_VIEW,
-			'C_TABLE_VIEW' => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
-			'C_FULL_ITEM_DISPLAY' => $this->config->is_full_item_displayed(),
-			'C_CATEGORY_DESCRIPTION' => !empty($category_description),	
-			'C_ENABLED_COMMENTS' => $this->comments_config->module_comments_is_enabled('web'),
-			'C_ENABLED_NOTATION' => $this->content_management_config->module_notation_is_enabled('web'),
-			'C_CONTROLS' => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
-			'C_PAGINATION' => $pagination->has_several_pages(),
-			'C_CATEGORY' => true,
-			'C_ROOT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
-			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
-			'C_SUB_CATEGORIES' => $nbr_cat_displayed > 0,
+			'C_ITEMS'                    => $result->get_rows_count() > 0,
+			'C_SEVERAL_ITEMS'            => $result->get_rows_count() > 1,
+			'C_GRID_VIEW'                => $this->config->get_display_type() == WebConfig::GRID_VIEW,
+			'C_LIST_VIEW'                => $this->config->get_display_type() == WebConfig::LIST_VIEW,
+			'C_TABLE_VIEW'               => $this->config->get_display_type() == WebConfig::TABLE_VIEW,
+			'C_FULL_ITEM_DISPLAY'        => $this->config->is_full_item_displayed(),
+			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
+			'C_ENABLED_COMMENTS'         => $this->comments_config->module_comments_is_enabled('web'),
+			'C_ENABLED_NOTATION'         => $this->content_management_config->module_notation_is_enabled('web'),
+			'C_CONTROLS'                 => CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
+			'C_PAGINATION'               => $pagination->has_several_pages(),
+			'C_CATEGORY'                 => true,
+			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
+			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($nbr_cat_displayed != 0 || !empty($category_description)),
+			'C_SUB_CATEGORIES'           => $nbr_cat_displayed > 0,
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
-					
-			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
+
+			'CATEGORIES_PER_ROW'       => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'            => $this->config->get_items_per_row(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
-			'PAGINATION' => $pagination->display(),
-			'CATEGORY_ID' => $this->get_category()->get_id(),
-			'CATEGORY_NAME' => $this->get_category()->get_name(),
-			'CATEGORY_PARENT_ID'   	   => $this->get_category()->get_id_parent(),
-			'CATEGORY_SUB_ORDER'   	   => $this->get_category()->get_order(),
-			'CATEGORY_DESCRIPTION' => $category_description,
+			'PAGINATION'               => $pagination->display(),
+			'CATEGORY_ID'              => $this->get_category()->get_id(),
+			'CATEGORY_NAME'            => $this->get_category()->get_name(),
+			'CATEGORY_PARENT_ID' 	   => $this->get_category()->get_id_parent(),
+			'CATEGORY_SUB_ORDER' 	   => $this->get_category()->get_order(),
+			'CATEGORY_DESCRIPTION'     => $category_description,
 
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
-			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'web')->rel()
+			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? WebUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'web')->rel()
 		));
 
 		while ($row = $result->fetch())

@@ -71,10 +71,10 @@ class WebMemberItemsController extends DefaultModuleController
 			'C_ENABLED_NOTATION'  => $content_management_config->module_notation_is_enabled('web'),
 			'C_PAGINATION'        => $pagination->has_several_pages(),
 
-			'CATEGORIES_PER_ROW'  => $this->config->get_categories_per_row(),
-			'ITEMS_PER_ROW'       => $this->config->get_items_per_row(),
-			'PAGINATION'          => $pagination->display(),
-			'MEMBER_NAME' => $this->get_member()->get_display_name()
+			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
+			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
+			'PAGINATION'         => $pagination->display(),
+			'MEMBER_NAME'        => $this->get_member()->get_display_name()
 		));
 
 		while ($row = $result->fetch())
