@@ -132,7 +132,7 @@ class DownloadCategoryController extends DefaultModuleController
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'PAGINATION'               => $pagination->display(),
 			'TABLE_COLSPAN'            => 4 + (int)$this->comments_config->module_comments_is_enabled('download') + (int)$this->content_management_config->module_notation_is_enabled('download'),
-			'ID_CAT'                   => $this->get_category()->get_id(),
+			'CATEGORY_ID'              => $this->get_category()->get_id(),
 			'CATEGORY_NAME'            => $this->get_category()->get_name(),
 			'CATEGORY_PARENT_ID' 	   => $this->get_category()->get_id_parent(),
 			'CATEGORY_SUB_ORDER' 	   => $this->get_category()->get_order(),

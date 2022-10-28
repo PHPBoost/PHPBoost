@@ -86,7 +86,7 @@ class FaqCategoryController extends DefaultModuleController
 
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'CATEGORIES_NUMBER'        => $categories_per_row,
-			'ID_CAT'                   => $this->get_category()->get_id(),
+			'CATEGORY_ID'              => $this->get_category()->get_id(),
 			'CATEGORY_NAME'            => $this->get_category()->get_name(),
 			'CATEGORY_PARENT_ID'   	   => $this->get_category()->get_id_parent(),
 			'CATEGORY_SUB_ORDER'   	   => $this->get_category()->get_order(),

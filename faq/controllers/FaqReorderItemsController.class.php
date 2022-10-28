@@ -52,7 +52,7 @@ class FaqReorderItemsController extends DefaultModuleController
 			'C_ITEMS'                => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS'        => $result->get_rows_count() > 1,
 
-			'ID_CAT'               => $this->get_category()->get_id(),
+			'CATEGORY_ID'          => $this->get_category()->get_id(),
 			'CATEGORY_NAME'        => $this->get_category()->get_name(),
 			'CATEGORY_DESCRIPTION' => $category_description,
 			'ITEMS_NUMBER'         => $result->get_rows_count(),

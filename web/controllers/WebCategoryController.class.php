@@ -131,7 +131,7 @@ class WebCategoryController extends DefaultModuleController
 			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'SUBCATEGORIES_PAGINATION' => $subcategories_pagination->display(),
 			'PAGINATION' => $pagination->display(),
-			'ID_CAT' => $this->get_category()->get_id(),
+			'CATEGORY_ID' => $this->get_category()->get_id(),
 			'CATEGORY_NAME' => $this->get_category()->get_name(),
 			'CATEGORY_PARENT_ID'   	   => $this->get_category()->get_id_parent(),
 			'CATEGORY_SUB_ORDER'   	   => $this->get_category()->get_order(),
