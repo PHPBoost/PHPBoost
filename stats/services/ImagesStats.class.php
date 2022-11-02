@@ -4,11 +4,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 06 14
+ * @version   	PHPBoost 5.2 - last update: 2022 11 02
  * @since   	PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('NO_ALLOCATE_COLOR', false);
@@ -36,12 +37,13 @@ class ImagesStats
 	 * @param string $draw_type Type of chart.
 	 * @param int $decimal Round precision.
 	 */
- 	public function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
+	public function load_data($array_stats, $draw_type = 'ellipse', $decimal = 1)
 	{
 		$this->decimal = $decimal;
 		if ($draw_type == 'ellipse')
 		{
 			//Nombre total d'entrées
+			$array_stats = array();
 			$this->nbr_entry = array_sum($array_stats);
 			if ($this->nbr_entry == 0)
 				$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);

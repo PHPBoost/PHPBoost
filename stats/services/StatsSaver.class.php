@@ -250,6 +250,7 @@ class StatsSaver
 	 */
 	public static function retrieve_stats($stat_name)
 	{
+		$stats_array = array();
 		$file = new File(PATH_TO_ROOT . '/stats/cache/' . $stat_name . '.txt');
 		if ($file->exists())
 		{
