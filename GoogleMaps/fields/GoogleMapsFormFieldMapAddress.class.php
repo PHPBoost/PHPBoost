@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 07 10
+ * @version   	PHPBoost 5.2 - last update: 2022 11 02
  * @since   	PHPBoost 5.0 - 2017 04 03
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -48,7 +48,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$unserialized_value = @unserialize($this->get_value());
+		$unserialized_value = TextHelper::deserialize($this->get_value());
 		$value = $unserialized_value !== false ? $unserialized_value : $this->get_value();
 
 		if (!($value instanceof GoogleMapsMarker))

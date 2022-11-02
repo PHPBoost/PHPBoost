@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 05
+ * @version   	PHPBoost 5.2 - last update: 2022 11 02
  * @since   	PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarFormController extends ModuleController
@@ -106,7 +107,7 @@ class CalendarFormController extends ModuleController
 			array(new FormFieldConstraintIntegerRange(1, 150))
 		));
 
-		$unserialized_value = @unserialize($event_content->get_location());
+		$unserialized_value = TextHelper::deserialize($event_content->get_location());
 		$location_value = $unserialized_value !== false ? $unserialized_value : $event_content->get_location();
 
 		$location = '';

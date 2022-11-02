@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 15
+ * @version   	PHPBoost 5.2 - last update: 2022 11 02
  * @since   	PHPBoost 4.1 - 2015 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -135,10 +135,10 @@ class AdminFilesConfigController extends AdminController
 	{
 		$authorized_extensions = $this->file_upload_config->get_authorized_extensions();
 		$array_extensions_type = array(
-			$this->lang['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'nef'),
+			$this->lang['files_image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'tif', 'svg', 'ico', 'nef', 'webp'),
 			$this->lang['files_archives'] => array('rar', 'zip', 'gz', '7z'),
 			$this->lang['files_text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'),
-			$this->lang['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'),
+			$this->lang['files_media'] => array('flv', 'mp3', 'ogg', 'mpg', 'mov', 'swf', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv', 'webm'),
 			$this->lang['files_misc'] => array('ttf', 'tex', 'rtf', 'psd', 'iso')
 		);
 

@@ -21,7 +21,7 @@ $lang = array(
 Here is a small demonstration video file that illustrates how this module works.<br />
 <br />
 Nice video !',
-	'media_url' => 'https://www.youtube.com/watch?v=MiKw3uPGHB4',
+	'media_url' => 'https://www.youtube.com/watch?v=aqz-KE-bpKQ&t=525s',
 	'media_name_cat' => 'Videos',
 	'media_contents_cat' => 'This category contains a demonstration video file.',
 );

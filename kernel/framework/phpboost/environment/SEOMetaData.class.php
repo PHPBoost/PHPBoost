@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 10 31
+ * @version     PHPBoost 5.2 - last update: 2022 11 02
  * @since       PHPBoost 3.0 - 2012 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SEOMetaData
@@ -63,6 +64,10 @@ class SEOMetaData
 
 	public function get_full_description()
 	{
+		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+		if ($this->description === null)
+			$this->description = '';
+
 		if (Environment::home_page_running())
 			return GeneralConfig::load()->get_site_description();
 		else

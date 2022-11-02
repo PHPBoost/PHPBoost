@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2019 03 16
+ * @version   	PHPBoost 5.2 - last update: 2022 11 02
  * @since   	PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StatsSaver
@@ -247,12 +248,15 @@ class StatsSaver
 	 * @desc Retrieve stats from file
 	 * @param string $file_path The path to the stats file.
 	 */
-	public static function retrieve_stats($file_path)
+	public static function retrieve_stats($stat_name)
 	{
-		$file = @fopen(PATH_TO_ROOT . '/stats/cache/' . $file_path . '.txt', 'r');
-		$stats_array = @fgets($file);
-		$stats_array = !empty($stats_array) ? TextHelper::unserialize($stats_array) : array();
-		@fclose($file);
+		$file = new File(PATH_TO_ROOT . '/stats/cache/' . $stat_name . '.txt');
+		if ($file->exists())
+		{
+			$file_content = $file->read();
+			if ($file_content)
+				$stats_array = TextHelper::unserialize($file_content);
+		}
 
 		return $stats_array;
 	}

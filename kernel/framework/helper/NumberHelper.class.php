@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 24
+ * @version     PHPBoost 5.2 - last update: 2022 11 02
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NumberHelper
@@ -45,7 +46,7 @@ class NumberHelper
 	 */
 	public static function round($number, $dec)
 	{
-		return trim(number_format($number, $dec, '.', ''));
+		return floatval(number_format($number, $dec, '.', ''));
 	}
 }
 ?>

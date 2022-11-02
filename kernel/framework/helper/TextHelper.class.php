@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2022 11 02
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TextHelper
@@ -132,6 +133,10 @@ class TextHelper
 		if ($flags === null)
 			$flags = ENT_COMPAT;
 
+		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+		if ($string === null)
+			$string = '';
+
 		return str_replace('&amp;', '&', htmlspecialchars($string, $flags, $encoding, $double_encode));
 	}
 
@@ -147,6 +152,10 @@ class TextHelper
 	{
 		if ($flags === null)
 			$flags = ENT_COMPAT;
+
+		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+		if ($string === null)
+			$string = '';
 
 		return html_entity_decode($string, $flags, $encoding);
 	}
@@ -204,6 +213,10 @@ class TextHelper
 
 	public static function substr($string, $start, $length = '')
 	{
+		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+		if ($string === null)
+			$string = '';
+			
 		if (is_int($length))
 			return substr($string, $start, $length);
 		else
@@ -293,6 +306,69 @@ class TextHelper
 		return preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string) && false !== $decoded && base64_encode($decoded) == $string;
 	}
 
+	/**
+	 * @author      Wordpress
+	*/
+	public static function is_serialized( $string, $strict = true )
+	{
+		if (!is_string($string))
+			return false;
+
+		$string = trim($string);
+		if ('N;' === $string)
+			return true;
+
+		if (strlen($string) < 4 )
+			return false;
+
+		if (':' !== $string[1])
+			return false;
+
+		if ($strict)
+		{
+			$lastc = substr( $string, -1 );
+			if (';' !== $lastc && '}' !== $lastc)
+				return false;
+		}
+		else
+		{
+			$semicolon = strpos($string, ';');
+			$brace     = strpos($string, '}');
+
+			if (false === $semicolon && false === $brace)
+				return false;
+
+			if (false !== $semicolon && $semicolon < 3)
+				return false;
+
+			if (false !== $brace && $brace < 4)
+				return false;
+		}
+		$token = $string[0];
+		switch ($token) {
+			case 's':
+				if ($strict) {
+					if ('"' !== substr($string, -2, 1))
+						return false;
+				}
+				elseif (false === strpos($string, '"'))
+					return false;
+			case 'a':
+			case 'O':
+				return (bool)preg_match("/^{$token}:[0-9]+:/s", $string);
+			case 'b':
+			case 'i':
+			case 'd':
+				$end = $strict ? '$' : '';
+				return (bool)preg_match("/^{$token}:[0-9.E+-]+;$end/", $string);
+		}
+		return false;
+	}
+
+	public static function deserialize($string)
+	{
+		return self::is_serialized($string) ? unserialize($string) : $string;
+	}
 	/**
 	 * Checks if a string contains less than a defined number of links (used to prevent SPAM).
 	 * @param string $contents String in which you want to count the number of links

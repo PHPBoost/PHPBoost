@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 11 09
+ * @version     PHPBoost 5.2 - last update: 2022 11 02
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('RANK_TYPE', 1);
@@ -85,7 +86,7 @@ class User
 	public function set_groups($groups)
 	{
 		if (!is_array($groups))
-			$groups = explode('|', $groups);
+			$groups = explode('|', $groups ?? '');
 
 		$this->groups = $groups;
 	}
@@ -233,6 +234,10 @@ class User
 
 	public static function get_group_color($user_groups, $level = 0, $is_array = false)
 	{
+		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+		if ($user_groups === null)
+			$user_groups = '';
+
 		if (!$is_array)
 			$user_groups = explode('|', $user_groups);
 

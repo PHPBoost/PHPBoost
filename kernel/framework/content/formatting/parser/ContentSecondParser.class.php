@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 11 01
+ * @version     PHPBoost 5.2 - last update: 2022 11 02
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -39,6 +39,9 @@ class ContentSecondParser extends AbstractParser
 	 */
 	public function parse()
 	{
+		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+		if ($this->content === null)
+			$this->content = '';
 		//Relative url parsing
 		$this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`suU', array($this, 'callbackrelative_url'), $this->content);
 

@@ -6,11 +6,12 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2018 06 18
+ * @version     PHPBoost 5.2 - last update: 2022 11 02
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ContentFormattingUnparser extends AbstractParser
@@ -32,6 +33,9 @@ abstract class ContentFormattingUnparser extends AbstractParser
 		//Prélèvement du HTML
 		if ($action == self::PICK_UP)
 		{
+			/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
+			if ($this->content === null)
+                $this->content = '';
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`suU';
 			$content_split = preg_split($mask, str_replace('&nbsp;', '&amp;nbsp;', $this->content), -1, PREG_SPLIT_DELIM_CAPTURE);
 
