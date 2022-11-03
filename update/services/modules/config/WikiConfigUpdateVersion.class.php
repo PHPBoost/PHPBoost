@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2022 11 03
  * @since       PHPBoost 5.1 - 2018 12 19
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WikiConfigUpdateVersion extends ConfigUpdateVersion
@@ -12,6 +13,13 @@ class WikiConfigUpdateVersion extends ConfigUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('wiki');
+
+		$this->config_parameters_to_modify = array(
+			'root_category_description' => array(
+				'parameter_name' => 'root_category_description',
+				'value' => $this->get_parsed_old_content('WikiConfig', 'index_text')
+			)
+		);
 	}
 
 	protected function build_new_config()

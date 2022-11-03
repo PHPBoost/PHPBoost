@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2022 11 03
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -59,7 +59,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 		if ($serialize)
 		{
 			mb_internal_encoding('utf-8');
-			return @unserialize($old_config);
+			return TextHelper::deserialize($old_config);
 		}
 		return $old_config;
 	}
@@ -143,6 +143,31 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 			return true;
 		}
 		return false;
+	}
+
+	protected function get_parsed_old_content($module_config, $parameter)
+	{
+		$old_config = $this->get_old_config();
+		if ($old_config && (ModulesManager::is_module_installed(self::$module_id) && ModulesManager::is_module_activated(self::$module_id)))
+		{
+			$config = $module_config::load();
+			$unparser = new OldBBCodeUnparser();
+			$parser = new BBCodeParser();
+			$root_description = $old_config->get_property($parameter);
+
+			$getter = 'get_'.$parameter;
+			$setter = 'set_'.$parameter;
+			$unparser->set_content($root_description);
+			$unparser->parse();
+			$parser->set_content($unparser->get_content());
+			$parser->parse();
+			
+			if ($parser->get_content() != $root_description)
+			{
+				$config->$setter($parser->get_content());
+				return $config->$getter();
+			}
+		}
 	}
 }
 ?>

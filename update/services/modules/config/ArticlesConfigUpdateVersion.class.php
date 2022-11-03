@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2022 11 03
  * @since       PHPBoost 6.0 - 2020 05 03
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -44,6 +44,10 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 					'mosaic' => 'grid_view',
 					'list'   => 'list_view'
 				)
+			),
+			'root_category_description' => array(
+				'parameter_name' => 'root_category_description',
+				'value' => $this->get_parsed_old_content('ArticlesConfig', 'root_category_description')
 			)
 		);
 	}

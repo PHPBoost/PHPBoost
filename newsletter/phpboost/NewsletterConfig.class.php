@@ -12,7 +12,7 @@ class NewsletterConfig extends AbstractConfigData
 {
 	const MAIL_SENDER             = 'mail_sender';
 	const NEWSLETTER_NAME         = 'newsletter_name';
-	const DEFAULT_CONTENT        = 'default_content';
+	const DEFAULT_CONTENT         = 'default_content';
 	const STREAMS_NUMBER_PER_PAGE = 'streams_number_per_page';
 	const AUTHORIZATIONS          = 'authorizations';
 
