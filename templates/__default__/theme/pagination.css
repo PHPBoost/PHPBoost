@@ -32,7 +32,7 @@
 	transition: all 0.2s linear;
 }
 
-.light-pagination .pagination-item a { border-radius: 50%; }
+.light-pagination .pagination-item a { border-radius: 50em; }
 
 .pagination-item a:hover {
 	transition: all 0.1s linear;
