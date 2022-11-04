@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2022 11 04
  * @since       PHPBoost 5.0 - 2017 04 21
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -32,7 +32,7 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 
 	protected function update_content()
 	{
-		UpdateServices::update_table_content(PREFIX . 'bugtracker');
+		UpdateServices::update_table_content(PREFIX . 'bugtracker', 'content');
 		UpdateServices::update_table_content(PREFIX . 'bugtracker', 'reproduction_method');
 		UpdateServices::update_table_content(PREFIX . 'bugtracker_history', 'old_value');
 		UpdateServices::update_table_content(PREFIX . 'bugtracker_history', 'new_value');
