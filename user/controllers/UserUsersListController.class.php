@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 14
+ * @version     PHPBoost 6.0 - last update: 2022 11 04
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -67,7 +67,6 @@ class UserUsersListController extends AbstractController
 		), new HTMLTableSortingRule('last_connection_date', HTMLTableSortingRule::DESC));
 
 		$table_model->set_filters_menu_title($this->lang['user.filter.members']);
-		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('display_name', 'filter1', $this->lang['user.display.name']));
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['user.rank'], array(2 => $this->lang['user.administrators'], 1 => $this->lang['user.moderators'], 0 => $this->lang['user.members'])));
 		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('email', 'filter3', $this->lang['user.email']));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
