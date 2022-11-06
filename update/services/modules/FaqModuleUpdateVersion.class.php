@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 09
+ * @version     PHPBoost 6.0 - last update: 2022 11 06
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -55,6 +55,7 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 				)
 			)
 		);
+		UpdateServices::update_table_content(PREFIX . 'faq', 'content');
 	}
 }
 ?>
