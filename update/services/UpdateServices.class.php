@@ -218,8 +218,8 @@ class UpdateServices
 		// Updating content
 		$this->update_content();
 
-		// Updating content
-		$this->update_content_menus();
+		// Updating content of content menus
+		// $this->update_content_menus();
 
 		// Clear autoload
 		$this->clear_autoload();
@@ -651,7 +651,7 @@ class UpdateServices
 		}
 	}
 
-	public static function update_table_content($table, $contents = 'contents', $id = 'id')
+	public static function update_table_content($table, $contents = 'content', $id = 'id')
 	{
 		$columns = self::$db_utils->desc_table($table);
 
@@ -728,6 +728,10 @@ class UpdateServices
 			
 				$menu = MenuService::load($row[$id]);
 				MenuService::save($menu);
+				$menus_list = MenuService::get_menus_map();
+				// Debug::stop($menus_list);
+				// MenuService::initialise(array($menus_list));
+				MenuService::generate_cache();
 			}
 			$result->dispose();
 
@@ -736,6 +740,11 @@ class UpdateServices
 				$object = new self('', false);
 				$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' content' . ($updated_content > 1 ? 's' : '') . ' updated');
 			}
+			MenuService::save($menu);
+			$menus_list = MenuService::get_menus_map();
+			
+			MenuService::initialise($menus_list);
+			MenuService::generate_cache();
 		}
 	}
 
