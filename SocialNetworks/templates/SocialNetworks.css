@@ -4,36 +4,35 @@
 */
 
 /* --- Social Connect --- */
-a.social-connect {
+.social-connect {
 	display: block;
-	vertical-align: middle;
 	padding: 0.809em 1.618em;
 	text-align: center;
 	font-size: 0.618em;
 }
 
 @media (min-width: 769px) {
-	a.social-connect.login-page { display: inline-block; }
+	.social-connect.login-page { display: inline-block; }
 }
 
-a.social-connect.login-page { margin: 0.809em 0; }
+.social-connect.login-page { margin: 0.809em 0; }
 
-.horizontal-fieldset a.social-connect {
+.horizontal-fieldset .social-connect {
 	margin: 0;
 	vertical-align: middle;
 }
 
-a.social-connect i:before {
+.social-connect i:before {
 	transition: 0.2s ease-out;
 	font-size: 1.618em;
 }
 
-a.social-connect:hover i:before { transition: 0.2s ease-out; }
+.social-connect:hover i:before { transition: 0.2s ease-out; }
 
 span.social-connect i:before { font-size: 1.618em; }
 span.social-connect { padding: 1em 1.618em; }
 
-a.social-connect span { display: none; }
+.social-connect span { display: none; }
 
 .social-connect { color: var(--txt-alt); }
 
