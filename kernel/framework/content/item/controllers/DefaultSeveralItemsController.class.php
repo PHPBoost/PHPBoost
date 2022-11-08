@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 28
+ * @version     PHPBoost 6.0 - last update: 2022 11 08
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -359,7 +359,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		{
 			$category_thumbnail = $this->get_category()->get_thumbnail()->rel();
 			$this->view->put_all(array(
-				'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
+				'C_CATEGORY_THUMBNAIL' => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($category_thumbnail),
 				'U_CATEGORY_THUMBNAIL' => $category_thumbnail
 			));
 		}

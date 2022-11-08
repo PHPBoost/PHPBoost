@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 28
+ * @version     PHPBoost 6.0 - last update: 2022 11 08
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -122,6 +122,7 @@ class DownloadCategoryController extends DefaultModuleController
 			'C_CONTROLS'                 => DownloadAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_PAGINATION'               => $pagination->has_several_pages(),
 			'C_CATEGORY'                 => true,
+			'C_CATEGORY_THUMBNAIL' 		 => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($categories_number_displayed != 0 || !empty($category_description)),
 			'C_SUB_CATEGORIES'           => $categories_number_displayed > 0,

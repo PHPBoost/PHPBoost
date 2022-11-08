@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 28
+ * @version     PHPBoost 6.0 - last update: 2022 11 08
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -73,6 +73,7 @@ class FaqCategoryController extends DefaultModuleController
 
 		$this->view->put_all(array(
 			'C_CATEGORY'                 => true,
+			'C_CATEGORY_THUMBNAIL' 		 => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE'     => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($categories_number != 0 || !empty($category_description)),
 			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
