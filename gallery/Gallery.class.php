@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 01
+ * @version     PHPBoost 6.0 - last update: 2022 11 08
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -378,7 +378,7 @@ class Gallery
 			$weight = !empty($weight) ? $weight : 0;
 
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
-			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg', 5 => 'webp');
+			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg', 18 => 'webp');
 			if (isset($array_type[$type]))
 				return array($width, $height, $weight, $array_type[$type]);
 			else
