@@ -100,7 +100,7 @@ $lang['database.file.name']           = 'File';
 $lang['database.file.weight']         = 'File size';
 
 // Message helper
-$lang['database.backup.success']         = 'Your database was successfully saved. You can download it trough this link : <a href ="admin_database.php?read_file=%s">%s</a>';
+$lang['database.backup.success']         = 'Your database was successfully saved. You can download it trough this link : <a href="admin_database.php?read_file=%s">%s</a>';
 $lang['database.restore.success']        = 'The restoration query has been executed successfully';
 $lang['database.restore.error']          = 'An error occurred while restoring the database.';
 $lang['database.upload.error']           = 'An error occured during file transfert from it you wish import your database';
