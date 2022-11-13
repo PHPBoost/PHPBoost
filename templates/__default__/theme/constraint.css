@@ -53,7 +53,7 @@
 	content: "\f00c";
 }
 
-.constraint-status-right .field-required:after { content: " "; }
+.constraint-status-right .field-required:after { content: "\f00c"; }
 
 .constraint-status-error i.picture-status-constraint { content: "\f056"; }
 
