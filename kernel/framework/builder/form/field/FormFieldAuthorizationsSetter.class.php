@@ -9,6 +9,7 @@
  * @since       PHPBoost 3.0 - 2010 03 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldAuthorizationsSetter extends AbstractFormField
@@ -90,7 +91,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		$g_auths = array();
 		foreach ($auths as $role => $auth)
 		{
-			if ($role != '0' || $role != '' || $role != NULL)
+			if ($role != '0' || !empty($role) || !is_null($role))
 			{
 				$g_auths[$role] = $auth;
 			}
