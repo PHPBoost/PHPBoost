@@ -91,7 +91,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		$g_auths = array();
 		foreach ($auths as $role => $auth)
 		{
-			if ($role != '0' || $role != '' || $role != NULL)
+			if ($role != '0' || !empty($role) || !is_null($role))
 			{
 				$g_auths[$role] = $auth;
 			}

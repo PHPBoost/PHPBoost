@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2016 10 28
+ * @version     PHPBoost 5.2 - last update: 2022 11 14
  * @since       PHPBoost 3.0 - 2010 03 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class RolesAuthorizations
@@ -128,7 +129,7 @@ class RolesAuthorizations
 		{
 			if ($auth)
 			{
-				if ($role[0] == 'm')
+				if (TextHelper::strstr($role, 'm'))
 				{
 					$this->users[] = (int)TextHelper::substr($role, 1);
 				}
