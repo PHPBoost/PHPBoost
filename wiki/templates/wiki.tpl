@@ -26,6 +26,8 @@
 									</ul>
 								</div>
 							</aside>
+						# ELSE #
+							<aside></aside>
 						# ENDIF #
 						<aside class="cell">
 							<div class="cell-header">
