@@ -12,8 +12,8 @@
 <div class="bbcode wiki-extended-bbcode">
 	<nav class="bbcode-containers">
 		<ul>
-			<li class="auto-resize bbcode-group bbcode-text wikibar">
-				<span data-modal data-target="block-link" class="auto-resize bbcode-group-title bbcode-button" aria-label="{@wiki.bbcode.wiki.icon}">
+			<li class="bbcode-group bbcode-text wikibar">
+				<span data-modal data-target="block-link" class="bbcode-group-title bbcode-button" aria-label="{@wiki.bbcode.wiki.icon}">
 					<i class="fa fa-fw fa-w"></i>
 				</span>
 				<ul id="wiki-paragraph-container" class="bbcode-container cell-list cell-list-inline cell-tile cell-modal modal-container">
@@ -26,13 +26,13 @@
 							<div class="content-panel cell">
 								<div class="cell-header"><span class="cell-name">{@wiki.insert.link}</span></div>
 								<div class="cell-form">
-									<label for="bb_wiki_link" class="auto-resize cell-label">{@wiki.link.title}</label>
+									<label for="bb_wiki_link" class="cell-label">{@wiki.link.title}</label>
 									<div class="cell-input">
-										<input class="auto-resize" id="bb_wiki_link" type="text">
+										<input id="bb_wiki_link" type="text">
 									</div>
 								</div>
 								<div class="cell-footer cell-input">
-									<span class="auto-resize button hide-modal close-bbcode-sub" onclick="insert_wiki_link();">{@form.insert}</span>
+									<span class="button hide-modal close-bbcode-sub" onclick="insert_wiki_link();">{@form.insert}</span>
 								</div>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 						<span data-modal data-target="block-paragraph-1" class="bbcode-button" aria-label="{L_PARAGRAPH_1}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
-								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">1</span>
+								<span class="stack-event stack-circle stack-center bgc-full link-color stack-wiki">1</span>
 							</span>
 						</span>
 						<div id="block-paragraph-1" class="modal modal-animation">
@@ -64,7 +64,7 @@
 						<a href="javascript:insert_paragraph(1);" class="bbcode-button" aria-label="{L_PARAGRAPH_1}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
-								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">1</span>
+								<span class="stack-event stack-circle stack-center bgc-full link-color stack-wiki">1</span>
 							</span>
 						</a>
 					</li>
@@ -72,7 +72,7 @@
 						<a href="javascript:insert_paragraph(2);" class="bbcode-button" aria-label="{L_PARAGRAPH_2}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
-								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">2</span>
+								<span class="stack-event stack-circle stack-center bgc-full link-color stack-wiki">2</span>
 							</span>
 						</a>
 					</li>
@@ -80,7 +80,7 @@
 						<a href="javascript:insert_paragraph(3);" class="bbcode-button" aria-label="{L_PARAGRAPH_3}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
-								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">3</span>
+								<span class="stack-event stack-circle stack-center bgc-full link-color stack-wiki">3</span>
 							</span>
 						</a>
 					</li>
@@ -88,7 +88,7 @@
 						<a href="javascript:insert_paragraph(4);" class="bbcode-button" aria-label="{L_PARAGRAPH_4}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
-								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">4</span>
+								<span class="stack-event stack-circle stack-center bgc-full link-color stack-wiki">4</span>
 							</span>
 						</a>
 					</li>
@@ -96,7 +96,7 @@
 						<a href="javascript:insert_paragraph(5);" class="bbcode-button" aria-label="{L_PARAGRAPH_5}">
 							<span class="stacked">
 								<i class="fa fa-fw fa-newspaper" aria-hidden="true"></i>
-								<span class="stack-event auto-resize stack-circle stack-center bgc-full link-color stack-wiki">5</span>
+								<span class="stack-event stack-circle stack-center bgc-full link-color stack-wiki">5</span>
 							</span>
 						</a>
 					</li>
