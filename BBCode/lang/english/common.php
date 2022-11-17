@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2022 11 17
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -165,5 +165,7 @@ $lang['bbcode.prog']               = 'Programming';
 $lang['bbcode.math']               = 'Insert mathematics code';
 $lang['bbcode.html']               = 'Html code';
 
-$lang['bbcode.help'] = 'BBcode help';
+$lang['bbcode.help']     = 'BBcode help';
+$lang['bbcode.collapse'] = 'Collapse the text field';
+$lang['bbcode.expand']   = 'Expand the text field';
 ?>
