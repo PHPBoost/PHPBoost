@@ -162,12 +162,13 @@
 										# ENDIF #
 										# IF C_ENABLED_DATE #
 											<td>
-												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-													# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
-												</time>
 												# IF items.C_HAS_UPDATE_DATE #
 													<time class="pinned notice small text-italic" aria-label="{@common.last.update}"datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
 														{items.UPDATE_DATE}
+													</time>
+												# ELSE #
+													<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+														# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE}# ELSE #{items.DATE}# ENDIF #
 													</time>
 												# ENDIF #
 											</td>
@@ -244,23 +245,22 @@
 											# ENDIF #
 										# ENDIF #
 										# IF C_ENABLED_DATE #
-											<span class="pinned item-creation-date" aria-label="{@common.creation.date}">
-												<i class="far fa-calendar-alt" aria-hidden="true"></i>
-												<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
-													# IF items.C_DEFFERED_PUBLISHING #
-														{items.DEFFERED_PUBLISHING_START_DATE}
-													# ELSE #
-														{items.DATE}
-													# ENDIF #
-												</time>
-											</span>
-										# ENDIF #
-										# IF C_ENABLED_UPDATE_DATE #
 											# IF items.C_HAS_UPDATE_DATE #
 												<span class="pinned item-modified-date" aria-label="{@common.last.update}">
 													<i class="far fa-calendar-plus" aria-hidden="true"></i>
 													<time datetime="{items.UPDATE_DATE_ISO8601}" itemprop="dateModified">
 														{items.UPDATE_DATE}
+													</time>
+												</span>
+											# ELSE #
+												<span class="pinned item-creation-date" aria-label="{@common.creation.date}">
+													<i class="far fa-calendar-alt" aria-hidden="true"></i>
+													<time datetime="# IF items.C_DEFFERED_PUBLISHING #{items.DEFFERED_PUBLISHING_START_DATE_ISO8601}# ELSE #{items.DATE_ISO8601}# ENDIF #" itemprop="datePublished">
+														# IF items.C_DEFFERED_PUBLISHING #
+															{items.DEFFERED_PUBLISHING_START_DATE}
+														# ELSE #
+															{items.DATE}
+														# ENDIF #
 													</time>
 												</span>
 											# ENDIF #

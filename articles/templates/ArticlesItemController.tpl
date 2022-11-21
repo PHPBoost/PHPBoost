@@ -27,7 +27,7 @@
 								# ENDIF #
 							</span>
 						# ENDIF #
-						<span class="pinned item-creation-date">
+						<span class="pinned item-creation-date" aria-label="{@common.creation.date}">
 							<i class="far fa-calendar-alt" aria-hidden="true"></i> <time datetime="# IF NOT C_DIFFERED #{DATE_ISO8601}# ELSE #{PUBLISHING_START_DATE_ISO8601}# ENDIF #" itemprop="datePublished"># IF NOT C_DIFFERED #{DATE}# ELSE #{PUBLISHING_START_DATE}# ENDIF #</time>
 						</span>
 						# IF NOT C_ROOT_CATEGORY #
@@ -35,8 +35,8 @@
 								<i class="far fa-folder" aria-hidden="true"></i> <a class="offload" itemprop="about" href="{U_CATEGORY}">{CATEGORY_NAME}</a>
 							</span>
 						# ENDIF #
-						<span class="pinned item-views-number">
-							<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo" aria-label="{VIEWS_NUMBER} {@common.views}">{VIEWS_NUMBER}</span>
+						<span class="pinned item-views-number" aria-label="{VIEWS_NUMBER} {@common.views}">
+							<i class="far fa-eye" aria-hidden="true"></i> <span role="contentinfo">{VIEWS_NUMBER}</span>
 						</span>
 						# IF C_ENABLED_COMMENTS #
 							<span class="pinned item-comments">
