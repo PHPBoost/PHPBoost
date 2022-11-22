@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 03
+ * @version     PHPBoost 6.0 - last update: 2022 11 22
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -190,6 +190,37 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 				$this->querier->update(PREFIX . 'pages', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id=:id', array('id' => $row['id']));
 			}
 			$new_date->dispose();
+		}
+
+		// Update path of comments in Pages
+		$result_in_pages = PersistenceContext::get_querier()->select('SELECT 
+			pages.id, pages.rewrited_title, pages.id_category, 
+			cat.id AS cat_id, cat.rewrited_name
+		FROM ' . PREFIX . 'pages pages
+		LEFT JOIN ' . PREFIX . 'pages_cats cat ON cat.id = pages.id_category
+		ORDER BY pages.id'
+		);
+
+		while($page = $result_in_pages->fetch())
+		{
+			$page['id_category'] == '0' ? $category_name = 'root' : $category_name = $page['rewrited_name'];
+
+			$new_url = '/pages/' . $page['id_category'] . '-' . $category_name . '/'.  $page['id'] . '-' . $page['rewrited_title'];
+			
+			$result = PersistenceContext::get_querier()->select("SELECT
+				topic.*
+			FROM " . DB_TABLE_COMMENTS_TOPIC . " topic
+			WHERE topic.module_id = :module_id
+			AND topic.id_in_module = :page_id
+			ORDER BY topic.path ", array(
+				'module_id' => 'pages',
+				'page_id' => $page['id']                   
+			));
+
+			while ($row = $result->fetch())
+			{  
+				PersistenceContext::get_querier()->update( DB_TABLE_COMMENTS_TOPIC , array('path' => $new_url), ' WHERE id_in_module = :id AND module_id = :module_id' , array('id' => $page['id'], 'module_id' => 'pages'));
+			}
 		}
 	}
 
