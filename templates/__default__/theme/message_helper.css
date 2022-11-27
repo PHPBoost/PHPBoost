@@ -20,8 +20,8 @@
 
 .message-helper:before {
 	position: absolute;
-	left: 6px;
-	top: 7px;
+	left: 0.228em;
+	top: 0.228em;
 	width: 28px;
 	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
