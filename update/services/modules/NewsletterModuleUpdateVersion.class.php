@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2022 11 29
  * @since       PHPBoost 5.0 - 2017 03 09
  * @contributor xela <xela@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -72,9 +72,11 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 	private function update_visitor_subscription_date_field()
 	{
 		$now = new Date();
-		$result = PersistenceContext::get_querier()->update(PREFIX . 'newsletter_subscribers', array(
-			'subscription_date' => $now->get_timestamp(),
-				), 'WHERE user_id = :user_id', array('user_id' => -1));
+		$result = PersistenceContext::get_querier()->update(
+			PREFIX . 'newsletter_subscribers', 
+			array('subscription_date' => $now->get_timestamp()), 
+			'WHERE user_id = :user_id', array('user_id' => -1)
+		);
 
 		$result->dispose();
 	}

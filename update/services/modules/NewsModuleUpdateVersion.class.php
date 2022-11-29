@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 21
+ * @version     PHPBoost 6.0 - last update: 2022 11 29
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -31,9 +31,6 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/NewsFormFieldSelectSources.tpl',
 			'/templates/NewsDisplayNewsController.tpl',
 			'/templates/NewsDisplaySeveralNewsController.tpl',
-			// 6.0.b1
-			'/templates/NewsItemController.tpl',
-			'/templates/NewsSeveralItemsController.tpl',
 		);
 		self::$delete_old_folders_list = array(
 			'/controllers',
@@ -56,9 +53,6 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 					'end_date'         => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
 					'approbation_type' => 'published INT(1) NOT NULL DEFAULT 0',
 					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
-					// 6.0.b1
-					'publication'   => 'published INT(1) NOT NULL DEFAULT 0',
-					'thumbnail_url' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
 				)
 			),
 			array(
