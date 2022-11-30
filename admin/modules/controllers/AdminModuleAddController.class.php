@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2019 12 10
+ * @version   	PHPBoost 5.2 - last update: 2022 11 30
  * @since   	PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -140,7 +140,7 @@ class AdminModuleAddController extends AdminController
 		foreach ($modules_folder->get_folders() as $folder)
 		{
 			$folder_name = $folder->get_name();
-			if ($folder_name != 'lang' && !ModulesManager::is_module_installed($folder_name))
+			if ($folder_name != 'lang' && !ModulesManager::is_module_installed($folder_name) && !in_array($folder_name, array('admin', 'cache', 'images', 'kernel', 'lang', 'repository', 'syndication', 'templates', 'upload', 'user')))
 			{
 				try
 				{
