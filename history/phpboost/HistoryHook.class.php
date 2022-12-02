@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 25
+ * @version     PHPBoost 6.0 - last update: 2022 12 03
  * @since       PHPBoost 6.0 - 2021 10 22
 */
 
@@ -207,10 +207,7 @@ class HistoryHook extends Hook
 	public function on_delete_comment_action($module_id, array $properties, $description = '')
 	{
 		if (!in_array('comments', HistoryConfig::load()->get_history_topics_disabled()))
-		{
-			$comment_properties = CommentsCache::load()->get_comment($properties['id']);
-			return $this->add_history_entry('delete_comment', $module_id, ($comment_properties ? array_merge($comment_properties, $properties) : $properties), $description);
-		}
+			return $this->add_history_entry('delete_comment', $module_id, $properties, $description);
 	}
 
 	/**
