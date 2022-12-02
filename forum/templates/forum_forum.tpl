@@ -131,12 +131,14 @@
 			<h2>
 				# IF C_THUMBNAILS_DISPLAYED ## IF C_HAS_THUMBNAIL#<img class="forum-category-thumbnail" src="{U_CATEGORY_THUMBNAIL}" alt="{CURRENT_SUBCAT_NAME}" /># ENDIF ## ENDIF # {CURRENT_SUBCAT_NAME}
 			</h2>
-			<div class="controls align-right">
-				# IF C_POST_NEW_TOPIC #
-					<a href="{U_POST_NEW_SUBJECT}" class="button bgc member small offload">{@forum.post.new.topic}</a>
-				# ENDIF #
-				<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning"></i></a>
-				# IF CATEGORY_ID #<a class="offload" href="unread.php?cat={CATEGORY_ID}" aria-label="{@forum.unread.messages}"><i class="far fa-file-alt" aria-hidden="true"></i></a># ENDIF #
+			<div class="align-right">
+				<div class="controls">
+					# IF C_POST_NEW_TOPIC #
+						<a href="{U_POST_NEW_SUBJECT}" class="button bgc member small offload">{@forum.post.new.topic}</a>
+					# ENDIF #
+					<a class="offload" href="${relative_url(SyndicationUrlBuilder::rss('forum',CATEGORY_ID))}" aria-label="{@common.syndication}"><i class="fa fa-rss warning"></i></a>
+					# IF CATEGORY_ID #<a class="offload" href="unread.php?cat={CATEGORY_ID}" aria-label="{@forum.unread.messages}"><i class="far fa-file-alt" aria-hidden="true"></i></a># ENDIF #
+				</div>
 				# IF C_PAGINATION # # INCLUDE PAGINATION # # ENDIF #
 			</div>
 		</div>
