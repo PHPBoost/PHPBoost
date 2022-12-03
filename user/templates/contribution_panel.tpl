@@ -61,92 +61,92 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_ENTITLED_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.title}
-												<span class="html-table-header-sortable# IF C_ORDER_ENTITLED_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_ENTITLED_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_MODULE_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_MODULE_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_MODULE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.module}
-												<span class="html-table-header-sortable# IF C_ORDER_MODULE_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_MODULE_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_MODULE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_STATUS_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_STATUS_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.status}
-												<span class="html-table-header-sortable# IF C_ORDER_STATUS_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_STATUS_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_CREATION_DATE_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.creation.date}
-												<span class="html-table-header-sortable# IF C_ORDER_CREATION_DATE_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_CREATION_DATE_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_FIXING_DATE_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_FIXING_DATE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@contribution.closing.date}
-												<span class="html-table-header-sortable# IF C_ORDER_FIXING_DATE_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_FIXING_DATE_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_FIXING_DATE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_AUTHOR_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_AUTHOR_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_AUTHOR_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@common.author}
-												<span class="html-table-header-sortable# IF C_ORDER_AUTHOR_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_AUTHOR_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_AUTHOR_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>
 												</span>
 											</th>
-											<th>
-												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_ASC # sort-active# ENDIF #">
+											<th class="sortable-thead">
+												<span class="html-table-header-sortable sortable-desc# IF C_ORDER_REFEREE_ASC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_REFEREE_ASC}" aria-label="{@common.sort.asc}">
 														<i class="fa fa-caret-up" aria-hidden="true"></i>
 													</a>
 												</span>
 												{@user.referee}
-												<span class="html-table-header-sortable# IF C_ORDER_REFEREE_DESC # sort-active# ENDIF #">
+												<span class="html-table-header-sortable sortable-asc# IF C_ORDER_REFEREE_DESC # sort-active# ENDIF #">
 													<a class="offload" href="{U_ORDER_REFEREE_DESC}" aria-label="{@common.sort.desc}">
 														<i class="fa fa-caret-down" aria-hidden="true"></i>
 													</a>

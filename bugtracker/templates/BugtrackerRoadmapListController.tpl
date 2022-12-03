@@ -129,3 +129,12 @@
 # ELSE #
 	<div class="message-helper bgc notice">{@bugtracker.notice.version}</div>
 # ENDIF #
+<script>
+	// Highlight current order
+	let url = window.location.href,
+		link = jQuery('.html-table-header-sortable a');
+	jQuery(link).each(function() {
+		if(url.indexOf(jQuery(this).attr('href')) != -1)
+			jQuery(this).parent().toggleClass('sort-active');
+	});
+</script>

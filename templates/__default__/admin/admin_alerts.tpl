@@ -149,8 +149,10 @@
 </div>
 <script>
 	// Highlight current order
-	if(window.location.search)
-		jQuery('.html-table-header-sortable a[href*="' + window.location.search + '"]').parent().addClass('sort-active');
-	else
-		jQuery('.html-table-header-sortable').first().addClass('sort-active');
+	let url = window.location.href,
+		link = jQuery('.html-table-header-sortable a');
+	jQuery(link).each(function() {
+		if(url.indexOf(jQuery(this).attr('href')) != -1)
+			jQuery(this).parent().addClass('sort-active');
+	});
 </script>
