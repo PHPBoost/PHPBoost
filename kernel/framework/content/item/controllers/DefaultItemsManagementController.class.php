@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 12
+ * @version     PHPBoost 6.0 - last update: 2022 12 03
  * @since       PHPBoost 6.0 - 2020 01 16
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -39,7 +39,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			),
 			$this->get_additional_html_table_columns(),
 			array(
-				new HTMLTableColumn($this->lang['common.status.publication'], 'published'),
+				new HTMLTableColumn($this->lang['common.status'], 'published'),
 				new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
 			)
 		);
