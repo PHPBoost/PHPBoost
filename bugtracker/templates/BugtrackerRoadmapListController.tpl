@@ -135,6 +135,6 @@
 		link = jQuery('.html-table-header-sortable a');
 	jQuery(link).each(function() {
 		if(url.indexOf(jQuery(this).attr('href')) != -1)
-			jQuery(this).parent().toggleClass('sort-active');
+			jQuery(this).parent().addClass('sort-active');
 	});
 </script>
