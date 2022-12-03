@@ -6,21 +6,21 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>
-							<span class="html-table-header-sortable">
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc">
 								<a class="offload" href="{LINK_BUG_ID_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 							</span>
 							{@common.id}
-							<span class="html-table-header-sortable">
+							<span class="html-table-header-sortable sortable-asc">
 								<a class="offload" href="{LINK_BUG_ID_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 							</span>
 						</th>
-						<th class="col-30P">
-							<span class="html-table-header-sortable">
+						<th class="col-30P sortable-thead">
+							<span class="html-table-header-sortable sortable-desc">
 								<a class="offload" href="{LINK_BUG_TITLE_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 							</span>
 							{@common.title}
-							<span class="html-table-header-sortable">
+							<span class="html-table-header-sortable sortable-asc">
 								<a class="offload" href="{LINK_BUG_TITLE_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 							</span>
 						</th>
@@ -44,21 +44,21 @@
 								{@bugtracker.detected.in}
 							</th>
 						# ENDIF #
-						<th>
-							<span class="html-table-header-sortable">
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc">
 								<a class="offload" href="{LINK_BUG_STATUS_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 							</span>
 							{@common.informations}
-							<span class="html-table-header-sortable">
+							<span class="html-table-header-sortable sortable-asc">
 								<a class="offload" href="{LINK_BUG_STATUS_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 							</span>
 						</th>
-						<th>
-							<span class="html-table-header-sortable">
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc">
 								<a class="offload" href="{LINK_BUG_DATE_TOP}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
 							</span>
 							{@bugtracker.solved.date}
-							<span class="html-table-header-sortable">
+							<span class="html-table-header-sortable sortable-asc">
 								<a class="offload" href="{LINK_BUG_DATE_BOTTOM}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
 							</span>
 						</th>

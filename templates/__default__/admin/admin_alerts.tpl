@@ -89,25 +89,25 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>
-							<span class="html-table-header-sortable"><a href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc"><a href="{U_ORDER_ENTITLED_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
 							{@common.type}
-							<span class="html-table-header-sortable"><a href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
+							<span class="html-table-header-sortable sortable-asc"><a href="{U_ORDER_ENTITLED_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
-						<th>
-							<span class="html-table-header-sortable"><a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc"><a href="{U_ORDER_CREATION_DATE_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
 							{@common.creation.date}
-							<span class="html-table-header-sortable"><a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
+							<span class="html-table-header-sortable sortable-asc"><a href="{U_ORDER_CREATION_DATE_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
-						<th>
-							<span class="html-table-header-sortable"><a href="{U_ORDER_PRIORITY_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc"><a href="{U_ORDER_PRIORITY_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
 							{@admin.priority}
-							<span class="html-table-header-sortable"><a href="{U_ORDER_PRIORITY_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
+							<span class="html-table-header-sortable sortable-asc"><a href="{U_ORDER_PRIORITY_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
-						<th>
-							<span class="html-table-header-sortable"><a href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
+						<th class="sortable-thead">
+							<span class="html-table-header-sortable sortable-desc"><a href="{U_ORDER_STATUS_ASC}" aria-label="{@common.sort.asc}"><i class="fa fa-caret-up" aria-hidden="true"></i></a></span>
 							{@common.actions}
-							<span class="html-table-header-sortable"><a href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
+							<span class="html-table-header-sortable sortable-asc"><a href="{U_ORDER_STATUS_DESC}" aria-label="{@common.sort.desc}"><i class="fa fa-caret-down" aria-hidden="true"></i></a></span>
 						</th>
 					</tr>
 				</thead>

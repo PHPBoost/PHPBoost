@@ -49,10 +49,10 @@
 										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="{@common.select.elements}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
 										# START header_column #
 											<th
-												# IF header_column.C_CSS_CLASSES # class="{header_column.CSS_CLASSES}"# ENDIF #
+												class="# IF header_column.C_CSS_CLASSES #{header_column.CSS_CLASSES}# ENDIF ## IF header_column.C_SORTABLE # sortable-thead# ENDIF #"
 												# IF header_column.C_CSS_STYLE # style="{header_column.CSS_STYLE}"# ENDIF #>
 												# IF header_column.C_SORTABLE #
-													<span class="html-table-header-sortable# IF header_column.C_SORT_DESC_SELECTED # sort-active# ENDIF #">
+													<span class="html-table-header-sortable sortable-desc# IF header_column.C_SORT_DESC_SELECTED # sort-active# ENDIF #">
 														<a href="{header_column.U_SORT_DESC}" aria-label="{@common.sort.desc}">
 															<i class="fa fa-caret-up" aria-hidden="true"></i>
 														</a>
@@ -60,7 +60,7 @@
 												# ENDIF #
 												<span class="html-table-header-name# IF header_column.C_SR_ONLY # sr-only# ENDIF #">{header_column.NAME}</span>
 												# IF header_column.C_SORTABLE #
-													<span class="html-table-header-sortable# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #">
+													<span class="html-table-header-sortable sortable-asc# IF header_column.C_SORT_ASC_SELECTED # sort-active# ENDIF #">
 														<a href="{header_column.U_SORT_ASC}" aria-label="{@common.sort.asc}">
 															<i class="fa fa-caret-down" aria-hidden="true"></i>
 														</a>

@@ -147,7 +147,6 @@ tfoot td select { padding: 0.1618em 0.309em; }
 	display: block;
 	width: 100%;
 	text-align: left;
-	vertical-align: top;
 }
 
 .bt tbody td:before {
@@ -182,10 +181,21 @@ tfoot td select { padding: 0.1618em 0.309em; }
 }
 
 /* --- Sortable filters ----------------------------------------------------- */
+th.sortable-thead { 
+	position: relative; 
+	padding-bottom: 1.809em;
+}
+
 .html-table-header-sortable {
 	display: none;
+	position:absolute;
+	bottom: 0.228em;
+	left: 50%;
 	padding: 0.309em 0;
 }
+
+.sortable-desc { transform: translateX(-120%); }
+.sortable-asc  { transform: translateX(20%); }
 
 .html-table-header-sortable a {
 	padding: 0 0.309em;
@@ -194,8 +204,8 @@ tfoot td select { padding: 0.1618em 0.309em; }
 	border-color: transparent;
 }
 
-@media (min-width: 769px) {
-	.html-table-header-sortable { display: inline-block; }
+@media (min-width: 768px) {
+	.html-table-header-sortable { display: table; }
 }
 
 /* --- Options -------------------------------------------------------------- */
