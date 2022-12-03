@@ -19,7 +19,10 @@
 	}
 </script>
 <div class="bugtracker-filter">
-	<a href="#" onclick="toggle_filters_table(); return false;" class="cssmenu-title"><i class="fa fa-filter" aria-hidden="true"></i> # IF C_SEVERAL_FILTERS #{@common.filters}# ELSE #{@common.filter}# ENDIF #</a>
+	<a href="#" onclick="toggle_filters_table(); return false;" class="cssmenu-title">
+		<i class="fa fa-filter" aria-hidden="true"></i> 
+		&nbsp;# IF C_SEVERAL_FILTERS # {@common.filters}# ELSE # {@common.filter}# ENDIF #
+	</a>
 </div>
 <div class="responsive-table">
 	<table id="table_filters" class="table table-form"# IF NOT C_HAS_SELECTED_FILTERS # style="display: none;"# ENDIF #>

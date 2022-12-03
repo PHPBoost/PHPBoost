@@ -384,7 +384,7 @@
 
 .cssmenu-group li:last-child .cssmenu-title { border-right-width: 1px; }
 
-.cssmenu-group .cssmenu-title-icon { padding: 0.5em 0.482em 0.5em; }
+.cssmenu-group .cssmenu-title-icon { padding: 0 0.618em 0 0.809em; }
 
 /* --- Small screens cssmenu-group variant --- */
 .cssmenu-group.small-screen ul li .cssmenu-title { padding: 0.309em 0.618em; }
