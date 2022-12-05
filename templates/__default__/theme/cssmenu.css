@@ -386,6 +386,11 @@
 
 .cssmenu-group .cssmenu-title-icon { padding: 0 0.618em 0 0.809em; }
 
+.cssmenu-group .cssmenu-title.cssmenu-title-icon {
+	padding: 6px 6px 7px;
+	border-width: 1px 0 1px 1px;
+}
+
 /* --- Small screens cssmenu-group variant --- */
 .cssmenu-group.small-screen ul li .cssmenu-title { padding: 0.309em 0.618em; }
 
