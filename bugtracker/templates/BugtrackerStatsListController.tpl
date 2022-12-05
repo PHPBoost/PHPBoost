@@ -4,7 +4,7 @@
     google.setOnLoadCallback(drawChart);
     function drawChart() {
         var status_chart_data = google.visualization.arrayToDataTable([
-            ['${escapejs(@common.status)}, ${TextHelper::to_js_string(@common.items.number)}],
+            [${escapejs(@common.status)}, ${TextHelper::to_js_string(@common.items.number)}],
             # START status #
                 ['{status.NAME}',     {status.NUMBER}],
             # END status #
