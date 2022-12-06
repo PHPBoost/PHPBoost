@@ -1,3 +1,4 @@
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/accordion# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/autocomplete# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/basictable# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/lightcase# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
@@ -74,9 +75,12 @@
 
 // Multitabs
     jQuery('.modal-container [data-modal]').multiTabs({ pluginType: 'modal' });
-    jQuery('.accordion-container.basic [data-accordion]').multiTabs({ pluginType: 'accordion'});
-    jQuery('.accordion-container.siblings [data-accordion]').multiTabs({ pluginType: 'accordion', accordionSiblings: true });
     jQuery('.tabs-container [data-tabs]').multiTabs({ pluginType: 'tabs' });
+	
+	jQuery('.multiple-accordion').accordion({});
+	jQuery('.single-accordion').accordion({
+		openSingle: true
+	});
 
 // Wizard
     jQuery('.wizard-container').wizard();
