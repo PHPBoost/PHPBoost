@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.0 - last update: 2022 12 06
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -43,7 +43,7 @@ class FaqPendingItemsController extends DefaultModuleController
 			'C_ITEMS'            => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS'    => true,
 			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
-			'C_BASIC_VIEW'       => $this->config->get_display_type() == FaqConfig::BASIC_VIEW,
+			'C_SINGLE_VIEW'              => $this->config->get_display_type() == FaqConfig::SIBLINGS_VIEW,
 			'C_DISPLAY_CONTROLS' => $this->config->are_control_buttons_displayed(),
 
 			'ITEMS_NUMBER' => $result->get_rows_count()

@@ -92,25 +92,11 @@
 	# IF C_ITEMS #
 		<div class="sub-section">
 			<div class="content-container">
-				<div class="accordion-container# IF C_DISPLY_BASIC # basic# ELSE # siblings# ENDIF #">
-					# IF C_DISPLAY_CONTROLS #
-						<div class="accordion-controls">
-							<span class="open-all-accordions" aria-label="{@faq.show.all.contents}"><i class="fa fa-fw fa-chevron-down"></i></span>
-							<span class="close-all-accordions" aria-label="{@faq.hide.all.contents}"><i class="fa fa-fw fa-chevron-up"></i></span>
-						</div>
-					# ENDIF #
-					<nav class="accordion-nav">
-						<ul class="accordion-bordered">
-							# START items #
-								<li id="question-title-{items.ID}" class="category-{items.CATEGORY_ID}">
-									<a href="#" data-accordion data-target="question{items.ID}">{items.TITLE}</a>
-								</li>
-							# END items #
-						</ul>
-					</nav>
+				<div class="accordion-container">
 					# START items #
-						<article id="question{items.ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="accordion accordion-animation faq-item several-items# IF items.C_NEW_CONTENT # new-content# ENDIF #">
-							<div class="content-panel faq-answer-container" itemprop="text">
+						<article id="question{items.ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="# IF C_SINGLE_VIEW #single# ELSE #multiple# ENDIF #-accordion faq-item several-items# IF items.C_NEW_CONTENT # new-content# ENDIF #">
+							<span class="accordion-trigger">{items.TITLE}</span>
+							<div class="accordion-content faq-answer-container" itemprop="text">
 								<div class="controls align-right">
 									# IF C_PENDING_ITEMS #{items.ITEM_DATE} | # ENDIF #
 									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>

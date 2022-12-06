@@ -11,7 +11,7 @@
 .single-accordion:first-child,
 .multiple-accordion:first-child { margin-top: 0; }
 
-.accordion-trigger, 
+.accordion-trigger > button, 
 .accordion-content { padding: 0.618em; }
 
 .accordion-trigger {

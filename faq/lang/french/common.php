@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 09
+ * @version     PHPBoost 6.0 - last update: 2022 12 06
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -34,8 +34,8 @@ $lang['faq.hide.all.contents'] = 'Cacher toutes les réponses';
 
 //config
 $lang['faq.config.accordion']             = 'Type d\'affichage des réponses';
-$lang['faq.config.basic.view']            = 'Affichage indépendant';
-$lang['faq.config.siblings.view']         = 'Affichage séparé';
+$lang['faq.config.basic.view']            = 'Affichage multiple';
+$lang['faq.config.siblings.view']         = 'Affichage unique';
 $lang['faq.config.display.controls']      = 'Afficher le contrôle total';
 $lang['faq.config.display.controls.clue'] = 'Afficher les boutons pour ouvrir/fermer toutes les réponses';
 

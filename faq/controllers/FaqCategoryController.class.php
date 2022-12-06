@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 08
+ * @version     PHPBoost 6.0 - last update: 2022 12 06
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -80,7 +80,7 @@ class FaqCategoryController extends DefaultModuleController
 			'C_SUB_CATEGORIES'           => $categories_number > 0,
 			'C_ITEMS'                    => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS'            => $result->get_rows_count() > 1,
-			'C_BASIC_VIEW'               => $this->config->get_display_type() == FaqConfig::BASIC_VIEW,
+			'C_SINGLE_VIEW'              => $this->config->get_display_type() == FaqConfig::SIBLINGS_VIEW,
 			'C_DISPLAY_CONTROLS'         => $this->config->are_control_buttons_displayed(),
 			'C_DISPLAY_REORDER_LINK'     => $result->get_rows_count() > 1 && CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id())->moderation(),
 			'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
