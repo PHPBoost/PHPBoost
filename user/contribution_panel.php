@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 09 29
+ * @version     PHPBoost 6.0 - last update: 2022 12 07
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -156,7 +156,7 @@ if ($contribution_id > 0)
 	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
 
 	$view->put_all(array_merge(
-		Date::get_array_tpl_vars($this_contribution->get_creation_date(), 'creation_date'),
+		Date::get_array_tpl_vars($contribution->get_creation_date(), 'creation_date'),
 		array(
 		'C_WRITE_AUTH'               => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
@@ -185,7 +185,7 @@ if ($contribution_id > 0)
 		$fixer_group_color = User::get_group_color($fixer['user_groups'], $fixer['level']);
 
 		$view->put_all(array_merge(
-			Date::get_array_tpl_vars($this_contribution->get_fixing_date(), 'fixing_date'),
+			Date::get_array_tpl_vars($contribution->get_fixing_date(), 'fixing_date'),
 			array(
 			'C_CONTRIBUTION_FIXED'  => true,
 			'C_REFEREE_GROUP_COLOR' => !empty($fixer_group_color),
@@ -241,40 +241,40 @@ else
 	$order = $order == 'desc' ? 'desc' : 'asc';
 
 	// Listing contributions
-	foreach (ContributionService::get_all_contributions($criteria, $order) as $this_contribution)
+	foreach (ContributionService::get_all_contributions($criteria, $order) as $contribution)
 	{
 		// Display of contribution member
-		if (AppContext::get_current_user()->check_auth($this_contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || AppContext::get_current_user()->get_id() == $this_contribution->get_poster_id())
+		if (AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) || AppContext::get_current_user()->get_id() == $contribution->get_poster_id())
 		{
 			// Display conditions
 			if ($num_contributions > CONTRIBUTIONS_PER_PAGE * ($page - 1) && $num_contributions <= CONTRIBUTIONS_PER_PAGE * $page)
 			{
-				$poster_group_color = User::get_group_color($this_contribution->get_poster_groups(), $this_contribution->get_poster_level());
-				$fixer_group_color = User::get_group_color($this_contribution->get_fixer_groups(), $this_contribution->get_fixer_level());
+				$poster_group_color = User::get_group_color($contribution->get_poster_groups(), $contribution->get_poster_level());
+				$fixer_group_color = User::get_group_color($contribution->get_fixer_groups(), $contribution->get_fixer_level());
 
 				$view->assign_block_vars('contributions', array_merge(
-					Date::get_array_tpl_vars($this_contribution->get_creation_date(), 'creation_date'),
-					Date::get_array_tpl_vars($this_contribution->get_fixing_date(), 'fixing_date'),
+					Date::get_array_tpl_vars($contribution->get_creation_date(), 'creation_date'),
+					Date::get_array_tpl_vars($contribution->get_fixing_date(), 'fixing_date'),
 					array(
 					'C_AUTHOR_GROUP_COLOR'  => !empty($poster_group_color),
 					'C_REFEREE_GROUP_COLOR' => !empty($fixer_group_color),
 
-					'ENTITLED'            => $this_contribution->get_entitled(),
-					'MODULE'              => $this_contribution->get_module_name(),
-					'STATUS'              => $this_contribution->get_status_name(),
-					'POSTER'              => $this_contribution->get_poster_login(),
-					'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($this_contribution->get_poster_level()),
+					'ENTITLED'            => $contribution->get_entitled(),
+					'MODULE'              => $contribution->get_module_name(),
+					'STATUS'              => $contribution->get_status_name(),
+					'POSTER'              => $contribution->get_poster_login(),
+					'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($contribution->get_poster_level()),
 					'AUTHOR_GROUP_COLOR'  => $poster_group_color,
-					'FIXER'               => $this_contribution->get_fixer_login(),
-					'REFEREE_LEVEL_CLASS' => UserService::get_level_class($this_contribution->get_fixer_level()),
+					'FIXER'               => $contribution->get_fixer_login(),
+					'REFEREE_LEVEL_CLASS' => UserService::get_level_class($contribution->get_fixer_level()),
 					'REFEREE_GROUP_COLOR' => $fixer_group_color,
 					'ACTIONS'             => '',
 
-					'U_REFEREE_PROFILE' => UserUrlBuilder::profile($this_contribution->get_fixer_id())->rel(),
-					'U_AUTHOR_PROFILE'  => UserUrlBuilder::profile($this_contribution->get_poster_id())->rel(),
-					'U_CONSULT'         => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $this_contribution->get_id()),
-					'C_FIXED'           => $this_contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
-					'C_PROCESSING'      => $this_contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
+					'U_REFEREE_PROFILE' => UserUrlBuilder::profile($contribution->get_fixer_id())->rel(),
+					'U_AUTHOR_PROFILE'  => UserUrlBuilder::profile($contribution->get_poster_id())->rel(),
+					'U_CONSULT'         => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $contribution->get_id()),
+					'C_FIXED'           => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
+					'C_PROCESSING'      => $contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
 				)));
 			}
 
