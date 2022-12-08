@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 12 08
  * @since       PHPBoost 3.0 - 2010 12 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,23 +15,23 @@
 class MemberShortTextExtendedField extends AbstractMemberExtendedField
 {
 	public static $brands_pictures_list = array(
-		'bitbucket' => array('aria-label' => 'Bitbucket', 'picture' => 'fa-bitbucket'),
-		'deviantart' => array('aria-label' => 'Deviantart', 'picture' => 'fa-deviantart'),
-		'facebook' => array('aria-label' => 'Facebook', 'picture' => 'fa-facebook'),
-		'github' => array('aria-label' => 'Github', 'picture' => 'fa-github'),
-		'google' => array('aria-label' => 'Google+', 'picture' => 'fa-google-plus-g'),
-		'hotmail' => array('aria-label' => 'Hotmail', 'picture' => 'fa-windows'),
-		'instagram' => array('aria-label' => 'Instagram', 'picture' => 'fa-instagram'),
-		'linkedin' => array('aria-label' => 'Linkedin', 'picture' => 'fa-linkedin'),
-		'live' => array('aria-label' => 'MSN', 'picture' => 'fa-windows'),
-		'msn' => array('aria-label' => 'MSN', 'picture' => 'fa-windows'),
-		'outlook' => array('aria-label' => 'Outlook', 'picture' => 'fa-windows'),
-		'skype' => array('aria-label' => 'Skype', 'picture' => 'fa-skype'),
-		'steam' => array('aria-label' => 'Steam', 'picture' => 'fa-steam'),
-		'twitch' => array('aria-label' => 'Twitch', 'picture' => 'fa-twitch'),
-		'twitter' => array('aria-label' => 'Twitter', 'picture' => 'fa-twitter'),
-		'yahoo' => array('aria-label' => 'Yahoo', 'picture' => 'fa-yahoo'),
-		'youtube' => array('aria-label' => 'Youtube', 'picture' => 'fa-youtube')
+		'bitbucket' => array('title' => 'Bitbucket', 'picture' => 'fa-bitbucket'),
+		'deviantart' => array('title' => 'Deviantart', 'picture' => 'fa-deviantart'),
+		'facebook' => array('title' => 'Facebook', 'picture' => 'fa-facebook'),
+		'github' => array('title' => 'Github', 'picture' => 'fa-github'),
+		'google' => array('title' => 'Google+', 'picture' => 'fa-google-plus-g'),
+		'hotmail' => array('title' => 'Hotmail', 'picture' => 'fa-windows'),
+		'instagram' => array('title' => 'Instagram', 'picture' => 'fa-instagram'),
+		'linkedin' => array('title' => 'Linkedin', 'picture' => 'fa-linkedin'),
+		'live' => array('title' => 'Live', 'picture' => 'fa-windows'),
+		'msn' => array('title' => 'MSN', 'picture' => 'fa-windows'),
+		'outlook' => array('title' => 'Outlook', 'picture' => 'fa-windows'),
+		'skype' => array('title' => 'Skype', 'picture' => 'fa-skype'),
+		'steam' => array('title' => 'Steam', 'picture' => 'fa-steam'),
+		'twitch' => array('title' => 'Twitch', 'picture' => 'fa-twitch'),
+		'twitter' => array('title' => 'Twitter', 'picture' => 'fa-twitter'),
+		'yahoo' => array('title' => 'Yahoo', 'picture' => 'fa-yahoo'),
+		'youtube' => array('title' => 'Youtube', 'picture' => 'fa-youtube')
 	);
 
 	public function __construct()
