@@ -87,12 +87,12 @@
 												<a href="#" aria-label="{@common.move.down}" id="move-down-{items.ID}" onclick="return false;"><i class="fa fa-fw fa-arrow-down" aria-hidden="true"></i></a>
 											# ENDIF #
 											<a class="offload" href="{items.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-											<a href="#" onclick="return false;" aria-label="{@common.delete}" id="delete-{items.ID}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+											<a href="{items.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 										</div>
 
 										<script>
 											jQuery(document).ready(function() {
-												var pages_question = new PagesItem({items.ID}, PagesItems);
+												var pages_item = new PagesItem({items.ID}, PagesItems);
 
 												if (PagesItems.items_number > 1) {
 													jQuery('#move-up-{items.ID}').on('click',function(){
