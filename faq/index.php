@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 23
+ * @version     PHPBoost 6.0 - last update: 2022 12 08
  * @since       PHPBoost 4.0 - 2014 09 02
 */
 
@@ -26,7 +26,6 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('FaqItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('FaqItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
 	new UrlControllerMapper('FaqDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
-	new UrlControllerMapper('FaqAjaxDeleteItemController', '`^/ajax_delete/?$`'),
 	new UrlControllerMapper('FaqReorderItemsController', '`^/reorder/([0-9]+)-?([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
 
 	new UrlControllerMapper('FaqPendingItemsController', '`^/pending(?:/([a-z]+))?/?([a-z]+)?/?$`', array('field', 'sort')),

@@ -1,33 +1,3 @@
-# IF C_ITEMS #
-	<script>
-		var questions_number = {ITEMS_NUMBER};
-
-		function delete_question(id_question)
-		{
-			if (confirm(${escapejs(@warning.confirm.delete)}))
-			{
-				jQuery.ajax({
-					url: '${relative_url(FaqUrlBuilder::ajax_delete())}',
-					type: "post",
-					dataType: "json",
-					data: {'id' : id_question, 'token' : '{TOKEN}'},
-					success: function(returnData) {
-						if(returnData.deleted_id > 0) {
-							questions_number--;
-							jQuery("#question-title-" + returnData.deleted_id).remove();
-							jQuery("#question" + returnData.deleted_id).remove();
-
-							if (questions_number == 0) {
-								jQuery(".accordion-container").hide();
-								jQuery("#no-item-message").show();
-							}
-						}
-					}
-				});
-			}
-		}
-	</script>
-# ENDIF #
 # INCLUDE MESSAGE_HELPER #
 <section id="module-faq" class="several-items">
 	<header class="section-header">
@@ -104,7 +74,7 @@
 										<a class="offload" href="{items.U_EDIT}"aria-label="{@common.edit}"><i class="far fa-fw fa-edit fa-fw" aria-hidden="true"></i> </a>
 									# ENDIF #
 									# IF items.C_DELETE #
-										<a href="#" aria-label="{@common.delete}" onclick="delete_question({items.ID});return false;"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
+										<a href="{items.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i> </a>
 									# ENDIF #
 								</div>
 								<div class="content">{items.CONTENT}</div>
