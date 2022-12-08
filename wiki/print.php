@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 27
+ * @version     PHPBoost 6.0 - last update: 2022 12 08
  * @since       PHPBoost 2.0 - 2008 09 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,6 +59,7 @@ if (empty($article_infos['id']))
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $template = new FileTemplate('framework/content/print.tpl');
+$template->add_lang(LangLoader::get_all_langs('wiki'));
 
 $template->put_all(array(
 	'PAGE_TITLE' => stripslashes($article_infos['title']) . ($config->get_wiki_name() ? $config->get_wiki_name() : $lang['wiki.module.title']),
