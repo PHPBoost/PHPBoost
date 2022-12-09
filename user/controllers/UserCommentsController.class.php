@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 12 08
  * @since       PHPBoost 3.0 - 2012 02 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -125,7 +125,9 @@ class UserCommentsController extends AbstractController
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$template->assign_block_vars('comments', array(
+			$template->assign_block_vars('comments', array_merge(
+				Date::get_array_tpl_vars($timestamp,'date'),
+				array(
 				'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
 				'C_VISITOR'              => empty($row['display_name']),
 				'C_VIEW_TOPIC'           => true,
@@ -141,8 +143,6 @@ class UserCommentsController extends AbstractController
 
 				'COMMENT_NUMBER' => $this->comments_number,
 				'ID_COMMENT'     => $id,
-				'DATE'           => $timestamp->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-				'DATE_ISO8601'   => $timestamp->format(Date::FORMAT_ISO8601),
 				'MESSAGE'        => FormatingHelper::second_parse($row['message']),
 
 				// User
@@ -151,7 +151,7 @@ class UserCommentsController extends AbstractController
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'L_LEVEL'     => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
-			));
+			)));
 
 			$template->put_all(array(
 				'MODULE_ID'    => $row['module_id'],
