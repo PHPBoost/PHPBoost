@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 12 09
  * @since       PHPBoost 3.0 - 2011 07 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -90,7 +90,7 @@ class UserLostPasswordController extends AbstractController
 		$content = StringVars::replace_vars($this->lang['user.forgotten.password.email.content'], $parameters);
 		AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content);
 
-		$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotteb.password.success'], MessageHelper::SUCCESS));
+		$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotten.password.success'], MessageHelper::SUCCESS));
 	}
 
 	private function get_user()
