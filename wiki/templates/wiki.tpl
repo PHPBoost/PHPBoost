@@ -164,3 +164,8 @@
 		})
 	</script>
 # ENDIF #
+<script>
+	let hash = window.location.hash;
+	if (hash == '#preview')
+		window.history.pushState('', '', window.location.pathname);
+</script>

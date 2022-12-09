@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2022 12 09
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -311,6 +311,11 @@ $content_editor = AppContext::get_content_formatting_service()->get_default_fact
 $editor = $content_editor->get_editor();
 $editor->set_identifier('content');
 
+if ((bool)retrieve(POST, 'url', true))
+	$target = url('post.php' . ($is_cat == 1 ? '?type=cat#preview' : '#preview'));
+else
+	$target = url('post.php' . ($is_cat == 1 ? '?type=cat' : ''));
+	
 $view->put_all(array(
 	'C_CAPTCHA'       => !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'C_IS_CATEGORY'   => $is_cat == 1,
@@ -328,7 +333,7 @@ $view->put_all(array(
 	'IS_CATEGORY'   => $is_cat,
 	'CAPTCHA'       => $captcha->display(),
 
-	'U_TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat' : '')),
+	'U_TARGET' => url('post.php' . ($is_cat == 1 ? '?type=cat#preview' : '#preview'))
 ));
 
 //outils BBcode en javascript

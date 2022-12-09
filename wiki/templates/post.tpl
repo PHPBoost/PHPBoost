@@ -97,7 +97,7 @@
 						</div>
 						<fieldset class="fieldset-submit">
 							<legend>{@form.preview}</legend>
-							<button type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button>
+							<button id="preview-button" type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button>
 						</fieldset>
 						# START preview #
 							<div class="auto-resize xmlhttprequest-preview" id="preview">
@@ -155,8 +155,7 @@
 							<input type="hidden" name="is_cat" value="{IS_CATEGORY}">
 							<input type="hidden" name="id_edit" value="{ID_EDIT}">
 							<input type="hidden" name="token" value="{TOKEN}">
-							<!-- <button type="submit" class="button preview-button" name="preview" value="preview">{@form.preview}</button> -->
-							<button type="reset" class="button reset-button">{@form.reset}</button>
+							<button type="reset" class="button reset-button" name="default">{@form.reset}</button>
 						</div>
 					</fieldset>
 				</form>
@@ -164,4 +163,6 @@
 		</div>
 	</div>
 </section>
-<script>jQuery('.bbcode-bar > nav > ul').prepend(jQuery('.wikibar'));</script>
+<script>
+	jQuery('.bbcode-bar > nav > ul').prepend(jQuery('.wikibar'));
+</script>
