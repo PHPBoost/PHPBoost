@@ -5,7 +5,6 @@
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/linedtextarea# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/multitabs# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
-<script src="{PATH_TO_ROOT}/templates/__default__/plugins/owl.carousel# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/precode# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
