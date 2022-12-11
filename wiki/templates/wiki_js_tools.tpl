@@ -26,7 +26,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@wiki.insert.link}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@wiki.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@wiki.tag.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
 								</div>
 								<div class="cell-form">
 									<label for="bb_wiki_link" class="cell-label">{@wiki.link.title}</label>

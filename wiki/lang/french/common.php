@@ -202,7 +202,7 @@ $lang['wiki.rss.last.items'] = '%s : derniers articles';
 $lang['wiki.update.index'] = 'Modifier l\'accueil';
 $lang['wiki.move']         = 'Déplacer';
 $lang['wiki.rename']       = 'Renommer';
-$lang['wiki.tags.cancel']  = 'Annuler';
+$lang['wiki.tag.cancel']   = 'Annuler';
 
 // Tracked items
 $lang['wiki.tracked.items']             = 'Favoris';
