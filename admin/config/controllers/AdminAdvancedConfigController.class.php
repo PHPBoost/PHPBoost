@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2022 12 11
  * @since       PHPBoost 3.0 - 2011 07 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -101,7 +101,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
 		$fieldset->add_field( new FormFieldCheckbox('redirection_www_enabled', $this->lang['configuration.enable.redirection'], $this->server_environment_config->is_redirection_www_enabled(),
 			array(
-				'class' => 'custom-checkbox',
+				'class' => 'custom-checkbox top-field',
 				'description' => $redirection_www_enabled_clue,
 				'disabled' => $redirection_www_disabled,
 				'events' => array('click' => '
@@ -119,7 +119,10 @@ class AdminAdvancedConfigController extends DefaultAdminController
 				new FormFieldSelectChoiceOption($this->lang['configuration.redirection.with.www'], ServerEnvironmentConfig::REDIRECTION_WWW_WITH_WWW),
 				new FormFieldSelectChoiceOption($this->lang['configuration.redirection.without.www'], ServerEnvironmentConfig::REDIRECTION_WWW_WITHOUT_WWW)
 			),
-			array('hidden' => !$this->server_environment_config->is_redirection_www_enabled())
+			array(
+				'class' => 'top-field',
+				'hidden' => !$this->server_environment_config->is_redirection_www_enabled()
+			)
 		));
 
 		if ($request->get_is_https())
@@ -138,7 +141,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
 		$fieldset->add_field( new FormFieldCheckbox('redirection_https_enabled', $this->lang['configuration.enable.redirection.https'], $this->server_environment_config->is_redirection_https_enabled(),
 			array(
-				'class' => 'custom-checkbox',
+				'class' => 'custom-checkbox top-field',
 				'description' => $redirection_https_enabled_clue,
 				'disabled' => $redirection_https_disabled,
 				'events' => array('click' => '
@@ -156,6 +159,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
 		$fieldset->add_field( new FormFieldCheckbox('hsts_security_enabled', $this->lang['configuration.enable.hsts'], $this->server_environment_config->is_hsts_security_enabled(),
 			array(
+				'class' => 'custom-checkbox top-field',
 				'description' => $this->lang['configuration.hsts.clue'],
 				'hidden' => !$this->server_environment_config->is_redirection_https_enabled(),
 				'events' => array('click' => '
@@ -172,6 +176,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
 		$fieldset->add_field(new FormFieldNumberEditor('hsts_security_duration', $this->lang['configuration.hsts.duration'], $this->server_environment_config->get_config_hsts_security_duration(),
 			array(
+				'class' => 'top-field',
 				'min' => 1, 'max' => 365, 'required' => true,
 				'description' => $this->lang['configuration.hsts.duration.clue'],
 				'hidden' => !$this->server_environment_config->is_hsts_security_enabled()
@@ -181,6 +186,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
 		$fieldset->add_field(new FormFieldCheckbox('hsts_security_subdomain', $this->lang['configuration.hsts.subdomain'], $this->server_environment_config->is_hsts_security_subdomain_enabled(),
 			array(
+				'class' => 'custom-checkbox top-field',
 				'description' => $this->lang['configuration.hsts.subdomain.clue'],
 				'hidden' => !$this->server_environment_config->is_hsts_security_enabled()
 			)
