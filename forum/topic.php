@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 30
+ * @version     PHPBoost 6.0 - last update: 2022 12 11
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -457,7 +457,7 @@ while ( $row = $result->fetch() )
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
 					{
-						$button        = '<a href ="mailto:' . $row[$field_type] . '" class ="button small"><i class ="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$button        = '<a href="mailto:' . $row[$field_type] . '" class="button small"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 						$title         = $parameters['title'];
 						$icon_fa       = $parameters['picture'];
 						$unknown_field = false;
@@ -477,7 +477,7 @@ while ( $row = $result->fetch() )
 				{
 					if (TextHelper::strstr($row[$field_type], $id))
 					{
-						$button        = '<a href ="' . $row[$field_type] . '" class ="button small offload"><i class ="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
+						$button        = '<a href="' . $row[$field_type] . '" class="button small offload"><i class="fa ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 						$title         = $parameters['title'];
 						$icon_fa       = $parameters['picture'];
 						$unknown_field = false;

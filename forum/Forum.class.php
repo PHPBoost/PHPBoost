@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 22
+ * @version     PHPBoost 6.0 - last update: 2022 12 11
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -114,7 +114,7 @@ class Forum
 
 					PrivateMsg::start_conversation(
 						$row['user_id'],
-						$lang['forum.email.tit.e_new_post'],
+						$lang['forum.email.title.new.post'],
 						nl2br($content),
 						'-1',
 						PrivateMsg::SYSTEM_PM
