@@ -17,6 +17,8 @@ body {
     color: var(--txt-main);
 }
 
+.debugger { background-color: rgba(var(--darken), 0.2); }
+
 .bgc-main	{ background-color: var(--bgc-main); color: var(--txt-main); }
 .bgc-sub    { background-color: var(--bgc-sub); color: var(--txt-sub); }
 .bgc-alt	{ background-color: var(--bgc-alt); color: var(--txt-alt); }

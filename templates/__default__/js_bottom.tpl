@@ -145,6 +145,19 @@
 // Sidebar behaviour - needed to fix the BBCode troubles on long texts
 	jQuery('#menu-left, #menu-right').theiaStickySidebar();
 
+// Add outline on element if only Tab key is pressed
+jQuery('*').on('focus', function(e) {
+	$this = jQuery(this);
+    jQuery(window).keyup(function (e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if (code == 9) {
+			$this.addClass('focus-on-tab');
+        }
+    });
+}).on('click', function(e) {
+	jQuery(this).removeClass('focus-on-tab');
+});
+
 // Display the page only when it's loaded
 	jQuery(window).ready(function() {
 		jQuery('.content-preloader').animate({opacity: 1}, 300);

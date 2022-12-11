@@ -15,6 +15,12 @@
 	outline: none;
 }
 
+.focus-on-tab:focus,
+[type="checkbox"].focus-on-tab:focus + span::before { 
+	outline: 0.1618em double var(--question-tone);
+	outline-offset: 0.1618em;
+}
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -162,7 +168,19 @@ abbr {
 .blink { animation: blink 1.5s ease-in-out infinite; }
 
 /* --- Debug --- */
-.debugger { padding: 0.618em 1.618em; }
+.debugger { 
+	padding: 0.618em 1.618em; 
+	position: relative;
+	background-color: rgba(var(--darken), 0.2);
+}
+
+.debugger::before {
+	position: absolute;
+	content: 'debug';
+	font-size: 0.618em;
+	top: 0.228em;
+	left: 0.618em
+}
 
 
 /* --- Basic font ----------------------------------------------------------- */
