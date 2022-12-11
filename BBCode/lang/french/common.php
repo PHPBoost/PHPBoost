@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 17
+ * @version     PHPBoost 6.0 - last update: 2022 12 11
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,6 +17,7 @@
 
 $lang['bbcode.tags.add']     = 'Insérer';
 $lang['bbcode.tags.choice']  = 'Choisir';
+$lang['bbcode.tags.cancel']  = 'Annuler';
 $lang['bbcode.tags.options'] = 'Ajouter des options à la balise';
 $lang['bbcode.preview.text'] = 'Aperçu du texte';
 $lang['bbcode.class']        = 'Classes';
