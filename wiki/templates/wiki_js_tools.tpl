@@ -1,5 +1,5 @@
 <script>
-	var tinymce_editor       = {C_TINYMCE_EDITOR};
+	var tinymce_editor       = {C_TINYMCE_EDITOR} ? true : false;
 	var enter_text           = "{@wiki.warning.link.name}";
 	var title_link           = "{@wiki.link.title}";
 	var enter_paragraph_name = "{@wiki.warning.paragraph.name}";
@@ -13,18 +13,21 @@
 	<nav class="bbcode-containers">
 		<ul>
 			<li class="bbcode-group bbcode-text wikibar">
-				<span data-modal data-target="block-link" class="bbcode-group-title bbcode-button" aria-label="{@wiki.bbcode.wiki.icon}">
+				<a href="#wiki-tools" data-modal data-target="block-link" class="bbcode-group-title bbcode-button" aria-label="{@wiki.bbcode.wiki.icon}">
 					<i class="fa fa-fw fa-w"></i>
-				</span>
+				</a>
 				<ul id="wiki-paragraph-container" class="bbcode-container cell-list cell-list-inline cell-tile cell-modal modal-container">
 					<li class="bbcode-elements">
-						<span data-modal data-target="block-link" class="bbcode-button" aria-label="{@wiki.insert.link}">
+						<a href="#link-tag" data-modal data-target="block-link" class="bbcode-button" aria-label="{@wiki.insert.link}">
 							<i class="fa fa-link" aria-hidden="true"></i>
-						</span>
+						</a>
 						<div id="block-link" class="modal modal-animation">
 							<div class="close-modal">{@common.close}</div>
 							<div class="content-panel cell">
-								<div class="cell-header"><span class="cell-name">{@wiki.insert.link}</span></div>
+								<div class="cell-header">
+									<h6 class="cell-name">{@wiki.insert.link}</h6>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@wiki.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+								</div>
 								<div class="cell-form">
 									<label for="bb_wiki_link" class="cell-label">{@wiki.link.title}</label>
 									<div class="cell-input">
@@ -32,7 +35,7 @@
 									</div>
 								</div>
 								<div class="cell-footer cell-input">
-									<span class="button hide-modal close-bbcode-sub" onclick="insert_wiki_link();">{@form.insert}</span>
+									<a href="#link-tag-insert" class="button hide-modal close-bbcode-sub" onclick="insert_wiki_link();">{@form.insert}</a>
 								</div>
 							</div>
 						</div>

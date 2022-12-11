@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 09 19
+ * @version     PHPBoost 6.0 - last update: 2022 12 11
  * @since       PHPBoost 1.6 - 2006 12 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -202,6 +202,7 @@ $lang['wiki.rss.last.items'] = '%s : derniers articles';
 $lang['wiki.update.index'] = 'Modifier l\'accueil';
 $lang['wiki.move']         = 'Déplacer';
 $lang['wiki.rename']       = 'Renommer';
+$lang['wiki.tag.cancel']   = 'Annuler';
 
 // Tracked items
 $lang['wiki.tracked.items']             = 'Favoris';
