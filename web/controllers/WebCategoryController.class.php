@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 08
+ * @version     PHPBoost 6.0 - last update: 2022 12 14
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -319,7 +319,7 @@ class WebCategoryController extends DefaultModuleController
 
 	public static function get_view()
 	{
-		$object = new self();
+		$object = new self('web');
 		$object->init();
 		$object->check_authorizations();
 		$object->build_view(AppContext::get_request());

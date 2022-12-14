@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2022 12 14
  * @since       PHPBoost 3.0 - 2011 03 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -132,7 +132,7 @@ class NewsletterHomeController extends DefaultModuleController
 
 	public static function get_view()
 	{
-		$object = new self();
+		$object = new self('newsletter');
 		$object->check_authorizations();
 		$object->init();
 		$object->build_form(AppContext::get_request());

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 18
+ * @version     PHPBoost 6.0 - last update: 2022 12 14
  * @since       PHPBoost 4.1 - 2014 10 14
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -198,9 +198,8 @@ class ShoutboxHomeController extends DefaultModuleController
 
 	public static function get_view()
 	{
-		$object = new self();
+		$object = new self('shoutbox');
 		$object->check_authorizations();
-		$object->init();
 		$object->build_view();
 		return $object->view;
 	}
