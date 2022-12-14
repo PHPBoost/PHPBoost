@@ -150,7 +150,7 @@
 									<input type="checkbox" name="a{alert_list.ID}">
 								</td>
 								<td class="td20P">
-									<a class="offload" href="{alert_list.U_TITLE}"> <i class="far fa-edit"></i> {alert_list.TITLE}</a>
+									<a class="offload flex-between" href="{alert_list.U_TITLE}"> {alert_list.TITLE} <i class="far fa-edit"></i></a>
 								</td>
 								<td class="td20P">
 									<a class="offload" href="{alert_list.U_TOPIC}">{alert_list.TOPIC}</a>
@@ -195,9 +195,8 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th colspan="2">
-							{TOPIC}
-						</th>
+						<th>{@common.description}</th>
+						<th>{@common.content}</th>
 					</tr>
 				</thead>
 				<tbody>
