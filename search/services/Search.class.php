@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 23
+ * @version     PHPBoost 6.0 - last update: 2022 12 14
  * @since       PHPBoost 2.0 - 2008 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -261,22 +261,25 @@ class Search
 		// Checks results in cache
 		foreach ($requestAndResults as $module_name => $request)
 		{
-			if (!is_array($request))
+			if (!empty($request))
 			{
-				if (!$this->is_in_cache($module_name))
-				{   // If results are not in cache, adds them
-					if ($nbReqSEARCH > 0)
-					{
-						$reqSEARCH .= " UNION ";
-					}
+				if (!is_array($request))
+				{
+					if (!$this->is_in_cache($module_name))
+					{   // If results are not in cache, adds them
+						if ($nbReqSEARCH > 0)
+						{
+							$reqSEARCH .= " UNION ";
+						}
 
-					$reqSEARCH .= "(".trim( $request, ' ;' ).")";
-					$nbReqSEARCH++;
+						$reqSEARCH .= "(".trim( $request, ' ;' ).")";
+						$nbReqSEARCH++;
+					}
 				}
-			}
-			else
-			{
-				$results += $requestAndResults[$module_name];
+				else
+				{
+					$results += $requestAndResults[$module_name];
+				}
 			}
 		}
 
