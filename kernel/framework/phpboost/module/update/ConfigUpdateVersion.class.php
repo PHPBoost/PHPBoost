@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 03
+ * @version     PHPBoost 6.0 - last update: 2022 12 15
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -104,18 +104,27 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 					{
 						$set_new_property = 'set_' . $new_name;
 						$config->$set_new_property($property);
+						$modified_properties[] = $new_name;
 					}
 					else
 					{
 						$set_new_property = 'set_' . $new_name['parameter_name'];
 						
-						foreach ($new_name['values'] as $old_value_name => $new_value_name)
+						if (isset($new_name['values']))
 						{
-							if ($property == $old_value_name)
-								$config->$set_new_property($new_value_name);
+							foreach ($new_name['values'] as $old_value_name => $new_value_name)
+							{
+								if ($property == $old_value_name)
+									$config->$set_new_property($new_value_name);
+							}
+							$modified_properties[] = $new_name['parameter_name'];
+						}
+						else if (isset($new_name['value']))
+						{
+							$config->$set_new_property($new_name['value']);
+							$modified_properties[] = $new_name['parameter_name'];
 						}
 					}
-					$modified_properties[] = !is_array($new_name) ? $new_name : $new_name['parameter_name'];
 				}
 			}
 			
