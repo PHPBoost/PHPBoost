@@ -34,7 +34,7 @@
     --darken :   0, 0, 0;
     --lighten:   255, 255, 255;
 
-/* .link-color */
+/* a | .link-color */
     --main-rgb-d: 32, 58, 84;
     --main-dark:  #203A54;
     --main-rgb-t: 50, 100, 147;
@@ -90,7 +90,7 @@
     --error-rgb-l: 223, 59, 92;
     --error-light: #DF3B5C;
 
-/* .notation.star - .link-color-alt */
+/* .star */
     --star-rgb-d: 189, 135, 39;
     --star-dark:  #BD8727;
     --star-rgb-t: 224, 195, 65;

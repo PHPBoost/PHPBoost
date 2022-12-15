@@ -257,7 +257,7 @@
 					</ul>
 				</li>
 				<li class="mini-sandbox-switcher has-sub">
-					<span><i class="far fa-image fa-fw link-color-alt"></i> <span>{@sandbox.mini.themes.switcher}</span></span>
+					<span><i class="far fa-image fa-fw star"></i> <span>{@sandbox.mini.themes.switcher}</span></span>
 					<ul>
 						<li>
 							<a href="?switchtheme={DEFAULT_THEME}">

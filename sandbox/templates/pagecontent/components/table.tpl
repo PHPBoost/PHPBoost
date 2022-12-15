@@ -8,14 +8,14 @@
         </caption>
         <thead>
             <tr>
-                <th class="sortable-thead">
-                    <span class="html-table-header-sortable sortable-desc">
+                <th>
+                    <span class="html-table-header-sortable">
                         <a href="#" aria-label="{@sandbox.component.table.sort.down}">
                             <i class="fa fa-caret-up" aria-hidden="true"></i>
                         </a>
                     </span>
                     {@sandbox.component.table.name}
-                    <span class="html-table-header-sortable sortable-asc">
+                    <span class="html-table-header-sortable">
                         <a href="#" aria-label="{@sandbox.component.table.sort.up}">
                             <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </a>

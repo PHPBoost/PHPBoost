@@ -18,7 +18,7 @@
         <span class="pinned visitor">visitor</span>
         <span class="pinned custom-author">custom-author</span>
         <span class="pinned link-color">link-color</span>
-        <span class="pinned link-color-alt">link-color-alt</span>
+        <span class="pinned star">star</span>
         <span class="pinned logo-color">logo-color</span>
     </p>
     <p>
@@ -34,7 +34,7 @@
         <span class="pinned bgc visitor">visitor</span>
         <span class="pinned bgc custom-author">custom-author</span>
         <span class="pinned bgc link-color">link-color</span>
-        <span class="pinned bgc link-color-alt">link-color-alt</span>
+        <span class="pinned bgc star">star</span>
         <span class="pinned bgc logo-color">logo-color</span>
 
     </p>
@@ -51,7 +51,7 @@
         <span class="pinned bgc-full visitor">visitor</span>
         <span class="pinned bgc-full custom-author">custom-author</span>
         <span class="pinned bgc-full link-color">link-color</span>
-        <span class="pinned bgc-full link-color-alt">link-color-alt</span>
+        <span class="pinned bgc-full star">star</span>
         <span class="pinned bgc-full logo-color">logo-color</span>
     </p>
     <!-- Source code -->
