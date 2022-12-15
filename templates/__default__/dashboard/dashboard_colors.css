@@ -84,36 +84,7 @@ table thead th a { color: var(--txt-alt); }
 [type=password],
 [type=file],
 textarea,
-select { background-color: var(--bgc-sub); }
-
-[type=text]:hover,
-[type=email]:hover,
-[type=url]:hover,
-[type=number]:hover,
-[type=color]:hover,
-[type=tel]:hover,
-[type=search]:hover,
-[type=password]:hover,
-[type=file]:hover,
-textarea:hover,
-select:hover { background-color: var(--bgc-main); }
-
-[type=text]:focus,
-[type=email]:focus,
-[type=url]:focus,
-[type=number]:focus,
-[type=color]:focus,
-[type=tel]:focus,
-[type=search]:focus,
-[type=password]:focus,
-[type=file]:focus,
-textarea:focus,
-select:focus { background-color: var(--bgc-main); }
-
-[disabled],
-[disabled]:hover,
-[readonly],
-[readonly]:hover { background-color: var(--bgc-sub); }
+select { background-color: var(--bgc-main); }
 
 /* --- Checkbox --- */
 .mini-checkbox .checkbox [type="checkbox"] + span::before {
