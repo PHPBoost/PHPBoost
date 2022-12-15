@@ -127,18 +127,18 @@ ul.pagination a { padding: 0.309em; }
 }
 
 /* --- Unread messages --- */
-.forum-refresh {
-	position: relative;
-	float: left;
-}
+
+.forum-refresh { position: relative; }
 
 .forum-refresh #forum_block_forum_unread_top,
 .forum-refresh #forum_block_forum_unread_bottom {
 	position: absolute;
 	z-index: 100;
-	top: 100%;
-	right: -150px;
+	top: 0.618em;
+	right: -2.228em;
 }
+
+.refresh-table { background-color: var(--bgc-main); }
 
 .forum-notread {
 	padding: 0.228em;

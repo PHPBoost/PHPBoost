@@ -31,7 +31,7 @@
 									<div class="cssmenu-title">
 										<a class="offload" href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> <span id="nbr_unread_messages_bottom">{UNREAD_MESSAGES_NUMBER}</span> <span class="hidden-large-screens"> {@forum.unread.messages}</span></a>
 										<div class="forum-refresh">
-											<div id="forum_block_forum_unread_bottom" style="display: none;"></div>
+											<div id="forum_block_forum_unread_bottom" style="display: none;" onmouseout="forum_hide_block('forum_unread_bottom', 0);"></div>
 										</div>
 										<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_bottom');return false;" onmouseover="forum_hide_block('forum_unread_bottom', 1);" onmouseout="forum_hide_block('forum_unread_bottom', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" id="refresh_forum_unread_bottom"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
 									</div>

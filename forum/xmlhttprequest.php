@@ -81,7 +81,7 @@ if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
 
 		echo "array_unread_topics[0] = '" . $nbr_msg_not_read . "';\n";
 		echo "array_unread_topics[1] = '" . '<a class="small offload" href="' . PATH_TO_ROOT . '/forum/unread.php">' . addslashes($lang['forum.unread.messages']) . (AppContext::get_current_user()->get_id() !== -1 ? ' (' . $nbr_msg_not_read . ')' : '') . '</a>' . "';\n";
-		echo "array_unread_topics[2] = '" . '<div style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="module-table" style="margin:2px;width:99%">' . $content . "</table></div>';";
+		echo "array_unread_topics[2] = '" . '<div style="width:438px;height:' . max($height_visible_topics, 65) . 'px;overflow:auto;padding:0px;" onmouseover="forum_hide_block(\\\'forum_unread\\\', 1);" onmouseout="forum_hide_block(\\\'forum_unread\\\', 0);"><table class="table refresh-table">' . $content . "</table></div>';";
 	}
 	else
 		echo '';

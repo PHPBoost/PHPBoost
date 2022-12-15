@@ -23,11 +23,10 @@
 				if (array_unread_topics[0] > 0)
 					forum_display_block(divID);
 
-				document.getElementById('nbr_unread_topics_top').innerHTML = array_unread_topics[0];
-				document.getElementById('nbr_unread_topics_bottom').innerHTML = array_unread_topics[0];
 				document.getElementById('forum_block_' + divID).innerHTML = array_unread_topics[2];
 				document.getElementById('forum_block_' + divID).innerHTML = array_unread_topics[2];
-			} else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
+			} 
+			else if (xhr_object.readyState == 4 && xhr_object.responseText == '')
 			{
 				alert("{@warning.error}");
 				if (document.getElementById('refresh_' + divID))
@@ -56,7 +55,8 @@
 			block.style.display = 'block';
 			displayed_forum = true;
 			previous_forumblock = 'forum_block_' + divID;
-		} else
+		} 
+		else
 		{
 			block.style.display = 'none';
 			displayed_forum = false;
@@ -106,7 +106,7 @@
 							<div class="cssmenu-title">
 								<a class="offload" href="{U_UNREAD_MESSAGES}" aria-label="{@forum.unread.messages}"><i class="far fa-fw fa-file-alt" aria-hidden="true"></i> <span id="nbr_unread_topics_top">{UNREAD_MESSAGES_NUMBER}</span> <span class="hidden-large-screens">{@forum.unread.messages}</span></a>
 								<div class="forum-refresh">
-									<div id="forum_block_forum_unread_top" style="display: none;"></div>
+									<div id="forum_block_forum_unread_top" style="display: none;" onmouseout="forum_hide_block('forum_unread_top', 0);"></div>
 								</div>
 								<a href="#" class="reload-unread" onclick="XMLHttpRequest_unread_topics('forum_unread_top');return false;" onmouseover="forum_hide_block('forum_unread_top', 1);" onmouseout="forum_hide_block('forum_unread_top', 0);" aria-label="{@forum.reload.unread.messages}"><i class="fa fa-fw fa-sync" aria-hidden="true" id="refresh_forum_unread_top"></i><span class="sr-only">{@forum.reload.unread.messages}</span></a>
 							</div>
