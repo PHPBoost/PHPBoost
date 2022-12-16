@@ -662,7 +662,7 @@ class UpdateServices
 
 			$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
 				FROM ' . $table . '
-				WHERE (' . $contents . ' LIKE "%<a%") OR (' . $contents . ' LIKE "%class=\"message-helper\"%") OR (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%") OR (' . $contents . ' LIKE "%title=\"%")'
+				WHERE (' . $contents . ' LIKE "%href=\"%") OR (' . $contents . ' LIKE "%<a%") OR (' . $contents . ' LIKE "%&lt;%") OR (' . $contents . ' LIKE "%class=\"message-helper\"%") OR (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%") OR (' . $contents . ' LIKE "%title=\"%")'
 			);
 
 			$selected_rows = $result->get_rows_count();
@@ -707,7 +707,7 @@ class UpdateServices
 			$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . ', class
 				FROM ' . $table . '
 				WHERE class LIKE "%' . $class . '%"
-				AND (' . $contents . ' LIKE "%href=\"%") OR ' . $contents . ' LIKE "%<a%") OR ' . $contents . ' LIKE "%&lt;a%") OR (' . $contents . ' LIKE "%class=\"message-helper%") OR (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%") OR (' . $contents . ' LIKE "%title=\"%")'
+				AND (' . $contents . ' LIKE "%href=\"%") OR (' . $contents . ' LIKE "%<a%") OR (' . $contents . ' LIKE "%&lt;a%") OR (' . $contents . ' LIKE "%class=\"message-helper%") OR (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%") OR (' . $contents . ' LIKE "%title=\"%")'
 			);
 
 			$selected_rows = $result->get_rows_count();
