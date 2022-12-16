@@ -189,22 +189,22 @@ class WebItemFormController extends DefaultModuleController
 	{
 		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('contribution', $$this->lang['contribution.contribution']);
-			$fieldset->set_description(MessageHelper::display($$this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
+			$fieldset->set_description(MessageHelper::display($this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $$this->lang['contribution.description'], '',
-				array('description' => $$this->lang['contribution.description.clue'])
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
+				array('description' => $this->lang['contribution.description.clue'])
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
 		{
-			$fieldset = new FormFieldsetHTML('member_edition', $$this->lang['contribution.member.edition']);
-			$fieldset->set_description(MessageHelper::display($$this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
+			$fieldset = new FormFieldsetHTML('member_edition', $this->lang['contribution.member.edition']);
+			$fieldset->set_description(MessageHelper::display($this->lang['contribution.edition.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $$this->lang['contribution.edition.description'], '',
-				array('description' => $$this->lang['contribution.edition.description.clue'])
+			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
+				array('description' => $this->lang['contribution.edition.description.clue'])
 			));
 		}
 	}
