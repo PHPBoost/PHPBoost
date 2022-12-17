@@ -452,7 +452,7 @@
 							<div class="cell-list">
 								<ul class="small">
 									<li class="li-stretch"><span>{personal_files.FILETYPE}</span><span>{personal_files.SIZE}</span></li>
-									<li class="li-stretch" aria-label="{@upload.file.date}"><span><i class="far fa-clock" aria-hidden></i></span><span>{personal_files.DATE_FULL}</span></li>
+									<li class="li-stretch" aria-label="{@upload.file.date}"><span><i class="far fa-clock" aria-hidden="true"></i></span><span>{personal_files.DATE_FULL}</span></li>
 								</ul>
 							</div>
 
@@ -519,7 +519,7 @@
 							<div class="cell-list">
 								<ul class="small">
 									<li class="li-stretch"><span>{shared_files.FILETYPE}</span><span>{shared_files.SIZE}</span></li>
-									<li class="li-stretch" aria-label="{@upload.file.date}"><span><i class="far fa-clock" aria-hidden></i></span><span>{shared_files.DATE_FULL}</span></li>
+									<li class="li-stretch" aria-label="{@upload.file.date}"><span><i class="far fa-clock" aria-hidden="true"></i></span><span>{shared_files.DATE_FULL}</span></li>
 								</ul>
 							</div>
 						</div>

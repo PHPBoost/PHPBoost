@@ -23,7 +23,7 @@
 		<div id="openmodal-administration" class="modal modal-animation">
 			<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="content-panel">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden></i></a></div>
+				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 				<div class="next-menu">
 					<a href="#change-modal" data-modal data-target="openmodal-modules"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.modules}</a>
 					<a href="#change-modal" data-modal data-target="openmodal-tools">{@menu.tools} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -77,7 +77,7 @@
 		<div id="openmodal-tools" class="modal modal-animation">
 			<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="content-panel">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden></i></a></div>
+				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 				<div class="next-menu">
 					<a href="#change-modal" data-modal data-target="openmodal-administration"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.administration}</a>
 					<a href="#change-modal" data-modal data-target="openmodal-users">{@menu.users} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -118,7 +118,7 @@
 		<div id="openmodal-users" class="modal modal-animation">
 			<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="content-panel">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden></i></a></div>
+				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 				<div class="next-menu">
 					<a href="#change-modal" data-modal data-target="openmodal-tools"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.tools}</a>
 					<a href="#change-modal" data-modal data-target="openmodal-content">{@menu.content} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -159,7 +159,7 @@
 		<div id="openmodal-content" class="modal modal-animation">
 			<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="content-panel">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden></i></a></div>
+				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 				<div class="next-menu">
 					<a href="#change-modal" data-modal data-target="openmodal-users"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.users}</a>
 					<a href="#change-modal" data-modal data-target="openmodal-modules">{@menu.modules} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -210,7 +210,7 @@
 		<div id="openmodal-modules" class="modal modal-animation">
 			<div class="close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="content-panel">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden></i></a></div>
+				<div class="align-right"><a href="#cancel" class="big error hide-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 				<div class="next-menu">
 					<a href="#change-modal" data-modal data-target="openmodal-content"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.content}</a>
 					<a href="#change-modal" data-modal data-target="openmodal-administration">{@menu.administration} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>

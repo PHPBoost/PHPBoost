@@ -35,8 +35,8 @@ $lang['sandbox.lang']          = 'Langues';
 
 $lang['sandbox.phpboost.doc'] = 'la documentation de PHPBoost';
 
-$lang['sandbox.pinned.php']    = '<span class ="pinned moderator smallest" data-tooltip-pos ="top" aria-label ="Cet élément peut être ajouté en php"><i class    ="fa fa-fw fa-terminal" aria-hidden ="true"></i></span>';
-$lang['sandbox.pinned.bbcode'] = '<span class ="pinned member smallest" data-tooltip-pos    ="top" aria-label ="Cet élément peut être ajouté en bbcode"><i class ="fa fa-fw fa-code" aria-hidden     ="true"></i></span>';
+$lang['sandbox.pinned.php']    = '<span class="pinned moderator smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en php"><i class="fa fa-fw fa-terminal" aria-hidden="true"></i></span>';
+$lang['sandbox.pinned.bbcode'] = '<span class="pinned member smallest" data-tooltip-pos="top" aria-label="Cet élément peut être ajouté en bbcode"><i class="fa fa-fw fa-code" aria-hidden="true"></i></span>';
 
 // Home page
 $lang['sandbox.welcome.message'] = '

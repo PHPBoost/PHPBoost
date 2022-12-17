@@ -82,7 +82,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.color}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div id="bb-color{FIELD}" class="cell-table color-table close-bbcode-sub"></div>
 							</div>
@@ -97,7 +97,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.bgcolor}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div id="bb-bgcolor{FIELD}" class="cell-table color-table close-bbcode-sub"></div>
 							</div>
@@ -112,7 +112,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.size}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label id="font_size_picker" class="cell-label" for="bb_font_size{FIELD}">{@bbcode.size.picker}</label>
@@ -140,7 +140,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.font}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<nav class="cell-list cell-list-inline">
 									<ul>
@@ -180,7 +180,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.align}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<nav class="cell-list">
 									<ul>
@@ -214,7 +214,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.positions}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-list">
 									<ul>
@@ -253,7 +253,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.title}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-body">
 									<div class="cell-content flex-between">
@@ -297,7 +297,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.list}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_list{FIELD}">{@bbcode.lines}</label>
@@ -329,7 +329,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.table}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb-lines{FIELD}">{@bbcode.lines}</label>
@@ -367,7 +367,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.container}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<nav class="cell-list">
 									<ul>
@@ -400,7 +400,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.custom.div}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-body">
 									<div class="cell-content">
@@ -429,7 +429,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.fieldset}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label for="bb_legend{FIELD}" class="cell-label">{@bbcode.fieldset.legend}</label>
@@ -449,7 +449,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.abbr}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label for="bb_abbr_name{FIELD}" class="cell-label">{@bbcode.abbr}</label>
@@ -474,7 +474,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.quote}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_quote_author{FIELD}">{@bbcode.quote.author}</label>
@@ -503,7 +503,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.hide}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-list">
 									<ul>
@@ -537,7 +537,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.style}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-body">
 									<div class="cell-content">
@@ -601,7 +601,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.link}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_link_url{FIELD}">{@bbcode.link.url}</label>
@@ -630,7 +630,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.mail}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_mail_url{FIELD}">{@bbcode.mail}</label>
@@ -659,7 +659,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.wikipedia}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label for="bb_wikipedia_word{FIELD}" class="cell-label">{@bbcode.wikipedia.word}</label>
@@ -704,7 +704,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.feed}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label for="bb_feed_module_name{FIELD}" class="cell-label">{@bbcode.feed.module}</label>
@@ -744,7 +744,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.anchor}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_anchor_id{FIELD}">{@bbcode.anchor.name}</label>
@@ -781,7 +781,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.sound}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
@@ -807,7 +807,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.movie}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_movie_url{FIELD}">
@@ -867,7 +867,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.lightbox}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_lightbox{FIELD}">
@@ -903,7 +903,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.figure}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
@@ -961,7 +961,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.smileys}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-list cell-list-inline">
 									<ul>
@@ -991,7 +991,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.emojis}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-content align-center">
 									{@H|bbcode.emojis.link}
@@ -1035,7 +1035,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.fa}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-content align-center">
 									{@bbcode.fa.tag}
@@ -1068,7 +1068,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.code}</h6>
-									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></a>
+									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 								</div>
 								<div class="cell-form">
 									<label for="bb_code_custom_name{FIELD}" class="cell-label">{@bbcode.code.custom.name}</label>
