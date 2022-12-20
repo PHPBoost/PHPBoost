@@ -73,7 +73,7 @@ class OnlineService
 				$user->set_id($row['user_id']);
 				$user->set_display_name($row['display_name']);
 				$user->set_level($row['level']);
-				$user->set_groups(explode('|', $row['groups']));
+				$user->set_groups(explode('|', $row['groups'] ?? ''));
 				$user->set_last_update(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE));
 				$user->set_location_script($row['location_script']);
 				$user->set_location_title(stripslashes($row['location_title']));
