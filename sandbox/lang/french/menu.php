@@ -62,7 +62,7 @@ $lang['sandbox.menu.panel']      = 'Panneau';
 $lang['sandbox.menu.basic'] = 'Menu de liens';
 // Accordion
 $lang['sandbox.menu.accordion.title']   = 'Menu Accordéon';
-$lang['sandbox.menu.accordion.options'] = 'Changez la classe css <code class="language-css">basic</code> en <code class="language-css">siblings</code> pour modifier le comportement d\'ouverture des panneaux et ainsi fermer un panneau ouvert lorsque vous en ouvrez un autre';
+$lang['sandbox.menu.accordion.options'] = 'Changez la classe css <code class="precode">multiple-accordion</code> en <code class="precode">single-accordion</code> pour modifier le comportement d\'ouverture des panneaux et ainsi fermer un panneau ouvert lorsque vous en ouvrez un autre.';
 $lang['sandbox.menu.accordion.open']    = 'Ouvrir tous les panneaux';
 $lang['sandbox.menu.accordion.close']   = 'Fermer tous les panneaux';
 

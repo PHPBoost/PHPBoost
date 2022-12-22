@@ -82,7 +82,7 @@ class SandboxMenusContentController extends DefaultModuleController
 	{
 		$accordion_tpl = new FileTemplate('sandbox/pagecontent/menus/accordion.tpl');
 		$accordion_tpl->add_lang($this->lang);
-		$accordion_tpl->put('ACCORDION_FORM', $this->build_accordion_form()->display());
+		// $accordion_tpl->put('ACCORDION_FORM', $this->build_accordion_form()->display());
 		return $accordion_tpl;
 	}
 
