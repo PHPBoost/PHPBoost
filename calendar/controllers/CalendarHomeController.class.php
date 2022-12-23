@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2022 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 08
+ * @version     PHPBoost 6.0 - last update: 2022 12 23
  * @since       PHPBoost 4.0 - 2013 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -38,17 +38,15 @@ class CalendarHomeController extends DefaultModuleController
 
 		$this->view->put_all(array(
 			'C_CATEGORY' 	  	   => true,
-			'C_CATEGORY_THUMBNAIL' => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ROOT_CATEGORY' 	   => $this->category->get_id() == Category::ROOT_CATEGORY,
 
 			'CATEGORY_NAME'      => $this->category->get_name(),
-			'CATEGORY_PARENT_ID' => $this->get_category()->get_id_parent(),
-			'CATEGORY_SUB_ORDER' => $this->get_category()->get_order(),
-			'CALENDAR'           => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->get_category()->get_id()),
+			'CATEGORY_PARENT_ID' => $this->category->get_id_parent(),
+			'CATEGORY_SUB_ORDER' => $this->category->get_order(),
+			'CALENDAR'           => CalendarAjaxCalendarController::get_view(false, $year, $month, $this->category->get_id()),
 			'EVENTS'             => CalendarAjaxEventsController::get_view($year, $month, $day),
 
 			'U_EDIT_CATEGORY' 	   => $this->category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->category->get_id(), 'calendar')->rel(),
-			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel()
 		));
 
 		return $this->view;
