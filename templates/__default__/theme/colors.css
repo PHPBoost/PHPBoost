@@ -706,19 +706,19 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .link-color    { color: var(--main-tone); 		   border-color: var(--main-tone); }
 .star  		   { color: var(--star-tone); 		   border-color: var(--star-tone); }
 
-.notice:hover        { color: var(--notice-light); 		  border-color: var(--notice-light); }
-.question:hover      { color: var(--question-light); 	  border-color: var(--question-light); }
-.success:hover       { color: var(--success-light); 	  border-color: var(--success-light); }
-.warning:hover       { color: var(--warning-light); 	  border-color: var(--warning-light); }
-.error:hover         { color: var(--error-light); 		  border-color: var(--error-light); }
-.visitor:hover       { color: var(--visitor-light); 	  border-color: var(--visitor-light); }
-.custom-author:hover { color: var(--custom-author-light); border-color: var(--custom-author-light); }
-.member:hover        { color: var(--member-light); 		  border-color: var(--member-light); }
-.moderator:hover     { color: var(--moderator-light); 	  border-color: var(--moderator-light); }
-.administrator:hover { color: var(--administrator-light); border-color: var(--administrator-light); }
-.logo-color:hover 	 { color: var(--logo-light); 		  border-color: var(--logo-light); }
-.link-color:hover 	 { color: var(--main-light); 		  border-color: var(--main-light); }
-.star:hover 		 { color: var(--star-light); 		  border-color: var(--star-light); }
+.notice:hover        { color: var(--notice-dark); 		  border-color: var(--notice-dark); }
+.question:hover      { color: var(--question-dark); 	  border-color: var(--question-dark); }
+.success:hover       { color: var(--success-dark); 	  border-color: var(--success-dark); }
+.warning:hover       { color: var(--warning-dark); 	  border-color: var(--warning-dark); }
+.error:hover         { color: var(--error-dark); 		  border-color: var(--error-dark); }
+.visitor:hover       { color: var(--visitor-dark); 	  border-color: var(--visitor-dark); }
+.custom-author:hover { color: var(--custom-author-dark); border-color: var(--custom-author-dark); }
+.member:hover        { color: var(--member-dark); 		  border-color: var(--member-dark); }
+.moderator:hover     { color: var(--moderator-dark); 	  border-color: var(--moderator-dark); }
+.administrator:hover { color: var(--administrator-dark); border-color: var(--administrator-dark); }
+.logo-color:hover 	 { color: var(--logo-dark); 		  border-color: var(--logo-dark); }
+.link-color:hover 	 { color: var(--main-dark); 		  border-color: var(--main-dark); }
+.star:hover 		 { color: var(--star-dark); 		  border-color: var(--star-dark); }
 
 .bgc.notice        { background-color: rgba(var(--notice-rgb-t), 0.2); }
 .bgc.question      { background-color: rgba(var(--question-rgb-t), 0.2); }
