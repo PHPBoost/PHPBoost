@@ -126,6 +126,11 @@ ul.pagination a { padding: 0.309em; }
 	clear: both;
 }
 
+.message-footer-container {
+    max-height: 80px;
+    overflow-y: auto;
+}
+
 /* --- Unread messages --- */
 
 .forum-refresh { position: relative; }

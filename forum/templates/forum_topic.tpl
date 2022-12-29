@@ -225,13 +225,13 @@
 									# IF C_AUTH_POST #<a class="offload" href="topic{msg.U_QUOTE}#go-bottom" aria-label="{@forum.quote.message}"><i class="fa fa-quote-right" aria-hidden="true"></i></a># ENDIF #
 									# IF msg.C_FORUM_MSG_EDIT #<a class="offload" href="post{msg.U_EDIT}" aria-label="{@common.edit}"><i class="far fa-edit" aria-hidden="true"></i></a># ENDIF #
 
-								  	# IF msg.C_AUTHORIZE_SELECTED #
-									   	# IF msg.C_IS_SELECTED #
-									   		<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-check-circle success" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
-									   	# ELSE #
-									   		<a href="action{msg.U_SET_MSG_AS_SELECTED}"><i class="fa fa-check" aria-hidden="true" aria-label="{@forum.set.as.selected}"></i></a>
-									   	# END IF #
-								   	# END IF #
+									# IF msg.C_AUTHORIZE_SELECTED #
+										# IF msg.C_IS_SELECTED #
+											<a href="action{msg.U_SET_MSG_AS_UNSELECTED}"><i class="fa fa-check-circle success" aria-hidden="true" aria-label="{@forum.set.as.unselected}"></i></a>
+										# ELSE #
+											<a href="action{msg.U_SET_MSG_AS_SELECTED}"><i class="fa fa-check" aria-hidden="true" aria-label="{@forum.set.as.selected}"></i></a>
+										# END IF #
+									# END IF #
 
 									# IF msg.C_DELETE #
 										<a href="action{msg.U_DELETE}" aria-label="{@common.delete}" class="delete-message" data-confirmation="# IF msg.C_DELETE_MESSAGE #{@forum.alert.delete.message}# ELSE #{@forum.alert.delete.topic}# ENDIF #"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
@@ -265,7 +265,7 @@
 							</li>
 							<li class="li-stretch">
 								<span>{@common.see.profile}</span>
-								<a href="{msg.U_FORUM_USER_PROFILE}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL} offload"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #>{msg.FORUM_USER_LOGIN}</a>
+								<a href="{msg.U_FORUM_USER_PROFILE}" class="msg-link-pseudo {msg.FORUM_USER_LEVEL} offload"# IF msg.FORUM_USER_GROUP_COLOR # style="color:{msg.FORUM_USER_GROUP_COLOR}"# ENDIF #><i class="fa fa-link fa-fw"></i> {msg.FORUM_USER_LOGIN}</a>
 							</li>
 							<li class="li-stretch">
 								<span>{@forum.registred.on} :</span>
@@ -309,7 +309,6 @@
 									</li>
 								# END msg.usergroups #
 							# ENDIF #
-							# IF msg.C_USER_SIGN #<li>{msg.USER_SIGN}</li># ENDIF #
 							# IF msg.C_CONTROLS #
 								<li class="li-stretch">
 									<span>{@user.punishments} : {msg.USER_WARNING}%</span>
@@ -346,6 +345,7 @@
 					</p>
 				# ENDIF #
 			</div>
+			# IF msg.C_USER_SIGN #<div class="message-footer-container">{msg.USER_SIGN}</div># ENDIF #
 		</div>
 	# END msg #
 

@@ -19,7 +19,8 @@
 .message-header-container h3 { font-size: 1.456em; }
 
 .message-header-container,
-.message-content {
+.message-content,
+.message-footer-container {
     border-width: 1px;
     border-style: solid;
     border-color: transparent;
@@ -113,6 +114,11 @@
 	font-size: 0.809em;
 	font-style: italic;
 	display: block;
+}
+
+.message-footer-container {
+    border-width: 0 1px 1px;
+    padding: 0.618em;
 }
 
 /* --- Current user --- */

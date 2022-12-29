@@ -108,8 +108,7 @@ table tbody tr.prime-item td,
 
 .message-header-container,
 .message-content,
-.message-footer-container,
-.message-user-sign { border-color: var(--bdr-main); }
+.message-footer-container { border-color: var(--bdr-main); }
 
 .message-announce     { color: var(--question-tone); }
 .message-announce-new { color: var(--success-tone); }
