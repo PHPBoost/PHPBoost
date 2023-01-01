@@ -1,7 +1,7 @@
 <?php
 /**
  * This class provides easy ways to create several type of charts.
- * @copyright   &copy; 2005-2022 PHPBoost
+ * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2022 04 30
