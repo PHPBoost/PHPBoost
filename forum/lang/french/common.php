@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 21
+ * @version     PHPBoost 6.0 - last update: 2023 01 02
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -61,7 +61,7 @@ $lang['forum.specific_hook.forum_delete_topic']           = 'Suppression d\'un s
 $lang['forum.specific_hook.forum_lock_topic']             = 'Verrouillage d\'un sujet';
 $lang['forum.specific_hook.forum_unlock_topic']           = 'Déverrouillage d\'un sujet';
 $lang['forum.specific_hook.forum_move_topic']             = 'Déplacement d\'un sujet';
-$lang['forum.specific_hook.forum_move_topic.description'] = 'Sujet déplacé de :old_category à :new_category.';
+$lang['forum.specific_hook.forum_move_topic.description'] = 'Sujet déplacé de <span class="text-strong">:old_category</span> à <span class="text-strong">:new_category</span>.';
 $lang['forum.specific_hook.forum_add_poll']               = 'Ajout d\'un sondage';
 $lang['forum.specific_hook.forum_edit_poll']              = 'Modification d\'un sondage';
 $lang['forum.specific_hook.forum_answer_poll']            = 'Réponse à un sondage';

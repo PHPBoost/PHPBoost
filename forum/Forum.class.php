@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 11
+ * @version     PHPBoost 6.0 - last update: 2023 01 02
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -524,7 +524,7 @@ class Forum
 		ForumCategoriesCache::invalidate();
 
 		$categories_cache = ForumCategoriesCache::load();
-		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))), StringVars::replace_vars($this->lang['forum.specific_hook.forum_move_topic.description'], array('old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name())));
+		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))), StringVars::replace_vars(LangLoader::get_message('forum.specific_hook.forum_move_topic.description', 'common', 'forum'), array('old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name())));
 	}
 
 	//Déplacement d'un sujet
