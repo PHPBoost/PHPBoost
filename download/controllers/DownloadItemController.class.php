@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.0 - last update: 2023 01 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -78,7 +78,6 @@ class DownloadItemController extends DefaultModuleController
 			'C_ENABLED_COMMENTS'      => $comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION'      => $content_management_config->module_notation_is_enabled('download'),
 			'C_KEYWORDS'              => $has_keywords,
-			'C_DISPLAY_DOWNLOAD_LINK' => DownloadAuthorizationsService::check_authorizations()->display_download_link(),
 			'NOT_VISIBLE_MESSAGE'              => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.download'], MessageHelper::WARNING)
 		)));

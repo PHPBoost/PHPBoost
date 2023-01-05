@@ -218,22 +218,24 @@
 									# ENDIF #
 								# ENDIF #
 								<div class="cell-body">
-									<div class="cell-list">
-										<ul>
-											<li class="li-stretch">
-												<a href="{items.U_DOWNLOAD}" class="button submit small offload">
-													<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
-												</a>
-												# IF items.C_VISIBLE #
-													# IF IS_USER_CONNECTED #
-														<a href="{items.U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning small" aria-label="{@contribution.report.dead.link}">
-															<i class="fa fa-unlink" aria-hidden="true"></i>
-														</a>
+									# IF items.C_DISPLAY_DOWNLOAD_LINK #
+										<div class="cell-list">
+											<ul>
+												<li class="li-stretch">
+													<a href="{items.U_DOWNLOAD}" class="button submit small offload">
+														<i class="fa fa-download" aria-hidden="true"></i> {@download.download}
+													</a>
+													# IF items.C_VISIBLE #
+														# IF IS_USER_CONNECTED #
+															<a href="{items.U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning small" aria-label="{@contribution.report.dead.link}">
+																<i class="fa fa-unlink" aria-hidden="true"></i>
+															</a>
+														# ENDIF #
 													# ENDIF #
-												# ENDIF #
-											</li>
-										</ul>
-									</div>
+												</li>
+											</ul>
+										</div>
+									# ENDIF #
 									<div class="cell-content">
 										<div itemprop="text">
 											# IF C_FULL_ITEM_DISPLAY #

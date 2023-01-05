@@ -72,7 +72,7 @@ class DownloadMemberItemsController extends DefaultModuleController
 			'C_ENABLED_NOTATION'     => $content_management_config->module_notation_is_enabled('download'),
 			'C_AUTHOR_DISPLAYED'     => $this->config->is_author_displayed(),
 			'C_PAGINATION'           => $pagination->has_several_pages(),
-			
+
 			'CATEGORIES_PER_ROW' => $this->config->get_categories_per_row(),
 			'ITEMS_PER_ROW'      => $this->config->get_items_per_row(),
 			'PAGINATION'         => $pagination->display(),

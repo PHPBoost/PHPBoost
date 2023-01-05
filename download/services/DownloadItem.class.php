@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 19
+ * @version     PHPBoost 6.0 - last update: 2023 01 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -394,6 +394,11 @@ class DownloadItem
 		return DownloadAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || (DownloadAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
+	public function is_authorized_to_download()
+	{
+		return DownloadAuthorizationsService::check_authorizations($this->id_category)->display_download_link();
+	}
+
 	public function get_properties()
 	{
 		return array(
@@ -523,21 +528,22 @@ class DownloadItem
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
 			array(
 				// Conditions
-				'C_VISIBLE'              => $this->is_published(),
-				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
-				'C_EDIT'                 => $this->is_authorized_to_edit(),
-				'C_DELETE'               => $this->is_authorized_to_delete(),
-				'C_READ_MORE'            => !$this->is_summary_enabled() && TextHelper::strlen($content) > $config->get_auto_cut_characters_number() && $real_summary != @strip_tags($content, '<br><br/>'),
-				'C_SIZE'                 => !empty($this->size),
-				'C_HAS_THUMBNAIL'        => $this->has_thumbnail(),
-				'C_VERSION_NUMBER'       => !empty($this->version_number),
-				'C_AUTHOR_CUSTOM_NAME'   => $this->is_author_custom_name_enabled(),
-				'C_ENABLED_VIEWS_NUMBER' => $config->get_enabled_views_number(),
-				'C_AUTHOR_GROUP_COLOR'   => !empty($user_group_color),
-				'C_HAS_UPDATE_DATE'      => $this->has_update_date(),
-				'C_SOURCES'              => $nbr_sources > 0,
-				'C_DIFFERED'             => $this->published == self::DEFERRED_PUBLICATION,
-				'C_NEW_CONTENT'          => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
+				'C_VISIBLE'               => $this->is_published(),
+				'C_CONTROLS'			  => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_EDIT'                  => $this->is_authorized_to_edit(),
+				'C_DELETE'                => $this->is_authorized_to_delete(),
+				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($content) > $config->get_auto_cut_characters_number() && $real_summary != @strip_tags($content, '<br><br/>'),
+				'C_SIZE'                  => !empty($this->size),
+				'C_HAS_THUMBNAIL'         => $this->has_thumbnail(),
+				'C_VERSION_NUMBER'        => !empty($this->version_number),
+				'C_AUTHOR_CUSTOM_NAME'    => $this->is_author_custom_name_enabled(),
+				'C_ENABLED_VIEWS_NUMBER'  => $config->get_enabled_views_number(),
+				'C_AUTHOR_GROUP_COLOR'    => !empty($user_group_color),
+				'C_DISPLAY_DOWNLOAD_LINK' => $this->is_authorized_to_download(),
+				'C_HAS_UPDATE_DATE'       => $this->has_update_date(),
+				'C_SOURCES'               => $nbr_sources > 0,
+				'C_DIFFERED'              => $this->published == self::DEFERRED_PUBLICATION,
+				'C_NEW_CONTENT'           => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('download', $this->get_publishing_start_date() != null ? $this->get_publishing_start_date()->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published(),
 
 				// Item
 				'ID'                  => $this->id,
