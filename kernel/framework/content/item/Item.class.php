@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 15
+ * @version     PHPBoost 6.0 - last update: 2023 01 06
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -738,6 +738,7 @@ class Item
 
 			// Links
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
+			'U_AUTHOR_CONTRIB' => ItemsUrlBuilder::display_member_items($author->get_id())->rel(),
 			'U_ITEM'           => $this->get_item_url(),
 			'U_EDIT'           => ItemsUrlBuilder::edit($this->id, self::$module->get_id())->rel(),
 			'U_DELETE'         => ItemsUrlBuilder::delete($this->id, self::$module->get_id())->rel(),

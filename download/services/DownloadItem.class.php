@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 05
+ * @version     PHPBoost 6.0 - last update: 2023 01 06
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -579,6 +579,7 @@ class DownloadItem
 				// Links
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('download', $this->id_category)->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+				'U_AUTHOR_CONTRIB' => DownloadUrlBuilder::display_member_items($this->get_author_user()->get_id())->rel(),
 				'U_ITEM'           => $this->get_item_url(),
 				'U_DOWNLOAD'       => DownloadUrlBuilder::download($this->id)->rel(),
 				'U_DEADLINK'       => DownloadUrlBuilder::dead_link($this->id)->rel(),

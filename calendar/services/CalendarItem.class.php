@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 06
+ * @version     PHPBoost 6.0 - last update: 2023 01 06
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -240,6 +240,7 @@ class CalendarItem
 
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
+				'U_AUTHOR_CONTRIB' => CalendarUrlBuilder::display_member_items($author->get_id())->rel(),
 				'U_ITEM'           => $this->get_item_url(),
 				'U_EDIT'           => CalendarUrlBuilder::edit_item(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 				'U_DELETE'         => CalendarUrlBuilder::delete_item($this->id)->rel(),

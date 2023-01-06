@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 19
+ * @version     PHPBoost 6.0 - last update: 2023 01 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -511,6 +511,7 @@ class WebItem
 				// Links
 				'U_SYNDICATION'       => SyndicationUrlBuilder::rss('web', $this->id_category)->rel(),
 				'U_AUTHOR_PROFILE'    => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+				'U_AUTHOR_CONTRIB' 	  => WebUrlBuilder::display_member_items($this->get_author_user()->get_id())->rel(),
 				'U_ITEM'              => $this->get_item_url(),
 				'U_VISIT'             => WebUrlBuilder::visit($this->id)->rel(),
 				'U_DEADLINK'          => WebUrlBuilder::dead_link($this->id)->rel(),
