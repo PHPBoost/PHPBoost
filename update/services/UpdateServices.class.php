@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 14
+ * @version     PHPBoost 6.0 - last update: 2023 01 07
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -660,9 +660,22 @@ class UpdateServices
 			$unparser = new OldBBCodeUnparser();
 			$parser = new BBCodeParser();
 
+			$contents_list = array(
+				'(\' . $contents . \' LIKE "%href=\"%")',
+				'(\' . $contents . \' LIKE "%formatter-blockquote%")',
+				'(\' . $contents . \' LIKE "%class=\"success\"%")',
+				'(\' . $contents . \' LIKE "%class=\"question\"%")',
+				'(\' . $contents . \' LIKE "%class=\"notice\"%")',
+				'(\' . $contents . \' LIKE "%class=\"warning\"%")',
+				'(\' . $contents . \' LIKE "%class=\"error\"%")',
+				'(\' . $contents . \' LIKE "%title=\"%")'
+			);
+
+			$contents_list = implode(' OR ', $contents_list);
+
 			$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . '
 				FROM ' . $table . '
-				WHERE (' . $contents . ' LIKE "%href=\"%") OR (' . $contents . ' LIKE "%<a%") OR (' . $contents . ' LIKE "%&lt;%") OR (' . $contents . ' LIKE "%class=\"message-helper\"%") OR (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%") OR (' . $contents . ' LIKE "%title=\"%")'
+				WHERE ' . $contents_list
 			);
 
 			$selected_rows = $result->get_rows_count();
@@ -704,10 +717,21 @@ class UpdateServices
 			$unparser = new OldBBCodeUnparser();
 			$parser = new BBCodeParser();
 
+			$contents_list = array(
+				'(\' . $contents . \' LIKE "%href=\"%")',
+				'(\' . $contents . \' LIKE "%formatter-blockquote%")',
+				'(\' . $contents . \' LIKE "%class=\"success\"%")',
+				'(\' . $contents . \' LIKE "%class=\"question\"%")',
+				'(\' . $contents . \' LIKE "%class=\"notice\"%")',
+				'(\' . $contents . \' LIKE "%class=\"warning\"%")',
+				'(\' . $contents . \' LIKE "%class=\"error\"%")',
+				'(\' . $contents . \' LIKE "%title=\"%")'
+			);
+
 			$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . ', class
 				FROM ' . $table . '
 				WHERE class LIKE "%' . $class . '%"
-				AND (' . $contents . ' LIKE "%href=\"%") OR (' . $contents . ' LIKE "%<a%") OR (' . $contents . ' LIKE "%&lt;a%") OR (' . $contents . ' LIKE "%class=\"message-helper%") OR (' . $contents . ' LIKE "%class=\"success\"%") OR (' . $contents . ' LIKE "%class=\"question\"%") OR (' . $contents . ' LIKE "%class=\"notice\"%") OR (' . $contents . ' LIKE "%class=\"warning\"%") OR (' . $contents . ' LIKE "%class=\"error\"%") OR (' . $contents . ' LIKE "%title=\"%")'
+				AND ' . $contents_list
 			);
 
 			$selected_rows = $result->get_rows_count();
@@ -725,7 +749,7 @@ class UpdateServices
 					self::$db_querier->update($table, array($contents => $parser->get_content()), 'WHERE ' . $id . '=:id', array('id' => $row[$id]));
 					$updated_content++;
 				}
-			
+
 				$menu = MenuService::load($row[$id]);
 				MenuService::save($menu);
 				$menus_list = MenuService::get_menus_map();
@@ -742,7 +766,7 @@ class UpdateServices
 			}
 			MenuService::save($menu);
 			$menus_list = MenuService::get_menus_map();
-			
+
 			MenuService::initialise($menus_list);
 			MenuService::generate_cache();
 		}
