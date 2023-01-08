@@ -325,7 +325,7 @@ form .constraint-status-right textarea { border-color: var(--success-tone); }
 }
 
 .text-status-constraint {
-	background-color: var(--bgc-main);
+	background-color: rgba(var(--error-rgb-t), 0.2);
 	border-color: var(--error-tone);
 	color: var(--error-tone);
 }

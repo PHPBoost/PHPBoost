@@ -107,18 +107,18 @@ HTMLForm.prototype = {
 		var validation = '';
 		jQuery.each(this.getFields(), function(index, field) {
 			var field_validation = field.validate();
-			
+
 			if (field_validation != "") {
 				validation = validation + '\n\n' + field_validation;
 				validated = false;
 			}
 		});
-		
+
 		if (validated == false) {
 			this.displayValidationError(validation);
 			jQuery('html, body').animate({scrollTop:jQuery('#' + this.id).offset().top}, 'slow');
 		}
-		
+
 		this.registerDisabledFields();
 		return validated;
 	},
@@ -307,12 +307,12 @@ FormField.prototype = {
 		if (!this.validationMessageEnabled) {
 			return;
 		}
-		
-		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
-			
+
+		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) 
+		{
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').addClass('constraint-status-error');
 			jQuery('#onblurMessageResponse' + this.getHTMLId()).html(message);
-			
+
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeIn(500);
 		}
 	},
@@ -320,16 +320,16 @@ FormField.prototype = {
 		if (!this.validationMessageEnabled) {
 			return;
 		}
-		
-		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
-			
+
+		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) 
+		{
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-error').addClass('constraint-status-right');
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).hide();
 		}
 	},
 	clearErrorMessage : function() {
-		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) {
-
+		if (jQuery('#' + this.getHTMLId() + '_field').length && jQuery('#onblurContainerResponse' + this.getHTMLId()).length) 
+		{
 			jQuery('#' + this.getHTMLId() + '_field').removeClass('constraint-status-right').removeClass('constraint-status-error');
 			jQuery('#onblurMessageResponse' + this.getHTMLId()).html('');
 			jQuery("#onblurMessageResponse" + this.getHTMLId()).fadeOut(200);
@@ -338,8 +338,9 @@ FormField.prototype = {
 	liveValidate : function() {
 		if (!this.isDisabled() && this.hasConstraints) {
 			var errorMessage = this.doValidate();
-			if (errorMessage != "") {
-				this.displayErrorMessage('<i class="fa fa-minus-circle"></i> ' + errorMessage);
+			if (errorMessage != "") 
+			{
+				this.displayErrorMessage('<i class="fa fa-minus-circle"></i>&nbsp;' + errorMessage);
 			} else {
 				this.displaySuccessMessage();
 			}
@@ -348,9 +349,10 @@ FormField.prototype = {
 	validate : function() {
 		if (!this.isDisabled() && this.hasConstraints) {
 			var errorMessage = this.doValidate();
-			if (errorMessage != "") {
+			if (errorMessage != "") 
+			{
 				this.enableValidationMessage();
-				this.displayErrorMessage('<i class="fa fa-minus-circle"></i> ' + errorMessage);
+				this.displayErrorMessage('<i class="fa fa-minus-circle"></i>&nbsp;' + errorMessage);
 			} 
 			return errorMessage;
 		}
