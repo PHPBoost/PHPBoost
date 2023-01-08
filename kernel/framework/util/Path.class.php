@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 14
+ * @version     PHPBoost 6.0 - last update: 2023 01 08
  * @since       PHPBoost 1.6 - 2006 11 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -91,7 +91,7 @@ class Path
 	 */
 	public static function uniformize_path($path)
 	{
-		return str_replace('\\', '/', $path);
+		return str_replace('\\', '/', $path ?? '');
 	}
 }
 ?>
