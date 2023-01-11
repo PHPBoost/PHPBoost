@@ -101,7 +101,7 @@ class AdminViewAllMembersController extends DefaultAdminController
 				new HTMLTableRowCell(new LinkHTMLElement('mailto:' . $user->get_email(), '<i class="fa fa-fw iboost fa-iboost-email"></i>', array('aria-label' => $this->lang['user.email']), 'button submit')),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never']),
-				new HTMLTableRowCell($user->is_banned() ? $this->lang['user.banned'] : (empty($row['login']) || $row['approved'] ? $this->lang['common.yes'] : $this->lang['common.no'])),
+				new HTMLTableRowCell(empty($row['login']) || $row['approved'] ? $this->lang['common.yes'] : $this->lang['common.no']),
 				new HTMLTableRowCell($user->get_warning_percentage() . '%' . ($user->is_banned() ? '<br />' . $this->lang['user.banned'] : '') . ($user->is_readonly() ? '<br />' . $this->lang['user.read.only'] : '')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			));
