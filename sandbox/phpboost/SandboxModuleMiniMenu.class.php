@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 24
+ * @version     PHPBoost 6.0 - last update: 2023 01 11
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -11,6 +11,25 @@
 
 class SandboxModuleMiniMenu extends ModuleMiniMenu
 {
+	private $enable_css_button;
+	private $enable_css_cache;
+	private $disable_css_button;
+	private $disable_css_cache;
+	private $clean_css_button;
+	private $clean_css_cache;
+	private $clean_button;
+	private $clean_cache;
+	private $clean_syndication_button;
+	private $clean_syndication_cache;
+	private $disable_left_button;
+	private $enable_left_button;
+	private $disable_left_menu;
+	private $enable_left_menu;
+	private $disable_right_button;
+	private $enable_right_button;
+	private $disable_right_menu;
+	private $enable_right_menu;
+
 	public function get_default_block()
 	{
 		return self::BLOCK_POSITION__HEADER;
@@ -284,7 +303,6 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 	private function build_clean_cache()
 	{
-		$this->css_cache_config = CSSCacheConfig::load();
 		$clean_cache = new HTMLForm('clean_cache', '', false);
 		$clean_cache->set_css_class('sandbox-mini-form clean-cache');
 
