@@ -33,7 +33,7 @@ abstract class DefaultModuleController extends ModuleController
 
 		if (!ModulesManager::is_module_installed(self::$module_id))
 			return PHPBoostErrors::module_not_installed();
-		
+
 		$this->init_parameters();
 		$this->init_view();
 	}
@@ -56,7 +56,7 @@ abstract class DefaultModuleController extends ModuleController
 			'MODULE_NAME' => self::get_module_configuration()->get_name()
 		));
 	}
-	
+
 	protected function init_lang()
 	{
 		$this->lang = LangLoader::get_all_langs(self::$module_id);
