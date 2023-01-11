@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 19
+ * @version     PHPBoost 6.0 - last update: 2023 01 11
  * @since       PHPBoost 3.0 - 2010 02 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -57,6 +57,7 @@ class AdminViewAllMembersController extends DefaultAdminController
 			new HTMLTableColumn($this->lang['user.registration.date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['user.last.connection'], 'last_connection_date'),
 			new HTMLTableColumn($this->lang['user.approbation'], 'approved'),
+			new HTMLTableColumn($this->lang['user.caution'], 'warning_percentage'),
 			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
 		), new HTMLTableSortingRule('display_name', HTMLTableSortingRule::ASC));
 
@@ -68,7 +69,7 @@ class AdminViewAllMembersController extends DefaultAdminController
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter4', $this->lang['user.approbation'], array(1 => $this->lang['common.status.approved'], 0 => $this->lang['common.status.unapproved'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter8', $this->lang['user.approbation'], array(1 => $this->lang['common.status.approved'], 0 => $this->lang['common.status.unapproved'])));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
@@ -101,6 +102,7 @@ class AdminViewAllMembersController extends DefaultAdminController
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never']),
 				new HTMLTableRowCell($user->is_banned() ? $this->lang['user.banned'] : (empty($row['login']) || $row['approved'] ? $this->lang['common.yes'] : $this->lang['common.no'])),
+				new HTMLTableRowCell($user->get_warning_percentage() . '%' . ($user->is_banned() ? '<br />' . $this->lang['user.banned'] : '') . ($user->is_readonly() ? '<br />' . $this->lang['user.read.only'] : '')),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
 			));
 		}

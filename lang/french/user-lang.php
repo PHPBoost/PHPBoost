@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 10
+ * @version     PHPBoost 6.0 - last update: 2023 01 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -231,7 +231,7 @@ $lang['user.delete.account.confirmation.admin']  = 'Etes-vous sûr de vouloir su
 
 // Other
 $lang['user.caution']  = 'Avertissement';
-$lang['user.readonly'] = 'Lecture seule';
+$lang['user.read.only'] = 'Lecture seule';
 $lang['user.banned']   = 'Banni';
 
 $lang['user.internal.connection']        = 'Connexion interne';
