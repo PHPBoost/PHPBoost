@@ -5,6 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2023 01 13
  * @since       PHPBoost 4.0 - 2014 08 24
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadAuthorizationsService extends CategoriesAuthorizationsService
