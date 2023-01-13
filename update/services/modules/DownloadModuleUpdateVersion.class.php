@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2023 01 10
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,6 +17,8 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 
 		$this->content_tables = array(PREFIX . 'download');
 		self::$delete_old_files_list = array(
+			'/controllers/categories/DownloadCategoriesManageController.class.php',
+			'/controllers/categories/DownloadDeleteCategoryController.class.php',
 			'/controllers/DownloadDeleteController.class.php',
 			'/controllers/DownloadDisplayCategoryController.class.php',
 			'/controllers/DownloadDisplayDownloadFileController.class.php',
@@ -36,9 +38,6 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/DownloadDisplayDownloadFileController.tpl',
 			'/templates/DownloadDisplaySeveralDownloadFilesController.tpl',
 			'/util/AdminDownloadDisplayResponse.class.php'
-		);
-		self::$delete_old_folders_list = array(
-			'/controllers/categories'
 		);
 
 		$this->database_columns_to_add = array(

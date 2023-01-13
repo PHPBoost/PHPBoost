@@ -29,7 +29,7 @@ class DownloadCategoriesCache extends DefaultRichCategoriesCache
 	{
 		return DownloadConfig::load()->get_authorizations();
 	}
-	
+
 	protected function get_root_category_description()
 	{
 		$description = DownloadConfig::load()->get_root_category_description();
