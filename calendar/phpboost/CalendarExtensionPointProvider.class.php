@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2023 01 16
  * @since       PHPBoost 2.0 - 2008 07 07
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -13,6 +13,11 @@
 
 class CalendarExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
+	public function comments()
+	{
+		return new CommentsTopics(array(new CalendarCommentsTopic()));
+	}
+
 	public function home_page()
 	{
 		return new DefaultHomePageDisplay($this->get_id(), CalendarHomeController::get_view());
