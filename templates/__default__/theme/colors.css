@@ -609,12 +609,12 @@ a[class*='lightcase-icon-']:hover {
 #lightcase-overlay { background-color: rgba(var(--darken), 0.7); }
 
 /* --- plugins --- */
-.accordion-container > .accordion-nav > ul > li > a {
-    border-color: var(--bdr-alt);
-    background-color: rgba(var(--main-rgb-t), 0.2);
-}
+.single-accordion,
+.multiple-accordion { border-color: var(--bdr-main); }
 
-.accordion .content-panel { border-color: var(--bdr-main); }
+.accordion-trigger { background-color: var(--bgc-sub); }
+
+.accordion-trigger > button { color: var(--txt-main); }
 
 .close-modal { color: var(--txt-alt); }
 

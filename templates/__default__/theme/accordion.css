@@ -2,7 +2,7 @@
 .multiple-accordion {
 	border-width: 1px 1px 0;
 	border-style: solid;
-	border-color: var(--bdr-main);
+	border-color: transparent;
 }
 
 .single-accordion:last-child,
@@ -20,7 +20,6 @@
 	position: relative;
 	margin: 0;
 	padding-right: 1.618em;
-	background-color: var(--bgc-sub);
 }
 
 .accordion-trigger > button {
