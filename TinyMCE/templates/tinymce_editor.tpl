@@ -96,6 +96,8 @@ tinymce.init({
 	convert_urls: false,
 	media_alt_source: false,
 	media_poster: false,
+	link_title: false,
+	target_list: false,
 	content_css: [
 		"{PATH_TO_ROOT}/kernel/lib/css/font-awesome/css/font-awesome.css",
 		"{PATH_TO_ROOT}/templates/{THEME}/theme/global.css"
