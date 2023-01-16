@@ -88,25 +88,6 @@
 li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
 
 /* --- Multitabs Modals ----------------------------------------------------- */
-.modal-btn {
-    position: relative;
-    padding: .309em 2.618em .309em 1em;
-    margin: 0.618em;
-    border-width: 1px;
-    border-style: solid;
-    border-color: transparent;
-}
-
-.modal-btn:after {
-    position: absolute;
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 1em;
-    content: '\f065';
-}
-
 .modal {
     position: fixed;
     z-index: -1;
@@ -157,22 +138,13 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     cursor: pointer;
 }
 
-.close-modal:after {
-    position: absolute;
-    top: 0.309em;
-    right: 0.309em;
-    font-size: 1.608em;
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 400;
-    content: '\f057';
+.hide-modal {
+	text-align: right;
+	padding: 0 0 0.228em 0;
 }
 
-@media (min-width:769px) {
-    .close-modal:after {
-        top: 0.618em;
-        right: 1.618em;
-    }
 
+@media (min-width:769px) {
     .modal .content-panel {
         padding: 1.618em;
         width: 80%;

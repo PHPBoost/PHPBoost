@@ -52,6 +52,7 @@
 					<div id="message-user-datas-{list.ID}" class="modal modal-animation">
 						<div class="close-modal" aria-label="{@common.close}"></div>
 						<div class="content-panel cell">
+							<div class="align-right"><a href="#" class="error hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 							<div class="cell-list">
 								<ul>
 									<li class="li-stretch">

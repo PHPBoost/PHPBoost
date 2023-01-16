@@ -133,6 +133,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									{@bbcode.smileys}
+									<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 								</div>
 								<div class="cell-list cell-list-inline">
 									<ul>
@@ -162,6 +163,7 @@
 							<div class="content-panel cell">
 								<div class="cell-header">
 									<div class="cell-name">{@bbcode.emojis}</div>
+									<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 								</div>
 								<div class="cell-content align-center">
 									{@H|bbcode.emojis.link}

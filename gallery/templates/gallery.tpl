@@ -392,6 +392,7 @@
 															<div class="cell content-panel">
 																<div class="cell-header">
 																	<div class="cell-name">{@common.move.to} :</div>
+																	<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 																</div>
 																<div class="cell-input">
 																	<select name="{ID}cat" onchange="document.location = '{U_MOVE}'">
@@ -512,6 +513,7 @@
 																<div class="cell content-panel">
 																	<div class="cell-header">
 																		<div class="cell-name">{@common.move.to} :</div>
+																		<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 																	</div>
 																	<div class="cell-input">
 																		<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">

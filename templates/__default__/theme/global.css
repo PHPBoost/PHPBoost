@@ -192,10 +192,10 @@ a.pinned { cursor: pointer; }
 }
 
 /* --- Display --- */
-.d-flex         { display: flex; }
-.d-inline 	    { display: inline; }
-.d-block 	    { display: block; }
-.d-inline-block { display: inline-block; }
+.d-flex         { display: flex !important; }
+.d-inline 	    { display: inline !important; }
+.d-block 	    { display: block !important; }
+.d-inline-block { display: inline-block !important; }
 
 .span-mobile { display: block; }
 @media (min-width:769px) {

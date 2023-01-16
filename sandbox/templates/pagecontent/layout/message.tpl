@@ -32,6 +32,7 @@
                 <div id="message-user-datas-ID" class="modal modal-animation">
                     <div class="close-modal" aria-label="{@common.close}"></div>
                     <div class="content-panel cell">
+                        <div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
                         <div class="cell-list">
                             <ul>
                                 <li class="li-stretch">
@@ -111,6 +112,7 @@
     &lt;div id="message-user-datas-ID" class="modal modal-animation">
         &lt;div class="close-modal" aria-label="{@common.close}">&lt;/div>
         &lt;div class="content-panel cell">
+            &lt;div class="align-right">&lt;a href="#" class="error big hide-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
             &lt;div class="cell-list">
                 &lt;ul>
                     &lt;li class="li-stretch">

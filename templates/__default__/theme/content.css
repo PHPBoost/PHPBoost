@@ -303,3 +303,9 @@ a.wikipedia-link:after {
 	display: block;
 	clear: both;
 }
+
+/* --- calendar picker --- */
+.calendar-block .hide-modal {
+	justify-content: flex-end;
+	padding: 0 0 0.228em 0;
+}

@@ -46,6 +46,7 @@
                 jQuery('.modal-container').on('click', '.hide-modal, .close-modal', function() {
                     jQuery('.modal-container ' + hashUrl).removeClass('active-panel'); // remove activation class from the target
                     history.pushState('', '', ' '); // delete the hash of the url without apllying it
+                    return false;
                 });
             } else if(options.pluginType == 'accordion') {
                 if(jQuery('.accordion-container').find('[data-target="'+hashTarget+'"]').closest('.accordion').length){ // if target is nested
