@@ -92,6 +92,8 @@
 		convert_urls: false,
 		media_alt_source: false,
 		media_poster: false,
+		link_title: false,
+		target_list: false,
 		content_css: [
 			"{PATH_TO_ROOT}/templates/__default__/theme/font-awesome/css/all.css",
 			"{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css"
