@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 01
+ * @version     PHPBoost 6.0 - last update: 2023 01 17
  * @since       PHPBoost 5.2 - 2019 10 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -400,8 +400,6 @@ class NginxFileCache implements CacheData
 		$this->add_line('add_header X-Frame-Options SAMEORIGIN');
 		$this->add_line('# Control Cross-Domain Policies');
 		$this->add_line('add_header X-Permitted-Cross-Domain-Policies "master-only"');
-		$this->add_line('# Turn on IE8-IE9 XSS prevention tools');
-		$this->add_line('add_header X-XSS-Protection "1; mode=block"');
 		$this->add_line('# Prevent mime based attacks');
 		$this->add_line('add_header X-Content-Type-Options "nosniff"');
 	}
