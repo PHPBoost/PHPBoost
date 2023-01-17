@@ -41,8 +41,8 @@
 			<h5>{@sandbox.component.movie} {@H|sandbox.pinned.bbcode}</h5>
 		</header>
 		<div class="media-content" style="width: 800px; height: 450px">
-			<video class="video-player" controls="">
-				<source src="http://data.babsoweb.com/private/logo-pbt.mp4" type="video/mp4" />
+			<video class="video-player" poster="{PATH_TO_ROOT}/sandbox/templates/images/paysage.png" controls="">
+				<source src="https://dl.phpboost.com/videos/intro.mp4" type="video/mp4" />
 			</video>
 		</div>
 	</article>
