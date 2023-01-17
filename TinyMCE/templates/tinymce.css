@@ -40,3 +40,31 @@ div[id$="rich_text_field"].editor-tinymce.constraint-status-error .form-field-te
 div[id$="rich_text_field"].editor-tinymce.constraint-status-right .form-field-textarea.field-required:after {
 	bottom: 8px;
 }
+
+.mce-content-body blockquote {
+	margin: 0.456em;
+	padding: 0.618em 1.618em;
+	background-color: var(--bgc-sub);
+	position: relative;
+	font-style: italic;
+}
+
+.mce-content-body blockquote::before,
+.mce-content-body blockquote::after {
+	position: absolute;
+	font-family: 'Font Awesome 6 Free';
+	font-weight: 900;
+	font-size: 1em;
+}
+
+.mce-content-body blockquote::before {
+	content: '\f10d';
+	top: -0.256em;
+	left: -0.256em;
+}
+
+.mce-content-body blockquote::after {
+	content: '\f10e';
+	bottom: -0.256em;
+	right: -0.1618em;
+}

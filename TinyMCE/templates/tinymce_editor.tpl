@@ -96,7 +96,8 @@
 		target_list: false,
 		content_css: [
 			"{PATH_TO_ROOT}/templates/__default__/theme/font-awesome/css/all.css",
-			"{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css"
+			"{PATH_TO_ROOT}/templates/{THEME}/theme/@import.css",
+			"{PATH_TO_ROOT}/TinyMCE/templates/tinymce.css"
 		],
 		style_formats: [
 			{title: ${escapejs(@warning.success)}, inline: 'span', classes: 'success'},
