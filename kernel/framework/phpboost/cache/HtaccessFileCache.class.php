@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2019 10 13
+ * @version     PHPBoost 5.2 - last update: 2023 01 17
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -145,8 +145,6 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('	Header always set X-Frame-Options SAMEORIGIN');
 			$this->add_line('	# Control Cross-Domain Policies');
 			$this->add_line('	Header always set X-Permitted-Cross-Domain-Policies "master-only"');
-			$this->add_line('	# Turn on IE8-IE9 XSS prevention tools');
-			$this->add_line('	Header always set X-XSS-Protection "1; mode=block"');
 			$this->add_line('	# Prevent mime based attacks');
 			$this->add_line('	Header always set X-Content-Type-Options "nosniff"');
 			$this->add_line('	# Use this to force IE to hide that annoying browser compatibility button in the address bar.');
