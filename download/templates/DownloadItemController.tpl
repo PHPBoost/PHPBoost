@@ -85,7 +85,7 @@
 					<div itemprop="text">{CONTENT}</div>
 				</div>
 
-				<aside>${ContentSharingActionsMenuService::display()}</aside>
+				<aside class="sharing-container">${ContentSharingActionsMenuService::display()}</aside>
 
 				# IF C_SOURCES #
 					<aside class="sources-container">
