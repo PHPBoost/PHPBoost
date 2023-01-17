@@ -19,13 +19,13 @@
 			preserveInput: {PRESERVE_INPUT},
 			params: {'token': ${escapejs(TOKEN)}},
 			# IF C_DISPLAY_HTML_IN_SUGGESTIONS #
-			formatResult: function (suggestion, currentValue) {
-				return suggestion.value;
-			},
-			onSelect: function (suggestion) {
-				$(this).val($(this).val().replace(/(<([^>]+)>)/ig,""));
-				$(this).focus();
-			}
+				formatResult: function (suggestion, currentValue) {
+					return suggestion.value;
+				},
+				onSelect: function (suggestion) {
+					$(this).val($(this).val().replace(/(<([^>]+)>)/ig,""));
+					$(this).focus();
+				}
 			# ENDIF #
 		});
 	}
