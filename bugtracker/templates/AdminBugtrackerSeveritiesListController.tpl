@@ -36,7 +36,7 @@
 		<tfoot>
 			<tr>
 				<td>
-					<a href="{LINK_DELETE_DEFAULT}" aria-label="{@labels.del_default_value}" data-confirmation="delete-element"><i class="far fa-lg fa-dot-circle error"></i> </a>
+					<a href="{LINK_DELETE_DEFAULT}" aria-label="{@labels.del_default_value}" data-confirmation="delete-element"><i class="far fa-lg fa-dot-circle error"></i> <span class="hidden-large-screens">{@labels.del_default_value}</span></a>
 				</td>
 				<td colspan="2"></td>
 			</tr>

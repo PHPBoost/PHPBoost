@@ -95,11 +95,11 @@
 		<tr>
 			# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #
 				<td>
-					<a href="{LINK_DELETE_DEFAULT}" data-confirmation="{@actions.confirm.del_default_value}" aria-label="{@labels.del_default_value}"><i class="far fa-lg fa-dot-circle error" aria-hidden="true"></i> </a>
+					<a href="{LINK_DELETE_DEFAULT}" data-confirmation="{@actions.confirm.del_default_value}" aria-label="{@labels.del_default_value}"><i class="far fa-lg fa-dot-circle error" aria-hidden="true"></i> <span class="hidden-large-screens">{@labels.del_default_value}</span></a>
 				</td>
 			# ENDIF #
 			<td colspan="# IF C_DISPLAY_DEFAULT_DELETE_BUTTON #2# ELSE #3# ENDIF #">
-					<a href="#" onclick="BugtrackerFormFieldTypes.add_type();return false;" aria-label="{@titles.add_type}" id="add-type"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+					<a href="#" onclick="BugtrackerFormFieldTypes.add_type();return false;" aria-label="{@titles.add_type}" id="add-type"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i> <span class="hidden-large-screens">{@titles.add_type}</span></a>
 			</td>
 		</tr>
 	</tfoot>
