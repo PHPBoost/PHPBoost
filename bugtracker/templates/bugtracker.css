@@ -44,4 +44,9 @@ table.bt .bt-content { width: 65% !important; }
 
 table.bt tfoot .bt-content { width: 100% !important; }
 
+tfoot td * { 
+	vertical-align: initial;
+	text-align: left;
+}
+
 .cell-progressbar { width: 50%; }
