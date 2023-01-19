@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 09
+ * @version     PHPBoost 6.0 - last update: 2023 01 19
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -13,9 +13,7 @@
 class ClassLoader
 {
 	protected static $cache_file = '/cache/autoload.php';
-	protected static $modules_cache_file = '/cache/autoload_modules.php';
 	protected static $autoload;
-	protected static $modules_classlist = array();
 	protected static $already_reloaded = false;
 	protected static $exclude_paths = array(
 		'/cache', '/images', '/lang', '/upload', '/templates',
@@ -96,8 +94,6 @@ class ClassLoader
 	{
 		$file = new File(PATH_TO_ROOT . self::$cache_file);
 		$file->delete();
-		$file = new File(PATH_TO_ROOT . self::$modules_cache_file);
-		$file->delete();
 		self::$already_reloaded = false;
 	}
 
@@ -112,20 +108,11 @@ class ClassLoader
 		$folder = new Folder($directory);
 		$relative_path = Path::get_path_from_root($folder->get_path());
 		
-		$path_folders = explode('/', $relative_path);
-		$module_id = isset($path_folders[1]) ? $path_folders[1] : '';
-		
 		$files = $folder->get_files($pattern);
 		foreach ($files as $file)
 		{
 			$filename = $file->get_name();
 			$classname = $file->get_name_without_extension();
-			if ($module_id  && !in_array($module_id, array('admin', 'kernel', 'lang', 'syndication', 'user')))
-			{
-				if(!isset(self::$modules_classlist[$module_id]))
-					self::$modules_classlist[$module_id] = array();
-				self::$modules_classlist[$module_id][$classname] = $relative_path . '/' . $filename;
-			}
 			self::$autoload[$classname] = $relative_path . '/' . $filename;
 		}
 
@@ -149,17 +136,6 @@ class ClassLoader
 		try
 		{
 			$file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; ?>');
-			$file->close();
-		}
-		catch (IOException $ex)
-		{
-			die('The cache folder is not writeable, please set CHMOD to 755');
-		}
-		
-		$file = new File(PATH_TO_ROOT . self::$modules_cache_file);
-		try
-		{
-			$file->write('<?php self::$modules_classlist = ' . var_export(self::$modules_classlist, true) . '; ?>');
 			$file->close();
 		}
 		catch (IOException $ex)
