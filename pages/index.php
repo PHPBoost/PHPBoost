@@ -27,7 +27,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('PagesReorderItemsController', '`^/reorder/?([0-9]+)?-?([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
 
 	//Items list
-	new UrlControllerMapper('PagesHomeController', '`^/?$`'),
+	new UrlControllerMapper('PagesHomeController', '`^/?$`')
 );
 
 ModuleDispatchManager::dispatch($url_controller_mappers, 'pages');
