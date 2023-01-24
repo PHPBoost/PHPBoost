@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 24
+ * @version     PHPBoost 6.0 - last update: 2023 01 25
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -198,10 +198,14 @@ class LangLoader
 		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale($locale));
 		$files = $lang_directory->get_files();
 		$langloader = array();
+		
+		// Don't load admin language variables if not on admin page
+		$excluded_files = preg_match('/admin/i', REWRITED_SCRIPT) ? array('config') : array('config', 'addon-lang', 'admin-lang', 'configuration-lang', 'menu-lang');
+		
 		foreach($files as $file)
 		{
 			$filename = $file->get_name_without_extension();
-			if (!in_array($filename, array('config')))
+			if (!in_array($filename, $excluded_files))
 			{
 				foreach(self::get($filename) as $var => $desc)
 				{
