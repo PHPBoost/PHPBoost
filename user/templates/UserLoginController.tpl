@@ -45,7 +45,7 @@
 
 					# IF C_DISPLAY_DELAY #
 						<div class="delay">
-							{@admin.maintenance.delay}
+							{@user.maintenance.delay}
 							<div id="release">{@common.loading}...</div>
 						</div>
 

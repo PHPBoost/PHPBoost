@@ -4,7 +4,7 @@
 			<div id="message-helper-maintain" class="floating-element">
 				<div class="message-helper bgc warning">
 					<a id="message-helper-button-maintain" class="bgc-full warning close-message" aria-label="{@common.close}"><i class="fa fa-times" aria-hidden="true"></i></a>
-					{@admin.maintenance.delay}
+					{@user.maintenance.delay}
 					<div id="release">{@common.loading}...</div>
 					# INCLUDE DISABLE_MAINTENANCE #
 				</div>

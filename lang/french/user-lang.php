@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 11
+ * @version     PHPBoost 6.0 - last update: 2023 01 24
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -170,6 +170,9 @@ $lang['user.profile.edit.password.error']       = 'Le mot de passe que vous avez
 $lang['user.external.auth.account.exists']      = 'Vous avez déjà un compte sur le site. Pour utiliser cette méthode de connexion, veuillez vous connecter et vous rendre dans l\'édition de votre profil';
 $lang['user.external.auth.email.not.found']     = 'L\'adresse email de votre compte n\'a pas pu être récupérée, votre compte ne peut pas être associé.';
 $lang['user.external.auth.user.data.not.found'] = 'Les informations de votre compte n\'ont pas pu être récupérées, votre compte ne peut pas être créé.';
+
+// Maintenance
+$lang['user.maintenance.delay']   = 'Délai estimé avant réouverture du site :';
 
 // Ranks
 $lang['user.rank']               = 'Rang';
