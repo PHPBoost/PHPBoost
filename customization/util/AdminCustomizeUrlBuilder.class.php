@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2015 10 08
+ * @version     PHPBoost 6.0 - last update: 2023 01 25
  * @since       PHPBoost 3.0 - 2011 09 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminCustomizeUrlBuilder
@@ -17,7 +18,7 @@ class AdminCustomizeUrlBuilder
 	 */
     public static function customize_interface($theme = '')
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/interface/'. $theme);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/interface/'. $theme);
 	}
 
 	/**
@@ -25,7 +26,7 @@ class AdminCustomizeUrlBuilder
 	 */
     public static function customize_favicon()
 	{
-		return DispatchManager::get_url(self::$dispatcher, '/favicon');
+		return DispatchManager::get_url(self::$dispatcher, '/admin/favicon');
 	}
 
 	/**
@@ -34,7 +35,7 @@ class AdminCustomizeUrlBuilder
     public static function editor_css_file($theme = '', $file = '')
 	{
 		$url = !empty($file) ? $theme . '/' . $file : $theme;
-		return DispatchManager::get_url(self::$dispatcher, '/editor/css/'. $url);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/editor/css/'. $url);
 	}
 
 	/**
@@ -43,7 +44,7 @@ class AdminCustomizeUrlBuilder
     public static function editor_tpl_file($theme = '', $file = '')
 	{
 		$url = !empty($file) ? $theme . '/' . $file : $theme;
-		return DispatchManager::get_url(self::$dispatcher, '/editor/tpl/'. $url);
+		return DispatchManager::get_url(self::$dispatcher, '/admin/editor/tpl/'. $url);
 	}
 }
 ?>
