@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 18
+ * @version     PHPBoost 6.0 - last update: 2023 01 27
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,8 @@ class Updates
 	private $apps = array();
 
 	const PHPBOOST_OFFICIAL_REPOSITORY = 'https://www.phpboost.com/repository/main.xml';
-	const PHP_MIN_VERSION_UPDATES = '5';
+	const PHPBOOST_OFFICIAL_MODULES_REPOSITORY = 'https://dl.phpboost.com/repository/modules.xml';
+	const PHPBOOST_OFFICIAL_THEMES_REPOSITORY = 'https://dl.phpboost.com/repository/themes.xml';
 
 	/**
 	* constructor of the class
@@ -41,37 +42,32 @@ class Updates
 	*/
 	private function load_apps($checks = CHECK_ALL_UPDATES)
 	{
-		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
+		$user_locale = AppContext::get_current_user()->get_locale();
+		if ($checks & CHECK_KERNEL)
 		{
-			$user_locale = AppContext::get_current_user()->get_locale();
-			if ($checks & CHECK_KERNEL)
-			{   // Add the kernel to the check list
-				$this->apps[] = new Application('kernel', $user_locale, Application::KERNEL_TYPE, Environment::get_phpboost_version(), Updates::PHPBOOST_OFFICIAL_REPOSITORY);
-			}
+			// Add kernel repository to the check list
+			$this->apps[] = new Application('kernel', $user_locale, Application::KERNEL_TYPE, Environment::get_phpboost_version(), self::PHPBOOST_OFFICIAL_REPOSITORY);
+		}
 
-			if ($checks & CHECK_MODULES)
+		if ($checks & CHECK_MODULES)
+		{
+			// Add modules repository to the check list
+			foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 			{
-				$activated_modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-				foreach ($activated_modules as $module)
-				{
-					$this->apps[] = new Application($module->get_id(),
-					$user_locale, Application::MODULE_TYPE,
-					$module->get_configuration()->get_version(), $module->get_configuration()->get_repository());
-				}
+				$repository = $module->get_configuration()->get_repository();
+				$repository = $repository ? $repository : self::PHPBOOST_OFFICIAL_MODULES_REPOSITORY;
+				$this->apps[] = new Application($module->get_id(), $user_locale, Application::MODULE_TYPE, $module->get_configuration()->get_version(), $repository);
 			}
+		}
 
-			if ($checks & CHECK_THEMES)
+		if ($checks & CHECK_THEMES)
+		{
+			// Add themes repository to the check list
+			foreach (ThemesManager::get_activated_themes_map() as $theme)
 			{
-				// Add Themes
-				$activated_themes = ThemesManager::get_activated_themes_map();
-				foreach ($activated_themes as $id => $value)
-				{
-					$repository = $value->get_configuration()->get_repository();
-					if (!empty($repository))
-					{
-						$this->apps[] = new Application($id, $user_locale, Application::TEMPLATE_TYPE, $value->get_configuration()->get_version(), $repository);
-					}
-				}
+				$repository = $theme->get_configuration()->get_repository();
+				$repository = $repository ? $repository : self::PHPBOOST_OFFICIAL_THEMES_REPOSITORY;
+				$this->apps[] = new Application($theme->get_id(), $user_locale, Application::TEMPLATE_TYPE, $theme->get_configuration()->get_version(), $repository);
 			}
 		}
 	}
@@ -81,14 +77,11 @@ class Updates
 	*/
 	private function load_repositories()
 	{
-		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
+		foreach ($this->apps as $app)
 		{
-			foreach ($this->apps as $app)
-			{
-				$rep = $app->get_repository();
-				if (!empty($rep) && !isset($this->repositories[$rep]))
-					$this->repositories[$rep] = new Repository($rep);
-			}
+			$rep = $app->get_repository();
+			if (!empty($rep) && !isset($this->repositories[$rep]))
+				$this->repositories[$rep] = new Repository($rep);
 		}
 	}
 
@@ -97,15 +90,12 @@ class Updates
 	*/
 	private function check_repositories()
 	{
-		if (ServerConfiguration::get_phpversion() > self::PHP_MIN_VERSION_UPDATES)
+		foreach ($this->apps as $app)
 		{
-			foreach ($this->apps as $app)
-			{
-				$result = $this->repositories[$app->get_repository()]->check($app);
-				if ($result !== null)
-				{   // processing to the update notification
-					$this->add_update_alert($result);
-				}
+			$result = $this->repositories[$app->get_repository()]->check($app);
+			if ($result !== null)
+			{   // processing to the update notification
+				$this->add_update_alert($result);
 			}
 		}
 	}

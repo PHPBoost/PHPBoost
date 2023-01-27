@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 24
+ * @version     PHPBoost 6.0 - last update: 2023 01 27
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -251,11 +251,6 @@ $lang['admin.download.full.pack']     = 'Download the full pack';
 $lang['admin.download.update.pack']   = 'Download the update pack';
 $lang['admin.no.available.update']    = 'No update is available for the moment.';
 $lang['admin.updates.check']          = 'Check for updates now!';
-$lang['admin.update.php.version']     = '
-    Can\'t check for updates.<br />
-    Please upgrade to PHP version %s or above.<br />
-    If you can\'t use PHP5, check for updates on our <a href="https://www.phpboost.com">official website</a>.
-';
 $lang['admin.update.verification.impossible'] = 'Checking for updates is not possible, the function is not available on your server.<br/>Enable the Curl extension in your server\'s PHP options to run the update availability check.';
 
 ?>
