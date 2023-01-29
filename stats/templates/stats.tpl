@@ -166,7 +166,7 @@
 					# IF C_DISPLAY_SEX #
 						<h3>{@user.sex}</h3>
 						<div class="align-center">
-							<img src="{U_GRAPH_RESULT_THEME}" alt="{@user.sex}" />
+							<img src="{U_GRAPH_RESULT_SEX}" alt="{@user.sex}" />
 						</div>
 						<table class="table">
 							<thead>
