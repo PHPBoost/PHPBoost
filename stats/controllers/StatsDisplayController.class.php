@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 14
+ * @version     PHPBoost 6.0 - last update: 2023 01 29
  * @since       PHPBoost 6.0 - 2021 11 23
 */
 
@@ -178,6 +178,13 @@ class StatsDisplayController extends DefaultModuleController
 			LIMIT 10 OFFSET 0");
 			while ($row = $result->fetch())
 			{
+				$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
+				$contributions_number = 0;
+				foreach ($modules as $module)
+				{
+					$contributions_number += $module->get_publications_number($row['user_id']);
+				}
+
 				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 				$this->view->assign_block_vars('top_poster', array(
@@ -187,7 +194,9 @@ class StatsDisplayController extends DefaultModuleController
 					'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
 					'USER_GROUP_COLOR'   => $user_group_color,
 					'USER_POST'          => $row['posted_msg'],
-					'U_USER_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
+					'USER_PUBLICATIONS'  => $contributions_number - $row['posted_msg'],
+					'U_USER_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
+					'U_USER_PUBLICATIONS' => UserUrlBuilder::publications($row['user_id'])->rel(),
 				));
 
 				$i++;

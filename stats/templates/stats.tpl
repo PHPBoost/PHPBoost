@@ -211,7 +211,10 @@
 									{@user.display.name}
 								</th>
 								<th>
-									{@common.messages}
+									{@stats.top.10.forum}
+								</th>
+								<th>
+									{@stats.top.10.modules}
 								</th>
 							</tr>
 						</thead>
@@ -226,6 +229,9 @@
 									</td>
 									<td>
 										{top_poster.USER_POST}
+									</td>
+									<td>
+										<a class="{top_poster.USER_LEVEL_CLASS} offload" href="{top_poster.U_USER_PUBLICATIONS}">{top_poster.USER_PUBLICATIONS}</a>
 									</td>
 								</tr>
 							# END top_poster #

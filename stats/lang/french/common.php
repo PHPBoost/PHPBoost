@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 21
+ * @version     PHPBoost 6.0 - last update: 2023 01 29
  * @since       PHPBoost 1.6 - 2007 09 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -31,6 +31,8 @@ $lang['stats.phpboost.version']      = 'Version installée';
 	// Members
 $lang['stats.last.member']         = 'Dernier membre';
 $lang['stats.top.10.contributors'] = 'Top 10 des contributeurs';
+$lang['stats.top.10.forum']        = 'Messages du forum';
+$lang['stats.top.10.modules']      = 'Autres modules';
 $lang['stats.registered.member']   = 'membre inscrit';
 $lang['stats.registered.members']  = 'membres inscrits';
 	// Browsers
