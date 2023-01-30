@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 09 20
+ * @version     PHPBoost 6.0 - last update: 2023 01 30
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,13 @@ class UserPublicationsController extends AbstractController
 	private function build_view()
 	{
 		$modules_with_publications = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
-		foreach (array_merge(array('user' => true), ModulesManager::get_activated_modules_map_sorted_by_localized_name()) as $id => $installed_module)
+
+        $this->view->put_all(array(
+            'C_CURRENT_USER' => $this->user->get_id() == AppContext::get_current_user()->get_id(),
+            'USER_NAME' => $this->user->get_display_name()
+        ));
+
+        foreach (array_merge(array('user' => true), ModulesManager::get_activated_modules_map_sorted_by_localized_name()) as $id => $installed_module)
 		{
 			if (in_array($id, array_keys($modules_with_publications)))
 			{
