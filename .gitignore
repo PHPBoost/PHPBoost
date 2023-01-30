@@ -19,7 +19,10 @@ gallery/pics/*
 upload/*
 
 # Non official modules
+BasicSimple
 birthday
+broadcast
+CategoriesMenus
 countdown
 CMSMigrant
 dictionary
@@ -28,14 +31,17 @@ GoogleAnalytics
 HomeCustom
 HomeLanding
 lastcoms
-newscat
 PHPBoostOfficial
 quotes
+recipe
 ServerStatus
 smallads
+spots
 steam
-teamspeack
+teamspeak
+video
 WikiStatus
+wikitree
 
 # Non official graphic templates
 !templates
