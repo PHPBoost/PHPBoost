@@ -182,7 +182,8 @@ class StatsDisplayController extends DefaultModuleController
 				$contributions_number = 0;
 				foreach ($modules as $module)
 				{
-					$contributions_number += $module->get_publications_number($row['user_id']);
+					if($module->get_publications_module_id() != 'forum')
+						$contributions_number += $module->get_publications_number($row['user_id']);
 				}
 
 				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -194,7 +195,7 @@ class StatsDisplayController extends DefaultModuleController
 					'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
 					'USER_GROUP_COLOR'   => $user_group_color,
 					'USER_POST'          => $row['posted_msg'],
-					'USER_PUBLICATIONS'  => $contributions_number - $row['posted_msg'],
+					'USER_PUBLICATIONS'  => $contributions_number,
 					'U_USER_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
 					'U_USER_PUBLICATIONS' => UserUrlBuilder::publications($row['user_id'])->rel(),
 				));
