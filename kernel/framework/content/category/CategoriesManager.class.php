@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 24
+ * @version     PHPBoost 6.0 - last update: 2023 01 31
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -76,7 +76,7 @@ class CategoriesManager
 			}
 			else
 			{
-				$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $category->get_order()));
+				$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $category->get_order()));
 				while ($row = $result->fetch())
 				{
 					$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
@@ -144,7 +144,7 @@ class CategoriesManager
 					//Update items
 					$this->move_items_into_another($category, $id_parent);
 
-					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+					$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 					while ($row = $result->fetch())
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
@@ -153,7 +153,7 @@ class CategoriesManager
 				}
 				else
 				{
-					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $position));
+					$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $position));
 					while ($row = $result->fetch())
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1)), 'WHERE id=:id', array('id' => $row['id']));
@@ -165,7 +165,7 @@ class CategoriesManager
 					//Update items
 					$this->move_items_into_another($category, $id_parent);
 
-					$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+					$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 					while ($row = $result->fetch())
 					{
 						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
@@ -254,9 +254,25 @@ class CategoriesManager
 		$this->db_querier->delete($this->table_name, 'WHERE id=:id', array('id' => $id));
 
 		//Delete items
-		$this->db_querier->delete($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $id));
+		$module_has_items = ModulesManager::get_module($this->module_id)->get_configuration()->has_items();
+		$items_manager = $module_has_items ? ItemsService::get_items_manager($this->module_id) : '';
+		$result = $this->db_querier->select_rows($this->categories_items_parameters->get_table_name_contains_items(), array('id'), 'WHERE ' . $this->categories_items_parameters->get_field_name_id_category() . '=:id_category', array('id_category' => $id));
+		while ($row = $result->fetch())
+		{
+			if ($module_has_items)
+				$items_manager->delete_from_id($row['id']);
+			else
+			{
+				$this->db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => $this->module_id, 'id' => $row['id']));
 
-		$result = PersistenceContext::get_querier()->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+				CommentsService::delete_comments_topic_module($this->module_id, $row['id']);
+				KeywordsService::get_keywords_manager($this->module_id)->delete_relations($row['id']);
+				NotationService::delete_notes_id_in_module($this->module_id, $row['id']);
+			}
+		}
+		$result->dispose();
+		
+		$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 		while ($row = $result->fetch())
 		{
 			$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));

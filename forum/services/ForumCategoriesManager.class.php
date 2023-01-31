@@ -4,10 +4,10 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2023 01 31
- * @since       PHPBoost 6.0 - 2021 03 24
+ * @since       PHPBoost 6.0 - 2023 01 31
 */
 
-class CalendarCategoriesManager extends CategoriesManager
+class ForumCategoriesManager extends CategoriesManager
 {
 	/**
 	 * Deletes a category and items.
@@ -20,13 +20,11 @@ class CalendarCategoriesManager extends CategoriesManager
 			throw new CategoryNotFoundException($id);
 		}
 		
-		$result = PersistenceContext::get_querier()->select('SELECT id_event
-		FROM ' . CalendarSetup::$calendar_events_table . ' event
-		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		WHERE id_category = :id_category', array('id_category' => $id));
+		$result = PersistenceContext::get_querier()->select_rows(ForumSetup::$forum_topics_table, array('id'), 'WHERE id_category=:=:id_category', array('id_category' => $id));
 		while ($row = $result->fetch())
 		{
-			CalendarService::delete($row['id_event']);
+			$Forumfct = new Forum();
+			$Forumfct->Del_topic($row['id']);
 		}
 		$result->dispose();
 
