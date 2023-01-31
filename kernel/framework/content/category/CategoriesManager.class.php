@@ -272,6 +272,8 @@ class CategoriesManager
 		}
 		$result->dispose();
 		
+		$this->db_querier->delete($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $id));
+		
 		$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
 		while ($row = $result->fetch())
 		{
