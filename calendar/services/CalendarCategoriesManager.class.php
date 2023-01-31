@@ -26,7 +26,7 @@ class CalendarCategoriesManager extends CategoriesManager
 		WHERE id_category = :id_category', array('id_category' => $id));
 		while ($row = $result->fetch())
 		{
-			CalendarService::delete($row['id_event']);
+			CalendarService::delete_item($row['id_event']);
 		}
 		$result->dispose();
 
