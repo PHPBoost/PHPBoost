@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 25
+ * @version     PHPBoost 6.0 - last update: 2023 02 01
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StatsSaver
@@ -162,6 +163,7 @@ class StatsSaver
 		$array_os = array(
 			'android' => 'android',
 			'iphone|ipad' => 'ios',
+			'windows nt 10.0' => 'windows11',
 			'windows nt 10.0' => 'windows10',
 			'windows nt 6.3' => 'windows8.1',
 			'windows nt 6.2' => 'windows8',
