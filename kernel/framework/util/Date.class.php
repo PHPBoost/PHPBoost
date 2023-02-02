@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 21
+ * @version     PHPBoost 6.0 - last update: 2023 02 02
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -576,6 +576,7 @@ class Date
 			$date_label . '_MINUTE'           => $date->get_minutes(),
 			$date_label . '_SECONDS'          => $date->get_seconds(),
 			$date_label . '_ISO8601'          => $date->format(Date::FORMAT_ISO8601),
+			$date_label . '_RFC2822'          => $date->format(Date::FORMAT_RFC2822),
 			$date_label . '_AGO'              => $date->format(Date::FORMAT_AGO),
 			$date_label . '_SINCE'            => $date->format(Date::FORMAT_SINCE),
 			$date_label . '_DELAY'            => $date->format(Date::FORMAT_DELAY),
