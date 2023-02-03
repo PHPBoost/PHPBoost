@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 28
+ * @version     PHPBoost 6.0 - last update: 2023 02 04
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,7 +89,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
-			'`<a class="offload"(?: aria-label="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
+			'`<a(?: class="offload")?(?: aria-label="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
 			'`<h1 class="formatter-title">(.*)</h1>`isuU',
 			'`<h2 class="formatter-title">(.*)</h2>`isuU',
 			'`<h3 class="formatter-title">(.*)</h3>`isuU',
