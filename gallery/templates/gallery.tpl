@@ -241,11 +241,11 @@
 	<header class="section-header">
 		<div class="controls align-right">
 			<a href="${relative_url(SyndicationUrlBuilder::rss('gallery', ID_CATEGORY))}" aria-label="{@common.syndication}"><i class="fa fa-fw fa-rss warning" aria-hidden="true"></i></a>
-			# IF NOT C_ROOT_CATEGORY #{MODULE_NAME}# ENDIF #
+			# IF NOT C_ROOT_CATEGORY #{@gallery.module.title}# ENDIF #
 			# IF IS_ADMIN #<a href="{U_EDIT_CATEGORY}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 		</div>
 		<h1>
-			# IF C_ROOT_CATEGORY #{MODULE_NAME}# ELSE #{CATEGORY_NAME}# ENDIF #
+			# IF C_ROOT_CATEGORY #{@gallery.module.title}# ELSE #{CATEGORY_NAME}# ENDIF #
 		</h1>
 	</header>
 
