@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 07 01
+ * @version     PHPBoost 6.0 - last update: 2023 02 05
  * @since       PHPBoost 3.0 - 2011 10 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -101,12 +101,14 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 						break;
 				}
 			}
+
 			$view->put_all(array(
 				'C_FADE'              => false,
 				'C_VERTICAL_SCROLL'   => false,
 				'C_HORIZONTAL_SCROLL' => false,
 				'C_STATIC'            => false
 			));
+
 			switch ($config->get_scroll_type())
 			{
 				case GalleryConfig::STATIC_SCROLL :
@@ -157,8 +159,8 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 		}
 
 		$view->put_all(array(
-			'C_NO_ITEM' => count($gallery_mini) == 0,
-			
+            'C_NO_ITEM' => $i == 0,
+
 			'SCROLL_DELAY'  => $config->get_mini_pics_speed()*1000,
 			'ARRAY_PICS'    => $array_pics_mini,
 			'HEIGHT_DIV'    => $config->get_mini_max_height(),
