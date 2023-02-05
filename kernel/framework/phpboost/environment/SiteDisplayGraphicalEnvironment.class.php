@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 19
+ * @version     PHPBoost 6.0 - last update: 2023 02 05
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -340,7 +340,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		{
 			$form = new HTMLForm('disable_maintenance_form', '', false);
 
-			$submit_button = new FormButtonSubmit(self::$lang['admin.disable.maintenance'], 'disable_maintenance', '', 'bgc-full warning disable-maintenance-button');
+			$submit_button = new FormButtonSubmit(self::$lang['user.admin.disable.maintenance'], 'disable_maintenance', '', 'bgc-full warning disable-maintenance-button');
 			$form->add_button($submit_button);
 
 			if ($submit_button->has_been_submited() && $form->validate())

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 24
+ * @version     PHPBoost 6.0 - last update: 2023 02 05
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -172,7 +172,9 @@ $lang['user.external.auth.email.not.found']     = 'The email address of your acc
 $lang['user.external.auth.user.data.not.found'] = 'The informations of your account could not be retrieved, your account can not be created.';
 
 // Maintenance
-$lang['user.maintenance.delay']   = 'Time remaining:';
+$lang['user.maintenance.delay']         = 'Time remaining:';
+$lang['user.admin.maintenance']         = 'Maintenance';
+$lang['user.admin.disable.maintenance'] = 'Disable maintenance';
 
 // Ranks
 $lang['user.rank']               = 'Rank';
