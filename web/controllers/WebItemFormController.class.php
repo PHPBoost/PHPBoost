@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2023 02 06
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -122,7 +122,7 @@ class WebItemFormController extends DefaultModuleController
 
 			if (!$this->get_item()->is_published())
 			{
-				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.date'], false,
+				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.creation.date'], false,
 					array('hidden' => $this->get_item()->get_status() != WebItem::NOT_PUBLISHED)
 				));
 			}
