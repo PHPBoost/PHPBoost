@@ -110,6 +110,6 @@
 <a href="javascript:GoogleMapsFormFieldMultipleMarkers.add();" id="add-${escape(HTML_ID)}" class="form-field-checkbox-more" aria-label="{@form.add.marker}"><i class="far fa-plus-square" aria-hidden="true"></i></a>
 
 # IF C_INCLUDE_API #
-	<script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places"></script>
+	<script src="//maps.googleapis.com/maps/api/js?key={API_KEY}&amp;libraries=places&callback=Function.prototype"></script>
 	<script src="{PATH_TO_ROOT}/GoogleMaps/templates/js/jquery.geocomplete# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # ENDIF #
