@@ -124,7 +124,7 @@
 .cssmenu ul ul {
 	position: absolute;
 	left: -9999px;
-	z-index: 10;
+	z-index: 10000;
 }
 
 .cssmenu li:hover > ul                      { left: auto ;            }
