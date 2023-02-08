@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 24
+ * @version     PHPBoost 6.0 - last update: 2023 02 08
  * @since       PHPBoost 5.1 - 2018 01 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,7 +40,7 @@ $lang['sn.hide.share.link']         = 'Cacher le lien de partage';
 $lang['sn.no.sharing.content.url']  = 'Ce réseau social n\'a pas de lien de partage, il n\'apparaîtra pas dans la liste des liens de partage mais uniquement dans la liste des modes de connexion si celle-ci est activée.';
 
 $lang['sn.menu.position']            = 'Positionnement du menu';
-$lang['sn.menu.mini.module.message'] = 'Pour afficher les liens de partage dans un mini-module sur toutes les pages, activez le mini-module dédié dans la <a href="' . PATH_TO_ROOT . '/admin/menus/menus.php#module-mini-social-networks">gestion des Menus</a>.';
+$lang['sn.menu.mini.module.message'] = 'Pour afficher les liens de partage dans un mini-module sur toutes les pages, activez le mini-module dédié dans la <a href="' . TPL_PATH_TO_ROOT . '/admin/menus/menus.php">gestion des Menus</a>.';
 $lang['sn.menu.content.message']     = 'Pour afficher les liens de partage sur les pages de contenu uniquement, activez l\'option <b>Afficher les liens de partage sur les pages de contenu</b> dans la <a href="' . AdminContentUrlBuilder::content_configuration()->rel() . '#AdminContentConfigController_sharing_config">gestion du Contenu</a>.';
 
 // Sign in label
