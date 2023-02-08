@@ -248,14 +248,8 @@ a.pinned { cursor: pointer; }
 }
 
 @media (min-width: 769px) {
-	.float-left   {
-		float: left;
-		padding: 0.618em 0.809em 0.618em 0;
-	}
-	.float-right {
-		float: right;
-		padding: 0.618em 0 0.809em 0.618em;
-	}
+	.float-left   { padding: 0.618em 0.809em 0.618em 0; }
+	.float-right  { padding: 0.618em 0 0.809em 0.618em; }
 }
 
 .valign-top		{ vertical-align: top; }
