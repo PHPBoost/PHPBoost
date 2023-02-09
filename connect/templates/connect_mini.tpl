@@ -84,9 +84,9 @@
 						<img src="{U_USER_AVATAR}" class="valign-middle" width="22px" height="22px" alt="{USER_DISPLAYED_NAME}">
 					# ELSE #
 						# IF IS_MODERATOR #
-							<i class="fa fa-user-tie" aria-hidden="true"></i>
+							<span><i class="fa fa-fw fa-user-tie" aria-hidden="true"></i></span>
 						# ELSE #
-							<i class="fa fa-user" aria-hidden="true"></i>
+							<span><i class="fa fa-fw fa-user" aria-hidden="true"></i></span>
 						# ENDIF #
 					# ENDIF #
 				</div>
