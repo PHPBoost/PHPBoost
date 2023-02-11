@@ -471,11 +471,9 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 
 .cssmenu-select .has-sub > .cssmenu-title {
 	background-color: var(--bgc-sub);
-	border-color: var(--bdr-main);
-	color: var(--txt-main);
+	border-color: var(--bdr-sub);
+	color: var(--txt-sub);
 }
-
-.cssmenu-select .has-sub:hover > .cssmenu-title { background-color: var(--bgc-sub); }
 
 .small-screen.cssmenu ul ul,
 .small-screen.cssmenu-actionslinks ul {

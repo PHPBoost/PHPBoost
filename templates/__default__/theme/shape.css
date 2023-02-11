@@ -70,6 +70,8 @@ body {
 	flex-direction: column;
 }
 
+#top-header-content { padding: 0.618em 0; }
+
 #inner-header-content { flex: 1 1 auto; }
 
 #site-infos {
