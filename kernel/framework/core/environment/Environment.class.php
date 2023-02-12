@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 22
+ * @version     PHPBoost 6.0 - last update: 2023 02 13
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -62,7 +62,7 @@ class Environment
 		self::init_output_bufferization();
 		self::fit_to_php_configuration();
 		self::init_services();
-		DBFactory::load_prefix();
+		DBFactory::load_config();
 
 		self::init_session();
 		self::set_default_timezone();

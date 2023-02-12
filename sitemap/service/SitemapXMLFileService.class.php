@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2023 02 13
  * @since       PHPBoost 3.0 - 2009 12 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -83,6 +83,11 @@ class SitemapXMLFileService
 			$lang = LangLoader::get_all_langs('sitemap');
 			ErrorHandler::add_error_in_log($lang['sitemap.warning.xml.authorizations'], __FILE__, __LINE__);
 		}
+		catch (PHPBoostNotInstalledException $ex)
+		{
+			$lang = LangLoader::get_all_langs('sitemap');
+			ErrorHandler::add_error_in_log($lang['sitemap.warning.xml.authorizations'], __FILE__, __LINE__);
+		}
 	}
 
 	/**
@@ -91,7 +96,7 @@ class SitemapXMLFileService
 	 */
 	public static function try_to_generate()
 	{
-		DBFactory::load_prefix();
+		DBFactory::load_config();
 		$sitemap = SitemapService::get_public_sitemap();
 		$export_config = self::get_export_config();
 

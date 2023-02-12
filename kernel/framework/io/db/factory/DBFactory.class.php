@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 05 16
+ * @version     PHPBoost 6.0 - last update: 2023 02 13
  * @since       PHPBoost 3.0 - 2009 10 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -34,11 +34,6 @@ class DBFactory
 	public static function __static()
 	{
 		self::$config_file = '/kernel/db/config.php';
-	}
-
-	public static function load_prefix()
-	{
-		@include_once(PATH_TO_ROOT . self::$config_file);
 	}
 
 	public static function init_factory($dbms)
