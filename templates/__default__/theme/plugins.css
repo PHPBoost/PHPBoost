@@ -98,7 +98,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     overflow-y: auto;
 }
 
-.modal.active-panel { z-index: 100; }
+.modal.active-panel { z-index: 10001; }
 
 .modal-animation {
     opacity: 0;
