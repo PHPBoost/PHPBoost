@@ -119,7 +119,7 @@ class DBFactory
 		return self::get_factory()->new_dbms_util($querier);
 	}
 
-	private static function load_config()
+	public static function load_config()
 	{
 		if (file_exists(PATH_TO_ROOT . self::$config_file))
 		{
