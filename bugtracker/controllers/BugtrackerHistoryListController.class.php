@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2023 02 13
  * @since       PHPBoost 3.0 - 2012 11 11
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -123,8 +123,8 @@ class BugtrackerHistoryListController extends DefaultModuleController
 				'C_UPDATER_GROUP_COLOR'	=> !empty($user_group_color),
 				'C_UPDATER_EXIST'		=> $user->get_id() !== User::VISITOR_LEVEL,
 				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['labels.fields.' . $row['updated_field']] : $this->lang['notice.none']),
-				'OLD_VALUE'				=> stripslashes($old_value),
-				'NEW_VALUE'				=> stripslashes($new_value),
+				'OLD_VALUE'				=> stripslashes($old_value ?? ''),
+				'NEW_VALUE'				=> stripslashes($new_value ?? ''),
 				'COMMENT'				=> $row['change_comment'],
 				'UPDATER'				=> $user->get_display_name(),
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
