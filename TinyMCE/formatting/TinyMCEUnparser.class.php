@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 17
+ * @version     PHPBoost 6.0 - last update: 2023 02 15
  * @since       PHPBoost 2.0 - 2008 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -112,14 +112,14 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	 */
 	private function unparse_smilies()
 	{
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
-		'<img src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$2" />', $this->content);
-
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
-		'<img src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" />', $this->content);
-
-		$this->content = preg_replace('`<img src="[\./]*/images/smileys/([^"]+)" alt="([^"]+)" class="smiley" />`iu',
-		'<img src="' . PATH_TO_ROOT . '/images/smileys/$1" alt="$3" />', $this->content);
+		$smiley_img_url = $smiley_code = array();
+		foreach (SmileysCache::load()->get_smileys() as $code => $infos)
+		{
+			$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
+			$smiley_code[] = $code;
+		}
+		if (!empty($smiley_img_url))
+			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
 	}
 
 	/**
@@ -205,7 +205,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			$this->content = preg_replace_callback('`<span style="font-family: ([ a-z0-9,_-]+);">(.*)</span>`isuU', array($this, 'unparse_font'), $this->content );
 
 			//Image
-			$this->content = preg_replace_callback('`<img(?: title="([^"]+)?")? src="([^"]+)"(?: alt="([^"]+)")?(?: title="([^"]+)?")?(?: style="([^"]*)")? />`isuU', array($this, 'unparse_img'), $this->content );
+			$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`isuU', array($this, 'unparse_img'), $this->content );
 
 			// Feed
 			$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);

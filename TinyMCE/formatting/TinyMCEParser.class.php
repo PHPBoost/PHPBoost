@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 01
+ * @version     PHPBoost 6.0 - last update: 2023 02 15
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -923,10 +923,10 @@ class TinyMCEParser extends ContentFormattingParser
 
 	private function parse_img($matches)
 	{
-		$img_pathinfo = pathinfo($matches[2]);
+		$img_pathinfo = pathinfo($matches[3]);
 		$file_array = explode('.', $img_pathinfo['filename']);
 		$img_name = $file_array[0];
-		$alt = !empty($matches[3]) ? $matches[3] : $img_name;
+		$alt = !empty($matches[4]) ? $matches[4] : $img_name;
 		$width = $height = 0;
 		$style = !empty($matches[1]) ? $matches[1] : '';
 
@@ -943,7 +943,7 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 		$style = explode(';', $style);
 
-		foreach (explode('" ', $matches[4] . ' ') as $raw_property)
+		foreach (explode('" ', $matches[5] . ' ') as $raw_property)
 		{
 			$exp = explode('="', $raw_property);
 			if (count($exp) < 2)
@@ -978,7 +978,7 @@ class TinyMCEParser extends ContentFormattingParser
 
 		$style = !empty($style) ? ' style="' . implode(';', array_filter($style)) . '"' : '';
 
-		return '<img src="' . $matches[2] . '" alt="' . $alt . '"' . $style .' />';
+		return '<img src="' . $matches[3] . '" alt="' . $alt . '"' . $style .' />';
 	}
 
 	/**
