@@ -38,7 +38,7 @@
 								</li>
 								<li>
 									<span class="cssmenu-title">
-										<a class="offload" href="{U_MARK_AS_READ}" aria-label="{@forum.mark.topics.as.read}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-fw fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{L_MARK_AS_READ}</span></a>
+										<a class="offload" href="{U_MARK_AS_READ}" aria-label="{@forum.mark.topics.as.read}" onclick="javascript:return Confirm_read_topics();"><i class="fa fa-fw fa-eraser" aria-hidden="true"></i> <span class="hidden-large-screens">{@forum.mark.topics.as.read}</span></a>
 									</span>
 								</li>
 								# IF C_FORUM_CONNEXION #
