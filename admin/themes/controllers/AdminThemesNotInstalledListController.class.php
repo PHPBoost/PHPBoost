@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 29
+ * @version     PHPBoost 6.0 - last update: 2023 02 17
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,7 +15,7 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('admin/themes/AdminThemesNotInstalledListController.tpl');
+        return new FileTemplate('admin/themes/AdminThemesNotInstalledListController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -268,7 +268,7 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.file.upload.invalid.format'], MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.file.invalid.format'], MessageHelper::WARNING));
 				}
 			}
 			else

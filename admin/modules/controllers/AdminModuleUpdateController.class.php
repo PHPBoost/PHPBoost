@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2023 02 17
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -246,7 +246,7 @@ class AdminModuleUpdateController extends DefaultAdminController
 				}
 				else
 				{
-					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.file.upload.invalid.format'], MessageHelper::WARNING));
+					$this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['warning.file.invalid.format'], MessageHelper::WARNING));
 				}
 			}
 			else
