@@ -243,3 +243,11 @@ th.sortable-thead {
 .bordered-table .bt tr:last-child td { border-width: 1px 1px 0 1px; }
 
 .bordered-table .bt tr:last-child td:last-child { border-width: 1px; }
+
+/* --- Text to left --- */
+.left-table td,
+.left-table td.formatter-table-head { text-align: left; }
+
+/* --- Text to right --- */
+.right-table td,
+.right-table td.formatter-table-head { text-align: right; }
