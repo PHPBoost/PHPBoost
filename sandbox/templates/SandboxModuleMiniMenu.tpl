@@ -380,7 +380,7 @@
 					<a href="${relative_url(SandboxUrlBuilder::config())}" aria-label="{@sandbox.mini.admin}">
 						<span class="stacked">
 							<i class="fa fa-fw fa-hard-hat" aria-hidden="true"></i>
-							<i class="fa fa-cog stack-event stack-sup stack-left notice" aria-hidden="true"></i>
+							<i class="fa fa-cog stack-event stack-sup stack-top-left notice" aria-hidden="true"></i>
 						</span>
 					</a>
 				</li>
