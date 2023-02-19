@@ -19,7 +19,7 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 
 			if ($pseudo && $content)
 			{
-				//Mod anti-flood, autorisé aux membres qui bénificie de l'autorisation de flooder.
+				//Mod anti-flood, autorisé aux membres qui bénéficient de l'autorisation de flooder.
 				$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "shoutbox", 'MAX(timestamp)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id())) : '';
 				if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 				{
