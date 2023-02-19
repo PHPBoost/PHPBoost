@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 02 24
+ * @version     PHPBoost 6.0 - last update: 2023 02 19
  * @since       PHPBoost 4.1 - 2014 10 14
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ShoutboxUrlBuilder
@@ -25,7 +26,7 @@ class ShoutboxUrlBuilder
 	public static function home($page = 1, $id = null)
 	{
 		$page = $page !== 1 ? $page : '';
-		$id = $id !== null ? '#m' . $id : '';
+		$id = $id !== null ? '#sm' . $id : '';
 		return DispatchManager::get_url(self::$dispatcher, '/' . $page . $id);
 	}
 

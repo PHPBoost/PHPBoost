@@ -35,7 +35,7 @@
 						# ENDIF #
 						# IF C_MULTIPLE_DELETE_DISPLAYED #<form method="post" class="fieldset-content"># ENDIF #
 							# START messages #
-								<article id="article-shoutbox-{messages.ID}" class="shoutbox-item message-container message-small# IF IS_USER_CONNECTED # message-offset# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Comment">
+								<article id="sm{messages.ID}" class="shoutbox-item message-container message-small# IF IS_USER_CONNECTED # message-offset# ENDIF #" itemscope="itemscope" itemtype="https://schema.org/Comment">
 									<header class="message-header-container# IF messages.C_CURRENT_USER_MESSAGE # current-user-message# ENDIF #">
 										# IF messages.C_AVATAR #<img src="{messages.U_AVATAR}" alt="{@common.avatar}" class="message-user-avatar" /># ENDIF #
 										<div class="message-header-infos">
@@ -72,7 +72,7 @@
 													# IF messages.C_DELETE #
 														<a href="{messages.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 													# ENDIF #
-													<a href="{U_SITE}{messages.U_ANCHOR}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#S{messages.ID}</a>
+													<a href="{U_SITE}{messages.U_ANCHOR}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#{messages.ID}</a>
 												</div>
 											</div>
 										</div>
