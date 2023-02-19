@@ -1014,7 +1014,7 @@
 													<ul class="flex-start">
 												# ELSE #
 													<li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
-														<a href="#emoji" class="hide-modal close-bbcode-sub bigger emoji-tag" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
+														<a href="#emoji" class="hide-modal close-bbcode-sub bigger emoji-tag" onclick="insertbbcode('{emojis.DECIMAL}', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
 															{emojis.DECIMAL}
 														</a>
 													</li>

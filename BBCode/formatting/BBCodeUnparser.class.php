@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 04
+ * @version     PHPBoost 6.0 - last update: 2023 02 19
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -157,7 +157,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[member]$1[/member]",
 			"[moderator]$1[/moderator]",
 			"[teaser]$1[/teaser]",
-			"[emoji]$1[/emoji]",
+			"$1",
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
@@ -195,9 +195,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa([blrsdt])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
-
-		//HTML emoji Icon
-		$this->content = preg_replace_callback('`<span class="emoji-tag">(?:[a-z0-9_+.:?/=#%@&;,-])</span>`iuU', array($this, 'unparse_emoji_tag'), $this->content);
 
 		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))

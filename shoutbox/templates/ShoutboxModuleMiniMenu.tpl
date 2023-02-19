@@ -186,7 +186,7 @@
 													<ul class="flex-start">
 												# ELSE #
 													<li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
-														<span class="hide-modal bigger emoji-tag" onclick="insertbbcode('[emoji]{emojis.DECIMAL}[/emoji]', '', 'shout-content');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
+														<span class="hide-modal bigger emoji-tag" onclick="insertbbcode('{emojis.DECIMAL}', '', 'shout-content');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
 															{emojis.DECIMAL}
 														</span>
 													</li>
