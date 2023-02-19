@@ -25,7 +25,7 @@
 						<li># INCLUDE CLEAN_RSS_CACHE #</li>
 						# IF C_HISTORY #
 							<li>
-								<a href="{PATH_TO_ROOT}/history/">
+								<a href="{PATH_TO_ROOT}/history/admin/history/">
 									<span><i class="fa fa-fw fa-clock-rotate-left" aria-hidden="true"></i> <span>{@sandbox.mini.history}</span></span>
 								</a>
 							</li>
