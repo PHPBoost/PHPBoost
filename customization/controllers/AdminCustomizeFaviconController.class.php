@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 13
+ * @version     PHPBoost 6.0 - last update: 2023 02 20
  * @since       PHPBoost 3.0 - 2011 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -75,7 +75,7 @@ class AdminCustomizeFaviconController extends DefaultAdminModuleController
 		}
 
 		$fieldset->add_field(new FormFieldFilePicker('favicon', $this->lang['customization.favicon.current.change'],
-			array('class' => 'third-field'),
+			array('class' => 'top-field third-field'),
 			array(new FormFieldConstraintPictureFile())
 		));
 
