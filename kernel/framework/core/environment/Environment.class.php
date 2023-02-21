@@ -5,10 +5,10 @@
  * users management...) as well as the graphical environment.</p>
  * @package     Core
  * @subpackage  Environment
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2021 02 05
+ * @version     PHPBoost 5.2 - last update: 2023 02 22
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -55,20 +55,20 @@ class Environment
 
 	public static function try_init()
 	{
+		self::load_static_constants();
+		self::load_dynamic_constants();
 		self::redirect_to_update_script_if_needed();
 		self::init_output_bufferization();
 		self::fit_to_php_configuration();
 		self::init_services();
-		self::load_static_constants();
-		DBFactory::load_prefix();
+		DBFactory::load_config();
 
-		self::load_dynamic_constants();
 		self::init_session();
 		self::set_default_timezone();
 
 		self::load_lang_files();
-		self::process_changeday_tasks_if_needed();
 		self::compute_running_module_name();
+		self::process_changeday_tasks_if_needed();
 		self::execute_modules_changepage_tasks();
 		self::csrf_protect_post_requests();
 		self::enable_errors_and_exceptions_management();
@@ -115,26 +115,27 @@ class Environment
 	public static function load_static_constants()
 	{
 		//Path from the server root
-		define('SCRIPT', 			TextHelper::htmlspecialchars($_SERVER['PHP_SELF']));
-		define('REWRITED_SCRIPT', 	TextHelper::htmlspecialchars($_SERVER['REQUEST_URI']));
+		defined('SCRIPT') or define('SCRIPT', TextHelper::htmlspecialchars($_SERVER['PHP_SELF']));
+		defined('REWRITED_SCRIPT') or define('REWRITED_SCRIPT', TextHelper::htmlspecialchars($_SERVER['REQUEST_URI']));
 
 		//Get parameters
-		define('QUERY_STRING', 		addslashes($_SERVER['QUERY_STRING']));
-		define('PHPBOOST', 			true);
+		defined('QUERY_STRING') or define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING']));
+		defined('PHPBOOST') or define('PHPBOOST', true);
 
 		### Authorizations ###
-		define('AUTH_FLOOD', 		'auth_flood');
-		define('PM_GROUP_LIMIT', 	'pm_group_limit');
-		define('DATA_GROUP_LIMIT', 	'data_group_limit');
+		defined('AUTH_FLOOD') or define('AUTH_FLOOD', 'auth_flood');
+		defined('PM_GROUP_LIMIT') or define('PM_GROUP_LIMIT', 'pm_group_limit');
+		defined('DATA_GROUP_LIMIT') or define('DATA_GROUP_LIMIT', 'data_group_limit');
+
 	}
 
 	public static function load_dynamic_constants()
 	{
 		$general_config = GeneralConfig::load();
 		$site_path = $general_config->get_site_path();
-		define('DIR', $site_path);
-		define('HOST', AppContext::get_request()->get_site_url());
-		define('TPL_PATH_TO_ROOT', DIR);
+		defined('DIR') or define('DIR', $site_path);
+		defined('HOST') or define('HOST', AppContext::get_request()->get_site_url());
+		defined('TPL_PATH_TO_ROOT') or define('TPL_PATH_TO_ROOT', DIR);
 	}
 
 	public static function init_session()
@@ -247,10 +248,10 @@ class Environment
 	{
 		$today = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 		$yesterday = new Date(self::get_yesterday_timestamp(), Timezone::SERVER_TIMEZONE);
-		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
-		foreach ($jobs as $job)
+		foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job)
 		{
-			$job->on_changeday($yesterday, $today);
+			if ($job)
+				$job->on_changeday($yesterday, $today);
 		}
 	}
 
@@ -307,10 +308,10 @@ class Environment
 
 	private static function execute_modules_changepage_tasks()
 	{
-		$jobs = AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT);
-		foreach ($jobs as $job)
+		foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job)
 		{
-			$job->on_changepage();
+			if ($job)
+				$job->on_changepage();
 		}
 	}
 
@@ -373,9 +374,8 @@ class Environment
 	private static function redirect_to_update_script_if_needed()
 	{
 		$folder = new Folder(PATH_TO_ROOT . '/update');
-		if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
+		if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && ClassLoader::is_class_registered_and_valid('UpdateServices') && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
 		{
-			self::load_dynamic_constants();
 			AppContext::get_response()->redirect(new Url(HOST . DIR . '/update'));
 		}
 	}
