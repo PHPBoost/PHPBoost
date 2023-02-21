@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2023 02 22
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -45,9 +45,9 @@ $lang['shoutbox.seo.description'] = 'All :site\'s shoutbox messages.';
 
 // Messages helper
 $lang['shoutbox.message.success.delete'] = 'The message has been deleted';
-$lang['shoutbox.message.unauthorized']   = 'You are not authorized to post a message!';
 
 // Warnings
-$lang['shoutbox.warning.delete.message'] = 'An error occurred while message deleting';
+$lang['shoutbox.warning.token.expired']   = 'The session has expired, please refresh the page and try again';
+$lang['shoutbox.warning.delete.message']  = 'An error occurred while message deleting';
 $lang['shoutbox.error.post.unauthorized'] = 'You are not authorized to post a message!';
 ?>

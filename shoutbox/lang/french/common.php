@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2023 02 22
  * @since       PHPBoost 4.1 - 2014 11 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -46,9 +46,9 @@ $lang['shoutbox.seo.description'] = 'Tous les messages de la boîte de discussio
 
 // Messages helper
 $lang['shoutbox.message.success.delete'] = 'Le message a été supprimé';
-$lang['shoutbox.message.unauthorized']   = 'Vous n\'êtes pas autorisé à ajouter un message !';
 
 // Warnings
-$lang['shoutbox.warning.delete.message'] = 'Erreur lors de la suppression du message';
+$lang['shoutbox.warning.token.expired']   = 'La session a expirée, veuillez rafraîchir la page et réessayer';
+$lang['shoutbox.warning.delete.message']  = 'Erreur lors de la suppression du message';
 $lang['shoutbox.error.post.unauthorized'] = 'Vous n\'êtes pas autorisé à ajouter un message !';
 ?>

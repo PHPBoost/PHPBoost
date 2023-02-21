@@ -40,7 +40,7 @@
 					jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
 				},
 				error: function(e){
-					alert(${escapejs(@warning.csrf.invalid.token)});
+					alert(${escapejs(@shoutbox.warning.token.expired)});
 				}
 			});
 		} else {
@@ -72,7 +72,7 @@
 					jQuery('#shoutbox-refresh').html('<i class="fa fa-sync"></i>');
 				},
 				error: function(e){
-					alert(${escapejs(@warning.csrf.invalid.token)});
+					alert(${escapejs(@shoutbox.warning.token.expired)});
 				}
 			});
 		}
@@ -222,7 +222,7 @@
 # ELSE #
 	# IF C_DISPLAY_NO_WRITE_AUTHORIZATION_MESSAGE #
 		<div class="cell-alert">
-			<div class="message-helper bgc warning">{@shoutbox.message.unauthorized}</div>
+			<div class="message-helper bgc warning">{@shoutbox.error.post.unauthorized}</div>
 		</div>
 	# ENDIF #
 # ENDIF #
