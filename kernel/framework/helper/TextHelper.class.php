@@ -2,10 +2,10 @@
 /**
  * Text helper
  * @package     Helper
- * @copyright   &copy; 2005-2019 PHPBoost
+ * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2022 11 02
+ * @version     PHPBoost 5.2 - last update: 2023 02 22
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -113,7 +113,7 @@ class TextHelper
 	public static function to_js_string($string, $add_quotes = true)
 	{
 		$bounds = $add_quotes ? '\'' : '';
-		return $bounds . str_replace(array("\r\n", "\r", "\n", '"'), array('\n', '\n', '\n', '&quot;'), addcslashes($string, '\'')) . $bounds;
+		return $bounds . ($string ? str_replace(array("\r\n", "\r", "\n", '"'), array('\n', '\n', '\n', '&quot;'), addcslashes($string, '\'')) : '') . $bounds;
 	}
 
 	/**
@@ -125,7 +125,7 @@ class TextHelper
 	public static function to_json_string($string, $add_quotes = true)
 	{
 		$bounds = $add_quotes ? '"' : '';
-		return $bounds . str_replace(array("\r\n", "\r", "\n",), array('\n', '\n', '\n',), addcslashes($string, '"')) . $bounds;
+		return $bounds . ($string ? str_replace(array("\r\n", "\r", "\n",), array('\n', '\n', '\n',), addcslashes($string, '"')) : '') . $bounds;
 	}
 
 	public static function htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
