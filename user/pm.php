@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 21
+ * @version     PHPBoost 6.0 - last update: 2023 02 22
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -687,11 +687,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 			$row['level'] = 2;
 
 		if ( !$is_guest_in_convers )
-		{
-			$row['level'] = -1;
 			$is_guest_in_convers = empty($row['display_name']);
-		}
-
 
 		// Resumption of the last message from the previous page.
 		$row['contents'] = ($quote_last_msg == 1 && $i == 0) ? '<span class="text-strong">' . $lang['user.quote.last.message'] . '</span><br /><br />' . $row['contents'] : $row['contents'];
