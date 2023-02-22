@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright 	&copy; 2005-2019 PHPBoost
+ * @copyright 	&copy; 2005-2023 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2022 11 02
+ * @version   	PHPBoost 5.2 - last update: 2023 02 22
  * @since   	PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -109,7 +109,10 @@ class StatsSaver
 		//Suppression des images de statistiques en cache.
 		$array_stats_img = array('browsers.png', 'os.png', 'lang.png');
 		foreach ($array_stats_img as $key => $value)
-			@unlink(PATH_TO_ROOT . '/cache/' . $value);
+		{
+			if (file_exists(PATH_TO_ROOT . '/cache/' . $value))
+				unlink(PATH_TO_ROOT . '/cache/' . $value);
+		}
 
 		########### Détection des navigateurs ###########
 		$array_browser = array(
