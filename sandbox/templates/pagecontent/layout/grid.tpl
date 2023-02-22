@@ -9,70 +9,84 @@
             <h5>{@sandbox.layout.grid.free}</h5>
             <p>{@sandbox.layout.grid.free.clue}</p>
             <p><code>.cell-inline</code></p>
-            <div class="cell-flex cell-inline layout-content-demo">
-                <article class="cell" style="width: 140px;"><div class="cell-grid-demo">140px</div></article>
-                <article class="cell" style="width: 240px;"><div class="cell-grid-demo">240px</div></article>
-                <article class="cell" style="width: 340px;"><div class="cell-grid-demo">340px</div></article>
-                <article class="cell" style="width: 440px;"><div class="cell-grid-demo">440px</div></article>
+            <div class="layout-content-demo">
+                <div class="cell-flex cell-inline">
+                    <article class="cell" style="width: 140px;"><div class="cell-grid-demo">140px</div></article>
+                    <article class="cell" style="width: 240px;"><div class="cell-grid-demo">240px</div></article>
+                    <article class="cell" style="width: 340px;"><div class="cell-grid-demo">340px</div></article>
+                    <article class="cell" style="width: 440px;"><div class="cell-grid-demo">440px</div></article>
+                </div>
             </div>
             <p>{@H|sandbox.layout.grid.free.forced.clue}</p>
             <p><code>.cell-inline</code></p>
-            <div class="cell-flex cell-inline layout-content-demo">
-                <article class="cell cell-100"><div class="cell-grid-demo">100%</div></article>
-                <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
-                <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
-                <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
-                <article class="cell cell-2-3"><div class="cell-grid-demo">2/3</div></article>
-                <article class="cell cell-3-4"><div class="cell-grid-demo">3/4</div></article>
+            <div class="layout-content-demo">
+                <div class="cell-flex cell-inline">
+                    <article class="cell cell-100"><div class="cell-grid-demo">100%</div></article>
+                    <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+                    <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
+                    <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
+                    <article class="cell cell-2-3"><div class="cell-grid-demo">2/3</div></article>
+                    <article class="cell cell-3-4"><div class="cell-grid-demo">3/4</div></article>
+                </div>
             </div>
         </div>
         <div class="content">
             <h5>{@sandbox.layout.grid.block.columns}</h5>
             <p>{@sandbox.layout.grid.block.columns.clue}</p>
             <p><code class="language-css">.cell-columns-4</code></p>
-            <div class="cell-flex cell-columns-4 layout-content-demo">
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
+            <div class="layout-content-demo">
+                <div class="cell-flex cell-columns-4">
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                </div>
             </div>
             <p><code class="language-css">.cell-columns-3</code></p>
-            <div class="cell-flex cell-columns-3 layout-content-demo">
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
+            <div class="layout-content-demo">
+                <div class="cell-flex cell-columns-3">
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                </div>
             </div>
             <p><code class="language-css">.cell-columns-2</code></p>
-            <div class="cell-flex cell-columns-2 layout-content-demo">
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
+            <div class="layout-content-demo">
+                <div class="cell-flex cell-columns-2">
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                </div>
             </div>
             <p>{@H|sandbox.layout.grid.block.columns.forced.clue}</p>
             <p><code class="language-css">.cell-columns-3</code></p>
-            <div class="cell-flex cell-columns-3 layout-content-demo">
-                <article class="cell cell-2-3"><div class="cell-grid-demo">2/3</div></article>
-                <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
-                <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
-                <article class="cell cell-3-4"><div class="cell-grid-demo">3/4</div></article>
-                <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
-                <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
-                <article class="cell"><div class="cell-grid-demo"></div></article>
+            <div class="layout-content-demo">
+                <div class="cell-flex cell-columns-3">
+                    <article class="cell cell-2-3"><div class="cell-grid-demo">2/3</div></article>
+                    <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
+                    <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+                    <article class="cell cell-3-4"><div class="cell-grid-demo">3/4</div></article>
+                    <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
+                    <article class="cell cell-1-2"><div class="cell-grid-demo">1/2</div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                    <article class="cell"><div class="cell-grid-demo"></div></article>
+                </div>
             </div>
         </div>
 
         <h5>{@sandbox.layout.grid.list}</h5>
         <p>{@sandbox.layout.grid.list.clue}</p>
         <p><code>.cell-row</code></p>
-        <div class="cell-flex cell-row layout-content-demo">
-            <article class="cell"><div class="cell-grid-demo"></div></article>
-            <article class="cell"><div class="cell-grid-demo"></div></article>
-            <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
-            <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+        <div class="layout-content-demo">
+            <div class="cell-flex cell-row">
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell"><div class="cell-grid-demo"></div></article>
+                <article class="cell cell-1-3"><div class="cell-grid-demo">1/3</div></article>
+                <article class="cell cell-1-4"><div class="cell-grid-demo">1/4</div></article>
+            </div>
         </div>
     </article>
 
