@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 03
+ * @version     PHPBoost 6.0 - last update: 2023 02 23
  * @since       PHPBoost 6.0 - 2021 10 22
 */
 
@@ -296,7 +296,12 @@ class HistoryHook extends Hook
 					if (ClassLoader::is_class_registered_and_valid($item_class) && is_subclass_of($item_class, 'Item'))
 					{
 						$manager = new $manager_class($module_id);
-						$item = $manager->get_item($id_in_module);
+						
+						try {
+							$item = $manager->get_item($id_in_module);
+						} catch (RowNotFoundException $e) {
+							$item = '';
+						}
 					}
 					else
 						$item = $manager_class::get_item($id_in_module);
