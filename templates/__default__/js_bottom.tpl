@@ -124,8 +124,8 @@
 	jQuery('[data-color-surround]').colorSurround();
 
 // Owl Carousel
-	jQuery('[id*="slideboost"] > br').remove();
-	jQuery('[id*="slideboost"]')
+	jQuery('[id*="slideboost-"] > br').remove();
+	jQuery('[id*="slideboost-4-"]')
 		.addClass('owl-carousel')
 		.owlCarousel({
 			autoplay: true,
@@ -141,22 +141,64 @@
 				1367: { items: 4}
 			}
 	});
+	jQuery('[id*="slideboost-3-"]')
+		.addClass('owl-carousel')
+		.owlCarousel({
+			autoplay: true,
+			autoplayTimeout: 3500,
+			loop: true,
+			margin: 15,
+			smartSpeed: 1000,
+			autoplayHoverPause: true,
+			responsive: {
+				0: { items: 1},
+				769: { items: 2},
+				1025: { items: 3}
+			}
+	});
+	jQuery('[id*="slideboost-2-"]')
+		.addClass('owl-carousel')
+		.owlCarousel({
+			autoplay: true,
+			autoplayTimeout: 3500,
+			loop: true,
+			margin: 15,
+			smartSpeed: 1000,
+			autoplayHoverPause: true,
+			responsive: {
+				0: { items: 1},
+				769: { items: 2}
+			}
+	});
+	jQuery('[id*="slideboost-1-"]')
+		.addClass('owl-carousel')
+		.owlCarousel({
+			autoplay: true,
+			autoplayTimeout: 3500,
+			loop: true,
+			margin: 15,
+			smartSpeed: 1000,
+			autoplayHoverPause: true,
+			responsive: {
+				0: { items: 1}
+			}
+	});
 
 // Sidebar behaviour - needed to fix the BBCode troubles on long texts
 	jQuery('#main').theiaStickySidebar();
 
 // Add outline on element if only Tab key is pressed
-jQuery('*').on('focus', function(e) {
-	$this = jQuery(this);
-    jQuery(window).keyup(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if (code == 9) {
-			$this.addClass('focus-on-tab');
-        }
+    jQuery('*').on('focus', function(e) {
+        $this = jQuery(this);
+        jQuery(window).keyup(function (e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code == 9) {
+                $this.addClass('focus-on-tab');
+            }
+        });
+    }).on('click', function(e) {
+        jQuery(this).removeClass('focus-on-tab');
     });
-}).on('click', function(e) {
-	jQuery(this).removeClass('focus-on-tab');
-});
 
 // Display the page only when it's loaded
 	jQuery(window).ready(function() {
