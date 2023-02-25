@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2014 12 22
+ * @version     PHPBoost 5.2 - last update: 2023 02 25
  * @since       PHPBoost 3.0 - 2009 10 05
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SelectQueryResultMapper implements SelectQueryResult
@@ -67,11 +68,13 @@ class SelectQueryResultMapper implements SelectQueryResult
         return $this->model->new_instance($this->query_result->fetch());
     }
 
+    #[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		return $this->query_result->rewind();
 	}
 
+    #[\ReturnTypeWillChange]
 	public function valid()
 	{
 		return $this->query_result->valid();
@@ -82,11 +85,13 @@ class SelectQueryResultMapper implements SelectQueryResult
 		return $this->model->new_instance($this->query_result->current());
 	}
 
+    #[\ReturnTypeWillChange]
 	public function key()
 	{
 		return $this->query_result->key();
 	}
 
+    #[\ReturnTypeWillChange]
 	public function next()
 	{
 		return $this->query_result->next();
