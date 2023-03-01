@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2023 03 01
  * @since       PHPBoost 4.0 - 2013 09 29
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -24,7 +24,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		$view = new FileTemplate('contact/ContactFormFieldRecipientsPossibleValues.tpl');
-		$view->add_lang(LangLoader::get_all_langs());
+		$view->add_lang(LangLoader::get_all_langs('contact'));
 
 		$this->assign_common_template_variables($template);
 
