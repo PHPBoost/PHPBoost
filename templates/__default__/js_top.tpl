@@ -4,7 +4,8 @@
 	var TOKEN        = "{TOKEN}";
 	var THEME        = "{THEME}";
 	var LANG         = "{LANG}";
-	var COPIED_TO_CLIPBOARD = ${escapejs(@common.copied.to.clipboard)}
+	var COPIED_TO_CLIPBOARD = ${escapejs(@common.copied.to.clipboard)};
+	var ARIA_TO_CLIPBOARD = ${escapejs(@common.copy.link.to.clipboard)};
 
 	// BBCode Variables
 	var L_HIDE_MESSAGE    = ${escapejs(@common.hidden.text)};
