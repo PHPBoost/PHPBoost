@@ -73,6 +73,13 @@ h6.formatter-title { font-size: 2.0rem; margin-left: 6.472rem; }
 	transform: scaleY(1);
 }
 
+pre span { font-weight: normal !important; }
+
+pre[style*="display:inline;"] {
+    padding: 0 0.228em;
+    display: inline-block !important;
+}
+
 .formatter-hide .formatter-hide-message {
 	display: block;
 	font-style: italic;
