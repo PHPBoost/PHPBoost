@@ -68,8 +68,6 @@ a.pinned { cursor: pointer; }
 	width: 1.309em;
 }
 
-.overflow-hidden { overflow: hidden; }
-
 /* --- Search engines --- */
 .robot {
 	font-size: 0.9em;
