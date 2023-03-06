@@ -1,11 +1,10 @@
-/**
- * Multi Tabs jQuery plugin - Version: 1.0
- * @copyright   &copy; 2005-2023 PHPBoost - 2019 babsolune
- * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 17
- * @since       PHPBoost 6.0 - 2019 09 06
-*/
+// Multi Tabs jQuery plugin - Version: 1.0
+// @copyright   &copy; 2005-2023 PHPBoost - 2019 babsolune
+// @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+// @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+// @version     PHPBoost 6.0 - last update: 2023 03 06
+// @since       PHPBoost 6.0 - 2019 09 06
+
 
 (function(jQuery) {
 
@@ -85,11 +84,13 @@
                 if(options.pluginType == 'modal')
                 {
                     jQuery(this).on('click', function(e) { //when click on a trigger
+                        jQuery(this).closest('body').addClass('overflow-hidden');
                         e.preventDefault(); // stop the trigger action
                         history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
                         jQuery(targetPanel).siblings().removeClass('active-panel'); // remove all active panel
                         jQuery(targetPanel).addClass('active-panel'); // add activation class to the target
                         jQuery('.modal-container').on('click', '.close-modal, .hide-modal', function() {
+                            jQuery(this).closest('body').removeClass('overflow-hidden');
                             jQuery(targetPanel).removeClass('active-panel'); // remove activation class from the target
                             history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
                         });
@@ -113,7 +114,7 @@
                         e.preventDefault(); // stop the trigger action
                         history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
                         var contentHeight = contentPanel.outerHeight(); // calculate height of target
-                        if(options.accordionSiblings == true) {
+                        if(options.accordionSiblings) {
                             jQuery(this).closest('.accordion-container').find('.accordion').not(targetPanel).removeClass('active-panel').height(0);
                             jQuery(this).closest('.accordion-container').find('[data-accordion]').not(this).removeClass('active-tab');
                         }
