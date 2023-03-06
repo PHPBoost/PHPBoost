@@ -83,16 +83,16 @@
 
                 if(options.pluginType == 'modal')
                 {
+                    jQuery('body').addClass('modal-container').css('position', 'relative');
+                    jQuery(targetPanel).addClass('cell-modal').prependTo(jQuery('body'));
                     jQuery(this).on('click', function(e) { //when click on a trigger
-                        jQuery(this).closest('body').addClass('overflow-hidden');
                         e.preventDefault(); // stop the trigger action
-                        history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
+                        // history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
                         jQuery(targetPanel).siblings().removeClass('active-panel'); // remove all active panel
                         jQuery(targetPanel).addClass('active-panel'); // add activation class to the target
-                        jQuery('.modal-container').on('click', '.close-modal, .hide-modal', function() {
-                            jQuery(this).closest('body').removeClass('overflow-hidden');
+                        jQuery('.close-modal, .hide-modal').on('click', function() {
                             jQuery(targetPanel).removeClass('active-panel'); // remove activation class from the target
-                            history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
+                            // history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
                         });
                         jQuery('.modal [data-target]').on('click', function(){ // when trigger is inside one of the targets
                             jQuery(this).closest('nav').siblings(targetPanel).removeClass('active-panel'); // remove activation class from the target
@@ -101,7 +101,7 @@
                         if(options.animation) { // if animate.css is active
                             jQuery(targetPanel).removeClass().css(animStyles);// remove all classes from target & add animation details attributes
                             jQuery(targetPanel).addClass('modal active-panel ' + options.animationClass + ' ' + options.animationIn); // then add necessary opening classes for animate.css
-                            jQuery('.modal-container').on('click', '.close-modal, .hide-modal', function(){
+                            jQuery('.close-modal, .hide-modal').on('click', function(){
                                 jQuery(this).parent().removeClass(options.animationIn).addClass(options.animationOut); // change animation classes to closing ones
                             });
                         }
