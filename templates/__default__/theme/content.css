@@ -125,8 +125,8 @@ aside:not(#menu-left):not(#menu-right)::after {
 @media (min-width: 769px) {
 	.item-thumbnail {
 		max-width: 38%;
-		float: left;
-		margin: 0.309em 0.618em 0.618em 0;
+		float: right;
+		margin: 0.309em 0 0.618em 0.618em;
 		position: relative;
 		z-index: 2;
 	}
