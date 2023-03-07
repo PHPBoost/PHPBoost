@@ -475,7 +475,7 @@
 												<span class="change-name" id="fi{personal_files.ID}"></span>
 												# IF NOT personal_files.C_ENABLED_THUMBNAILS #
 													<a href="{personal_files.URL}" {personal_files.LIGHTBOX} aria-label="{@common.see.details}">
-														<i class="far {personal_files.IMG}" aria-hidden="true"> </i>
+														<i class="{personal_files.IMG}" aria-hidden="true"> </i>
 													</a>
 												# ENDIF #
 											</div>
@@ -488,9 +488,9 @@
 																<i class="fa fa-eye" aria-hidden="true"></i>
 															</a>
 														# ELSE #
-															<i class="far {personal_files.IMG} fa-4x"></i>
+															<i class="{personal_files.IMG} fa-4x"></i>
 															<a class="cell-thumbnail-caption" href="{personal_files.URL}" {personal_files.LIGHTBOX}>
-																<i class="far {personal_files.IMG}"> </i>
+																<i class="{personal_files.IMG}"> </i>
 															</a>
 														# ENDIF #
 													</div>
@@ -561,7 +561,7 @@
 												<div id="fifl{shared_files.ID}" class="cell-name ellipsis">{shared_files.NAME}</div>
 												# IF NOT shared_files.C_ENABLED_THUMBNAILS #
 													<a href="{shared_files.URL}" {shared_files.LIGHTBOX} aria-label="{@common.see.details}">
-														<i class="far {shared_files.IMG}"> </i>
+														<i class="{shared_files.IMG}"> </i>
 													</a>
 												# ENDIF #
 												<span id="fi{shared_files.ID}"></span>
@@ -575,9 +575,9 @@
 																<i class="fa fa-eye"></i>
 															</a>
 														# ELSE #
-															<i class="far {shared_files.IMG} fa-4x"></i>
+															<i class="{shared_files.IMG} fa-4x"></i>
 															<a class="cell-thumbnail-caption" href="{shared_files.URL}" {shared_files.LIGHTBOX}>
-																<i class="far {shared_files.IMG}"></i>
+																<i class="{shared_files.IMG}"></i>
 															</a>
 														# ENDIF #
 													</div>
