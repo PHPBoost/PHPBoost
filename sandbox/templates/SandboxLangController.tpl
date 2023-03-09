@@ -11,9 +11,10 @@
 	<div class="sub-section">
 		<div class="content-container">
 			<article class="all-files cell">
+                <p class="align-center">{@sandbox.lang.admin.only}</p>
 				<header class="cell-header root-folder trigger-folder bgc success">
 					<h2 class="cell-name folder-name">{@sandbox.lang.kernel}</h2>
-					<a class="folder-trigger" href="#" aria-label="voir les variables"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+					<a class="folder-trigger" href="#" aria-label="{@sandbox.lang.see.vars}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
 				</header>
 				<div class="cell-list">
 					<ul class="lang-files">
@@ -21,7 +22,7 @@
 							<li class="parent">
 								<div class="flex-between bgc question lang-file-name">
 									<span>{lang_file.LANG_FILE_NAME}</span>
-									<a class="file-trigger" href="#" aria-label="voir les variables"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+									<a class="file-trigger" href="#" aria-label="{@sandbox.lang.see.vars}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
 								</div>
 								<ul>
 									# START lang_file.items #
@@ -39,7 +40,7 @@
 			<article class="all-files cell">
 				<header class="cell-header bgc success">
 					<h2 class="cell-name">{@sandbox.lang.modules}</h2>
-					<a href="#" class="folder-trigger" aria-label="voir les variables"><i class="fa fa-chevron-right fa-chevron-down" aria-hidden="true"></i></a>
+					<a href="#" class="folder-trigger" aria-label="{@sandbox.lang.see.vars}"><i class="fa fa-chevron-right fa-chevron-down" aria-hidden="true"></i></a>
 				</header>
 				<div class="cell-list">
 					<ul>
@@ -47,14 +48,14 @@
 							<li>
 								<div class="flex-between bgc moderator module-name">
 									<span>{module.MODULE_NAME}</span>
-									<a class="folder-module-trigger" href="#" aria-label="voir les variables"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+									<a class="folder-module-trigger" href="#" aria-label="{@sandbox.lang.see.vars}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
 								</div>
 								<ul>
 									# START module.module_file #
 										<li class="module-{module.MODULE_ID} parent">
 											<div class="flex-between bgc question module-file-name">
 												<span>{module.module_file.MODULE_FILE_NAME}</span>
-												<a class="file-trigger" href="#" aria-label="voir les variables"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+												<a class="file-trigger" href="#" aria-label="{@sandbox.lang.see.vars}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
 											</div>
 											<ul>
 												# START module.module_file.items #
@@ -135,5 +136,11 @@
 		jQuery.expr[':'].icontains = function (obj, index, meta, stack) {
 			return (obj.textContent || obj.innerText || jQuery(obj).text() || '').toLowerCase().indexOf(meta[3].toLowerCase()) >= 0;
 		};
+
+        var adminLang = ['addon-lang', 'admin-lang', 'configuration-lang', 'menu-lang'];
+        jQuery('.lang-file-name > span').each(function() {
+            if (jQuery.inArray(jQuery(this).text(), adminLang) !== -1)
+                jQuery(this).parent().removeClass('question').addClass('error');
+        })
 	});
 </script>
