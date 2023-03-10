@@ -143,7 +143,7 @@ class BugtrackerHistoryListController extends DefaultModuleController
 		try {
 			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
 		} catch (RowNotFoundException $e) {
-			$controller = new UserErrorController($lang['warning.error'], $this->lang['error.e_unexist_bug']);
+			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($controller);
 		}
 
