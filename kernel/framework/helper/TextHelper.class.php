@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 22
+ * @version     PHPBoost 6.0 - last update: 2023 03 10
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,17 +59,17 @@ class TextHelper
 	}
 
 	/**
-	 * Inserts a carriage return every $lenght characters. It's equivalent to wordwrap PHP function but it can deal with the HTML entities.
+	 * Inserts a carriage return every $length characters. It's equivalent to wordwrap PHP function but it can deal with the HTML entities.
 	 * An entity is coded on several characters and the wordwrap function counts several characters for an entity whereas it represents only one character.
 	 * @param string $str The string to wrap.
-	 * @param int $lenght The number of characters you want in a line.
-	 * @param string $cut_char The character to insert every $lenght characters. The default value is '<br />', the HTML carriage return tag.
+	 * @param int $length The number of characters you want in a line.
+	 * @param string $cut_char The character to insert every $length characters. The default value is '<br />', the HTML carriage return tag.
 	 * @param bool $cut True if you accept that a word would be broken apart, false if you want to cut only on a blank character.
 	 * @return string The wrapped HTML string.
 	 */
-	public static function wordwrap_html($str, $lenght, $cut_char = '<br />', $cut = true)
+	public static function wordwrap_html($str, $length, $cut_char = '<br />', $cut = true)
 	{
-		$str = self::utf8_wordwrap(self::html_entity_decode($str), $lenght, $cut_char, $cut);
+		$str = self::utf8_wordwrap(self::html_entity_decode($str), $length, $cut_char, $cut);
 		return str_replace('&lt;br /&gt;', '<br />', self::htmlspecialchars($str, ENT_NOQUOTES));
 	}
 
@@ -432,7 +432,6 @@ class TextHelper
 	 * @param string $string the input string
 	 * @return string the given string without tags
 	 */
-
 	public static function strip_content_tags($string)
 	{
 		$string = preg_replace("/<div.*?formatter-.*?(?:<\/div>){1,}/", "", $string);
@@ -447,12 +446,56 @@ class TextHelper
 	 * @param string $string the input string
 	 * @return string the given string without extra line break
 	 */
-
 	public static function strip_content_extra_line_break($string)
 	{
 		$string = preg_replace("/\n<br\W*?\/?>/", "", $string);
 		$string = preg_replace("/^<br\W*?\/?>/", "", $string);
 		return $string;
+	}
+
+    /**
+     * Native nonnullable php functions/methods for PHP8.1
+     * see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg
+     */
+
+	/**
+	 * Split a string by a string
+	 */
+	public static function explode($separator, $string, $limit = PHP_INT_MAX)
+	{
+		return explode($separator, $string ?? '', $limit);
+	}
+
+	/**
+	 * Perform a regular expression search and replace
+	 */
+	public static function preg_match($pattern, $subject, $matches = null, $flags = 0, $offset = 0)
+	{
+		return preg_match($pattern, $subject ?? '', $matches, $flags, $offset);
+	}
+
+	/**
+	 * Perform a regular expression search and replace
+	 */
+	public static function preg_replace($pattern, $replacement, $subject, $limit = -1, $count = null)
+	{
+		return preg_replace($pattern, $replacement, $subject ?? '', $limit, $count);
+	}
+
+	/**
+	 * Replace all occurrences of the search string with the replacement string
+	 */
+	public static function str_replace($search, $replace, $subject, $count = null)
+	{
+		return str_replace($search, $replace, $subject ?? '', $count);
+	}
+
+	/**
+	 * Un-quotes a quoted string
+	 */
+	public static function stripslashes($string)
+	{
+		return stripslashes($string ?? '');
 	}
 
 }

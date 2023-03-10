@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.0 - last update: 2023 03 10
  * @since       PHPBoost 3.0 - 2010 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,7 +55,7 @@ class FormatingHelper
 	public static function unparse($content)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_unparser();
-		$parser->set_content(stripslashes($content));
+		$parser->set_content(TextHelper::stripslashes($content));
 		$parser->parse();
 
 		return $parser->get_content();
