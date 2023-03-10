@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 27
+ * @version     PHPBoost 6.0 - last update: 2023 03 10
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -30,7 +30,7 @@ $lang['admin.unknown.robot'] = 'Unknown robot';
 // Advice
 $lang['admin.advice']                              = 'Advice';
 $lang['admin.advice.modules.management']           = '<a href="' . AdminModulesUrlBuilder::list_installed_modules()->rel() . '">Disable or uninstall modules</a> you don\'t need to free ressources on the website.';
-$lang['admin.advice.check_modules.authorizations'] = 'Check the authorizations of all your modules and menus before opening your website to avoit guest or unauthorized users accessing protected areas.';
+$lang['admin.advice.check.modules.authorizations'] = 'Check the authorizations of all your modules and menus before opening your website to avoit guest or unauthorized users accessing protected areas.';
 $lang['admin.advice.disable.debug.mode']           = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Disable debug mode</a> to hide errors to users (the errors are loggued on the <a href="' . AdminErrorsUrlBuilder::logged_errors()->rel() . '">Loggued errors</a> page).';
 $lang['admin.advice.disable.maintenance']          = '<a href="' . AdminMaintainUrlBuilder::maintain()->rel() . '">Disable maintenance</a> to allow the users to view your website.';
 $lang['admin.advice.enable.url.rewriting']         = '<a href="' . AdminConfigUrlBuilder::advanced_config()->rel() . '">Enable URL rewriting</a> to have more readable urls (usefull for SEO).';
