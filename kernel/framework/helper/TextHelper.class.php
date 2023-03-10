@@ -469,7 +469,7 @@ class TextHelper
 	/**
 	 * Perform a regular expression search and replace
 	 */
-	public static function preg_match($pattern, $subject, $matches = null, $flags = 0, $offset = 0)
+	public static function preg_match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
 	{
 		return preg_match($pattern, $subject ?? '', $matches, $flags, $offset);
 	}
@@ -477,7 +477,7 @@ class TextHelper
 	/**
 	 * Perform a regular expression search and replace
 	 */
-	public static function preg_replace($pattern, $replacement, $subject, $limit = -1, $count = null)
+	public static function preg_replace($pattern, $replacement, $subject, $limit = -1, &$count = null)
 	{
 		return preg_replace($pattern, $replacement, $subject ?? '', $limit, $count);
 	}
@@ -485,7 +485,7 @@ class TextHelper
 	/**
 	 * Replace all occurrences of the search string with the replacement string
 	 */
-	public static function str_replace($search, $replace, $subject, $count = null)
+	public static function str_replace($search, $replace, $subject, &$count = null)
 	{
 		return str_replace($search, $replace, $subject ?? '', $count);
 	}
