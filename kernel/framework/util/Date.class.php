@@ -74,7 +74,7 @@ class Date
 		}
 		else
 		{
-			$this->date_time = new DateTime($time ?? '', $date_timezone);
+			$this->date_time = new DateTime($time ? $time : '', $date_timezone);
 		}
 	}
 
