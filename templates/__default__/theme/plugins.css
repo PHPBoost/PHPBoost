@@ -138,11 +138,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     cursor: pointer;
 }
 
-.hide-modal {
-	text-align: right;
-	padding: 0 0 0.228em 0;
-}
-
+.hide-modal { padding: 0 0 0.228em 0; }
 
 @media (min-width:769px) {
     .modal .content-panel {
