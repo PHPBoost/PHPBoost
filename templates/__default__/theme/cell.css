@@ -152,7 +152,6 @@
 	.cell-list ul li.li-stretch.li-stretch-large { flex-direction: row;}
 }
 
-
 .cell-list .button { width: auto; }
 
 .cell-list-inline ul {
@@ -193,5 +192,9 @@
 
 .cell-footer {
 	padding: 0.618em;
-	text-align: right;
+	text-align: center;
+}
+
+@media (min-width: 769px) {
+    .cell-footer { text-align: right; }
 }
