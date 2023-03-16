@@ -231,7 +231,9 @@
 								</div>
 							</div>
 							<div id="results_list_{results.MODULE_NAME}" class="ResultsList"></div>
-							<div id="pagination_results_{results.MODULE_NAME}" class="PaginationResults"></div>
+							<nav class="pagination">
+                                <ul id="pagination_results_{results.MODULE_NAME}" class="PaginationResults"></ul>
+                            </nav>  
 						</div>
 					# END results #
 				# ENDIF #
