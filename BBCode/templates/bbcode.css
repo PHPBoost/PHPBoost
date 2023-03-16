@@ -85,9 +85,10 @@
 
 .bbcode-elements .button { display: inline-block; }
 
-.bbcode-container .cell-table.color-table td {
+.cell-table.color-table td {
 	cursor: pointer;
 	border-width: 3px !important;
+    width: calc(100% / 8);
 }
 
 .bbcode-forbidden {
