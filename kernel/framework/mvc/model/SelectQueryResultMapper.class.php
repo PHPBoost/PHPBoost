@@ -80,6 +80,7 @@ class SelectQueryResultMapper implements SelectQueryResult
 		return $this->query_result->valid();
 	}
 
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		return $this->model->new_instance($this->query_result->current());
