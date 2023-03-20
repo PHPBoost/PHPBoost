@@ -1,10 +1,10 @@
 <?php
 /**
  * This class provides easy ways to create several type of charts.
- * @copyright 	&copy; 2005-2019 PHPBoost
+ * @copyright 	&copy; 2005-2023 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2022 11 02
+ * @version   	PHPBoost 5.2 - last update: 2023 03 20
  * @since   	PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -43,7 +43,6 @@ class ImagesStats
 		if ($draw_type == 'ellipse')
 		{
 			//Nombre total d'entrées
-			$array_stats = array();
 			$this->nbr_entry = array_sum($array_stats);
 			if ($this->nbr_entry == 0)
 				$this->data_stats = array(LangLoader::get_message('other', 'main') => 360);
@@ -81,8 +80,11 @@ class ImagesStats
 	{
 		if (@extension_loaded('gd'))
 		{
-			$w_ellipse = $w_arc/2;
-			$h_ellipse = $h_arc/2;
+			$w_arc = (int)$w_arc;
+			$h_arc = (int)$h_arc;
+			$w_ellipse = (int)($w_arc/2);
+			$h_ellipse = (int)($h_arc/2);
+			$height_3d = (int)$height_3d;
 
 			list($x_ellipse, $y_ellipse, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
 			if ($draw_legend) //Tracé de la légende de l'ellipse.
@@ -93,9 +95,9 @@ class ImagesStats
 			if ($draw_percent) //Tracé des pourcentages autour de l'ellipse, calcul du décallage horizontal/vertical de l'ellipse.
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, '99.9%');
-				$x_ellipse = abs($array_size_ttf[2] - $array_size_ttf[0]) + 5;
+				$x_ellipse = (int)abs($array_size_ttf[2] - $array_size_ttf[0]) + 5;
 				$x_ellipse += ($x_ellipse * 10)/100; //Marge de 10% supplémentaire.
-				$y_ellipse = abs($array_size_ttf[7] - $array_size_ttf[1]) + 30;
+				$y_ellipse = (int)abs($array_size_ttf[7] - $array_size_ttf[1]) + 30;
 				$y_ellipse += ($y_ellipse * 12)/100;
 			}
 
@@ -136,10 +138,10 @@ class ImagesStats
 					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
 
 					//Calcul des coordonées cartésiennes.
-					$angle_tmp = (2*$angle + $angle_value) / 2;
+					$angle_tmp = (int)((2*$angle + $angle_value) / 2);
 					$angle_string = deg2rad($angle_tmp);
-					$x_string = ($w_ellipse * 1.2) * cos($angle_string) + $w_ellipse + $x_ellipse;
-					$y_string = ($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse;
+					$x_string =(int)(($w_ellipse * 1.2) * cos($angle_string) + $w_ellipse + $x_ellipse);
+					$y_string = (int)(($h_ellipse * 1.2) * sin($angle_string) + $h_ellipse + $y_ellipse);
 
 					//Texte
 					$text = ($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%';
@@ -151,7 +153,7 @@ class ImagesStats
 
 					$text_x = $x_string - ($text_width/2);
 					$text_y = ($angle_tmp >= 0 && $angle_tmp <= 180 ) ? $y_string + ($text_height/2) + $height_3d : $y_string + ($text_height/2);
-					imagettftext($image, $font_size, 0, $text_x, $text_y, $black, $font, $text);
+					imagettftext($image, $font_size, 0, intval($text_x), intval($text_y), $black, $font, $text);
 
 					$angle += $angle_value;
 				}
@@ -188,7 +190,7 @@ class ImagesStats
 						//Texte
 						$text = TextHelper::ucfirst(TextHelper::substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
 
-						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $text);
+						imagettftext($image, $font_size, 0, intval($x_legend_extend + 24), intval($y_legend_extend + (16*$i) + 17), $black, $font, $text);
 						$i++;
 					}
 					else
@@ -224,10 +226,12 @@ class ImagesStats
 	 * @param string $font Font type used for the legend.
 	 * @return Return true if image has been succefully created, false otherwise and create an error image.
 	 */
-	 public function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
+	public function draw_histogram($w_histo, $h_histo, $img_cache = '', $scale_legend = array(), $draw_legend = true, $draw_values = true, $font_size = 10, $font = FRANKLINBC_TTF)
 	{
 		if (@extension_loaded('gd'))
 		{
+			$w_histo = (int)$w_histo;
+			$h_histo = (int)$h_histo;
 			$max_element = max($this->data_stats);
 			$max_element = max(array($max_element, 1));
 			list($x_histo, $y_histo, $x_legend_extend, $y_legend_extend) = array(0, 0, 0, 0);
@@ -270,7 +274,7 @@ class ImagesStats
 						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
 
 						//Texte
-						imagettftext($image, $font_size, 0, $x_legend_extend + 24, $y_legend_extend + (16*$i) + 17, $black, $font, $name_value);
+						imagettftext($image, $font_size, 0, intval($x_legend_extend + 24), intval($y_legend_extend + (16*$i) + 17), $black, $font, $name_value);
 						$i++;
 					}
 					else
@@ -281,8 +285,8 @@ class ImagesStats
 			//Génération de l'histogramme.
 			$margin = 21;
 			$array_size_ttf = imagettfbbox($font_size, 0, $font, $max_element);
-			$x_histo = abs($array_size_ttf[2] - $array_size_ttf[0]) + $margin;
-			$y_histo = abs($array_size_ttf[7] - $array_size_ttf[1]) + $margin;
+			$x_histo = (int)(abs($array_size_ttf[2] - $array_size_ttf[0]) + $margin);
+			$y_histo = (int)(abs($array_size_ttf[7] - $array_size_ttf[1]) + $margin);
 			$h_histo_content = $h_histo - $y_histo - $margin;
 			$w_histo_content = $w_histo - $margin - $x_histo;
 
@@ -313,7 +317,7 @@ class ImagesStats
 					$array_size_ttf = imagettfbbox($font_size, 0, $font, $array_scale[$j]);
 					$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]) + 6;
 					$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-					imagettftext($image, $font_size, 0, $x_histo - $x_text, $scale_pos + ($y_text/2), $black, $font, $array_scale[$j]);
+					imagettftext($image, $font_size, 0, intval($x_histo - $x_text), intval($scale_pos + ($y_text/2)), $black, $font, $array_scale[$j]);
 
 					$j++;
 					$separator = 3;
@@ -353,24 +357,24 @@ class ImagesStats
 				if ($value != 0)
 				{
 					//Bordure.
-					imagerectangle($image, $x_bar + $width_bar/3, $y_bar - 4, $x2_bar + $width_bar/3 + 1, $y2_bar, $black);
+					imagerectangle($image, intval($x_bar + $width_bar/3), $y_bar - 4, intval($x2_bar + $width_bar/3 + 1), $y2_bar, $black);
 					//Barre sombre
-					imagefilledrectangle($image, $x_bar + $width_bar/3, $y_bar - 3, $x2_bar + $width_bar/3, $y2_bar, $color_bar_dark);
+					imagefilledrectangle($image, intval($x_bar + $width_bar/3), $y_bar - 3, intval($x2_bar + $width_bar/3), $y2_bar, $color_bar_dark);
 					//Bordure.
 					imagerectangle($image, $x_bar - 1, $y_bar - 1, $x2_bar + 1, $y2_bar + 1, $black);
 					//Barre
 					imagefilledrectangle($image, $x_bar, $y_bar, $x2_bar, $y2_bar, $color_bar);
 					//Chapeau
 					$polygon_point = array(
-						$x_bar + $width_bar/3, $y_bar - 4,
-						$x2_bar + $width_bar/3 + 1, $y_bar - 4,
+						intval($x_bar + $width_bar/3), $y_bar - 4,
+						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
 					imagefilledpolygon($image, $polygon_point, 4, $color_bar_dark);
 					$polygon_point = array(
-						$x_bar + $width_bar/3, $y_bar - 4,
-						$x2_bar + $width_bar/3 + 1, $y_bar - 4,
+						intval($x_bar + $width_bar/3), $y_bar - 4,
+						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
@@ -381,14 +385,14 @@ class ImagesStats
 						$array_size_ttf = imagettfbbox($font_size, 0, $font, $value);
 						$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 						$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-						imagettftext($image, $font_size, 0, ($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2), $y_bar - $y_text, $black, $font, $value);
+						imagettftext($image, $font_size, 0, intval(($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2)), intval( $y_bar - $y_text), $black, $font, $value);
 					}
 				}
 				//Texte, info
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $name_value);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-				imagettftext($image, $font_size, 0, ($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2), $margin + $h_histo_content + $y_text + 4, $black, $font, $name_value);
+				imagettftext($image, $font_size, 0, intval(($x_bar + $x2_bar + ($width_bar/3))/2 - ($x_text/2)), intval($margin + $h_histo_content + $y_text + 4), $black, $font, $name_value);
 
 				$i++;
 			}
@@ -401,14 +405,14 @@ class ImagesStats
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[0]);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-				imagettftext($image, $font_size, 0, $x_histo + $w_histo_content - $x_text + $margin/2, $w_histo - $h_histo_content + $y_text/2, $black, $font, $scale_legend[0]);
+				imagettftext($image, $font_size, 0, intval($x_histo + $w_histo_content - $x_text + ($margin/2)), intval($w_histo - $h_histo_content + ($y_text/2)), $black, $font, $scale_legend[0]);
 			}
 			if (isset($scale_legend[1]))
 			{
 				$array_size_ttf = imagettfbbox($font_size, 0, $font, $scale_legend[1]);
 				$x_text = abs($array_size_ttf[2] - $array_size_ttf[0]);
 				$y_text = abs($array_size_ttf[7] - $array_size_ttf[1]);
-				imagettftext($image, $font_size, 0, $margin/2, $y_text, $black, $font, $scale_legend[1]);
+				imagettftext($image, $font_size, 0, intval($margin/2), intval($y_text), $black, $font, $scale_legend[1]);
 			}
 
 			//Affichage de l'image
@@ -484,7 +488,7 @@ class ImagesStats
 			$max_element++;
 
 		$scale = $max_element;
-		$scale_iteration = $max_element/3;
+		$scale_iteration = (int)($max_element/3);
 		for ($i = 0; $i < 4; $i++)
 		{
 			$array_scale[$i] = NumberHelper::round(abs($scale), 0);
@@ -499,7 +503,7 @@ class ImagesStats
 	 * @param boolean $demi_dozen Round to the half dozen.
 	 * @return int The number rounded.
 	 */
-	 private function number_round_dozen($number, $demi_dozen = true)
+	private function number_round_dozen($number, $demi_dozen = true)
 	{
 		$unit = $number % 10;
 		$number = NumberHelper::round($number, 1) * 10;
@@ -547,7 +551,7 @@ class ImagesStats
 		$text_y = ($height/2) + ($text_height/2);
 
 		//Ecriture du code.
-		@imagettftext($thumbtail, $font_size, 0, $text_x, $text_y, $text_color, $font, 'Error Image');
+		@imagettftext($thumbtail, $font_size, 0, intval($text_x), intval($text_y), $text_color, $font, 'Error Image');
 
 		//Affichage de l'image
 		header('Content-type: image/png');
