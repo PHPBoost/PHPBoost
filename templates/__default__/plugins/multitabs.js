@@ -2,7 +2,7 @@
 // @copyright   &copy; 2005-2023 PHPBoost - 2019 babsolune
 // @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
 // @author      Sebastien LARTIGUE <babsolune@phpboost.com>
-// @version     PHPBoost 6.0 - last update: 2023 03 06
+// @version     PHPBoost 6.0 - last update: 2023 03 25
 // @since       PHPBoost 6.0 - 2019 09 06
 
 
@@ -84,7 +84,7 @@
                 if(options.pluginType == 'modal')
                 {
                     jQuery('body').addClass('modal-container').css('position', 'relative');
-                    jQuery(targetPanel).addClass('cell-modal').prependTo(jQuery('body'));
+                    jQuery(targetPanel).addClass('cell-modal').appendTo(jQuery('body'));
                     jQuery(this).on('click', function(e) { //when click on a trigger
                         e.preventDefault(); // stop the trigger action
                         // history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
