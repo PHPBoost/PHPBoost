@@ -100,13 +100,14 @@
 	<footer><div class="wiki-hits">{L_VIEWS_NUMBER}</div></footer>
 </section>
 
-# IF C_STICKY_MENU #
-	<script>
+<script>
+    # IF C_STICKY_MENU #
 		/* Push the body and the nav over by the menu div width over */
 		var summaryWidth = jQuery('.wiki-sticky').innerWidth();
 		var viewportWidth = jQuery(window).width();
 
-		jQuery('.wiki-sticky-title').on('click',function(f) {
+        jQuery('.wiki-sticky').prependTo(jQuery('body'));
+		jQuery('.wiki-sticky-title').appendTo(jQuery('body')).on('click',function(f) {
 			jQuery('.wiki-sticky-title').removeClass('blink');
 			jQuery('.wiki-sticky').animate({
 				left: "0px",
@@ -123,7 +124,8 @@
 		jQuery(document).on('click',function(f) {
 			if (jQuery(f.target).is('.wiki-sticky-title') === false) {
 				jQuery('.wiki-sticky').animate({
-					left: -summaryWidth + 'px'
+					left: -summaryWidth + 'px',
+                    'max-width': 0 + 'px'
 				}, 200);
 
 				jQuery('body').animate({
@@ -133,7 +135,8 @@
 		});
 		jQuery('.wiki-sticky a').on('click',function() {
 			jQuery('.wiki-sticky').animate({
-				left: -summaryWidth + 'px'
+				left: -summaryWidth + 'px',
+                'max-width': 0 + 'px'
 			}, 200);
 
 			jQuery('body').animate({
@@ -150,9 +153,7 @@
 			}, 'slow');
 			return false;
 		});
-	</script>
-# ELSE #
-	<script>
+    # ELSE #
 		// smooth scroll when clicking on a inside link
 		jQuery('a[href^="#paragraph"]').on('click',function() {
 			var the_id = $(this).attr("href");
@@ -162,10 +163,10 @@
 			}, 'slow');
 			return false;
 		})
-	</script>
-# ENDIF #
-<script>
+    # ENDIF #
+
 	let hash = window.location.hash;
 	if (hash == '#preview')
 		window.history.pushState('', '', window.location.pathname);
+
 </script>
