@@ -46,7 +46,7 @@
 								# ENDIF #
 								<thead>
 									<tr>
-										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="{@common.select.elements}"><i class="far fa-square" aria-hidden="true"></i></span></th># ENDIF #
+										# IF C_MULTIPLE_DELETE_DISPLAYED #<th class="col-smaller"><span aria-label="{@common.select.elements}"><i class="far fa-square" aria-hidden="true"></i></span><span class="hidden-large-screens">{@common.select.element}</span></th># ENDIF #
 										# START header_column #
 											<th
 												class="# IF header_column.C_CSS_CLASSES #{header_column.CSS_CLASSES}# ENDIF ## IF header_column.C_SORTABLE # sortable-thead# ENDIF #"
