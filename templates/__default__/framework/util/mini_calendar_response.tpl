@@ -1,4 +1,4 @@
-<a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
+<a href="#" class="error big hide-modal align-right" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
 <div class="cell-body date-select-container grouped-inputs">
 	<a class="date-select-nav grouped-element" href="#" onclick="xmlhttprequest_calendar(${escapejs(FIELD)}, ${escapejs(INPUT_FIELD)}, ${escapejs(PREVIOUS_YEAR)}, ${escapejs(PREVIOUS_MONTH)}, 1, ${escapejs(CALENDAR_NUMBER)});return false;" aria-label="${LangLoader::get_message('common.next', 'common-lang')}">
 		<i class="fa fa-caret-left fa-large" aria-hidden="true"></i>

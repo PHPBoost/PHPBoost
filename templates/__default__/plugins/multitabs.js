@@ -90,9 +90,9 @@
                         // history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
                         jQuery(targetPanel).siblings().removeClass('active-panel'); // remove all active panel
                         jQuery(targetPanel).addClass('active-panel'); // add activation class to the target
-                        jQuery('.close-modal, .hide-modal').on('click', function() {
+                        jQuery(targetPanel).on('click', '.close-modal, .hide-modal', function() {
                             jQuery(targetPanel).removeClass('active-panel'); // remove activation class from the target
-                            // history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
+                            return false;
                         });
                         jQuery('.modal [data-target]').on('click', function(){ // when trigger is inside one of the targets
                             jQuery(this).closest('nav').siblings(targetPanel).removeClass('active-panel'); // remove activation class from the target
@@ -103,7 +103,7 @@
                             jQuery(targetPanel).addClass('modal active-panel ' + options.animationClass + ' ' + options.animationIn); // then add necessary opening classes for animate.css
                             jQuery('.close-modal, .hide-modal').on('click', function(){
                                 jQuery(this).parent().removeClass(options.animationIn).addClass(options.animationOut); // change animation classes to closing ones
-                            });
+                        });
                         }
                     });
                 }
