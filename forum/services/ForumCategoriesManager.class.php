@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 31
+ * @version     PHPBoost 6.0 - last update: 2023 04 04
  * @since       PHPBoost 6.0 - 2023 01 31
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumCategoriesManager extends CategoriesManager
@@ -20,7 +21,7 @@ class ForumCategoriesManager extends CategoriesManager
 			throw new CategoryNotFoundException($id);
 		}
 		
-		$result = PersistenceContext::get_querier()->select_rows(ForumSetup::$forum_topics_table, array('id'), 'WHERE id_category=:=:id_category', array('id_category' => $id));
+		$result = PersistenceContext::get_querier()->select_rows(ForumSetup::$forum_topics_table, array('id'), 'WHERE id_category = :id_category', array('id_category' => $id));
 		while ($row = $result->fetch())
 		{
 			$Forumfct = new Forum();
