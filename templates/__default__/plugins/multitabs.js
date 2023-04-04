@@ -2,9 +2,8 @@
 // @copyright   &copy; 2005-2023 PHPBoost - 2019 babsolune
 // @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
 // @author      Sebastien LARTIGUE <babsolune@phpboost.com>
-// @version     PHPBoost 6.0 - last update: 2023 03 25
+// @version     PHPBoost 6.0 - last update: 2023 04 04
 // @since       PHPBoost 6.0 - 2019 09 06
-
 
 (function(jQuery) {
 
@@ -23,19 +22,6 @@
             };
             options = jQuery.extend(defaults, options);
 
-            if(options.pluginType == 'accordion') // accordion controls management
-            {
-                jQuery('.open-all-accordions').on('click', function(){
-                    jQuery(this).closest('.accordion-container').find('.accordion').addClass('active-panel').css('height', 'auto');
-                    jQuery(this).closest('.accordion-container').find('[data-target]').addClass('active-tab');
-                });
-                jQuery('.close-all-accordions').on('click', function(){
-                    jQuery(this).closest('.accordion-container').find('.accordion').removeClass('active-panel');
-                    jQuery(this).closest('.accordion-container').find('.accordion').delay(800).queue(function (next) {jQuery(this).css('height', 0); next();});
-                    jQuery(this).closest('.accordion-container').find('[data-target]').removeClass('active-tab');
-                });
-            }
-
             // When page loads, open target if hash correspond to an id
             var hashUrl = location.hash;
             var hashTarget = hashUrl.substring(1);
@@ -47,19 +33,13 @@
                     history.pushState('', '', ' '); // delete the hash of the url without apllying it
                     return false;
                 });
-            } else if(options.pluginType == 'accordion') {
-                if(jQuery('.accordion-container').find('[data-target="'+hashTarget+'"]').closest('.accordion').length){ // if target is nested
-                    jQuery('.accordion-container').find('[data-target="'+hashTarget+'"]').closest('.accordion').addClass('active-panel').css('height', 'auto');
-                }
-                jQuery('.accordion-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
-                jQuery('.accordion-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
             } else if(options.pluginType == 'tabs') {
                 if(hashUrl) {
-                    if(jQuery('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').length) // if target is nested
-                        jQuery('.tabs-container').find('[data-target="'+hashTarget+'"]').closest('.tabs').addClass('active-panel').css('height', 'auto');
+                    if(jQuery('.tabs-container').find('[data-target="' + hashTarget + '"]').closest('.tabs').length) // if target is nested
+                        jQuery('.tabs-container').find('[data-target="' + hashTarget + '"]').closest('.tabs').addClass('active-panel').css('height', 'auto');
 
-                    if(jQuery('.tabs-container').find('[data-target="'+hashTarget+'"]').length) {
-                        jQuery('.tabs-container').find('[data-target="'+hashTarget+'"]').addClass('active-tab');
+                    if(jQuery('.tabs-container').find('[data-target="' + hashTarget + '"]').length) {
+                        jQuery('.tabs-container').find('[data-target="' + hashTarget + '"]').addClass('active-tab');
                         jQuery('.tabs-container').find(hashUrl).addClass('active-panel').css('height', 'auto');
                     } else {
                         jQuery('.tabs-container .tabs.first-tab').addClass('active-panel').css('height', 'auto'); // show the first target when the page loads
@@ -75,7 +55,6 @@
             return this.each(function() {
                 var dataId = jQuery(this).data('target'), // get the target name
                     targetPanel = jQuery('#' + dataId), // set the target var
-                    contentPanel = jQuery('#' + dataId + ' ' + options.contentClass),
                     animStyles = {
                         'animation-duration': options.animationDuration + 'ms',
                         'animation-delay': options.animationDelay + 'ms',
@@ -101,50 +80,9 @@
                         if(options.animation) { // if animate.css is active
                             jQuery(targetPanel).removeClass().css(animStyles);// remove all classes from target & add animation details attributes
                             jQuery(targetPanel).addClass('modal active-panel ' + options.animationClass + ' ' + options.animationIn); // then add necessary opening classes for animate.css
-                            jQuery('.close-modal, .hide-modal').on('click', function(){
+                            jQuery(targetPanel).on('click', '.close-modal, .hide-modal', function(){
                                 jQuery(this).parent().removeClass(options.animationIn).addClass(options.animationOut); // change animation classes to closing ones
                         });
-                        }
-                    });
-                }
-                else if(options.pluginType == 'accordion')
-                {
-                    jQuery(this).after(targetPanel).appendTo(); // get target and place it just after trigger
-                    jQuery(this).on('click', function(e) {
-                        e.preventDefault(); // stop the trigger action
-                        history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
-                        var contentHeight = contentPanel.outerHeight(); // calculate height of target
-                        if(options.accordionSiblings) {
-                            jQuery(this).closest('.accordion-container').find('.accordion').not(targetPanel).removeClass('active-panel').height(0);
-                            jQuery(this).closest('.accordion-container').find('[data-accordion]').not(this).removeClass('active-tab');
-                        }
-                        if(targetPanel.hasClass('active-panel')) // if target is active
-                        {
-                            jQuery(this).removeClass('active-tab');
-                            jQuery(targetPanel).removeClass('active-panel'); // remove activation class
-                            jQuery(targetPanel).css('height', 0); // set height of target to zero
-                            history.pushState('', '', ' '); // delete the hash of the url whitout apllying it
-                            if(options.animation) { // if animate.css
-                                jQuery(targetPanel).removeClass().css(animStyles);// remove all classes from target & add animation details attributes
-                                jQuery(targetPanel).addClass('accordion ' + options.animationClass + ' ' + options.animationOut);  // then add necessary closing classes for animate.css
-                            }
-                        }
-                        else // if target is not active
-                        {
-                            jQuery(this).addClass('active-tab');
-                            jQuery(targetPanel).addClass('active-panel'); // add activation class
-                            jQuery(targetPanel).css('height', contentHeight + 'px'); // set the height of the target
-                            if(jQuery(this).parents(options.contentClass).length) // if the trigger is inside a target
-                            {
-                                jQuery(targetPanel).closest(options.contentClass).closest('.accordion').css('height', 'auto');
-                            }
-                            if(options.animation) { // if animate.css
-                                jQuery(targetPanel).removeClass().css({ // remove all classes from target & add animation details attributes
-                                    'animation-duration': options.animationDuration + 'ms',
-                                    'animation-delay': options.animationDelay + 'ms',
-                                });
-                                jQuery(targetPanel).addClass('accordion active-panel ' + options.animationClass + ' ' + options.animationIn); // then add necessary opening classes for animate.css
-                            }
                         }
                     });
                 }
@@ -167,9 +105,6 @@
                     });
                 }
             });
-
-
         }
-
     });
 })(jQuery);
