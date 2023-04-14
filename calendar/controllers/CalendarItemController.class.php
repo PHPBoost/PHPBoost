@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2023 04 14
  * @since       PHPBoost 4.0 - 2013 07 29
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -118,7 +118,7 @@ class CalendarItemController extends DefaultModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
-		$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_content()->get_id_category(), true));
+		$categories = array_reverse(CategoriesService::get_categories_manager('calendar')->get_parents($item->get_content()->get_id_category(), true));
 		foreach ($categories as $id => $category)
 		{
 			if ($category->get_id() != Category::ROOT_CATEGORY)

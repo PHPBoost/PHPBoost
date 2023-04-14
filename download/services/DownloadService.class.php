@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 30
+ * @version     PHPBoost 6.0 - last update: 2023 04 14
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -110,7 +110,7 @@ class DownloadService
 		Feed::clear_cache('download');
 		KeywordsCache::invalidate();
 		DownloadCache::invalidate();
-        CategoriesService::get_categories_manager()->regenerate_cache();
+		CategoriesService::get_categories_manager('download')->regenerate_cache();
 	}
 }
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 06
+ * @version     PHPBoost 6.0 - last update: 2023 04 14
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -94,7 +94,7 @@ class DownloadItem
 
 	public function get_category()
 	{
-		return CategoriesService::get_categories_manager()->get_categories_cache()->get_category($this->id_category);
+		return CategoriesService::get_categories_manager('download')->get_categories_cache()->get_category($this->id_category);
 	}
 
 	public function get_title()
