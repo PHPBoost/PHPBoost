@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 06
+ * @version     PHPBoost 6.0 - last update: 2023 04 20
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -18,17 +18,15 @@ class WebItemFormController extends DefaultModuleController
 
 		$this->build_form($request);
 
-		$view = new StringTemplate('# INCLUDE FORM #');
-
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
 			$this->redirect();
 		}
 
-		$view->put('FORM', $this->form->display());
+		$this->view->put('CONTENT', $this->form->display());
 
-		return $this->generate_response($view);
+		return $this->generate_response($this->view);
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -61,7 +59,7 @@ class WebItemFormController extends DefaultModuleController
 
 		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
 			array(
-				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => WebConfig::AUTO_CUT_CHARACTERS_NUMBER)),
+				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())),
 				'events' => array('click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
