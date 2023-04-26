@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 24
+ * @version     PHPBoost 6.0 - last update: 2023 04 26
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -13,7 +13,7 @@
 
 class ServerConfiguration
 {
-	const MIN_PHP_VERSION = '7.0';
+	const MIN_PHP_VERSION = '7.1';
 	const RECOMMENDED_PHP_VERSION = '7.4';
 	private static $mod_rewrite = 'mod_rewrite';
 
