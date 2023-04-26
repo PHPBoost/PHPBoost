@@ -19,7 +19,7 @@ class CookiebarConfigUpdateVersion extends ConfigUpdateVersion
 		$old_config = $this->get_old_config();
 		if ($old_config)
 		{
-			$config = CookiebarConfig::load();
+			$config = CookieBarConfig::load();
 			$unparser = new OldBBCodeUnparser();
 			$parser = new BBCodeParser();
 			$old_content = $old_config->get_property('cookiebar_content');
