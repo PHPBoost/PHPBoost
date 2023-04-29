@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 14
+ * @version     PHPBoost 6.0 - last update: 2023 04 29
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -21,7 +21,7 @@ $view->add_lang($lang);
 foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 {
 	$configuration = $module->get_configuration();
-	$admin_home_page = $configuration->get_admin_main_page();
+	$admin_home_page = Url::to_rel($configuration->get_admin_main_page());
 
 	$img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png';
 	$img = new File($img_url);
