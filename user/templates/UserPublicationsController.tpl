@@ -1,6 +1,6 @@
 <section id="module-user-messages">
 	<header class="section-header">
-		<h1># IF C_CURRENT_USER #{@user.my.publications}# ELSE #{@user.publications.from}# ENDIF #</h1>
+		<h1># IF C_CURRENT_USER #{@user.my.publications}# ELSE #{@user.publications}# ENDIF #</h1>
 		# IF NOT C_CURRENT_USER #<h2 class="align-center">{USER_NAME}</h2># ENDIF #
 	</header>
 	<div class="sub-section">
