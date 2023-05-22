@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 04
+ * @version     PHPBoost 6.0 - last update: 2023 05 22
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,6 +13,7 @@
 class UserUsersListController extends AbstractController
 {
 	private $lang;
+	private $view;
 	private $elements_number = 0;
 	private $ids = array();
 
@@ -33,8 +34,6 @@ class UserUsersListController extends AbstractController
 		$this->lang = LangLoader::get_all_langs();
 		$this->view = new StringTemplate('# INCLUDE FORM # # INCLUDE TABLE #');
 		$this->view->add_lang($this->lang);
-		$this->groups_cache = GroupsCache::load();
-		$this->config = UserAccountsConfig::load();
 	}
 
 	private function build_form()
@@ -156,6 +155,16 @@ class UserUsersListController extends AbstractController
 			else
 				AppContext::get_response()->redirect(UserUrlBuilder::home(), $this->lang['warning.process.success']);
 		}
+	}
+
+	public function get_right_controller_regarding_authorizations()
+	{
+		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
+		{
+			$error_controller = PHPBoostErrors::user_not_authorized();
+			DispatchManager::redirect($error_controller);
+		}
+		return $this;
 	}
 
 	private function generate_response($page = 1)
