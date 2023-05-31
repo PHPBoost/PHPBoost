@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 26
+ * @version     PHPBoost 6.0 - last update: 2023 05 31
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
 */
 
 class ServerConfiguration
@@ -54,11 +55,19 @@ class ServerConfiguration
 			}
 			return $size;
 		};
-		
+
 		$max_upload = $normalize(ini_get('upload_max_filesize'));
 		$max_post = $normalize(ini_get('post_max_size'));
 		$memory_limit = $normalize(ini_get('memory_limit'));
-		$maxFileSize = min($max_upload, $max_post, $memory_limit);
+		if ($memory_limit <= '0' AND $max_post <= '0') {
+			$maxFileSize = $max_upload;
+		} elseif ($max_post <= '0') {
+            $maxFileSize = min($max_upload, $memory_limit);
+		} elseif ($memory_limit <= '0') {
+            $maxFileSize = min($max_upload, $max_post);
+		} else {
+            $maxFileSize = min($max_upload, $max_post, $memory_limit);
+		}
 		return $maxFileSize;
 	}
 
