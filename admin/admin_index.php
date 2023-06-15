@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2023 06 15
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,7 +63,7 @@ while ($row = $result->fetch())
 		'VISITOR_EMAIL'     => $row['visitor_email'],
 		'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
 		'USER_GROUP_COLOR'  => $group_color,
-		'MODULE_NAME'       => ModulesManager::get_module($row['module_id'])->get_configuration()->get_name(),
+		'MODULE_NAME'       => $row['module_id'] != 'user' ? ModulesManager::get_module($row['module_id'])->get_configuration()->get_name() : $lang['contribution.contribution'],
 
 		'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
 		'U_DELETE'       => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
