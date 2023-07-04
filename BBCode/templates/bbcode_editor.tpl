@@ -1045,7 +1045,7 @@
 										# START code_fa #
 											<li>
 												<a href="#fa" class="hide-modal close-bbcode-sub" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
-													<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
+													<i class="fa# IF code_fa.C_CUSTOM_PREFIX # {code_fa.PREFIX}# ENDIF # fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
 												</a>
 											</li>
 										# END code_fa #

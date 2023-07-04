@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2023 07 04
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -18,19 +18,7 @@ class BBCodeEditor extends ContentEditor
 	 */
 	private static $editor_already_included = false;
 	private $forbidden_positions = 0;
-	private $icon_fa = array(
-		array("fa","arrow-up"),array("fa","arrow-down"),array("fa","arrow-left"),array("fa","arrow-right"),array("fa","arrows-alt-h"),array("fa","arrows-alt"),array("fa","ban"),array("fa","bars"),array("fa","chart-bar"),
-		array("fa","bell"),array("fa","book"),array("fa","calendar-alt"),array("fa","caret-left"),array("fa","caret-right"),array("far","clipboard"),array("far","clock"),array("fa","cloud-upload-alt"),array("fa","download"),
-		array("fa","code"),array("fa","code-branch"),array("fa","cog"),array("fa","cogs"),array("fa","comment"),array("far","comment"),array("far","comments"),array("fa","cube"),array("fa","cubes"),
-		array("fa","times"),array("fa","edit"),array("fa","envelope"),array("far","envelope"),array("fa","eraser"),array("fa","check"),array("fa","exclamation-triangle"),array("fa","question"),array("fa","minus-circle"),
-		array("fa","info-circle"),array("far","eye"),array("fa","eye-slash"),array("fab","facebook"),array("fa","fast-forward"),array("fa","filter"),array("fa","flag"),array("fab","font-awesome-flag"),array("fa","folder"),
-		array("fa","folder-open"),array("fa","gavel"),array("fa","cogs"),array("fa","globe"),array("fa","hand-point-right"),array("fa","heart"),array("fa","home"),array("fa","key"),array("far","lightbulb"),
-		array("fa","list-ul"),array("fa","lock"),array("fa","magic"),array("fa","minus"),array("fa","plus"),array("fa","share"),array("fa","image"),array("fa","print"),array("fa","tachometer-alt"),
-		array("fa","quote-right"),array("fa","sync-alt"),array("fa","save"),array("fa","search"),array("far","share-square"),array("fa","sign-in-alt"),array("fa","sign-out-alt"),array("fa","smile"),array("fa","sort"),
-		array("fa","sort-alpha-up"),array("fa","sort-amount-up"),array("fa","sort-amount-down"),array("fa","spinner"),array("fa","star"),array("far","star"),array("fa","rss"),array("fa","tag"),array("fa","tags"),
-		array("fa","tasks"),array("fa","th"),array("fa","ticket-alt"),array("fa","undo"),array("fa","unlink"),array("fa","file"),array("far","file"),array("fa","file-alt"),array("far","file-alt"),
-		array("fa","user"),array("fa","user-shield"),array("fa","users"),array("fa","user-times"),array("fa","user-check"),array("fa","male"),array("fa","female"),array("fa","volume-up"),array("fa","wrench")
-	);
+	protected $forbidden_tags;
 
 	public function get_template()
 	{
@@ -48,6 +36,14 @@ class BBCodeEditor extends ContentEditor
 	public function display()
 	{
 		$template = $this->get_template();
+
+        // Files autoload for additional code and template variables
+		$extra_directory = new Folder(PATH_TO_ROOT . '/BBCode/extra/');
+		$extra_files = $extra_directory->get_files();
+		foreach ($extra_files as $extra_file)
+		{
+			require_once($extra_file->get_path());
+		}
 
 		$smileys_cache = SmileysCache::load();
 
@@ -86,7 +82,7 @@ class BBCodeEditor extends ContentEditor
 				'C_DISABLED_POSITIONS' => true
 			));
 		}
-		
+
 		if (in_array('p', $this->forbidden_tags) && in_array('block', $this->forbidden_tags) && in_array('container', $this->forbidden_tags) && in_array('fieldset', $this->forbidden_tags) && in_array('abbr', $this->forbidden_tags))
 		{
 			$template->put_all(array(
@@ -94,7 +90,7 @@ class BBCodeEditor extends ContentEditor
 				'C_DISABLED_CONTAINERS' => true
 			));
 		}
-		
+
 		if (in_array('hide', $this->forbidden_tags) && in_array('member', $this->forbidden_tags) && in_array('teaser', $this->forbidden_tags) && in_array('moderator', $this->forbidden_tags))
 		{
 			$template->put_all(array(
@@ -102,7 +98,7 @@ class BBCodeEditor extends ContentEditor
 				'C_DISABLED_HIDDEN' => true
 			));
 		}
-		
+
 		foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
 		{
 			$template->assign_block_vars('smileys', array(
@@ -137,14 +133,15 @@ class BBCodeEditor extends ContentEditor
 			}
 		}
 
-		foreach ($this->icon_fa as $key => $value)
-		{
-			$template->assign_block_vars('code_fa', array(
-				'C_CUSTOM_PREFIX' => $value[0] != 'fa',
-				'PREFIX'          => $value[0],
-				'CODE'            => $value[1]
-			));
-		}
+        $fa_icons = LangLoader::get('fa-icons', 'BBCode');
+        foreach($fa_icons as $key => $values)
+        {
+            $template->assign_block_vars('code_fa', array(
+                'C_CUSTOM_PREFIX' => $values[0] != 'fa',
+                'PREFIX'          => $values[0],
+                'CODE'            => $values[1]
+            ));
+        }
 
 		$feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
