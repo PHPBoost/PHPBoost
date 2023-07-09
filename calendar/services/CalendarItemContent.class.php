@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 14
+ * @version     PHPBoost 6.0 - last update: 2023 07 09
  * @since       PHPBoost 4.0 - 2013 10 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -419,7 +419,7 @@ class CalendarItemContent
 
 		$this->registration_authorized = false;
 		$this->registration_limit = false;
-		$this->max_registred_members = 0;
+		$this->max_registered_members = 0;
 		$this->last_registration_date_enabled = false;
 		$this->register_authorizations = array('r0' => 3, 'r1' => 3);
 
