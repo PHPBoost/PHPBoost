@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2023 07 09
  * @since       PHPBoost 6.0 - 2019 04 04
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -13,6 +13,7 @@
 class FormFieldConstraintFileMaxSize extends AbstractFormFieldConstraint
 {
 	private $max_size;
+	private $error_message;
 
 	public function __construct($max_size, $error_message = '')
 	{

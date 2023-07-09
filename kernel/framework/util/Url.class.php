@@ -13,13 +13,14 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 23
+ * @version     PHPBoost 6.0 - last update: 2023 07 09
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('SERVER_URL', $_SERVER['PHP_SELF']);
@@ -206,8 +207,8 @@ class Url
 	 */
 	public static function encode_rewrite($url)
 	{
-		$url = utf8_decode(TextHelper::html_entity_decode($url));
-		$url = TextHelper::strtolower(strtr($url, utf8_decode('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöø°ÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>«»`|+.= #'),  '2aaaaaaaaaaaaoooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    --      c  ---    e         --- '));
+		$url = mb_convert_encoding(TextHelper::html_entity_decode($url), 'UTF-8', mb_detect_encoding(TextHelper::html_entity_decode($url)));
+        $url = TextHelper::strtolower(strtr($url, mb_convert_encoding('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöø°ÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>«»`|+.= #', mb_detect_encoding(TextHelper::html_entity_decode($url)), 'UTF-8'), '2aaaaaaaaaaaaoooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    --      c  ---    e         --- '));
 		$url = str_replace(' ', '', $url);
 		$url = str_replace('---', '-', $url);
 		$url = str_replace('--', '-', $url);
