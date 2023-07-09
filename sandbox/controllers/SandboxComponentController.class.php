@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 15
+ * @version     PHPBoost 6.0 - last update: 2023 07 09
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,6 +16,7 @@ class SandboxComponentController extends DefaultModuleController
 	 * @var FormButtonDefaultSubmit
 	 */
 	private $floating_messages_button;
+	private $floating_messages;
 
 	protected function get_template_to_use()
 	{
