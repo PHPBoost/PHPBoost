@@ -14,14 +14,14 @@
 #                       French                      #
 #####################################################
 
-$lang['categories'] = $lang['items'] = array();
+$lang['categories'] = $lang['items'] = [];
 
-$lang['categories'][] = array(
+$lang['categories'][] = [
 	'category.name'        => 'Catégorie de test',
 	'category.description' => 'Articles de démonstration'
-);
+];
 
-$lang['items'][] = array(
+$lang['items'][] = [
 	'item.title'   => 'Débuter avec le module Articles',
 	'item.content' => '
 		<p>Ce bref article va vous donner quelques conseils simples pour prendre en main ce module.</p>
@@ -38,5 +38,5 @@ $lang['items'][] = array(
 		<br />
 		Bonne utilisation de ce module.',
 	'item.summary' => ''
-);
+];
 ?>

@@ -60,14 +60,12 @@
 					<span class="pinned notice small text-italic item-modified-date"><i>{@common.last.update} : <time datetime="{UPDATE_DATE_ISO8601}" itemprop="datePublished">{UPDATE_DATE}</time></i></span>
 				# ENDIF #
 
-				# IF C_PAGINATION #
-					# INCLUDE FORM #
-					<div class="spacer"></div>
-				# ENDIF #
-
-				# IF PAGE_NAME #
-					<h2 class="page-title-name">{PAGE_NAME}</h2>
-				# ENDIF #
+                # IF C_PAGE_NAME #
+                    <header class="flex-between">
+                        <h2 class="page-title-name">{PAGE_NAME}</h2>
+                        # IF C_PAGINATION ## INCLUDE FORM ## ENDIF #
+                    </header>
+                # ENDIF #
 
 				<div class="content" itemprop="text">
 					# IF C_FIRST_PAGE #
