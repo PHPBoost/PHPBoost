@@ -3,22 +3,20 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 6.0 - last update: 2022 04 15
+ * @version   	PHPBoost 6.0 - last update: 2023 07 09
  * @since   	PHPBoost 4.1 - 2015 06 29
 */
 
 class PollMiniMenuCache implements CacheData
 {
-	private $polls_displaying = array();
-	private $polls_not_displaying = array();
+	private $polls_displaying = [];
+	private $polls_not_displaying = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->polls = array();
-
 		$selected_items_in_config = PollConfig::load()->get_mini_module_selected_items();
 
 		if ($selected_items_in_config)
