@@ -19,7 +19,7 @@ class CalendarCategoriesManager extends CategoriesManager
 		{
 			throw new CategoryNotFoundException($id);
 		}
-		
+
 		$result = PersistenceContext::get_querier()->select('SELECT id_event
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
