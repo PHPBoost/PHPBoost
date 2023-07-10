@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 14
+ * @version     PHPBoost 6.0 - last update: 2023 07 10
  * @since       PHPBoost 2.0 - 2008 02 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -15,6 +15,7 @@ define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_uses());
 class Search
 {
 	public $id_search = array();
+	private $cache;
 	private $search;
 	private $modules;
 	private $modules_conditions;
