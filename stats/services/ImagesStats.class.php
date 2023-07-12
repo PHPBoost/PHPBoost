@@ -310,7 +310,7 @@ class ImagesStats
 					{
 						//Lignes pointillées
 						imagesetstyle($image, array($border_dashed, $border_dashed, $border_dashed, $histo_background, $histo_background, $histo_background));
-						imageline($image, $x_histo, $scale_pos, $w_histo - $margin, $scale_pos, IMG_COLOR_STYLED);
+						imageline($image, (int)$x_histo, (int)$scale_pos, (int)($w_histo - $margin), (int)$scale_pos, IMG_COLOR_STYLED);
 					}
 
 					//Texte
@@ -326,7 +326,7 @@ class ImagesStats
 					$separator = 1;
 
 				if ($i < 15)
-					imageline($image, $x_histo, $scale_pos, $x_histo + $separator, $scale_pos, $border_scale);
+					imageline($image, (int)$x_histo, (int)$scale_pos, (int)($x_histo + $separator), (int)$scale_pos, (int)$border_scale);
 				$scale_pos += $scale_iteration;
 			}
 
@@ -483,7 +483,7 @@ class ImagesStats
 	private function generate_scale($max_element)
 	{
 		$array_scale = array();
-		$max_element += ($max_element * 20/100);
+		$max_element += (int)($max_element * 20/100);
 		while (($max_element%3) != 0)
 			$max_element++;
 
