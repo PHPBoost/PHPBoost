@@ -67,7 +67,7 @@ class ExtensionPointProviderService
 	public function get_providers($extension_point, $authorized_providers_ids = null)
 	{
 		if ($authorized_providers_ids === null)
-		{
+		{  
 			$authorized_providers_ids = $this->available_providers_ids;
 		}
         $providers = array();

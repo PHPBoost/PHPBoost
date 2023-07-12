@@ -65,11 +65,11 @@ class DefaultTemplateData implements TemplateData
 		}
 
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
+
 		if ($theme)
 		{
 			$menus = MenusCache::load()->get_menus();
 			$columns_disabled = $theme->get_columns_disabled();
-
 			foreach ($menus as $cached_menu)
 			{
 				$menu = $cached_menu->get_menu();
