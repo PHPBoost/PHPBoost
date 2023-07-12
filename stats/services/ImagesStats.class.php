@@ -4,11 +4,12 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 30
+ * @version     PHPBoost 6.0 - last update: 2023 07 12
  * @since       PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('NO_ALLOCATE_COLOR', false);
@@ -117,7 +118,7 @@ class ImagesStats
 				{
 					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark($image) . 'dark'];
 					if ($angle_value > 5)
-						imagefilledarc($image, $w_ellipse + $x_ellipse, $i + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_NOFILL);
+						imagefilledarc($image, (int)($w_ellipse + $x_ellipse), (int)($i + $y_ellipse), (int)$w_arc, (int)$h_arc, (int)$angle, (int)($angle + $angle_value), (int)$get_color, IMG_ARC_NOFILL);
 					$angle += $angle_value;
 				}
 			}
@@ -133,8 +134,8 @@ class ImagesStats
 					$get_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
 					$this->color_index--;
 					$get_shadow_color = $this->array_allocated_color[$this->image_color_allocate_dark(false, NO_ALLOCATE_COLOR) . 'dark'];
-					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_color, IMG_ARC_PIE);
-					imagefilledarc($image, $w_ellipse + $x_ellipse, $h_ellipse + $y_ellipse, $w_arc, $h_arc, $angle, ($angle + $angle_value), $get_shadow_color, IMG_ARC_NOFILL);
+					imagefilledarc($image, (int)($w_ellipse + $x_ellipse), (int)($h_ellipse + $y_ellipse), (int)$w_arc, (int)$h_arc, (int)$angle, (int)($angle + $angle_value), (int)$get_color, IMG_ARC_PIE);
+					imagefilledarc($image, (int)($w_ellipse + $x_ellipse), (int)($h_ellipse + $y_ellipse), (int)$w_arc, (int)$h_arc, (int)$angle, (int)($angle + $angle_value), (int)$get_shadow_color, IMG_ARC_NOFILL);
 
 					//Calcul des coordonées cartésiennes.
 					$angle_tmp = (int)((2*$angle + $angle_value) / 2);
@@ -183,8 +184,8 @@ class ImagesStats
 					if ($i < 8)
 					{
 						//Carré de couleur.
-						imagefilledrectangle($image, $x_legend_extend + 6, $y_legend_extend + (16*$i) + 7, $x_legend_extend + 18, $y_legend_extend + (16*$i) + 19, $black);
-						imagefilledrectangle($image, $x_legend_extend + 7, $y_legend_extend + (16*$i) + 8, $x_legend_extend + 17, $y_legend_extend + (16*$i) + 18, $get_color);
+						imagefilledrectangle($image, (int)($x_legend_extend + 6), (int)($y_legend_extend + (16*$i) + 7), (int)($x_legend_extend + 18), (int)($y_legend_extend + (16*$i) + 19), (int)$black);
+						imagefilledrectangle($image, (int)($x_legend_extend + 7), (int)($y_legend_extend + (16*$i) + 8), (int)($x_legend_extend + 17), (int)($y_legend_extend + (16*$i) + 18), (int)$get_color);
 
 						//Texte
 						$text = TextHelper::ucfirst(TextHelper::substr($name_value, 0, 14)) . ' (' . (($angle_value != 360) ? NumberHelper::round(($angle_value/3.6), 1) . '%' : '100%') . ')';
@@ -356,13 +357,13 @@ class ImagesStats
 				if ($value != 0)
 				{
 					//Bordure.
-					imagerectangle($image, intval($x_bar + $width_bar/3), $y_bar - 4, intval($x2_bar + $width_bar/3 + 1), $y2_bar, $black);
+					imagerectangle($image, intval($x_bar + $width_bar/3), (int)($y_bar - 4), intval($x2_bar + $width_bar/3 + 1), (int)$y2_bar, (int)$black);
 					//Barre sombre
-					imagefilledrectangle($image, intval($x_bar + $width_bar/3), $y_bar - 3, intval($x2_bar + $width_bar/3), $y2_bar, $color_bar_dark);
+					imagefilledrectangle($image, intval($x_bar + $width_bar/3), (int)($y_bar - 3), intval($x2_bar + $width_bar/3), (int)$y2_bar, (int)$color_bar_dark);
 					//Bordure.
-					imagerectangle($image, $x_bar - 1, $y_bar - 1, $x2_bar + 1, $y2_bar + 1, $black);
+					imagerectangle($image, (int)$x_bar - 1, (int)$y_bar - 1, (int)$x2_bar + 1, (int)$y2_bar + 1, (int)$black);
 					//Barre
-					imagefilledrectangle($image, $x_bar, $y_bar, $x2_bar, $y2_bar, $color_bar);
+					imagefilledrectangle($image, (int)$x_bar, (int)$y_bar,(int) $x2_bar, (int)$y2_bar, (int)$color_bar);
 					//Chapeau
 					$polygon_point = array(
 						intval($x_bar + $width_bar/3), $y_bar - 4,
@@ -370,14 +371,14 @@ class ImagesStats
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
-					imagefilledpolygon($image, $polygon_point, 4, $color_bar_dark);
+					imagefilledpolygon($image, $polygon_point, $color_bar_dark);
 					$polygon_point = array(
 						intval($x_bar + $width_bar/3), $y_bar - 4,
 						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
-					imagepolygon($image, $polygon_point, 4, $black);
+					imagepolygon($image, $polygon_point, $black);
 
 					if ($draw_values) //Texte, valeur
 					{
