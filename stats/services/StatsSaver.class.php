@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 01
+ * @version     PHPBoost 6.0 - last update: 2023 07 12
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -63,7 +63,7 @@ class StatsSaver
 				{
 					$pattern = '/' . $query_param . '=(.*?)&/si';
 					preg_match($pattern, $query, $matches);
-					$keyword = TextHelper::strprotect(utf8_decode(urldecode(TextHelper::strtolower($matches[1]))));
+					$keyword = TextHelper::strprotect(mb_convert_encoding(urldecode(TextHelper::strtolower($matches[1])), 'ISO-8859-1', 'UTF-8'));
 
 					$check_search_engine = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :keyword', array('url' => $search_engine, 'keyword' => $keyword));
 					if (!empty($keyword))

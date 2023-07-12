@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 01
+ * @version     PHPBoost 6.0 - last update: 2023 07 12
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -151,7 +151,7 @@ elseif (!empty($msg_d))
 }
 elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve(GET, 'punish_moderation_panel', false)) //Recherche d'un membre
 {
-	$login = TextHelper::strprotect(utf8_decode(AppContext::get_request()->get_postvalue('login', '')));
+	$login = TextHelper::strprotect(mb_convert_encoding(AppContext::get_request()->get_postvalue('login', ''), 'ISO-8859-1', 'UTF-8'));
 	$login = str_replace('*', '%', $login);
 	if (!empty($login))
 	{

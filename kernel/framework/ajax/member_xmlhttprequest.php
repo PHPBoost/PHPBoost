@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 19
+ * @version     PHPBoost 6.0 - last update: 2023 07 12
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -30,9 +30,9 @@ $warning_user = $request->get_getint('warning_user', 0);
 $punish_user = $request->get_getint('punish_user', 0);
 $ban_user = $request->get_getint('ban_user', 0);
 
-$login = TextHelper::strprotect(utf8_decode($request->get_postvalue('login', '')));
+$login = TextHelper::strprotect(mb_convert_encoding($request->get_postvalue('login', ''), 'ISO-8859-1', 'UTF-8'));
 $login = str_replace('*', '%', $login);
-$divid = TextHelper::strprotect(utf8_decode($request->get_postvalue('divid', '')));
+$divid = TextHelper::strprotect(mb_convert_encoding($request->get_postvalue('divid', ''), 'ISO-8859-1', 'UTF-8'));
 $admin = $request->get_postint('admin', 0);
 
 if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !empty($admin_member) || !empty($warning_member) || !empty($punish_member)) //Recherche d'un membre
