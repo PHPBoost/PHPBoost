@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 08
+ * @version     PHPBoost 6.0 - last update: 2023 07 16
  * @since       PHPBoost 1.2 - 2005 08 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -502,7 +502,7 @@ class Gallery
 		$text_y = ($height/2) + ($text_height/2);
 
 		//Ecriture du code.
-		imagettftext($thumbnail, $font_size, 0, $text_x, $text_y, $text_color, $font, $lang['e_error_img']);
+		imagettftext($thumbnail, (float)$font_size, (float)0, (int)$text_x, (int)$text_y, (int)$text_color, $font, $lang['e_error_img']);
 		@imagejpeg($thumbnail, $path, 75);
 	}
 
