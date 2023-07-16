@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2023 07 16
  * @since       PHPBoost 6.0 - 2021 03 15
 */
 
@@ -36,12 +36,12 @@ class ArticlesItemController extends DefaultDisplayItemController
 
 		$page_name = (isset($array_page[1][$current_page-1]) && $array_page[1][$current_page-1] != '&nbsp;') ? $array_page[1][($current_page-1)] : '';
 
-		$this->view->put_all([
+		$this->view->put_all(array(
             'C_PAGE_NAME' => !empty($page_name),
 			'CONTENT'   => isset($clean_content[$current_page-1]) ? FormatingHelper::second_parse($clean_content[$current_page-1]) : '',
 			'PAGE_NAME' => $page_name,
 			'U_EDIT'    => $page_name !== '' ? ItemsUrlBuilder::edit($this->item->get_id(), 'articles', $current_page)->rel() : ItemsUrlBuilder::edit($this->item->get_id())->rel()
-		]);
+        ));
 
 		$this->build_pages_pagination($current_page, $pages_number, $array_page);
 	}
@@ -58,10 +58,10 @@ class ArticlesItemController extends DefaultDisplayItemController
 		$article_pages = $this->list_article_pages($array_page);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('article_pages', '', $current_page, $article_pages,
-			[
+			array(
                 'class' => 'summary', 
-                'events' => ['change' => 'document.location = "' . ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . '" + HTMLForms.getField("article_pages").getValue();']
-            ]
+                'events' => array('change' => 'document.location = "' . ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . '" + HTMLForms.getField("article_pages").getValue();')
+            )
 		));
 
 		$this->view->put('FORM', $form->display());
@@ -77,29 +77,29 @@ class ArticlesItemController extends DefaultDisplayItemController
 			{
 				$previous_page = ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . ($current_page - 1);
 
-				$this->view->put_all([
+				$this->view->put_all(array(
 					'U_PREVIOUS_PAGE' => $previous_page,
 					'L_PREVIOUS_TITLE' => $array_page[1][$current_page-2]
-				]);
+                ));
 			}
 
 			if ($current_page > 0 && $current_page < $pages_number)
 			{
 				$next_page = ItemsUrlBuilder::display($this->item->get_category()->get_id(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), 'articles', '')->rel() . ($current_page + 1);
 
-				$this->view->put_all([
+				$this->view->put_all(array(
 					'U_NEXT_PAGE' => $next_page,
 					'L_NEXT_TITLE' => $array_page[1][$current_page]
-				]);
+                ));
 			}
 
-			$this->view->put_all([
+			$this->view->put_all(array(
 				'C_PAGINATION'	  => true,
 				'C_FIRST_PAGE' 	  => $current_page == 1,
 				'C_PREVIOUS_PAGE' => $current_page != 1,
 				'C_NEXT_PAGE' 	  => $current_page != $pages_number,
 				'PAGINATION_ARTICLES' => $pagination->display()
-			]);
+            ));
 		}
 		else
 		{
@@ -151,7 +151,7 @@ class ArticlesItemController extends DefaultDisplayItemController
 
 		if ($this->get_item()->get_publishing_end_date() !== null)
 			$additionnal_properties['article:expiration_time'] = $this->get_item()->get_publishing_end_date()->format(Date::FORMAT_ISO8601);
-		
+
 		return $additionnal_properties;
 	}
 
