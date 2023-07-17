@@ -11,7 +11,7 @@
 
 class GallerySetup extends DefaultModuleSetup
 {
-    public static $messages;
+    private $messages;
 	public static $gallery_table;
 	public static $gallery_cats_table;
 
