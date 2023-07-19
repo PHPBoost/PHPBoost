@@ -32,7 +32,7 @@ class WebDeadLinkController extends AbstractController
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($this->item->get_id());
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.dead.link', 'contribution-lang'), array('link_name' => $this->item->get_title())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.dead.link.name', 'contribution-lang'), array('link_name' => $this->item->get_title())));
 				$contribution->set_fixing_url(WebUrlBuilder::edit($this->item->get_id())->relative());
 				$contribution->set_description(LangLoader::get_message('contribution.dead.link.clue', 'contribution-lang'));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());
