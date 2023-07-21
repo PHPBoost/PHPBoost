@@ -193,7 +193,7 @@
 									</li>
 								# END comments_list #
 								<li>
-									<p class="align-center"><a class="d-inline-block button bgc-full link-color" href="${relative_url(UserUrlBuilder::comments())}">{L_VIEW_ALL_COMMENTS}</a></p>
+									<p class="align-center"><a class="d-inline-block button bgc-full link-color" href="${relative_url(UserUrlBuilder::comments())}">{@comment.see.all.comments}</a></p>
 								</li>
 								<li class="mini-checkbox">
 									<label for="delete-all-checkbox" class="checkbox" aria-label="{@common.select.all.elements}">
