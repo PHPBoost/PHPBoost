@@ -5,12 +5,13 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 03
+ * @version     PHPBoost 6.0 - last update: 2023 07 12
  * @since       PHPBoost 1.6 - 2007 01 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Upload
@@ -255,8 +256,8 @@ class Upload
 	 */
 	private static function clean_filename($string)
 	{
-		$string = utf8_decode(TextHelper::html_entity_decode($string));
-		$string = TextHelper::strtolower(strtr($string, utf8_decode('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>|+.- #'),  '2aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    __      c  ___    e       -_ '));
+		$string = mb_convert_encoding(TextHelper::html_entity_decode($string), 'ISO-8859-1', 'UTF-8');
+		$string = TextHelper::strtolower(strtr($string, mb_convert_encoding('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>|+.- #', 'ISO-8859-1', 'UTF-8'),  '2aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    __      c  ___    e       -_ '));
 		$string = str_replace(' ', '', $string);
 		$string = str_replace('___', '_', $string);
 		$string = str_replace('__', '_', $string);
