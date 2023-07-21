@@ -12,7 +12,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 04
+ * @version     PHPBoost 6.0 - last update: 2023 07 09
  * @since       PHPBoost 3.0 - 2009 06 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,6 +28,7 @@ class FileTemplateLoader implements TemplateLoader
 
 	private $module;
 	private $file;
+	private $filename;
 
 	private $templates_folder;
 	private $default_templates_folder;

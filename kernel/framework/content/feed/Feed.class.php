@@ -87,7 +87,7 @@ class Feed
 	{
 		if ($template === false)
 		{    // A specific template is used
-			$view = clone $this->tpl;
+			$view = clone $this->view;
 		}
 		else
 		{
