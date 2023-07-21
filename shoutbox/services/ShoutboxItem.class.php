@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 16
+ * @version     PHPBoost 6.0 - last update: 2023 07 11
  * @since       PHPBoost 4.1 - 2014 10 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,6 +16,7 @@ class ShoutboxItem
 	private $content;
 	private $login;
 	private $user_id;
+	private $author_user;
 	private $creation_date;
 
 	public function set_id($id)
