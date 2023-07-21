@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 05 31
+ * @version     PHPBoost 6.0 - last update: 2023 04 26
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -55,7 +55,7 @@ class ServerConfiguration
 			}
 			return $size;
 		};
-
+		
 		$max_upload = $normalize(ini_get('upload_max_filesize'));
 		$max_post = $normalize(ini_get('post_max_size'));
 		$memory_limit = $normalize(ini_get('memory_limit'));

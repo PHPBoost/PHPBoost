@@ -46,7 +46,8 @@ class MenuService
 		$fragment = self::build_menu_list_query_conditions($class, $block, $enabled);
 		$menus = array();
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $fragment->get_query() . ' ORDER BY position ASC', $fragment->get_parameters());
-		foreach ($results as $row)
+		
+        foreach ($results as $row)
 		{
 			$menus[$row['id']] = self::initialize($row);
 		}

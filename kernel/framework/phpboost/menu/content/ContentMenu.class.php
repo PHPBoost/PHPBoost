@@ -74,7 +74,9 @@ class ContentMenu extends Menu
 	/**
 	 * @param string $content the content to set
 	 */
-	public function set_content($content) { $this->content = FormatingHelper::strparse($content, array(), false); }
+	public function set_content($content) { 
+        $this->content = FormatingHelper::strparse($content, array(), false); 
+    }
 
 	## Getters ##
 	/**
