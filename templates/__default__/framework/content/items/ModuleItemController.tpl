@@ -98,7 +98,7 @@
 												<i class="fa fa-globe" aria-hidden="true"></i> {@common.visit}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.dead.link}">
+												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.report.dead.link}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
@@ -114,7 +114,7 @@
 												<i class="fa fa-globe" aria-hidden="true"></i> {@common.download}
 											</a>
 											# IF IS_USER_CONNECTED #
-												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.dead.link}">
+												<a href="{U_DEADLINK}" data-confirmation="{@contribution.dead.link.confirmation}" class="button bgc-full warning" aria-label="{@contribution.report.dead.link}">
 													<i class="fa fa-unlink" aria-hidden="true"></i>
 												</a>
 											# ENDIF #
