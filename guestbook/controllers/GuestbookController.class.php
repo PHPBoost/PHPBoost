@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 14
+ * @version     PHPBoost 6.0 - last update: 2023 07 10
  * @since       PHPBoost 3.0 - 2012 12 12
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -24,8 +24,6 @@ class GuestbookController extends DefaultModuleController
 	{
 		$this->check_authorizations();
 
-		$this->init();
-
 		$this->build_view();
 
 		if ($this->display_multiple_delete)
@@ -40,7 +38,6 @@ class GuestbookController extends DefaultModuleController
 		$messages_number = GuestbookService::count();
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = $this->get_pagination($messages_number, $page);
-		$is_guest = !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL);
 
 		$result = PersistenceContext::get_querier()->select('SELECT member.*, guestbook.*, guestbook.login as glogin, ext_field.user_avatar
 		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
@@ -127,11 +124,6 @@ class GuestbookController extends DefaultModuleController
 		return $this->view;
 	}
 
-	private function init()
-	{
-		$this->current_user = AppContext::get_current_user();
-	}
-
 	private function execute_multiple_delete_if_needed(HTTPRequestCustom $request)
 	{
 		if ($request->get_string('delete-selected-elements', false))
@@ -203,7 +195,6 @@ class GuestbookController extends DefaultModuleController
 	{
 		$object = new self('guestbook');
 		$object->check_authorizations();
-		$object->init();
 		$object->build_view();
 		return $object->view;
 	}
