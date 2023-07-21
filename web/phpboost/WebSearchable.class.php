@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 15
+ * @version     PHPBoost 6.0 - last update: 2023 07 10
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -31,8 +31,8 @@ class WebSearchable extends DefaultSearchable
 		$this->field_published = 'published';
 
 		$this->has_validation_period = true;
-		$this->field_validation_publishing_start_date = 'publishing_start_date';
-		$this->field_validation_publishing_end_date = 'publishing_end_date';
+		$this->field_validation_start_date = 'publishing_start_date';
+		$this->field_validation_end_date = 'publishing_end_date';
 	}
 }
 ?>
