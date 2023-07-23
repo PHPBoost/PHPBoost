@@ -76,13 +76,13 @@
 
 		if( !hide_folder )
 		{
-			document.getElementById('new-folder').innerHTML += '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div><i class="fa fa-folder"></i></div></div>';
+			document.getElementById('new-folder').innerHTML += '<div id="new-folder-' + divid + '" class="cell"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + divid + ');"></div><i class="fa fa-folder"></i></div></div>';
 			document.getElementById('folder_name').focus();
 		}
 		else
 		{
-			document.getElementById('new-folder' + (divid - 1)).style.display = 'block';
-			document.getElementById('new-folder' + (divid - 1)).innerHTML = '<div id="new-folder' + divid + '"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div><i class="fa fa-folder"></i></div></div>';
+			document.getElementById('new-folder-' + (divid - 1)).style.display = 'block';
+			document.getElementById('new-folder-' + (divid - 1)).innerHTML = '<div id="new-folder-' + divid + '" class="cell"><div class="cell-header"><div class="cell-name ellipsis"><input type="text" name="folder_name" id="folder_name" value="" onblur="add_folder(\'{FOLDER_ID}\', \'{USER_ID}\', ' + (divid - 1) + ');"></div><i class="fa fa-folder"></i></div></div>';
 			document.getElementById('folder_name').focus();
 			this.divid--;
 			hide_folder = false;
@@ -143,8 +143,8 @@
 		if( name != '' && regex.test(name) ) // prohibition of special characters in the name.
 		{
 			alert("{@warning.folder.forbidden.chars}");
-			document.getElementById('new-folder' + divid).innerHTML = '';
-			document.getElementById('new-folder' + divid).style.display = 'none';
+			document.getElementById('new-folder-' + divid).innerHTML = '';
+			document.getElementById('new-folder-' + divid).style.display = 'none';
 			hide_folder = true;
 			if( document.getElementById('empty-folder') && empty_folder == 0 )
 				document.getElementById('empty-folder').style.display = 'block';
@@ -185,7 +185,7 @@
 								<span id="img' + xhr_object.responseText + '"></span>\
 							</ul>\
 						</div>';
-						document.getElementById('new-folder' + divid).innerHTML = newFolder;
+						document.getElementById('new-folder-' + divid).innerHTML = newFolder;
 						var total_folder = document.getElementById('total-folder').innerHTML;
 						total_folder++;
 						document.getElementById('total-folder').innerHTML = total_folder;
@@ -195,8 +195,8 @@
 					else
 					{
 						alert("{@warning.folder.already.exists}");
-						document.getElementById('new-folder' + divid).innerHTML = '';
-						document.getElementById('new-folder' + divid).style.display = 'none';
+						document.getElementById('new-folder-' + divid).innerHTML = '';
+						document.getElementById('new-folder-' + divid).style.display = 'none';
 						hide_folder = true;
 					}
 				}
@@ -207,8 +207,8 @@
 		{
 			if( document.getElementById('empty-folder') && empty_folder == 0 )
 				document.getElementById('empty-folder').style.display = 'block';
-			document.getElementById('new-folder' + divid).innerHTML = '';
-			document.getElementById('new-folder' + divid).style.display = 'none';
+			document.getElementById('new-folder-' + divid).innerHTML = '';
+			document.getElementById('new-folder-' + divid).style.display = 'none';
 			hide_folder = true;
 		}
 	}
@@ -461,7 +461,7 @@
 										</div>
 									</div>
 								# END folder #
-								<div id="new-folder" class="cell"></div>
+								<div id="new-folder"></div>
 							</div>
 							<div class="cell-flex cell-tile  # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
 								# IF C_PERSONAL_FILES #
