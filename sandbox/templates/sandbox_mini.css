@@ -53,4 +53,9 @@
     margin: 0;
     width: 90%;
 }
+
 .switchtheme.grouped-inputs select { width: 100%; }
+
+.pushmenu-toggle .stacked {
+    padding: 0 0.618em;
+}

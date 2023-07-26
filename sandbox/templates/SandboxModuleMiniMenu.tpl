@@ -3,8 +3,8 @@
 		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator" data-tooltip="{@sandbox.module.title}">
         <span class="stacked">
 			<i class="fa fa-screwdriver-wrench" aria-hidden="true"></i>
-            # IF C_LOGGED_ERRORS # <i class="fa fa-terminal stack-event stack-top-right warning blink" aria-hidden="true"></i># ENDIF #
-            # IF C_404_ERRORS # <i class="fa fa-unlink stack-event stack-bottom-right warning blink" aria-hidden="true"></i># ENDIF #
+            # IF C_LOGGED_ERRORS # <span class="stack-event stack-top-right warning blink">{ERRORS_NB}</span># ENDIF #
+            # IF C_404_ERRORS # <span class="stack-event stack-bottom-right warning blink">{404_NB}</span># ENDIF #
         </span>
 			<span class="sr-only">{@sandbox.module.title}</span>
 		</a>
@@ -57,7 +57,7 @@
 						# ENDIF #
 						# IF C_REVIEW #
 							<li>
-								<a href="{PATH_TO_ROOT}/review/index.php?url=/home/">
+								<a href="{PATH_TO_ROOT}/review/index.php?url=/admin/">
 									<i class="fa fa-fw fa-magnifying-glass-location" aria-hidden="true"></i> <span>{@sandbox.mini.review}</span>
 								</a>
 							</li>
