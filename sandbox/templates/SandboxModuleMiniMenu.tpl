@@ -3,8 +3,8 @@
 		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator" data-tooltip="{@sandbox.module.title}">
         <span class="stacked">
 			<i class="fa fa-screwdriver-wrench" aria-hidden="true"></i>
-            # IF C_LOGGED_ERRORS # <span class="stack-event stack-top-right warning blink">{ERRORS_NB}</span># ENDIF #
-            # IF C_404_ERRORS # <span class="stack-event stack-bottom-right warning blink">{404_NB}</span># ENDIF #
+            # IF C_LOGGED_ERRORS # <span class="stack-event stack-top-right bgc-full warning blink">{ERRORS_NB}</span># ENDIF #
+            # IF C_404_ERRORS # <span class="stack-event stack-bottom-right bgc-full warning blink">{404_NB}</span># ENDIF #
         </span>
 			<span class="sr-only">{@sandbox.module.title}</span>
 		</a>
@@ -13,10 +13,13 @@
 				<li class="mini-sandbox-tools has-sub">
 					<span class="mini-toolbox flex-between">
 						<span><i class="fa fa-toolbox fa-fw error"></i> <span>{@sandbox.mini.tools}</span></span>
-                        <span class="warning blink">
-                            # IF C_LOGGED_ERRORS #<i class="fa fa-terminal fa-fw" aria-hidden="true"></i># ENDIF #
-                            # IF C_404_ERRORS #<i class="fa fa-unlink fa-fw" aria-hidden="true"></i># ENDIF #
-                        </span>
+                        # IF C_ERRORS #
+                            <span class="toolbox-errors warning blink">
+                                # IF C_LOGGED_ERRORS #<i class="fa fa-terminal fa-fw" aria-hidden="true"></i> {ERRORS_NB}# ENDIF #
+                                # IF C_ERRORS_SEPARATOR # | # ENDIF #
+                                # IF C_404_ERRORS #<i class="fa fa-unlink fa-fw" aria-hidden="true"></i> {404_NB}# ENDIF #
+                            </span>
+                        # ENDIF #
                     </span>
 					<ul>
 						<li>

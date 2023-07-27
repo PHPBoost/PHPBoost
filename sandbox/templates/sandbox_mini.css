@@ -45,7 +45,7 @@
     padding: 1em 1.809em 1.809em 1em;
 }
 
-.nav-item .mini-toolbox > .warning.blink { margin-right: 1.618em;}
+.toolbox-errors { margin-right: 2.618em;}
 
 .switchtheme.grouped-inputs input,
 .switchtheme.inputs-with-sup .label-sup {

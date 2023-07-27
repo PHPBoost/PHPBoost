@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 11
+ * @version     PHPBoost 6.0 - last update: 2023 07 27
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -154,7 +154,9 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			'C_RIGHT_ENABLED'     => !$menus_status->right_columns_is_disabled(),
 			'C_IS_LOCALHOST'      => AppContext::get_request()->get_is_localhost(),
 			'C_IS_SUPERADMIN'     => $is_superadmin,
-			'C_LOGGED_ERRORS'     => ((bool)count($this->get_logged_errors_nb())),
+            'C_ERRORS'            => (bool)count($this->get_logged_errors_nb()) || (bool)$nb_404,
+            'C_ERRORS_SEPARATOR'  => (bool)count($this->get_logged_errors_nb()) && (bool)$nb_404,
+			'C_LOGGED_ERRORS'     => (bool)count($this->get_logged_errors_nb()),
 			'C_404_ERRORS'        => (bool)$nb_404,
 			'C_NO_EXPANSION'      => $config->get_expansion_type() == SandboxConfig::NO_EXPANSION,
 			'C_HISTORY'		      => ModulesManager::is_module_installed('history') && ModulesManager::is_module_activated('history'),
