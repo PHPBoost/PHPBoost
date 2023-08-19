@@ -1,11 +1,11 @@
 # IF C_IS_SUPERADMIN #
 	<div id="module-mini-sandbox" class="mini-sandbox">
-		<a class="fwkboost-toggle pushmenu-toggle bgc-full administrator" data-tooltip="{@sandbox.module.title}">
-        <span class="stacked">
-			<i class="fa fa-screwdriver-wrench" aria-hidden="true"></i>
-            # IF C_LOGGED_ERRORS # <span class="stack-event stack-top-right bgc-full warning blink">{ERRORS_NB}</span># ENDIF #
-            # IF C_404_ERRORS # <span class="stack-event stack-bottom-right bgc-full warning blink">{404_NB}</span># ENDIF #
-        </span>
+		<a class="fwkboost-toggle sandbox-mini-{OPENING_TYPE} pushmenu-toggle bgc-full administrator" data-tooltip="{@sandbox.module.title}">
+            <span class="stacked">
+                <i class="fa fa-screwdriver-wrench" aria-hidden="true"></i>
+                # IF C_LOGGED_ERRORS # <span class="stack-event stack-top-right bgc-full warning blink">{ERRORS_NB}</span># ENDIF #
+                # IF C_404_ERRORS # <span class="stack-event stack-bottom-right bgc-full warning blink">{404_NB}</span># ENDIF #
+            </span>
 			<span class="sr-only">{@sandbox.module.title}</span>
 		</a>
 		<nav id="pushmenu-fwkboost" class="pushnav">
@@ -397,7 +397,7 @@
 		</nav>
 	</div>
 	<script>
-	    jQuery('#pushmenu-fwkboost').pushmenu({
+        jQuery('#pushmenu-fwkboost').pushmenu({
 			width: 291,
 			customToggle: jQuery('.fwkboost-toggle'), // null
 			navTitle: '{@sandbox.module.title}', // null
