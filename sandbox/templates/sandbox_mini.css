@@ -27,22 +27,45 @@
 /* --- Toggle button position --- */
 
 .fwkboost-toggle {
-    padding: 0.809em 1.618em 1.618em 0.809em;
     text-align: center;
     z-index: 399;
     cursor: pointer;
     text-decoration: none;
     position: fixed;
+	opacity: 0.3;
+    padding: 0.809em 1.618em 1.618em 0.809em;
+}
+
+.sandbox-mini-left {
     top: 0;
     left: 0;
-	opacity: 0.3;
     border-radius: 0 0 100% 0;
+}
+
+.sandbox-mini-right {
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 100%;
+}
+
+.sandbox-mini-top {
+    top: 0;
+    left: 20%;
+    transform: translateX(-50%);
+    border-radius: 0 0 100% 100%;
+}
+
+.sandbox-mini-bottom {
+    bottom: 0;
+    left: 20%;
+    transform: translateX(-50%);
+    padding: 1.618em 1.618em 0.809em 0.809em;
+    border-radius: 100% 100% 0 0;
 }
 
 .fwkboost-toggle:hover {
     opacity: 1;
     text-decoration: none;
-    padding: 1em 1.809em 1.809em 1em;
 }
 
 .toolbox-errors { margin-right: 2.618em;}
