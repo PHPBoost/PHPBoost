@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 03 11
+ * @version     PHPBoost 6.0 - last update: 2023 08 25
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,11 +62,11 @@ class Date
 		self::$lang = LangLoader::get('date-lang');
 		$date_timezone = Timezone::get_timezone($referencial_timezone);
 
-		if (preg_match('`^([0-9]+)$`iu', $time))
+		if (preg_match('`^([0-9]+)$`iu', $time ? $time : ''))
 		{
 			$this->date_time = new DateTime();
 			$this->date_time->setTimezone($date_timezone);
-			$this->date_time->setTimestamp($time);
+			$this->date_time->setTimestamp($time ? $time : '');
 		}
 		else if (preg_match('`^-([0-9]+)$`iu', $time))
 		{
