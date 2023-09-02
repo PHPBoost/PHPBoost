@@ -192,6 +192,7 @@ a.pinned { cursor: pointer; }
 }
 
 /* --- Display --- */
+.d-none         { display: none !important; }
 .d-flex         { display: flex !important; }
 .d-inline 	    { display: inline !important; }
 .d-block 	    { display: block !important; }
