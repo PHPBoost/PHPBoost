@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 05 22
+ * @version     PHPBoost 6.0 - last update: 2023 09 02
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -88,12 +88,16 @@ class UserUsersListController extends AbstractController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $user->get_id();
 
-			$edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()));
-
-			if ($user->get_level() != User::ADMINISTRATOR_LEVEL || ($user->get_level() == User::ADMINISTRATOR_LEVEL && $number_admins > 1))
+			if (AppContext::get_current_user()->get_level() == User::ADMINISTRATOR_LEVEL || (AppContext::get_current_user()->get_level() == User::ADMINISTRATOR_LEVEL && $user->get_level() == User::ADMINISTRATOR_LEVEL && $number_admins > 1) || AppContext::get_current_user()->get_id() == $user->get_id())
+            {
+                $edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($user->get_id()));
 				$delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($user->get_id()));
+            }
 			else
-				$delete_link = new DeleteLinkHTMLElement('', '', array('disabled' => true));
+            {
+				$edit_link = new EditLinkHTMLElement('', '', array('aria-label' => '', 'disabled' => true), 'd-none');
+				$delete_link = new DeleteLinkHTMLElement('', '', array('aria-label' => '', 'disabled' => true), 'd-none');
+            }
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
