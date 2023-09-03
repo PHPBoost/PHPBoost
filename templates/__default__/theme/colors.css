@@ -231,6 +231,14 @@ legend { border-color: var(--bdr-main); }
 .grouped-element { border-color: var(--bdr-main); }
 
 /* --- Input --- */
+/* Hack automatic browser css */
+/* firefox */
+input:autofill,
+select:autofill { background-image: linear-gradient(var(--bgc-sub), var(--bgc-sub)) !important; }
+/* chromium */
+input:-webkit-autofill,
+input:-webkit-autofill:focus { transition: background-color 0s 600000s, color 0s 600000s; }
+
 [type=text],
 [type=email],
 [type=url],
