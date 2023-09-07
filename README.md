@@ -17,8 +17,9 @@ One branch per version.
 | Branch | Description | Release date | Maintenance/Support |
 | --- | --- | --- | --- |
 | master | development branch | --- | ![Wip](https://img.shields.io/badge/-Wip-EE8027) |
-| **5.2** | **latest stable version** | **28/01/2019** | ![Full](https://img.shields.io/badge/-Full-2ABA66) |
-| 5.1 | stable version | 18/07/2017 | ![Full](https://img.shields.io/badge/-Full-2ABA66) |
+| **6.0** | **latest stable version** | **26/04/2023** | ![Full](https://img.shields.io/badge/-Full-2ABA66) |
+| 5.2 | --- | 28/01/2019 | ![Full](https://img.shields.io/badge/-Full-2ABA66) |
+| 5.1 | --- | 18/07/2017 | ![Full](https://img.shields.io/badge/-Full-2ABA66) |
 | 5.0 | --- | 11/02/2016 | ![No](https://img.shields.io/badge/-No-BF263C) |
 | 4.1 | --- | 15/07/2014 | ![No](https://img.shields.io/badge/-No-BF263C) |
 | 4.0 | --- | 30/01/2013 | ![No](https://img.shields.io/badge/-No-BF263C) |
