@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 03
+ * @version     PHPBoost 6.0 - last update: 2023 09 08
  * @since       PHPBoost 2.0 - 2008 04 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,7 +43,7 @@ class Feed
 	 *
 	 * @var string The feed Template to use
 	 */
-	protected $view = null;
+	protected $tpl = null;
 	/**
 	 *
 	 * @var string The data structure
@@ -87,7 +87,7 @@ class Feed
 	{
 		if ($template === false)
 		{    // A specific template is used
-			$view = clone $this->view;
+			$view = clone $this->tpl;
 		}
 		else
 		{
