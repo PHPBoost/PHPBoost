@@ -35,10 +35,13 @@ th,
 	font-size: 1.2em;
 	text-align: center;
 	font-weight: normal;
-	border-width: 1px;
+	border-width: 1px 0 1px 1px;
 	border-style: solid;
 	border-color: transparent;
 }
+
+th:last-child,
+.table-head:last-child { border-width: 1px; }
 
 /* --- Content --- */
 td,
