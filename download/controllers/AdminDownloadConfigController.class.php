@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 07
+ * @version     PHPBoost 6.0 - last update: 2023 09 17
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -251,13 +251,14 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 
-		if($this->form->get_value('display_type') == DownloadConfig::GRID_VIEW)
-			$this->config->set_items_number_per_row($this->form->get_value('items_per_row'));
+		if($this->form->get_value('display_type')->get_raw_value() == DownloadConfig::GRID_VIEW)
+            $this->config->set_items_per_row($this->form->get_value('items_per_row'));
 
 		if ($this->form->get_value('full_item_display'))
 			$this->config->display_full_item();
 		else
 			$this->config->display_condensed_item();
+
 		$this->config->set_categories_per_page($this->form->get_value('categories_per_page'));
 		$this->config->set_categories_per_row($this->form->get_value('categories_per_row'));
 		$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
