@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 13
+ * @version     PHPBoost 6.0 - last update: 2023 09 24
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -116,11 +116,11 @@ class Environment
 	public static function load_static_constants()
 	{
 		//Path from the server root
-		defined('SCRIPT') or define('SCRIPT', TextHelper::htmlspecialchars($_SERVER['PHP_SELF']));
-		defined('REWRITED_SCRIPT') or define('REWRITED_SCRIPT', TextHelper::htmlspecialchars($_SERVER['REQUEST_URI']));
+		defined('SCRIPT') or define('SCRIPT', (isset($_SERVER['PHP_SELF']) ? TextHelper::htmlspecialchars($_SERVER['PHP_SELF']) : ''));
+		defined('REWRITED_SCRIPT') or define('REWRITED_SCRIPT', (isset($_SERVER['REQUEST_URI']) ? TextHelper::htmlspecialchars($_SERVER['REQUEST_URI']) : ''));
 
 		//Get parameters
-		defined('QUERY_STRING') or define('QUERY_STRING', addslashes($_SERVER['QUERY_STRING']));
+		defined('QUERY_STRING') or define('QUERY_STRING', (isset($_SERVER['QUERY_STRING']) ? addslashes($_SERVER['QUERY_STRING']) : ''));
 		defined('PHPBOOST') or define('PHPBOOST', true);
 
 		### Authorizations ###
