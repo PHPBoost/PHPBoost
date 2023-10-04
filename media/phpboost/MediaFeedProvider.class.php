@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -53,10 +53,7 @@ class MediaFeedProvider implements FeedProvider
 			foreach ($results as $row)
 			{
 				// Rewriting
-				$link = new Url('/media/media' . url(
-					'.php?id=' . $row['id'],
-					'-' . $row['id'] . '+' . Url::encode_rewrite($row['title']) . '.php'
-				));
+				$link = new Url('/media/media' . url('.php?id=' . $row['id'], '-' . $row['id'] . '-' . Url::encode_rewrite($row['title']) . '.php'));
 
 				$item = new FeedItem();
 				$item->set_title($row['title']);

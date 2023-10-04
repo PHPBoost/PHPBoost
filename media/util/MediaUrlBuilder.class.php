@@ -33,7 +33,7 @@ class MediaUrlBuilder
 	public static function display_category($id, $rewrited_name, $page = 1, $subcategories_page = 1)
 	{
 		$page = $page !== 1 || $subcategories_page !== 1 ? '&p=' . $page : '';
-		return new Url(PATH_TO_ROOT. '/media/' . url('media.php?cat=' . $id . $page, 'media-0-' . $id . ($page > 1 ? '-' . $page : '') . '+' . $rewrited_name . '.php'));
+		return new Url(PATH_TO_ROOT. '/media/' . url('media.php?cat=' . $id . $page, 'media-0-' . $id . ($page > 1 ? '-' . $page : '') . '-' . $rewrited_name . '.php'));
 	}
 
 	/**
