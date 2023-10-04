@@ -3,11 +3,12 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 01
+ * @version     PHPBoost 6.0 - last update: 2023 07 12
  * @since       PHPBoost 1.6 - 2007 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -60,7 +61,7 @@ elseif (!empty($rename_pics)) //Renomme une image.
 		$Gallery = new Gallery;
 
 		$name = $request->get_postvalue('name', '');
-		$previous_name = TextHelper::strprotect(utf8_decode($request->get_postvalue('previous_name', '')));
+		$previous_name = TextHelper::strprotect(mb_convert_encoding($request->get_postvalue('previous_name', ''), 'ISO-8859-1', 'UTF-8'));
 
 		if (!empty($id_file))
 			echo $Gallery->Rename_pics($id_file, $name, $previous_name);
