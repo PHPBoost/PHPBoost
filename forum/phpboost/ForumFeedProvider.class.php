@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 28
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -54,11 +54,7 @@ class ForumFeedProvider implements FeedProvider
 				$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
 				$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
 
-				$link = new Url('/forum/topic' . url(
-						'.php?' . $last_page .  'id=' . $row['id'],
-						'-' . $row['id'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php'
-						) . '#m' .  $row['last_msg_id']
-						);
+				$link = new Url('/forum/topic' . url('.php?' . $last_page .  'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $row['last_msg_id']);
 				$item->set_title(
 					(($config->is_message_before_topic_title_displayed() && !empty($row['display_msg'])) ?
 					TextHelper::html_entity_decode($config->get_message_before_topic_title(), ENT_NOQUOTES) . ' ' : '') .

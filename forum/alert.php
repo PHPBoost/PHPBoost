@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 28
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 1.5 - 2006 08 07
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -34,7 +34,7 @@ $category = CategoriesService::get_categories_manager('forum')->get_categories_c
 
 $topic_name = !empty($topic['title']) ? stripslashes($topic['title']) : '';
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
-$Bread_crumb->add($category->get_name(), 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '+' . $category->get_rewrited_name() . '.php'));
+$Bread_crumb->add($category->get_name(), 'forum' . url('.php?id=' . $topic['id_category'], '-' . $topic['id_category'] . '-' . $category->get_rewrited_name() . '.php'));
 $Bread_crumb->add($topic['title'], 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'));
 $Bread_crumb->add($lang['forum.report.topic.title'], '');
 

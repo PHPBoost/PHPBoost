@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 09 09
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -128,9 +128,9 @@ elseif (!empty($idt_get))
 	}
 
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $category->get_rewrited_name() : '';
+	$rewrited_cat_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . $category->get_rewrited_name() : '';
 	//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '';
+	$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '';
 
 	//Changement du statut (display_msg) du sujet.
 	if ($msg_d)

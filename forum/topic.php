@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 11
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,7 +26,7 @@ if (!empty($change_cat))
 	try {
 		$new_cat = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
 $id_get = $request->get_getint('id', 0);
@@ -61,7 +61,7 @@ $categories = array_reverse(CategoriesService::get_categories_manager('forum')->
 foreach ($categories as $id => $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
-		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
+		$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '-' . $cat->get_rewrited_name() . '.php'));
 }
 $Bread_crumb->add($topic['title'], '');
 
@@ -69,7 +69,7 @@ define('TITLE', $topic['title']);
 define('DESCRIPTION', StringVars::replace_vars($lang['forum.topic.title.seo'], array('title' => $topic['title'], 'forum' => ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() : ''))));
 require_once('../kernel/header.php');
 
-$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
+$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : ''; //On encode l'url pour un éventuel rewriting.
 
 //Autorisation en lecture.
 if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->read() || !ForumAuthorizationsService::check_authorizations()->read_topics_content())
@@ -171,7 +171,7 @@ $vars_tpl = array(
 	'DISPLAY_ISSUE_STATUS'    => (($config->is_message_before_topic_title_displayed() && $topic['display_msg']) ? $config->get_message_before_topic_title() . ' ' : '') ,
 
 	'U_MARK_AS_READ'          => Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $topic['id_category'], '')),
-	'U_CHANGE_CAT'            => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
+	'U_CHANGE_CAT'            => 'topic' . url('.php?id=' . $id_get, '-' . $id_get . '-' . $category->get_rewrited_name() . '.php'),
 	'U_ONCHANGE'              => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 	'U_ONCHANGE_CAT'          => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 	'U_CATEGORY'              => !empty($forum_cats) ? $forum_cats : '',
