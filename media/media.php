@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 09 03
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -69,7 +69,7 @@ elseif ($id_media > 0)
 	}
 
 	bread_crumb($media['id_category']);
-	$Bread_crumb->add($media['title'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['id_category'] . '+' . Url::encode_rewrite($media['title']) . '.php'));
+	$Bread_crumb->add($media['title'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['id_category'] . '-' . Url::encode_rewrite($media['title']) . '.php'));
 
 	define('TITLE', $media['title']);
 	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['content'])), '<br><br/>'), 150));
@@ -116,7 +116,7 @@ elseif ($id_media > 0)
 			'AUTHOR_GROUP_COLOR'  => $group_color,
 			'CATEGORY_ID'         => $media['id_category'],
 			'CATEGORY_NAME'       => $media['id_category'] == Category::ROOT_CATEGORY ? $lang['media.module.title'] : CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category'])->get_name(),
-			
+
 			'U_STATUS' 		   => url('media_action.php?invisible=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),
 			'U_EDIT'      	   => url('media_action.php?edit=' . $id_media),
 			'U_DELETE'    	   => url('media_action.php?del=' . $id_media . '&amp;token=' . AppContext::get_session()->get_token()),

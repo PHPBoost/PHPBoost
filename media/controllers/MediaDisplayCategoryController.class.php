@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 14
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -237,10 +237,10 @@ class MediaDisplayCategoryController extends DefaultModuleController
 				'KERNEL_NOTATION'     => NotationService::display_static_image($notation),
 
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_ITEM'           => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $this->get_category()->get_id() . '+' . Url::encode_rewrite($row['title']) . '.php'),
-				'U_STATUS' 		   => PATH_TO_ROOT . url('/media/media_action.php?invisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
-				'U_EDIT'     	   => PATH_TO_ROOT . url('/media/media_action.php?edit=' . $row['id']),
-				'U_DELETE'   	   => PATH_TO_ROOT . url('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token())
+				'U_ITEM'           => PATH_TO_ROOT . '/media/' . url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $this->get_category()->get_id() . '-' . Url::encode_rewrite($row['title']) . '.php'),
+				'U_STATUS'         => Url::to_rel('/media/media_action.php?invisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()),
+				'U_EDIT'           => Url::to_rel('/media/media_action.php?edit=' . $row['id']),
+				'U_DELETE'         => Url::to_rel('/media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token())
 			)));
 		}
 		$result->dispose();

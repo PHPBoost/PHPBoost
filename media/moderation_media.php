@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -171,7 +171,7 @@ else
 			'DISAPPROVED' => $row['published'] == MEDIA_STATUS_DISAPPROVED ? ' checked="checked"' : '',
 
 			'U_CATEGORY' => url('media.php?cat=' . $row['id_category']),
-			'U_ITEM' 	 => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '+' . Url::encode_rewrite($row['title']) . '.php'),
+			'U_ITEM' 	 => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '-' . Url::encode_rewrite($row['title']) . '.php'),
 			'U_EDIT' 	 => url('media_action.php?edit=' . $row['id']),
 		));
 	}
