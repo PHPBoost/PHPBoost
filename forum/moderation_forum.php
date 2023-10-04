@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 21
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -62,7 +62,7 @@ if (!empty($change_cat))
 	try {
 		$new_cat = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
 if ($action == 'alert') //Gestion des alertes
@@ -162,7 +162,7 @@ if ($action == 'alert') //Gestion des alertes
 				'LOGIN_MODO'       => $row['login_modo'],
 
 				'U_TITLE'      => 'moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']),
-				'U_TOPIC'      => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
+				'U_TOPIC'      => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '-' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'U_IDMODO_REL' => UserUrlBuilder::profile($row['idmodo'])->rel()
 			)));
 
@@ -236,9 +236,9 @@ if ($action == 'alert') //Gestion des alertes
 				'USER_GROUP_COLOR'   => $group_color,
 				'LOGIN_USER'         => $row['display_name'],
 
-				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
+				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '-' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'U_IDMODO_REL'       => UserUrlBuilder::profile($row['idmodo'])->rel(),
-				'U_CAT'              => 'forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . '+' . $category->get_rewrited_name() . '.php'),
+				'U_CAT'              => 'forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . '-' . $category->get_rewrited_name() . '.php'),
 				'U_CHANGE_STATUS'    => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
 
 				'L_CHANGE_STATUS'    => ($row['status'] == '0') ? $lang['forum.report.change.to.solved'] : $lang['forum.report.change.to.unsolved'],

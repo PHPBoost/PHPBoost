@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 02
+ * @version     PHPBoost 6.0 - last update: 2023 10 03
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -161,7 +161,7 @@ class Forum
 		forum_generate_feeds(); //Regénération des flux flux
 		ForumCategoriesCache::invalidate();
 
-		HooksService::execute_hook_action('forum_add_topic', 'forum', array_merge($properties, array('id' => $last_topic_id, 'url' => Url::to_rel('/forum/topic.php?id=' . $last_topic_id, '-' . $last_topic_id . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($title) : '') . '.php'))));
+		HooksService::execute_hook_action('forum_add_topic', 'forum', array_merge($properties, array('id' => $last_topic_id, 'url' => Url::to_rel('/forum/topic.php?id=' . $last_topic_id, '-' . $last_topic_id . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($title) : '') . '.php'))));
 
 		return array($last_topic_id, $last_msg_id);
 	}
@@ -239,7 +239,7 @@ class Forum
 			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
 		} catch (RowNotFoundException $e) {}
 
-		HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($title) : '') . '.php'))));
+		HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($title) : '') . '.php'))));
 	}
 
 	//Supression d'un message.
@@ -475,7 +475,7 @@ class Forum
 		}
 
 		if (!empty($topic))
-			HooksService::execute_hook_action('forum_lock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
+			HooksService::execute_hook_action('forum_lock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
 	}
 
 	//Déverrouillage d'un sujet.
@@ -493,7 +493,7 @@ class Forum
 		}
 
 		if (!empty($topic))
-			HooksService::execute_hook_action('forum_unlock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
+			HooksService::execute_hook_action('forum_unlock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
 	}
 
 	//Déplacement d'un sujet.
@@ -524,7 +524,7 @@ class Forum
 		ForumCategoriesCache::invalidate();
 
 		$categories_cache = ForumCategoriesCache::load();
-		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic['title']) : '') . '.php'))), StringVars::replace_vars(LangLoader::get_message('forum.specific_hook.forum_move_topic.description', 'common', 'forum'), array('old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name())));
+		HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php'))), StringVars::replace_vars(LangLoader::get_message('forum.specific_hook.forum_move_topic.description', 'common', 'forum'), array('old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name())));
 	}
 
 	//Déplacement d'un sujet
@@ -690,7 +690,7 @@ class Forum
 		
 		$properties = array('idtopic' => $idtopic, 'question' => $question, 'answers' => implode('|', $answers), 'voter_id' => 0, 'votes' => trim(str_repeat('0|', $nbr_votes)), 'type' => NumberHelper::numeric($type));
 		PersistenceContext::get_querier()->insert(PREFIX . "forum_poll", $properties);
-		HooksService::execute_hook_action('forum_add_poll', 'forum', array_merge($properties, array('id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic_title) : '') . '.php'))));
+		HooksService::execute_hook_action('forum_add_poll', 'forum', array_merge($properties, array('id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php'))));
 	}
 
 	//Edition d'un sondage.
@@ -713,7 +713,7 @@ class Forum
 		
 		$properties = array('question' => $question, 'answers' => implode('|', $answers), 'votes' => implode('|', $votes), 'type' => $type);
 		PersistenceContext::get_querier()->update(PREFIX . "forum_poll", $properties, 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
-		HooksService::execute_hook_action('forum_edit_poll', 'forum', array_merge($properties, array('idtopic' => $idtopic, 'id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($topic_title) : '') . '.php'))));
+		HooksService::execute_hook_action('forum_edit_poll', 'forum', array_merge($properties, array('idtopic' => $idtopic, 'id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php'))));
 	}
 
 	//Suppression d'un sondage.
