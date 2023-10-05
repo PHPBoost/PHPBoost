@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2019 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 5.2 - last update: 2021 01 26
+ * @version     PHPBoost 5.2 - last update: 2023 10 05
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -56,7 +56,7 @@ if ($unvisible > 0)
 	}
 
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+	$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '-' . Url::encode_rewrite($media['name']) . '.php'));
 	$Bread_crumb->add($MEDIA_LANG['hide_media'], url('media_action.php?unvisible=' . $media['id'] . '&amp;token=' . AppContext::get_session()->get_token()));
 
 	define('TITLE', $MEDIA_LANG['media_moderation']);
@@ -103,7 +103,7 @@ elseif ($delete > 0)
 
 	$category = MediaService::get_categories_manager()->get_categories_cache()->get_category($media['idcat']);
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '+' . $category->get_rewrited_name() . '.php'));
+	$Bread_crumb->add($MEDIA_LANG['delete_media'], url('media.php?cat=' . $media['idcat'], 'media-0-' . $media['idcat'] . '-' . $category->get_rewrited_name() . '.php'));
 
 	define('TITLE', $MEDIA_LANG['delete_media']);
 	require_once('../kernel/header.php');
@@ -250,7 +250,7 @@ elseif ($add >= 0 && !$submit || $edit > 0)
 
 	if (!empty($media))
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['id'], 'media-' . $media['id'] . '-' . $media['idcat'] . '-' . Url::encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['id']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}
@@ -286,7 +286,7 @@ elseif ($submit)
 
 	if ($media['idedit'])
 	{
-		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+		$Bread_crumb->add($media['name'], url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['idcat'] . '-' . Url::encode_rewrite($media['name']) . '.php'));
 		$Bread_crumb->add($MEDIA_LANG['edit_media'], url('media_action.php?edit=' . $media['idedit']));
 		define('TITLE', $MEDIA_LANG['edit_media']);
 	}

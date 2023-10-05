@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2021 02 05
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -67,7 +67,7 @@ elseif ($id_media > 0)
 	}
 
 	bread_crumb($media['idcat']);
-	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php'));
+	$Bread_crumb->add($media['name'], url('media.php?id=' . $id_media, 'media-' . $id_media . '-' . $media['idcat'] . '-' . Url::encode_rewrite($media['name']) . '.php'));
 
 	define('TITLE', $media['name']);
 	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['contents'])), '<br><br/>'), 150));
@@ -102,7 +102,7 @@ elseif ($id_media > 0)
 		'COUNT' => $media['counter'],
 		'KERNEL_NOTATION' => NotationService::display_active_image($notation),
 		'HITS' => ((int)$media['counter']+1) > 1 ? sprintf($MEDIA_LANG['n_times'], ((int)$media['counter']+1)) : sprintf($MEDIA_LANG['n_time'], ((int)$media['counter']+1)),
-		'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '+' . Url::encode_rewrite($media['name']) . '.php?com=0') .'#comments-list',
+		'U_COM' => PATH_TO_ROOT .'/media/media' . url('.php?id=' . $id_media . '&amp;com=0', '-' . $id_media . '-' . $media['idcat'] . '-' . Url::encode_rewrite($media['name']) . '.php?com=0') .'#comments-list',
 		'L_COM' => CommentsService::get_number_and_lang_comments('media', $id_media),
 		'L_DATE' => LangLoader::get_message('date', 'date-common'),
 		'L_SIZE' => $LANG['size'],

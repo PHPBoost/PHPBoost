@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version   	PHPBoost 5.2 - last update: 2020 02 01
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -178,7 +179,7 @@ else
 		$tpl->assign_block_vars('files', array(
 			'ID' => $row['id'],
 			'NAME' => $row['name'],
-			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '+' . Url::encode_rewrite($row['name']) . '.php'),
+			'U_FILE' => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['idcat'] . '-' . Url::encode_rewrite($row['name']) . '.php'),
 			'U_EDIT' => url('media_action.php?edit=' . $row['id']),
 			'CAT' => $categories_cache->category_exists($row['idcat']) ? $row['cat_name'] : $LANG['unknown'],
 			'U_CAT' => url('media.php?cat=' . $row['idcat']),

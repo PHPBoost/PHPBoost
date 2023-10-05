@@ -3,10 +3,11 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 11 30
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 3.0 - 2012 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumSearchable extends AbstractSearchableExtensionPoint
@@ -221,7 +222,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'L_TOPIC' => $LANG['topic']
 		));
 
-		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($result_data['title']) : '';
+		$rewrited_title = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($result_data['title']) : '';
 
 		$result_date = new Date($result_data['date'], Timezone::SERVER_TIMEZONE);
 

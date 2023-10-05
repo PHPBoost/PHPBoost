@@ -3,9 +3,10 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2016 02 02
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumFeedProvider implements FeedProvider
@@ -54,7 +55,7 @@ class ForumFeedProvider implements FeedProvider
 
 				$link = new Url('/forum/topic' . url(
 						'.php?' . $last_page .  'id=' . $row['id'],
-						'-' . $row['id'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php'
+						'-' . $row['id'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title'])  . '.php'
 						) . '#m' .  $row['last_msg_id']
 						);
 				$item->set_title(

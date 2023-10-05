@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 1.2 - 2005 10 26
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -34,7 +34,7 @@ try {
 }
 
 if ($category->get_type() != ForumCategory::TYPE_FORUM)
-	AppContext::get_response()->redirect('/forum/' . url('index.php?id=' . $category->get_id(), 'cat-' . $category->get_id() . '+' . $category->get_rewrited_name() . '.php'));
+	AppContext::get_response()->redirect('/forum/' . url('index.php?id=' . $category->get_id(), 'cat-' . $category->get_id() . '-' . $category->get_rewrited_name() . '.php'));
 
 //Vérification des autorisations d'accès.
 if (!ForumAuthorizationsService::check_authorizations($category->get_id())->read())
@@ -57,9 +57,9 @@ foreach ($categories as $id => $cat)
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
 	{
 		if ($cat->get_type() == ForumCategory::TYPE_FORUM)
-			$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
+			$Bread_crumb->add($cat->get_name(), 'forum' . url('.php?id=' . $cat->get_id(), '-' . $cat->get_id() . '-' . $cat->get_rewrited_name() . '.php'));
 		else
-			$Bread_crumb->add($cat->get_name(), url('index.php?id=' . $cat->get_id(), 'cat-' . $cat->get_id() . '+' . $cat->get_rewrited_name() . '.php'));
+			$Bread_crumb->add($cat->get_name(), url('index.php?id=' . $cat->get_id(), 'cat-' . $cat->get_id() . '-' . $cat->get_rewrited_name() . '.php'));
 	}
 }
 
@@ -83,7 +83,7 @@ if (!empty($change_cat))
 	try {
 		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
 if (!empty($id_get))
@@ -176,7 +176,7 @@ if (!empty($id_get))
 						if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 						{
 							$is_sub_forum[] = $child->get_id();
-							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small forum-subforum-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="small forum-subforum-element">';
+							$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="small forum-subforum-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '-' . $child->get_rewrited_name() . '.php') . '" class="small forum-subforum-element">';
 							$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 						}
 					}
@@ -210,11 +210,11 @@ if (!empty($id_get))
 					'NBR_TOPIC'                   => $row['nbr_topic'],
 					'NBR_MSG'                     => $row['nbr_msg'],
 					'U_FORUM_URL'                 => $row['url'],
-					'U_FORUM_VARS'                => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '+' . $row['rewrited_name'] . '.php'),
+					'U_FORUM_VARS'                => url('.php?id=' . $row['cid'], '-' . $row['cid'] . '-' . $row['rewrited_name'] . '.php'),
 					'C_LAST_TOPIC_MSG'            => !empty($row['last_topic_id']),
 					'LAST_TOPIC_TITLE'            => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
-					'U_LAST_TOPIC'                => "topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
-					'U_LAST_MSG'                  => !empty($row['last_topic_id']) ? "topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id : '',
+					'U_LAST_TOPIC'                => "topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '-' . Url::encode_rewrite($row['title'])  . '.php'),
+					'U_LAST_MSG'                  => !empty($row['last_topic_id']) ? "topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id : '',
 					'C_LAST_MSG_GUEST'            => !empty($row['display_name']),
 					'U_LAST_MSG_USER_PROFIL'      => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 					'LAST_MSG_USER_LOGIN'         => $row['display_name'],
@@ -250,7 +250,7 @@ if (!empty($id_get))
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
 	$pagination = new ModulePagination($page, $nbr_topic, $config->get_number_topics_per_page(), Pagination::LIGHT_PAGINATION);
-	$pagination->set_url(new Url('/forum/forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d+' . $category->get_rewrited_name() . '.php')));
+	$pagination->set_url(new Url('/forum/forum' . url('.php?id=' . $id_get . '&amp;p=%d', '-' . $id_get . '-%d-' . $category->get_rewrited_name() . '.php')));
 
 	if ($pagination->current_page_is_empty() && $page > 1)
 	{
@@ -285,7 +285,7 @@ if (!empty($id_get))
 		'C_MASS_MODO_CHECK'          => false,
 		'C_POST_NEW_SUBJECT'         => $check_group_write_auth,
 		'U_MSG_SET_VIEW'             =>  Url::to_rel('/forum/action' . url('.php?read=1&amp;f=' . $id_get, '')),
-		'U_CHANGE_CAT'               => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '+' . $category->get_rewrited_name() . '.php'),
+		'U_CHANGE_CAT'               => 'forum' . url('.php?id=' . $id_get, '-' . $id_get . '-' . $category->get_rewrited_name() . '.php'),
 		'U_ONCHANGE'                 => url(".php?id=' + this.options[this.selectedIndex].value + '", "forum-' + this.options[this.selectedIndex].value + '.php"),
 		'U_ONCHANGE_CAT'             => url("index.php?id=' + this.options[this.selectedIndex].value + '", "cat-' + this.options[this.selectedIndex].value + '.php"),
 		'U_POST_NEW_SUBJECT'         => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
@@ -367,7 +367,7 @@ if (!empty($id_get))
 		}
 
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
-		$rewrited_title_topic = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . Url::encode_rewrite($row['title']) : '';
+		$rewrited_title_topic = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($row['title']) : '';
 
 		//Ancre ajoutée aux messages non lus.
 		$new_ancre = ($new_msg === true && !$is_guest) ? 'topic' . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id : '';

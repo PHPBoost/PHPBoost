@@ -3,7 +3,7 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2018 12 23
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -123,7 +123,7 @@ class ForumHomeController extends ModuleController
 						$this->view->assign_block_vars('forums_list.cats', array(
 							'IDCAT' => $this->category->get_id(),
 							'NAME' => $this->category->get_name(),
-							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php')
+							'U_FORUM_VARS' => PATH_TO_ROOT . '/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '-' . $this->category->get_rewrited_name() . '.php')
 						));
 						$display_cat = false;
 					}
@@ -143,7 +143,7 @@ class ForumHomeController extends ModuleController
 							if ($child->get_id_parent() == $row['cid'] && ForumAuthorizationsService::check_authorizations($child->get_id())->read()) //Sous forum distant d'un niveau au plus.
 							{
 								$is_sub_forum[] = $child->get_id();
-								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subform-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '+' . $child->get_rewrited_name() . '.php') . '" class="forum-subform-element">';
+								$link = $child->get_url() ? '<a href="' . $child->get_url() . '" class="forum-subform-element">' : '<a href="forum' . url('.php?id=' . $child->get_id(), '-' . $child->get_id() . '-' . $child->get_rewrited_name() . '.php') . '" class="forum-subform-element">';
 								$subforums .= !empty($subforums) ? ', ' . $link . $child->get_name() . '</a>' : $link . $child->get_name() . '</a>';
 							}
 						}
@@ -209,8 +209,8 @@ class ForumHomeController extends ModuleController
 						'U_FORUM_VARS' => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
 						'C_LAST_TOPIC_MSG' => !empty($row['last_topic_id']),
 						'LAST_TOPIC_TITLE' => !empty($row['last_topic_id']) ? stripslashes($last_topic_title) : '',
-						'U_LAST_TOPIC' => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '+' . Url::encode_rewrite($row['title'])  . '.php'),
-						'U_LAST_MSG' => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '+' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id : '',
+						'U_LAST_TOPIC' => PATH_TO_ROOT . "/forum/topic" . url('.php?id=' . $row['tid'], '-' . $row['tid'] . '-' . Url::encode_rewrite($row['title'])  . '.php'),
+						'U_LAST_MSG' => !empty($row['last_topic_id']) ? PATH_TO_ROOT . "/forum/topic" . url('.php?' . $last_page .  'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $last_msg_id : '',
 						'C_LAST_MSG_GUEST' => ($row['last_user_id']) != '-1',
 						'U_LAST_MSG_USER_PROFIL' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 						'LAST_MSG_USER_LOGIN' => $row['login'],
@@ -241,7 +241,7 @@ class ForumHomeController extends ModuleController
 			$where = "AND s.location_script LIKE '%". $site_path ."/forum/%'";
 			if (!empty($id_get))
 			{
-				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . ($this->category !== false && $id_get != Category::ROOT_CATEGORY ? '+' . $this->category->get_rewrited_name() : '') . '.php') ."'";
+				$where = "AND s.location_script LIKE '%". $site_path . url('/forum/index.php?id=' . $id_get, '/forum/cat-' . $id_get . ($this->category !== false && $id_get != Category::ROOT_CATEGORY ? '-' . $this->category->get_rewrited_name() : '') . '.php') ."'";
 			}
 			list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online($where);
 		}
@@ -330,7 +330,7 @@ class ForumHomeController extends ModuleController
 		$breadcrumb->add($LANG['title_forum'], ForumUrlBuilder::home());
 
 		if ($this->category !== false && $this->category->get_id() != Category::ROOT_CATEGORY)
-			$breadcrumb->add($this->category->get_name(), url('/forum/index.php?id=' . $this->category->get_id(), '/forum/cat-' . $this->category->get_id() . '+' . $this->category->get_rewrited_name() . '.php'));
+			$breadcrumb->add($this->category->get_name(), url('/forum/index.php?id=' . $this->category->get_id(), '/forum/cat-' . $this->category->get_id() . '-' . $this->category->get_rewrited_name() . '.php'));
 
 		return $response;
 	}

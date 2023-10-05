@@ -3,8 +3,9 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2017 06 08
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 4.0 - 2015 02 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MediaUrlBuilder
@@ -65,7 +66,7 @@ class MediaUrlBuilder
 	public static function display_category($id, $rewrited_name, $page = 1, $subcategories_page = 1)
 	{
 		$page = $page !== 1 || $subcategories_page !== 1 ? '&p=' . $page : '';
-		return new Url(PATH_TO_ROOT. '/media/' . url('media.php?cat=' . $id . $page, 'media-0-' . $id . ($page > 1 ? '-' . $page : '') . '+' . $rewrited_name . '.php'));
+		return new Url(PATH_TO_ROOT. '/media/' . url('media.php?cat=' . $id . $page, 'media-0-' . $id . ($page > 1 ? '-' . $page : '') . '-' . $rewrited_name . '.php'));
 	}
 
 	/**

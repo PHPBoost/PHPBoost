@@ -3,11 +3,12 @@
  * @copyright 	&copy; 2005-2019 PHPBoost
  * @license 	https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version   	PHPBoost 5.2 - last update: 2021 02 15
+ * @version   	PHPBoost 5.2 - last update: 2023 10 05
  * @since   	PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -65,7 +66,7 @@ if (!empty($change_cat))
 	try {
 		$new_cat = ForumService::get_categories_manager()->get_categories_cache()->get_category($change_cat);
 	} catch (CategoryNotFoundException $e) { }
-	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '+' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
+	AppContext::get_response()->redirect('/forum/forum' . url('.php?id=' . $change_cat, '-' . $change_cat . ($new_cat && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . $new_cat->get_rewrited_name() : '') . '.php', '&'));
 }
 
 if ($action == 'alert') //Gestion des alertes
@@ -156,7 +157,7 @@ if ($action == 'alert') //Gestion des alertes
 				'TITLE'              => stripslashes($row['title']),
 				'U_TITLE'            => 'moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']),
 				'TOPIC'              => $row['topic_title'],
-				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
+				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '-' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'USER_ID'            => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'USER_CSSCLASS'      => UserService::get_level_class($row['user_level']),
 				'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -224,7 +225,7 @@ if ($action == 'alert') //Gestion des alertes
 				'ID'                 => $id_get,
 				'TITLE'              => stripslashes($row['title']),
 				'TOPIC'              => $row['topic_title'],
-				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '+' . Url::encode_rewrite($row['topic_title']) . '.php'),
+				'U_TOPIC'            => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '-' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'CONTENTS'           => FormatingHelper::second_parse($row['contents']),
 				'C_STATUS'           => $row['status'] != 0,
 				'L_ALERT_SOLVED'     => $LANG['alert_solved'],
@@ -241,7 +242,7 @@ if ($action == 'alert') //Gestion des alertes
 				'LOGIN_USER'         => $row['display_name'],
 
 				'CAT_NAME'           => $category->get_name(),
-				'U_CAT'              => 'forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '+' . $category->get_rewrited_name() . '.php'),
+				'U_CAT'              => 'forum' . url('.php?id=' . $row['idcat'], '-' . $row['idcat'] . '-' . $category->get_rewrited_name() . '.php'),
 				'C_FORUM_ALERT_LIST' => true,
 				'U_CHANGE_STATUS'    => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
 				'L_CHANGE_STATUS'    => ($row['status'] == '0') ? $LANG['change_status_to_1'] : $LANG['change_status_to_0'],
