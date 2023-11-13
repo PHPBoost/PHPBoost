@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 25
+ * @version     PHPBoost 6.0 - last update: 2023 11 13
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -184,7 +184,7 @@ class LangLoader
 			}
 		}
 
-		if ($throw_exception_on_failure)
+		if ($throw_exception_on_failure && Debug::is_debug_mode_enabled())
 			throw new LangNotFoundException($folder, $filename);
 		else
 			return false;
