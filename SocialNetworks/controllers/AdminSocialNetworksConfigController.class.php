@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2023 11 14
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -31,9 +31,9 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 			$this->save();
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
 		}
-		// Debug::dump(array_keys($this->social_networks));
+
 		$social_networks_number = 0;
-		$social_networks_order = array_unique($this->config->get_social_networks_order() ? array_merge($this->config->get_social_networks_order(), array_keys($this->social_networks)) : array());
+		$social_networks_order = array_unique(array_merge($this->config->get_social_networks_order(), array_keys($this->social_networks)));
 		foreach ($social_networks_order as $id)
 		{
 			if (isset($this->social_networks[$id]))
