@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 18
+ * @version     PHPBoost 6.0 - last update: 2023 11 18
  * @since       PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -24,6 +24,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 
 		$actual_major_version = GeneralConfig::load()->get_phpboost_major_version();
 		$phpboost_5_1_release_date = new Date('2017-07-18');
+		$phpboost_6_0_release_date = new Date('2023-04-29');
 
 		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_5_1_release_date))
 		{
@@ -34,7 +35,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		}
 
 		// Pages
-		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && ClassLoader::is_class_registered_and_valid('PagesService') && $actual_major_version >= '6.0')
+		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && $actual_major_version >= '6.0' && GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_6_0_release_date))
 		{
 			$this->urls_mappings[] = new UrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
 
@@ -45,6 +46,14 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
 					$this->urls_mappings[] = new UrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
+			
+			$result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('pages')->get_configuration()->get_items_table_name());
+			
+			while ($row = $result->fetch())
+			{
+				$this->urls_mappings[] = new UrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_cat']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
+			}
+			$result->dispose();
 		}
 
 		// Poll
