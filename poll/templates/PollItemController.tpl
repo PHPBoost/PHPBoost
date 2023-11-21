@@ -46,7 +46,7 @@
 							# ENDIF #
 							# IF C_ENABLED_VIEWS #
 								<span class="pinned item-views-number" role="contentinfo" aria-label="{@common.views.number}">
-									<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@views}# ELSE #{@view}# ENDIF #
+									<i class="fa fa-eye" aria-hidden="true"></i> {VIEWS_NUMBER} # IF C_SEVERAL_VIEWS #{@common.views}# ELSE #{@common.view}# ENDIF #
 								</span>
 							# ENDIF #
 							# IF C_ENABLED_COMMENTS #
