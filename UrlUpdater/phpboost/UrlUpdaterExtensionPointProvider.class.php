@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 11 18
+ * @version     PHPBoost 6.0 - last update: 2023 11 28
  * @since       PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -51,7 +51,8 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			
 			while ($row = $result->fetch())
 			{
-				$this->urls_mappings[] = new UrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_cat']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
+				if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
+					$this->urls_mappings[] = new UrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
 			}
 			$result->dispose();
 		}
