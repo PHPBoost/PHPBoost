@@ -277,11 +277,11 @@
 						</select>
 					</div>
 				</div>
-				<div class="form-element">
+				<div class="form-element" id="pics_number">
 					<label for="pics_number_in_mini">{@gallery.thumbnails.number}</label>
 					<div class="form-field form-field-number"><input type="number" min="1" name="pics_number_in_mini" id="pics_number_in_mini" value="{THUMBNAILS_NUMBER}"></div>
 				</div>
-				<div class="form-element">
+				<div class="form-element" id="pics_speed">
 					<label for="mini_pics_speed">{@gallery.scroll.speed} <span class="field-description">{@gallery.scroll.speed.clue}</span></label>
 					<div class="form-field form-field-select">
 						<select name="mini_pics_speed" id="mini_pics_speed">
@@ -290,6 +290,20 @@
 					</div>
 				</div>
 			</div>
+            <script>
+                jQuery('#scroll_type').on('change', function(){
+                    if(jQuery(this).val() == 'no_scroll')
+                    {
+                        jQuery('#pics_number').hide();
+                        jQuery('#pics_speed').hide();
+                    }
+                    else
+                    {
+                        jQuery('#pics_number').show();
+                        jQuery('#pics_speed').show();
+                    }
+                }).trigger('change')
+            </script>
 		</fieldset>
 
 		<fieldset>
