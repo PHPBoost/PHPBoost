@@ -450,7 +450,7 @@ class ImagesStats
 
 	/**
 	 * @desc Allocate a darker color than the color given.
-	 * @param resource $image Image concerned.
+	 * @param GdImage $image Image concerned.
 	 * @param resource $mask_color Set 0 for darker, 255 for brighter
 	 * @param resource $similar_color Set 0.40 for a different color and 0.99 for a very similar.
 	 * @return int angle
@@ -478,7 +478,7 @@ class ImagesStats
 	/**
 	 * @desc Generate a scale
 	 * @param array $array_scale List of element
-	 * @param resource $max_element Maximal element int the array_scale list
+	 * @param int $max_element Maximal element int the array_scale list
 	 */
 	private function generate_scale($max_element)
 	{

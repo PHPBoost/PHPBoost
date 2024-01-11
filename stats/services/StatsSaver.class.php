@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 12
+ * @version     PHPBoost 6.0 - last update: 2024 01 11
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -271,20 +271,20 @@ class StatsSaver
 		$file = new File(PATH_TO_ROOT . '/stats/cache/robots.txt');
 		if (!$file->exists() || $file->is_writable())
 		{
-			$stats_array = self::retrieve_stats($stat_name);
+			$stats_array = self::retrieve_stats('robots');
 
-			$list = array(strtolower($current_robot), ucfirst(strtolower($current_robot)));
+			$list = array(TextHelper::strtolower($current_robot), TextHelper::ucfirst(TextHelper::strtolower($current_robot)));
 			if (preg_match('`bot`iu', $current_robot) && !preg_match('`robot`iu', $current_robot))
 			{
 				$bot_name = preg_replace('`bot$`iu', '', $current_robot);
-				$list[] = strtolower($bot_name);
-				$list[] = ucfirst(strtolower($bot_name));
+				$list[] = TextHelper::strtolower($bot_name);
+				$list[] = TextHelper::ucfirst(TextHelper::strtolower($bot_name));
 			}
 			if (preg_match('`spider`iu', $current_robot))
 			{
 				$bot_name = preg_replace('`spider$`iu', '', $current_robot);
-				$list[] = strtolower($bot_name);
-				$list[] = ucfirst(strtolower($bot_name));
+				$list[] = TextHelper::strtolower($bot_name);
+				$list[] = TextHelper::ucfirst(TextHelper::strtolower($bot_name));
 			}
 			
 			$delete_cache_file = false;
