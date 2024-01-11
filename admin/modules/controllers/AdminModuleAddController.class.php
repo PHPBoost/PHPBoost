@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2024 01 11
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -17,7 +17,7 @@ class AdminModuleAddController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('admin/modules/AdminModuleAddController.tpl');
+        return new FileTemplate('admin/modules/AdminModuleAddController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -204,7 +204,7 @@ class AdminModuleAddController extends DefaultAdminController
 		$modules_folder = PATH_TO_ROOT . '/';
 		if (!is_writable($modules_folder))
 		{
-			$is_writable = @chmod($dir, 0755);
+			$is_writable = @chmod($modules_folder, 0755);
 		}
 		else
 		{

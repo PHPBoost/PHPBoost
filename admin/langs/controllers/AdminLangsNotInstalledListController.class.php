@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 29
+ * @version     PHPBoost 6.0 - last update: 2024 01 11
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,7 +16,7 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('admin/langs/AdminLangsNotInstalledListController.tpl');
+        return new FileTemplate('admin/langs/AdminLangsNotInstalledListController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -164,7 +164,7 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 		$folder_phpboost_langs = PATH_TO_ROOT . '/lang/';
 		if (!is_writable($folder_phpboost_langs))
 		{
-			$is_writable = @chmod($dir, 0755);
+			$is_writable = @chmod($folder_phpboost_langs, 0755);
 		}
 		else
 		{

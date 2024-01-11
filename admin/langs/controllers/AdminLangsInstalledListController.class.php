@@ -15,7 +15,7 @@ class AdminLangsInstalledListController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
+        return new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
