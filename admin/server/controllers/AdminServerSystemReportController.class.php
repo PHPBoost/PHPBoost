@@ -36,7 +36,6 @@ class AdminServerSystemReportController extends DefaultAdminController
 		$general_config = GeneralConfig::load();
 		$server_environment_config = ServerEnvironmentConfig::load();
 		$sessions_config = SessionsConfig::load();
-		$maintenance_config = MaintenanceConfig::load();
 
 		$url_rewriting_available = false;
 		$url_rewriting_known = true;
