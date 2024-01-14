@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 05
+ * @version     PHPBoost 6.0 - last update: 2024 01 14
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,6 +62,7 @@ $lang['user.activation.mode']           = 'User account activation type';
 $lang['user.activation.auto']           = 'Automatic';
 $lang['user.activation.mail']           = 'Mail';
 $lang['user.activation.admin']          = 'Administrator';
+$lang['user.activation.admin.email']    = 'Send email to administrators';
 $lang['user.unactivated.timeout']       = 'Number of days after which the unactivated members are cleared';
 $lang['user.unactivated.timeout.clue']  = 'Leave blank to skip this option (not included if validated by administrator)';
 $lang['user.allow.display.name.change'] = 'Allow members to change their Display name';
@@ -276,6 +277,7 @@ You can now login to the site using the credentials provided in the previous ema
 :signature';
 
 $lang['user.registration.pending.approval']   = 'A new member has registered. His account must be approved before it can be used.';
+$lang['user.registration.pending.approval']   = ':pseudo has registered. <a href=":link">His account/a> must be approved before it can be used.';
 $lang['user.registration.not.approved']       = 'Your account must be approved by an administrator before it can be used.';
 $lang['user.registration.email.subject']      = 'Confirmation of registration :site_name';
 $lang['user.registration.lost.password.link'] = 'If you loose your password, you can generate a new one from this link :lost_password_link';
