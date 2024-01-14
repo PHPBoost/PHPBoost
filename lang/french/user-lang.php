@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 05
+ * @version     PHPBoost 6.0 - last update: 2024 01 14
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -62,6 +62,7 @@ $lang['user.activation.mode']           = 'Mode d\'activation du compte membre';
 $lang['user.activation.auto']           = 'Automatique';
 $lang['user.activation.mail']           = 'Mail';
 $lang['user.activation.admin']          = 'Administrateur';
+$lang['user.activation.admin.email']    = 'Envoyer un email aux administrateurs';
 $lang['user.unactivated.timeout']       = 'Nombre de jours après lequel les membres non activés sont effacés';
 $lang['user.unactivated.timeout.clue']  = 'Laisser vide pour ignorer cette option (Non pris en compte si validation par administrateur)';
 $lang['user.allow.display.name.change'] = 'Autoriser les membres à changer leur Nom d\'affichage';
@@ -276,6 +277,7 @@ Vous pouvez dès à présent vous connecter au site à l\'aide des identifiants 
 :signature';
 
 $lang['user.registration.pending.approval']   = 'Un nouveau membre s\'est inscrit. Son compte doit être approuvé avant de pouvoir être utilisé.';
+$lang['user.registration.email.approval']     = ':pseudo s\'est inscrit. <a href=":link">Son compte</a> doit être approuvé avant de pouvoir être utilisé.';
 $lang['user.registration.not.approved']       = 'Votre compte doit être approuvé par un administrateur avant de pouvoir être utilisé.';
 $lang['user.registration.email.subject']      = 'Confirmation d\'inscription sur :site_name';
 $lang['user.registration.lost.password.link'] = 'Si vous perdez votre mot de passe, vous pouvez en générer un nouveau à partir de ce lien : :lost_password_link';

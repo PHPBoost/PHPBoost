@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 19
+ * @version     PHPBoost 6.0 - last update: 2024 01 14
  * @since       PHPBoost 3.0 - 2009 10 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -85,6 +85,7 @@ class UserAccountsConfig extends AbstractConfigData
 	const AUTOMATIC_USER_ACCOUNTS_VALIDATION     = '1';
 	const MAIL_USER_ACCOUNTS_VALIDATION          = '2';
 	const ADMINISTRATOR_USER_ACCOUNTS_VALIDATION = '3';
+    const ADMINISTRATOR_ACCOUNTS_VALIDATION_EMAIL = 'administrator_accounts_validation_email';
 
 	const DISPLAY_TYPE = 'display_type';
 	const TABLE_VIEW = 'table_view';
@@ -143,6 +144,24 @@ class UserAccountsConfig extends AbstractConfigData
 	public function set_member_accounts_validation_method($method)
 	{
 		$this->set_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY, $method);
+	}
+
+	/**
+	 * Send email to administrators if activation by administrator is selected
+	 * @return bool 0 if selected, 1 if not
+	 */
+	public function get_administrator_accounts_validation_email()
+	{
+		return $this->get_property(self::ADMINISTRATOR_ACCOUNTS_VALIDATION_EMAIL);
+	}
+
+	/**
+	 * Sets the send of an email to administrators if activation by administrator is selected
+	 * @param bool 0 if selected, 1 if not
+	 */
+	public function set_administrator_accounts_validation_email($method)
+	{
+		$this->set_property(self::ADMINISTRATOR_ACCOUNTS_VALIDATION_EMAIL, $method);
 	}
 
 	/**
@@ -465,6 +484,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::ITEMS_PER_ROW                              => 2,
 			self::REGISTRATION_ENABLED_PROPERTY              => FormFieldCheckbox::CHECKED,
 			self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY => self::AUTOMATIC_USER_ACCOUNTS_VALIDATION,
+            self::ADMINISTRATOR_ACCOUNTS_VALIDATION_EMAIL    => false,
 			self::WELCOME_MESSAGE_PROPERTY                   => LangLoader::get_message('user.site.member.message', 'user-lang'),
 			self::REGISTRATION_AGREEMENT_PROPERTY            => LangLoader::get_message('user.registration.agreement', 'user-lang'),
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY      => 20,

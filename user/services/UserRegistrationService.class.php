@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2024 01 14
  * @since       PHPBoost 3.0 - 2011 10 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -72,6 +72,21 @@ class UserRegistrationService
 				);
 				$content = StringVars::replace_vars($lang['user.registration.content.email' . ($admin_creation ? '.admin' : '')], $parameters);
 				AppContext::get_mail_service()->send_from_properties($email, $subject, $content);
+
+                if($user_accounts_config->get_administrator_accounts_validation_email()) {
+                    $parameters = array(
+                        'pseudo' => $pseudo,
+                        'link'   => GeneralConfig::load()->get_site_url() . '/user/profile/' . $user_id. '/edit',
+                    );
+                    $admin_content = StringVars::replace_vars($lang['user.registration.email.approval'], $parameters);
+                    $admin_list = MailServiceConfig::load()->get_administrators_mails();
+                    foreach ($admin_list as $admin_email)
+                    {
+                        AppContext::get_mail_service()->send_from_properties($admin_email, $subject, $admin_content);
+                    }
+                    break;
+                }
+
 				break;
 		}
 	}
