@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 11
+ * @version     PHPBoost 6.0 - last update: 2024 01 14
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -28,6 +28,7 @@ class AdminMemberConfigController extends DefaultAdminController
 
 			$this->form->get_field_by_id('type_activation_members')->set_hidden(!$this->user_accounts_config->is_registration_enabled());
 			$this->form->get_field_by_id('unactivated_accounts_timeout')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
+			$this->form->get_field_by_id('user_activation_admin_email')->set_hidden(!$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() !== UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION);
 			// $this->form->get_field_by_id('items_per_row')->set_hidden($this->user_accounts_config->get_display_type() !== UserAccountsConfig::GRID_VIEW);
 			// UserCache::invalidate();
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
@@ -60,10 +61,14 @@ class AdminMemberConfigController extends DefaultAdminController
 						HTMLForms.getField("type_activation_members").enable();
 						if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
 							HTMLForms.getField("unactivated_accounts_timeout").enable();
-						}
+							HTMLForms.getField("user_activation_admin_email").disable();
+						} else {
+							HTMLForms.getField("user_activation_admin_email").enable();
+                        }
 					} else {
 						HTMLForms.getField("type_activation_members").disable();
 						HTMLForms.getField("unactivated_accounts_timeout").disable();
+						HTMLForms.getField("user_activation_admin_email").disable();
 					}'
 				)
 			)
@@ -81,10 +86,19 @@ class AdminMemberConfigController extends DefaultAdminController
 				'events' => array('change' => '
 					if (HTMLForms.getField("type_activation_members").getValue() != ' . UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION . ') {
 						HTMLForms.getField("unactivated_accounts_timeout").enable();
+						HTMLForms.getField("user_activation_admin_email").disable();
 					} else {
 						HTMLForms.getField("unactivated_accounts_timeout").disable();
+						HTMLForms.getField("user_activation_admin_email").enable();
 					}'
 				)
+			)
+		));
+
+		$fieldset->add_field(new FormFieldCheckbox('user_activation_admin_email', $this->lang['user.activation.admin.email'], $this->user_accounts_config->get_administrator_accounts_validation_email(),
+			array(
+				'class' => 'custom-checkbox top-field',
+				'hidden' => !$this->user_accounts_config->is_registration_enabled() || !$this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
 			)
 		));
 
@@ -247,6 +261,11 @@ class AdminMemberConfigController extends DefaultAdminController
 		if (!$this->form->field_is_disabled('unactivated_accounts_timeout'))
 		{
 			$this->user_accounts_config->set_unactivated_accounts_timeout($this->form->get_value('unactivated_accounts_timeout'));
+		}
+
+		if (!$this->form->field_is_disabled('user_activation_admin_email'))
+		{
+			$this->user_accounts_config->set_administrator_accounts_validation_email($this->form->get_value('user_activation_admin_email'));
 		}
 
 		$this->user_accounts_config->set_allow_users_to_change_display_name($this->form->get_value('allow_users_to_change_display_name'));
