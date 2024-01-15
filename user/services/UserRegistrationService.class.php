@@ -84,9 +84,7 @@ class UserRegistrationService
                     {
                         AppContext::get_mail_service()->send_from_properties($admin_email, $subject, $admin_content);
                     }
-                    break;
                 }
-
 				break;
 		}
 	}
