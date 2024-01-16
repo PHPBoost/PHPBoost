@@ -6,7 +6,7 @@
 		# IF C_DESCRIPTION #<meta name="description" content="{SITE_DESCRIPTION}" /># ENDIF #
 		<meta name="generator" content="PHPBoost" />
 		# IF C_CANONICAL_URL #<link rel="canonical" href="{U_CANONICAL}" /># ENDIF #
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		# IF C_OPENGRAPH #
 			<meta property="og:site_name" content="{SITE_NAME}" />
@@ -53,5 +53,6 @@
 			# INCLUDE BODY #
 		</div>
 		# INCLUDE JS_BOTTOM #
+		# INCLUDE JS_ADDITIONAL #
 	</body>
 </html>
