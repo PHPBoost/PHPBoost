@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 19
+ * @version     PHPBoost 6.0 - last update: 2024 01 16
  * @since       PHPBoost 4.0 - 2014 06 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -49,6 +49,9 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance()
 		));
 
+		$js_add_tpl = new FileTemplate('js_add.tpl');
+		$js_add_tpl->add_lang($lang);
+
 		$description = $this->get_seo_meta_data()->get_full_description();
 		$view->put_all(array(
 			'C_CSS_LOGIN_DISPLAYED' => $this->display_css_login,
@@ -63,6 +66,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'MODULES_CSS'      => $this->get_modules_css_files_html_code(),
 			'JS_TOP'           => $js_top_tpl,
 			'JS_BOTTOM'        => $js_bottom_tpl,
+			'JS_ADDITIONAL'    => $js_add_tpl,
 			'BODY'             => new StringTemplate($content),
 
 			'U_CANONICAL' => $this->get_seo_meta_data()->get_canonical_link(),
