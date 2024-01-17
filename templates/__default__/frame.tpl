@@ -45,6 +45,7 @@
 		# ENDIF #
 
 		# INCLUDE JS_TOP #
+		# INCLUDE JS_ADDITIONAL #
 	</head>
 
 	<body itemscope="itemscope" itemtype="https://schema.org/WebPage">
@@ -53,6 +54,5 @@
 			# INCLUDE BODY #
 		</div>
 		# INCLUDE JS_BOTTOM #
-		# INCLUDE JS_ADDITIONAL #
 	</body>
 </html>
