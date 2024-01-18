@@ -22,7 +22,7 @@
                             jQuery('.filter-button').opensubmenu({
                                 osmTarget: '#filters-{TABLE_ID}',
                                 osmCloseExcept: '#filters-{TABLE_ID} .filters-container *',
-                                osmCloseButton: '.close-filters',
+                                osmCloseButton: '.close-filters *',
                             });
                             var url = window.location.search;
                             if (url.indexOf(',filters:') != -1)
