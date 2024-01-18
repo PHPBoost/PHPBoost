@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 03
+ * @version     PHPBoost 6.0 - last update: 2024 01 18
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -85,7 +85,6 @@ $lang['common.validation']   = 'Validation';
 $lang['common.moderation']   = 'Modération';
 $lang['common.reorder']      = 'Réorganiser';
 $lang['common.respond']      = 'Répondre';
-$lang['common.filter.items'] = 'Filtrer les éléments';
 $lang['common.actions']      = 'Actions';
 $lang['common.enable']       = 'Activer';
 $lang['common.disable']      = 'Désactiver';
@@ -106,6 +105,8 @@ $lang['common.print']        = 'Imprimer';
 $lang['common.printable']    = 'Version imprimable';
 $lang['common.open.panels']  = 'Ouvrir tous les panneaux';
 $lang['common.close.panels'] = 'Fermer tous les panneaux';
+$lang['common.filter.items'] = 'Filtrer les éléments';
+$lang['common.reset.filters'] = 'Réinitialiser les filtres';
 
 // Constraint
 $lang['common.constraint.required']     = 'Requis';
