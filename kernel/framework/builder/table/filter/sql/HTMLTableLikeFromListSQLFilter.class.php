@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2024 01 18
  * @since       PHPBoost 3.0 - 2010 02 27
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter implements SQLFragmentBuilder
@@ -30,7 +31,7 @@ class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter imple
 		if ($choice_option instanceof FormFieldSelectChoiceOption)
 		{
 			$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
-			$query = $this->db_field . 'LIKE :' . $parameter_name;
+			$query = $this->db_field . ' LIKE :' . $parameter_name;
 			$parameters = array($parameter_name => $this->get_like_value());
 			return new SQLFragment($query, $parameters);
 		}
