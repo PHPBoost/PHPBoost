@@ -93,11 +93,16 @@ tfoot td select { padding: 0.1618em 0.309em; }
 	height: auto;
 }
 
+.reset-filters,
 .close-filters {
 	position: absolute;
 	top: 0.228em;
 	right: 0.618em;
 	cursor: pointer;
+}
+
+.reset-filters {
+	right: 2.618em;
 }
 
 .html-table-elements-number { text-align: left; }
