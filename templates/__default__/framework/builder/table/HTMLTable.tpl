@@ -12,8 +12,8 @@
                         <div id="filters-{TABLE_ID}" class="html-table-filters">
                             <a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@common.filter.items}# ENDIF #</a>
                             <div class="filters-container">
-                                <span class="close-filters" aria-label=" {@common.close}"><i class="far fa-window-close" aria-hidden="true"></i></span>
-                                <span class="reset-filters" aria-label=" {@common.reset.filters}"><i class="fa fa-arrows-rotate" aria-hidden="true"></i></span>
+                                <span class="close-filters" aria-label="{@common.close}"><i class="far fa-window-close" aria-hidden="true"></i></span>
+                                <span class="reset-filters" aria-label="{@common.reset.filters}"><i class="fa fa-arrows-rotate" aria-hidden="true"></i></span>
                                 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
                                 # INCLUDE FILTERS #
                             </div>
@@ -29,8 +29,6 @@
                                 jQuery('.html-table-filters').addClass('opened');
                             let currentUrl = window.location.href,
                                 updatedUrl = currentUrl.replace(window.location.search, '');
-                                console.log(currentUrl);
-                                console.log(updatedUrl);
                             jQuery('.reset-filters').on('click', function() {
                                 if (currentUrl !== updatedUrl) {
                                     window.history.replaceState({ path: updatedUrl }, '', updatedUrl);
