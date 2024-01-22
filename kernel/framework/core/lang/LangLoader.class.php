@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 11 13
+ * @version     PHPBoost 6.0 - last update: 2024 01 22
  * @since       PHPBoost 3.0 - 2009 09 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -58,7 +58,7 @@ class LangLoader
 		$browser_lang = !$browser_lang && isset($_SERVER['HTTP_X_COUNTRY_CODE']) ? strtolower($_SERVER['HTTP_X_COUNTRY_CODE']) : $browser_lang;
 		$browser_lang = !$browser_lang ? strtolower(AppContext::get_request()->get_location_info_by_ip()) : $browser_lang;
 		$langs = self::get_available_langs();
-		
+
 		if ($browser_lang)
 		{
 			foreach ($langs as $lang)
@@ -67,6 +67,7 @@ class LangLoader
 				if (($lang == 'english' && $browser_lang == 'en') || (isset($lang_config['identifier']) && $lang_config['identifier'] == $browser_lang))
 					return $lang;
 			}
+            return $langs[0];
 		}
 		else
 			return $langs[0];
@@ -108,7 +109,7 @@ class LangLoader
 	 * @param string $filename the language filename
 	 * @param string $module the module to look for languages files in
 	 * @param string $forced_file the language filename to return inevitably
-	 * @return string[string] the lang array which keys are languages identifiers and values the
+	 * @return array  string[string] the lang array which keys are languages identifiers and values the
 	 * translated messages
 	 */
 	public static function get($filename, $module = '', $forced_file = '')
@@ -194,14 +195,14 @@ class LangLoader
 	{
 		if ($locale)
 			self::set_locale($locale);
-		
+
 		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale($locale));
 		$files = $lang_directory->get_files();
 		$langloader = array();
-		
+
 		// Don't load admin language variables if not on admin page
 		$excluded_files = preg_match('/admin/i', REWRITED_SCRIPT) ? array('config') : array('config', 'addon-lang', 'admin-lang', 'configuration-lang', 'menu-lang');
-		
+
 		foreach($files as $file)
 		{
 			$filename = $file->get_name_without_extension();
@@ -220,7 +221,7 @@ class LangLoader
 	{
 		if ($locale)
 			self::set_locale($locale);
-		
+
 		$current_theme = AppContext::get_current_user()->get_theme();
 		$theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale($locale));
 		$files = $theme_lang_directory->get_files();
@@ -243,7 +244,7 @@ class LangLoader
     {
 		if ($locale)
 			self::set_locale($locale);
-		
+
 		$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale($locale));
 		$files = $module_lang_directory->get_files();
 		$module_langloader = array();
