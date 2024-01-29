@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 02
+ * @version     PHPBoost 6.0 - last update: 2024 01 29
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -109,8 +109,11 @@ class AdminExtendedFieldMemberAddController extends DefaultAdminController
 			array('class' => 'top-field')
 		));
 
-		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['form.possible.values'],
-			array()
+		$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['form.possible.values'], array(),
+			array(
+                'class' => 'half-field',
+                'description' => $this->lang['form.select.default.value']
+            )
 		));
 
 		$auth_settings = new AuthorizationsSettings(array(
