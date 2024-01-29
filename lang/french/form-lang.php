@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 28
+ * @version     PHPBoost 6.0 - last update: 2024 01 29
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -124,7 +124,6 @@ $lang['form.avatar.management']     = 'Gestion de l\'avatar';
 $lang['form.required.field']        = 'Champ requis';
 $lang['form.required.field.clue']   = 'Obligatoire dans le profil du membre et à son inscription.';
 $lang['form.possible.values']       = 'Valeurs possibles';
-$lang['form.delete.default.values'] = 'Supprimer la valeur par défaut';
 
 // Labels
 $lang['form.name']                       = 'Nom';
@@ -173,6 +172,7 @@ $lang['form.default']                    = 'Défaut';
 $lang['form.is.default']                 = 'Par défaut';
 $lang['form.default.value']              = 'Valeur par défaut';
 $lang['form.delete.default.value']       = 'Supprimer la valeur par défaut';
+$lang['form.select.default.value']       = 'Sélectionner une valeur par défaut';
 
 // Messages
 $lang['form.success.add']  = 'Le champ <b>:name</b> a été ajouté';
