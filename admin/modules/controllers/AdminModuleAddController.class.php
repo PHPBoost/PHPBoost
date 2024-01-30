@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 11
+ * @version     PHPBoost 6.0 - last update: 2024 01 30
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -238,7 +238,7 @@ class AdminModuleAddController extends DefaultAdminController
 					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
-					$forbidden_files = array('/body.tpl', '/frame.tpl', '/theme/content.css', '/theme/design.css', '/theme/global.css');
+					$forbidden_files = array('/theme/@import.css');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $module_name) === 0)
