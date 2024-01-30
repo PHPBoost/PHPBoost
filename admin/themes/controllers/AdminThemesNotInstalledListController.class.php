@@ -218,7 +218,8 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 
 					$theme_name = TextHelper::substr($upload->get_filename(), 0, TextHelper::strpos($upload->get_filename(), '.'));
 					$archive_root_content = array();
-					$required_files = array('/config.ini');
+					$required_files = array('/config.ini', '/theme/@import.css');
+                    $is_theme = array();
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $theme_name) === 0)
