@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 09
+ * @version     PHPBoost 6.0 - last update: 2024 01 31
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -83,7 +83,7 @@ class SandboxComponentController extends DefaultModuleController
 	private function build_modal_form()
 	{
 		$modal_form = new HTMLForm('Sandbox_Modal');
-		$modal_form->set_css_class('modal-container fieldset-content');
+		$modal_form->set_css_class('modal-container');
 
 		$modal_menu = new FormFieldMenuFieldset('modal_menu', '');
 			$modal_form->add_fieldset($modal_menu);

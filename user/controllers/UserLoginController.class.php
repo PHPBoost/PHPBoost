@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 05
+ * @version     PHPBoost 6.0 - last update: 2024 01 31
  * @since       PHPBoost 3.0 - 2012 04 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -135,14 +135,15 @@ class UserLoginController extends AbstractController
 		}
 
 		$this->view->put_all(array(
-			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
 			'C_DISPLAY_EXTERNAL_AUTHENTICATION' => $external_authentication,
-			'C_USER_LOGIN'         => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
-			'C_ADMIN_LOGIN'        => $this->login_type == self::ADMIN_LOGIN,
-			'C_HAS_ERROR'          => $this->has_error,
+			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
+			'C_USER_LOGIN'           => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
+			'C_ADMIN_LOGIN'          => $this->login_type == self::ADMIN_LOGIN,
+			'C_HAS_ERROR'            => $this->has_error,
+			'C_HEADER_LOGO'          => !empty($header_logo_path),
+
 			'SITE_NAME'            => GeneralConfig::load()->get_site_name(),
 			'SITE_SLOGAN'          => GeneralConfig::load()->get_site_slogan(),
-			'C_HEADER_LOGO'        => !empty($header_logo_path),
 			'HEADER_LOGO'          => Url::to_rel($header_logo_path),
 			'U_REGISTER'           => UserUrlBuilder::registration()->rel(),
 			'U_FORGOTTEN_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
@@ -223,7 +224,6 @@ class UserLoginController extends AbstractController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
-		$this->form->set_css_class('fieldset-content');
 
 		$this->fieldset = new FormFieldsetHTML('loginFieldset', $this->lang['form.parameters']);
 		$this->form->add_fieldset($this->fieldset);
