@@ -7,16 +7,16 @@
 					# INCLUDE ERROR_MESSAGE #
 					# INCLUDE LOGIN_FORM #
 					<div class="align-center">
+                        <a class="offload" href="{U_FORGOTTEN_PASSWORD}"><i class="fa fa-question-circle" aria-hidden="true"></i> {@user.forgotten.password}</a>
+                        <div class="spacer"></div>
 						# IF C_REGISTRATION_ENABLED #
-							<a class="offload" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@user.sign.up}</a>
+							<a class="button offload" href="{U_REGISTER}"><i class="fa fa-ticket-alt" aria-hidden="true"></i> {@user.sign.up}</a>
 						# ENDIF #
 						# IF C_DISPLAY_EXTERNAL_AUTHENTICATION #
 							# START external_auth #
 								<a class="{external_auth.CSS_CLASS} login-page" href="{external_auth.U_CONNECT}">{external_auth.IMAGE_HTML}</a>
 							# END external_auth #
 						# ENDIF #
-						<div class="spacer"></div>
-						<a class="offload" href="{U_FORGOTTEN_PASSWORD}"><i class="fa fa-question-circle" aria-hidden="true"></i> {@user.forgotten.password}</a>
 					</div>
 				</article>
 			</div>

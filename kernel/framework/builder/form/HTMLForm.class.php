@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2024 01 31
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,9 +21,6 @@ class HTMLForm implements HTMLElement
 {
 	const HTTP_METHOD_POST = 'post';
 	const HTTP_METHOD_GET = 'get';
-
-	const SMALL_CSS_CLASS = 'fieldset-mini';
-	const NORMAL_CSS_CLASS = 'fieldset-content';
 
 	private static $instance_id = 0;
 
@@ -54,7 +51,7 @@ class HTMLForm implements HTMLElement
 	/**
 	 * @var string
 	 */
-	private $css_class = self::NORMAL_CSS_CLASS;
+	private $css_class;
 	/**
 	 * @var string
 	 */
@@ -236,13 +233,14 @@ class HTMLForm implements HTMLElement
 		$template->put_all(array(
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS'     => (self::$instance_id == 1) ? $this->has_required_fields() : false,
+			'C_FORM_CLASS'              => !empty($this->css_class),
 			'C_TARGET'                  => !empty($this->target),
 			'C_LAYOUT'                  => !empty($this->layout_title),
 			'C_VALIDATION_ERROR'        => count($this->validation_error_messages),
 
 			'LAYOUT_TITLE' => $this->layout_title,
 			'MODULE_ID'    => Environment::get_running_module_name(),
-			'FORMCLASS'    => $this->css_class,
+			'FORM_CLASS'   => $this->css_class,
 			'TARGET'       => $this->target,
 			'HTML_ID'      => $this->html_id,
 			'METHOD'       => $this->method,
@@ -387,8 +385,7 @@ class HTMLForm implements HTMLElement
 
 	/**
 	 * Sets the form's CSS class
-	 * @param string $css_class The CSS class (see the HTMLForm::SMALL_CSS_CLASS and
-	 * HTMLForm::NORMAL_CSS_CLASS constants)
+	 * @param string $css_class The CSS class 
 	 */
 	public function set_css_class($css_class)
 	{
@@ -396,9 +393,8 @@ class HTMLForm implements HTMLElement
 	}
 
 	/**
-	 * Sets the form's CSS class
-	 * @param string $css_class The CSS class (see the HTMLForm::SMALL_CSS_CLASS and
-	 * HTMLForm::NORMAL_CSS_CLASS constants)
+	 * Sets the h1 title of the layout
+	 * @param string $layout_title
 	 */
 	public function set_layout_title($layout_title)
 	{

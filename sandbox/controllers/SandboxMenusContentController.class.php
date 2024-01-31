@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 003 15
+ * @version     PHPBoost 6.0 - last update: 2024 01 31
  * @since       PHPBoost 5.2 - 2019 07 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -89,7 +89,7 @@ class SandboxMenusContentController extends DefaultModuleController
 	private function build_accordion_form()
 	{
 		$accordion_form = new HTMLForm('Sandbox_Accordion');
-		$accordion_form->set_css_class('accordion-container basic fieldset-content'); // basic|siblings
+		$accordion_form->set_css_class('accordion-container basic'); // basic|siblings
 
 		$accordion_controls = new FormFieldsetAccordionControls('accordion_controls_basic', '');
 			$accordion_form->add_fieldset($accordion_controls);
@@ -149,7 +149,7 @@ class SandboxMenusContentController extends DefaultModuleController
 	private function build_tabs_form()
 	{
 		$tabs_form = new HTMLForm('Sandbox_Accordion');
-		$tabs_form->set_css_class('tabs-container fieldset-content');
+		$tabs_form->set_css_class('tabs-container');
 
 		$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
 			$tabs_form->add_fieldset($tabs_menu);
@@ -206,7 +206,7 @@ class SandboxMenusContentController extends DefaultModuleController
 	private function build_wizard_form()
 	{
 		$wizard_form = new WizardHTMLForm('wizard_form');
-		$wizard_form->set_css_class('wizard-container fieldset-content');
+		$wizard_form->set_css_class('wizard-container');
 
 		// Wizard menu
 		$fieldset_tab_menu = new FormFieldMenuFieldset('tab_menu', '');
