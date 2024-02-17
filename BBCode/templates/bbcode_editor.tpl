@@ -381,7 +381,7 @@
 										</li>
 										<li id="html-div-custom" class="li-stretch{AUTH_CONTAINER}">
 											<span class="bbcode-label"> {@bbcode.custom.div} </span>
-											<spaa href="#custom-select"n class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" role="button" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </spaa>
+											<span href="#custom-select"n class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" role="button" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 										</li>
 										<li id="html-fieldset" class="li-stretch{AUTH_FIELDSET}">
 											<span class="bbcode-label">{@bbcode.fieldset}</span>
