@@ -381,7 +381,7 @@
 										</li>
 										<li id="html-div-custom" class="li-stretch{AUTH_CONTAINER}">
 											<span class="bbcode-label"> {@bbcode.custom.div} </span>
-											<spaa href="#custom-select"n class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" role="button" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </spaa>
+											<span href="#custom-select" class="button" # IF NOT C_DISABLED_CONTAINER #data-modal# ENDIF # data-target="block-custom-div{FIELD}" role="button" aria-label="{@bbcode.tags.options}"> {@bbcode.tags.choice} </span>
 										</li>
 										<li id="html-fieldset" class="li-stretch{AUTH_FIELDSET}">
 											<span class="bbcode-label">{@bbcode.fieldset}</span>
@@ -1045,7 +1045,7 @@
 										# START code_fa #
 											<li>
 												<a href="#fa" class="hide-modal close-bbcode-sub" onclick="insertbbcode('[fa# IF code_fa.C_CUSTOM_PREFIX #={code_fa.PREFIX}# ENDIF #]{code_fa.CODE}[/fa]', '', '{FIELD}');" role="button" aria-label="{code_fa.CODE}">
-													<i class="{code_fa.PREFIX} fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
+													<i class="fa# IF code_fa.C_CUSTOM_PREFIX # {code_fa.PREFIX}# ENDIF # fa-{code_fa.CODE} fa-fw" aria-hidden="true"></i>
 												</a>
 											</li>
 										# END code_fa #
