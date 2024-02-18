@@ -25,19 +25,19 @@
     <label for="ForumWhere">{@common.options}</label>
     <div class="form-field form-field-radio-button">
         <div class="form-field-radio">
-            <label clas="radio">
+            <label class="radio">
                 <input type="radio" id="ForumWhere" name="ForumWhere" value="title" {IS_TITLE_CHECKED}/>
                 <span>{@common.title}</span>
             </label>
         </div>
         <div class="form-field-radio">
-            <label clas="radio">
+            <label class="radio">
                 <input type="radio" name="ForumWhere" value="content" {IS_CONTENT_CHECKED}/>
                 <span>{@common.content}</span>
             </label>
         </div>
         <div class="form-field-radio">
-            <label clas="radio">
+            <label class="radio">
                 <input type="radio" name="ForumWhere" value="all" {IS_ALL_CHECKED}/>
                 <span>{@common.title} / {@common.content}</span>
             </label>
