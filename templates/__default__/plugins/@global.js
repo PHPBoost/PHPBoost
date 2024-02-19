@@ -321,7 +321,7 @@
 	//
 	function multiple_checkbox_check(status, elements_number, except_element, delete_button_control)
 	{
-		delete_button_control = true
+		delete_button_control = true;
 		except_element = (typeof except_element !== 'undefined') ? except_element : 0;
 		var i;
 
@@ -617,3 +617,50 @@
 			jQuery('html, body').animate({scrollTop:jQuery(realAnchor).offset().top}, 'slow');
 		})
 	});
+
+// AJAX to upload one file from a single button
+    function direct_upload(thisElement, targetId, token) 
+    {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.className = 'hidden';
+        fileInput.name = 'upload_file';
+        thisElement.parentNode.appendChild(fileInput);
+        
+        fileInput.click();
+        
+        const targetInput = document.getElementById(targetId);
+        
+        fileInput.addEventListener('change', function () {
+            targetInput.classList.remove('warning');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('upload_file', file);
+            formData.append('token', token);
+            
+            // Use AJAX to upload the file
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', PATH_TO_ROOT + '/user/ajax_upload.php', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    targetInput.value = response.url;
+                    if (response.class) {
+                        targetInput.classList.add(response.class);
+                    }
+                    targetInput.focus();
+                } else {
+                    targetInput.value = xhr.responseText;
+                    if (xhr.class) {
+                        targetInput.classList.add(xhr.class);
+                    }
+                    targetInput.focus();
+                }
+            };
+            xhr.onerror = function () {
+                console.error('Error occurred during the XMLHttpRequest');
+            };
+            xhr.send(formData);
+        });
+    }
+    

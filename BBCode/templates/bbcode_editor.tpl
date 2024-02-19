@@ -787,7 +787,10 @@
 									<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
-										<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_sound_url{FIELD}', '${escape(TOKEN)}')">
+                                            <i class="fa fa-laptop" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
 										</a>
 									</div>
@@ -815,7 +818,10 @@
 									</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
-										<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_movie_url{FIELD}', '${escape(TOKEN)}')">
+                                            <i class="fa fa-laptop" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
 										</a>
 									</div>
@@ -875,7 +881,10 @@
 									</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
-										<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_lightbox{FIELD}', '${escape(TOKEN)}')">
+                                            <i class="fa fa-laptop" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
 										</a>
 									</div>
@@ -909,7 +918,10 @@
 									<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
-										<a class="grouped-element" aria-label="{@bbcode.upload}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_figure_img{FIELD}', '${escape(TOKEN)}')">
+                                            <i class="fa fa-laptop" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
 											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
 										</a>
 									</div>
