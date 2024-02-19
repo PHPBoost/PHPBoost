@@ -9,8 +9,11 @@
 	# ENDIF #
 
 	<div id="onblurContainerResponse${escape(HTML_ID)}" class="form-field grouped-inputs # IF C_AUTH_UPLOAD #form-field-upload-file# ENDIF # picture-status-constraint# IF C_REQUIRED # field-required # ENDIF #">
-		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="grouped-element upload-input# IF C_HAS_CSS_CLASS # ${escape(CSS_CLASS)}# ENDIF #"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
-		<span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
+		<input type="text" name="${escape(NAME)}" id="${escape(HTML_ID)}" value="{VALUE}" class="grouped-element flex-wide# IF C_HAS_CSS_CLASS # ${escape(CSS_CLASS)}# ENDIF #"# IF C_DISABLED # disabled="disabled"# ENDIF ## IF C_READONLY # readonly="readonly"# ENDIF #/>
+		<a class="grouped-element button" aria-label="${LangLoader::get_message('upload.file.add', 'upload-lang')}" onclick="direct_upload(this, '${escape(HTML_ID)}', '${escape(TOKEN)}')">
+            <i class="fa fa-laptop" aria-hidden="true"></i>
+        </a>
+        <span class="text-status-constraint" style="display: none;" id="onblurMessageResponse${escape(HTML_ID)}"></span>
 		# IF C_AUTH_UPLOAD #
 			<a class="grouped-element bgc-full link-color" aria-label="${LangLoader::get_message('upload.files.management', 'upload-lang')}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=${escape(NAME)}&amp;parse=true&amp;no_path=true', '', 'height=500,width=769,resizable=yes,scrollbars=yes');return false;">
 				<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>

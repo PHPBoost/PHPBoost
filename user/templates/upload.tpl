@@ -67,7 +67,7 @@
 	function display_new_folder()
 	{
 		if( document.getElementById('empty-folder') )
-				document.getElementById('empty-folder').style.display = 'none';
+            document.getElementById('empty-folder').style.display = 'none';
 
 		if ( typeof this.divid == 'undefined' )
 			this.divid = 0;
