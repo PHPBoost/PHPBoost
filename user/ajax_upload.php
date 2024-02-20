@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 02 18
+ * @version     PHPBoost 6.0 - last update: 2024 02 20
  * @since       PHPBoost 6.0 - 2024 02 18
 */
 
@@ -68,7 +68,7 @@ else
                 $result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('shared' => 0, 'idcat' => 0, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => AppContext::get_current_user()->get_id(), 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
                 echo json_encode([
                     'success' => true,
-                    'url' => '/upload/' . $parameters['name']
+                    'url' => '/upload/' . $parameters['path']
                 ]);
             }
         }
