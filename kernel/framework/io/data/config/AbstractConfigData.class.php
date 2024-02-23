@@ -100,7 +100,7 @@ abstract class AbstractConfigData implements ConfigData
 
 	/**
 	 * Returns a map associating to each property name the corresponding default value
-	 * @return string[mixed]
+	 * @return array[mixed]
 	 */
 	abstract protected function get_default_values();
 }

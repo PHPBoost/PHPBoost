@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 07 21
+ * @version     PHPBoost 6.0 - last update: 2024 02 23
  * @since       PHPBoost 3.0 - 2009 11 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MySQLDBMSUtils implements DBMSUtils
@@ -63,6 +64,18 @@ class MySQLDBMSUtils implements DBMSUtils
 		$tables = array();
 		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
 		$results = $this->select('SHOW TABLES ' . $like_prefix . ';', array(), SelectQueryResult::FETCH_NUM);
+		foreach ($results as $result)
+		{
+			$tables[] = $result[0];
+		}
+		return $tables;
+	}
+
+	public function list_module_tables($module_id)
+	{
+		$tables = array();
+		$module_table = ' LIKE \'' . PREFIX . $module_id .'%\'';
+		$results = $this->select('SHOW TABLES ' . $module_table . ';', array(), SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$tables[] = $result[0];
@@ -128,6 +141,13 @@ class MySQLDBMSUtils implements DBMSUtils
 		{
 			$this->inject($query);
 		}
+	}
+
+	public function copy_table($table_name, $new_table_name)
+	{
+        $this->drop(array($new_table_name));
+        $this->inject('CREATE TABLE `' . $new_table_name . '` LIKE `' . $table_name . '`;');
+        $this->inject('INSERT INTO `' . $new_table_name . '` SELECT * FROM `' . $table_name . '`;');
 	}
 
 	public function drop($tables)
