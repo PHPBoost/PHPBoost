@@ -202,8 +202,8 @@ class BBCodeParser extends ContentFormattingParser
 		);
 
 		$array_preg_replace = array(
-			'b' => '<strong>$1</strong>',
-			'strong' => '<b>$1</b>',
+			'b' => '<b>$1</b>',
+			'strong' => '<strong>$1</strong>',
 			'i' => '<i>$1</i>',
 			'em' => '<em>$1</em>',
 			'u' => '<span style="text-decoration:underline;">$1</span>', // 'u' => '<u>$1</u>',
@@ -211,7 +211,7 @@ class BBCodeParser extends ContentFormattingParser
 			'del' => '<del>$1</del>',
 			'p' => '<p>$1</p>',
 			'q' => '<q>$1</q>',
-			'c' => '<pre style="display:inline-block;">$1</pre>',
+			'c' => '<code style="display:inline-block;">$1</code>',
 			'sup' => '<sup>$1</sup>',
 			'sub' => '<sub>$1</sub>',
 			'ins' => '<ins>$1</ins>',
