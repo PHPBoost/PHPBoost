@@ -242,25 +242,29 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 						}
 					}
 
-					if ($archive_root_content[0]['folder'] && empty($required_files))
-					{
-						$theme_id = $archive_root_content[0]['filename'];
-						if (!ThemesManager::get_theme_existed($theme_id))
+					if (isset($archive_root_content[0]) && !empty($archive_root_content[0])) {
+						if ($archive_root_content[0]['folder'] && empty($required_files))
 						{
-							if ($upload->get_extension() == 'gz')
-								PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
+							$theme_id = $archive_root_content[0]['filename'];
+							if (!ThemesManager::get_theme_existed($theme_id))
+							{
+								if ($upload->get_extension() == 'gz')
+									PclTarExtract($upload->get_filename(), $folder_phpboost_themes);
+								else
+									$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
+	
+								$this->install_theme($theme_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+							}
 							else
-								$zip->extract(PCLZIP_OPT_PATH, $folder_phpboost_themes, PCLZIP_OPT_SET_CHMOD, 0755);
-
-							$this->install_theme($theme_id, array('r-1' => 1, 'r0' => 1, 'r1' => 1));
+							{
+								$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.element.already.exists'], MessageHelper::WARNING));
+							}
 						}
 						else
 						{
-							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.element.already.exists'], MessageHelper::WARNING));
+							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.invalid.archive.content'], MessageHelper::WARNING));
 						}
-					}
-					else
-					{
+					} else {
 						$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.invalid.archive.content'], MessageHelper::WARNING));
 					}
 
