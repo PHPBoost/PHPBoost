@@ -217,9 +217,10 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 					}
 
 					$theme_name = TextHelper::substr($upload->get_filename(), 0, TextHelper::strpos($upload->get_filename(), '.'));
+					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini', '/theme/@import.css');
-                    $is_theme = array();
+					$forbidden_files = array('index.php', 'admin-lang.php');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $theme_name) === 0)
@@ -239,10 +240,15 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 								unset($required_files[array_search($name_in_archive, $required_files)]);
 							else if (in_array('/' . $name_in_archive, $required_files))
 								unset($required_files[array_search('/' . $name_in_archive, $required_files)]);
+
+                            if (in_array($name_in_archive, $forbidden_files) || in_array('/' . $name_in_archive, $forbidden_files))
+                            {
+                                $valid_archive = false;
+                            }
 						}
 					}
 
-					if (isset($archive_root_content[0]) && !empty($archive_root_content[0])) {
+					if (isset($archive_root_content[0]) && !empty($archive_root_content[0]) && $valid_archive) {
 						if ($archive_root_content[0]['folder'] && empty($required_files))
 						{
 							$theme_id = $archive_root_content[0]['filename'];

@@ -195,8 +195,10 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 					}
 
 					$lang_name = TextHelper::substr($upload->get_filename(), 0, TextHelper::strpos($upload->get_filename(), '.'));
+					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini', '/admin-lang.php', '/addon-lang.php', '/common-lang.php');
+					$forbidden_files = array('/theme/@import.css', 'index.php');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $lang_name) === 0)
@@ -216,10 +218,15 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 								unset($required_files[array_search($name_in_archive, $required_files)]);
 							else if (in_array('/' . $name_in_archive, $required_files))
 								unset($required_files[array_search('/' . $name_in_archive, $required_files)]);
+
+                            if (in_array($name_in_archive, $forbidden_files) || in_array('/' . $name_in_archive, $forbidden_files))
+                            {
+                                $valid_archive = false;
+                            }
 						}
 					}
 
-					if ($archive_root_content[0]['folder'] && empty($required_files))
+					if ($archive_root_content[0]['folder'] && empty($required_files) && $valid_archive)
 					{
 						$lang_id = $archive_root_content[0]['filename'];
 						if (!LangsManager::get_lang_existed($lang_id))

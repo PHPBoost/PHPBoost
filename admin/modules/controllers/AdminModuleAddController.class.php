@@ -238,7 +238,7 @@ class AdminModuleAddController extends DefaultAdminController
 					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
-					$forbidden_files = array('/theme/@import.css');
+					$forbidden_files = array('/theme/@import.css', 'admin-lang.php');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $module_name) === 0)
