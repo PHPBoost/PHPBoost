@@ -25,7 +25,7 @@
 								# IF modules_not_installed.C_COMPATIBLE #
 									<button type="submit" class="button submit addon-menu-title" name="add-{modules_not_installed.MODULE_ID}" value="true">{@addon.install}</button>
 								# ELSE #
-									<span class="addon-menu-title error">{@addon.not.compatible}</span>
+									<span class="addon-menu-title bgc-full error">{@addon.not.compatible}</span>
 								# ENDIF #
 							</div>
 						</header>
@@ -52,7 +52,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@addon.compatibility} :</span>
-									<span# IF NOT modules_not_installed.C_COMPATIBLE # class="not-compatible error"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span>
+									<span# IF NOT modules_not_installed.C_COMPATIBLE_VERSION # class="not-compatible bgc-full error"# ENDIF #>PHPBoost {modules_not_installed.COMPATIBILITY}</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@common.author} :</span>
@@ -74,6 +74,9 @@
 									<span class="text-strong">{@common.description} :</span>
 									{modules_not_installed.DESCRIPTION}
 								</li>
+                                # IF NOT modules_not_installed.C_COMPATIBLE_ADDON #
+                                    <li class="bgc-full error">{@addon.modules.not.module}</li>
+                                # ENDIF #
 							</ul>
 						</div>
 

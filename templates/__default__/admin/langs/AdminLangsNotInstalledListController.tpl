@@ -7,7 +7,7 @@
 		# IF C_LANG_AVAILABLE #
 			<div class="cell-flex cell-columns-3 cell-tile">
 				# START langs_not_installed #
-					<article class="cell addon# IF NOT langs_not_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
+					<article class="cell addon# IF NOT langs_not_installed.C_COMPATIBLE # not-compatible bgc error# ENDIF #">
 						<header class="cell-header">
 							# IF C_SEVERAL_LANGS_AVAILABLE #
 								# IF langs_not_installed.C_COMPATIBLE #
@@ -29,7 +29,7 @@
 								# IF langs_not_installed.C_COMPATIBLE #
 									<button type="submit" class="button submit addon-menu-title" name="add-{langs_not_installed.ID}" value="true">{@addon.install}</button>
 								# ELSE #
-									<span class="addon-menu-title">{@addon.not.compatible}</span>
+									<span class="addon-menu-title bgc-full error">{@addon.not.compatible}</span>
 								# ENDIF #
 							</div>
 						</header>
@@ -42,7 +42,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@addon.compatibility} :</span>
-									<span# IF NOT langs_not_installed.C_COMPATIBLE # class="not-compatible error"# ENDIF #>PHPBoost {langs_not_installed.COMPATIBILITY}</span>
+									<span # IF NOT langs_not_installed.C_COMPATIBLE_VERSION # class="bgc-full error"# ENDIF #>PHPBoost {langs_not_installed.COMPATIBILITY}</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@common.author} :</span>
@@ -52,6 +52,9 @@
 										# IF langs_not_installed.C_AUTHOR_WEBSITE # <a href="{langs_not_installed.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
 									</span>
 								</li>
+                                # IF NOT langs_not_installed.C_COMPATIBLE_ADDON #
+                                    <li class="bgc-full error">{@addon.langs.not.lang}</li>
+                                # ENDIF #
 							</ul>
 						</div>
 

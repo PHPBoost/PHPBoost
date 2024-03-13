@@ -27,7 +27,7 @@
 								</div>
 							# ELSE #
 								<div class="addon-menu-container addon-with-menu">
-									<a href="#" id="addon-menu-title-{themes_installed.THEME_NUMBER}" class="addon-menu-title bgc-full link-color">
+									<a href="#" id="addon-menu-title-{themes_installed.THEME_NUMBER}" class="addon-menu-title bgc-full # IF themes_installed.C_COMPATIBLE #link-color# ELSE #error# ENDIF #">
 										# IF themes_installed.C_COMPATIBLE #
 											# IF themes_installed.C_IS_ACTIVATED #
 												{@common.actions}
@@ -71,7 +71,7 @@
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@addon.compatibility} :</span>
-								<span# IF NOT themes_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span>
+								<span # IF NOT themes_installed.C_COMPATIBLE # class="not-compatible bgc-full error"# ENDIF #>PHPBoost {themes_installed.COMPATIBILITY}</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@common.author} :</span>
@@ -110,11 +110,17 @@
 								{themes_installed.WIDTH}
 							</li>
 							# IF themes_installed.C_PARENT_THEME #
-							<li class="li-stretch">
-								<span class="text-strong">{@addon.themes.parent.theme} :</span>
-								{themes_installed.PARENT_THEME}
-							</li>
+                                <li class="li-stretch">
+                                    <span class="text-strong">{@addon.themes.parent.theme} :</span>
+                                    {themes_installed.PARENT_THEME}
+                                </li>
 							# ENDIF #
+                            # IF NOT themes_installed.C_COMPATIBLE_ADDON #
+                                <li class="bgc-full error">{@addon.themes.not.theme}</li>
+                            # ENDIF #
+                            # IF NOT themes_installed.C_COMPATIBLE_VERSION #
+                                <li class="bgc-full error">{@addon.themes.warning.version}</li>
+                            # ENDIF #
 						</ul>
 					</div>
 					<footer class="cell-footer">
