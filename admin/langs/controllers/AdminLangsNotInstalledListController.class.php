@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 11
+ * @version     PHPBoost 6.0 - last update: 2024 03 12
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -48,10 +48,12 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 			$author_website = $configuration->get_author_link();
 
 			$this->view->assign_block_vars('langs_not_installed', array(
-				'C_AUTHOR_EMAIL'   => !empty($author_email),
-				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
-				'C_HAS_THUMBNAIL'  => $configuration->has_picture(),
+				'C_AUTHOR_EMAIL'       => !empty($author_email),
+				'C_AUTHOR_WEBSITE'     => !empty($author_website),
+				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'lang' && $configuration->get_compatibility() == $phpboost_version,
+				'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'lang',
+				'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
+				'C_HAS_THUMBNAIL'      => $configuration->has_picture(),
 
 				'LANG_NUMBER'    => $lang_number,
 				'ID'             => $lang->get_id(),
@@ -198,7 +200,7 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
 					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini', '/admin-lang.php', '/addon-lang.php', '/common-lang.php');
-					$forbidden_files = array('/theme/@import.css', 'index.php');
+					$forbidden_files = array('theme/@import.css', 'index.php');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $lang_name) === 0)

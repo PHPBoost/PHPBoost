@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 24
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -15,7 +15,7 @@ class AdminModulesManagementController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
+        return new FileTemplate('admin/modules/AdminModulesManagementController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -42,14 +42,16 @@ class AdminModulesManagementController extends DefaultAdminController
 			$thumbnail = new File(PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png');
 
 			$this->view->assign_block_vars('modules_installed', array(
-				'C_THUMBNAIL'      => $thumbnail->exists(),
-				'C_FA_ICON' 	   => !empty($fa_icon),
-				'C_HEXA_ICON' 	   => !empty($hexa_icon),
-				'C_AUTHOR_EMAIL'   => !empty($author_email),
-				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
-				'C_IS_ACTIVATED'   => $module->is_activated(),
-				'C_DOCUMENTATION'  => !empty($documentation),
+				'C_THUMBNAIL'          => $thumbnail->exists(),
+				'C_FA_ICON' 	       => !empty($fa_icon),
+				'C_HEXA_ICON' 	       => !empty($hexa_icon),
+				'C_AUTHOR_EMAIL'       => !empty($author_email),
+				'C_AUTHOR_WEBSITE'     => !empty($author_website),
+				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'module' && $configuration->get_compatibility() == $phpboost_version,
+				'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'module',
+				'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
+				'C_IS_ACTIVATED'       => $module->is_activated(),
+				'C_DOCUMENTATION'      => !empty($documentation),
 
 				'MODULE_NUMBER'  => $module_number,
 				'MODULE_ID'      => $module->get_id(),

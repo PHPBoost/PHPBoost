@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 30
+ * @version     PHPBoost 6.0 - last update: 2024 03 12
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -58,14 +58,16 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 			$author_email = $configuration->get_author_mail();
 			$author_website = $configuration->get_author_link();
 			$pictures = $configuration->get_pictures();
+
 			$this->view->assign_block_vars('themes_not_installed', array(
-				'C_AUTHOR_EMAIL'   => !empty($author_email),
-				'C_AUTHOR_WEBSITE' => !empty($author_website),
-				'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version && ($theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true),
-				'C_VERSION_COMPAT' => $configuration->get_compatibility() == $phpboost_version,
-				'C_PARENT_THEME'   => $theme_has_parent,
-				'C_PARENT_COMPAT'  => $theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true,
-				'C_THUMBNAIL'      => count($pictures) > 0,
+				'C_AUTHOR_EMAIL'       => !empty($author_email),
+				'C_AUTHOR_WEBSITE'     => !empty($author_website),
+				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'theme' && $configuration->get_compatibility() == $phpboost_version && ($theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true),
+				'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'theme',
+				'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
+				'C_PARENT_THEME'       => $theme_has_parent,
+				'C_PARENT_COMPATIBLE'  => $theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true,
+				'C_THUMBNAIL'          => count($pictures) > 0,
 
 				'THEME_NUMBER'   => $theme_number,
 				'MODULE_ID'      => $theme->get_id(),
@@ -85,8 +87,8 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 				'WIDTH'          => $configuration->get_variable_width() ? $this->lang['addon.themes.variable.width'] : $configuration->get_width(),
 				'PARENT_THEME'   => $theme_has_parent ? (ThemesManager::get_theme_existed($configuration->get_parent_theme()) ? ThemesManager::get_theme($configuration->get_parent_theme())->get_configuration()->get_name() : $configuration->get_parent_theme()) : '',
 
-				'U_MAIN_THUMBNAIL' => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
-				'L_PARENT_COMPAT'  => StringVars::replace_vars($this->lang['addon.themes.parent.theme.not.installed'], array('id_parent' => $configuration->get_parent_theme())),
+				'U_MAIN_THUMBNAIL'     => count($pictures) > 0 ? Url::to_rel('/templates/' . $theme->get_id() . '/' . current($pictures)) : '',
+				'L_PARENT_COMPATIBLE'  => StringVars::replace_vars($this->lang['addon.themes.parent.theme.not.installed'], array('id_parent' => $configuration->get_parent_theme())),
 			));
 
 			if (count($pictures) > 0)
@@ -200,6 +202,7 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 			if ($uploaded_file !== null)
 			{
 				$upload = new Upload($folder_phpboost_themes);
+
 				if ($upload->file('upload_theme_file', '`([A-Za-z0-9-_]+)\.(gz|zip)+$`iu'))
 				{
 					$archive = $folder_phpboost_themes . $upload->get_filename();
@@ -248,7 +251,8 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 						}
 					}
 
-					if (isset($archive_root_content[0]) && !empty($archive_root_content[0]) && $valid_archive) {
+					if (isset($archive_root_content[0]) && !empty($archive_root_content[0]) && $valid_archive) 
+                    {
 						if ($archive_root_content[0]['folder'] && empty($required_files))
 						{
 							$theme_id = $archive_root_content[0]['filename'];
@@ -270,7 +274,9 @@ class AdminThemesNotInstalledListController extends DefaultAdminController
 						{
 							$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.invalid.archive.content'], MessageHelper::WARNING));
 						}
-					} else {
+					}
+                    else
+                    {
 						$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.invalid.archive.content'], MessageHelper::WARNING));
 					}
 
