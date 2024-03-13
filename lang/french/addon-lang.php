@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 26
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -47,6 +47,7 @@ $lang['addon.langs.select.all']      = 'Selectionner toutes les langues';
     // Warnings
 $lang['addon.langs.warning.delete']  = 'Une langue doit être activée, désactivée ou supprimée uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.langs.warning.install'] = 'Les langues ajoutées sont automatiquement activées. Pensez à les désactiver si besoin.';
+$lang['addon.langs.not.lang']        = 'Ce dossier n\'est pas un dossier de langue.';
     // Upload
 $lang['addon.langs.upload']      = 'Uploader une langue';
     // Drop
@@ -70,6 +71,7 @@ $lang['addon.modules.no.icon']         = 'Aucune icône';
 $lang['addon.modules.warning.delete']  = 'Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.modules.warning.install'] = 'Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.';
 $lang['addon.modules.warning.update']  = 'Les modules mis à jour sont automatiquement activés. Pensez à les désactiver si besoin.';
+$lang['addon.modules.not.module']      = 'Ce dossier n\'est pas un dossier de module.';
     // Upload
 $lang['addon.modules.upload']      = 'Uploader un module';
     // Module
@@ -120,6 +122,7 @@ $lang['addon.themes.parent.theme.not.installed'] = 'Le thème parent (<b>:id_par
 $lang['addon.themes.default.parent.theme']       = 'Le thème <b>:name</b> est le parent du thème par défaut du site (<b>:default_theme</b>), il ne peut pas être désinstallé';
 $lang['addon.themes.warning.childs.list']        = 'Les thèmes <b>:themes_names</b>, enfants du thème <b>:name</b> vont également être désinstallés';
 $lang['addon.themes.warning.child']              = 'Le thème <b>:theme_name</b>, enfant du thème <b>:name</b> va également être désinstallé';
+$lang['addon.themes.not.theme']                  = 'Ce dossier n\'est pas un dossier de themes.';
     // Upload
 $lang['addon.themes.upload'] = 'Uploader un thème';
     // Drop

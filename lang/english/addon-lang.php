@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 07
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -47,6 +47,7 @@ $lang['addon.langs.select.all']      = 'Select all languages';
     // Warnings
 $lang['addon.langs.warning.delete']  = 'A language must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.';
 $lang['addon.langs.warning.install'] = 'The installed languages are automatically enabled. Do not forget to disable them if necessary.';
+$lang['addon.langs.not.lang']        = 'This folder is not a language one.';
     // Upload
 $lang['addon.langs.upload'] = 'Upload a language';
     // Drop
@@ -70,6 +71,7 @@ $lang['addon.modules.no.icon']         = 'No icon';
 $lang['addon.modules.warning.delete']  = 'A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.';
 $lang['addon.modules.warning.install'] = 'The installed modules are automatically enabled. Do not forget to disable them if necessary.';
 $lang['addon.modules.warning.update']  = 'The updated modules are automatically enabled. Do not forget to disable them if necessary.';
+$lang['addon.modules.not.module']      = 'This folder is not a module one.';
     // Upload
 $lang['addon.modules.upload'] = 'Upload a module';
     // Module
@@ -117,9 +119,10 @@ $lang['addon.themes.warning.install']            = 'The installed themes are aut
 $lang['addon.themes.warning.default']            = 'Default theme cannot be uninstalled';
 $lang['addon.themes.warning.version']            = 'The PHPBoost version of this theme is not compatible with the PHPBoost version of the site ';
 $lang['addon.themes.parent.theme.not.installed'] = 'Parent theme (<b>:id_parent</b>) of this theme is not installed, please install it before this one';
-$lang['addon.themes.default.parent.theme']      = 'The theme <b>:name</b> is the parent of the site\'s default theme (<b>:default_theme</b>), it cannot be uninstalled';
+$lang['addon.themes.default.parent.theme']       = 'The theme <b>:name</b> is the parent of the site\'s default theme (<b>:default_theme</b>), it cannot be uninstalled';
 $lang['addon.themes.warning.childs.list']        = 'Themes <b>:themes_names</b>, childs of theme <b>:name</b> will be uninstalled too';
 $lang['addon.themes.warning.child']              = 'Theme <b>:theme_name</b>, child of theme <b>:name</b> will be uninstalled too';
+$lang['addon.themes.not.theme']                  = 'This folder is not a theme one.';
     // Upload
 $lang['addon.themes.upload'] = 'Upload theme';
     // Drop
