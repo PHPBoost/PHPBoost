@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 23
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2011 04 10
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -13,6 +13,7 @@
 
 class ThemeConfiguration
 {
+	private $addon_type;
 	private $name;
 	private $author_name;
 	private $author_mail;
@@ -37,6 +38,11 @@ class ThemeConfiguration
 	{
 		$this->load_configuration($config_ini_file);
 		$this->load_description($desc_ini_file);
+	}
+
+	public function get_addon_type()
+	{
+		return $this->addon_type;
 	}
 
 	public function get_name()
@@ -154,6 +160,7 @@ class ThemeConfiguration
 
 		$this->check_parse_ini_file($config, $config_ini_file);
 
+		$this->addon_type        = isset($config['addon_type']) ? $config['addon_type'] : '';
 		$this->author_name       = $config['author'];
 		$this->author_mail       = $config['author_mail'];
 		$this->author_link       = $config['author_link'];
@@ -207,6 +214,7 @@ class ThemeConfiguration
 	public function get_properties()
 	{
 		return array(
+			'addon_type'        => $this->addon_type,
 			'name'              => $this->name,
 			'description'       => $this->description,
 			'main_color'        => $this->main_color,

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 19
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,6 +16,7 @@
 
 class ModuleConfiguration
 {
+	private $addon_type;
 	private $module_id;
 	private $name;
 	private $description;
@@ -48,6 +49,11 @@ class ModuleConfiguration
 		$this->module_id = $module_id;
 		$this->load_configuration($config_ini_file);
 		$this->load_description($desc_ini_file);
+	}
+
+	public function get_addon_type()
+	{
+		return $this->addon_type;
 	}
 
 	public function get_name()
@@ -230,6 +236,7 @@ class ModuleConfiguration
 		$config = parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
 
+		$this->addon_type             = isset($config['addon_type']) ? $config['addon_type'] : '';
 		$this->author                 = $config['author'];
 		$this->author_email           = isset($config['author_mail']) ? $config['author_mail'] : '';
 		$this->author_website         = isset($config['author_website']) ? $config['author_website'] : '';
@@ -299,6 +306,7 @@ class ModuleConfiguration
 	public function get_properties()
 	{
 		return array(
+			'addon_type'             => $this->addon_type,
 			'name'                   => $this->name,
 			'description'            => $this->description,
 			'documentation'          => $this->documentation,
