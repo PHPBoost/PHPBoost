@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Bruno MERCIER <aiglobulles@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2024 03 13
+ * @version     PHPBoost 6.0 - last update: 2024 03 14
  * @since       PHPBoost 3.0 - 2012 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -97,15 +97,15 @@ class LangConfiguration
 		$this->check_parse_ini_file($config, $config_ini_file);
 
 		$this->addon_type      = isset($config['addon_type']) ? $config['addon_type'] : '';
-		$this->name            = $config['name'];
-		$this->author_name     = $config['author'];
-		$this->author_mail     = $config['author_mail'];
-		$this->author_link     = $config['author_link'];
-		$this->date            = $config['creation_date'];
-		$this->version         = $config['version'];
-		$this->compatibility   = $config['compatibility'];
-		$this->identifier      = $config['identifier'];
-		$this->repository      = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
+		$this->name            = isset($config['name']) ? $config['name'] : '';
+		$this->author_name     = isset($config['author']) ? $config['author'] : '';
+		$this->author_mail     = isset($config['author_mail']) ? $config['author_mail'] : '';
+		$this->author_link     = isset($config['author_link']) ? $config['author_link'] : '';
+		$this->date            = isset($config['creation_date']) ? $config['creation_date'] : '';
+		$this->version         = isset($config['version']) ? $config['version'] : '';
+		$this->compatibility   = isset($config['compatibility']) ? $config['compatibility'] : '';
+		$this->identifier      = isset($config['identifier']) ? $config['identifier'] : '';
+		$this->repository      = isset($config['repository']) ? (!empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY) : '';
 
 		$url = '/images/stats/countries/' . $this->identifier . '.png';
 		$picture = new File(PATH_TO_ROOT . $url);

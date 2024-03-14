@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 03 13
+ * @version     PHPBoost 6.0 - last update: 2024 03 14
  * @since       PHPBoost 3.0 - 2012 04 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -122,7 +122,7 @@ $lang['addon.themes.parent.theme.not.installed'] = 'Le thème parent (<b>:id_par
 $lang['addon.themes.default.parent.theme']       = 'Le thème <b>:name</b> est le parent du thème par défaut du site (<b>:default_theme</b>), il ne peut pas être désinstallé';
 $lang['addon.themes.warning.childs.list']        = 'Les thèmes <b>:themes_names</b>, enfants du thème <b>:name</b> vont également être désinstallés';
 $lang['addon.themes.warning.child']              = 'Le thème <b>:theme_name</b>, enfant du thème <b>:name</b> va également être désinstallé';
-$lang['addon.themes.not.theme']                  = 'Ce dossier n\'est pas un dossier de themes.';
+$lang['addon.themes.not.theme']                  = 'Ce dossier n\'est pas un dossier de thème.';
     // Upload
 $lang['addon.themes.upload'] = 'Uploader un thème';
     // Drop
