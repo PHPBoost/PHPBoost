@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 24
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@ class AdminThemesInstalledListController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-	   return new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
+        return new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -34,19 +34,23 @@ class AdminThemesInstalledListController extends DefaultAdminController
 		foreach($installed_themes as $theme)
 		{
 			$configuration = $theme->get_configuration();
-			$authorizations = $theme->get_authorizations();
+			$theme_has_parent = $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__';
+
+            $authorizations = $theme->get_authorizations();
 			$author_email = $configuration->get_author_mail();
 			$author_website = $configuration->get_author_link();
 			$pictures = $configuration->get_pictures();
 
 			$this->view->assign_block_vars('themes_installed', array(
-				'C_AUTHOR_EMAIL'     => !empty($author_email),
-				'C_AUTHOR_WEBSITE'   => !empty($author_website),
-				'C_COMPATIBLE'       => $configuration->get_compatibility() == $phpboost_version,
-				'C_IS_DEFAULT_THEME' => $theme->get_id() == ThemesManager::get_default_theme(),
-				'C_IS_ACTIVATED'     => $theme->is_activated(),
-				'C_THUMBNAILS'       => count($pictures) > 0,
-				'C_PARENT_THEME'     => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__',
+				'C_AUTHOR_EMAIL'       => !empty($author_email),
+				'C_AUTHOR_WEBSITE'     => !empty($author_website),
+				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'theme' && $configuration->get_compatibility() == $phpboost_version && ($theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true),
+				'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'theme',
+				'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
+				'C_IS_DEFAULT_THEME'   => $theme->get_id() == ThemesManager::get_default_theme(),
+				'C_IS_ACTIVATED'       => $theme->is_activated(),
+				'C_THUMBNAILS'         => count($pictures) > 0,
+				'C_PARENT_THEME'       => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__',
 
 				'THEME_NUMBER'   => $theme_number,
 				'MODULE_ID'      => $theme->get_id(),

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2024 11 01
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -100,9 +100,11 @@ class AdminModuleUpdateController extends DefaultAdminController
 				$author_website = $configuration->get_author_website();
 
 				$this->view->assign_block_vars('modules_upgradable', array(
-					'C_AUTHOR_EMAIL'   => !empty($author_email),
-					'C_AUTHOR_WEBSITE' => !empty($author_website),
-					'C_COMPATIBLE'     => $configuration->get_compatibility() == $phpboost_version,
+					'C_AUTHOR_EMAIL'       => !empty($author_email),
+					'C_AUTHOR_WEBSITE'     => !empty($author_website),
+                    'C_COMPATIBLE'         => $configuration->get_addon_type() == 'module' && $configuration->get_compatibility() == $phpboost_version,
+                    'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'module',
+                    'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
 
 					'MODULE_NUMBER'    => $module_number,
 					'MODULE_ID'               => $module->get_id(),

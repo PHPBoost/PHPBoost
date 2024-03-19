@@ -7,7 +7,7 @@
 		<header class="legend">{@addon.langs.installed}</header>
 		<div class="cell-flex cell-columns-3 cell-tile">
 			# START langs_installed #
-				<article class="cell addon# IF langs_installed.C_IS_DEFAULT_LANG # default-addon# ENDIF ## IF NOT langs_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT langs_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
+				<article class="cell addon# IF langs_installed.C_IS_DEFAULT_LANG # default-addon# ENDIF ## IF NOT langs_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT langs_installed.C_COMPATIBLE # not-compatible bgc error# ENDIF #">
 					<header class="cell-header">
 						# IF C_SEVERAL_LANGS_INSTALLED #
 							# IF langs_installed.C_COMPATIBLE #
@@ -31,7 +31,7 @@
 							</div>
 						# ELSE #
 							<div class="addon-menu-container addon-with-menu">
-								<a href="#" id="addon-menu-title-{langs_installed.LANG_NUMBER}" class="addon-menu-title bgc-full link-color" aria-label="{@common.actions}">
+								<a href="#" id="addon-menu-title-{langs_installed.LANG_NUMBER}" class="addon-menu-title bgc-full # IF langs_installed.C_COMPATIBLE #link-color# ELSE #error# ENDIF #" aria-label="{@common.actions}">
 									# IF langs_installed.C_COMPATIBLE #
 										# IF langs_installed.C_IS_ACTIVATED #
 											{@common.actions}
@@ -52,7 +52,7 @@
 										# ENDIF #
 									# ENDIF #
 									<li class="addon-menu-item"><button type="submit" class="button alt-submit" name="delete-{langs_installed.ID}" value="true">{@addon.uninstall}</button></li>
-								</ul>
+                                </ul>
 							</div>
 						# ENDIF #
 					</header>
@@ -64,7 +64,7 @@
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@addon.compatibility} :</span>
-								<span# IF NOT langs_installed.C_COMPATIBLE # class="not-compatible error"# ENDIF #>PHPBoost {langs_installed.COMPATIBILITY}</span>
+								<span# IF NOT langs_installed.C_COMPATIBLE_VERSION # class="not-compatible bgc-full error"# ENDIF #>PHPBoost {langs_installed.COMPATIBILITY}</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@common.author} :</span>
@@ -74,7 +74,10 @@
 									# IF langs_installed.C_AUTHOR_WEBSITE # <a href="{langs_installed.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
 								</span>
 							</li>
-						</ul>
+                            # IF NOT langs_installed.C_COMPATIBLE_ADDON #
+                                <li class="bgc-full error">{@addon.langs.not.lang}</li>
+                            # ENDIF #
+                        </ul>
 					</div>
 					<footer class="cell-footer">
 						# IF langs_installed.C_COMPATIBLE #

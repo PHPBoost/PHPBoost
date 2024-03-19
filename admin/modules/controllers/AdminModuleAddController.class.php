@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 30
+ * @version     PHPBoost 6.0 - last update: 2024 03 12
  * @since       PHPBoost 3.0 - 2011 09 20
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -104,12 +104,14 @@ class AdminModuleAddController extends DefaultAdminController
 			$thumbnail = new File(PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png');
 
 			$this->view->assign_block_vars('modules_not_installed', array(
-				'C_THUMBNAIL'      => $thumbnail->exists(),
-				'C_FA_ICON' 	   => !empty($fa_icon),
-				'C_HEXA_ICON' 	   => !empty($hexa_icon),
-				'C_AUTHOR_EMAIL'    => !empty($author_email),
-				'C_AUTHOR_WEBSITE'  => !empty($author_website),
-				'C_COMPATIBLE'      => $configuration->get_compatibility() == $phpboost_version,
+				'C_THUMBNAIL'          => $thumbnail->exists(),
+				'C_FA_ICON' 	       => !empty($fa_icon),
+				'C_HEXA_ICON' 	       => !empty($hexa_icon),
+				'C_AUTHOR_EMAIL'       => !empty($author_email),
+				'C_AUTHOR_WEBSITE'     => !empty($author_website),
+				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'module' && $configuration->get_compatibility() == $phpboost_version,
+				'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'module',
+				'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
 
 				'MODULE_NUMBER'  => $module_number,
 				'MODULE_ID'      => $module->get_id(),
@@ -238,7 +240,7 @@ class AdminModuleAddController extends DefaultAdminController
 					$valid_archive = true;
 					$archive_root_content = array();
 					$required_files = array('/config.ini');
-					$forbidden_files = array('/theme/@import.css');
+					$forbidden_files = array('theme/@import.css', 'admin-lang.php');
 					foreach ($archive_content as $element)
 					{
 						if (TextHelper::strpos($element['filename'], $module_name) === 0)

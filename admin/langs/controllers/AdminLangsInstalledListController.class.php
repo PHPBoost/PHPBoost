@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 04
+ * @version     PHPBoost 6.0 - last update: 2024 03 13
  * @since       PHPBoost 3.0 - 2011 04 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,12 +40,14 @@ class AdminLangsInstalledListController extends DefaultAdminController
 			$author_website = $configuration->get_author_link();
 
 			$this->view->assign_block_vars('langs_installed', array(
-				'C_AUTHOR_EMAIL'    => !empty($author_email),
-				'C_AUTHOR_WEBSITE'  => !empty($author_website),
-				'C_COMPATIBLE'      => $configuration->get_compatibility() == $phpboost_version,
-				'C_IS_DEFAULT_LANG' => $lang->get_id() == LangsManager::get_default_lang(),
-				'C_IS_ACTIVATED'    => $lang->is_activated(),
-				'C_HAS_PICTURE'     => $configuration->has_picture(),
+				'C_AUTHOR_EMAIL'       => !empty($author_email),
+				'C_AUTHOR_WEBSITE'     => !empty($author_website),
+				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'lang' && $configuration->get_compatibility() == $phpboost_version,
+				'C_COMPATIBLE_ADDON'   => $configuration->get_addon_type() == 'lang',
+				'C_COMPATIBLE_VERSION' => $configuration->get_compatibility() == $phpboost_version,
+				'C_IS_DEFAULT_LANG'    => $lang->get_id() == LangsManager::get_default_lang(),
+				'C_IS_ACTIVATED'       => $lang->is_activated(),
+				'C_HAS_PICTURE'        => $configuration->has_picture(),
 
 				'LANG_NUMBER'    => $lang_number,
 				'ID'             => $lang->get_id(),

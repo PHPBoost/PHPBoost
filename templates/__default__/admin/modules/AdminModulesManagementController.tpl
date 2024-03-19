@@ -12,7 +12,7 @@
 		<header class="legend">{@addon.modules.installed}</header>
 		<div class="cell-flex cell-columns-3 cell-tile">
 			# START modules_installed #
-				<article class="cell addon# IF NOT modules_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT modules_installed.C_COMPATIBLE # not-compatible# ENDIF #">
+				<article class="cell addon# IF NOT modules_installed.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT modules_installed.C_COMPATIBLE # not-compatible error# ENDIF #">
 					<header class="cell-header">
 						# IF C_SEVERAL_MODULES_INSTALLED #
 							# IF modules_installed.C_COMPATIBLE #
@@ -26,7 +26,7 @@
 						# ENDIF #
 						<h3 class="cell-name">{modules_installed.MODULE_NAME}</h3>
 						<div class="addon-menu-container addon-with-menu">
-							<a href="#" id="addon-menu-title-{modules_installed.MODULE_NUMBER}" class="addon-menu-title bgc-full link-color">
+							<a href="#" id="addon-menu-title-{modules_installed.MODULE_NUMBER}" class="addon-menu-title bgc-full # IF modules_installed.C_COMPATIBLE #link-color# ELSE #error# ENDIF #">
 								# IF modules_installed.C_COMPATIBLE #
 									# IF modules_installed.C_IS_ACTIVATED #
 										{@common.actions}
@@ -92,12 +92,15 @@
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@addon.compatibility} :</span>
-								<span# IF NOT modules_installed.C_COMPATIBLE # class="not-compatible"# ENDIF #>PHPBoost {modules_installed.COMPATIBILITY}</span>
+								<span# IF NOT modules_installed.C_COMPATIBLE_VERSION # class="not-compatible bgc-full error"# ENDIF #>PHPBoost {modules_installed.COMPATIBILITY}</span>
 							</li>
 							<li class="li-stretch">
 								<span class="text-strong">{@addon.modules.php.version} :</span>
 								{modules_installed.PHP_VERSION}
 							</li>
+                            # IF NOT modules_installed.C_COMPATIBLE_ADDON #
+                                <li class="bgc-full error">{@addon.modules.not.module}</li>
+                            # ENDIF #
 						</ul>
 					</div>
 					# IF modules_installed.C_DOCUMENTATION #

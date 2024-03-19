@@ -40,7 +40,7 @@
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@addon.compatibility} :</span>
-									<span# IF NOT modules_upgradable.C_COMPATIBLE # class="not-compatible error"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
+									<span# IF NOT modules_upgradable.C_COMPATIBLE_VERSION # class="not-compatible bgc-full error"# ENDIF#>PHPBoost {modules_upgradable.COMPATIBILITY}</span>
 								</li>
 								<li class="li-stretch">
 									<span class="text-strong">{@common.author} :</span>
@@ -58,6 +58,9 @@
 									<span class="text-strong">{@common.description} :</span>
 									{modules_upgradable.DESCRIPTION}
 								</li>
+                                # IF NOT modules_upgradable.C_COMPATIBLE_ADDON #
+                                    <li class="bgc-full error">{@addon.modules.not.module}</li>
+                                # ENDIF #
 							</ul>
 						</div>
 						<footer></footer>

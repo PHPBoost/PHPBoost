@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 19
+ * @version     PHPBoost 6.0 - last update: 2024 03 15
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,6 +16,7 @@
 
 class ModuleConfiguration
 {
+	private $addon_type;
 	private $module_id;
 	private $name;
 	private $description;
@@ -48,6 +49,11 @@ class ModuleConfiguration
 		$this->module_id = $module_id;
 		$this->load_configuration($config_ini_file);
 		$this->load_description($desc_ini_file);
+	}
+
+	public function get_addon_type()
+	{
+		return $this->addon_type;
 	}
 
 	public function get_name()
@@ -230,33 +236,34 @@ class ModuleConfiguration
 		$config = parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
 
-		$this->author                 = $config['author'];
+		$this->addon_type             = isset($config['addon_type']) ? $config['addon_type'] : '';
+		$this->author                 = isset($config['author']) ? $config['author'] : '';
 		$this->author_email           = isset($config['author_mail']) ? $config['author_mail'] : '';
 		$this->author_website         = isset($config['author_website']) ? $config['author_website'] : '';
-		$this->version                = $config['version'];
-		$this->creation_date          = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']), Date::FORMAT_DAY_MONTH_YEAR) : '';
-		$this->last_update            = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']), Date::FORMAT_DAY_MONTH_YEAR) : '';
-		$this->compatibility          = $config['compatibility'];
+		$this->version                = isset($config['version']) ? $config['version'] : '';
+		$this->creation_date          = isset($config['creation_date']) ? Date::to_format(strtotime($config['creation_date']), Date::FORMAT_DAY_MONTH_YEAR) : null;
+		$this->last_update            = isset($config['last_update']) ? Date::to_format(strtotime($config['last_update']), Date::FORMAT_DAY_MONTH_YEAR) : null;
+		$this->compatibility          = isset($config['compatibility']) ? $config['compatibility'] : '';
 		$this->fa_icon                = isset($config['fa_icon']) ? $config['fa_icon'] : '';
 		$this->hexa_icon              = isset($config['hexa_icon']) ? $config['hexa_icon'] : '';
-		$this->php_version            = !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
-		$this->repository             = !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
-		$this->features               = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
-		$this->specific_hooks         = !empty($config['specific_hooks']) ? explode(',', preg_replace('/\s/', '', $config['specific_hooks'])) : array();
-		$this->contribution_interface = !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
-		$this->url_rewrite_rules      = !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
+		$this->php_version            = isset($config['php_version']) && !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
+		$this->repository             = isset($config['repository']) && !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
+		$this->features               = isset($config['features']) && !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
+		$this->specific_hooks         = isset($config['specific_hooks']) && !empty($config['specific_hooks']) ? explode(',', preg_replace('/\s/', '', $config['specific_hooks'])) : array();
+		$this->contribution_interface = isset($config['contribution_interface']) && !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
+		$this->url_rewrite_rules      = isset($config['rewrite_rules']) && !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
 
 		if (GeneralConfig::load()->get_phpboost_major_version() >= '6.0' && $this->compatibility >= '6.0' && ((ModulesManager::is_module_installed($this->module_id) && ModulesConfig::load()->get_module($this->module_id)->get_installed_version() == $this->version) || !ModulesManager::is_module_installed($this->module_id)))
 		{
-			$this->item_name             = !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
-			$this->items_table_name      = !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name || $this->has_categories() ? $this->module_id : '');
-			$this->categories_table_name = !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories() ? $this->module_id . '_cats' : '');
-			$this->configuration_name    = !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
+			$this->item_name             = isset($config['item_name']) && !empty($config['item_name']) ? $config['item_name'] : $this->get_default_item_class_name();
+			$this->items_table_name      = isset($config['items_table_name']) && !empty($config['items_table_name']) ? $config['items_table_name'] : ($this->item_name || $this->has_categories() ? $this->module_id : '');
+			$this->categories_table_name = isset($config['categories_table_name']) && !empty($config['categories_table_name']) ? $config['categories_table_name'] : ($this->has_categories() ? $this->module_id . '_cats' : '');
+			$this->configuration_name    = isset($config['configuration_name']) && !empty($config['configuration_name']) ? $config['configuration_name'] : $this->get_default_configuration_class_name();
 		}
 
-		$this->home_page       = !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
-		$this->admin_main_page = !empty($config['admin_main_page']) ? (!preg_match('/' . $this->module_id . '\//', $config['admin_main_page']) ? Url::to_relative('/' . $this->module_id . '/' . $config['admin_main_page']) : $config['admin_main_page']) : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
-		$this->admin_menu      = !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
+		$this->home_page       = isset($config['home_page']) && !empty($config['home_page']) ? $config['home_page'] : ($this->item_name ? 'index.php' : '');
+		$this->admin_main_page = isset($config['admin_main_page']) && !empty($config['admin_main_page']) ? (!preg_match('/' . $this->module_id . '\//', $config['admin_main_page']) ? Url::to_relative('/' . $this->module_id . '/' . $config['admin_main_page']) : $config['admin_main_page']) : ($this->get_configuration_name() ? ModulesUrlBuilder::admin($this->module_id)->relative() : '');
+		$this->admin_menu      = isset($config['admin_menu']) && !empty($config['admin_menu']) ? $config['admin_menu'] : 'modules';
 	}
 
 	private function get_default_configuration_class_name()
@@ -283,9 +290,9 @@ class ModuleConfiguration
 	{
 		$desc = @parse_ini_file($desc_ini_file);
 		$this->check_parse_ini_file($desc, $desc_ini_file);
-		$this->name = $desc['name'];
-		$this->description = $desc['desc'];
-		$this->documentation = !empty($desc['documentation']) ? $desc['documentation'] : '';
+		$this->name = isset($desc['name']) ? $desc['name'] : '';
+		$this->description = isset($desc['desc']) ? $desc['desc'] : '';
+		$this->documentation = isset($desc['documentation']) && !empty($desc['documentation']) ? $desc['documentation'] : '';
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)
@@ -299,6 +306,7 @@ class ModuleConfiguration
 	public function get_properties()
 	{
 		return array(
+			'addon_type'             => $this->addon_type,
 			'name'                   => $this->name,
 			'description'            => $this->description,
 			'documentation'          => $this->documentation,
