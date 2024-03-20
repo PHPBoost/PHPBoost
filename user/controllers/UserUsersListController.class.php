@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 09 02
+ * @version     PHPBoost 6.0 - last update: 2024 03 20
  * @since       PHPBoost 3.0 - 2011 10 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -95,6 +95,7 @@ class UserUsersListController extends AbstractController
             }
 			else
             {
+                $table->hide_multiple_delete();
 				$edit_link = new EditLinkHTMLElement('', '', array('aria-label' => '', 'disabled' => true), 'd-none');
 				$delete_link = new DeleteLinkHTMLElement('', '', array('aria-label' => '', 'disabled' => true), 'd-none');
             }
