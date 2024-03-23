@@ -29,11 +29,11 @@ One branch per version.
 
 # How it works ?
 It requires a PHP/SQL web server with a remote access.  
-Install, configure and use it with a web browser.
+Install, configure and use it with a web browser.  
 
-It is composed of a kernel and modules which can use PHPBoost's lightweight development framework.
-As with the structure of a personal computer, the core of PHPBoost is an operating system used by various software, modules. It works with a database. Currently, MySQL or MariaDB are necessary but soon SQLite, PostGreSQL and other DBMS can be implemented.
+It is composed of a kernel and modules which can use PHPBoost's lightweight development framework.  
+As with the structure of a personal computer, the core of PHPBoost is an operating system used by various software, modules. It works with a database. Currently, MySQL or MariaDB are necessary but soon SQLite, PostGreSQL and other DBMS can be implemented.  
 
-PHPBoost can also be very useful for developers who don't want to program a complete structure for their website. They just need to install the PHPBoost kernel, with some existing modules, and build their own using the PHPBoost framework which contains many functions to facilitate development.
+PHPBoost can also be very useful for developers who don't want to program a complete structure for their website. They just need to install the PHPBoost kernel, with some existing modules, and build their own using the PHPBoost framework which contains many functions to facilitate development.  
 
 To sum up, to build your website with PHPBoost, you need a web server and a database (MySQL or MariaDB) and get started.
