@@ -3,7 +3,7 @@
  * This class manages an url address.
  * @package     Builder
  * @subpackage  Form\field
- * @copyright   &copy; 2005-2023 PHPBoost
+ * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2018 06 03
@@ -23,7 +23,7 @@ class FormFieldUrlEditor extends FormFieldTextEditor
 	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
 	{
-		$this->set_placeholder('http://');
+		$this->set_placeholder('http-s://');
 		$constraints[] = new FormFieldConstraintUrl();
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-url');

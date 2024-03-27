@@ -2,7 +2,7 @@
 /**
  * @deprecated
  * This class helps you to generate the backup file of your data base.
- * @copyright   &copy; 2005-2023 PHPBoost
+ * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2016 11 14
@@ -160,7 +160,7 @@ class Backup
 
 	/**
 	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
-	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see http://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
+	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see https://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
 	* @return string[] Map containing the following structure:
 	* for each table: table_name => array(
 	* 	'name' => name of the table,

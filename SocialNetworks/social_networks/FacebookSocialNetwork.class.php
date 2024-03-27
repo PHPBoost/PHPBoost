@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   &copy; 2005-2023 PHPBoost
+ * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2018 09 20
@@ -23,7 +23,7 @@ class FacebookSocialNetwork extends AbstractSocialNetwork
 
 	public function get_content_sharing_url()
 	{
-		return 'http://www.facebook.com/share.php?u=' . (rawurlencode(HOST . REWRITED_SCRIPT));
+		return 'https://www.facebook.com/share.php?u=' . (rawurlencode(HOST . REWRITED_SCRIPT));
 	}
 
 	public function get_external_authentication()
