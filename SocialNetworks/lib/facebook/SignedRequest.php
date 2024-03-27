@@ -9,7 +9,7 @@
  *
  * As with any software that integrates with the Facebook platform, your use
  * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
+ * Policies [https://developers.facebook.com/policy/]. This copyright notice
  * shall be included in all copies or substantial portions of the software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -280,7 +280,7 @@ class SignedRequest
      *   + instead of -
      *   / instead of _
      *
-     * @link http://en.wikipedia.org/wiki/Base64#URL_applications
+     * @link https://en.wikipedia.org/wiki/Base64#URL_applications
      *
      * @param string $input base64 url encoded input
      *
@@ -299,7 +299,7 @@ class SignedRequest
      *   + instead of -
      *   / instead of _
      *
-     * @link http://en.wikipedia.org/wiki/Base64#URL_applications
+     * @link https://en.wikipedia.org/wiki/Base64#URL_applications
      *
      * @param string $input string to encode
      *
