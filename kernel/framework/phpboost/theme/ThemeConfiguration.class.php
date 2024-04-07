@@ -175,8 +175,8 @@ class ThemeConfiguration
 		$this->variable_width    = isset($config['variable_width']) ? (bool)$config['variable_width'] : '';
 		$this->width             = isset($config['width']) ? $config['width'] : '';
 		$this->pictures          = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
-		$this->parent_theme      = isset($config['parent_theme']) ? (!empty($config['parent_theme']) ? $config['parent_theme'] : '__default__') : '';
-		$this->repository        = isset($config['repository']) ? (!empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY) : '';
+		$this->parent_theme      = isset($config['parent_theme']) && !empty($config['parent_theme']) ? $config['parent_theme'] : '__default__';
+		$this->repository        = isset($config['repository']) && !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 
 	}
 
