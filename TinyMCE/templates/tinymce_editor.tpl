@@ -70,11 +70,7 @@
 	tinymce.init({
 		selector : "textarea\#{FIELD}",
 		language : "{LANGUAGE}",
-		plugins: [
-			"advlist autolink autoresize autosave link image lists charmap hr anchor",
-			"searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media",
-			"table directionality emoticons paste textpattern imagetools"
-		],
+		plugins: "advlist autolink autoresize autosave link image lists charmap hr anchor searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media table directionality emoticons paste textpattern imagetools",
 
 		# IF C_TOOLBAR #
 		toolbar: '{TOOLBAR}',
@@ -113,7 +109,7 @@
 					ed.windowManager.openUrl({ 
 						title: '',
 						url: '{PATH_TO_ROOT}/user/upload.php?popup=1&close_button=0&fd=# IF C_HTMLFORM #' + HTMLForms.get("{FORM_NAME}").getId() + '_{FIELD_NAME}# ELSE #{FIELD}# ENDIF #&edt=TinyMCE',
-						width: 720,
+						width: 780,
 						height: 500,
 					}); 
 				},
