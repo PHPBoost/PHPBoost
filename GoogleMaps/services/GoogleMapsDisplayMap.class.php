@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 12
+ * @version     PHPBoost 6.0 - last update: 2024 04 18
  * @since       PHPBoost 5.0 - 2017 04 03
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -14,6 +14,7 @@ class GoogleMapsDisplayMap
 	private $map_id;
 	private $default_marker_label;
 	private $hide_address_on_label;
+	private $address_displayed_on_label;
 
 	/**
 	 * @var Usefull to know if we have to include all the necessary JS includes
