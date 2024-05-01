@@ -65,7 +65,10 @@ class MediaFeedProvider implements FeedProvider
 				$item->set_auth(CategoriesService::get_categories_manager('media')->get_heritated_authorizations($row['id_category'], Category::READ_AUTHORIZATIONS, Authorizations::AUTH_PARENT_PRIORITY));
 
 				$enclosure = new FeedItemEnclosure();
-				$enclosure->set_lenght(@filesize($row['file_url']));
+				if (strpos($row['file_url'], 'http://') === 0 || strpos($row['file_url'], 'https://') === 0) {
+					$enclosure->set_lenght(0); } 
+				else {
+        				$enclosure->set_lenght(@filesize($row['file_url'])); }
 				$enclosure->set_type($row['mime_type']);
 				$enclosure->set_url($row['file_url']);
 				$item->set_enclosure($enclosure);
