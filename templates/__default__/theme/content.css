@@ -95,6 +95,11 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 /* --- Sibling links --- */
+.related-links {
+	display: flex;
+	flex-direction: column;
+}
+
 .related-item {
 	display: flex;
 	flex-direction: row;
@@ -114,6 +119,11 @@ aside:not(#menu-left):not(#menu-right)::after {
 
 @media (min-width: 769px) {
 	.related-item { max-width: 45%; }
+    .related-links {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 /* --- Main thumbnail in item --- */
