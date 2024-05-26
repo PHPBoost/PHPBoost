@@ -22,6 +22,10 @@ div.mce-window-head {
 	float: none;
 }
 
+.tox-sidebar-wrap .tox-edit-area {
+	padding: 15px;
+}
+
 .mce-resizehandle {
 	margin-bottom: 5px !important;
 }
