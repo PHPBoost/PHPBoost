@@ -398,6 +398,10 @@ class TinyMCEParser extends ContentFormattingParser
 		//Pre tag
 		if (!in_array('pre', $this->forbidden_tags))
 		{
+			array_push($array_preg, '`&lt;pre class="language-(.+)"&gt;&lt;code&gt;(.+)&lt;/code&gt;&lt;/pre&gt;`isuU');
+			array_push($array_preg_replace, '[[CODE=$1]]$2[[/CODE]]');
+			array_push($array_preg, '`&lt;code&gt;(.+)&lt;/code&gt;`isuU');
+			array_push($array_preg_replace, '<code>$1</code>');
 			array_push($array_preg, '`&lt;pre&gt;(.+)(<br />[\s]*)*&lt;/pre&gt;`isuU');
 			array_push($array_preg_replace, '<pre>$1</pre>');
 		}
@@ -466,8 +470,8 @@ class TinyMCEParser extends ContentFormattingParser
 		//Style tag
 		if (!in_array('style', $this->forbidden_tags))
 		{
-			array_push($array_preg, '`&lt;span class="(success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isuU');
-			array_push($array_preg_replace, '<span class="$1">$2</span>');
+			array_push($array_preg, '`&lt;span class="message-helper bgc (success|question|notice|warning|error)"&gt;(.+)&lt;/span&gt;`isuU');
+			array_push($array_preg_replace, '<span class="message-helper bgc $1">$2</span>');
 		}
 		//Align tag
 		if (!in_array('align', $this->forbidden_tags))

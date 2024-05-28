@@ -105,6 +105,9 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//reimplanting html and code tags
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
+
+		$this->content = preg_replace('`\[code=(.+)\](.+)\[/code\]`isuU', "<pre class=\"language-$1\"><code>$2</code></pre>", $this->content);
+
 	}
 
 	/**
@@ -149,11 +152,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 			"<a class=\"offload\" id=\"$1\"></a>",
 			"<a class=\"offload\" aria-label=\"$1\" name=\"$1\">$2</a>",
 			"<h1>$2</h1>",
-			"<h1>$2</h1>",
 			"<h2>$2</h2>",
 			"<h3>$2</h3>",
 			"<h4>$2</h4>",
 			"<h5>$2</h5>",
+			"<h6>$2</h6>",
 			'<span style="background-color: $1;">$2</span>',
 			'<span style="color: $1;">$2</span>',
 			"<p style=\"text-align: $1;\">$2</p>",

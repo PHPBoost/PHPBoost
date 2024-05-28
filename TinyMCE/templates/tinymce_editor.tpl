@@ -69,24 +69,39 @@
 <script>
 	tinymce.init({
 		selector : "textarea\#{FIELD}",
+		license_key: "gpl",
 		language : "{LANGUAGE}",
-		plugins: "advlist autolink autoresize autosave link image lists charmap hr anchor searchreplace wordcount visualblocks visualchars fullscreen insertdatetime media table directionality emoticons paste textpattern imagetools",
+		plugins: "advlist autolink autoresize autosave link image lists charmap hr anchor searchreplace wordcount visualblocks visualchars code codesample fullscreen insertdatetime media table directionality emoticons paste textpattern imagetools",
 
 		# IF C_TOOLBAR #
 		toolbar: '{TOOLBAR}',
 		# ENDIF #
 
-		toolbar_sticky: true,
-		toolbar_mode: 'wrap',
-		menubar: false,
+		codesample_languages: [
+			{ text: 'HTML', value: 'HTML' },
+			{ text: 'XML', value: 'XML' },
+			{ text: 'Tpl', value: 'tpl' },
+			{ text: 'JavaScript', value: 'javascript' },
+			{ text: 'CSS', value: 'css' },
+			{ text: 'PHP', value: 'php' },
+			{ text: 'Ruby', value: 'ruby' },
+			{ text: 'Python', value: 'python' },
+			{ text: 'Java', value: 'java' },
+			{ text: 'C', value: 'c' },
+			{ text: 'C#', value: 'csharp' },
+			{ text: 'C++', value: 'cpp' }
+		],
+		toolbar_mode: 'sliding',
 		branding: false,
+		promotion: false,
 		autoresize_max_height: '500px',
 		advlist_number_styles: 'default',
 		advlist_bullet_styles: 'default',
-		block_formats: 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Preformatted=pre',
-		fontsize_formats: '5pt 10pt 15pt 20pt 25pt 30pt 35pt 40pt 45pt',
+		font_size_formats: '5pt 10pt 15pt 20pt 25pt 30pt 35pt 40pt 45pt',
+		style_formats_merge: true,
+		browser_spellcheck: true,
 		convert_urls: false,
-		media_alt_source: false,
+		max_height: 600,
 		media_poster: false,
 		link_title: false,
 		target_list: false,
@@ -96,11 +111,11 @@
 			"{PATH_TO_ROOT}/TinyMCE/templates/tinymce.css"
 		],
 		style_formats: [
-			{title: ${escapejs(@warning.success)}, inline: 'span', classes: 'success'},
-			{title: ${escapejs(@warning.question)}, inline: 'span', classes: 'question'},
-			{title: ${escapejs(@warning.notice)}, inline: 'span', classes: 'notice'},
-			{title: ${escapejs(@warning.warning)}, inline: 'span', classes: 'warning'},
-			{title: ${escapejs(@warning.error)}, inline: 'span', classes: 'error'}
+			{title: ${escapejs(@warning.success)}, inline: 'span', classes: 'message-helper bgc success'},
+			{title: ${escapejs(@warning.question)}, inline: 'span', classes: 'message-helper bgc question'},
+			{title: ${escapejs(@warning.notice)}, inline: 'span', classes: 'message-helper bgc notice'},
+			{title: ${escapejs(@warning.warning)}, inline: 'span', classes: 'message-helper bgc warning'},
+			{title: ${escapejs(@warning.error)}, inline: 'span', classes: 'message-helper bgc error'}
 		],
 		setup : function(ed) {
 			ed.ui.registry.addButton('insertfile', {
