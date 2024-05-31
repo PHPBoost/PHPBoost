@@ -4,10 +4,11 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 20
+ * @version     PHPBoost 6.0 - last update: 2024 05 31
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ClassLoader
@@ -15,20 +16,20 @@ class ClassLoader
 	protected static $cache_file = '/cache/autoload.php';
 	protected static $autoload;
 	protected static $already_reloaded = false;
-	protected static $exclude_paths = array(
+	protected static $exclude_paths = [
 		'/cache', '/images', '/lang', '/upload', '/templates',
-		'/kernel/data', '/kernel/lib/js', '/kernel/lib/flash', '/kernel/lib/css', '/kernel/lib/php/geshi',
-		'/kernel/framework/io/db/dbms/Doctrine', '/test/PHPUnit',
-	);
+		'/kernel/data', '/kernel/lib/js', '/kernel/lib/php/geshi',
+		'/kernel/framework/io/db/dbms/Doctrine'
+    ];
 
-	protected static $exclude_folders_names = array('templates', 'lang');
+	protected static $exclude_folders_names = ['templates', 'lang'];
 
 	/**
 	 * initializes the autoload class list
 	 */
 	public static function init_autoload()
 	{
-		spl_autoload_register(array(get_class(), 'autoload'));
+		spl_autoload_register([self::class, 'autoload']);
 		if (!self::inc(PATH_TO_ROOT . self::$cache_file))
 			self::generate_classlist();
 	}
@@ -71,7 +72,7 @@ class ClassLoader
 		if (!self::$already_reloaded || $force)
 		{
 			self::$already_reloaded = true;
-			self::$autoload = array();
+			self::$autoload = [];
 
 			include_once(PATH_TO_ROOT . '/kernel/framework/io/filesystem/FileSystemElement.class.php');
 			include_once(PATH_TO_ROOT . '/kernel/framework/io/filesystem/Folder.class.php');
@@ -80,7 +81,7 @@ class ClassLoader
 			include_once(PATH_TO_ROOT . '/kernel/framework/util/Path.class.php');
 
 			$phpboost_classfile_pattern = '`\.class\.php$`';
-			$paths = array('/', '/kernel/framework/core/lang');
+			$paths = ['/', '/kernel/framework/core/lang'];
 
 			foreach ($paths as $path)
 			{
@@ -105,10 +106,10 @@ class ClassLoader
 
 	protected static function add_classes($directory, $pattern, $recursive = true)
 	{
-		$files = array();
+		$files = [];
 		$folder = new Folder($directory);
 		$relative_path = Path::get_path_from_root($folder->get_path());
-		
+
 		$files = $folder->get_files($pattern);
 		foreach ($files as $file)
 		{
@@ -154,7 +155,7 @@ class ClassLoader
 	{
 		if (method_exists($classname, '__static'))
 		{
-			call_user_func(array($classname, '__static'));
+			call_user_func([$classname, '__static']);
 		}
 	}
 }

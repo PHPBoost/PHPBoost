@@ -5,16 +5,17 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 26
+ * @version     PHPBoost 6.0 - last update: 2024 05 31
  * @since       PHPBoost 3.0 - 2010 05 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ServerConfiguration
 {
-	const MIN_PHP_VERSION = '7.1';
+	const MIN_PHP_VERSION = '7.2';
 	const RECOMMENDED_PHP_VERSION = '7.4';
 	private static $mod_rewrite = 'mod_rewrite';
 
@@ -24,14 +25,14 @@ class ServerConfiguration
 	public static function get_phpversion()
 	{
 		$system_phpversion = phpversion();
-		$matches = array();
+		$matches = [];
 		if (preg_match('`^([0-9]+(?:\.[0-9]+){0,2})`u', $system_phpversion, $matches))
 		{
 			return $matches[1];
 		}
 		return $system_phpversion;
 	}
-	
+
 	/**
 	* Detects max size of file cab be uploaded to server
 	*
@@ -47,7 +48,7 @@ class ServerConfiguration
 		{
 			if (preg_match('/^([\d\.]+)([KMG])$/i', $size, $match))
 			{
-				$pos = array_search($match[2], array("K", "M", "G"));
+				$pos = array_search($match[2], ["K", "M", "G"]);
 				if ($pos !== false)
 				{
 					$size = $match[1] * pow(1024, $pos + 1);
@@ -55,7 +56,7 @@ class ServerConfiguration
 			}
 			return $size;
 		};
-		
+
 		$max_upload = $normalize(ini_get('upload_max_filesize'));
 		$max_post = $normalize(ini_get('post_max_size'));
 		$memory_limit = $normalize(ini_get('memory_limit'));
@@ -72,7 +73,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if php version fits to phpboost's requirements.
+	 * @return bool true if php version fits to phpboost's requirements.
 	 */
 	public function is_php_compatible()
 	{
@@ -80,7 +81,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if GD library is available, else false.
+	 * @return bool true if GD library is available.
 	 */
 	public function has_gd_library()
 	{
@@ -88,7 +89,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if curl library is available, else false.
+	 * @return bool true if curl library is available.
 	 */
 	public function has_curl_library()
 	{
@@ -96,7 +97,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if MBstring (UTF-8) library is available, else false.
+	 * @return bool true if MBstring (UTF-8) library is available.
 	 */
 	public function has_mbstring_library()
 	{
@@ -104,7 +105,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if zip library is available, else false.
+	 * @return bool true if zip library is available.
 	 */
 	public function has_zip_library()
 	{
@@ -112,7 +113,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if allow_url_fopen directive is enabled, else false.
+	 * @return bool true if allow_url_fopen directive is enabled.
 	 */
 	public function has_allow_url_fopen()
 	{
@@ -120,7 +121,7 @@ class ServerConfiguration
 	}
 
 	/**
-	 * @return true if url rewriting is available, else false.
+	 * @return bool true if url rewriting is available.
 	 */
 	public function has_url_rewriting()
 	{
