@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 03
+ * @version     PHPBoost 6.0 - last update: 2024 05 31
  * @since       PHPBoost 2.0 - 2007 12 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -239,7 +239,8 @@ class Forum
 			$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
 		} catch (RowNotFoundException $e) {}
 
-		HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($title) : '') . '.php'))));
+        $hook_url = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'topic-' . $idtopic . '-' . Url::encode_rewrite($title) . '.php' : 'topic.php?id=' . $idtopic;
+        HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/' . $hook_url))));
 	}
 
 	//Supression d'un message.
