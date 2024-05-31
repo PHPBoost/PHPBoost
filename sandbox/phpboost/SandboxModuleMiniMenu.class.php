@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 27
+ * @version     PHPBoost 6.0 - last update: 2024 05 31
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -55,6 +55,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 		return true;
 	}
 
+	private $mini_lang; // php8.3
 	private $lang;
 
 	public function get_menu_content()
