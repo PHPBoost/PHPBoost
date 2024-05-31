@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 09 29
+ * @version     PHPBoost 6.0 - last update: 2024 05 31
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,7 +59,7 @@ else // Display management interface.
 
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) // No visitors !
 {
-    $error_controller = PHPBoostErrors::unexisting_page();
+    $error_controller = PHPBoostErrors::user_not_authorized();
     DispatchManager::redirect($error_controller);
 }
 
