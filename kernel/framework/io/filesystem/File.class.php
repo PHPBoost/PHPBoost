@@ -343,5 +343,44 @@ class File extends FileSystemElement
 	{
 		return hash_file('sha256', $filename);
 	}
+
+	/**
+	 * Returns the size of a remote file by its URL
+	 * Return -1 if file don't exist
+	 * @return int The size of the file in bytes.
+	 */
+	public static function get_remote_file_size($file_url):int
+	{
+		$ch = curl_init($file_url);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
+		$data = curl_exec($ch);
+		curl_close($ch);
+		if ($data) 
+		{
+			$line = strtok($data, "\r\n");
+			$status_code = trim($line);
+			while (($line = strtok("\r\n")) !== false) 
+			{
+				if(false !== ($matches = explode(':', $line, 2))) 
+				{
+				  	$response_headers["{$matches[0]}"] = trim($matches[1]);
+				}  
+			}
+			if (preg_match("/HTTP\/\d[.\d]* (\d\d\d)/", $status_code, $matches)) 
+			{
+				$status = (int) $matches[1];
+				if ($status === 200)
+				{
+					return (int)$response_headers['content-length'] ?? -1;
+				}
+
+			}
+		}
+		return -1;
+	}
 }
 ?>
