@@ -34,7 +34,7 @@ class FileSystemHelper
 		{
 			while ($item = readdir($handle))
 			{
-				$protect_folder_delete = $protect_folder ? !preg_match('/' . $first_folder . '/', $item) : true;
+				$protect_folder_delete = $protect_folder ? !preg_match('/' . $first_folder_name . '/', $item) : true;
 				
 				if ($item != "." && $item != ".." && $protect_folder_delete)
 				{
@@ -48,7 +48,7 @@ class FileSystemHelper
 			
 			closedir ($handle);
 			
-			$protect_folder_delete = $protect_folder ? !preg_match('/' . $first_folder . '/', $folder) : true;
+			$protect_folder_delete = $protect_folder ? !preg_match('/' . $first_folder_name . '/', $folder) : true;
 			if ($protect_folder_delete)
 				$result = rmdir($folder);
 		}
@@ -99,7 +99,7 @@ class FileSystemHelper
 	 * @param string $retry Second try if the archive is corrupted. No need to use this parameter, it is used automatically by the function.
 	 * @return bool True if the file is successfully downloaded, otherwise false.
 	 */
-	public static function download_remote_file($url, $destination_path, $extract_archive = true, $retry = false)
+	public static function download_remote_file($url, $destination_path, $extract_archive = true, $retry = false):bool
 	{
 		if (!preg_match( "/^.*\/$/", $destination_path))
 			$destination_path .= '/';
@@ -114,46 +114,47 @@ class FileSystemHelper
 			
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
 			$content = curl_exec($ch);
+			$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			$downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
 			curl_close($ch);
 			file_put_contents($file_name, $content);
-			
-			$file = new File($file_name);
-			if ($file->exists())
-			{
-				if (File::get_file_checksum($url) != File::get_file_checksum($file_name))
+			if ($code === 200 && $downloaded_size) {
+				$original_size = File::get_remote_file_size($url);
+				$file = new File($file_name);
+				if ($file->exists())
 				{
-					if (!$retry)
-						FileSystemHelper::download_remote_file($url, $destination_path, $extract_archive, true);
-					else
-						return false;
-				}
-				
-				if ($extract_archive && $file_extension == 'zip')
-				{
-					if ($server_configuration->has_zip_library())
+					if ($downloaded_size === $original_size && $original_size === $file->get_file_size())
 					{
-						$zip_archive = new ZipArchive();
-						if ($zip_archive->open($file_name))
+						if ($extract_archive && $file_extension == 'zip')
 						{
-							$zip_archive->extractTo($destination_path);
-							$zip_archive->close();
+							if ($server_configuration->has_zip_library())
+							{
+								$zip_archive = new ZipArchive();
+								if ($zip_archive->open($file_name))
+								{
+									$zip_archive->extractTo($destination_path);
+									$zip_archive->close();
+								}
+								else
+									return false;
+							}
+							else
+							{
+								include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
+								$zip = new PclZip($file_name);
+								$zip->extract(PCLZIP_OPT_PATH, $destination_path, PCLZIP_OPT_SET_CHMOD, 0755);
+							}
+							unlink($file_name);
 						}
-						else
-							return false;
+						return true;
 					}
-					else
-					{
-						include_once(PATH_TO_ROOT . '/kernel/lib/php/pcl/pclzip.lib.php');
-						$zip = new PclZip($file_name);
-						$zip->extract(PCLZIP_OPT_PATH, $destination_path, PCLZIP_OPT_SET_CHMOD, 0755);
-					}
-					unlink($file_name);
 				}
-				
-				return true;
 			}
-			return false;
+			if (!$retry)
+				return FileSystemHelper::download_remote_file($url, $destination_path, $extract_archive, true);
 		}
 		return false;
 	}
