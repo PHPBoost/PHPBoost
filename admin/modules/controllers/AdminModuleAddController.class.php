@@ -25,6 +25,7 @@ class AdminModuleAddController extends DefaultAdminController
 		$message_success = $message_warning = '';
 		$modules_selected = $modules_success = 0;
 		$module_number = 1;
+		ClassLoader::generate_classlist(true);
 		foreach ($this->get_modules_not_installed() as $name => $module)
 		{
 			if ($request->get_string('add-' . $module->get_id(), false) || ($request->get_string('add-selected-modules', false) && $request->get_value('add-checkbox-' . $module_number, 'off') == 'on'))
