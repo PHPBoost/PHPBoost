@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 14
+ * @version     PHPBoost 6.0 - last update: 2024 06 07
  * @since       PHPBoost 3.0 - 2010 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -98,7 +98,7 @@ class AdminMemberConfigController extends DefaultAdminController
 		$fieldset->add_field(new FormFieldCheckbox('user_activation_admin_email', $this->lang['user.activation.admin.email'], $this->user_accounts_config->get_administrator_accounts_validation_email(),
 			array(
 				'class' => 'custom-checkbox top-field',
-				'hidden' => !$this->user_accounts_config->is_registration_enabled() || !$this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
+				'hidden' => !$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() != UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
 			)
 		));
 
