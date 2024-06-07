@@ -98,7 +98,7 @@ class AdminMemberConfigController extends DefaultAdminController
 		$fieldset->add_field(new FormFieldCheckbox('user_activation_admin_email', $this->lang['user.activation.admin.email'], $this->user_accounts_config->get_administrator_accounts_validation_email(),
 			array(
 				'class' => 'custom-checkbox top-field',
-				'hidden' => !$this->user_accounts_config->is_registration_enabled() || !$this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
+				'hidden' => !$this->user_accounts_config->is_registration_enabled() || $this->user_accounts_config->get_member_accounts_validation_method() != UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION
 			)
 		));
 
