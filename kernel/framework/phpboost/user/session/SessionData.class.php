@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 23
+ * @version     PHPBoost 6.0 - last update: 2024 06 11
  * @since       PHPBoost 3.0 - 2010 11 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -299,8 +299,6 @@ class SessionData
 			$data->ip = AppContext::get_request()->get_ip_address();
 			self::fill_user_cached_data($data);
 			$data->create();
-
-			self::add_in_visit_counter();
 		}
 		return $data;
 	}
