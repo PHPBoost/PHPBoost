@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2024 06 17
  * @since       PHPBoost 1.5 - 2006 06 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -49,7 +49,7 @@ $lang['warning.captcha.last.installed']   = 'Dernier captcha, vous ne pouvez pas
 
 // Content
 $lang['warning.locked.content.description']  = 'L\'élément est actuellement ouvert par :user_display_name, vous ne pouvez pas y accéder, réessayez plus tard.';
-$lang['warning.locked.content.another_user'] = 'un autre utilisateur';
+$lang['warning.locked.content.another.user'] = 'un autre utilisateur';
 
 // Contributions
 $lang['warning.delete.contribution'] = 'Etes-vous sûr de vouloir supprimer cette contribution ?';
