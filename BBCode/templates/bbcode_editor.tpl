@@ -772,7 +772,7 @@
 			<li class="bbcode-group bbcode-files">
 				<a href="#files" class="bbcode-group-title bbcode-button" aria-label="{@bbcode.files}"><i class="fa fa-fw fa-file-import" aria-hidden="true"></i></a>
 				<ul class="bbcode-container modal-container cell-modal cell-tile">
-					<li id="links-sound" class="bbcode-elements">
+					<li id="files-sound" class="bbcode-elements">
 						<a href="#sound" class="bbcode-button{AUTH_SOUND}" # IF NOT C_DISABLED_SOUND #data-modal# ENDIF # data-target="block-sound{FIELD}" role="button" aria-label="{@bbcode.sound}">
 							<i class="fa fa-fw fa-music" aria-hidden="true"></i>
 						</a>
@@ -787,12 +787,14 @@
 									<label class="cell-label" for="bb_sound_url{FIELD}">{@bbcode.sound.url}</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_sound_url{FIELD}" type="text" name="bb_sound_url{FIELD}" />
-										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_sound_url{FIELD}', '${escape(TOKEN)}')">
-                                            <i class="fa fa-laptop" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
-											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
-										</a>
+										# IF C_UPLOAD_MANAGEMENT #
+                                            <a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_sound_url{FIELD}', '${escape(TOKEN)}')">
+                                                <i class="fa fa-laptop" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_sound_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+                                                <i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+                                            </a>
+                                        # ENDIF #
 									</div>
 								</div>
 								<div class="cell-footer">
@@ -801,7 +803,7 @@
 							</div>
 						</div>
 					</li>
-					<li id="links-movie" class="bbcode-elements">
+					<li id="files-movie" class="bbcode-elements">
 						<a href="#movie" class="bbcode-button{AUTH_MOVIE}" # IF NOT C_DISABLED_MOVIE #data-modal# ENDIF # data-target="block-movie{FIELD}" role="button" aria-label="{@bbcode.movie}">
 							<i class="fa fa-fw fa-film" aria-hidden="true"></i>
 						</a>
@@ -818,12 +820,14 @@
 									</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_movie_url{FIELD}" type="text" name="bb_movie_url{FIELD}" />
-										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_movie_url{FIELD}', '${escape(TOKEN)}')">
-                                            <i class="fa fa-laptop" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
-											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
-										</a>
+										# IF C_UPLOAD_MANAGEMENT #
+                                            <a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_movie_url{FIELD}', '${escape(TOKEN)}')">
+                                                <i class="fa fa-laptop" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_movie_url{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+                                                <i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+                                            </a>
+                                        # ENDIF #
 									</div>
 								</div>
 								<div class="cell-form">
@@ -864,7 +868,7 @@
 							</div>
 						</div>
 					</li>
-					<li id="link-lightbox" class="bbcode-elements">
+					<li id="files-lightbox" class="bbcode-elements">
 						<a href="#lightbox" class="bbcode-button{AUTH_LIGHTBOX}" # IF NOT C_DISABLED_LIGHTBOX #data-modal# ENDIF # data-target="block-lightbox{FIELD}" role="button" aria-label="{@bbcode.lightbox}">
 							<i class="fa fa-fw fa-camera" aria-hidden="true"></i>
 						</a>
@@ -881,12 +885,14 @@
 									</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_lightbox{FIELD}" type="text" name="bb_lightbox{FIELD}" />
-										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_lightbox{FIELD}', '${escape(TOKEN)}')">
-                                            <i class="fa fa-laptop" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
-											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
-										</a>
+                                        # IF C_UPLOAD_MANAGEMENT #
+                                            <a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_lightbox{FIELD}', '${escape(TOKEN)}')">
+                                                <i class="fa fa-laptop" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_lightbox{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+                                                <i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+                                            </a>
+                                        # ENDIF #
 									</div>
 								</div>
 								<div class="cell-form">
@@ -903,7 +909,7 @@
 							</div>
 						</div>
 					</li>
-					<li id="link-figure" class="bbcode-elements">
+					<li id="files-figure" class="bbcode-elements">
 						<a href="#picture" class="bbcode-button{AUTH_IMG}" # IF NOT C_DISABLED_IMG #data-modal# ENDIF # data-target="block-figure{FIELD}" role="button" aria-label="{@bbcode.figure}">
 							<i class="far fa-fw fa-image" aria-hidden="true"></i>
 						</a>
@@ -918,12 +924,14 @@
 									<label class="cell-label" for="bb_figure_img{FIELD}">{@bbcode.picture.url}</label>
 									<div class="cell-input grouped-inputs">
 										<input class="grouped-element" id="bb_figure_img{FIELD}" type="text" name="bb_figure_img{FIELD}" />
-										<a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_figure_img{FIELD}', '${escape(TOKEN)}')">
-                                            <i class="fa fa-laptop" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
-											<i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
-										</a>
+										# IF C_UPLOAD_MANAGEMENT #
+                                            <a class="grouped-element button" aria-label="{@upload.file.add}" onclick="direct_upload(this, 'bb_figure_img{FIELD}', '${escape(TOKEN)}')">
+                                                <i class="fa fa-laptop" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="grouped-element submit" aria-label="{@upload.files.management}" href="#" onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd=bb_figure_img{FIELD}&amp;parse=true&amp;no_path=true', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;">
+                                                <i class="fa fa-cloud-upload-alt" aria-hidden="true"></i>
+                                            </a>
+                                        # ENDIF #
 									</div>
 								</div>
 								<div class="cell-form">
@@ -951,7 +959,7 @@
 						</div>
 					</li>
 					# IF C_UPLOAD_MANAGEMENT #
-						<li id="link-upload" class="bbcode-elements">
+						<li id="files-upload" class="bbcode-elements">
 							<a class="bbcode-button{AUTH_UPLOAD} close-bbcode-sub" href="#" aria-label="{@bbcode.upload}" # IF NOT C_DISABLED_UPLOAD #onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=BBCode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"# ENDIF #>
 								<i class="fa fa-fw fa-cloud-upload-alt" aria-hidden="true"></i>
 							</a>
