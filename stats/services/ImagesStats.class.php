@@ -371,14 +371,14 @@ class ImagesStats
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
-					imagefilledpolygon($image, $polygon_point, 4, $color_bar_dark);
+					ServerConfiguration::get_phpversion() < 8.0 ? imagefilledpolygon($image, $polygon_point, 4, $color_bar_dark) : imagefilledpolygon($image, $polygon_point, $color_bar_dark);
 					$polygon_point = array(
 						intval($x_bar + $width_bar/3), $y_bar - 4,
 						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
-					imagepolygon($image, $polygon_point, 4, $black);
+					ServerConfiguration::get_phpversion() < 8.0 ? imagepolygon($image, $polygon_point, 4, $black) : imagepolygon($image, $polygon_point, $black);
 
 					if ($draw_values) //Texte, valeur
 					{
