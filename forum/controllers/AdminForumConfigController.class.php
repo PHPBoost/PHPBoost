@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 08
+ * @version     PHPBoost 6.0 - last update: 2024 06 22
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -135,7 +135,7 @@ class AdminForumConfigController extends DefaultAdminModuleController
 			new VisitorDisabledActionAuthorization($this->lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.read.topics.content'], ForumAuthorizationsService::READ_TOPICS_CONTENT_AUTHORIZATIONS),
-			new ActionAuthorization($this->lang['forum.authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization($this->lang['forum.authorizations.flood'], ForumAuthorizationsService::FLOOD_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.hide.edition.mark'], ForumAuthorizationsService::HIDE_EDITION_MARK_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['forum.authorizations.unlimited.topics.tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.categories'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),

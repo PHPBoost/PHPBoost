@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 30
+ * @version     PHPBoost 6.0 - last update: 2024 06 22
  * @since       PHPBoost 4.1 - 2015 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumAuthorizationsService extends CategoriesAuthorizationsService
@@ -35,6 +36,11 @@ class ForumAuthorizationsService extends CategoriesAuthorizationsService
 	public function read_topics_content()
 	{
 		return $this->is_authorized(self::READ_TOPICS_CONTENT_AUTHORIZATIONS);
+	}
+
+	public function manage()
+	{
+		return $this->is_authorized(self::CATEGORIES_MANAGEMENT_AUTHORIZATIONS);
 	}
 
 	public function multiple_posts()
