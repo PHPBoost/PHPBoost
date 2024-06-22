@@ -55,6 +55,9 @@ class Countries
 
 	public static function get_countries()
 	{
+        usort(self::$countries, function($a, $b) {
+            return strcmp($a["name"], $b["name"]);
+        });
 		return self::$countries;
 	}
 
