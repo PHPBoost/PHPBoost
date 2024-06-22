@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 09 28
+ * @version     PHPBoost 6.0 - last update: 2024 06 22
  * @since       PHPBoost 3.0 - 2011 09 25
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -79,12 +79,15 @@ $lang = array(
 	'er' => 'Eritrea',
 	'es' => 'Spain',
 	'et' => 'Ethiopia',
+	'fe' => 'England',
 	'fi' => 'Finland',
 	'fj' => 'Fiji',
 	'fk' => 'Falkland Islands (Malvinas)',
 	'fm' => 'Micronesia, (Federated States of',
 	'fo' => 'Faroe Islands',
 	'fr' => 'France',
+	'fs' => 'Scotland',
+	'fw' => 'Wales',
 	'ga' => 'Gabon',
 	'gb' => 'Great Britain',
 	'gd' => 'Grenada',
