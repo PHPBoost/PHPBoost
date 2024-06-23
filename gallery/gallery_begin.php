@@ -36,10 +36,10 @@ $parent_categories = array_reverse(CategoriesService::get_categories_manager('ga
 foreach ($parent_categories as $cat)
 {
 	if ($cat->get_id() != Category::ROOT_CATEGORY)
-		$Bread_crumb->add($cat->get_name(), url('gallery.php?cat=' . $cat->get_id(), 'gallery-' . $cat->get_id() . '.php'));
+		$Bread_crumb->add($cat->get_name(),GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_rewrited_name()));
 }
 
 define('TITLE', $module_title . ($category->get_id() != Category::ROOT_CATEGORY ? ' - ' . $category->get_name() : ''));
 if ($category->get_id() != Category::ROOT_CATEGORY)
-	$Bread_crumb->add($category->get_name(), url('gallery.php?cat=' . $category->get_id(), 'gallery-' . $category->get_id() . '.php'));
+	$Bread_crumb->add($category->get_name(),GalleryUrlBuilder::get_link_cat($category->get_id(), $category->get_rewrited_name()));
 ?>
