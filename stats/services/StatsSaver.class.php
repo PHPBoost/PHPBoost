@@ -241,7 +241,6 @@ class StatsSaver
 			if ($file_content)
 				$stats_array = TextHelper::unserialize($file_content);
 		}
-
 		return $stats_array;
 	}
 
