@@ -1,3 +1,4 @@
+<script src="{PATH_TO_ROOT}/stats/templates/js/chart.min.js"></script>
 <section id="module-stats">
 	<header class="section-header">
 		<h1>{MODULE_NAME}</h1>
@@ -123,9 +124,7 @@
 					</table>
 
 					<h3>{@common.themes}</h3>
-					<div class="align-center">
-						<img src="{U_GRAPH_RESULT_THEME}" alt="{@common.themes}" />
-					</div>
+					{MEMBERS_THEMES_CHART}
 					<table class="table">
 						<thead>
 							<tr>
@@ -165,9 +164,7 @@
 
 					# IF C_DISPLAY_SEX #
 						<h3>{@user.sex}</h3>
-						<div class="align-center">
-							<img src="{U_GRAPH_RESULT_SEX}" alt="{@user.sex}" />
-						</div>
+						{MEMBERS_GENDER_CHART}
 						<table class="table">
 							<thead>
 								<tr>
@@ -292,66 +289,10 @@
 										</li>
 									</ul>
 								</div>
-								# IF C_STATS_NO_GD #
-									<div class="cell-table">
-										<table class="table">
-											<tbody>
-												<tr>
-													<td></td>
-													<td>
-														{MAX_NBR}
-													</td>
-
-													# START values #
-														<td>
-															<table>
-																<tbody>
-																	# START values.head #
-																	<tr>
-																		<td class="table-values-head">
-																		</td>
-																	</tr>
-																	# END values.head #
-																	<tr>
-																		<td class="table-values" style="height: {values.HEIGHT}px;">
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													# END values #
-
-													# START end_td #
-														<td style="width:13px;">&nbsp;</td>
-													# END end_td #
-												</tr>
-												<tr>
-													<td></td>
-													<td>
-														0
-													</td>
-													# START legend #
-														<td>
-															# IF legend.C_LEGEND #
-															<a href="{legend.U_LEGEND}">{legend.L_LEGEND}</a>
-															# ELSE #
-															{legend.L_LEGEND}
-															# ENDIF #
-														</td>
-													# END legend #
-												</tr>
-												<tr>
-													<td colspan="{COLSPAN}"><a href="{U_YEAR}">{@stats.see.year.stats} {YEAR}</a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								# ELSE #
-									<div class="cell-body">
-										<div class="cell-thumbnail"><img src="{U_GRAPH_RESULT}" alt="{@stats.total.visits}" /></div>
-										<div class="cell-conte align-center"><a href="{U_YEAR}">{@stats.see.year.stats} {YEAR}</a></div>
-									</div>
-								# ENDIF #
+								<div class="cell-body">
+									{VISITS_CHART}
+									<div class="cell-conte align-center"><a href="{U_YEAR}">{@stats.see.year.stats} {YEAR}</a></div>
+								</div>
 							</div>
 						</div>
 						<table class="table">
@@ -392,7 +333,7 @@
 						<h2>{@stats.browsers}</h2>
 					</header>
 					<div class="align-center">
-						<img src="{U_GRAPH_RESULT}" alt="# IF C_CACHE_FILE #{@stats.browsers}# ELSE #{@browser.s}# ENDIF #" />
+						{CHART}
 					</div>
 					<table class="table">
 						<thead>
@@ -427,7 +368,7 @@
 						<h2>{@stats.os}</h2>
 					</header>
 					<div class="align-center">
-						<img src="{U_GRAPH_RESULT}" alt="# IF C_CACHE_FILE #{@stats.os}# ELSE #{@os}# ENDIF #" />
+						{CHART}
 					</div>
 					<table class="table">
 						<thead>
@@ -462,7 +403,7 @@
 						<h2>{@stats.countries}</h2>
 					</header>
 					<div class="align-center">
-						<img src="{U_GRAPH_RESULT}" alt="# IF C_CACHE_FILE #{@stats.countries}# ELSE #{@stat.lang}# ENDIF #" />
+						{CHART}
 					</div>
 					<table class="table">
 						<thead>
@@ -711,7 +652,7 @@
 							</header>
 							# IF C_ROBOTS_DATA #
 								<div class="align-center">
-									<img class="fieldset-img" src="{U_GRAPH_RESULT}" alt="{@stats.robots}" />
+									{ROBOTS_CHART}
 								</div>
 							# ENDIF #
 							<table class="table">

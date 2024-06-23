@@ -136,7 +136,7 @@ class GalleryDisplayCategoryController extends ModuleController
 						'CATEGORY_PARENT_ID'   => $cat->get_id_parent(),
 						'ITEMS_NUMBER'         => sprintf($elements_number['pics_aprob']),
 						'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-						'U_CATEGORY'           => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_name())
+						'U_CATEGORY'           => GalleryUrlBuilder::get_link_cat($cat->get_id(), $cat->get_rewrited_name())
 					));
 				}
 			}

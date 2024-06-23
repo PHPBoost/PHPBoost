@@ -9,19 +9,104 @@
 
 class StatsDisplayController extends DefaultModuleController
 {
+	private $db_querier;
+	private $year;
+	private $month;
+	private $current_year;
+	private $current_month;
+	private $year_requested;
+	private $month_requested;
+	private $next_year;
+	private $previous_year;
+	private $next_month;
+	private $previous_month;
+	private $array_month;
+	private $bissextile;
+
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-
+		$this->check_erase($request);
+		$this->affect_vars($request);
 		$this->build_view($request);
-
 		return $this->generate_response($request);
 	}
 
 	private function build_view(HTTPRequestCustom $request)
+	{		
+		$section = $request->get_string('section', '');
+		$visit   = ($section == 'visit');
+		$pages   = ($section == 'pages');
+		$referer = ($section == 'referer');
+		$keyword = ($section == 'keyword');
+		$members = ($section == 'members');
+		$browser = ($section == 'browser');
+		$os      = ($section == 'os');
+		$country = ($section == 'lang');
+		$bot     = ($section == 'bot');
+
+		$this->view->put_all([
+			'U_STATS_SITE'    => StatsUrlBuilder::home('site')->rel(),
+			'U_STATS_USERS'   => StatsUrlBuilder::home('members')->rel(),
+			'U_STATS_VISIT'   => StatsUrlBuilder::home('visit')->rel(),
+			'U_STATS_PAGES'   => StatsUrlBuilder::home('pages')->rel(),
+			'U_STATS_REFERER' => StatsUrlBuilder::home('referer')->rel(),
+			'U_STATS_KEYWORD' => StatsUrlBuilder::home('keyword')->rel(),
+			'U_STATS_BROWSER' => StatsUrlBuilder::home('browser')->rel(),
+			'U_STATS_OS'      => StatsUrlBuilder::home('os')->rel(),
+			'U_STATS_LANG'    => StatsUrlBuilder::home('lang')->rel(),
+			'U_STATS_ROBOTS'  => StatsUrlBuilder::home('bot')->rel()
+		]);
+
+		if ($members)
+		{
+			$this->build_members_view();
+		}
+		elseif ($visit) //Visites par jour classées par mois.
+		{
+			$this->build_visits_view();
+		}
+		elseif ($pages) //Pages par jour classées par mois.
+		{
+			$this->build_pages_view();
+		}
+		elseif ($referer)
+		{
+			$this->build_referers_view($request);
+		}
+		elseif ($keyword)
+		{
+			$this->build_keyword_view($request);
+		}
+		elseif ($browser)
+		{
+			$this->build_pie_stats_view('browsers');
+		}
+		elseif ($os)
+		{
+			$this->build_pie_stats_view('os');
+		}
+		elseif ($country)
+		{
+			$this->build_pie_stats_view('lang');
+		}
+		elseif ($bot)
+		{
+			$this->build_robots_view();
+		}
+		else
+		{
+			$general_config = GeneralConfig::load();
+			$this->view->put_all([
+				'C_STATS_SITE' => true,
+				'START'        => $general_config->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
+				'VERSION'      => $general_config->get_phpboost_major_version()
+			]);
+		}
+	}
+
+	private function check_erase(HTTPRequestCustom $request)
 	{
-		$db_querier = PersistenceContext::get_querier();
-		
 		$erase            = $request->get_postbool('erase', false);
 		$erase_occasional = $request->get_postbool('erase-occasional', false);
 
@@ -35,7 +120,7 @@ class StatsDisplayController extends DefaultModuleController
 		if ($erase_occasional) //Erase occasional robots
 		{
 			$array_robot = StatsSaver::retrieve_stats('robots');
-			$robots_visits = array();
+			$robots_visits = [];
 			$robots_visits_number = 0;
 			foreach ($array_robot as $key => $value)
 			{
@@ -45,11 +130,9 @@ class StatsDisplayController extends DefaultModuleController
 
 			if ($robots_visits_number)
 			{
-				$Stats = new ImagesStats();
-				$Stats->load_data($robots_visits, 'ellipse');
-				foreach ($Stats->data_stats as $key => $angle_value)
+				foreach ($robots_visits as $key => $value)
 				{
-					if (!NumberHelper::round(($angle_value/3.6), 1))
+					if (NumberHelper::round(($value/$robots_visits_number*100), 1) == 0)
 						unset($array_robot[$key]);
 				}
 			}
@@ -58,1108 +141,694 @@ class StatsDisplayController extends DefaultModuleController
 			fwrite($file, TextHelper::serialize($array_robot));
 			fclose($file);
 		}
-		
-		$section = $request->get_string('section', '');
-		
-		$visit   = ($section == 'visit');
-		$pages   = ($section == 'pages');
-		$referer = ($section == 'referer');
-		$keyword = ($section == 'keyword');
-		$members = ($section == 'members');
-		$browser = ($section == 'browser');
-		$os      = ($section == 'os');
-		$all     = ($section == 'all');
-		$country = ($section == 'lang');
-		$bot     = ($section == 'bot');
-		
+	}
+
+	private function affect_vars(HTTPRequestCustom $request)
+	{
+		$this->db_querier = PersistenceContext::get_querier();
 		$now = new Date();
 		
-		$year = $request->has_postparameter('year') ? $request->get_postint('year', '') : $request->get_getint('year', '');
-		$month = $request->has_postparameter('month') ? $request->get_postint('month', '') : $request->get_getint('month', '');
-		$day = $request->has_postparameter('day') ? $request->get_postint('day', '') : $request->get_getint('day', '');
-		
-		$current_year = NumberHelper::numeric($year ? $year : $now->get_year());
-		$current_month = NumberHelper::numeric($month ? $month : $now->get_month());
-		$current_day = NumberHelper::numeric($day ? $day : $now->get_day());
+		$this->year = $request->has_postparameter('year') ? $request->get_postint('year', '') : $request->get_getint('year', '');
+		$this->month = $request->has_postparameter('month') ? $request->get_postint('month', '') : $request->get_getint('month', '');
 
-		$this->view->put_all(array(
-			'U_STATS_SITE'    => StatsUrlBuilder::home('site')->rel(),
-			'U_STATS_USERS'   => StatsUrlBuilder::home('members')->rel(),
-			'U_STATS_VISIT'   => StatsUrlBuilder::home('visit')->rel(),
-			'U_STATS_PAGES'   => StatsUrlBuilder::home('pages')->rel(),
-			'U_STATS_REFERER' => StatsUrlBuilder::home('referer')->rel(),
-			'U_STATS_KEYWORD' => StatsUrlBuilder::home('keyword')->rel(),
-			'U_STATS_BROWSER' => StatsUrlBuilder::home('browser')->rel(),
-			'U_STATS_OS'      => StatsUrlBuilder::home('os')->rel(),
-			'U_STATS_LANG'    => StatsUrlBuilder::home('lang')->rel(),
-			'U_STATS_ROBOTS'  => StatsUrlBuilder::home('bot')->rel()
-		));
+		$this->current_year = NumberHelper::numeric($this->year ? $this->year : $now->get_year());
+		$this->current_month = NumberHelper::numeric($this->month ? $this->month : $now->get_month());
 
-		if ($members)
+		$this->year_requested = (bool)$this->year;
+		$this->month_requested = (bool)$this->month;
+
+		$this->month = $this->month ? $this->month : $this->current_month;
+		$this->year = $this->year ? $this->year : $this->current_year;
+
+		if (!$this->year_requested && $this->month_requested)
 		{
-			$stats_cache = StatsCache::load();
-			$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
-			$user_sex_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_sex');
-
-			$this->view->put_all(array(
-				'C_STATS_USERS'           => true,
-				'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
-				'C_DISPLAY_SEX'           => (!empty($user_sex_field) && $user_sex_field['display']),
-				'LAST_USER_DISPLAY_NAME'  => $stats_cache->get_stats_properties('last_member_login'),
-				'LAST_USER_LEVEL_CLASS'   => UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')),
-				'LAST_USER_GROUP_COLOR'   => $last_user_group_color,
-				'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
-				'USERS_NUMBER'            => $stats_cache->get_stats_properties('nbr_members'),
-				'U_GRAPH_RESULT_THEME'    => !file_exists('../cache/theme.png') ? StatsUrlBuilder::display_themes_graph()->rel() : '../cache/theme.png',
-				'U_GRAPH_RESULT_SEX'      => !file_exists('../cache/sex.png') ? StatsUrlBuilder::display_sex_graph()->rel() : '../cache/sex.png'
-			));
-
-			$stats_array = array();
-			foreach (ThemesManager::get_activated_themes_map() as $theme)
-			{
-				$stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
-			}
-
-			$Stats = new ImagesStats();
-
-			$Stats->load_data($stats_array, 'ellipse');
-			foreach ($Stats->data_stats as $name => $angle_value)
-			{
-				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-				$this->view->assign_block_vars('templates', array(
-					'NBR_THEME' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
-					'COLOR'     => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'THEME'     => ($name == 'Other') ? $this->lang['common.other'] : $name,
-					'PERCENT'   => NumberHelper::round(($angle_value/3.6), 1)
-				));
-			}
-
-			$stats_array = array();
-			$result = $db_querier->select("SELECT count(ext_field.user_sex) as compt, ext_field.user_sex
-			FROM " . PREFIX . "member member
-			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
-			GROUP BY ext_field.user_sex
-			ORDER BY compt");
-			while ($row = $result->fetch())
-			{
-				switch ($row['user_sex'])
-				{
-					case 0:
-					$name = $this->lang['common.unknown'];
-					break;
-					case 1:
-					$name = $this->lang['user.male'];
-					break;
-					case 2:
-					$name = $this->lang['user.female'];
-					break;
-				}
-				$stats_array[$name] = $row['compt'];
-			}
-			$result->dispose();
-
-			$Stats->color_index = 0;
-			$Stats->load_data($stats_array, 'ellipse');
-			foreach ($Stats->data_stats as $name => $angle_value)
-			{
-				$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-				$this->view->assign_block_vars('sex', array(
-					'MEMBERS_NUMBER' => NumberHelper::round(($angle_value*$Stats->nbr_entry)/360, 0),
-					'COLOR'          => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-					'SEX'            => ($name == 'Other') ? $this->lang['common.other'] : $name,
-					'PERCENT'        => NumberHelper::round(($angle_value/3.6), 1)
-				));
-			}
-
-			$i = 1;
-			$result = $db_querier->select("SELECT user_id, display_name, level, user_groups, posted_msg
-			FROM " . DB_TABLE_MEMBER . "
-			ORDER BY posted_msg DESC
-			LIMIT 10 OFFSET 0");
-			while ($row = $result->fetch())
-			{
-				$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
-				$contributions_number = 0;
-				foreach ($modules as $module)
-				{
-					if($module->get_publications_module_id() != 'forum')
-						$contributions_number += $module->get_publications_number($row['user_id']);
-				}
-
-				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
-
-				$this->view->assign_block_vars('top_poster', array(
-					'C_USER_GROUP_COLOR' => !empty($user_group_color),
-					'ID'                 => $i,
-					'LOGIN'              => $row['display_name'],
-					'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
-					'USER_GROUP_COLOR'   => $user_group_color,
-					'USER_POST'          => $row['posted_msg'],
-					'USER_PUBLICATIONS'  => $contributions_number,
-					'U_USER_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
-					'U_USER_PUBLICATIONS' => UserUrlBuilder::publications($row['user_id'])->rel(),
-				));
-
-				$i++;
-			}
-			$result->dispose();
-		}
-		elseif ($visit) //Visites par jour classées par mois.
-		{
-			//On affiche les visiteurs totaux et du jour
-			$visit_counter = array('nbr_ip' => 0, 'total' => 0);
-			try {
-				$visit_counter = $db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, array('ip AS nbr_ip', 'total'), 'WHERE id = :id', array('id' => 1));
-			} catch (RowNotFoundException $e) {}
-
-			$visit_counter_total = !empty($visit_counter['nbr_ip']) ? $visit_counter['nbr_ip'] : 1;
-			$visit_counter_day = !empty($visit_counter['total']) ? $visit_counter['total'] : 1;
-
-			$year_requested = (bool)$year;
-			$month_requested = (bool)$month;
-			$month = $month ? $month : $current_month;
-			$year = $year ? $year : $current_year;
-
-			//Gestion des mois pour s'adapter au array défini dans lang/{locale}/date-lang.php
-			$array_l_months = array($this->lang['date.january'], $this->lang['date.february'], $this->lang['date.march'], $this->lang['date.april'], $this->lang['date.may'], $this->lang['date.june'],
-			$this->lang['date.july'], $this->lang['date.august'], $this->lang['date.september'], $this->lang['date.october'], $this->lang['date.november'], $this->lang['date.december']);
-
-			if ($year_requested && !$month_requested) //Visites par mois classées par ans.
-			{
-				//Années précédente et suivante
-				$next_year = $year + 1;
-				$previous_year = $year - 1;
-
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = array('max_month' => 0, 'sum_month' => 0, 'nbr_month' => 0);
-				try {
-					$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year=:year GROUP BY stats_year', array('year' => $year));
-				} catch (RowNotFoundException $e) {}
-
-				$this->view->put_all(array(
-					'C_STATS_VISIT'   => true,
-					'TYPE'            => 'visit',
-					'VISIT_TOTAL'     => $visit_counter_total,
-					'VISIT_DAY'       => $visit_counter_day,
-					'YEAR'            => $year,
-					'COLSPAN'         => 14,
-					'SUM_NBR'         => $info['sum_month'],
-					'MAX_NBR'         => $info['max_month'],
-					'MOY_NBR'         => !empty($info['nbr_month']) ? NumberHelper::round($info['sum_month']/$info['nbr_month'], 1) : 1,
-					'U_NEXT_LINK'     => StatsUrlBuilder::home('visit', $next_year)->rel(),
-					'U_PREVIOUS_LINK' => StatsUrlBuilder::home('visit', $previous_year)->rel(),
-					'U_YEAR'          => StatsUrlBuilder::home('visit', $year)->rel()
-				));
-
-				//Année maximale
-				$info_year = array('max_year' => 0, 'min_year' => 0);
-				try {
-					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
-				} catch (RowNotFoundException $e) {}
-				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-				{
-					$this->view->assign_block_vars('year_select', array(
-						'C_SELECTED' => ($i == $year),
-						'LABEL'      => $i,
-						'VALUE'      => $i
-					));
-				}
-				$this->view->put_all(array(
-					'C_STATS_YEAR' => true
-				));
-
-				if (@extension_loaded('gd'))
-				{
-					$this->view->put_all(array(
-						'U_GRAPH_RESULT' => StatsUrlBuilder::display_visits_year_graph($year)->rel()
-					));
-
-					//On fait la liste des visites journalières
-					$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :stats_year
-						GROUP BY stats_month", array(
-							'stats_year' => $year
-					));
-					while ($row = $result->fetch())
-					{
-						//On affiche les stats numériquement dans un tableau en dessous
-						$this->view->assign_block_vars('value', array(
-							'C_DETAILS_LINK' => true,
-							'U_DETAILS'      => StatsUrlBuilder::home('visit', $year, $row['stats_month'])->rel(),
-							'L_DETAILS'      => $array_l_months[$row['stats_month'] - 1],
-							'NBR'            => $row['total']
-						));
-					}
-					$result->dispose();
-				}
-				else
-				{
-					$max_month = 1;
-					$result = $db_querier->select("SELECT SUM(nbr) AS total
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :stats_year
-						GROUP BY stats_month", array(
-							'stats_year' => $year
-					));
-					while ($row = $result->fetch())
-					{
-						$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-					}
-					$result->dispose();
-
-					$this->view->put_all(array(
-						'C_STATS_NO_GD' => true
-					));
-
-					$i = 1;
-					$last_month = 1;
-					$months_not_empty = array();
-					$result = $db_querier->select("SELECT stats_month, SUM(nbr) AS total
-					FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :stats_year
-						GROUP BY stats_month", array(
-							'stats_year' => $year
-					));
-					while ($row = $result->fetch())
-					{
-						$diff = 0;
-						if ($row['stats_month'] != $i)
-						{
-							$diff = $row['stats_month'] - $i;
-							for ($j = 0; $j < $diff; $j++)
-							{
-								$this->view->assign_block_vars('values', array(
-									'HEIGHT' => 0
-								));
-							}
-						}
-
-						$i += $diff;
-
-						//On a des stats pour ce mois-ci, on l'enregistre
-						array_push($months_not_empty, $row['stats_month']);
-
-						//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
-						$height = $row['total'] / $max_month * 200;
-
-						$this->view->assign_block_vars('values', array(
-							'HEIGHT' => ceil($height)
-						));
-
-						$this->view->assign_block_vars('values.head', array(
-						));
-
-						//On affiche les stats numériquement dans un tableau en dessous
-						$this->view->assign_block_vars('value', array(
-							'C_DETAILS_LINK' => true,
-							'U_DETAILS'      => StatsUrlBuilder::home('visit', $year, $row['stats_month'])->rel(),
-							'L_DETAILS'      => $array_l_months[$row['stats_month'] - 1],
-							'NBR'            => $row['total']
-						));
-
-						$last_month = $row['stats_month'];
-						$i++;
-					}
-					$result->dispose();
-
-					//Génération des td manquants.
-					$date_day = isset($date_day) ? $date_day : 1;
-					for	($i = $last_month; $i < 12; $i++)
-					{
-						$this->view->assign_block_vars('end_td', array(
-							'END_TD' => $i
-						));
-					}
-					//On liste les jours en dessous du graphique
-					$i = 1;
-					foreach ($array_l_months as $value)
-					{
-						$this->view->assign_block_vars('legend', array(
-							'C_LEGEND' => (in_array($i, $months_not_empty)),
-							'L_LEGEND' => TextHelper::substr($value, 0, 3),
-							'U_LEGEND' => StatsUrlBuilder::home('visit', $year, $i)->rel()
-						));
-						$i++;
-					}
-				}
-			}
-			else
-			{
-				//Nombre de jours pour chaque mois (gestion des années bissextiles)
-				$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-				$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-
-				//Mois précédent et suivant
-				$next_month = ($month < 12) ? $month + 1 : 1;
-				$next_year = ($month < 12) ? $year : $year + 1;
-				$previous_month = ($month > 1) ? $month - 1 : 12;
-				$previous_year = ($month > 1) ? $year : $year - 1;
-
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
-				try {
-					$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'), 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', array('year' => $year, 'month' => $month));
-				} catch (RowNotFoundException $e) {}
-
-				$this->view->put_all(array(
-					'C_STATS_VISIT'   => true,
-					'C_YEAR'          => $year && !$month,
-					'TYPE'            => 'visit',
-					'VISIT_TOTAL'     => $visit_counter_total,
-					'VISIT_DAY'       => $visit_counter_day,
-					'COLSPAN'         => $array_month[$month-1] + 2,
-					'SUM_NBR'         => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
-					'MONTH'           => $array_l_months[$month - 1],
-					'MAX_NBR'         => $info['max_nbr'],
-					'MOY_NBR'         => NumberHelper::round($info['avg_nbr'], 1),
-					'YEAR'            => $year,
-					'U_NEXT_LINK'     => StatsUrlBuilder::home('visit', $next_year, $next_month)->rel(),
-					'U_PREVIOUS_LINK' => StatsUrlBuilder::home('visit', $previous_year, $previous_month)->rel(),
-					'U_YEAR'          => StatsUrlBuilder::home('visit', $year)->rel()
-				));
-
-				for ($i = 1; $i <= 12; $i++)
-				{
-					$this->view->assign_block_vars('month_select', array(
-						'C_SELECTED' => ($i == $month),
-						'LABEL'      => $array_l_months[$i - 1],
-						'VALUE'      => $i
-					));
-				}
-
-				//Année maximale
-				$info_year = array('max_year' => 0, 'min_year' => 0);
-				try {
-					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
-				} catch (RowNotFoundException $e) {}
-				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-				{
-					$this->view->assign_block_vars('year_select', array(
-						'C_SELECTED' => ($i == $year),
-						'LABEL'      => $i,
-						'VALUE'      => $i
-					));
-				}
-				$this->view->put_all(array(
-					'C_STATS_YEAR'  => true,
-					'C_STATS_MONTH' => true
-				));
-
-				if (@extension_loaded('gd'))
-				{
-					$this->view->put_all(array(
-						'U_GRAPH_RESULT' => StatsUrlBuilder::display_visits_month_graph($year, $month)->rel()
-					));
-
-					//On fait la liste des visites journalières
-					$result = $db_querier->select("SELECT nbr, stats_day AS day
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :year AND stats_month = :month
-						GROUP BY stats_day, nbr", array(
-							'year' => $year,
-							'month' => $month
-					));
-					while ($row = $result->fetch())
-					{
-						$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
-
-						//On affiche les stats numériquement dans un tableau en dessous
-						$this->view->assign_block_vars('value', array(
-							'L_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
-							'NBR'       => $row['nbr']
-						));
-					}
-					$result->dispose();
-				}
-				else
-				{
-					//Mois selectionné.
-					if (!empty($month) && !empty($year))
-					{
-						$this->view->put_all(array(
-							'C_STATS_NO_GD' => true
-						));
-
-						//On rajoute un 0 devant tous les mois plus petits que 10
-						$month = ($month < 10) ? '0' . $month : $month;
-						unset($i);
-
-						//On fait la liste des visites journalières
-						$j = 0;
-						$result = $db_querier->select("SELECT nbr, stats_day AS day
-							FROM " . StatsSetup::$stats_table . "
-							WHERE stats_year = :year AND stats_month = :month
-							ORDER BY stats_day", array(
-								'year' => $year,
-								'month' => $month
-						));
-						while ($row = $result->fetch())
-						{
-							//Complétion des jours précédent le premier enregistrement du mois.
-							if ($j == 0)
-							{
-								for ($z = 1; $z < $row['day']; $z++)
-								{
-									$this->view->assign_block_vars('values', array(
-										'HEIGHT' => 0
-									));
-								}
-								$j++;
-							}
-							//Remplissage des trous possibles entre les enregistrements.
-							$i = !isset($i) ? $row['day'] : $i;
-							$diff = 0;
-							if ($row['day'] != $i)
-							{
-								$diff = $row['day'] - $i;
-								for ($j = 0; $j < $diff; $j++)
-								{
-									$this->view->assign_block_vars('values', array(
-										'HEIGHT' => 0
-									));
-								}
-							}
-							$i += $diff;
-
-							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
-							$height = ($row['nbr'] / $info['max_nbr']) * 200;
-
-							$this->view->assign_block_vars('values', array(
-								'HEIGHT' => ceil($height)
-							));
-
-							$this->view->assign_block_vars('values.head', array(
-							));
-
-							$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
-
-							//On affiche les stats numériquement dans un tableau en dessous
-							$this->view->assign_block_vars('value', array(
-								'L_DETAILS' => $date_day . '/' . sprintf('%02d', $month) . '/' . $year,
-								'NBR'       => $row['nbr']
-							));
-
-							$i++;
-						}
-						$result->dispose();
-
-						//Génération des td manquants.
-						$date_day = isset($date_day) ? $date_day : 1;
-						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
-						{
-							$this->view->assign_block_vars('end_td', array(
-								'END_TD' => $i
-							));
-						}
-
-						//On liste les jours en dessous du graphique
-						for ($i = 1; $i <= $array_month[$month - 1]; $i++)
-						{
-							$this->view->assign_block_vars('legend', array(
-								'L_LEGEND' => $i
-							));
-						}
-					}
-				}
-			}
-		}
-		elseif ($pages) //Pages par jour classées par mois.
-		{
-			$year_requested = (bool)$year;
-			$month_requested = (bool)$month;
-			$month = $month ? $month : $current_month;
-			$year = $year ? $year : $current_year;
-			
-			$condition = 'WHERE stats_year=:year' . ($month || !$year ? ' AND stats_month=:month' : '') . ' AND pages_detail <> \'\' GROUP BY stats_month';
-			
-			$parameters = array(
-				'year'  => $year,
-				'month' => $month
-			);
-
-			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-			$info = array('max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0);
-			try {
-				$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), $condition, $parameters);
-			} catch (RowNotFoundException $e) {}
-
-			//On affiche les visiteurs totaux et du jour
-			$pages_total = $db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
-			$pages_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
-			$pages_total = $pages_total + $pages_day;
-			$pages_day = !empty($pages_day) ? $pages_day : 1;
-
-			//Gestion des mois pour s'adapter au array défini dans lang/{locale}/date-lang.php
-			$array_l_months = array($this->lang['date.january'], $this->lang['date.february'], $this->lang['date.march'], $this->lang['date.april'], $this->lang['date.may'], $this->lang['date.june'],
-			$this->lang['date.july'], $this->lang['date.august'], $this->lang['date.september'], $this->lang['date.october'], $this->lang['date.november'], $this->lang['date.december']);
-
-			if ($year_requested && !$month_requested) //Visites par mois classées par ans.
-			{
-				//Années précédente et suivante
-				$next_year = $year + 1;
-				$previous_year = $year - 1;
-
-				//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
-				$info = array('max_nbr' => 0, 'sum_nbr' => 0, 'nbr_month' => 0);
-				try {
-					$info = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'), 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', array('year' => $year));
-				} catch (RowNotFoundException $e) {}
-
-				$this->view->put_all(array(
-					'C_STATS_VISIT'   => true,
-					'C_STATS_PAGES'   => true,
-					'TYPE'            => 'pages',
-					'VISIT_TOTAL'     => $pages_total,
-					'VISIT_DAY'       => $pages_day,
-					'YEAR'            => $year,
-					'COLSPAN'         => 13,
-					'SUM_NBR'         => $info['sum_nbr'],
-					'MAX_NBR'         => $info['max_nbr'],
-					'MOY_NBR'         => !empty($info['nbr_month']) ? NumberHelper::round($info['sum_nbr']/$info['nbr_month'], 1) : 0,
-					'U_NEXT_LINK'     => StatsUrlBuilder::home('pages', $next_year)->rel(),
-					'U_PREVIOUS_LINK' => StatsUrlBuilder::home('pages', $previous_year)->rel()
-				));
-
-				//Année maximale
-				$info_year = array('max_year' => 0, 'min_year' => 0);
-				try {
-					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
-				} catch (RowNotFoundException $e) {}
-
-				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-				{
-					$this->view->assign_block_vars('year_select', array(
-						'C_SELECTED' => ($i == $year),
-						'LABEL'      => $i,
-						'VALUE'      => $i
-					));
-				}
-				$this->view->put_all(array(
-					'C_STATS_YEAR' => true
-				));
-
-				if (@extension_loaded('gd'))
-				{
-					$this->view->put_all(array(
-						'U_GRAPH_RESULT' => StatsUrlBuilder::display_pages_year_graph($year)->rel()
-					));
-
-					//On fait la liste des visites journalières
-					$result = $db_querier->select("SELECT  stats_month, SUM(pages) AS total
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :year
-						GROUP BY stats_month", array(
-							'year' => $year
-					));
-					while ($row = $result->fetch())
-					{
-						//On affiche les stats numériquement dans un tableau en dessous
-						$this->view->assign_block_vars('value', array(
-							'C_DETAILS_LINK' => true,
-							'U_DETAILS'      => StatsUrlBuilder::home('pages', $year, $row['stats_month'])->rel(),
-							'L_DETAILS'      => $array_l_months[$row['stats_month'] - 1],
-							'NBR'            => $row['total']
-						));
-					}
-					$result->dispose();
-				}
-				else
-				{
-					$result = $db_querier->select("SELECT SUM(nbr) AS total
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :stats_year
-						GROUP BY stats_month", array(
-							'stats_year' => $year
-					));
-					$max_month = 1;
-					while ($row = $result->fetch())
-					{
-						$max_month = ($row['total'] <= $max_month) ? $max_month : $row['total'];
-					}
-
-					$this->view->put_all(array(
-						'C_STATS_NO_GD' => true
-					));
-
-					$i = 1;
-					$last_month = 1;
-					$months_not_empty = array();
-					$result = $db_querier->select("SELECT stats_month, SUM(pages) AS total
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :stats_year
-						GROUP BY stats_month", array(
-							'stats_year' => $year
-					));
-					while ($row = $result->fetch())
-					{
-						$diff = 0;
-						if ($row['stats_month'] != $i)
-						{
-							$diff = $row['stats_month'] - $i;
-							for ($j = 0; $j < $diff; $j++)
-							{
-								$this->view->assign_block_vars('values', array(
-									'HEIGHT' => 0
-								));
-							}
-						}
-
-						$i += $diff;
-
-						//On a des stats pour ce mois-ci, on l'enregistre
-						array_push($months_not_empty, $row['stats_month']);
-
-						//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
-						$height = $row['total'] / $info['max_month'] * 200;
-
-						$this->view->assign_block_vars('months', array(
-							'HEIGHT' => ceil($height)
-						));
-
-						$this->view->assign_block_vars('values.head', array(
-						));
-
-						//On affiche les stats numériquement dans un tableau en dessous
-						$this->view->assign_block_vars('value', array(
-							'C_DETAILS_LINK' => true,
-							'U_DETAILS'      => StatsUrlBuilder::home('pages', $year, $row['stats_month'])->rel(),
-							'L_DETAILS'      => $array_l_months[$row['stats_month'] - 1],
-							'NBR'            => $row['total']
-						));
-
-						$last_month = $row['stats_month'];
-						$i++;
-					}
-					$result->dispose();
-
-					//Génération des td manquants.
-					$date_day = isset($date_day) ? $date_day : 1;
-					for	($i = $last_month; $i < 12; $i++)
-					{
-						$this->view->assign_block_vars('end_td', array(
-							'END_TD' => $i
-						));
-					}
-					//On liste les jours en dessous du graphique
-					$i = 1;
-					foreach ($array_l_months as $value)
-					{
-						$this->view->assign_block_vars('legend', array(
-							'C_LEGEND' => (in_array($i, $months_not_empty)),
-							'L_LEGEND' => TextHelper::substr($value, 0, 3),
-							'U_LEGEND' => StatsUrlBuilder::home('pages', $year, $i)->rel()
-						));
-						$i++;
-					}
-				}
-			}
-			else
-			{
-				//Nombre de jours pour chaque mois (gestion des années bissextiles)
-				$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-				$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-
-				//Mois précédent et suivant
-				$next_month = ($month < 12) ? $month + 1 : 1;
-				$next_year = ($month < 12) ? $year : $year + 1;
-				$previous_month = ($month > 1) ? $month - 1 : 12;
-				$previous_year = ($month > 1) ? $year : $year - 1;
-
-				$this->view->put_all(array(
-					'C_STATS_VISIT'   => true,
-					'C_STATS_PAGES'   => true,
-					'TYPE'            => 'pages',
-					'VISIT_TOTAL'     => $pages_total,
-					'VISIT_DAY'       => $pages_day,
-					'COLSPAN'         => $array_month[$month - 1] + 2,
-					'SUM_NBR'         => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
-					'MONTH'           => $array_l_months[$month - 1],
-					'MAX_NBR'         => $info['max_nbr'],
-					'MOY_NBR'         => NumberHelper::round($info['avg_nbr'], 1),
-					'YEAR'            => $year,
-					'U_NEXT_LINK'     => StatsUrlBuilder::home('pages', $next_year, $next_month)->rel(),
-					'U_PREVIOUS_LINK' => StatsUrlBuilder::home('pages', $previous_year, $previous_month)->rel(),
-					'U_YEAR'          => StatsUrlBuilder::home('pages', $year)->rel()
-				));
-
-				for ($i = 1; $i <= 12; $i++)
-				{
-					$this->view->assign_block_vars('month_select', array(
-						'C_SELECTED' => ($i == $month),
-						'LABEL'      => $array_l_months[$i - 1],
-						'VALUE'      => $i
-					));
-				}
-
-				//Année maximale
-				$info_year = array('max_year' => 0, 'min_year' => 0);
-				try {
-					$info_year = $db_querier->select_single_row(StatsSetup::$stats_table, array('MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'), '');
-				} catch (RowNotFoundException $e) {}
-				for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
-				{
-					$this->view->assign_block_vars('year_select', array(
-						'C_SELECTED' => ($i == $year),
-						'LABEL'      => $i,
-						'VALUE'      => $i
-					));
-				}
-				$this->view->put_all(array(
-					'C_STATS_YEAR'  => true,
-					'C_STATS_MONTH' => true
-				));
-
-				if (@extension_loaded('gd'))
-				{
-					$this->view->put_all(array(
-						'U_GRAPH_RESULT' => StatsUrlBuilder::display_pages_month_graph($year, $month)->rel()
-					));
-
-					//On fait la liste des visites journalières
-					$result = $db_querier->select("SELECT pages, stats_day, stats_month, stats_year
-						FROM " . StatsSetup::$stats_table . "
-						WHERE stats_year = :stats_year AND stats_month = :stats_month
-						GROUP BY stats_day, pages, stats_month, stats_year", array(
-							'stats_year' => $year,
-							'stats_month' => $month,
-					));
-					while ($row = $result->fetch())
-					{
-						$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
-
-						//On affiche les stats numériquement dans un tableau en dessous
-						$this->view->assign_block_vars('value', array(
-							'U_DETAILS' => StatsUrlBuilder::home('pages', $row['stats_year'], $row['stats_month'], $row['stats_day'])->rel(),
-							'L_DETAILS' => $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'],
-							'NBR'       => $row['pages']
-						));
-					}
-					$result->dispose();
-				}
-				else
-				{
-					//Mois selectionné.
-					if (!empty($month) && !empty($year))
-					{
-						$this->view->put_all(array(
-							'C_STATS_NO_GD' => true
-						));
-
-						//On rajoute un 0 devant tous les mois plus petits que 10
-						$month = ($month < 10) ? '0' . $month : $month;
-						unset($i);
-
-						//On fait la liste des visites journalières
-						$j = 0;
-						$result = $db_querier->select("SELECT pages, stats_day AS day, stats_month, stats_year
-							FROM " . StatsSetup::$stats_table . "
-							WHERE stats_year = :stats_year AND stats_month = :stats_month
-							GROUP BY stats_day, pages, stats_month, stats_year", array(
-								'stats_year' => $year,
-								'stats_month' => $month,
-						));
-						while ($row = $result->fetch())
-						{
-							//Complétion des jours précédent le premier enregistrement du mois.
-							if ($j == 0)
-							{
-								for ($z = 1; $z < $row['day']; $z++)
-								{
-									$this->view->assign_block_vars('days', array(
-										'HEIGHT' => 0
-									));
-								}
-								$j++;
-							}
-							//Remplissage des trous possibles entre les enregistrements.
-							$i = !isset($i) ? $row['day'] : $i;
-							$diff = 0;
-							if ($row['day'] != $i)
-							{
-								$diff = $row['day'] - $i;
-								for ($j = 0; $j < $diff; $j++)
-								{
-									$this->view->assign_block_vars('days', array(
-										'HEIGHT' => 0
-									));
-								}
-							}
-							$i += $diff;
-
-							//On calcule la proportion (le maximum du mois tiendra toute la hauteur)
-							$height = ($row['pages'] / $info['max_nbr']) * 200;
-
-							$this->view->assign_block_vars('values', array(
-								'HEIGHT' => ceil($height)
-							));
-
-							$this->view->assign_block_vars('values.head', array(
-							));
-
-							$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
-
-							//On affiche les stats numériquement dans un tableau en dessous
-							$this->view->assign_block_vars('value', array(
-								'L_DETAILS' => $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'],
-								'NBR'       => $row['pages']
-							));
-
-							$i++;
-						}
-						$result->dispose();
-
-						//Génération des td manquants.
-						$date_day = isset($date_day) ? $date_day : 1;
-						for	($i = $date_day; $i < ($array_month[$month - 1] - 1); $i++)
-						{
-							$this->view->assign_block_vars('end_td', array(
-								'END_TD' => $i
-							));
-						}
-
-						//On liste les jours en dessous du graphique
-						for ($i = 1; $i <= $array_month[$month - 1]; $i++)
-						{
-							$this->view->assign_block_vars('legend', array(
-								'L_LEGEND' => $i
-							));
-						}
-					}
-				}
-			}
-		}
-		elseif ($referer)
-		{
-			$nbr_referer = $db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = :type', array('type' => 0), 'DISTINCT(url)');
-
-			$page = $request->get_getint('page', 1);
-			$pagination = new ModulePagination($page, $nbr_referer, $this->config->get_items_per_page());
-			$pagination->set_url(StatsUrlBuilder::table('referer', '%d'));
-
-			if ($pagination->current_page_is_empty() && $page > 1)
-			{
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
-
-			$result = $db_querier->select("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
-				FROM " . PREFIX . "stats_referer
-				WHERE type = 0
-				GROUP BY url, id, relative_url, nbr_day
-				ORDER BY total_visit DESC
-				LIMIT :number_items_per_page OFFSET :display_from", array(
-					'number_items_per_page' => $pagination->get_number_items_per_page(),
-					'display_from' => $pagination->get_display_from()
-				));
-			while ($row = $result->fetch())
-			{
-				$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-
-				$this->view->assign_block_vars('referer_list', array(
-					'ID'              => $row['id'],
-					'URL'             => $row['url'],
-					'NBR_LINKS'       => $row['count'],
-					'TOTAL_VISIT'     => $row['total_visit'],
-					'AVERAGE_VISIT'   => $trend_parameters['average'],
-					'LAST_UPDATE'     => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
-					'C_TREND_PICTURE' => !empty($trend_parameters['picture']),
-					'TREND_PICTURE'   => $trend_parameters['picture'],
-					'TREND_LABEL'     => '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
-				));
-			}
-			$result->dispose();
-
-			$this->view->put_all(array(
-				'C_STATS_REFERER' => true,
-				'C_REFERERS'      => $nbr_referer,
-				'C_PAGINATION'    => $pagination->has_several_pages(),
-				'PAGINATION'      => $pagination->display(),
-			));
-		}
-		elseif ($keyword)
-		{
-			$nbr_keyword = $db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = :type', array('type' => 1), 'DISTINCT(relative_url)');
-
-			$page = $request->get_getint('page', 1);
-			$pagination = new ModulePagination($page, $nbr_keyword, $this->config->get_items_per_page());
-			$pagination->set_url(StatsUrlBuilder::table('keyword', '%d'));
-			
-			if ($pagination->current_page_is_empty() && $page > 1)
-			{
-				$error_controller = PHPBoostErrors::unexisting_page();
-				DispatchManager::redirect($error_controller);
-			}
-
-			$result = $db_querier->select("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
-				FROM " . PREFIX . "stats_referer
-				WHERE type = 1
-				GROUP BY relative_url, id, nbr_day
-				ORDER BY total_visit DESC
-				LIMIT :number_items_per_page OFFSET :display_from", array(
-					'number_items_per_page' => $pagination->get_number_items_per_page(),
-					'display_from' => $pagination->get_display_from()
-				));
-			while ($row = $result->fetch())
-			{
-				$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
-
-				$this->view->assign_block_vars('keyword_list', array(
-					'ID'              => $row['id'],
-					'KEYWORD'         => $row['relative_url'],
-					'NBR_LINKS'       => $row['count'],
-					'TOTAL_VISIT'     => $row['total_visit'],
-					'AVERAGE_VISIT'   => $trend_parameters['average'],
-					'LAST_UPDATE'     => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
-					'C_TREND_PICTURE' => !empty($trend_parameters['picture']),
-					'TREND_PICTURE'   => $trend_parameters['picture'],
-					'TREND_LABEL'     => '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
-				));
-			}
-			$result->dispose();
-
-			$this->view->put_all(array(
-				'C_STATS_KEYWORD' => true,
-				'C_KEYWORDS'      => $nbr_keyword,
-				'C_PAGINATION'    => $pagination->has_several_pages(),
-				'PAGINATION'      => $pagination->display(),
-			));
-		}
-		elseif ($browser || $os || $country) //Graphiques camembert.
-		{
-			$path = '../images/stats/';
-			if (!empty($browser))
-			{
-				$this->view->put_all(array(
-					'C_STATS_BROWSERS' => true,
-					'C_CACHE_FILE'     => !file_exists('../cache/browsers.png'),
-					'U_GRAPH_RESULT'   => !file_exists('../cache/browsers.png') ? StatsUrlBuilder::display_browsers_graph()->rel() : '../cache/browsers.png',
-				));
-				$stats_menu = 'browsers';
-				$array_stats_info = LangLoader::get($stats_menu, 'stats');
-				$path = 'browsers/';
-			}
-			elseif (!empty($os))
-			{
-				$this->view->put_all(array(
-					'C_STATS_OS'     => true,
-					'C_CACHE_FILE'   => !file_exists('../cache/os.png'),
-					'U_GRAPH_RESULT' => !file_exists('../cache/os.png') ? StatsUrlBuilder::display_os_graph()->rel() : '../cache/os.png',
-				));
-				$stats_menu = 'os';
-				$array_stats_info = LangLoader::get($stats_menu, 'stats');
-				$path = 'os/';
-			}
-			elseif (!empty($country))
-			{
-				$this->view->put_all(array(
-					'C_STATS_LANG'   => true,
-					'C_CACHE_FILE'   => !file_exists('../cache/lang.png'),
-					'U_GRAPH_RESULT' => !file_exists('../cache/lang.png') ? StatsUrlBuilder::display_langs_graph()->rel() : '../cache/lang.png',
-				));
-				$stats_menu = 'lang';
-				$array_stats_info = LangLoader::get($stats_menu, 'stats');
-				$path = 'countries/';
-			}
-
-			$Stats = new ImagesStats();
-
-			$Stats->load_data(StatsSaver::retrieve_stats($stats_menu), 'ellipse', 5);
-
-			//Tri décroissant.
-			arsort($Stats->data_stats);
-
-			//Traitement des données.
-			$array_stats_tmp = array();
-			$array_order = array();
-			$percent_other = 0;
-			foreach ($Stats->data_stats as $value_name => $angle_value)
-			{
-				if (!isset($array_stats_info[$value_name]) || $value_name == 'other') //Autres, on additionne le tout.
-				{
-					$value_name = 'other';
-					$angle_value += $percent_other;
-					$percent_other += $angle_value;
-					$stats_img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $this->lang['common.other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $this->lang['common.other'] . '" />';
-					$name_stats = $this->lang['common.other'];
-				}
-				else
-				{
-					$stats_img = !empty($array_stats_info[$value_name][1]) ? '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/' . $path . $array_stats_info[$value_name][1] . '" alt="' . $array_stats_info[$value_name][0] . '" />' : '-';
-					$name_stats = $array_stats_info[$value_name][0];
-				}
-
-				if (!isset($array_order[$value_name]))
-				{
-					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-					$array_stats_tmp[$value_name] = array($name_stats, $array_color, $stats_img);
-					$array_order[$value_name] = $angle_value;
-				}
-			}
-
-			//Affichage.
-			foreach ($array_order as $value_name => $angle_value)
-			{
-				$this->view->assign_block_vars('list', array(
-					'COLOR'   => 'rgb(' . trim(implode(', ', $array_stats_tmp[$value_name][1]), ', ') . ')',
-					'IMG'     => $array_stats_tmp[$value_name][2],
-					'L_NAME'  => $array_stats_tmp[$value_name][0],
-					'PERCENT' => NumberHelper::round(($angle_value/3.6), 1),
-				));
-			}
-		}
-		elseif ($bot)
-		{
-			$array_robot = StatsSaver::retrieve_stats('robots');
-
-			if (isset($array_robot['unknow_bot']))
-			{
-				$array_robot[$this->lang['common.unknown']] = $array_robot['unknow_bot'];
-				unset($array_robot['unknow_bot']);
-			}
-			$robots_visits = array();
-			$robots_visits_number = 0;
-			foreach ($array_robot as $key => $value)
-			{
-				$robots_visits[$key] = is_array($value) ? $value['visits_number'] : $value;
-				$robots_visits_number += $robots_visits[$key];
-			}
-
-			if ($robots_visits_number)
-			{
-				$Stats = new ImagesStats();
-				$Stats->load_data($robots_visits, 'ellipse');
-				foreach ($Stats->data_stats as $key => $angle_value)
-				{
-					$array_color = $Stats->array_allocated_color[$Stats->image_color_allocate_dark(false, NO_ALLOCATE_COLOR)];
-					$this->view->assign_block_vars('list', array(
-						'C_BOT_DETAILS' => $key != $this->lang['common.unknown'],
-						'COLOR'         => 'rgb(' . $array_color[0] . ', ' . $array_color[1] . ', ' . $array_color[2] . ')',
-						'VISITS_NUMBER' => $robots_visits[$key],
-						'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.undetermined'],
-						'PERCENT'       => NumberHelper::round(($angle_value/3.6), 1),
-						'L_NAME'        => $key,
-						'U_BOT_DETAILS' => 'https://udger.com/resources/ua-list/bot-detail?bot=' . urlencode($key)
-					));
-				}
-			}
-
-			$this->view->put_all(array(
-				'C_STATS_ROBOTS' => true,
-				'C_ROBOTS_DATA'  => $robots_visits_number,
-				'U_GRAPH_RESULT' => !file_exists('../cache/bot.png') ? StatsUrlBuilder::display_bots_graph()->rel() : '../cache/bot.png'
-			));
+			//Mois précédent et suivant
+			$this->next_month = ($this->month < 12) ? $this->month + 1 : 1;
+			$this->next_year = ($this->month < 12) ? $this->year : $this->year + 1;
+			$this->previous_month = ($this->month > 1) ? $this->month - 1 : 12;
+			$this->previous_year = ($this->month > 1) ? $this->year : $this->year - 1;
 		}
 		else
 		{
-			$general_config = GeneralConfig::load();
-			
-			$this->view->put_all(array(
-				'C_STATS_SITE' => true,
-				'START'        => $general_config->get_site_install_date()->format(Date::FORMAT_DAY_MONTH_YEAR),
-				'VERSION'      => $general_config->get_phpboost_major_version()
-			));
+			$this->next_year = $this->year + 1;
+			$this->previous_year = $this->year - 1;
 		}
+		//Nombre de jours pour chaque mois (gestion des années bissextiles)
+		$this->bissextile = (date("L", mktime(0, 0, 0, 1, 1, $this->year)) == 1) ? 29 : 28;
+		$this->array_month = [31, $this->bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31];
+	}
+
+	private function build_members_view()
+	{
+		$stats_cache = StatsCache::load();
+		$last_user_group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
+		$user_sex_field = ExtendedFieldsCache::load()->get_extended_field_by_field_name('user_sex');
+		$users_number = $stats_cache->get_stats_properties('nbr_members');
+
+		$themes_stats_array = [];
+		foreach (ThemesManager::get_activated_themes_map() as $theme)
+		{
+			$themes_stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
+		}
+		$themes_chart = new StatsPieChart( 'members', $this->lang['user.members']);
+		$themes_chart->set_dataset($themes_stats_array);
+
+		foreach ($themes_stats_array as $name => $value)
+		{
+			$this->view->assign_block_vars('templates', [
+				'NBR_THEME' => $value,
+				'COLOR'     => $themes_chart->get_color_label($name),
+				'THEME'     => ($name == 'Other') ? $this->lang['common.other'] : $name,
+				'PERCENT'   => NumberHelper::round($value/$users_number*100, 1)
+			]);
+		}
+
+		$gender_stats_array = [];
+		$result = $this->db_querier->select("SELECT count(ext_field.user_sex) as compt, ext_field.user_sex
+		FROM " . PREFIX . "member member
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ext_field ON ext_field.user_id = member.user_id
+		GROUP BY ext_field.user_sex
+		ORDER BY compt");
+		while ($row = $result->fetch())
+		{
+			switch ($row['user_sex'])
+			{
+				case 0:
+				$name = $this->lang['common.unknown'];
+				break;
+				case 1:
+				$name = $this->lang['user.male'];
+				break;
+				case 2:
+				$name = $this->lang['user.female'];
+				break;
+			}
+			$gender_stats_array[$name] = (int)$row['compt'];
+		}
+		if (!isset($gender_stats_array[$this->lang['common.unknown']]))
+		{
+			$number_unknown = $users_number - ($gender_stats_array[$this->lang['user.male']] ?? 0) - ($gender_stats_array[$this->lang['user.female']] ?? 0);
+			if ($number_unknown > 0)
+				$gender_stats_array[$this->lang['common.unknown']] = $number_unknown;
+		}
+		$gender_chart = new StatsPieChart('gender', $this->lang['user.members']);
+		$gender_chart->set_dataset($gender_stats_array);
+
+		$this->view->put_all([
+			'C_STATS_USERS'           => true,
+			'C_LAST_USER_GROUP_COLOR' => !empty($last_user_group_color),
+			'C_DISPLAY_SEX'           => (!empty($user_sex_field) && $user_sex_field['display']),
+			'LAST_USER_DISPLAY_NAME'  => $stats_cache->get_stats_properties('last_member_login'),
+			'LAST_USER_LEVEL_CLASS'   => UserService::get_level_class($stats_cache->get_stats_properties('last_member_level')),
+			'LAST_USER_GROUP_COLOR'   => $last_user_group_color,
+			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
+			'USERS_NUMBER'            => $users_number,
+			'MEMBERS_THEMES_CHART'    => $themes_chart,
+			'MEMBERS_GENDER_CHART' 	  => $gender_chart
+		]);
+		$result->dispose();
+
+		foreach ($gender_stats_array as $name => $value)
+		{
+			$this->view->assign_block_vars('sex', [
+				'MEMBERS_NUMBER' => $value,
+				'COLOR'          => $gender_chart->get_color_label($name),
+				'SEX'            => ($name == 'Other') ? $this->lang['common.other'] : $name,
+				'PERCENT'        => NumberHelper::round($value/$users_number*100, 1)
+			]);
+		}
+		$i = 1;
+		$result = $this->db_querier->select("SELECT user_id, display_name, level, user_groups, posted_msg 
+		FROM " . DB_TABLE_MEMBER . " ORDER BY posted_msg DESC LIMIT 10 OFFSET 0");
+		while ($row = $result->fetch())
+		{
+			$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
+			$contributions_number = 0;
+			foreach ($modules as $module)
+			{
+				if($module->get_publications_module_id() != 'forum')
+					$contributions_number += $module->get_publications_number($row['user_id']);
+			}
+			$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
+
+			$this->view->assign_block_vars('top_poster', [
+				'C_USER_GROUP_COLOR' => !empty($user_group_color),
+				'ID'                 => $i,
+				'LOGIN'              => $row['display_name'],
+				'USER_LEVEL_CLASS'   => UserService::get_level_class($row['level']),
+				'USER_GROUP_COLOR'   => $user_group_color,
+				'USER_POST'          => $row['posted_msg'],
+				'USER_PUBLICATIONS'  => $contributions_number,
+				'U_USER_PROFILE'      => UserUrlBuilder::profile($row['user_id'])->rel(),
+				'U_USER_PUBLICATIONS' => UserUrlBuilder::publications($row['user_id'])->rel(),
+			]);
+			$i++;
+		}
+		$result->dispose();
+	}
+
+	private function build_visits_view()
+	{
+		//On affiche les visiteurs totaux et du jour
+		$visit_counter = ['nbr_ip' => 0, 'total' => 0];
+		try {
+			$visit_counter = $this->db_querier->select_single_row(DB_TABLE_VISIT_COUNTER, ['ip AS nbr_ip', 'total'], 'WHERE id = :id', ['id' => 1]);
+		} catch (RowNotFoundException $e) {}
+
+		$visit_counter_total = !empty($visit_counter['nbr_ip']) ? $visit_counter['nbr_ip'] : 1;
+		$visit_counter_day = !empty($visit_counter['total']) ? $visit_counter['total'] : 1;
+
+		$this->month = $this->month ? $this->month : $this->current_month;
+		$this->year = $this->year ? $this->year : $this->current_year;
+
+		if ($this->year_requested && !$this->month_requested) //Visites par mois classées par ans.
+		{
+			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+			$info = ['max_month' => 0, 'sum_month' => 0, 'nbr_month' => 0];
+			
+			try {
+				$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(nbr) as max_month', 'SUM(nbr) as sum_month', 'COUNT(DISTINCT(stats_month)) as nbr_month'], 'WHERE stats_year=:year GROUP BY stats_year', ['year' => $this->year]);
+			} catch (RowNotFoundException $e) {}
+			$average = !empty($info['nbr_month']) ? NumberHelper::round($info['sum_month']/$info['nbr_month'], 1) : 1;
+
+			//Année maximale
+			$info_year = ['max_year' => 0, 'min_year' => 0];
+			try {
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'], '');
+			} catch (RowNotFoundException $e) {}
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$this->view->assign_block_vars('year_select', [
+					'C_SELECTED' => ($i == $this->year),
+					'LABEL'      => $i,
+					'VALUE'      => $i
+				]);
+			}
+
+			$array_stats = [];
+			$result = PersistenceContext::get_querier()->select("SELECT SUM(nbr) as total, stats_month
+			FROM " . StatsSetup::$stats_table . "
+			WHERE stats_year = :year
+			GROUP BY stats_month
+			ORDER BY stats_month", [
+				'year' => $this->year
+			]);
+			while ($row = $result->fetch())
+			{
+				$array_stats[$row['stats_month']] = $row['total'];
+				//On affiche les stats numériquement dans un tableau en dessous
+				$this->view->assign_block_vars('value', [
+					'C_DETAILS_LINK' => true,
+					'U_DETAILS'      => StatsUrlBuilder::home('visit', $this->year, $row['stats_month'])->rel(),
+					'L_DETAILS'      => $this->get_translated_month($row['stats_month']),
+					'NBR'            => $row['total']
+				]);
+			}
+			$result->dispose();
+
+			//Complément des mois manquant
+			for ($i = 1; $i <= 12; $i++)
+			{
+				if (!isset($array_stats[$i]))
+				{
+					$array_stats[$i] = 0;
+				}
+			}
+			
+			$visits_year_data = [];
+			foreach ($array_stats as $key => $value)
+			{
+				$visits_year_data[$this->get_translated_month($key)] = $value;
+			}
+			$visits_chart = new StatsBarChart('visits', $this->lang['user.guests']);
+			$visits_chart->set_dataset($visits_year_data);
+			$visits_chart->add_average_dataset($this->lang['common.average'], $average);
+			$this->view->put_all([
+				'C_STATS_VISIT'   => true,
+				'TYPE'            => 'visit',
+				'VISIT_TOTAL'     => $visit_counter_total,
+				'VISIT_DAY'       => $visit_counter_day,
+				'YEAR'            => $this->year,
+				'COLSPAN'         => 14,
+				'SUM_NBR'         => $info['sum_month'],
+				'MAX_NBR'         => $info['max_month'],
+				'MOY_NBR'         => $average,
+				'U_NEXT_LINK'     => StatsUrlBuilder::home('visit', $this->next_year)->rel(),
+				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('visit', $this->previous_year)->rel(),
+				'U_YEAR'          => StatsUrlBuilder::home('visit', $this->year)->rel(),
+				'C_STATS_YEAR'    => true,
+				'VISITS_CHART'    => $visits_chart
+			]);
+		}
+		else
+		{
+			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+			$info = ['max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0];
+			try {
+				$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(nbr) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(nbr) as sum_nbr', 'AVG(nbr) as avg_nbr'], 'WHERE stats_year=:year AND stats_month=:month GROUP BY stats_month', ['year' => $this->year, 'month' => $this->month]);
+			} catch (RowNotFoundException $e) {}
+			$average = NumberHelper::round($info['avg_nbr'], 1);
+
+			for ($i = 1; $i <= 12; $i++)
+			{
+				$this->view->assign_block_vars('month_select', [
+					'C_SELECTED' => ($i == $this->month),
+					'LABEL'      => $this->get_translated_month($i),
+					'VALUE'      => $i
+				]);
+			}
+
+			//Année maximale
+			$info_year = ['max_year' => 0, 'min_year' => 0];
+			try {
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'], '');
+			} catch (RowNotFoundException $e) {}
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$this->view->assign_block_vars('year_select', [
+					'C_SELECTED' => ($i == $this->year),
+					'LABEL'      => $i,
+					'VALUE'      => $i
+				]);
+			}
+
+			$array_stats = [];
+			//On fait la liste des visites journalières
+			$result = $this->db_querier->select("SELECT nbr, stats_day AS day
+				FROM " . StatsSetup::$stats_table . "
+				WHERE stats_year = :year AND stats_month = :month
+				GROUP BY stats_day, nbr", [
+					'year' => $this->year,
+					'month' => $this->month
+			]);
+			while ($row = $result->fetch())
+			{
+				$date_day = ($row['day'] < 10) ? 0 . $row['day'] : $row['day'];
+				$array_stats[$row['day']] = $row['nbr'];
+
+				//On affiche les stats numériquement dans un tableau en dessous
+				$this->view->assign_block_vars('value', [
+					'L_DETAILS' => $date_day . '/' . sprintf('%02d', $this->month) . '/' . $this->year,
+					'NBR'       => $row['nbr']
+				]);
+			}
+			$result->dispose();
+
+			for ($i = 1; $i <= $this->array_month[$this->month - 1]; $i++)
+			{
+				if (!isset($array_stats[$i]))
+				{
+					$array_stats[$i] = 0;
+				}
+			}
+			$visits_chart = new StatsBarChart('visits', $this->lang['user.guests']);
+			$visits_chart->set_dataset($array_stats);
+			$visits_chart->add_average_dataset($this->lang['common.average'], $average);
+			$this->view->put_all([
+				'C_STATS_VISIT'   => true,
+				'C_YEAR'          => $this->year && !$this->month,
+				'C_STATS_YEAR'    => true,
+				'C_STATS_MONTH'   => true,
+				'TYPE'            => 'visit',
+				'VISIT_TOTAL'     => $visit_counter_total,
+				'VISIT_DAY'       => $visit_counter_day,
+				'COLSPAN'         => $this->array_month[$this->month-1] + 2,
+				'SUM_NBR'         => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
+				'MONTH'           => $this->get_translated_month($this->month),
+				'MAX_NBR'         => $info['max_nbr'],
+				'MOY_NBR'         => $average,
+				'YEAR'            => $this->year,
+				'U_NEXT_LINK'     => StatsUrlBuilder::home('visit', $this->next_year, $this->next_month)->rel(),
+				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('visit', $this->previous_year, $this->previous_month)->rel(),
+				'U_YEAR'          => StatsUrlBuilder::home('visit', $this->year)->rel(),
+				'VISITS_CHART'    => $visits_chart
+			]);
+		}
+	}
+
+	private function build_pages_view()
+	{
+		$condition = 'WHERE stats_year=:year' . ($this->month || !$this->year ? ' AND stats_month=:month' : '') . ' AND pages_detail <> \'\' GROUP BY stats_month';
+			
+		$parameters = [
+			'year'  => $this->year,
+			'month' => $this->month
+		];
+
+		//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+		$info = ['max_nbr' => 0, 'min_day' => 0, 'sum_nbr' => 0, 'avg_nbr' => 0];
+		try {
+			$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(pages) as max_nbr', 'MIN(stats_day) as min_day', 'SUM(pages) as sum_nbr', 'AVG(pages) as avg_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'], $condition, $parameters);
+		} catch (RowNotFoundException $e) {}
+
+		//On affiche les visiteurs totaux et du jour
+		$pages_total = $this->db_querier->get_column_value(StatsSetup::$stats_table, 'SUM(pages)', '');
+		$pages_day = array_sum(StatsSaver::retrieve_stats('pages')) + 1;
+		$pages_total = $pages_total + $pages_day;
+		$pages_day = !empty($pages_day) ? $pages_day : 1;
+
+		$this->view->put_all([
+			'C_STATS_VISIT'   => true,
+			'C_STATS_PAGES'   => true,
+			'C_STATS_YEAR'    => true,
+			'TYPE'            => 'pages',
+			'VISIT_TOTAL'     => $pages_total,
+			'VISIT_DAY'       => $pages_day,
+			'YEAR'            => $this->year
+		]);
+
+		if ($this->year_requested && !$this->month_requested) //Visites par mois classées par ans.
+		{
+			//On va chercher le nombre de jours présents dans la table, ainsi que le record mensuel
+			$info = ['max_nbr' => 0, 'sum_nbr' => 0, 'nbr_month' => 0];
+			try {
+				$info = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(pages) as max_nbr', 'SUM(pages) as sum_nbr', 'COUNT(DISTINCT(stats_month)) as nbr_month'], 'WHERE stats_year = :year AND pages_detail <> \'\' GROUP BY stats_year', ['year' => $this->year]);
+			} catch (RowNotFoundException $e) {}
+			$average = !empty($info['nbr_month']) ? NumberHelper::round($info['sum_nbr']/$info['nbr_month'], 1) : 0;
+
+			//Année maximale
+			$info_year = ['max_year' => 0, 'min_year' => 0];
+			try {
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'], '');
+			} catch (RowNotFoundException $e) {}
+
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$this->view->assign_block_vars('year_select', [
+					'C_SELECTED' => ($i == $this->year),
+					'LABEL'      => $i,
+					'VALUE'      => $i
+				]);
+			}
+
+			$array_stats = [];
+			//On fait la liste des visites journalières
+			$result = $this->db_querier->select("SELECT stats_month, SUM(pages) AS total
+				FROM " . StatsSetup::$stats_table . "
+				WHERE stats_year = :year
+				GROUP BY stats_month", [
+					'year' => $this->year
+			]);
+			while ($row = $result->fetch())
+			{
+				//On affiche les stats numériquement dans un tableau en dessous
+				$this->view->assign_block_vars('value', [
+					'C_DETAILS_LINK' => true,
+					'U_DETAILS'      => StatsUrlBuilder::home('pages', $this->year, $row['stats_month'])->rel(),
+					'L_DETAILS'      => $this->get_translated_month($row['stats_month']),
+					'NBR'            => $row['total']
+				]);
+				$array_stats[$this->get_translated_month($row['stats_month'])] = $row['total'];
+			}
+			$pages_chart = new StatsBarChart('pages', $this->lang['common.pages'] );
+			$pages_chart->set_dataset($array_stats);
+			$pages_chart->add_average_dataset($this->lang['common.average'], $average);
+
+			$this->view->put_all([
+				'COLSPAN'         => 13,
+				'SUM_NBR'         => $info['sum_nbr'],
+				'MAX_NBR'         => $info['max_nbr'],
+				'MOY_NBR'         => $average,
+				'U_NEXT_LINK'     => StatsUrlBuilder::home('pages', $this->next_year)->rel(),
+				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('pages', $this->previous_year)->rel(),
+				'VISITS_CHART'    => $pages_chart
+			]);
+			$result->dispose();
+		}
+		else
+		{
+			$average = NumberHelper::round($info['avg_nbr'], 1);
+			for ($i = 1; $i <= 12; $i++)
+			{
+				$this->view->assign_block_vars('month_select', [
+					'C_SELECTED' => ($i == $this->month),
+					'LABEL'      => $this->get_translated_month($i),
+					'VALUE'      => $i
+				]);
+			}
+
+			//Année maximale
+			$info_year = ['max_year' => 0, 'min_year' => 0];
+			try {
+				$info_year = $this->db_querier->select_single_row(StatsSetup::$stats_table, ['MAX(stats_year) as max_year', 'MIN(stats_year) as min_year'], '');
+			} catch (RowNotFoundException $e) {}
+			for ($i = $info_year['min_year']; $i <= $info_year['max_year']; $i++)
+			{
+				$this->view->assign_block_vars('year_select', [
+					'C_SELECTED' => ($i == $this->year),
+					'LABEL'      => $i,
+					'VALUE'      => $i
+				]);
+			}
+
+			//On fait la liste des visites journalières
+			$result = $this->db_querier->select("SELECT pages, stats_day, stats_month, stats_year
+				FROM " . StatsSetup::$stats_table . "
+				WHERE stats_year = :stats_year AND stats_month = :stats_month
+				GROUP BY stats_day, pages, stats_month, stats_year", [
+					'stats_year' => $this->year,
+					'stats_month' => $this->month,
+			]);
+
+			$array_stats = [];
+			while ($row = $result->fetch())
+			{
+				$date_day = ($row['stats_day'] < 10) ? 0 . $row['stats_day'] : $row['stats_day'];
+				$array_stats[$row['stats_day']] = $row['pages'];
+
+				//On affiche les stats numériquement dans un tableau en dessous
+				$this->view->assign_block_vars('value', [
+					'U_DETAILS' => StatsUrlBuilder::home('pages', $row['stats_year'], $row['stats_month'], $row['stats_day'])->rel(),
+					'L_DETAILS' => $date_day . '/' . sprintf('%02d', $row['stats_month']) . '/' . $row['stats_year'],
+					'NBR'       => $row['pages']
+				]);
+			}
+			$pages_chart = new StatsBarChart('pages', $this->lang['common.pages'] );
+			$pages_chart->set_dataset($array_stats);
+			$pages_chart->add_average_dataset($this->lang['common.average'], $average);
+			
+			$this->view->put_all([
+				'C_STATS_MONTH'   => true,
+				'COLSPAN'         => $this->array_month[$this->month - 1] + 2,
+				'SUM_NBR'         => !empty($info['sum_nbr']) ? $info['sum_nbr'] : 0,
+				'MONTH'           => $this->get_translated_month($this->month),
+				'MAX_NBR'         => $info['max_nbr'],
+				'MOY_NBR'         => $average,
+				'U_NEXT_LINK'     => StatsUrlBuilder::home('pages', $this->next_year, $this->next_month)->rel(),
+				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('pages', $this->previous_year, $this->previous_month)->rel(),
+				'U_YEAR'          => StatsUrlBuilder::home('pages', $this->year)->rel(),
+				'VISITS_CHART' => $pages_chart
+			]);
+			$result->dispose();
+			
+		}
+	}
+
+	private function build_referers_view(HTTPRequestCustom $request)
+	{
+		$nbr_referer = $this->db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = :type', ['type' => 0], 'DISTINCT(url)');
+
+		$page = $request->get_getint('page', 1);
+		$pagination = new ModulePagination($page, $nbr_referer, $this->config->get_items_per_page());
+		$pagination->set_url(StatsUrlBuilder::table('referer', '%d'));
+
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+
+		$result = $this->db_querier->select("SELECT id, COUNT(*) as count, url, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+			FROM " . PREFIX . "stats_referer
+			WHERE type = 0
+			GROUP BY url, id, relative_url, nbr_day
+			ORDER BY total_visit DESC
+			LIMIT :number_items_per_page OFFSET :display_from", [
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+			]);
+		while ($row = $result->fetch())
+		{
+			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+
+			$this->view->assign_block_vars('referer_list', [
+				'ID'              => $row['id'],
+				'URL'             => $row['url'],
+				'NBR_LINKS'       => $row['count'],
+				'TOTAL_VISIT'     => $row['total_visit'],
+				'AVERAGE_VISIT'   => $trend_parameters['average'],
+				'LAST_UPDATE'     => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
+				'C_TREND_PICTURE' => !empty($trend_parameters['picture']),
+				'TREND_PICTURE'   => $trend_parameters['picture'],
+				'TREND_LABEL'     => '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
+			]);
+		}
+		$result->dispose();
+
+		$this->view->put_all([
+			'C_STATS_REFERER' => true,
+			'C_REFERERS'      => $nbr_referer,
+			'C_PAGINATION'    => $pagination->has_several_pages(),
+			'PAGINATION'      => $pagination->display(),
+		]);
+	}
+
+	private function build_robots_view()
+	{
+		$array_robot = StatsSaver::retrieve_stats('robots');
+
+		if (isset($array_robot['unknow_bot']))
+		{
+			$array_robot[$this->lang['common.unknown']] = $array_robot['unknow_bot'];
+			unset($array_robot['unknow_bot']);
+		}
+		$robots_visits = [];
+		$robots_visits_number = 0;
+		foreach ($array_robot as $key => $value)
+		{
+			$robots_visits[$key] = is_array($value) ? $value['visits_number'] : $value;
+			$robots_visits_number += $robots_visits[$key];
+		}
+		$robots_chart = new StatsPieChart('robots', $this->lang['stats.hits']);
+		$robots_chart->set_dataset($robots_visits);
+
+		if ($robots_visits_number)
+		{
+			foreach ($robots_visits as $key => $value)
+			{
+				$this->view->assign_block_vars('list', [
+					'C_BOT_DETAILS' => $key != $this->lang['common.unknown'],
+					'COLOR'         => $robots_chart->get_color_label($key),
+					'VISITS_NUMBER' => $value,
+					'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.undetermined'],
+					'PERCENT'       => NumberHelper::round($value/$robots_visits_number*100, 1),
+					'L_NAME'        => $key,
+					'U_BOT_DETAILS' => 'https://udger.com/resources/ua-list/bot-detail?bot=' . urlencode($key)
+				]);
+			}
+		}
+
+		$this->view->put_all([
+			'C_STATS_ROBOTS' => true,
+			'C_ROBOTS_DATA'  => $robots_visits_number,
+			'ROBOTS_CHART' => $robots_chart
+		]);
+	}
+
+	private function build_keyword_view(HTTPRequestCustom $request)
+	{
+		$nbr_keyword = $this->db_querier->count(StatsSetup::$stats_referer_table, 'WHERE type = :type', ['type' => 1], 'DISTINCT(relative_url)');
+
+		$page = $request->get_getint('page', 1);
+		$pagination = new ModulePagination($page, $nbr_keyword, $this->config->get_items_per_page());
+		$pagination->set_url(StatsUrlBuilder::table('keyword', '%d'));
+		
+		if ($pagination->current_page_is_empty() && $page > 1)
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+
+		$result = $this->db_querier->select("SELECT id, count(*) as count, relative_url, SUM(total_visit) as total_visit, SUM(today_visit) as today_visit, SUM(yesterday_visit) as yesterday_visit, nbr_day, MAX(last_update) as last_update
+			FROM " . PREFIX . "stats_referer
+			WHERE type = 1
+			GROUP BY relative_url, id, nbr_day
+			ORDER BY total_visit DESC
+			LIMIT :number_items_per_page OFFSET :display_from", [
+				'number_items_per_page' => $pagination->get_number_items_per_page(),
+				'display_from' => $pagination->get_display_from()
+		]);
+
+		while ($row = $result->fetch())
+		{
+			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
+			$this->view->assign_block_vars('keyword_list', [
+				'ID'              => $row['id'],
+				'KEYWORD'         => $row['relative_url'],
+				'NBR_LINKS'       => $row['count'],
+				'TOTAL_VISIT'     => $row['total_visit'],
+				'AVERAGE_VISIT'   => $trend_parameters['average'],
+				'LAST_UPDATE'     => Date::to_format($row['last_update'], Date::FORMAT_DAY_MONTH_YEAR),
+				'C_TREND_PICTURE' => !empty($trend_parameters['picture']),
+				'TREND_PICTURE'   => $trend_parameters['picture'],
+				'TREND_LABEL'     => '(' . $trend_parameters['sign'] . $trend_parameters['trend'] . '%)'
+			]);
+		}
+		$result->dispose();
+
+		$this->view->put_all([
+			'C_STATS_KEYWORD' => true,
+			'C_KEYWORDS'      => $nbr_keyword,
+			'C_PAGINATION'    => $pagination->has_several_pages(),
+			'PAGINATION'      => $pagination->display(),
+		]);
+	}
+
+	private function build_pie_stats_view($stats_menu)
+	{
+		$path = $stats_menu . '/';
+		$array_stats_info = LangLoader::get($stats_menu, 'stats');
+		$array_stats = StatsSaver::retrieve_stats($stats_menu);
+		arsort($array_stats);
+
+		$array_stats_displayed = [];
+		$array_stats_graph = [];
+
+		foreach ($array_stats as $browser => $value) {
+			if ($browser === 'other')
+			{
+				$img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $this->lang['common.other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $this->lang['common.other'] . '" />';
+				$stats_browser = $this->lang['common.other'];
+			}
+			else
+			{
+				$stats_browser = $array_stats_info[$browser][0];
+				$img = !empty($array_stats_info[$browser][1]) ? '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/' . $path . $array_stats_info[$browser][1] . '" alt="' . $array_stats_info[$browser][0] . '" />' : '-';
+			}
+			$array_stats_displayed[$browser] = [
+				'img' => $img,
+				'stat' => $value,
+				'browser' => $stats_browser
+			];
+			$array_stats_graph[$stats_browser] = $value;
+		}
+
+		$chart = new StatsPieChart('pie', $this->lang['stats.hits']);
+		$chart->set_dataset($array_stats_graph);
+		$this->view->put_all([
+			'CHART' => $chart,
+			'C_STATS_' . strtoupper($stats_menu) => true
+		]);
+		$total_stats = array_sum($array_stats_graph);
+
+		//Affichage des données
+		foreach ($array_stats_displayed as $browser)
+		{
+			$this->view->assign_block_vars('list', [
+				'COLOR'   => $chart->get_color_label($browser['browser']),
+				'IMG'     => $browser['img'],
+				'L_NAME'  => $browser['browser'],
+				'PERCENT' => NumberHelper::round($browser['stat']/$total_stats * 100,1)
+			]);
+		}
+	}
+
+	private function get_translated_month($month_number):string {
+		$months = [
+			'1'  => 'january',
+			'2'  => 'february',
+			'3'  => 'march',
+			'4'  => 'april',
+			'5'  => 'may',
+			'6'  => 'june',
+			'7'  => 'july',
+			'8'  => 'august',
+			'9'  => 'september',
+			'10' => 'october',
+			'11' => 'november',
+			'12' => 'december'
+		];
+		return $this->lang['date.' . $months[$month_number]];
 	}
 
 	private function check_authorizations()

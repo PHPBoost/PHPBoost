@@ -11,20 +11,13 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	// Configurations
 	new UrlControllerMapper('AdminStatsConfigController', '`^/admin(?:/config)?/?$`'),
-	
-	// Graphs
-	new UrlControllerMapper('StatsGraphsController', '`^/graphs/([a-z0-9-_]+)/?$`', array('graph')),
-	new UrlControllerMapper('StatsGraphsController', '`^/graphs/visits/year/?([0-9]+)?/?$`', array('year')),
-	new UrlControllerMapper('StatsGraphsController', '`^/graphs/visits/month/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month')),
-	new UrlControllerMapper('StatsGraphsController', '`^/graphs/pages/year/?([0-9]+)?/?$`', array('year')),
-	new UrlControllerMapper('StatsGraphsController', '`^/graphs/pages/month/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month')),
 
-	new UrlControllerMapper('StatsDisplayController',  '`^/([a-z]+)/table/([0-9]+)?/?$`', array('section', 'page')),
-	new UrlControllerMapper('StatsDisplayController',  '`^/([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('section', 'year', 'month', 'day')),
+	new UrlControllerMapper('StatsDisplayController',  '`^/([a-z]+)/table/([0-9]+)?/?$`', ['section', 'page']),
+	new UrlControllerMapper('StatsDisplayController',  '`^/([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', ['section', 'year', 'month', 'day']),
 	new UrlControllerMapper('StatsDisplayController',  '`^/?$`'),
-);
+];
 DispatchManager::dispatch($url_controller_mappers);
 ?>

@@ -39,6 +39,7 @@ $lang['stats.registered.members']  = 'registered members';
 $lang['stats.browsers'] = 'Browsers';
 	// Operating systems
 $lang['stats.os'] = 'Operating systems';
+$lang['stats.hits'] = 'Hits';
 	// Countries
 $lang['stats.countries'] = 'Visitors countries';
 	// Referent websites
