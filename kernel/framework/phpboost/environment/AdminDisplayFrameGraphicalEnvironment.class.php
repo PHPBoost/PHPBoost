@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 19
+ * @version     PHPBoost 6.0 - last update: 2024 06 25
  * @since       PHPBoost 4.0 - 2014 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -26,19 +26,19 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 		$view->add_lang($lang);
 
 		$customization_config = CustomizationConfig::load();
-		$cookiebar_config = CookieBarConfig::load();
-		$maintenance_config = MaintenanceConfig::load();
 
 		$js_top_tpl = new FileTemplate('js_top.tpl');
 		$js_top_tpl->add_lang($lang);
 		$js_top_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED' => false
+			'C_COOKIEBAR_ENABLED' => false,
+			'MODULES_JS_TOP'      => $this->get_top_js_files_html_code()
 		));
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
 		$js_bottom_tpl->add_lang($lang);
 		$js_bottom_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED' => false
+			'C_COOKIEBAR_ENABLED' => false,
+			'MODULES_JS_BOTTOM'   => $this->get_bottom_js_files_html_code()
 		));
 
 		$view->put_all(array(
