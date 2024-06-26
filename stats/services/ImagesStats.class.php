@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 12
+ * @version     PHPBoost 6.0 - last update: 2024 06 18
  * @since       PHPBoost 1.6 - 2007 08 27
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -371,14 +371,14 @@ class ImagesStats
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
-					imagefilledpolygon($image, $polygon_point, $color_bar_dark);
+					ServerConfiguration::get_phpversion() < 8.0 ? imagefilledpolygon($image, $polygon_point, 4, $color_bar_dark) : imagefilledpolygon($image, $polygon_point, $color_bar_dark);
 					$polygon_point = array(
 						intval($x_bar + $width_bar/3), $y_bar - 4,
 						intval($x2_bar + $width_bar/3 + 1), $y_bar - 4,
 						$x2_bar + 1, $y_bar - 1,
 						$x_bar - 1, $y_bar - 1
 					);
-					imagepolygon($image, $polygon_point, $black);
+					ServerConfiguration::get_phpversion() < 8.0 ? imagepolygon($image, $polygon_point, 4, $black) : imagepolygon($image, $polygon_point, $black);
 
 					if ($draw_values) //Texte, valeur
 					{

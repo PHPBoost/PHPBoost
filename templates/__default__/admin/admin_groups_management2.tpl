@@ -164,7 +164,7 @@
 							<input class="grouped-element" type="text" maxlength="25" id="login" value="{LOGIN}" name="login_mbr">
 							<button class="grouped-element button submit" onclick="XMLHttpRequest_search();" type="button"><i class="fa fa-search"></i></button>
 						</div>
-						<div class="pinned" id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
+						<div id="xmlhttprequest-result-search" style="display: none;" class="xmlhttprequest-result-search"></div>
 					</div>
 				</div>
 			</fieldset>
