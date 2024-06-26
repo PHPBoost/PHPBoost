@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.0 - last update: 2024 06 25
  * @since       PHPBoost 3.0 - 2009 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
@@ -43,6 +43,36 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 			{
 				$html_code .= '<link rel="stylesheet" href="' . Url::to_rel($file) . '" type="text/css" media="screen, print" />';
 			}
+		}
+		return $html_code;
+	}
+
+	/**
+	 * Get all JS files as a string from modules to display at top_js in HTML in <script> tags
+	 * @return string
+	 */
+	protected function get_top_js_files_html_code():string
+	{
+		$js_files = array_merge(ModulesJsFilesService::get_top_js_files_always_displayed(), ModulesJsFilesService::get_top_js_files_running_module_displayed());
+		$html_code = '';
+		foreach ($js_files as $file)
+		{
+			$html_code = '<script src="'. Url::to_rel($file).'"></script>';
+		}
+		return $html_code;
+	}
+
+	/**
+	 * Get all JS files as a string from modules to display at bottom_js in HTML in <script> tags
+	 * @return string
+	 */
+	protected function get_bottom_js_files_html_code():string
+	{
+		$js_files = array_merge(ModulesJsFilesService::get_bottom_js_files_always_displayed(), ModulesJsFilesService::get_bottom_js_files_running_module_displayed());
+		$html_code = '';
+		foreach ($js_files as $file)
+		{
+			$html_code = '<script src="'. Url::to_rel($file).'"></script>';
 		}
 		return $html_code;
 	}
