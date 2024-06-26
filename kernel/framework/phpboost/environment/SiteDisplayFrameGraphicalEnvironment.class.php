@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 16
+ * @version     PHPBoost 6.0 - last update: 2024 06 25
  * @since       PHPBoost 4.0 - 2014 06 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -40,13 +40,15 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
 			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
 			'COOKIEBAR_TRACKING_MODE' => $cookiebar_config->get_cookiebar_tracking_mode(),
-			'COOKIEBAR_CONTENT'       => TextHelper::to_js_string($cookiebar_config->get_cookiebar_content())
+			'COOKIEBAR_CONTENT'       => TextHelper::to_js_string($cookiebar_config->get_cookiebar_content()),
+			'MODULES_JS_TOP'          => $this->get_top_js_files_html_code()
 		));
 
 		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
 		$js_bottom_tpl->add_lang($lang);
 		$js_bottom_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance()
+			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
+			'MODULES_JS_BOTTOM'   => $this->get_bottom_js_files_html_code()
 		));
 
 		$js_add_tpl = new FileTemplate('js_add.tpl');
