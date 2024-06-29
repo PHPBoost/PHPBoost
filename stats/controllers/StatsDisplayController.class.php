@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 29
+ * @version     PHPBoost 6.0 - last update: 2024 06 29
  * @since       PHPBoost 6.0 - 2021 11 23
 */
 
@@ -190,14 +190,16 @@ class StatsDisplayController extends DefaultModuleController
 		{
 			$themes_stats_array[$theme->get_id()] = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER, "WHERE theme = '" . $theme->get_id() . "'");
 		}
-		$themes_chart = new StatsPieChart( 'members', $this->lang['user.members']);
-		$themes_chart->set_dataset($themes_stats_array);
+		$themes_chart = new StatsPieChart( 'members');
+		$dataset = new ChartDataset($this->lang['user.members']);
+		$dataset->set_datas($themes_stats_array);
 
+		$themes_chart->add_dataset($dataset);
 		foreach ($themes_stats_array as $name => $value)
 		{
 			$this->view->assign_block_vars('templates', [
 				'NBR_THEME' => $value,
-				'COLOR'     => $themes_chart->get_color_label($name),
+				'COLOR'     => $dataset->get_color_label($name),
 				'THEME'     => ($name == 'Other') ? $this->lang['common.other'] : $name,
 				'PERCENT'   => NumberHelper::round($value/$users_number*100, 1)
 			]);
@@ -231,8 +233,11 @@ class StatsDisplayController extends DefaultModuleController
 			if ($number_unknown > 0)
 				$gender_stats_array[$this->lang['common.unknown']] = $number_unknown;
 		}
-		$gender_chart = new StatsPieChart('gender', $this->lang['user.members']);
-		$gender_chart->set_dataset($gender_stats_array);
+		$gender_chart = new StatsPieChart('gender');
+		$dataset = new ChartDataset($this->lang['user.members']);
+		$dataset->set_datas($gender_stats_array);
+
+		$gender_chart->add_dataset($dataset);
 
 		$this->view->put_all([
 			'C_STATS_USERS'           => true,
@@ -243,8 +248,8 @@ class StatsDisplayController extends DefaultModuleController
 			'LAST_USER_GROUP_COLOR'   => $last_user_group_color,
 			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
 			'USERS_NUMBER'            => $users_number,
-			'MEMBERS_THEMES_CHART'    => $themes_chart,
-			'MEMBERS_GENDER_CHART' 	  => $gender_chart
+			'MEMBERS_THEMES_CHART'    => $themes_chart->get_html(),
+			'MEMBERS_GENDER_CHART' 	  => $gender_chart->get_html()
 		]);
 		$result->dispose();
 
@@ -252,7 +257,7 @@ class StatsDisplayController extends DefaultModuleController
 		{
 			$this->view->assign_block_vars('sex', [
 				'MEMBERS_NUMBER' => $value,
-				'COLOR'          => $gender_chart->get_color_label($name),
+				'COLOR'          => $dataset->get_color_label($name),
 				'SEX'            => ($name == 'Other') ? $this->lang['common.other'] : $name,
 				'PERCENT'        => NumberHelper::round($value/$users_number*100, 1)
 			]);
@@ -360,9 +365,12 @@ class StatsDisplayController extends DefaultModuleController
 			{
 				$visits_year_data[$this->get_translated_month($key)] = $value;
 			}
-			$visits_chart = new StatsBarChart('visits', $this->lang['user.guests']);
-			$visits_chart->set_dataset($visits_year_data);
-			$visits_chart->add_average_dataset($this->lang['common.average'], $average);
+			$visits_chart = new StatsBarChart('visits');
+			$dataset = new ChartDataset($this->lang['user.guests']);
+			$dataset->set_datas($visits_year_data);
+			$visits_chart->add_dataset($dataset);
+			$visits_chart->add_average_dataset($dataset, $this->lang['common.average'], $average);
+
 			$this->view->put_all([
 				'C_STATS_VISIT'   => true,
 				'TYPE'            => 'visit',
@@ -377,7 +385,7 @@ class StatsDisplayController extends DefaultModuleController
 				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('visit', $this->previous_year)->rel(),
 				'U_YEAR'          => StatsUrlBuilder::home('visit', $this->year)->rel(),
 				'C_STATS_YEAR'    => true,
-				'VISITS_CHART'    => $visits_chart
+				'VISITS_CHART'    => $visits_chart->get_html()
 			]);
 		}
 		else
@@ -441,9 +449,12 @@ class StatsDisplayController extends DefaultModuleController
 					$array_stats[$i] = 0;
 				}
 			}
-			$visits_chart = new StatsBarChart('visits', $this->lang['user.guests']);
-			$visits_chart->set_dataset($array_stats);
-			$visits_chart->add_average_dataset($this->lang['common.average'], $average);
+			$visits_chart = new StatsBarChart('visits');
+			$dataset = new ChartDataset($this->lang['user.guests']);
+			$dataset->set_datas($array_stats);
+			$visits_chart->add_dataset($dataset);
+			$visits_chart->add_average_dataset($dataset, $this->lang['common.average'], $average);
+
 			$this->view->put_all([
 				'C_STATS_VISIT'   => true,
 				'C_YEAR'          => $this->year && !$this->month,
@@ -461,7 +472,7 @@ class StatsDisplayController extends DefaultModuleController
 				'U_NEXT_LINK'     => StatsUrlBuilder::home('visit', $this->next_year, $this->next_month)->rel(),
 				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('visit', $this->previous_year, $this->previous_month)->rel(),
 				'U_YEAR'          => StatsUrlBuilder::home('visit', $this->year)->rel(),
-				'VISITS_CHART'    => $visits_chart
+				'VISITS_CHART'    => $visits_chart->get_html()
 			]);
 		}
 	}
@@ -540,9 +551,11 @@ class StatsDisplayController extends DefaultModuleController
 				]);
 				$array_stats[$this->get_translated_month($row['stats_month'])] = $row['total'];
 			}
-			$pages_chart = new StatsBarChart('pages', $this->lang['common.pages'] );
-			$pages_chart->set_dataset($array_stats);
-			$pages_chart->add_average_dataset($this->lang['common.average'], $average);
+			$pages_chart = new StatsBarChart('pages');
+			$dataset = new ChartDataset($this->lang['common.pages']);
+			$dataset->set_datas($array_stats);
+			$pages_chart->add_dataset($dataset);
+			$pages_chart->add_average_dataset($dataset, $this->lang['common.average'], $average);
 
 			$this->view->put_all([
 				'COLSPAN'         => 13,
@@ -551,7 +564,7 @@ class StatsDisplayController extends DefaultModuleController
 				'MOY_NBR'         => $average,
 				'U_NEXT_LINK'     => StatsUrlBuilder::home('pages', $this->next_year)->rel(),
 				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('pages', $this->previous_year)->rel(),
-				'VISITS_CHART'    => $pages_chart
+				'VISITS_CHART'    => $pages_chart->get_html()
 			]);
 			$result->dispose();
 		}
@@ -603,9 +616,11 @@ class StatsDisplayController extends DefaultModuleController
 					'NBR'       => $row['pages']
 				]);
 			}
-			$pages_chart = new StatsBarChart('pages', $this->lang['common.pages'] );
-			$pages_chart->set_dataset($array_stats);
-			$pages_chart->add_average_dataset($this->lang['common.average'], $average);
+			$pages_chart = new StatsBarChart('pages');
+			$dataset = new ChartDataset($this->lang['common.pages']);
+			$dataset->set_datas($array_stats);
+			$pages_chart->add_dataset($dataset);
+			$pages_chart->add_average_dataset($dataset, $this->lang['common.average'], $average);
 			
 			$this->view->put_all([
 				'C_STATS_MONTH'   => true,
@@ -617,7 +632,7 @@ class StatsDisplayController extends DefaultModuleController
 				'U_NEXT_LINK'     => StatsUrlBuilder::home('pages', $this->next_year, $this->next_month)->rel(),
 				'U_PREVIOUS_LINK' => StatsUrlBuilder::home('pages', $this->previous_year, $this->previous_month)->rel(),
 				'U_YEAR'          => StatsUrlBuilder::home('pages', $this->year)->rel(),
-				'VISITS_CHART' => $pages_chart
+				'VISITS_CHART'    => $pages_chart->get_html()
 			]);
 			$result->dispose();
 			
@@ -689,8 +704,10 @@ class StatsDisplayController extends DefaultModuleController
 			$robots_visits[$key] = is_array($value) ? $value['visits_number'] : $value;
 			$robots_visits_number += $robots_visits[$key];
 		}
-		$robots_chart = new StatsPieChart('robots', $this->lang['stats.hits']);
-		$robots_chart->set_dataset($robots_visits);
+		$robots_chart = new StatsPieChart('robots');
+		$dataset = new ChartDataset($this->lang['stats.hits']);
+		$dataset->set_datas($robots_visits);
+		$robots_chart->add_dataset($dataset);
 
 		if ($robots_visits_number)
 		{
@@ -698,7 +715,7 @@ class StatsDisplayController extends DefaultModuleController
 			{
 				$this->view->assign_block_vars('list', [
 					'C_BOT_DETAILS' => $key != $this->lang['common.unknown'],
-					'COLOR'         => $robots_chart->get_color_label($key),
+					'COLOR'         => $dataset->get_color_label($key),
 					'VISITS_NUMBER' => $value,
 					'LAST_SEEN'     => is_array($array_robot[$key]) && isset($array_robot[$key]['last_seen']) ? Date::to_format($array_robot[$key]['last_seen'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.undetermined'],
 					'PERCENT'       => NumberHelper::round($value/$robots_visits_number*100, 1),
@@ -711,7 +728,7 @@ class StatsDisplayController extends DefaultModuleController
 		$this->view->put_all([
 			'C_STATS_ROBOTS' => true,
 			'C_ROBOTS_DATA'  => $robots_visits_number,
-			'ROBOTS_CHART' => $robots_chart
+			'ROBOTS_CHART'   => $robots_chart->get_html()
 		]);
 	}
 
@@ -793,10 +810,13 @@ class StatsDisplayController extends DefaultModuleController
 			$array_stats_graph[$stats_browser] = $value;
 		}
 
-		$chart = new StatsPieChart('pie', $this->lang['stats.hits']);
-		$chart->set_dataset($array_stats_graph);
+		$chart = new StatsPieChart('pie');
+		$dataset = new ChartDataset($this->lang['stats.hits']);
+		$dataset->set_datas($array_stats_graph);
+		$chart->add_dataset($dataset);
+
 		$this->view->put_all([
-			'CHART' => $chart,
+			'CHART' => $chart->get_html(),
 			'C_STATS_' . strtoupper($stats_menu) => true
 		]);
 		$total_stats = array_sum($array_stats_graph);
@@ -805,7 +825,7 @@ class StatsDisplayController extends DefaultModuleController
 		foreach ($array_stats_displayed as $browser)
 		{
 			$this->view->assign_block_vars('list', [
-				'COLOR'   => $chart->get_color_label($browser['browser']),
+				'COLOR'   => $dataset->get_color_label($browser['browser']),
 				'IMG'     => $browser['img'],
 				'L_NAME'  => $browser['browser'],
 				'PERCENT' => NumberHelper::round($browser['stat']/$total_stats * 100,1)
