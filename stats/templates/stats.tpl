@@ -1,4 +1,3 @@
-<script src="{PATH_TO_ROOT}/stats/templates/js/chart.min.js"></script>
 <section id="module-stats">
 	<header class="section-header">
 		<h1>{MODULE_NAME}</h1>
