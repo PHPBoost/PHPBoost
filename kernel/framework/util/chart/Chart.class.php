@@ -3,7 +3,7 @@
  * This class provides easy ways to create several type of charts.
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Maxence CAUDERLIER <mx.koder@gmail.com>
+ * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2024 06 29
  * @since       PHPBoost 6.0 - 2024 06 29
  * @see         https://www.chartjs.org/docs/latest/
@@ -55,10 +55,10 @@ abstract class Chart
     {
         $template = new FileTemplate('framework/util/chart.tpl');
         $template->put_all([
-            'data' => $this->get_datas(),
-            'options' => $this->get_options(),
-            'name' => $this->name,
-            'type' => $this->type,
+            'DATA' => $this->get_datas(),
+            'OPTIONS' => $this->get_options(),
+            'NAME' => $this->name,
+            'TYPE' => $this->type,
             'C_OPTIONS' => !empty($this->options)
         ]);
         return $template->render();
