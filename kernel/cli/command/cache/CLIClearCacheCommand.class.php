@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.0 - last update: 2024 07 06
  * @since       PHPBoost 3.0 - 2010 04 11
 */
 
@@ -45,6 +45,8 @@ class CLIClearCacheCommand implements CLICommand
         $cache_service->clear_syndication_cache();
         CLIOutput::writeln('[clear] CSS cache');
         $cache_service->clear_css_cache();
+        CLIOutput::writeln('[clear] JS cache');
+        $cache_service->clear_js_cache();
         CLIOutput::writeln('cache has been successfully cleared');
 	}
 }
