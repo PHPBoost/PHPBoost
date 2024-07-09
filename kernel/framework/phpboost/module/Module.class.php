@@ -59,5 +59,19 @@ class Module
     {
         return ModuleConfigurationManager::get($this->module_id);
     }
+
+    /**
+     * Return values for serialize Module in DB
+     * Force to remove autorizations from Module to remove them in kernel-modules table DB
+     * @return array
+     */
+    public function __serialize()
+    {
+        return [
+            'module_id' => $this->module_id,
+            'activated' => $this->activated,
+            'installed_version' => $this->installed_version
+        ];
+    }
 }
 ?>

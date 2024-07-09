@@ -5,6 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2024 06 29
  * @since       PHPBoost 6.0 - 2021 11 23
+ * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class StatsDisplayController extends DefaultModuleController

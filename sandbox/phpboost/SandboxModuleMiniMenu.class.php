@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 05 31
+ * @version     PHPBoost 6.0 - last update: 2024 07 06
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -302,6 +302,7 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 	protected function clean_css_cache()
 	{
 		AppContext::get_cache_service()->clear_css_cache();
+		AppContext::get_cache_service()->clear_js_cache();
 	}
 
 	private function build_clean_cache()

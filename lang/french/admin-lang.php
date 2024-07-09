@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 27
+ * @version     PHPBoost 6.0 - last update: 2024 07 06
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -79,9 +79,9 @@ $lang['admin.cache.syndication.description'] = '
     // CSS
 $lang['admin.cache.css']             = 'Cache CSS';
 $lang['admin.cache.css.description'] = '
-    <p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules.
-    En temps normal, à l\'affichage du site, un ensemble de fichiers css va être chargé. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé.</p>
-    <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache CSS de façon à forcer PHPBoost à recréer les fichiers CSS optimisés. </p>
+    <p>PHPBoost met en cache l\'ensemble des fichiers CSS et JS fournis par les thèmes et modules.
+    En temps normal, à l\'affichage du site, un ensemble de fichiers css et js va être chargé. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé, et faire de même avec les fichiers Javascript.</p>
+    <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache CSS et JS de façon à forcer PHPBoost à recréer les fichiers CSS et Javascript optimisés. </p>
 ';
     // Configuration
 $lang['admin.cache.configuration'] = 'Configuration du cache';
@@ -96,7 +96,7 @@ $lang['admin.apc.available']         = 'Disponibilité de l\'extension APCu';
 $lang['admin.apc.available.clue']    = 'L\'extension est disponible sur un nombre assez restreint de serveurs. Si elle n\'est pas disponible, vous ne pouvez malheureusement pas profiter des gains de performances qu\'elle permet d\'obtenir.';
 $lang['admin.apcu.cache']            = 'Cache APCu';
 $lang['admin.css.cache.description'] = '
-    <p>PHPBoost met en cache l\'ensemble des fichiers CSS fournis par les thèmes et modules pour améliorer le temps d\'affichage des pages.
+    <p>PHPBoost met en cache l\'ensemble des fichiers CSS et JS fournis par les thèmes et modules pour améliorer le temps d\'affichage des pages.
     Vous pouvez à travers cette configuration, choisir d\'activer ou non cette fonctionnalité et son niveau d\'intensité. <br/>
     La désactivation de cette option peut vous permettre de personnaliser plus facilement vos thèmes. </p>
 ';

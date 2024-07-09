@@ -1,15 +1,15 @@
-<div class="chart-container chart-{type}">
-    <canvas id="chart-{name}"></canvas>
+<div class="chart-container chart-{TYPE}">
+    <canvas id="chart-{NAME}"></canvas>
 </div>
 
 <script>
-    const ctx{name} = document.getElementById("chart-{name}");
-    new Chart(ctx{name} , 
+    const ctx{NAME} = document.getElementById("chart-{NAME}");
+    new Chart(ctx{NAME} , 
     {
-        type: "{type}",
-        data: {data},
+        type: "{TYPE}",
+        data: {DATA},
         # IF C_OPTIONS #
-        options: {options}
+        options: {OPTIONS}
         # ENDIF #
     });
 </script>

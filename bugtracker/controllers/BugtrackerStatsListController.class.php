@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2024 06 29
  * @since       PHPBoost 3.0 - 2012 11 13
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class BugtrackerStatsListController extends DefaultModuleController
@@ -35,23 +36,33 @@ class BugtrackerStatsListController extends DefaultModuleController
 		$bugs_number_per_version = $stats_cache->get_bugs_number_per_version_list();
 		$top_posters = $stats_cache->get_top_posters_list();
 
+		$bugs = [];
+		foreach ($stats_cache->get_bugs_number_list() as $status => $bugs_number)
+		{
+			if ($status != 'total')
+			{
+				$bugs[$this->lang['status.' . $status]] = (int)$bugs_number;
+				$this->view->assign_block_vars('status', array(
+					'NAME'	=> $this->lang['status.' . $status],
+					'NUMBER'=> $bugs_number
+				));
+			}
+		}
+
+		$chart = new PieChart('stats');
+		$dataset = new ChartDataset($this->lang['titles.details']);
+		$dataset->set_datas($bugs);
+		$chart->add_dataset($dataset);
+
 		$this->view->put_all(array(
 			'C_BUGS'				=> $stats_cache->get_bugs_number('total'),
 			'C_FIXED_BUGS'			=> !empty($bugs_number_per_version),
 			'C_POSTERS'				=> !empty($top_posters),
 			'C_DISPLAY_VERSIONS'	=> $display_versions,
 			'C_DISPLAY_TOP_POSTERS'	=> $this->config->are_stats_top_posters_enabled(),
-			'C_ROADMAP_ENABLED'		=> $this->config->is_roadmap_enabled()
+			'C_ROADMAP_ENABLED'		=> $this->config->is_roadmap_enabled(),
+			'CHART'                 => $chart->get_html()
 		));
-
-		foreach ($stats_cache->get_bugs_number_list() as $status => $bugs_number)
-		{
-			if ($status != 'total')
-				$this->view->assign_block_vars('status', array(
-					'NAME'	=> $this->lang['status.' . $status],
-					'NUMBER'=> $bugs_number
-				));
-		}
 
 		foreach ($bugs_number_per_version as $version_id => $bugs_number)
 		{
