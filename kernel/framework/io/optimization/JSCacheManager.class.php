@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.0 - last update: 2024 07 10
  * @since       PHPBoost 6.0 - 2024 07 06
 */
 
@@ -130,7 +130,7 @@ class JSCacheManager
         $template_folder = new Folder(PATH_TO_ROOT . $folder_path);
         if (!$template_folder->exists())
         {
-            mkdir($folder_path, 0666, true);
+            mkdir(PATH_TO_ROOT . $folder_path, 0775, true);
         }
         $cache_file_location = $folder_path . '/js-cache-' . md5(implode(';', $files)) . '.js';
 
