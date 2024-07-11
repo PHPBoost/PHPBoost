@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 27
+ * @version     PHPBoost 6.0 - last update: 2024 06 29
  * @since       PHPBoost 3.0 - 2012 04 16
  * @contributor xela <xela@phpboost.com>
+ * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class BugtrackerExtensionPointProvider extends ExtensionPointProvider
@@ -31,6 +32,13 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 		$module_css_files = new ModuleCssFiles();
 		$module_css_files->adding_running_module_displayed_file('bugtracker.css');
 		return $module_css_files;
+	}
+
+	public function js_files()
+	{
+		$js_file = new ModuleJsFiles();
+		$js_file->adding_running_module_displayed_file('chart.min.js');
+		return $js_file;
 	}
 
 	/**

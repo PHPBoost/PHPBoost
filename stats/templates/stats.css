@@ -31,6 +31,11 @@
 
 #menustats li { padding: 0.309em 0.618em; }
 
+.chart-container {
+	max-height: 550px;
+	max-width:100%;
+}
+
 @media (min-width: 769px) {
 	#menustats { display: table; }
 
@@ -95,33 +100,10 @@
 	border-color: var(--bdr-main);
 }
 
-.date-selector-container {
-	margin: auto;
-	text-align: center;
-}
-
-.table-values-head {
-	background-image: url(images/stats2.png);
-	background-repeat: no-repeat;
-	margin-left: 0.1618em;
-	height: 0.228em;
-	width: 0.618em;
-}
-
-.table-values {
-	background-image: url(images/stats.png);
-	background-repeat: repeat-y;
-	margin-left: 0.1618em;
-	width: 0.618em;
-	padding: 0;
-}
-
 .total-head 		{ width: 70px; }
 .average-head 		{ width: 60px; }
 .last-update-head 	{ width: 96px; }
 .trend-head 		{ width: 100px; }
-
-.date-selector-filter { text-align: center; }
 
 .js-menu-button {
 	display: inline-block;

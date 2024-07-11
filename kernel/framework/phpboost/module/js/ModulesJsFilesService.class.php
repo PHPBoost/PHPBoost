@@ -4,8 +4,8 @@
  * @subpackage  Module\js
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Maxence CAUDERLIER <mx.koder@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2024 06 25
+ * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
+ * @version     PHPBoost 6.0 - last update: 2024 07 10
  * @since       PHPBoost 6.0 - 2024 06 25
 */
 
@@ -141,17 +141,17 @@ class ModulesJsFilesService
         $theme = ThemesManager::get_theme($theme_id);
         $parent_theme_id = $theme ? $theme->get_configuration()->get_parent_theme() . '/' : '';
 
-        if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $js_file))
+        if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/js/' . $js_file))
         {
-            return '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $js_file;
+            return '/templates/' . $theme_id . '/modules/' . $module_id . '/js/' . $js_file;
         }
-        if (!empty($parent_theme_id) && file_exists(PATH_TO_ROOT . '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $js_file))
+        if (!empty($parent_theme_id) && file_exists(PATH_TO_ROOT . '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/js/' . $js_file))
         {
-            return '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $js_file;
+            return '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/js/' . $js_file;
         }
-        if (file_exists(PATH_TO_ROOT . '/'. $module_id . '/templates/' . $js_file))
+        if (file_exists(PATH_TO_ROOT . '/'. $module_id . '/templates/js/' . $js_file))
         {
-            return '/' . $module_id . '/templates/' . $js_file;
+            return '/' . $module_id . '/templates/js/' . $js_file;
         }
         if (file_exists(PATH_TO_ROOT . '/templates/__default__/plugins/' . $js_file))
         {
@@ -161,6 +161,6 @@ class ModulesJsFilesService
         {
             return '/kernel/lib/js/' . $js_file;
         }
-        return '/' . $module_id . '/templates/' . $js_file;
+        return '/' . $module_id . '/templates/js/' . $js_file;
     }
 }
