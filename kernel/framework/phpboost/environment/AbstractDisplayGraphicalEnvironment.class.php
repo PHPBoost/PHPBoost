@@ -7,11 +7,12 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 06 25
+ * @version     PHPBoost 6.0 - last update: 2024 07 06
  * @since       PHPBoost 3.0 - 2009 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
@@ -21,18 +22,21 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	 */
 	private $seo_meta_data = null;
 
+	private $css_cache_config;
+
 	private $location_id = '';
 
 	public function __construct()
 	{
 		$this->seo_meta_data = new SEOMetaData();
+		$this->css_cache_config = CSSCacheConfig::load();
 	}
 
 	protected function get_modules_css_files_html_code()
 	{
-		$css_cache_config = CSSCacheConfig::load();
+		
 		$css_files = array_merge(ModulesCssFilesService::get_css_files_always_displayed(), ModulesCssFilesService::get_css_files_running_module_displayed());
-		if ($css_cache_config->is_enabled())
+		if ($this->css_cache_config->is_enabled())
 		{
 			$html_code = '<link rel="stylesheet" href="' . CSSCacheManager::get_css_path($css_files) . '" type="text/css" media="screen, print" />';
 		}
@@ -54,12 +58,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	protected function get_top_js_files_html_code():string
 	{
 		$js_files = array_merge(ModulesJsFilesService::get_top_js_files_always_displayed(), ModulesJsFilesService::get_top_js_files_running_module_displayed());
-		$html_code = '';
-		foreach ($js_files as $file)
-		{
-			$html_code = '<script src="'. Url::to_rel($file).'"></script>';
-		}
-		return $html_code;
+		return $this->get_js_files_html_code($js_files);
 	}
 
 	/**
@@ -69,10 +68,37 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	protected function get_bottom_js_files_html_code():string
 	{
 		$js_files = array_merge(ModulesJsFilesService::get_bottom_js_files_always_displayed(), ModulesJsFilesService::get_bottom_js_files_running_module_displayed());
-		$html_code = '';
-		foreach ($js_files as $file)
+		return $this->get_js_files_html_code($js_files);
+	}
+
+	/**
+	 * Return HTML code for JS files regarding cache is enabled or not
+	 * @param array $js_files
+	 * @return string
+	 */
+	private function get_js_files_html_code($js_files):string
+	{
+		if ($this->css_cache_config->is_enabled())
 		{
-			$html_code = '<script src="'. Url::to_rel($file).'"></script>';
+			$js_manager = JSCacheManager::get_js_path($js_files);
+			if ($js_manager === false)
+			{
+				// No JS to add
+				return '';
+			}
+			$html_code = '<script src="'. $js_manager->get_script_cache_location() .'"></script>';
+			foreach ($js_manager->get_ignored_scripts() as $file)
+			{
+				$html_code .= "<script src=\"$file\"></script>";
+			}
+		}
+		else
+		{
+			$html_code = '';
+			foreach ($js_files as $file_url)
+			{
+				$html_code .= '<script src="'. Url::to_rel($file_url) .'"></script>';
+			}
 		}
 		return $html_code;
 	}

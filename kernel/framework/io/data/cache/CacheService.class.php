@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 10 22
+ * @version     PHPBoost 6.0 - last update: 2024 07 06
  * @since       PHPBoost 3.0 - 2010 04 11
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -18,6 +18,7 @@ class CacheService
 	private static $cache_folder;
 	private static $tpl_cache_folder;
 	private static $css_cache_folder;
+	private static $js_cache_folder;
 	private static $syndication_cache_folder;
 
 	public function __construct()
@@ -25,6 +26,7 @@ class CacheService
 		self::$cache_folder = new Folder(PATH_TO_ROOT . '/cache');
 		self::$tpl_cache_folder = new Folder(self::$cache_folder->get_path() . '/tpl');
 		self::$css_cache_folder = new Folder(self::$cache_folder->get_path() . '/css');
+		self::$js_cache_folder = new Folder(self::$cache_folder->get_path() . '/js');
 		self::$syndication_cache_folder = new Folder(self::$cache_folder->get_path() . '/syndication');
 	}
 
@@ -33,6 +35,7 @@ class CacheService
 		$this->clear_phpboost_cache();
 		$this->clear_template_cache();
 		$this->clear_css_cache();
+		$this->clear_js_cache();
 		$this->clear_syndication_cache();
 	}
 
@@ -50,6 +53,11 @@ class CacheService
 	public function clear_css_cache()
 	{
 		$this->delete_files(self::$css_cache_folder, self::$all_files_regex_without_extensions, true);
+	}
+
+	public function clear_js_cache()
+	{
+		$this->delete_files(self::$js_cache_folder, self::$all_files_regex_without_extensions, true);
 	}
 
 	public function clear_syndication_cache()
