@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 06 15
+ * @version     PHPBoost 6.0 - last update: 2024 07 06
  * @since       PHPBoost 5.2 - 2019 02 14
+ * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class FileSystemHelper
@@ -154,9 +155,35 @@ class FileSystemHelper
 				}
 			}
 			if (!$retry)
-				return FileSystemHelper::download_remote_file($url, $destination_path, $extract_archive, true);
+				return self::download_remote_file($url, $destination_path, $extract_archive, true);
 		}
 		return false;
 	}
+
+    /**
+     * Get content of a remote file. Return false if remote file don't exist or curl library isn't activated on server
+     * @param string $url 
+     * @return ?string Content of the remote file. False if error
+     */
+    public static function get_remote_file_content($url)
+    {
+        $server_configuration = new ServerConfiguration();
+        if ($server_configuration->has_curl_library() && Url::check_url_validity($url))
+        {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
+            $content = curl_exec($ch);
+            $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
+            curl_close($ch);
+            if ($code === 200 && $downloaded_size)
+            {
+                return $content;
+            }
+        }
+        return false;
+    }
 }
 ?>
