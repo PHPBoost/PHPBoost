@@ -1,33 +1,10 @@
-<script src="https://www.google.com/jsapi"></script>
-<script>
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var status_chart_data = google.visualization.arrayToDataTable([
-            [${escapejs(@common.status)}, ${TextHelper::to_js_string(@common.items.number)}],
-            # START status #
-                ['{status.NAME}',     {status.NUMBER}],
-            # END status #
-        ]);
-
-        var status_chart_options = {
-            title: '',
-            is3D: 'true',
-            pieSliceText: 'none'
-        };
-
-        var status_chart = new google.visualization.PieChart(document.getElementById('status-chart'));
-        status_chart.draw(status_chart_data, status_chart_options);
-    }
-</script>
-
 <article class="bugtracker-item several-items">
 	<header>
 		<h2>{@common.status}</h2>
 	</header>
 	<div class="content align-center">
 		# IF C_BUGS #
-			<div id="status-chart"></div>
+			{CHART}
 		# ELSE #
 			<div class="message-helper bgc notice">{@common.no.item.now}</div>
 		# ENDIF #
