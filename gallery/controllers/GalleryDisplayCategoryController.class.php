@@ -68,6 +68,18 @@ class GalleryDisplayCategoryController extends ModuleController
 		$content_management_config = ContentManagementConfig::load();
 		$category = $this->get_category();
 
+		/** 
+		 * Remove fake wanted picture if category's name is like '1987 - bestyear'
+		 * @todo Remove this when MVC factoring
+		*/
+		if (!empty($g_idpics))
+		{
+			if (substr($category->get_name(), 0 , strlen($g_idpics)) == $g_idpics)
+			{
+				$g_idpics = 0;
+			}
+		}
+
 		$subcategories = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id(), true, 'gallery'));
 
 		$elements_number = $category->get_elements_number();
