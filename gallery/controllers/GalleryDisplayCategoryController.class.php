@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 04
+ * @version     PHPBoost 6.0 - last update: 2024 07 16
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -67,6 +67,18 @@ class GalleryDisplayCategoryController extends ModuleController
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 		$category = $this->get_category();
+
+		/** 
+		 * Remove fake wanted picture if category's name is like '1987 - bestyear'
+		 * @todo Remove this when MVC factoring
+		*/
+		if (!empty($g_idpics))
+		{
+			if (substr($category->get_name(), 0 , strlen($g_idpics)) == $g_idpics)
+			{
+				$g_idpics = 0;
+			}
+		}
 
 		$subcategories = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_children($category->get_id(), CategoriesService::get_authorized_categories($category->get_id(), true, 'gallery'));
 
