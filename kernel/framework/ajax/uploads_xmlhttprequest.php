@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 12
+ * @version     PHPBoost 6.0 - last update: 2024 07 18
  * @since       PHPBoost 1.6 - 2007 01 25
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,8 +27,8 @@ $rename_folder = $request->get_getint('rename_folder', 0);
 $rename_file = $request->get_getint('rename_file', 0);
 
 $user_id = $request->get_postint('user_id', $user->get_id());
-$name = TextHelper::strprotect(mb_convert_encoding($request->get_postvalue('name', ''), 'ISO-8859-1', 'UTF-8'));
-$previous_name = TextHelper::strprotect(mb_convert_encoding($request->get_postvalue('previous_name', ''), 'ISO-8859-1', 'UTF-8'));
+$name = TextHelper::strprotect($request->get_postvalue('name', ''));
+$previous_name = TextHelper::strprotect($request->get_postvalue('previous_name', ''));
 
 if (!empty($new_folder)) //Ajout d'un dossier dans la gestion des fichiers.
 {
