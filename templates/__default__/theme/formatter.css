@@ -124,28 +124,28 @@ pre[style*="display:inline;"] {
 
 .formatter-blockquote .title-perso { padding-left: 1.618em; }
 
-.formatter-blockquote .formatter-content {
+.formatter-blockquote > .formatter-content {
 	border-width: 0;
 	padding: 1.618em;
 	font-style: italic;
 	position: relative;
 }
 
-.formatter-blockquote .formatter-content:before,
-.formatter-blockquote .formatter-content:after {
+.formatter-blockquote > .formatter-content:before,
+.formatter-blockquote > .formatter-content:after {
 	position: absolute;
 	font-family: 'Font Awesome 6 Free';
 	font-weight: 900;
 	font-size: 1.256em;
 }
 
-.formatter-blockquote .formatter-content:before {
+.formatter-blockquote > .formatter-content:before {
 	content: '\f10d';
 	top: -0.256em;
 	left: -0.256em;
 }
 
-.formatter-blockquote .formatter-content:after {
+.formatter-blockquote > .formatter-content:after {
 	content: '\f10e';
 	bottom: -0.256em;
 	right: -0.1618em;
