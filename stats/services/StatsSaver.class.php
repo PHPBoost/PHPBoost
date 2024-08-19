@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 11
+ * @version     PHPBoost 6.0 - last update: 2024 08 18
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -323,7 +323,7 @@ class StatsSaver
 
 			if (isset($stats_array[$current_robot]))
 			{
-				$visits_number = is_array($stats_array[$current_robot]) ? $stats_array[$current_robot]['visits_number']++ : $stats_array[$current_robot]++;
+				$visits_number = is_array($stats_array[$current_robot]) ? $stats_array[$current_robot]['visits_number'] + 1 : $stats_array[$current_robot] + 1;
 				$stats_array[$current_robot] = array(
 					'visits_number' => $visits_number,
 					'last_seen'     => time()
