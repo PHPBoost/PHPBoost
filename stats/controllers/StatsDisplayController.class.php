@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 06 29
+ * @version     PHPBoost 6.0 - last update: 2024 08 19
  * @since       PHPBoost 6.0 - 2021 11 23
  * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
@@ -792,7 +792,22 @@ class StatsDisplayController extends DefaultModuleController
 		$array_stats_displayed = [];
 		$array_stats_graph = [];
 
-		foreach ($array_stats as $browser => $value) {
+		foreach ($array_stats as $browser => &$value) 
+        {
+			if (!isset($array_stats_info[$browser]))
+			{
+				// Unknown browser
+				if (isset($array_stats_displayed['other']))
+				{
+					// 'other' browser already tracked
+					$array_stats_displayed['other']['stat'] += $value;
+					$array_stats_graph[$this->lang['common.other']] += $value;
+					continue;
+				}
+				// We add stats for 'other'
+				$array_stats['other'] += $value;
+				continue;
+			}
 			if ($browser === 'other')
 			{
 				$img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $this->lang['common.other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $this->lang['common.other'] . '" />';
