@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 06
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 3.0 - 2009 09 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -25,7 +25,7 @@ interface ConfigData extends CacheData
 	/**
 	 * Reads a property's value.
 	 * @param string $name Name of the property to read
-	 * @return string the read value
+	 * @return mixed the read value
 	 * @throws PropertyNotFoundException If the property if not found
 	 */
 	function get_property($name);
@@ -34,7 +34,7 @@ interface ConfigData extends CacheData
 	 * Sets a property value. If the property exists, it overrides its value,
 	 * otherwise, it creates an entry for this property.
 	 * @param string $name Name of the property
-	 * @param string $value Value of the property
+	 * @param mixed $value Value of the property
 	 */
 	function set_property($name, $value);
 

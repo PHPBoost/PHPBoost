@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 19
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 2.0 - 2008 01 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -42,12 +42,12 @@ class ExtensionPointProviderService
      * @param string $extension_point the requested extension point
      * @param string[] $authorized_providers_ids the extension point providers that are allowed
      * to provide the extension point. If not specified, all providers are allowed
-     * @return Object[string] the requested extension point implementations
+     * @return object[] the requested extension point implementations
      */
     public function get_extension_point($extension_point, $authorized_providers_ids = null)
     {
         $providers = $this->get_providers($extension_point, $authorized_providers_ids);
-        $extensions_points = array();
+        $extensions_points = [];
         foreach ($providers as $provider)
         {
             $extensions_points[$provider->get_id()] = $provider->get_extension_point($extension_point);
