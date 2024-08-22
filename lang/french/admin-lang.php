@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -100,11 +100,11 @@ $lang['admin.css.cache.description'] = '
     Vous pouvez à travers cette configuration, choisir d\'activer ou non cette fonctionnalité et son niveau d\'intensité. <br/>
     La désactivation de cette option peut vous permettre de personnaliser plus facilement vos thèmes. </p>
 ';
-$lang['admin.enable.css.cache']   = 'Activer le cache CSS';
+$lang['admin.enable.css.cache']   = 'Activer le cache CSS et JS';
 $lang['admin.optimization.level'] = 'Niveau d\'optimisation';
 $lang['admin.low.level']          = 'Bas';
 $lang['admin.high.level']         = 'Haut';
-$lang['admin.level.clue']         = 'Le niveau bas permet de ne supprimer que les tabulations et les espaces tandis que le niveau haut optimise totalement vos fichiers CSS.';
+$lang['admin.level.clue']         = 'Le niveau bas permet de ne supprimer que les tabulations et les espaces tandis que le niveau haut optimise totalement vos fichiers CSS et JS.';
 
 // Content
 $lang['admin.content.configuration'] = 'Configuration du contenu';

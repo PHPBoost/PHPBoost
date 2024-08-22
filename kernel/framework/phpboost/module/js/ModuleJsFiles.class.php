@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 6.0 - 2024 06 25
 */
 
@@ -38,12 +38,11 @@ class ModuleJsFiles implements JsFilesExtensionPoint
     /**
      * Adding js files to the module to display only on the pages of the module
      * @param string $js_file containing js file name
-     * @param string $module_id Module name
      * @param int $position POSITION_TOP_JS | POSITION_BOTTOM_JS
      */
-    public function adding_running_module_displayed_file($js_file, $module_id = '', $position = self::POSITION_JS_TOP)
+    public function adding_running_module_displayed_file($js_file,  $position = self::POSITION_JS_TOP)
     {
-        $this->js_files_running_module_displayed[$position][] = ['js_file' => $js_file, 'module_id' => $module_id];
+        $this->js_files_running_module_displayed[$position][] = $js_file;
     }
 
     /**

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 10
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 6.0 - 2024 06 25
 */
 
@@ -83,10 +83,9 @@ class ModulesJsFilesService
             {
                 foreach (self::$modules_js_files[$module_id]->get_top_js_files_running_module_displayed() as $js_file_options)
                 {
-                    if (!empty($js_file_options['js_file']))
+                    if (!empty($js_file_options))
                     {
-                        $module = !empty($js_file_options['module_id']) ? $js_file_options['module_id'] : Environment::get_running_module_name();
-                        $js_files[] = self::get_real_path_js_file($module, $js_file_options['js_file']);
+                        $js_files[] = self::get_real_path_js_file($module_id, $js_file_options);
                     }
                 }
             }
@@ -108,10 +107,9 @@ class ModulesJsFilesService
             {
                 foreach (self::$modules_js_files[$module_id]->get_bottom_js_files_running_module_displayed() as $js_file_options)
                 {
-                    if (!empty($js_file_options['js_file']))
+                    if (!empty($js_file_options))
                     {
-                        $module = !empty($js_file_options['module_id']) ? $js_file_options['module_id'] : Environment::get_running_module_name();
-                        $js_files[] = self::get_real_path_js_file($module, $js_file_options['js_file']);
+                        $js_files[] = self::get_real_path_js_file($module_id, $js_file_options);
                     }
                 }
             }

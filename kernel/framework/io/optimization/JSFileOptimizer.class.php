@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 6.0 - 2024 07 06
 */
 
@@ -50,7 +50,7 @@ class JSFileOptimizer
         $content = preg_replace(
             [
                 // Remove comment(s)
-                '#\s*("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#',
+                '#\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*#',
                 // Remove white-space(s) outside the string and regex
                 '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*\(\)\-=+\[\]\{\}|;:,.<>?\/])\s*#s'
             ],
