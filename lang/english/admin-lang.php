@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -100,11 +100,11 @@ $lang['admin.css.cache.description'] = '
     You through this setup, choose to activate this feature or not and to choose its level of intensity.<br/>
     Disabling this option can allow you to more easily customize your themes.</p>
 ';
-$lang['admin.enable.css.cache']   = 'Enable CSS cache';
+$lang['admin.enable.css.cache']   = 'Enable CSS & JS cache';
 $lang['admin.optimization.level'] = 'Optimization level';
 $lang['admin.low.level']          = 'Low';
 $lang['admin.high.level']         = 'High';
-$lang['admin.level.clue']         = 'The low level can only remove the tabs and spaces while the upper level fully optimizes your CSS files.';
+$lang['admin.level.clue']         = 'The low level can only remove the tabs and spaces while the upper level fully optimizes your CSS & JS files.';
 
 // Content
 $lang['admin.content.configuration'] = 'Content configuration';
