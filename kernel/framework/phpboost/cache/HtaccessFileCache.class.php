@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 17
+ * @version     PHPBoost 6.0 - last update: 2024 08 22
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -20,6 +20,12 @@ class HtaccessFileCache implements CacheData
 	private $htaccess_file_content = '';
 	private $general_config;
 	private $server_environment_config;
+	private $domain;
+
+	public function __construct()
+	{
+		$this->domain = AppContext::get_request()->get_domain_name();
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -94,9 +100,9 @@ class HtaccessFileCache implements CacheData
 
 	private function add_free_php56()
 	{
-		if(AppContext::get_request()->get_domain_name() == 'free.fr')
+		if($this->domain == 'free.fr')
 		{
-			$this->add_section('Enable PHP5.6 on ' . $domain . ' hosting');
+			$this->add_section('Enable PHP5.6 on ' . $this->domain . ' hosting');
 			$this->add_line('php56 1');
 		}
 	}
@@ -157,7 +163,7 @@ class HtaccessFileCache implements CacheData
 		}
 		else
 		{
-			$this->add_section('HTTP Headers disabled on ' . $domain . ' hosting');
+			$this->add_section('HTTP Headers disabled on ' . $this->domain . ' hosting');
 		}
 	}
 
@@ -318,8 +324,6 @@ class HtaccessFileCache implements CacheData
 
 	private function force_redirection_if_available()
 	{
-		$domain = AppContext::get_request()->get_domain_name();
-
 		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to www');
@@ -394,7 +398,7 @@ class HtaccessFileCache implements CacheData
 
 	private function add_gzip_compression()
 	{
-		if(AppContext::get_request()->get_domain_name() != 'free.fr')
+		if($this->domain != 'free.fr')
 		{
 			$this->add_section('Gzip compression');
 			$this->add_line('<IfModule mod_filter.c>');
@@ -434,13 +438,13 @@ class HtaccessFileCache implements CacheData
 		}
 		else
 		{
-			$this->add_section('Gzip compression disabled on ' . $domain . ' hosting');
+			$this->add_section('Gzip compression disabled on ' . $this->domain . ' hosting');
 		}
 	}
 
 	private function add_expires_headers()
 	{
-		if(AppContext::get_request()->get_domain_name() != 'free.fr')
+		if($this->domain != 'free.fr')
 		{
 			$this->add_section('Expires Headers');
 			$this->add_line('<IfModule mod_expires.c>');
@@ -506,20 +510,20 @@ class HtaccessFileCache implements CacheData
 		}
 		else
 		{
-			$this->add_section('Expires Headers disabled on ' . $domain . ' hosting');
+			$this->add_section('Expires Headers disabled on ' . $this->domain . ' hosting');
 		}
 	}
 
 	private function disable_file_etags()
 	{
-		if(AppContext::get_request()->get_domain_name() != 'free.fr')
+		if($this->domain != 'free.fr')
 		{
 			$this->add_section('Disable file etags');
 			$this->add_line('FileETag none');
 		}
 		else
 		{
-			$this->add_section('Disable file etags disabled on ' . $domain . ' hosting');
+			$this->add_section('Disable file etags disabled on ' . $this->domain . ' hosting');
 		}
 	}
 
