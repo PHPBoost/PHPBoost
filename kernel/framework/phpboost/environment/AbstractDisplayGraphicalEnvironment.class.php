@@ -84,7 +84,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	{
 		$js_top = new FileTemplate('js_top.tpl');
 		$js_top_files = $this->get_js_files_from_html($js_top->render());
-		$js_files = array_merge(ModulesJsFilesService::get_top_js_files_always_displayed(), ModulesJsFilesService::get_top_js_files_running_module_displayed(), $js_top_files);
+		$js_files = array_merge($js_top_files, ModulesJsFilesService::get_top_js_files_always_displayed(), ModulesJsFilesService::get_top_js_files_running_module_displayed());
 		return $this->get_js_files_html_code($js_files);
 	}
 
@@ -97,7 +97,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		$js_bottom = new FileTemplate('js_bottom.tpl');
 		$js_bottom->put('C_COOKIEBAR_ENABLED', $this->get_cookiebar_enabled());
 		$js_bottom_files = $this->get_js_files_from_html($js_bottom->render());
-		$js_files = array_merge(ModulesJsFilesService::get_bottom_js_files_always_displayed(), ModulesJsFilesService::get_bottom_js_files_running_module_displayed(), $js_bottom_files);
+		$js_files = array_merge($js_bottom_files, ModulesJsFilesService::get_bottom_js_files_always_displayed(), ModulesJsFilesService::get_bottom_js_files_running_module_displayed());
 		return $this->get_js_files_html_code($js_files);
 	}
 
