@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 06 25
+ * @version     PHPBoost 6.0 - last update: 2024 08 26
  * @since       PHPBoost 4.0 - 2014 06 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,6 +19,8 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 	public function __construct()
 	{
 		parent::__construct();
+		$this->cookiebar_config = CookieBarConfig::load();
+		$this->maintenance_config = MaintenanceConfig::load();
 	}
 
 	/**
@@ -31,31 +33,26 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$view->add_lang($lang);
 
 		$customization_config = CustomizationConfig::load();
-		$cookiebar_config = CookieBarConfig::load();
-		$maintenance_config = MaintenanceConfig::load();
 
-		$js_top_tpl = new FileTemplate('js_top.tpl');
+		$js_top_tpl = new FileTemplate('js_top_vars.tpl');
 		$js_top_tpl->add_lang($lang);
-		$js_top_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED'     => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
-			'COOKIEBAR_DURATION'      => $cookiebar_config->get_cookiebar_duration(),
-			'COOKIEBAR_TRACKING_MODE' => $cookiebar_config->get_cookiebar_tracking_mode(),
-			'COOKIEBAR_CONTENT'       => TextHelper::to_js_string($cookiebar_config->get_cookiebar_content()),
-			'MODULES_JS_TOP'          => $this->get_top_js_files_html_code()
-		));
+		$js_top_tpl->put_all([
+			'C_COOKIEBAR_ENABLED'	 	=> $this->get_cookiebar_enabled(),
+			'COOKIEBAR_DURATION' 		=> $this->cookiebar_config->get_cookiebar_duration(),
+			'COOKIEBAR_TRACKING_MODE' 	=> $this->cookiebar_config->get_cookiebar_tracking_mode(),
+			'COOKIEBAR_CONTENT' 		=> TextHelper::to_js_string($this->cookiebar_config->get_cookiebar_content()),
+			'JS_TOP'					=> $this->get_top_js_files_html_code()
+		]);
 
-		$js_bottom_tpl = new FileTemplate('js_bottom.tpl');
+		$js_bottom_tpl = new FileTemplate('js_bottom_vars.tpl');
 		$js_bottom_tpl->add_lang($lang);
-		$js_bottom_tpl->put_all(array(
-			'C_COOKIEBAR_ENABLED' => $cookiebar_config->is_cookiebar_enabled() && !$maintenance_config->is_under_maintenance(),
-			'MODULES_JS_BOTTOM'   => $this->get_bottom_js_files_html_code()
-		));
+		$js_bottom_tpl->put('JS_BOTTOM',$this->get_bottom_js_files_html_code());
 
 		$js_add_tpl = new FileTemplate('js_add.tpl');
 		$js_add_tpl->add_lang($lang);
 
 		$description = $this->get_seo_meta_data()->get_full_description();
-		$view->put_all(array(
+		$view->put_all([
 			'C_CSS_LOGIN_DISPLAYED' => $this->display_css_login,
 			'C_FAVICON'             => $customization_config->favicon_exists(),
 			'C_CANONICAL_URL'       => $this->get_seo_meta_data()->canonical_link_exists(),
@@ -73,7 +70,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 
 			'U_CANONICAL' => $this->get_seo_meta_data()->get_canonical_link(),
 			'U_FAVICON'   => Url::to_rel($customization_config->get_favicon_path()),
-		));
+		]);
 
 		$view->display(true);
 	}
