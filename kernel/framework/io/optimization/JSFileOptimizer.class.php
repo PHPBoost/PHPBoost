@@ -80,8 +80,6 @@ class JSFileOptimizer
                 [
                     // {}();, spaces {}();,
                     '#([\{\}\(\)\;\,]+)\s+([\{\}\(\)\;\,]+)#',
-                    // Remove the last semicolon
-                    '#;+\}\s(?!catch)#',
                     // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
                     '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
                     // --ibid. From `foo['bar']` to `foo.bar`
@@ -89,7 +87,6 @@ class JSFileOptimizer
                 ],
                 [
                     "$1$2",
-                    '}',
                     "$1$3",
                     "$1.$3"
                 ], 
