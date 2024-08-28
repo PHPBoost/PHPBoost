@@ -54,9 +54,9 @@ class JSFileOptimizer
                 // Comments like /* ... */
                 '#/\*.*?\*/#s',
                 // Comments like '^ // ...'
-                '#^\s*\/\/[^\n]*$\n#m',
+                '#^\s*\/\/[^\n]*$[\r\n]+#m',
                 // empty lines
-                '#\n\s*\n#',
+                '#[\r\n]+\s*[\r\n]+#',
                 // Spaces & tabulations on the beginning of the line
                 '#^[ \t]*#m',
                 // spaces {;,( tabs||spaces? EOL
@@ -68,7 +68,7 @@ class JSFileOptimizer
                 "$1",
                 '',
                 '',
-                "\n",
+                "\r\n",
                 '',
                 "$1",
                 "$1$2"
