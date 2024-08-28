@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 08 22
+ * @version     PHPBoost 6.0 - last update: 2024 08 26
  * @since       PHPBoost 6.0 - 2024 07 06
 */
 
@@ -49,37 +49,54 @@ class JSFileOptimizer
         $this->assemble_files();
         $content = preg_replace(
             [
-                // Remove comment(s)
-                '#\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*#',
-                // Remove white-space(s) outside the string and regex
-                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*\(\)\-=+\[\]\{\}|;:,.<>?\/])\s*#s'
+                // Comments like 'code // ...'
+                '#^(.+)(?<![\:\\\"\'])\/\/.*$#m',
+                // Comments like /* ... */
+                '#/\*.*?\*/#s',
+                // Comments like '^ // ...'
+                '#^\s*\/\/[^\n]*$\n#m',
+                // empty lines
+                '#\n\s*\n#',
+                // Spaces & tabulations on the beginning of the line
+                '#^[ \t]*#m',
+                // spaces {;,( tabs||spaces? EOL
+                '#\s*([\{\;\,\(]+)[ \t]*[\r\n]+#',
+                // {}();, spaces {}();,
+                '#([\{\}\(\)\;\,]+)\s+([\{\}\(\)\;\,]+)#'            
             ],
             [
-                '$1',
-                '$1$2',
+                "$1",
+                '',
+                '',
+                "\n",
+                '',
+                "$1",
+                "$1$2"
             ], 
         $this->content);
         if ($intensity === self::HIGH_OPTIMIZATION) 
         {
             $content = preg_replace(
                 [
+                    // {}();, spaces {}();,
+                    '#([\{\}\(\)\;\,]+)\s+([\{\}\(\)\;\,]+)#',
                     // Remove the last semicolon
-                    '#;+\}#',
+                    '#;+\}\s(?!catch)#',
                     // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
                     '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
                     // --ibid. From `foo['bar']` to `foo.bar`
                     '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
                 ],
                 [
+                    "$1$2",
                     '}',
-                    '$1$3',
-                    '$1.$3'
+                    "$1$3",
+                    "$1.$3"
                 ], 
             $content);
         }
         $this->content = trim($content);
     }
-
 
     /**
      * Get Optimized JS content

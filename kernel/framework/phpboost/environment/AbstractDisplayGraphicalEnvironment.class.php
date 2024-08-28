@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.0 - last update: 2024 08 26
  * @since       PHPBoost 3.0 - 2009 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>
@@ -26,12 +26,37 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 
 	private $location_id = '';
 
+	/**
+	 * @var CookieBarConfig
+	 */
+	protected $cookiebar_config;
+
+	/**
+	 * @var MaintenanceConfig
+	 */
+	protected $maintenance_config;
+
 	public function __construct()
 	{
 		$this->seo_meta_data = new SEOMetaData();
 		$this->css_cache_config = CSSCacheConfig::load();
 	}
 
+	
+	/**
+	 * Return if cookie bar is enabled or not
+	 * @return bool true if enabled, false otherwise
+	 */
+	protected function get_cookiebar_enabled():bool
+	{
+		return isset($this->cookiebar_config) ? $this->cookiebar_config->is_cookiebar_enabled() && !$this->maintenance_config->is_under_maintenance() : false;
+	}
+
+	
+	/**
+	 * Return HTML code for CSS files regarding cache is enabled or not
+	 * @return string
+	 */
 	protected function get_modules_css_files_html_code()
 	{
 		
@@ -57,7 +82,9 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	 */
 	protected function get_top_js_files_html_code():string
 	{
-		$js_files = array_merge(ModulesJsFilesService::get_top_js_files_always_displayed(), ModulesJsFilesService::get_top_js_files_running_module_displayed());
+		$js_top = new FileTemplate('js_top.tpl');
+		$js_top_files = $this->get_js_files_from_html($js_top->render());
+		$js_files = array_merge(ModulesJsFilesService::get_top_js_files_always_displayed(), ModulesJsFilesService::get_top_js_files_running_module_displayed(), $js_top_files);
 		return $this->get_js_files_html_code($js_files);
 	}
 
@@ -67,7 +94,10 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	 */
 	protected function get_bottom_js_files_html_code():string
 	{
-		$js_files = array_merge(ModulesJsFilesService::get_bottom_js_files_always_displayed(), ModulesJsFilesService::get_bottom_js_files_running_module_displayed());
+		$js_bottom = new FileTemplate('js_bottom.tpl');
+		$js_bottom->put('C_COOKIEBAR_ENABLED', $this->get_cookiebar_enabled());
+		$js_bottom_files = $this->get_js_files_from_html($js_bottom->render());
+		$js_files = array_merge(ModulesJsFilesService::get_bottom_js_files_always_displayed(), ModulesJsFilesService::get_bottom_js_files_running_module_displayed(), $js_bottom_files);
 		return $this->get_js_files_html_code($js_files);
 	}
 
@@ -102,6 +132,29 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		}
 		return $html_code;
 	}
+
+    /**
+     * Get all JS files as an array from an HTML code
+	 * scripts can be relative or absolute
+	 * eg : <script src="/path/templates/__default__/plugins/@global.js"></script>
+	 * or : <script src="https://plop.com./script.js"></script>
+     * @param string $html
+     * @return string[]
+     */
+	public function get_js_files_from_html(string $html):array
+    {
+        $files = [];
+        $html = explode('<script', $html);
+        foreach ($html as $script)
+        {
+            if (strpos($script, 'src="') !== false)
+            {
+                $tmp_file = substr($script, strpos($script, 'src="') + 5, strpos($script, '">') - strpos($script, 'src="') - 5);
+                $files[] = (filter_var($tmp_file, FILTER_VALIDATE_URL)) ? $tmp_file : str_replace(TPL_PATH_TO_ROOT, '', $tmp_file);
+            }
+        }
+        return $files;
+    }
 
 	public function get_location_id()
 	{
@@ -139,11 +192,11 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 
 	protected function retrieve_kernel_message()
 	{
-		$kernel_message = array(
+		$kernel_message = [
 			'message' => '',
 			'message_type' => MessageHelper::SUCCESS,
 			'message_duration' => 5
-		);
+		];
 
 		$request = AppContext::get_request();
 		if ($request->has_cookieparameter('message'))
@@ -207,7 +260,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 
 			if ($display_message_install || $display_message_update)
 			{
-				$message = ($display_message_install && $display_message_update ? LangLoader::get_message('warning.delete.install.and.update.folders', 'warning-lang') : StringVars::replace_vars(LangLoader::get_message('warning.delete.install.or.update.folders', 'warning-lang'), array('folder' => $display_message_install ? 'install' : 'update')));
+				$message = $display_message_install && $display_message_update ? LangLoader::get_message('warning.delete.install.and.update.folders', 'warning-lang') : StringVars::replace_vars(LangLoader::get_message('warning.delete.install.or.update.folders', 'warning-lang'), ['folder' => $display_message_install ? 'install' : 'update']);
 				$template->put('KERNEL_MESSAGE', MessageHelper::display($message . ' ' . $form->display()->render(), MessageHelper::WARNING));
 			}
 		}
