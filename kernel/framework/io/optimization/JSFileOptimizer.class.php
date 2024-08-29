@@ -54,9 +54,9 @@ class JSFileOptimizer
                 // Comments like /* ... */
                 '#/\*.*?\*/#s',
                 // Comments like '^ // ...'
-                '#^\s*\/\/[^\n]*$\n#m',
+                '#^\s*\/\/[^\n]*$[\r\n]+#m',
                 // empty lines
-                '#\n\s*\n#',
+                '#[\r\n]+\s*[\r\n]+#',
                 // Spaces & tabulations on the beginning of the line
                 '#^[ \t]*#m',
                 // spaces {;,( tabs||spaces? EOL
@@ -68,7 +68,7 @@ class JSFileOptimizer
                 "$1",
                 '',
                 '',
-                "\n",
+                "\r\n",
                 '',
                 "$1",
                 "$1$2"
@@ -80,8 +80,6 @@ class JSFileOptimizer
                 [
                     // {}();, spaces {}();,
                     '#([\{\}\(\)\;\,]+)\s+([\{\}\(\)\;\,]+)#',
-                    // Remove the last semicolon
-                    '#;+\}\s(?!catch)#',
                     // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
                     '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
                     // --ibid. From `foo['bar']` to `foo.bar`
@@ -89,7 +87,6 @@ class JSFileOptimizer
                 ],
                 [
                     "$1$2",
-                    '}',
                     "$1$3",
                     "$1.$3"
                 ], 
