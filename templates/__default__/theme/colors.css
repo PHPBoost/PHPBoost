@@ -496,8 +496,14 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 .cssmenu-actionslinks > ul ul { box-shadow: -7px 0 10px rgba(var(--main-rgb-t), 0.15); }
 
 @media (min-width: 769px) {
-	.cssmenu ul > li:hover > .cssmenu-title    { background-color: rgba(var(--main-rgb-t), 0.1); }
-	.cssmenu ul > li.current > .cssmenu-title  { background-color: rgba(var(--main-rgb-t), 0.1); }
+	.cssmenu ul > li:hover > .cssmenu-title    {
+        background-color: rgba(var(--main-rgb-t), 0.1) !important;
+        color: var(--main-tone) !important;
+    }
+	.cssmenu ul > li.current > .cssmenu-title  {
+        background-color: rgba(var(--main-rgb-t), 0.1) !important;
+        color: var(--main-tone) !important;
+    }
 
 	.cssmenu-group .cssmenu-title { border-color: var(--bdr-alt); }
 
@@ -691,7 +697,10 @@ a[class*='lightcase-icon-']:hover {
 .cell-tile .cell-header:not(:only-child) { border-bottom-color: var(--bdr-main); }
 
 .cell-list li:hover,
-.cell-list .current { background-color: rgba(var(--main-rgb-t), 0.1); }
+.cell-list .current {
+    background-color: rgba(var(--main-rgb-t), 0.1);
+    color: var(--main-tone);
+}
 
 .cell-mini .cell { background-color: transparent; }
 
