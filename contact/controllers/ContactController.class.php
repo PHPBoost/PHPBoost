@@ -166,7 +166,7 @@ class ContactController extends DefaultModuleController
 		$mail->set_subject($subject);
 		$mail->set_content(TextHelper::html_entity_decode($message));
 
-		if ($recipients_field->is_displayed())
+		if ($recipients_field->is_displayed() && $recipients_field->is_authorized())
 		{
 			if (in_array($recipients_field->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
 				$recipients_mails = explode(';', $recipients[$this->form->get_value('f_recipients')->get_raw_value()]['email']);
