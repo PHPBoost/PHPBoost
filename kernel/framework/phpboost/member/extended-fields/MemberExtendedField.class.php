@@ -3,7 +3,7 @@
  * This class represente a member extended field
  * @package     PHPBoost
  * @subpackage  Member\extended-fields
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2016 11 14

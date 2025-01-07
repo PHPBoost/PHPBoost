@@ -3,7 +3,7 @@
 * This class is an abstract class. It contains the common elements needed by all the unparsers of PHPBoost.
  * @package     Content
  * @subpackage  Formatting\parser
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2023 02 19

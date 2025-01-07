@@ -3,7 +3,7 @@
  * The class FormCheckBox represents a checkbox field in a form. It corresponds to a boolean.
  * @package     Builder
  * @subpackage  Form\field
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2017 03 10

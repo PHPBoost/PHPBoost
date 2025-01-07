@@ -5,7 +5,7 @@
  * methods to get all ExtensionPointProvider that provide a given extension point
  * @package     PHPBoost
  * @subpackage  Extension-provider
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2024 08 22
