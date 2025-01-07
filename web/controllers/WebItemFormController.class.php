@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 20
+ * @version     PHPBoost 6.0 - last update: 2025 01 07
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -420,7 +420,7 @@ class WebItemFormController extends DefaultModuleController
 		$item = $this->get_item();
 		$category = $item->get_category();
 
-		if ($this->is_new_item && $this->is_contributor_member() && !$item->is_published())
+		if ($this->is_contributor_member())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}

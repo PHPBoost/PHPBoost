@@ -2,10 +2,10 @@
 /**
  * @package     Content
  * @subpackage  Item\controllers
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 14
+ * @version     PHPBoost 6.0 - last update: 2025 01 07
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -535,7 +535,7 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function redirect()
 	{
-		if ($this->is_new_item && $this->is_contributor_member() && !$this->get_item()->is_published())
+		if ($this->is_contributor_member())
 		{
 			DispatchManager::redirect(new UserContributionSuccessController());
 		}
