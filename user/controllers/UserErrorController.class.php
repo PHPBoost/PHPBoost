@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 19
+ * @version     PHPBoost 6.0 - last update: 2025 01 07
  * @since       PHPBoost 3.0 - 2009 12 09
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -108,7 +108,7 @@ class UserErrorController extends AbstractController
 		else
 			$error_img = TPL_PATH_TO_ROOT . '/templates/__default__/images/error.webp';
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'ERROR_TYPE'  => $this->get_error_type(),
 			'TITLE'       => $this->title,
 			'MESSAGE'     => $this->message,
@@ -118,7 +118,7 @@ class UserErrorController extends AbstractController
 			'LINK_NAME'   => $this->link_name,
 			'HAS_LINK'    => !empty($this->link) && !empty($this->link_name),
 			'HAS_TIME'    => !empty($this->time) && !empty($this->link),
-		));
+		]);
 	}
 
 	private function get_error_type()
