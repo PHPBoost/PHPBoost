@@ -4,7 +4,7 @@
  * objects attached to the given <code>MappingModel</code>.
  * @package     MVC
  * @subpackage  Model
- * @copyright   &copy; 2005-2024 PHPBoost
+ * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2019 12 04
