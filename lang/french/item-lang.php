@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 10 22
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2020 01 08
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -37,6 +37,7 @@ $lang['items.no.element.alt'] = 'Aucune :item n\'est disponible pour le moment';
 $lang['items.management']  = 'Gestion des :items';
 $lang['items.manage']      = 'Gérer les :items';
 $lang['item.add']          = 'Ajouter :an_item';
+$lang['item.duplicate']    = 'Dupliquer :the_item';
 $lang['item.edit']         = 'Modifier :the_item';
 $lang['item.edition']      = 'Modification du :item';
 $lang['item.edition.alt']  = 'Modification de :the_item';

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,21 +19,22 @@ class Category
 	protected $rewrited_name;
 	protected $order;
 	protected $special_authorizations = false;
-	protected $auth = array();
+	protected $auth = [];
 	protected $id_parent;
 	protected $elements_number;
 	protected $allowed_to_have_childs = true;
 
-	protected $additional_attributes_values = array();
-	protected $additional_attributes_list = array();
-	protected $additional_attributes_categories_table_fields = array();
-	protected $additional_attributes_categories_table_options = array();
+	protected $additional_attributes_values = [];
+	protected $additional_attributes_list = [];
+	protected $additional_attributes_categories_table_fields = [];
+	protected $additional_attributes_categories_table_options = [];
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
 	const CONTRIBUTION_AUTHORIZATIONS = 4;
-	const MODERATION_AUTHORIZATIONS = 8;
-	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 16;
+	const DUPLICATION_AUTHORIZATIONS = 8;
+	const MODERATION_AUTHORIZATIONS = 16;
+	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 32;
 
 	const ROOT_CATEGORY = '0';
 
@@ -158,12 +159,12 @@ class Category
 		if (isset($parameters['key']))
 		{
 			if ($parameters['key'] == true)
-				$this->additional_attributes_categories_table_options[$id] = array('type' => 'key', 'fields' => $id);
+				$this->additional_attributes_categories_table_options[$id] = ['type' => 'key', 'fields' => $id];
 
 			unset($parameters['key']);
 		}
 
-		$this->additional_attributes_list[$id] = array('is_url' => false);
+		$this->additional_attributes_list[$id] = ['is_url' => false];
 		if (isset($parameters['is_url']))
 		{
 			$this->additional_attributes_list[$id]['is_url'] = $parameters['is_url'];
@@ -214,7 +215,7 @@ class Category
 
 	protected function get_additional_properties()
 	{
-		$properties = array();
+		$properties = [];
 
 		foreach ($this->additional_attributes_list as $id => $attribute)
 		{
@@ -247,7 +248,7 @@ class Category
 		$this->set_rewrited_name($properties['rewrited_name']);
 		$this->set_order($properties['c_order']);
 		$this->set_special_authorizations($properties['special_authorizations']);
-		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : array());
+		$this->set_authorizations(!empty($properties['auth']) ? TextHelper::unserialize($properties['auth']) : []);
 		$this->set_id_parent($properties['id_parent']);
 		$this->set_additional_properties($properties);
 	}
@@ -277,18 +278,18 @@ class Category
 		$object = new $class_name();
 
 		$fields = array_merge(array(
-			'id'                     => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name'                   => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_name'          => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'c_order'                => array('type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0),
-			'special_authorizations' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'auth'                   => array('type' => 'text', 'length' => 65000),
-			'id_parent'              => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
+			'id'                     => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'name'                   => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'rewrited_name'          => ['type' => 'string', 'length' => 250, 'default' => "''"],
+			'c_order'                => ['type' => 'integer', 'length' => 11, 'unsigned' => 1, 'notnull' => 1, 'default' => 0],
+			'special_authorizations' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'auth'                   => ['type' => 'text', 'length' => 65000],
+			'id_parent'              => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
 		), $object->get_additional_attributes_categories_table_fields());
 
 		$options = array_merge(array(
-			'primary'   => array('id'),
-			'id_parent' => array('type' => 'key', 'fields' => 'id_parent')
+			'primary'   => ['id'],
+			'id_parent' => ['type' => 'key', 'fields' => 'id_parent']
 		), $object->get_additional_attributes_categories_table_options());
 
 		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 09 17
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,19 +52,19 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			['min' => 1, 'max' => 50, 'required' => true],
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
-			array('min' => 1, 'max' => 4, 'required' => true),
+			['min' => 1, 'max' => 4, 'required' => true],
 			array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . TextHelper::strtoupper($this->config->get_items_default_sort_mode()), $this->get_sort_options()));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			['min' => 1, 'max' => 50, 'required' => true],
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
@@ -72,9 +72,9 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
 			array(
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], DownloadConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DownloadConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DownloadConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], DownloadConfig::GRID_VIEW, ['data_option_icon' => 'fa fa-th-large']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DownloadConfig::LIST_VIEW, ['data_option_icon' => 'fa fa-list']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DownloadConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
 			),
 			array(
 				'select_to_list' => true,
@@ -105,8 +105,9 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
 			array(
 				'hidden' => $this->config->get_display_type() !== DownloadConfig::GRID_VIEW,
-				'min' => 1, 'max' => 4, 'required' => true),
-				array(new FormFieldConstraintIntegerRange(1, 4))
+				'min' => 1, 'max' => 4, 'required' => true
+            ),
+            array(new FormFieldConstraintIntegerRange(1, 4))
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->lang['form.display.full.item'], $this->config->is_full_item_displayed(),
@@ -128,8 +129,8 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW && $this->config->is_full_item_displayed()
 			),
-			array(new FormFieldConstraintIntegerRange(20, 1000)
-		)));
+			array(new FormFieldConstraintIntegerRange(20, 1000))
+        ));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->lang['form.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
 			array(
@@ -137,45 +138,45 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 				'hidden' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW
 			)
 		));$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['form.display.author'], $this->config->is_author_displayed(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('nb_view_enabled', $this->lang['form.display.views.number'], $this->config->get_enabled_views_number(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
         $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['form.item.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset = new FormFieldsetHTML('menu', $this->lang['download.config.mini.module']);
 		$form->add_fieldset($fieldset);
 
 		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'], DownloadItem::SORT_UPDATE_DATE, array('data_option_icon' => 'far fa-calendar-plus')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], DownloadItem::SORT_DATE, array('data_option_icon' => 'far fa-calendar-alt')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], DownloadItem::SORT_ALPHABETIC, array('data_option_icon' => 'fa fa-sort-alpha-up')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], DownloadItem::SORT_AUTHOR, array('data_option_icon' => 'far fa-user')),
-			new FormFieldSelectChoiceOption($this->lang['download.downloads.number'], DownloadItem::SORT_DOWNLOADS_NUMBER, array('data_option_icon' => 'fa fa-download')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'], DownloadItem::SORT_VIEWS_NUMBERS, array('data_option_icon' => 'fa fa-eye')),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'], DownloadItem::SORT_UPDATE_DATE, ['data_option_icon' => 'far fa-calendar-plus']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], DownloadItem::SORT_DATE, ['data_option_icon' => 'far fa-calendar-alt']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], DownloadItem::SORT_ALPHABETIC, ['data_option_icon' => 'fa fa-sort-alpha-up']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], DownloadItem::SORT_AUTHOR, ['data_option_icon' => 'far fa-user']),
+			new FormFieldSelectChoiceOption($this->lang['download.downloads.number'], DownloadItem::SORT_DOWNLOADS_NUMBER, ['data_option_icon' => 'fa fa-download']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'], DownloadItem::SORT_VIEWS_NUMBERS, ['data_option_icon' => 'fa fa-eye']),
 		);
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], DownloadItem::SORT_COMMENTS_NUMBER, array('data_option_icon' => 'far fa-comments'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], DownloadItem::SORT_COMMENTS_NUMBER, ['data_option_icon' => 'far fa-comments']);
 
 		if ($this->content_management_config->module_notation_is_enabled('download'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'], DownloadItem::SORT_NOTATION, array('data_option_icon' => 'far fa-star'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'], DownloadItem::SORT_NOTATION, ['data_option_icon' => 'far fa-star']);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_type', $this->lang['common.sort.direction'], $this->config->get_sort_type(), $sort_options,
-			array('select_to_list' => true, 'description' => $this->lang['download.config.sort.type.clue'])
+			['select_to_list' => true, 'description' => $this->lang['download.config.sort.type.clue']]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('files_number_in_menu', $this->lang['download.config.items.number'], $this->config->get_files_number_in_menu(),
-			array('min' => 1, 'max' => 50, 'required' => true),
+			['min' => 1, 'max' => 50, 'required' => true],
 			array(new FormFieldConstraintIntegerRange(1, 50))
 		));
 
@@ -198,7 +199,7 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 		$form->add_fieldset($fieldset_authorizations);
 

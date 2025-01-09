@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 07
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -78,16 +78,21 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		if (($this->is_new_item && !$this->get_item()->is_authorized_to_add()) || (!$this->is_new_item && !$this->get_item()->is_authorized_to_edit()))
-			$this->display_user_not_authorized_page();
-		if (AppContext::get_current_user()->is_readonly())
-			$this->display_user_in_read_only_page();
+		if ($this->is_new_item && !$this->get_item()->is_authorized_to_add())
+            $this->display_user_not_authorized_page();
+		elseif ($this->is_duplication && !$this->get_item()->is_authorized_to_duplicate())
+            $this->display_user_not_authorized_page();
+		elseif (!$this->is_duplication && !$this->get_item()->is_authorized_to_edit())
+            $this->display_user_not_authorized_page();
+
+        if (AppContext::get_current_user()->is_readonly())
+            $this->display_user_in_read_only_page();
 	}
 
 	protected function build_form()
 	{
 		$form = new HTMLForm(self::$module_id . '_form');
-		$form->set_layout_title($this->is_new_item ? $this->lang['item.add'] : ($this->lang['item.edition']));
+		$form->set_layout_title($this->is_new_item ? $this->lang['item.add'] : ($this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edition']));
 
 		$fieldset = new FormFieldsetHTML(self::$module_id, $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -143,12 +148,19 @@ class DefaultItemFormController extends AbstractItemController
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $this->request->get_url_referrer()));
 
-		$this->submit_button = new FormButtonDefaultSubmit();
+        $this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
 		$form->add_button(new FormButtonReset());
 
 		$this->form = $form;
 	}
+
+    protected function get_duplication_source()
+    {
+        $url = self::get_items_manager()->get_item($this->request->get_value('id'))->get_item_url();
+        $title = self::get_items_manager()->get_item($this->request->get_value('id'))->get_title();
+        return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
+    }
 
 	protected function build_pre_content_fields(FormFieldset $fieldset)
 	{
@@ -320,7 +332,10 @@ class DefaultItemFormController extends AbstractItemController
 
 		if ($this->get_item()->content_field_enabled())
 		{
-			$this->get_item()->set_content($this->form->get_value($this->item_class::get_content_label()));
+            if ($this->is_duplication)
+                $this->get_item()->set_content($this->form->get_value($this->item_class::get_content_label()) . $this->get_duplication_source());
+            else
+                $this->get_item()->set_content($this->form->get_value($this->item_class::get_content_label()));
 		}
 
 		if (self::get_module_configuration()->has_rich_items())
@@ -347,6 +362,8 @@ class DefaultItemFormController extends AbstractItemController
 
 			if ($has_value)
 				$this->get_item()->set_additional_property($id, $value);
+            if ($id == 'views_number' && $this->is_duplication)
+				$this->get_item()->set_additional_property($id, 0);
 		}
 
 		if (self::get_module_configuration()->feature_is_enabled('sources'))
@@ -434,6 +451,16 @@ class DefaultItemFormController extends AbstractItemController
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
+		elseif ($this->is_duplication)
+		{
+            $this->get_item()->set_id(0);
+            $this->get_item()->set_author_user(AppContext::get_current_user());
+            $this->get_item()->set_creation_date($this->is_contributor_member() ? new Date() : $this->form->get_value('creation_date'));
+            $id = self::get_items_manager()->add($this->get_item());
+            $this->get_item()->set_id($id);
+            if (!$this->is_contributor_member())
+                HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+        }
 		else
 		{
 			$this->get_item()->set_update_date(new Date());
@@ -458,7 +485,7 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function build_contribution_fieldset($form)
 	{
-		if ($this->is_new_item && $this->is_contributor_member())
+		if (($this->is_new_item || $this->is_duplication) && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
@@ -486,7 +513,7 @@ class DefaultItemFormController extends AbstractItemController
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($item->get_id());
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
@@ -516,7 +543,7 @@ class DefaultItemFormController extends AbstractItemController
 			}
 
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
 		}
 		else
 		{
@@ -541,7 +568,7 @@ class DefaultItemFormController extends AbstractItemController
 		}
 		elseif ($this->get_item()->is_published())
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 			{
 				if (self::get_module_configuration()->has_categories())
 					AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
@@ -578,11 +605,11 @@ class DefaultItemFormController extends AbstractItemController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add(self::get_module_configuration()->get_name(), ModulesUrlBuilder::home());
 
-		if ($this->get_item()->get_id() === null)
+		if ($this->is_new_item)
 		{
-			$breadcrumb->add($this->lang['item.add'], ItemsUrlBuilder::add(self::get_module_configuration()->has_categories() ? $this->get_item()->get_id_category() : Category::ROOT_CATEGORY));
 			$graphical_environment->set_page_title($this->lang['item.add'], self::get_module_configuration()->get_name());
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::add(self::get_module_configuration()->has_categories() ? $this->get_item()->get_id_category() : Category::ROOT_CATEGORY, self::$module_id));
+            $breadcrumb->add($this->lang['item.add'], ItemsUrlBuilder::add(self::get_module_configuration()->has_categories() ? $this->get_item()->get_id_category() : Category::ROOT_CATEGORY));
 		}
 		else
 		{
@@ -599,12 +626,12 @@ class DefaultItemFormController extends AbstractItemController
 			else
 				$breadcrumb->add($this->get_item()->get_title(), ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id));
 
-			$breadcrumb->add($this->lang['item.edit'], ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
+			$breadcrumb->add($this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edit'], ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
 
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title(($this->lang['item.edition'] . ': ' . $this->get_item()->get_title()), self::get_module_configuration()->get_name());
+			$graphical_environment->set_page_title((($this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edition']) . ': ' . $this->get_item()->get_title()), self::get_module_configuration()->get_name());
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
 		}
 

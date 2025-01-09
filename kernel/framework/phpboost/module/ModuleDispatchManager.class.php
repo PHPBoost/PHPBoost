@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 05
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2020 02 07
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleDispatchManager extends DispatchManager
@@ -42,6 +43,7 @@ class ModuleDispatchManager extends DispatchManager
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id'), $module_id);
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category'), $module_id);
 			$url_controller_mappers[] = new UrlControllerMapper('DefaultItemFormController', '`^(?:/([0-9]+))/edit/?$`', array('id'), $module_id);
+			$url_controller_mappers[] = new UrlControllerMapper('DefaultItemFormController', '`^(?:/([0-9]+))/duplicate/?$`', array('id'), $module_id);
 
 			//Item display
 			if ($module_configuration->has_categories())

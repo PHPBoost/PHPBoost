@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 28
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2019 11 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -32,6 +32,11 @@ class CategoriesAuthorizationsService
 	public function contribution()
 	{
 		return $this->is_authorized(Category::CONTRIBUTION_AUTHORIZATIONS);
+	}
+
+	public function duplication()
+	{
+		return $this->is_authorized(Category::DUPLICATION_AUTHORIZATIONS);
 	}
 
 	public function write()

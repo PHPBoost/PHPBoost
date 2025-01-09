@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 18
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 4.0 - 2013 12 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -79,6 +79,7 @@ $lang['common.contribute']   = 'Contribute';
 $lang['common.delete']       = 'Delete';
 $lang['common.edit']         = 'Edit';
 $lang['common.modify']       = 'Modify';
+$lang['common.duplicate']    = 'Duplicate';
 $lang['common.rename']       = 'Rename';
 $lang['common.apply']        = 'Apply';
 $lang['common.validation']   = 'Validation';
@@ -107,6 +108,8 @@ $lang['common.open.panels']  = 'Open all panels';
 $lang['common.close.panels'] = 'Close all panels';
 $lang['common.filter.items'] = 'Filter items';
 $lang['common.reset.filters'] = 'Reset filters';
+
+$lang['common.duplication.source'] = '<br /><br /><div id="" class="small text-italic" style="">This element is a modified copy of <a class="offload" href=":url">:title</a></div>';
 
 // Constraint
 $lang['common.constraint.required']     = 'Required';

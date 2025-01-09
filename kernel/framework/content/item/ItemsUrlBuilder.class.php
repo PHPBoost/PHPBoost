@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 17
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2019 12 20
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsUrlBuilder
@@ -46,6 +47,15 @@ class ItemsUrlBuilder
 	{
 		$additional_parameter = (!empty($additional_parameter) ? ((is_int($additional_parameter) && $additional_parameter > 1) || !is_int($additional_parameter) ? $additional_parameter . '/' : '') : '');
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/'. $id .'/edit/' . $additional_parameter);
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function duplicate($id, $module_id = '', $additional_parameter = null)
+	{
+		$additional_parameter = (!empty($additional_parameter) ? ((is_int($additional_parameter) && $additional_parameter > 1) || !is_int($additional_parameter) ? $additional_parameter . '/' : '') : '');
+		return DispatchManager::get_url(self::get_dispatcher($module_id), '/'. $id .'/duplicate/' . $additional_parameter);
 	}
 
 	/**

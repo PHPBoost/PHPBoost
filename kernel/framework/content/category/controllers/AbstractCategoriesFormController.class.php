@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 4.0 - 2013 02 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -72,7 +72,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$fieldset = new FormFieldsetHTML('category', self::$lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), ['required' => true]));
 
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
 			array(
@@ -159,7 +159,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 		if (!$change_authorizations)
 		{
-			$this->get_category()->set_authorizations(array());
+			$this->get_category()->set_authorizations([]);
 			$this->get_category()->set_special_authorizations(false);
 		}
 
@@ -191,7 +191,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			{
 				$parameters = $attribute['attribute_field_parameters'];
 				$field_class = $parameters['field_class'];
-				$options = isset($parameters['options']) ? $parameters['options'] : array();
+				$options = isset($parameters['options']) ? $parameters['options'] : [];
 
 				if ($this->is_new_category)
 					$value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
@@ -261,14 +261,21 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			new ActionAuthorization(self::$lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
+			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.duplication'], Category::DUPLICATION_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization(self::$lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
 		);
 
 		if ($module && !$module->get_configuration()->has_contribution())
 		{
 			unset($authorizations[2]);
+			unset($authorizations[3]);
 			$authorizations = array_values($authorizations);
 		}
+        elseif ($module && $module->get_configuration()->has_contribution() && !$module->get_configuration()->has_duplication())
+        {
+			unset($authorizations[3]);
+			$authorizations = array_values($authorizations);
+        }
 
 		return $authorizations;
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 05
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -286,7 +286,7 @@ class DownloadConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::CATEGORIES_PER_PAGE                   => 10,
 			self::CATEGORIES_PER_ROW                    => 3,
 			self::ITEMS_PER_PAGE                        => 15,
@@ -305,9 +305,9 @@ class DownloadConfig extends AbstractConfigData
 			self::LIMIT_OLDEST_FILE_DAY_IN_MENU_ENABLED => false,
 			self::OLDEST_FILE_DAY_IN_MENU               => 30,
 			self::AUTO_CUT_CHARACTERS_NUMBER            => 128,
-			self::AUTHORIZATIONS                        => array('r-1' => 33, 'r0' => 37, 'r1' => 61),
-			self::DEFERRED_OPERATIONS                   => array()
-		);
+			self::AUTHORIZATIONS                        => ['r-1' => 65, 'r0' => 69, 'r1' => 85],
+			self::DEFERRED_OPERATIONS                   => []
+        ];
 	}
 
 	/**

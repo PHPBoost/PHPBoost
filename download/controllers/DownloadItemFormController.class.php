@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 07
+ * @version     PHPBoost 6.0 - last update: 2025 01 05
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -34,12 +34,12 @@ class DownloadItemFormController extends DefaultModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['download.add.item'] : ($this->lang['download.edit.item']));
+		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['download.add.item'] : ($this->is_duplication ? $this->lang['download.duplicate.item'] : $this->lang['download.edit.item']));
 
 		$fieldset = new FormFieldsetHTML('download', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $this->get_item()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $this->get_item()->get_title(), ['required' => true]));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -49,7 +49,7 @@ class DownloadItemFormController extends DefaultModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldUploadFile('file_url', $this->lang['form.url'], $this->get_item()->get_file_url()->relative(), array('required' => true)));
+		$fieldset->add_field(new FormFieldUploadFile('file_url', $this->lang['form.url'], $this->get_item()->get_file_url()->relative(), ['required' => true]));
 
 		$fieldset->add_field(new FormFieldCheckbox('determine_file_size_automatically_enabled', $this->lang['download.form.file.size.auto'], $this->is_file_size_automatic(),
 			array(
@@ -100,12 +100,12 @@ class DownloadItemFormController extends DefaultModuleController
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $this->get_item()->get_content(),
-			array('rows' => 15, 'required' => true)
+			['rows' => 15, 'required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
 			array(
-				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())),
+				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], ['number' => $this->config->get_auto_cut_characters_number()]),
 				'events' => array('click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
@@ -147,7 +147,7 @@ class DownloadItemFormController extends DefaultModuleController
 		$options_fieldset->add_field(new FormFieldTextEditor('version_number', $this->lang['download.version'], $this->get_item()->get_version_number()));
 
 		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->lang['form.keywords'],
-			array('description' => $this->lang['form.keywords.clue'])
+			['description' => $this->lang['form.keywords.clue']]
 		));
 
 		$options_fieldset->add_field(new FormFieldSelectSources('sources', $this->lang['form.sources'], $this->get_item()->get_sources()));
@@ -158,7 +158,7 @@ class DownloadItemFormController extends DefaultModuleController
 			$form->add_fieldset($publication_fieldset);
 
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
-				array('required' => true)
+				['required' => true]
 			));
 
 			if (!$this->get_item()->is_published())
@@ -228,14 +228,14 @@ class DownloadItemFormController extends DefaultModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
+		if (($this->get_item()->get_id() === null || $this->is_duplication) && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
@@ -245,7 +245,7 @@ class DownloadItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -264,15 +264,15 @@ class DownloadItemFormController extends DefaultModuleController
 	{
 		if ($this->item === null)
 		{
-			$id = AppContext::get_request()->get_getint('id', 0);
+            $id = AppContext::get_request()->get_getint('id', 0);
 			if (!empty($id))
 			{
-				try {
-					$this->item = DownloadService::get_item($id);
-				} catch (RowNotFoundException $e) {
-					$error_controller = PHPBoostErrors::unexisting_page();
-					DispatchManager::redirect($error_controller);
-				}
+                try {
+                    $this->item = DownloadService::get_item($id);
+                } catch (RowNotFoundException $e) {
+                    $error_controller = PHPBoostErrors::unexisting_page();
+                    DispatchManager::redirect($error_controller);
+                }
 			}
 			else
 			{
@@ -288,23 +288,23 @@ class DownloadItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item && !$item->is_authorized_to_add())
 		{
-			if (!$item->is_authorized_to_add())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
 		}
-		else
+		elseif ($this->is_duplication && !$item->is_authorized_to_duplicate())
 		{
-			if (!$item->is_authorized_to_edit())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
 		}
-		if (AppContext::get_current_user()->is_readonly())
+		elseif (!$this->is_duplication && !$item->is_authorized_to_edit())
+        {
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
+        }
+
+        if (AppContext::get_current_user()->is_readonly())
 		{
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
@@ -322,7 +322,11 @@ class DownloadItemFormController extends DefaultModuleController
 			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
 		$item->set_file_url(new Url($this->form->get_value('file_url')));
-		$item->set_content($this->form->get_value('content'));
+        if ($this->is_duplication)
+            $item->set_content($this->form->get_value('content') . $this->get_duplication_source());
+        else
+            $item->set_content($this->form->get_value('content'));
+
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
 		$item->set_thumbnail($this->form->get_value('thumbnail'));
 		$item->set_version_number($this->form->get_value('version_number'));
@@ -337,7 +341,7 @@ class DownloadItemFormController extends DefaultModuleController
 		}
 		else
 		{
-			$units = array($this->lang['common.unit.bytes'], $this->lang['common.unit.kilobytes'], $this->lang['common.unit.megabytes'], $this->lang['common.unit.gigabytes']);
+			$units = [$this->lang['common.unit.bytes'], $this->lang['common.unit.kilobytes'], $this->lang['common.unit.megabytes'], $this->lang['common.unit.gigabytes']];
 			$power = array_search($this->form->get_value('file_size_unit')->get_raw_value(), $units);
 			$file_size = (int)($this->form->get_value('file_size') * pow(1024, $power));
 		}
@@ -360,7 +364,6 @@ class DownloadItemFormController extends DefaultModuleController
 		}
 		else
 		{
-
 			if ($this->form->get_value('update_creation_date'))
 				$item->set_creation_date(new Date());
 			else
@@ -417,6 +420,17 @@ class DownloadItemFormController extends DefaultModuleController
 			if (!$this->is_contributor_member())
 				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
+		elseif ($this->is_duplication)
+		{
+            $item->set_id(0);
+            $item->set_downloads_number(0);
+            $item->set_author_user(AppContext::get_current_user());
+            $item->set_creation_date($this->is_contributor_member() ? new Date() : $this->form->get_value('creation_date'));
+            $id = DownloadService::add($item);
+            $item->set_id($id);
+            if (!$this->is_contributor_member())
+                HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+        }
 		else
 		{
 			$item->set_update_date(new Date());
@@ -433,13 +447,20 @@ class DownloadItemFormController extends DefaultModuleController
 		DownloadService::clear_cache();
 	}
 
+    private function get_duplication_source()
+    {
+        $url = DownloadService::get_item($this->request->get_value('id'))->get_item_url();
+        $title = DownloadService::get_item($this->request->get_value('id'))->get_title();
+        return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
+    }
+
 	private function contribution_actions(DownloadItem $item)
 	{
 		if ($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($item->get_id());
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
@@ -455,7 +476,7 @@ class DownloadItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
@@ -483,14 +504,14 @@ class DownloadItemFormController extends DefaultModuleController
 		}
 		elseif ($item->is_published())
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				AppContext::get_response()->redirect(DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['download.message.success.add'], array('title' => $item->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['download.message.success.edit'], array('title' => $item->get_title())));
 		}
 		else
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				AppContext::get_response()->redirect(DownloadUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['download.message.success.add'], array('title' => $item->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : DownloadUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['download.message.success.edit'], array('title' => $item->get_title())));
@@ -509,12 +530,20 @@ class DownloadItemFormController extends DefaultModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['download.module.title'], DownloadUrlBuilder::home());
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item)
 		{
-			$breadcrumb->add($this->lang['download.add.item'], DownloadUrlBuilder::add($item->get_id_category()));
 			$graphical_environment->set_page_title($this->lang['download.add.item'], $this->lang['download.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.add.item']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add($item->get_id_category()));
+
+            $breadcrumb->add($this->lang['download.add.item'], DownloadUrlBuilder::add($item->get_id_category()));
+		}
+		elseif ($this->is_duplication)
+		{
+			$graphical_environment->set_page_title($this->lang['download.duplicate.item'], $this->lang['download.module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.duplicate.item']);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add($item->get_id_category()));
+			$breadcrumb->add($this->lang['download.duplicate.item'], DownloadUrlBuilder::duplicate($item->get_id_category()));
 		}
 		else
 		{

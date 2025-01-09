@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 14
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,7 @@ class DownloadItem
 	const SORT_DOWNLOADS_NUMBER = 'downloads_number';
 	const SORT_VIEWS_NUMBERS 	= 'views_number';
 
-	const SORT_FIELDS_URL_VALUES = array(
+	const SORT_FIELDS_URL_VALUES = [
 		self::SORT_ALPHABETIC       => 'title',
 		self::SORT_AUTHOR           => 'author',
 		self::SORT_DATE             => 'date',
@@ -61,7 +61,7 @@ class DownloadItem
 		self::SORT_VIEWS_NUMBERS    => 'views',
 		self::SORT_NOTATION         => 'notes',
 		self::SORT_COMMENTS_NUMBER  => 'comments'
-	);
+    ];
 
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item.webp';
 
@@ -384,6 +384,14 @@ class DownloadItem
 		return DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || DownloadAuthorizationsService::check_authorizations($this->id_category)->contribution();
 	}
 
+	public function is_authorized_to_duplicate()
+	{
+        if (ModulesManager::get_module('download')->get_configuration()->has_contribution())
+            return ModulesManager::get_module('download')->get_configuration()->has_duplication() && (DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || DownloadAuthorizationsService::check_authorizations($this->id_category)->duplication());
+        else
+            return ModulesManager::get_module('download')->get_configuration()->has_duplication() && DownloadAuthorizationsService::check_authorizations($this->id_category)->write();
+	}
+
 	public function is_authorized_to_edit()
 	{
 		return DownloadAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || (DownloadAuthorizationsService::check_authorizations($this->id_category)->contribution())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
@@ -401,7 +409,7 @@ class DownloadItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -422,7 +430,7 @@ class DownloadItem
 			'thumbnail' => $this->get_thumbnail()->relative(),
 			'version_number' => $this->get_version_number(),
 			'sources' => TextHelper::serialize($this->get_sources())
-		);
+        ];
 	}
 
 	public function set_properties(array $properties)
@@ -445,7 +453,7 @@ class DownloadItem
 		$this->downloads_number = $properties['downloads_number'];
 		$this->thumbnail_url = $properties['thumbnail'];
 		$this->version_number = $properties['version_number'];
-		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array();
+		$this->sources = !empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : [];
 
 		$user = new User();
 		if (!empty($properties['user_id']))
@@ -484,7 +492,7 @@ class DownloadItem
 		$this->views_number = 0;
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 		$this->version_number = '';
-		$this->sources = array();
+		$this->sources = [];
 		$this->end_date_enabled = false;
 		$this->author_custom_name = $this->author_user->get_display_name();
 		$this->author_custom_name_enabled = false;
@@ -526,11 +534,12 @@ class DownloadItem
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->update_date, 'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
-			array(
+			[
 				// Conditions
 				'C_VISIBLE'               => $this->is_published(),
-				'C_CONTROLS'			  => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_CONTROLS'			  => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
 				'C_EDIT'                  => $this->is_authorized_to_edit(),
+				'C_DUPLICATE'             => $this->is_authorized_to_duplicate(),
 				'C_DELETE'                => $this->is_authorized_to_delete(),
 				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($content) > $config->get_auto_cut_characters_number() && $real_summary != @strip_tags($content, '<br><br/>'),
 				'C_SIZE'                  => !empty($this->size),
@@ -584,25 +593,26 @@ class DownloadItem
 				'U_DOWNLOAD'       => DownloadUrlBuilder::download($this->id)->rel(),
 				'U_DEADLINK'       => DownloadUrlBuilder::dead_link($this->id)->rel(),
 				'U_EDIT'           => DownloadUrlBuilder::edit($this->id)->rel(),
+				'U_DUPLICATE'      => DownloadUrlBuilder::duplicate($this->id)->rel(),
 				'U_DELETE'         => DownloadUrlBuilder::delete($this->id)->rel(),
 				'U_THUMBNAIL'      => $this->get_thumbnail()->rel(),
 				'U_COMMENTS'       => DownloadUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
-			)
+			]
 		);
 	}
 
 	public function get_array_tpl_source_vars($source_name)
 	{
-		$vars = array();
+		$vars = [];
 		$sources = $this->get_sources();
 
 		if (isset($sources[$source_name]))
 		{
-			$vars = array(
+			$vars = [
 				'C_SEPARATOR' => array_search($source_name, array_keys($sources)) < count($sources) - 1,
 				'NAME' => $source_name,
 				'URL'  => $sources[$source_name]
-			);
+            ];
 		}
 
 		return $vars;

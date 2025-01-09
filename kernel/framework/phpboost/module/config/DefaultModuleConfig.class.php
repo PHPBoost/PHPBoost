@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 30
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2020 01 10
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultModuleConfig extends AbstractConfigData
@@ -23,7 +24,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	public static function __static()
 	{
 		$module_id = ClassLoader::get_module_id_from_class_name(get_called_class());
-		self::$module_id = ($module_id && !in_array($module_id, array('admin', 'kernel', 'user')) ? $module_id : Environment::get_running_module_name());
+		self::$module_id = ($module_id && !in_array($module_id, ['admin', 'kernel', 'user']) ? $module_id : Environment::get_running_module_name());
 	}
 
 	/**
@@ -32,10 +33,10 @@ class DefaultModuleConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return array_merge(
-			array(
+			[
 				self::ITEMS_PER_PAGE => 15,
-				self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
-			),
+				self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 5, 'r1' => 21]
+			],
 			$this->get_kernel_additional_default_values(),
 			$this->get_additional_default_values()
 		);
@@ -46,7 +47,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	 */
 	public function get_kernel_additional_default_values()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -54,7 +55,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	 */
 	public function get_additional_default_values()
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -106,12 +107,12 @@ class DefaultModuleConfig extends AbstractConfigData
 					{
 						throw new Exception('Method ' . $matches[0] . '() must contain one argument.');
 					}
-					
+
 					$argument_type = gettype($arguments[0]);
 					$default_argument_type = gettype($this->get_default_values()[$constant_value]);
 					if ($argument_type != $default_argument_type)
 						settype($arguments[0], $default_argument_type);
-					
+
 					return $this->set_property($constant_value, $arguments[0]);
 				}
 			}

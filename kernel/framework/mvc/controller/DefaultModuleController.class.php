@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 25
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2021 11 29
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -24,6 +24,7 @@ abstract class DefaultModuleController extends ModuleController
 	protected $item;
 
 	protected $is_new_item;
+	protected $is_duplication;
 	protected $form;
 	protected $submit_button;
 
@@ -40,8 +41,9 @@ abstract class DefaultModuleController extends ModuleController
 
 	protected function init_parameters()
 	{
-		$this->request = AppContext::get_request();
-		$this->config = self::get_module_configuration()->get_configuration_parameters();
+		$this->request        = AppContext::get_request();
+		$this->config         = self::get_module_configuration()->get_configuration_parameters();
+        $this->is_duplication = TextHelper::strstr($this->request->get_current_url(), '/duplicate/');
 		$this->init_lang();
 	}
 

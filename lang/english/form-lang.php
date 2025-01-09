@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 29
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,6 +24,7 @@ $lang['form.authorizations.advanced']     = 'Advanced authorizations';
 $lang['form.authorizations.read']         = 'Read authorizations';
 $lang['form.authorizations.write']        = 'Write authorizations';
 $lang['form.authorizations.contribution'] = 'Contribution authorizations';
+$lang['form.authorizations.duplication']  = 'Duplication authorizations';
 $lang['form.authorizations.moderation']   = 'Moderation authorizations';
 $lang['form.authorizations.categories']   = 'Categories management authorizations';
 $lang['form.authorizations.menu']         = 'Authorizations to display menu';
