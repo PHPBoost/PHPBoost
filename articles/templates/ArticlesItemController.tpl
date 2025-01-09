@@ -51,8 +51,9 @@
 					</div>
 					<div class="controls align-right">
 						# IF C_CONTROLS #
-							<a class="offload item-edit" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
-							<a class="item-delete" href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
+                            # IF C_DUPLICATE #<a class="offload" href="{U_DUPLICATE}" aria-label="{@common.duplicate}"><i class="far fa-fw fa-clone"></i></a># ENDIF #
+                            # IF C_EDIT #<a class="offload item-edit" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
+							# IF C_DELETE #<a class="item-delete" href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 						# ENDIF #
 					</div>
 				</div>
