@@ -157,7 +157,7 @@ class DefaultItemFormController extends AbstractItemController
 
     protected function get_duplication_source()
     {
-        $url = self::get_items_manager()->get_item($this->request->get_value('id'))->get_item_url();
+        $url = GeneralConfig::load()->get_site_url() . self::get_items_manager()->get_item($this->request->get_value('id'))->get_item_url();
         $title = self::get_items_manager()->get_item($this->request->get_value('id'))->get_title();
         return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
     }
@@ -597,7 +597,8 @@ class DefaultItemFormController extends AbstractItemController
 	 */
 	protected function generate_response()
 	{
-		$location_id = $this->get_item()->get_id() ? self::$module_id . '-edit-' . $this->get_item()->get_id() : '';
+        $location_name = $this->is_duplication ? '-duplicate-' : '-edit-';
+		$location_id = $this->get_item()->get_id() ? self::$module_id . $location_name . $this->get_item()->get_id() : '';
 
 		$response = new SiteDisplayResponse($this->view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -613,7 +614,14 @@ class DefaultItemFormController extends AbstractItemController
 		}
 		else
 		{
-			if (self::get_module_configuration()->has_categories())
+            if (!AppContext::get_session()->location_id_already_exists($location_id))
+                $graphical_environment->set_location_id($location_id);
+
+            $page_title = $this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edit'];
+			$graphical_environment->set_page_title(($page_title . ': ' . $this->get_item()->get_title()), self::get_module_configuration()->get_name());
+			$graphical_environment->get_seo_meta_data()->set_canonical_url($this->is_duplication ? ItemsUrlBuilder::duplicate($this->get_item()->get_id(), self::$module_id) : ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
+
+            if (self::get_module_configuration()->has_categories())
 			{
 				$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($this->get_item()->get_id_category(), true));
 				foreach ($categories as $id => $category)
@@ -626,13 +634,7 @@ class DefaultItemFormController extends AbstractItemController
 			else
 				$breadcrumb->add($this->get_item()->get_title(), ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id));
 
-			$breadcrumb->add($this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edit'], ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
-
-			if (!AppContext::get_session()->location_id_already_exists($location_id))
-				$graphical_environment->set_location_id($location_id);
-
-			$graphical_environment->set_page_title((($this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edition']) . ': ' . $this->get_item()->get_title()), self::get_module_configuration()->get_name());
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
+			$breadcrumb->add($page_title, $this->is_duplication ? ItemsUrlBuilder::duplicate($this->get_item()->get_id(), self::$module_id) : ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
 		}
 
 		return $response;

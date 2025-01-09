@@ -15,6 +15,7 @@ class DownloadItemFormController extends DefaultModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
+		$this->get_duplication_source();
 
 		$this->build_form($request);
 
@@ -449,7 +450,7 @@ class DownloadItemFormController extends DefaultModuleController
 
     private function get_duplication_source()
     {
-        $url = DownloadService::get_item($this->request->get_value('id'))->get_item_url();
+        $url = GeneralConfig::load()->get_site_url() . DownloadService::get_item($this->request->get_value('id'))->get_item_url();
         $title = DownloadService::get_item($this->request->get_value('id'))->get_title();
         return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
     }
@@ -522,6 +523,7 @@ class DownloadItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
+        $location_name = $this->is_duplication ? 'download-duplicate-' : 'download-edit-';
 		$location_id = $item->get_id() ? 'download-edit-'. $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
@@ -538,21 +540,15 @@ class DownloadItemFormController extends DefaultModuleController
 
             $breadcrumb->add($this->lang['download.add.item'], DownloadUrlBuilder::add($item->get_id_category()));
 		}
-		elseif ($this->is_duplication)
-		{
-			$graphical_environment->set_page_title($this->lang['download.duplicate.item'], $this->lang['download.module.title']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.duplicate.item']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::add($item->get_id_category()));
-			$breadcrumb->add($this->lang['download.duplicate.item'], DownloadUrlBuilder::duplicate($item->get_id_category()));
-		}
 		else
 		{
+            $page_title = $this->is_duplication ? $this->lang['download.duplicate.item'] : $this->lang['download.edit.item'];
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['download.edit.item'], $this->lang['download.module.title']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['download.edit.item']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(DownloadUrlBuilder::edit($item->get_id()));
+			$graphical_environment->set_page_title($page_title . ': ' . $item->get_title(), $this->lang['download.module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($page_title);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url($this->is_duplication ? DownloadUrlBuilder::duplicate($item->get_id()) : DownloadUrlBuilder::edit($item->get_id()));
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -562,8 +558,8 @@ class DownloadItemFormController extends DefaultModuleController
 			}
 			$category = $item->get_category();
 			$breadcrumb->add($item->get_title(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
-			$breadcrumb->add($this->lang['download.edit.item'], DownloadUrlBuilder::edit($item->get_id()));
-		}
+            $breadcrumb->add($page_title, $this->is_duplication ? DownloadUrlBuilder::duplicate($item->get_id()) : DownloadUrlBuilder::edit($item->get_id()));
+        }
 
 		return $response;
 	}
