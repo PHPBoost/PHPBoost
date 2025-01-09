@@ -7,6 +7,7 @@
  * @since       PHPBoost 3.0 - 2010 02 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor misossdotnet <contact@phpboost.com>
 */
 
 class MediaFeedProvider implements FeedProvider
