@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 4.0 - 2013 06 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -105,15 +105,15 @@ class WikiConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::STICKY_MENU => true,
 			self::WIKI_NAME => LangLoader::get_message('wiki.name', 'common', 'wiki'),
 			self::NUMBER_ARTICLES_ON_INDEX => 0,
 			self::DISPLAY_CATEGORIES_ON_INDEX => false,
 			self::HITS_COUNTER => true,
 			self::INDEX_TEXT => LangLoader::get_message('wiki.index.text', 'common', 'wiki'),
-			self::AUTHORIZATIONS => array('r-1' => 5137, 'r0' => 5395, 'r1' => 8191)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 5137, 'r0' => 5395, 'r1' => 8191]
+		];
 	}
 
 	/**

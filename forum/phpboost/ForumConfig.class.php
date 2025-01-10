@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 08
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 4.1 - 2014 09 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -241,7 +241,7 @@ class ForumConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::FORUM_NAME                                => LangLoader::get_message('forum.config.default.forum.name', 'common', 'forum'),
 			self::NUMBER_TOPICS_PER_PAGE                    => 20,
 			self::NUMBER_MESSAGES_PER_PAGE                  => 15,
@@ -257,9 +257,9 @@ class ForumConfig extends AbstractConfigData
 			self::MESSAGE_WHEN_TOPIC_IS_UNSOLVED            => LangLoader::get_message('forum.config.issue.status.unsolved', 'common', 'forum'),
 			self::MESSAGE_WHEN_TOPIC_IS_SOLVED              => LangLoader::get_message('forum.config.issue.status.solved', 'common', 'forum'),
 			self::MESSAGE_BEFORE_TOPIC_TITLE_ICON_DISPLAYED => true,
-			self::AUTHORIZATIONS                            => array('r-1' => 129, 'r0' => 131, 'r1' => 139),
+			self::AUTHORIZATIONS                            => ['r-1' => 129, 'r0' => 131, 'r1' => 139],
 			self::DISPLAY_THUMBNAILS						=> false
-		);
+		];
 	}
 
 	/**

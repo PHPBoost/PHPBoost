@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 06
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -14,17 +14,17 @@ class PollConfig extends DefaultRichModuleConfig
 	const COOKIE_NAME = 'cookie_name';
 	const COOKIE_LENGHT = 'cookie_lenght';
 	
-	const VOTE_AUTHORIZATIONS = 32;
-	const DISPLAY_VOTES_RESULT_AUTHORIZATIONS = 64;
+	const VOTE_AUTHORIZATIONS = 64;
+	const DISPLAY_VOTES_RESULT_AUTHORIZATIONS = 128;
 
 	public function get_additional_default_values()
 	{
-		return array(
-			self::MINI_MODULE_SELECTED_ITEMS => array($this->get_default_mini_module_selected_item_id()),
+		return [
+			self::MINI_MODULE_SELECTED_ITEMS => [$this->get_default_mini_module_selected_item_id()],
 			self::COOKIE_NAME => 'poll',
 			self::COOKIE_LENGHT => 30, //Cookie duration is 30 days per default
-			self::AUTHORIZATIONS => array('r-1' => 97, 'r0' => 103, 'r1' => 109)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 129, 'r0' => 197, 'r1' => 213]
+        ];
 	}
 
 	public function get_cookie_lenght_in_seconds()
@@ -34,7 +34,7 @@ class PollConfig extends DefaultRichModuleConfig
 	
 	public function set_mini_module_selected_items(array $array)
 	{
-		$set_array = array();
+		$set_array = [];
 		foreach ($array as $value)
 		{
 			$set_array[] = (string) $value;
@@ -54,7 +54,7 @@ class PollConfig extends DefaultRichModuleConfig
 		{
 			try 
 			{
-				$item = $db_querier->select_single_row(PREFIX . self::$module_id, array('id', 'title'), 'WHERE title =:title', array('title' => $install_item_title));
+				$item = $db_querier->select_single_row(PREFIX . self::$module_id, ['id', 'title'], 'WHERE title =:title', ['title' => $install_item_title]);
 				$selected_id = $item['id'];
 			}
 			catch (RowNotFoundException $e) {}

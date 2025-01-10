@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 21
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 4.0 - 2013 06 26
 */
 
@@ -34,10 +34,10 @@ class StatsConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS_PER_PAGE => 15,
-			self::AUTHORIZATIONS => array('r0' => 1, 'r1' => 1)
-		);
+			self::AUTHORIZATIONS => ['r0' => 1, 'r1' => 1]
+		];
 	}
 
 	/**

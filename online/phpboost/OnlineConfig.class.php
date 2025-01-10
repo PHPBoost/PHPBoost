@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 15
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2011 09 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -94,13 +94,13 @@ class OnlineConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::DISPLAY_ORDER => self::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER,
 			self::NUMBER_MEMBER_DISPLAYED => 4,
 			self::NUMBER_MEMBERS_PER_PAGE => 20,
 			self::ROBOTS_DISPLAYED => false,
-			self::AUTHORIZATIONS => array('r0' => 1, 'r1' => 1)
-		);
+			self::AUTHORIZATIONS => ['r0' => 1, 'r1' => 1]
+		];
 	}
 
 	/**

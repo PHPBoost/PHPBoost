@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 05
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2010 05 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -244,7 +244,7 @@ class ContactConfig extends AbstractConfigData
 
 	private function init_fields_array()
 	{
-		$fields = array();
+		$fields = [];
 
 		$lang = LangLoader::get_all_langs('contact');
 
@@ -273,7 +273,7 @@ class ContactConfig extends AbstractConfigData
 		$field->set_name($lang['contact.recipients']);
 		$field->set_field_name('f_recipients');
 		$field->set_field_type('ContactSimpleSelectField');
-		$field->set_possible_values(array('admins' => array('is_default' => true, 'title' => $lang['contact.recipients.admins'], 'email' => '')));
+		$field->set_possible_values(['admins' => ['is_default' => true, 'title' => $lang['contact.recipients.admins'], 'email' => '']]);
 		$field->not_deletable();
 		$field->not_displayed();
 
@@ -297,21 +297,21 @@ class ContactConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::TITLE => LangLoader::get_message('contact.fieldset.title', 'common', 'contact'),
 			self::INFORMATIONS_ENABLED => false,
 			self::INFORMATIONS => '',
 			self::INFORMATIONS_POSITION => self::TOP,
 			self::MAP_ENABLED => false,
 			self::MAP_POSITION => self::MAP_TOP,
-			self::MAP_MARKERS => array(),
+			self::MAP_MARKERS => [],
 			self::TRACKING_NUMBER_ENABLED => false,
 			self::DATE_IN_TRACKING_NUMBER_ENABLED => true,
 			self::SENDER_ACKNOWLEDGMENT_ENABLED => false,
 			self::LAST_TRACKING_NUMBER => 0,
 			self::FIELDS => self::init_fields_array(),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 1, 'r1' => 1]
+		];
 	}
 
 	/**

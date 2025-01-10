@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 21
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -112,15 +112,15 @@ class SandboxConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::SUPERADMIN_ENABLED => false,
 			self::SUPERADMIN_NAME => '',
 			self::MENU_OPENING_TYPE => self::LEFT_MENU,
 			self::EXPANSION_TYPE => self::OVERLAP,
 			self::DISABLED_BODY => true,
 			self::PUSHED_CONTENT => true,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 1, 'r1' => 1]
+        ];
 	}
 
 	/**

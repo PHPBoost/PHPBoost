@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 05
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2012 09 06
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -500,7 +500,7 @@ class BugtrackerConfig extends AbstractConfigData
 	public function get_versions_detected()
 	{
 		$versions = $this->get_property(self::VERSIONS);
-		$versions_detected_in = array();
+		$versions_detected_in = [];
 		foreach ($versions as $key => $version)
 		{
 			if ($version['detected_in'] == true)
@@ -516,7 +516,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$now = new Date();
 		$versions = $this->get_property(self::VERSIONS);
-		$versions_fix = array();
+		$versions_fix = [];
 		foreach ($versions as $key => $version)
 		{
 			$release_date = !empty($version['release_date']) && is_numeric($version['release_date']) ? new Date($version['release_date'], Timezone::SERVER_TIMEZONE) : null;
@@ -805,7 +805,7 @@ class BugtrackerConfig extends AbstractConfigData
 	{
 		$lang = LangLoader::get_all_langs('bugtracker');
 
-		return array(
+		return [
 			self::ITEMS_PER_PAGE => 20,
 			self::REJECTED_BUG_COLOR => '#f8465e',
 			self::FIXED_BUG_COLOR => '#afffa2',
@@ -816,7 +816,7 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PROGRESS_BAR_ENABLED => true,
 			self::RESTRICT_DISPLAY_TO_OWN_ELEMENTS_ENABLED => false,
 			self::ADMIN_ALERTS_ENABLED => true,
-			self::ADMIN_ALERTS_LEVELS => array('2', '3'),
+			self::ADMIN_ALERTS_LEVELS => ['2', '3'],
 			self::ADMIN_ALERTS_FIX_ACTION => self::FIX,
 			self::PM_ENABLED => true,
 			self::PM_COMMENT_ENABLED => true,
@@ -829,11 +829,11 @@ class BugtrackerConfig extends AbstractConfigData
 			self::PM_REOPEN_ENABLED => true,
 			self::PM_DELETE_ENABLED => true,
 			self::CONTENT_VALUE => '',
-			self::TYPES => array(1 => $lang['types.anomaly'], $lang['types.evolution']),
-			self::CATEGORIES => array(1 => $lang['categories.kernel'], $lang['categories.module'], $lang['categories.graphism'], $lang['categories.installation']),
-			self::SEVERITIES => array(1 => array('name' => $lang['severities.minor'], 'color' => '#e8ffa2'), array('name' => $lang['severities.major'], 'color' => '#feebbc'), array('name' => $lang['severities.critical'], 'color' => '#fdbbbb')),
-			self::PRIORITIES => array(1 => $lang['priorities.very_low'], $lang['priorities.low'], $lang['priorities.normal'], $lang['priorities.high'], $lang['priorities.urgent']),
-			self::VERSIONS => array(),
+			self::TYPES => [1 => $lang['types.anomaly'], $lang['types.evolution']],
+			self::CATEGORIES => [1 => $lang['categories.kernel'], $lang['categories.module'], $lang['categories.graphism'], $lang['categories.installation']],
+			self::SEVERITIES => [1 => ['name' => $lang['severities.minor'], 'color' => '#e8ffa2'], ['name' => $lang['severities.major'], 'color' => '#feebbc'], ['name' => $lang['severities.critical'], 'color' => '#fdbbbb']],
+			self::PRIORITIES => [1 => $lang['priorities.very_low'], $lang['priorities.low'], $lang['priorities.normal'], $lang['priorities.high'], $lang['priorities.urgent']],
+			self::VERSIONS => [],
 			self::DEFAULT_TYPE => 1,
 			self::DEFAULT_CATEGORY => 0,
 			self::DEFAULT_SEVERITY => 1,
@@ -848,9 +848,9 @@ class BugtrackerConfig extends AbstractConfigData
 			self::DISPLAY_CATEGORY_COLUMN => false,
 			self::DISPLAY_PRIORITY_COLUMN => false,
 			self::DISPLAY_DETECTED_IN_COLUMN => false,
-			self::AUTHORIZATIONS => array('r0' => 3, 'r1' => 15),
-			self::STATUS_LIST => array(BugtrackerItem::NEW_BUG => 0, BugtrackerItem::PENDING => 0, BugtrackerItem::ASSIGNED => 20, BugtrackerItem::IN_PROGRESS => 50, BugtrackerItem::REJECTED => 0, BugtrackerItem::REOPEN => 30, BugtrackerItem::FIXED => 100)
-		);
+			self::AUTHORIZATIONS => ['r0' => 3, 'r1' => 15],
+			self::STATUS_LIST => [BugtrackerItem::NEW_BUG => 0, BugtrackerItem::PENDING => 0, BugtrackerItem::ASSIGNED => 20, BugtrackerItem::IN_PROGRESS => 50, BugtrackerItem::REJECTED => 0, BugtrackerItem::REOPEN => 30, BugtrackerItem::FIXED => 100]
+        ];
 	}
 
 	/**

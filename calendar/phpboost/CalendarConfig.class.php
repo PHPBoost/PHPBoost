@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 04 06
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -158,7 +158,7 @@ class CalendarConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS_PER_PAGE => 15,
 			self::ITEMS_PER_ROW => 2,
 			self::FULL_ITEM_DISPLAY => false,
@@ -168,8 +168,8 @@ class CalendarConfig extends AbstractConfigData
             self::DEFAULT_CONTENT => '',
 			self::EVENT_COLOR => '#81A4C8',
 			self::BIRTHDAY_COLOR => '#8F8ACF',
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 15)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 5, 'r1' => 21]
+		];
 	}
 
 	/**

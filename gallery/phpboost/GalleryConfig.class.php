@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 4.0 - 2013 06 30
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -326,7 +326,7 @@ class GalleryConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::MINI_MAX_WIDTH => 150,
 			self::MINI_MAX_HEIGHT => 150,
 			self::MAX_WIDTH => 1920,
@@ -351,8 +351,8 @@ class GalleryConfig extends AbstractConfigData
 			self::SCROLL_TYPE => self::VERTICAL_DYNAMIC_SCROLL,
 			self::PICS_NUMBER_IN_MINI => 6,
 			self::MINI_PICS_SPEED => 6,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 3, 'r1' => 11)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 3, 'r1' => 19]
+		];
 	}
 
 	/**

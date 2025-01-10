@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 25
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 4.1 - 2015 02 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -188,7 +188,7 @@ class MediaConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::CATEGORIES_PER_PAGE => 10,
 			self::CATEGORIES_PER_ROW => 2,
 			self::ITEMS_PER_PAGE => 25,
@@ -200,9 +200,9 @@ class MediaConfig extends AbstractConfigData
 			self::MAX_VIDEO_HEIGHT => 570,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('media'),
 			self::ROOT_CATEGORY_CONTENT_TYPE => self::CONTENT_TYPE_MUSIC_AND_VIDEO,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 5, 'r1' => 21],
 			self::PEERTUBE_CONSTANT => 'https://peertube.fr'
-		);
+		];
 	}
 
 	/**

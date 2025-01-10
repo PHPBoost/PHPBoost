@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 12 24
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2011 02 01 11
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -71,13 +71,13 @@ class NewsletterConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::MAIL_SENDER => MailServiceConfig::load()->get_default_mail_sender(),
 			self::NEWSLETTER_NAME => '',
 			self::DEFAULT_CONTENT => '',
 			self::STREAMS_NUMBER_PER_PAGE => 25,
-			self::AUTHORIZATIONS => array('r1' => 63, 'r0' => 35, 'r-1' => 35)
-		);
+			self::AUTHORIZATIONS => ['r1' => 63, 'r0' => 35, 'r-1' => 35]
+		];
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 19
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2010 08 10
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -232,7 +232,7 @@ class ShoutboxConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS_PER_PAGE => 20,
 			self::MAX_MESSAGES_NUMBER_ENABLED => true,
 			self::MAX_MESSAGES_NUMBER => 200,
@@ -247,8 +247,8 @@ class ShoutboxConfig extends AbstractConfigData
 			self::SHOUT_MAX_MESSAGES_NUMBER => 50,
 			self::SHOUT_BBCODE_ENABLED => true,
 			self::VALIDATION_ONKEYPRESS_ENTER_ENABLED => false,
-			self::AUTHORIZATIONS => array ('r-1' => 1, 'r0' => 3, 'r1' => 7)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 3, 'r1' => 7]
+        ];
 	}
 
 	/**
