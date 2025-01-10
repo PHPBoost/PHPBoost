@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 08
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -48,13 +48,14 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$requested_sort_field = $this->request->get_getstring('field', '');
 		$requested_sort_mode = $this->request->get_getstring('sort', '');
 
-		$this->sort_field = (in_array($requested_sort_field, array_keys($this->module_item->get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
+		$this->member = AppContext::get_request()->get_getint('user_id', 0) ? UserService::get_user(AppContext::get_request()->get_getint('user_id', 0)) : null;
+        $this->sort_field = (in_array($requested_sort_field, array_keys($this->module_item->get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
 		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), array(Item::ASC, Item::DESC)) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
 		$this->page = $this->request->get_getint('page', 1);
 		$this->subcategories_page = $this->request->get_getint('subcategories_page', 1);
 		$this->summary_displayed_to_guests = ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true);
 
-		$now = new Date();
+        $now = new Date();
 		$this->sql_parameters['timestamp_now'] = $now->get_timestamp();
 
 		if (TextHelper::strstr($this->request->get_current_url(), '/tag/'))
@@ -85,7 +86,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 		else if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
 		{
-			if (self::get_module_configuration()->has_categories())
+			if ($this->member && self::get_module_configuration()->has_categories())
 			{
 				$this->sql_condition = 'WHERE id_category IN :authorized_categories
 				AND author_user_id = :user_id
@@ -93,25 +94,44 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->summary_displayed_to_guests);
 			}
-			else
+			elseif (!$this->member && self::get_module_configuration()->has_categories())
+			{
+				$this->sql_condition = 'WHERE id_category IN :authorized_categories
+				AND (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+
+				$this->sql_parameters['authorized_categories'] = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, $this->summary_displayed_to_guests);
+			}
+			elseif($this->member && !self::get_module_configuration()->has_categories())
 			{
 				$this->sql_condition = 'WHERE author_user_id = :user_id
 				AND (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 			}
+			elseif(!$this->member && !self::get_module_configuration()->has_categories())
+			{
+				$this->sql_condition = 'WHERE (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
+			}
 
-			$this->sql_parameters['user_id'] = $this->get_member()->get_id();
+            if ($this->member)
+                $this->sql_parameters['user_id'] = $this->get_member()->get_id();
 
-			$this->page_title = $this->is_current_member_displayed() ? $this->lang['my.items'] : $this->lang['member.items'] . ' ' . $this->get_member()->get_display_name();
-			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], array('author' => $this->get_member()->get_display_name()));
-			$this->current_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
-			$this->pagination_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
-			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id);
+			$this->page_title = $this->member ? ($this->is_current_member_displayed() ? $this->lang['my.items'] : $this->get_member()->get_display_name()) : '';
+			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], array('author' => $this->member ? $this->get_member()->get_display_name() : $this->lang['contribution.members.list']));
+			$this->current_url = ItemsUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+			$this->pagination_url = ItemsUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, self::$module_id, $this->sort_field, $this->sort_mode, '%d');
+			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, self::$module_id);
 
-			$this->view->put_all(array(
-				'C_MEMBER_ITEMS' => true,
-				'C_MY_ITEMS'     => $this->is_current_member_displayed(),
-				'MEMBER_NAME'    => $this->get_member()->get_display_name()
-			));
+            $this->view->put('C_MEMBER_ITEMS', true);
+            if ($this->member)
+                $this->view->put_all(array(
+                    'C_MY_ITEMS'  => $this->is_current_member_displayed(),
+                    'MEMBER_NAME' => $this->get_member()->get_display_name()
+                ));
+            else {
+                $this->view->put_all([
+                    'C_MEMBERS_LIST' => true,
+                    'C_ITEMS' => false
+                ]);
+            }
 		}
 		else if (TextHelper::strstr($this->request->get_current_url(), '/pending/'))
 		{
@@ -208,11 +228,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 	protected function get_member()
 	{
-		if ($this->member === null)
+		if (!$this->member && $this->member !== null)
 		{
-			$this->member = UserService::get_user($this->request->get_getint('user_id', AppContext::get_current_user()->get_id()));
-			if (!$this->member)
-				$this->display_unexisting_page();
+			DispatchManager::redirect(PHPBoostErrors::unexisting_element());
 		}
 		return $this->member;
 	}
@@ -230,40 +248,61 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$items = self::get_items_manager()->get_items($this->sql_condition, $this->sql_parameters, $pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field['database_field'], TextHelper::strtoupper($this->sort_mode), $this->keyword !== null);
 		$controls_displayed = false;
 
-		foreach ($items as $item)
-		{
-			$this->view->assign_block_vars('items', $item->get_template_vars());
+        if (!$this->member && TextHelper::strstr($this->request->get_current_url(), '/member/') && count($items) > 0)
+        {
+            $users = [];
+            foreach ($items as $item)
+            {
+                $users[] = $item->get_author_user()->get_id();
+            }
 
-			if ($item->is_authorized_to_edit() || $item->is_authorized_to_delete())
-				$controls_displayed = true;
+            foreach (array_unique($users) as $user)
+            {
+                $avatar = AppContext::get_session()->get_cached_data('user_avatar') ? AppContext::get_session()->get_cached_data('user_avatar') : UserAccountsConfig::NO_AVATAR_URL;
+                $this->view->assign_block_vars('users', [
+                    'USER_NAME' => UserService::get_user($user)->get_display_name(),
+                    'U_USER' => ItemsUrlBuilder::display_member_items($user)->rel(),
+                    'U_AVATAR' => Url::to_rel($avatar)
+                ]);
+            }
+        }
+        else
+        {
+            foreach ($items as $item)
+            {
+                $this->view->assign_block_vars('items', $item->get_template_vars());
 
-			if (self::get_module_configuration()->feature_is_enabled('keywords'))
-			{
-				foreach ($item->get_keywords() as $keyword)
-				{
-					$this->view->assign_block_vars('items.keywords', $item->get_template_keyword_vars($keyword));
-				}
-			}
+                if ($item->is_authorized_to_edit() || $item->is_authorized_to_delete())
+                    $controls_displayed = true;
 
-			if (self::get_module_configuration()->feature_is_enabled('sources'))
-			{
-				foreach ($item->get_sources() as $name => $url)
-				{
-					$this->view->assign_block_vars('items.sources', $item->get_template_source_vars($name));
-				}
-			}
-		}
+                if (self::get_module_configuration()->feature_is_enabled('keywords'))
+                {
+                    foreach ($item->get_keywords() as $keyword)
+                    {
+                        $this->view->assign_block_vars('items.keywords', $item->get_template_keyword_vars($keyword));
+                    }
+                }
 
-		$this->view->put_all(array(
-			'C_ITEMS'         => !empty($items),
-			'C_CONTROLS'      => $controls_displayed,
-			'C_SEVERAL_ITEMS' => count($items) > 1,
-			'C_PAGINATION'    => $pagination->has_several_pages(),
+                if (self::get_module_configuration()->feature_is_enabled('sources'))
+                {
+                    foreach ($item->get_sources() as $name => $url)
+                    {
+                        $this->view->assign_block_vars('items.sources', $item->get_template_source_vars($name));
+                    }
+                }
+            }
 
-			'PAGINATION'    => $pagination->display(),
-			'CATEGORY_NAME' => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
-			'SORTING_FORM'  => $this->build_sorting_form()
-		));
+            $this->view->put_all(array(
+                'C_ITEMS'         => !empty($items),
+                'C_CONTROLS'      => $controls_displayed,
+                'C_SEVERAL_ITEMS' => count($items) > 1,
+                'C_PAGINATION'    => $pagination->has_several_pages(),
+
+                'PAGINATION'    => $pagination->display(),
+                'CATEGORY_NAME' => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
+                'SORTING_FORM'  => $this->build_sorting_form()
+            ));
+        }
 	}
 
 	protected function build_sorting_form()
@@ -451,7 +490,11 @@ class DefaultSeveralItemsController extends AbstractItemController
 			}
 		}
 		else if (!$this->display_published_items_list)
-			$breadcrumb->add($this->page_title, $this->current_url);
+        {
+            if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
+                $breadcrumb->add($this->lang['contribution.members.list'], ItemsUrlBuilder::display_member_items());
+            $breadcrumb->add($this->page_title, $this->current_url);
+        }
 
 		if ($this->customized_page_title)
 			$breadcrumb->add($this->customized_page_title, $this->current_url);

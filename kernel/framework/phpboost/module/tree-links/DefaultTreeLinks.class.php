@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -70,9 +70,12 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 			$this->get_module_additional_items_actions_tree_links($tree);
 
 			if ($module_configuration->has_items())
+            {
+				$tree->add_link(new ModuleLink(LangLoader::get_message('contribution.members.list', 'contribution-lang'), ItemsUrlBuilder::display_member_items(null, $this->module_id), $this->authorizations->read()));
 				$tree->add_link(new ModuleLink($lang['my.items'], ItemsUrlBuilder::display_member_items(AppContext::get_current_user()->get_id(), $this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
+            }
 
-			if (!$module_configuration->feature_is_enabled('messages'))
+            if (!$module_configuration->feature_is_enabled('messages'))
 				$tree->add_link(new ModuleLink($lang['pending.items'], ItemsUrlBuilder::display_pending($this->module_id), $this->check_write_authorization() || $this->authorizations->moderation()));
 		}
 

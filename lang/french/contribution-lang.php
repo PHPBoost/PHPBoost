@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2025 01 10
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -25,6 +25,7 @@ $lang['contribution.contributor']    = 'Contributeur';
 $lang['contribution.closing.date']   = 'Date de clôture';
 $lang['contribution.change.status']  = 'Modifier le statut de la contribution';
 $lang['contribution.delete']         = 'Supprimer la contribution';
+$lang['contribution.members.list']   = 'Liste des contributeurs';
 $lang['contribution.list']           = 'Liste des contributions';
 $lang['contribution.contribute']     = 'Contribuer';
 $lang['contribution.member.edition'] = 'Modification de contribution par l\'auteur';
