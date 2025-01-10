@@ -258,12 +258,15 @@ class DefaultSeveralItemsController extends AbstractItemController
 
             foreach (array_unique($users) as $user)
             {
-                $avatar = AppContext::get_session()->get_cached_data('user_avatar') ? AppContext::get_session()->get_cached_data('user_avatar') : UserAccountsConfig::NO_AVATAR_URL;
-                $this->view->assign_block_vars('users', [
-                    'USER_NAME' => UserService::get_user($user)->get_display_name(),
-                    'U_USER' => ItemsUrlBuilder::display_member_items($user)->rel(),
-                    'U_AVATAR' => Url::to_rel($avatar)
-                ]);
+                if ($user != '-1')
+                {
+                    $avatar = AppContext::get_session()->get_cached_data('user_avatar') ? AppContext::get_session()->get_cached_data('user_avatar') : UserAccountsConfig::NO_AVATAR_URL;
+                    $this->view->assign_block_vars('users', [
+                        'USER_NAME' => UserService::get_user($user)->get_display_name(),
+                        'U_USER' => ItemsUrlBuilder::display_member_items($user)->rel(),
+                        'U_AVATAR' => Url::to_rel($avatar)
+                    ]);
+                }
             }
         }
         else
