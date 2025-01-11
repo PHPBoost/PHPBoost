@@ -259,7 +259,7 @@ class DefaultSeveralItemsController extends AbstractItemController
             foreach (array_unique($contributors) as $user_id)
             {
                 $user = UserService::get_user($user_id);
-                if (!$user->is_guest())
+                if ($user)
                 {
                     $this->view->assign_block_vars('users', [
                         'C_AVATAR' => UserService::get_avatar($user) || UserAccountsConfig::load()->is_default_avatar_enabled(),
