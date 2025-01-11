@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2025 01 11
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,11 +28,11 @@ class UserService
 	 * @param User $user
 	 * @return int Id of the user if new user, false otherwise
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = array(), $auth_method_data = array())
+	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = [], $auth_method_data = [])
 	{
-		if (!self::user_exists('WHERE display_name = :display_name', array('display_name' => TextHelper::htmlspecialchars($user->get_display_name()))))
+		if (!self::user_exists('WHERE display_name = :display_name', ['display_name' => TextHelper::htmlspecialchars($user->get_display_name())]))
 		{
-			$result = self::$querier->insert(DB_TABLE_MEMBER, array(
+			$result = self::$querier->insert(DB_TABLE_MEMBER, [
 				'display_name'      => TextHelper::htmlspecialchars($user->get_display_name()),
 				'level'             => $user->get_level(),
 				'user_groups'       => implode('|', $user->get_groups()),
@@ -43,7 +43,7 @@ class UserService
 				'theme'             => $user->get_theme(),
 				'editor'            => $user->get_editor(),
 				'registration_date' => time()
-			));
+			]);
 
 			$user_id = $result->get_last_inserted_id();
 
@@ -52,13 +52,13 @@ class UserService
 				try {
 					$fields_data = $extended_fields->get_data($user_id);
 				} catch (MemberExtendedFieldErrorsMessageException $e) {
-					self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+					self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 					throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
 				}
 			}
 			elseif (!is_array($extended_fields))
 			{
-				$fields_data = array();
+				$fields_data = [];
 			}
 			else
 			{
@@ -89,7 +89,7 @@ class UserService
 		}
 
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 		self::$querier->delete(DB_TABLE_MEMBER, $condition, $parameters);
 		self::$querier->delete(DB_TABLE_MEMBER_EXTENDED_FIELDS, $condition, $parameters);
 		self::$querier->delete(DB_TABLE_SESSIONS, $condition, $parameters);
@@ -111,8 +111,8 @@ class UserService
 	public static function update(User $user, $extended_fields = null)
 	{
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user->get_id());
-		self::$querier->update(DB_TABLE_MEMBER, array(
+		$parameters = ['user_id' => $user->get_id()];
+		self::$querier->update(DB_TABLE_MEMBER, [
 			'display_name' => TextHelper::htmlspecialchars($user->get_display_name()),
 			'level'        => $user->get_level(),
 			'user_groups'  => implode('|', $user->get_groups()),
@@ -122,7 +122,7 @@ class UserService
 			'timezone'     => $user->get_timezone(),
 			'theme'        => $user->get_theme(),
 			'editor'       => $user->get_editor()
-		), $condition, $parameters);
+        ], $condition, $parameters);
 
 		if ($extended_fields !== null)
 		{
@@ -137,7 +137,7 @@ class UserService
 			elseif (is_array($extended_fields))
 				$fields_data = $extended_fields;
 			else
-				$fields_data = array();
+				$fields_data = [];
 
 			if ($fields_data)
 				self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
@@ -150,11 +150,11 @@ class UserService
 
 	public static function update_punishment(User $user)
 	{
-		self::$querier->update(DB_TABLE_MEMBER, array(
+		self::$querier->update(DB_TABLE_MEMBER, [
 			'warning_percentage' => $user->get_warning_percentage(),
 			'delay_readonly'     => $user->get_delay_readonly(),
 			'delay_banned'       => $user->get_delay_banned(),
-		), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
+        ], 'WHERE user_id=:user_id', ['user_id' => $user->get_id()]);
 	}
 
 	/**
@@ -164,12 +164,9 @@ class UserService
 	 */
 	public static function get_user($user_id)
 	{
-		try
-		{
-			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
-		}
-		catch (RowNotFoundException $e)
-		{
+		try {
+			$row = self::$querier->select_single_row(PREFIX . 'member', ['*'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
+		} catch (RowNotFoundException $e) {
 			return false;
 		}
 		$user = new User();
@@ -184,12 +181,9 @@ class UserService
 	 */
 	public static function get_user_by_display_name($display_name)
 	{
-		try
-		{
-			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE display_name=:display_name', array('display_name' => $display_name));
-		}
-		catch (RowNotFoundException $e)
-		{
+		try {
+			$row = self::$querier->select_single_row(PREFIX . 'member', ['*'], 'WHERE display_name=:display_name', ['display_name' => $display_name]);
+		} catch (RowNotFoundException $e) {
 			return false;
 		}
 		$user = new User();
@@ -204,12 +198,9 @@ class UserService
 	 */
 	public static function get_user_by_email($email)
 	{
-		try
-		{
-			$row = self::$querier->select_single_row(PREFIX . 'member', array('*'), 'WHERE email=:email', array('email' => $email));
-		}
-		catch (RowNotFoundException $e)
-		{
+		try {
+			$row = self::$querier->select_single_row(PREFIX . 'member', ['*'], 'WHERE email=:email', ['email' => $email]);
+		} catch (RowNotFoundException $e) {
 			return false;
 		}
 		$user = new User();
@@ -298,8 +289,8 @@ class UserService
 		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 		{
-			$result = self::$querier->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, array('user_id'),
-			'WHERE last_connection < :last_connection AND approved = 0', array('last_connection' => (time() - $delay_unactiv_max)));
+			$result = self::$querier->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, ['user_id'],
+			'WHERE last_connection < :last_connection AND approved = 0', ['last_connection' => (time() - $delay_unactiv_max)]);
 			foreach ($result as $row)
 			{
 				self::delete_by_id($row['user_id']);
@@ -310,14 +301,14 @@ class UserService
 
 	public static function count_admin_members()
 	{
-		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', array('level' => User::ADMINISTRATOR_LEVEL));
+		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', ['level' => User::ADMINISTRATOR_LEVEL]);
 	}
 
 	public static function display_user_profile_link($user_id)
 	{
 		if ($user_id != User::VISITOR_LEVEL)
 		{
-			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			$user = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 
 			if ($user)
 			{
@@ -325,19 +316,39 @@ class UserService
 
 				$group_color = User::get_group_color($user['user_groups'], $user['level']);
 
-				$tpl->put_all(array(
+				$tpl->put_all([
 					'C_GROUP_COLOR' => !empty($group_color),
 					'DISPLAY_NAME'  => $user['display_name'],
 					'LEVEL_CLASS'   => self::get_level_class($user['level']),
 					'GROUP_COLOR'   => $group_color,
 					'U_PROFILE'     => UserUrlBuilder::profile($user_id)->rel()
-				));
+				]);
 
 				return $tpl->render();
 			}
 		}
 		return '';
 	}
+
+    public static function get_avatar(User $user)
+    {
+		$user_accounts_config = UserAccountsConfig::load();
+        if(!$user->is_guest())
+		{
+			try {
+				$user_extended_fields = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, ['user_avatar'], 'WHERE user_id=:user_id', ['user_id' => $user->get_id()]);
+			} catch (RowNotFoundException $e) {
+				$user_extended_fields = [];
+			}
+			$avatar = !empty($user_extended_fields) && $user_extended_fields['user_avatar'] ? Url::to_rel($user_extended_fields['user_avatar']) : $user_accounts_config->get_default_avatar();
+		}
+		else
+		{
+			$avatar = $user_accounts_config->get_default_avatar();
+		}
+
+        return $avatar;
+    }
 
 	public static function regenerate_cache()
 	{
