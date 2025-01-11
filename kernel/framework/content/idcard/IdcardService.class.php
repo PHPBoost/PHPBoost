@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2025 01 11
  * @since       PHPBoost 5.2 - 2019 04 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -17,7 +17,6 @@ class IdcardService
 	 * Select some item author datas
 	 * @param User $user
 	 */
-
 	public static function display_idcard(User $user)
 	{
 		$lang = LangLoader::get_all_langs();
@@ -30,21 +29,20 @@ class IdcardService
 		if(!$user->is_guest())
 		{
 			try {
-				$user_extended_fields = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('user_avatar', 'user_biography'), 'WHERE user_id=:user_id', array('user_id' => $user->get_id()));
+				$user_extended_fields = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, ['user_avatar', 'user_biography'], 'WHERE user_id=:user_id', ['user_id' => $user->get_id()]);
 			} catch (RowNotFoundException $e) {
-				$user_extended_fields = array();
+				$user_extended_fields = [];
 			}
 
-			$avatar = !empty($user_extended_fields) && $user_extended_fields['user_avatar'] ? Url::to_rel($user_extended_fields['user_avatar']) : $user_accounts_config->get_default_avatar();
 			$biography = !empty($user_extended_fields) && $user_extended_fields['user_biography'] ? FormatingHelper::second_parse($user_extended_fields['user_biography']) : $lang['user.extended.field.no.biography'];
 		}
 		else
 		{
-			$avatar = $user_accounts_config->get_default_avatar();
 			$biography = $lang['user.extended.field.no.member'];
 		}
 
-		$view->put_all(array(
+        $avatar = UserService::get_avatar($user);
+		$view->put_all([
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
 			'C_AUTHOR_IS_MEMBER' => !$user->is_guest(),
 			'C_AVATAR'           => $avatar || $user_accounts_config->is_default_avatar_enabled(),
@@ -56,7 +54,7 @@ class IdcardService
 
 			'U_AUTHOR_PROFILE'   => UserUrlBuilder::profile($user->get_id())->rel(),
 			'U_AVATAR'           => $avatar
-		));
+		]);
 
 		return $view->render();
 	}
