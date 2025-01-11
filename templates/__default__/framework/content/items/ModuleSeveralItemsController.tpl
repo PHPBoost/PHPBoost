@@ -407,7 +407,7 @@
             <div class="sub-section">
                 <div class="content-container">
                     # START users #
-                        <a href="{users.U_USER}" class="offload pinned bgc-sub align-center"><img class="message-user-avatar" src="{users.U_AVATAR}" alt="{users.USER_NAME}"><span class="d-block">{users.USER_NAME}<span></a>
+                        <a href="{users.U_USER}" class="offload pinned bgc-sub align-center"># IF users.C_AVATAR #<img class="message-user-avatar" src="{users.U_AVATAR}" alt="{users.USER_NAME}"># ENDIF #<span class="d-block">{users.USER_NAME}<span></a>
                     # END users #
                 </div>
             </div>

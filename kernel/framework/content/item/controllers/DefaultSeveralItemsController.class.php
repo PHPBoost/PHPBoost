@@ -250,21 +250,22 @@ class DefaultSeveralItemsController extends AbstractItemController
 
         if (!$this->member && TextHelper::strstr($this->request->get_current_url(), '/member/') && count($items) > 0)
         {
-            $users = [];
+            $contributors = [];
             foreach ($items as $item)
             {
-                $users[] = $item->get_author_user()->get_id();
+                $contributors[] = $item->get_author_user()->get_id();
             }
 
-            foreach (array_unique($users) as $user)
+            foreach (array_unique($contributors) as $user_id)
             {
-                if ($user != '-1')
+                $user = UserService::get_user($user_id);
+                if (!$user->is_guest())
                 {
-                    $avatar = AppContext::get_session()->get_cached_data('user_avatar') ? AppContext::get_session()->get_cached_data('user_avatar') : UserAccountsConfig::NO_AVATAR_URL;
                     $this->view->assign_block_vars('users', [
-                        'USER_NAME' => UserService::get_user($user)->get_display_name(),
-                        'U_USER' => ItemsUrlBuilder::display_member_items($user)->rel(),
-                        'U_AVATAR' => Url::to_rel($avatar)
+                        'C_AVATAR' => UserService::get_avatar($user) || UserAccountsConfig::load()->is_default_avatar_enabled(),
+                        'USER_NAME' => $user->get_display_name(),
+                        'U_USER' => ItemsUrlBuilder::display_member_items($user->get_id())->rel(),
+                        'U_AVATAR' => UserService::get_avatar($user)
                     ]);
                 }
             }
