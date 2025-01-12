@@ -248,13 +248,14 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$items = self::get_items_manager()->get_items($this->sql_condition, $this->sql_parameters, $pagination->get_number_items_per_page(), $pagination->get_display_from(), $sort_field['database_field'], TextHelper::strtoupper($this->sort_mode), $this->keyword !== null);
 		$controls_displayed = false;
 
-        if (!$this->member && TextHelper::strstr($this->request->get_current_url(), '/member/') && count($items) > 0)
+        if (!$this->member && TextHelper::strstr($this->request->get_current_url(), '/member/'))
         {
             $contributors = [];
             foreach ($items as $item)
             {
                 $contributors[] = $item->get_author_user()->get_id();
             }
+            $this->view->put('C_MEMBERS', count($contributors) > 0);
 
             foreach (array_unique($contributors) as $user_id)
             {

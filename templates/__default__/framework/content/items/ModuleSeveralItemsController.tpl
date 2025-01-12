@@ -404,21 +404,31 @@
         </div>
     # ELSE #
         # IF C_MEMBERS_LIST #
-            <div class="sub-section">
-                <div class="content-container">
-                    # START users #
-                        <a href="{users.U_USER}" class="offload pinned bgc-sub align-center"># IF users.C_AVATAR #<img class="message-user-avatar" src="{users.U_AVATAR}" alt="{users.USER_NAME}"># ENDIF #<span class="d-block">{users.USER_NAME}<span></a>
-                    # END users #
+            # IF C_MEMBERS #
+                <div class="sub-section">
+                    <div class="content-container">
+                        <div class="content">
+                            # START users #
+                                <a href="{users.U_USER}" class="offload pinned bgc-sub align-center"># IF users.C_AVATAR #<img class="message-user-avatar" src="{users.U_AVATAR}" alt="{users.USER_NAME}"># ENDIF #<span class="d-block">{users.USER_NAME}<span></a>
+                            # END users #
+                        </div>
+                    </div>
                 </div>
-            </div>
+            # ELSE #
+                <div class="sub-section">
+                    <div class="content-container">
+                        <div class="content">
+                            <div class="message-helper bgc notice align-center">{@contribution.no.member}</div>
+                        </div>
+                    </div>
+                </div>
+            # ENDIF #
         # ELSE #
             # IF NOT C_HIDE_NO_ITEM_MESSAGE #
                 <div class="sub-section">
                     <div class="content-container">
                         <div class="content">
-                            <div class="message-helper bgc notice align-center">
-                                {@items.no.element}
-                            </div>
+                            <div class="message-helper bgc notice align-center">{@items.no.element}</div>
                         </div>
                     </div>
                 </div>

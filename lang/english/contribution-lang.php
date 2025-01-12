@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 10
+ * @version     PHPBoost 6.0 - last update: 2025 01 12
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -29,6 +29,7 @@ $lang['contribution.members.list']   = 'Contributors list';
 $lang['contribution.list']           = 'Contribution list';
 $lang['contribution.contribute']     = 'Contribute';
 $lang['contribution.member.edition'] = 'Contribution modification by the author';
+$lang['contribution.no.member']      = 'No member has contributed yet';
 
 $lang['contribution.contribute.in.modules']     = 'The modules above allow to contribute. Click on one of them to go to its contribution interface.';
 $lang['contribution.contribute.in.module.name'] = 'Contribute in %s';
