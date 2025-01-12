@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 10
+ * @version     PHPBoost 6.0 - last update: 2025 01 12
  * @since       PHPBoost 6.0 - 2020 01 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor xela <xela@phpboost.com>
@@ -115,8 +115,16 @@ class DefaultSeveralItemsController extends AbstractItemController
                 $this->sql_parameters['user_id'] = $this->get_member()->get_id();
 
 			$this->page_title = $this->member ? ($this->is_current_member_displayed() ? $this->lang['my.items'] : $this->get_member()->get_display_name()) : '';
-			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], array('author' => $this->member ? $this->get_member()->get_display_name() : $this->lang['contribution.members.list']));
-			$this->current_url = ItemsUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+			if ($this->member)
+            {
+                $this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], array('author' => $this->get_member()->get_display_name()));
+                $this->current_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
+            }
+            else
+            {
+                $this->page_description = $this->lang['contribution.members.list'];
+                $this->current_url = ItemsUrlBuilder::display_member_items(null, self::$module_id, $requested_sort_field, $requested_sort_mode);
+            }
 			$this->pagination_url = ItemsUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, self::$module_id);
 
