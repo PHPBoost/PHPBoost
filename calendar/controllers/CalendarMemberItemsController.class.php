@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 30
+ * @version     PHPBoost 6.0 - last update: 2025 01 12
  * @since       PHPBoost 5.2 - 2020 08 28
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,6 +12,7 @@ class CalendarMemberItemsController extends DefaultModuleController
 {
 	private $items_view;
 	private $member;
+	private $authorized_categories;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -19,7 +20,12 @@ class CalendarMemberItemsController extends DefaultModuleController
 
 		$this->init();
 
-		$this->build_view($request);
+		$this->view->put('C_MEMBER_ITEMS', true);
+
+        if ($this->member === null)
+            $this->build_members_listing_view();
+        else
+            $this->build_view($request);
 
 		return $this->generate_response();
 	}
@@ -28,21 +34,65 @@ class CalendarMemberItemsController extends DefaultModuleController
 	{
 		$this->items_view = new FileTemplate('calendar/CalendarAjaxEventsController.tpl');
 		$this->items_view->add_lang($this->lang);
-	}
+        $this->member = AppContext::get_request()->get_getint('user_id', 0) ? UserService::get_user(AppContext::get_request()->get_getint('user_id', 0)) : null;
+		$this->authorized_categories = CategoriesService::get_authorized_categories();
+    }
+
+	private function build_members_listing_view()
+	{
+		$now = new Date();
+        $result = PersistenceContext::get_querier()->select('SELECT *
+            FROM ' . CalendarSetup::$calendar_events_table . ' event
+            LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
+            LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_user_id
+            WHERE id_category IN :authorized_categories
+            AND approved = 1
+            ORDER BY member.display_name', [
+                'authorized_categories' => $this->authorized_categories,
+                'timestamp_now' => $now->get_timestamp()
+            ]
+        );
+        $this->view->put_all([
+            'C_MEMBERS_LIST' => true,
+            'C_ITEMS' => false
+        ]);
+
+        $contributors = [];
+        if ($result->get_rows_count() > 0)
+        {
+            foreach ($result as $smallad)
+            {
+                $contributors[] = $smallad['author_user_id'];
+            }
+            $this->view->put('C_MEMBERS', count($contributors) > 0);
+
+            foreach (array_unique($contributors) as $user_id)
+            {
+                $user = UserService::get_user($user_id);
+                if ($user)
+                {
+                    $this->view->assign_block_vars('users', [
+                        'C_AVATAR' => UserService::get_avatar($user) || UserAccountsConfig::load()->is_default_avatar_enabled(),
+                        'USER_NAME' => $user->get_display_name(),
+                        'U_USER' => CalendarUrlBuilder::display_member_items($user->get_id())->rel(),
+                        'U_AVATAR' => UserService::get_avatar($user)
+                    ]);
+                }
+            }
+        }
+    }
 
 	public function build_view(HTTPRequestCustom $request)
 	{
-		$authorized_categories = CategoriesService::get_authorized_categories();
-
 		$condition = 'WHERE approved = 1
 		AND author_user_id = :user_id
 		AND parent_id = 0
 		AND id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_user_id = :user_id' : '');
-		$parameters = array(
-			'authorized_categories' => $authorized_categories,
+		$parameters = [
+			'authorized_categories' => $this->authorized_categories,
 			'user_id' => $this->get_member()->get_id()
-		);
+        ];
 
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
@@ -54,15 +104,15 @@ class CalendarMemberItemsController extends DefaultModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = event.id_event AND com.module_id = \'calendar\'
 		' . $condition . '
 		ORDER BY start_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->items_view->put_all(array(
+		$this->items_view->put_all([
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_MEMBER_ITEMS' => true,
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -73,25 +123,22 @@ class CalendarMemberItemsController extends DefaultModuleController
 		}
 		$result->dispose();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'EVENTS' => $this->items_view,
-			'C_MEMBER_ITEMS' => true,
 			'C_MY_ITEMS' => $this->is_current_member_displayed(),
 			'MEMBER_NAME' => $this->get_member()->get_display_name(),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
-		));
+		]);
 
 		return $this->view;
 	}
 
 	protected function get_member()
 	{
-		if ($this->member === null)
+		if (!$this->member && $this->member !== null)
 		{
-			$this->member = UserService::get_user(AppContext::get_request()->get_getint('user_id', AppContext::get_current_user()->get_id()));
-			if (!$this->member)
-				DispatchManager::redirect(PHPBoostErrors::unexisting_element());
+			DispatchManager::redirect(PHPBoostErrors::unexisting_element());
 		}
 		return $this->member;
 	}
@@ -103,7 +150,7 @@ class CalendarMemberItemsController extends DefaultModuleController
 
 	private function check_authorizations()
 	{
-		if (!(CategoriesAuthorizationsService::check_authorizations()->write() || CategoriesAuthorizationsService::check_authorizations()->contribution() || CategoriesAuthorizationsService::check_authorizations()->moderation()))
+		if (!CategoriesAuthorizationsService::check_authorizations()->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -140,17 +187,27 @@ class CalendarMemberItemsController extends DefaultModuleController
 	private function generate_response()
 	{
 		$page = AppContext::get_request()->get_getint('page', 1);
-		$page_title = $this->is_current_member_displayed() ? $this->lang['calendar.my.items'] : $this->lang['calendar.member.items'] . ' ' . $this->get_member()->get_display_name();
+		$page_title = $this->member ? ($this->is_current_member_displayed() ? $this->lang['calendar.my.items'] : $this->get_member()->get_display_name()) : $this->lang['contribution.members.list'];
 		$response = new SiteDisplayResponse($this->view);
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($page_title, $this->lang['calendar.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], array('author' => AppContext::get_current_user()->get_display_name())), $page);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
+		if ($this->member)
+        {
+            $graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.member'], ['author' => $this->get_member()->get_id()]));
+            $graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
+        }
+        else
+        {
+            $graphical_environment->get_seo_meta_data()->set_description($this->lang['contribution.members.list']);
+            $graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_member_items());
+        }
 
-		$breadcrumb = $graphical_environment->get_breadcrumb();
+        $breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
-		$breadcrumb->add($this->lang['calendar.my.items'], CalendarUrlBuilder::display_member_items($this->get_member()->get_id(), $page));
+		$breadcrumb->add($this->lang['contribution.members.list'], CalendarUrlBuilder::display_member_items());
+        if ($this->member)
+            $breadcrumb->add($this->lang['calendar.my.items'], CalendarUrlBuilder::display_member_items($this->member ? $this->get_member()->get_id() : null, $page));
 
 		return $response;
 	}

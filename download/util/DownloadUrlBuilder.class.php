@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 09
+ * @version     PHPBoost 6.0 - last update: 2025 01 12
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -70,7 +70,7 @@ class DownloadUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function display_member_items($user_id, $page = 1)
+	public static function display_member_items($user_id = null, $page = 1)
 	{
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/member/' . $user_id . '/' . $page);
