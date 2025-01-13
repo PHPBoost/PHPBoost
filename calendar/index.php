@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 22
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 3.0 - 2012 11 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -29,6 +29,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('CalendarItemsManagerController', '`^/manage/?$`'),
 	new UrlControllerMapper('CalendarItemFormController', '`^/add/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?([0-9]+)?/?$`', array('year', 'month', 'day', 'id_category')),
 	new UrlControllerMapper('CalendarItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('CalendarItemFormController', '`^/([0-9]+)/duplicate/?$`', array('id')),
 	new UrlControllerMapper('CalendarDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('CalendarSuscribeController', '`^/([0-9]+)/suscribe/?$`', array('event_id')),
 	new UrlControllerMapper('CalendarUnsuscribeController', '`^/([0-9]+)/unsuscribe/?$`', array('event_id')),

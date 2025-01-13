@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 02 19
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -26,6 +26,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('WebItemsManagerController', '`^/manage/?$`'),
 	new UrlControllerMapper('WebItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('WebItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('WebItemFormController', '`^/([0-9]+)/duplicate/?$`', array('id')),
 	new UrlControllerMapper('WebDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('WebItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
 

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 25
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,10 +25,11 @@ $lang['web.my.items']     = 'My links';
 $lang['web.member.items'] = 'Links published by';
 $lang['web.filter.items'] = 'Filter links';
 
-$lang['web.add.item']      = 'New link';
-$lang['web.edit.item']     = 'Link edition';
-$lang['web.pending.items'] = 'Pending links';
-$lang['web.management']    = 'Links management';
+$lang['web.add.item']       = 'Add a link';
+$lang['web.edit.item']      = 'Edit a link';
+$lang['web.duplicate.item'] = 'Duplicate a link';
+$lang['web.pending.items']  = 'Pending links';
+$lang['web.management']     = 'Links management';
 
 $lang['web.partners']   = 'Partners';
 $lang['web.item.infos'] = 'Link informations';

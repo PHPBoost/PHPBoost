@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 09
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -78,11 +78,11 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		if ($this->is_new_item && !$this->get_item()->is_authorized_to_add())
-            $this->display_user_not_authorized_page();
-		elseif ($this->is_duplication && !$this->get_item()->is_authorized_to_duplicate())
-            $this->display_user_not_authorized_page();
-		elseif (!$this->is_duplication && !$this->get_item()->is_authorized_to_edit())
+		if (
+            ($this->is_new_item && !$this->get_item()->is_authorized_to_add())
+            || ($this->is_duplication && !$this->get_item()->is_authorized_to_duplicate())
+            || (!$this->is_duplication && !$this->get_item()->is_authorized_to_edit())
+        )
             $this->display_user_not_authorized_page();
 
         if (AppContext::get_current_user()->is_readonly())
@@ -618,8 +618,9 @@ class DefaultItemFormController extends AbstractItemController
                 $graphical_environment->set_location_id($location_id);
 
             $page_title = $this->is_duplication ? $this->lang['item.duplicate'] : $this->lang['item.edit'];
+            $page_url = $this->is_duplication ? ItemsUrlBuilder::duplicate($this->get_item()->get_id(), self::$module_id) : ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id);
 			$graphical_environment->set_page_title(($page_title . ': ' . $this->get_item()->get_title()), self::get_module_configuration()->get_name());
-			$graphical_environment->get_seo_meta_data()->set_canonical_url($this->is_duplication ? ItemsUrlBuilder::duplicate($this->get_item()->get_id(), self::$module_id) : ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url($page_url);
 
             if (self::get_module_configuration()->has_categories())
 			{
@@ -634,7 +635,7 @@ class DefaultItemFormController extends AbstractItemController
 			else
 				$breadcrumb->add($this->get_item()->get_title(), ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id));
 
-			$breadcrumb->add($page_title, $this->is_duplication ? ItemsUrlBuilder::duplicate($this->get_item()->get_id(), self::$module_id) : ItemsUrlBuilder::edit($this->get_item()->get_id(), self::$module_id));
+			$breadcrumb->add($page_title, $page_url);
 		}
 
 		return $response;

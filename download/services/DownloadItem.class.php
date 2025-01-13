@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 09
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -386,11 +386,8 @@ class DownloadItem
 
 	public function is_authorized_to_duplicate()
 	{
-        if (ModulesManager::get_module('download')->get_configuration()->has_contribution())
-            return ModulesManager::get_module('download')->get_configuration()->has_duplication() && (DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || DownloadAuthorizationsService::check_authorizations($this->id_category)->duplication());
-        else
-            return ModulesManager::get_module('download')->get_configuration()->has_duplication() && DownloadAuthorizationsService::check_authorizations($this->id_category)->write();
-	}
+        return ModulesManager::get_module('download')->get_configuration()->has_duplication() && (DownloadAuthorizationsService::check_authorizations($this->id_category)->write() || (DownloadAuthorizationsService::check_authorizations($this->id_category)->contribution() && DownloadAuthorizationsService::check_authorizations($this->id_category)->duplication()));
+    }
 
 	public function is_authorized_to_edit()
 	{

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 12
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -91,6 +91,14 @@ class WebUrlBuilder
 	public static function edit($id)
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
+	}
+
+	/**
+	 * @return Url
+	 */
+	public static function duplicate($id)
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/duplicate/');
 	}
 
 	/**

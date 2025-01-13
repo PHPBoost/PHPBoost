@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 08
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 09 02
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '..');
@@ -25,6 +26,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('FaqItemsManagerController', '`^/manage/?$`'),
 	new UrlControllerMapper('FaqItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
 	new UrlControllerMapper('FaqItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+	new UrlControllerMapper('FaqItemFormController', '`^/([0-9]+)/duplicate/?$`', array('id')),
 	new UrlControllerMapper('FaqDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
 	new UrlControllerMapper('FaqReorderItemsController', '`^/reorder/([0-9]+)-?([a-z0-9-_]+)?/?$`', array('id_category', 'rewrited_name')),
 

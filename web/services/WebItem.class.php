@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 14
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -349,6 +349,11 @@ class WebItem
 		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
+	public function is_authorized_to_duplicate()
+	{
+		return ModulesManager::get_module('download')->get_configuration()->has_duplication() && (CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && CategoriesAuthorizationsService::check_authorizations($this->id_category)->duplication()));
+	}
+
 	public function is_authorized_to_delete()
 	{
 		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
@@ -469,8 +474,9 @@ class WebItem
 			array(
 				// Conditions
 				'C_VISIBLE'               => $this->is_published(),
-				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
 				'C_EDIT'                  => $this->is_authorized_to_edit(),
+				'C_DUPLICATE'             => $this->is_authorized_to_duplicate(),
 				'C_DELETE'                => $this->is_authorized_to_delete(),
 				'C_READ_MORE'             => !$this->is_summary_enabled() && TextHelper::strlen($content) > $config->get_auto_cut_characters_number() && $real_summary != @strip_tags($content, '<br><br/>'),
 				'C_USER_GROUP_COLOR'      => !empty($user_group_color),
@@ -517,6 +523,7 @@ class WebItem
 				'U_DEADLINK'          => WebUrlBuilder::dead_link($this->id)->rel(),
 				'U_CATEGORY'          => WebUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
 				'U_EDIT'              => WebUrlBuilder::edit($this->id)->rel(),
+				'U_DUPLICATE'         => WebUrlBuilder::duplicate($this->id)->rel(),
 				'U_DELETE'            => WebUrlBuilder::delete($this->id)->rel(),
 				'U_THUMBNAIL'         => $this->get_thumbnail()->rel(),
 				'U_PARTNER_THUMBNAIL' => $this->partner_thumbnail->rel(),

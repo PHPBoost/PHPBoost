@@ -17,6 +17,7 @@
 			<article id="web-item-{ID}" itemscope="itemscope" itemtype="https://schema.org/CreativeWork" class="web-item# IF C_IS_PARTNER # content-friends# ENDIF ## IF C_IS_PRIVILEGED_PARTNER # content-privileged-friends# ENDIF ## IF C_NEW_CONTENT # new-content# ENDIF#">
 				# IF C_CONTROLS #
 					<div class="controls align-right">
+						# IF C_DUPLICATE #<a class="offload" href="{U_DUPLICATE}" aria-label="{@common.duplicate}"><i class="far fa-fw fa-clone" aria-hidden="true"></i></a># ENDIF #
 						# IF C_EDIT #<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a># ENDIF #
 						# IF C_DELETE #<a href="{U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
 					</div>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 01 10
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2013 08 20
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,8 +26,9 @@ $lang['item']  = 'event';
 $lang['items'] = 'events';
 
 // Titles
-$lang['calendar.item.add']         = 'Add event';
-$lang['calendar.item.edit']        = 'Event edition';
+$lang['calendar.item.add']         = 'Add an event';
+$lang['calendar.item.edit']        = 'Edit an event';
+$lang['calendar.item.duplicate']   = 'Duplicate an event';
 $lang['calendar.item.delete']      = 'Delete event';
 $lang['calendar.my.items']         = 'My events';
 $lang['calendar.member.items']     = 'Events published by';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 06
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,6 +25,7 @@ $lang['item']  = 'question';
 // Titles
 $lang['faq.add.item']          = 'Ajouter une question';
 $lang['faq.edit.item']         = 'Modifier la question';
+$lang['faq.duplicate.item']    = 'Dupliquer la question';
 $lang['faq.pending.items']     = 'Questions en attente';
 $lang['faq.items.management']  = 'Gestion des questions';
 $lang['faq.questions.reorder'] = 'Changer l\'ordre des questions';

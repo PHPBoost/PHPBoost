@@ -20,6 +20,7 @@
 					</div>
 					# IF C_CONTROLS #
 						<div class="controls align-right">
+                        # IF C_DUPLICATE #<a class="offload" href="{U_DUPLICATE}" aria-label="{@common.duplicate}"><i class="far fa-fw fa-clone" aria-hidden="true"></i></a># ENDIF #
 							# IF C_EDIT #
 								<a class="offload" href="{U_EDIT}" aria-label="{@common.edit}"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a>
 							# ENDIF #

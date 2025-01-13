@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 07
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -34,7 +34,7 @@ class CalendarItemFormController extends DefaultModuleController
 		$item_content = $this->get_item()->get_content();
 
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($item_content->get_id() === null ? $this->lang['calendar.item.add'] : $this->lang['calendar.item.edit']);
+		$form->set_layout_title($this->is_new_item ? $this->lang['calendar.item.add'] : ($this->is_duplication ? $this->lang['calendar.item.duplicate'] : $this->lang['calendar.item.edit']));
 
 		$fieldset = new FormFieldsetHTML('event', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -203,7 +203,7 @@ class CalendarItemFormController extends DefaultModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
+		if (($this->is_new_item || $this->is_duplication) && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
@@ -262,22 +262,21 @@ class CalendarItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item && !$item->is_authorized_to_add())
 		{
-			if (!$item->is_authorized_to_add())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
 		}
-		else
+		elseif ($this->is_duplication && !$item->is_authorized_to_duplicate())
 		{
-			if (!$item->is_authorized_to_edit())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
 		}
+		elseif (!$this->is_duplication && !$item->is_authorized_to_edit())
+        {
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
+        }
 		if (AppContext::get_current_user()->is_readonly())
 		{
 			$error_controller = PHPBoostErrors::user_in_read_only();
@@ -296,7 +295,11 @@ class CalendarItemFormController extends DefaultModuleController
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$item_content->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$item_content->set_content($this->form->get_value('content'));
+        if ($this->is_duplication)
+            $item_content->set_content($this->form->get_value('content') . $this->get_duplication_source());
+        else
+            $item_content->set_content($this->form->get_value('content'));
+
 		$item_content->set_thumbnail($this->form->get_value('thumbnail'));
 		$item_content->set_location($this->form->get_value('location'));
 
@@ -398,6 +401,44 @@ class CalendarItemFormController extends DefaultModuleController
 				}
 			}
 		}
+		elseif ($this->is_duplication)
+		{
+            $item->set_id(0);
+            $item_content->set_id(0);
+            $item_content->set_creation_date(new Date());
+            $item_content->set_author_user(AppContext::get_current_user());
+
+			$id_content = CalendarService::add_item_content($item_content);
+			$item_content->set_id($id_content);
+
+			$item->set_content($item_content);
+
+			$item_id = CalendarService::add_item($item);
+			$item->set_id($item_id);
+
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item_content->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+
+			if ($item->get_content()->is_repeatable())
+			{
+				$new_start_date = $item->get_start_date();
+				$new_end_date = $item->get_end_date();
+
+				for ($i = 1 ; $i <= $item->get_content()->get_repeat_number() ; $i++)
+				{
+					$e = new CalendarItem();
+					$e->set_content($item->get_content());
+					$e->set_parent_id($item_id);
+
+					$e = $this->set_event_start_and_end_date($e, $new_start_date, $new_end_date);
+
+					CalendarService::add_item($e);
+
+					$new_start_date = $e->get_start_date();
+					$new_end_date = $e->get_end_date();
+				}
+			}
+		}
 		else
 		{
 			CalendarService::update_item_content($item_content);
@@ -457,6 +498,13 @@ class CalendarItemFormController extends DefaultModuleController
 		CalendarService::clear_cache();
 	}
 
+    private function get_duplication_source()
+    {
+        $url = GeneralConfig::load()->get_site_url() . CalendarService::get_item($this->request->get_value('id'))->get_item_url();
+        $title = CalendarService::get_item($this->request->get_value('id'))->get_content()->get_title();
+        return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
+    }
+
 	private function set_event_start_and_end_date(CalendarItem $item, $new_start_date, $new_end_date)
 	{
 		switch ($item->get_content()->get_repeat_type())
@@ -514,7 +562,7 @@ class CalendarItemFormController extends DefaultModuleController
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($item->get_id());
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
@@ -530,7 +578,7 @@ class CalendarItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_content()->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action(($this->is_new_item || $this->is_duplication) ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_content()->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
@@ -558,14 +606,14 @@ class CalendarItemFormController extends DefaultModuleController
 		}
 		elseif ($item->get_content()->is_approved())
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				AppContext::get_response()->redirect(CalendarUrlBuilder::home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($item->get_start_date()->get_year(), $item->get_start_date()->get_month(), $item->get_start_date()->get_day() , true)), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
 		}
 		else
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				AppContext::get_response()->redirect(CalendarUrlBuilder::display_pending_items(), StringVars::replace_vars($this->lang['calendar.message.success.add'], array('title' => $item->get_content()->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : CalendarUrlBuilder::display_pending_items()), StringVars::replace_vars($this->lang['calendar.message.success.edit'], array('title' => $item->get_content()->get_title())));
@@ -576,7 +624,8 @@ class CalendarItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
-		$location_id = $item->get_id() ? 'item-edit-'. $item->get_id() : '';
+        $location_name = $this->is_duplication ? 'calendar-duplicate-' : 'calendar-edit-';
+		$location_id = $item->get_id() ? $location_name . $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -584,26 +633,28 @@ class CalendarItemFormController extends DefaultModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['calendar.module.title'], CalendarUrlBuilder::home());
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item)
 		{
 			$graphical_environment->set_page_title($this->lang['calendar.item.add'], $this->lang['calendar.module.title']);
-			$breadcrumb->add($this->lang['calendar.item.add'], CalendarUrlBuilder::add_item());
 			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.item.add']);
 			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::add_item());
+			$breadcrumb->add($this->lang['calendar.item.add'], CalendarUrlBuilder::add_item());
 		}
 		else
 		{
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['calendar.item.edit'], $this->lang['calendar.module.title']);
+            $page_title = $this->is_duplication ? $this->lang['calendar.item.duplicate'] : $this->lang['calendar.item.edit'];
+            $page_url = $this->is_duplication ? CalendarUrlBuilder::duplicate_item($item->get_id()) : CalendarUrlBuilder::edit_item($item->get_id());
+			$graphical_environment->set_page_title($page_title . ': ' . $item->get_content()->get_title(), $this->lang['calendar.module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($page_title);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url($page_url);
 
 			$category = $item->get_content()->get_category();
 			$breadcrumb->add($item->get_content()->get_title(), CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
-			$breadcrumb->add($this->lang['calendar.item.edit'], CalendarUrlBuilder::edit_item($item->get_id()));
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['calendar.item.edit']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::edit_item($item->get_id()));
+			$breadcrumb->add($page_title, $page_url);
 		}
 
 		return $response;

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 05
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -15,7 +15,6 @@ class DownloadItemFormController extends DefaultModuleController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->check_authorizations();
-		$this->get_duplication_source();
 
 		$this->build_form($request);
 
@@ -229,7 +228,7 @@ class DownloadItemFormController extends DefaultModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		if (($this->get_item()->get_id() === null || $this->is_duplication) && $this->is_contributor_member())
+		if (($this->is_new_item || $this->is_duplication) && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.extended.warning'], MessageHelper::WARNING)->render());
@@ -289,21 +288,15 @@ class DownloadItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
-		if ($this->is_new_item && !$item->is_authorized_to_add())
+		if (
+            ($this->is_new_item && !$item->is_authorized_to_add())
+            || ($this->is_duplication && !$item->is_authorized_to_duplicate())
+            || (!$this->is_duplication && !$item->is_authorized_to_edit())
+        )
 		{
             $error_controller = PHPBoostErrors::user_not_authorized();
             DispatchManager::redirect($error_controller);
 		}
-		elseif ($this->is_duplication && !$item->is_authorized_to_duplicate())
-		{
-            $error_controller = PHPBoostErrors::user_not_authorized();
-            DispatchManager::redirect($error_controller);
-		}
-		elseif (!$this->is_duplication && !$item->is_authorized_to_edit())
-        {
-            $error_controller = PHPBoostErrors::user_not_authorized();
-            DispatchManager::redirect($error_controller);
-        }
 
         if (AppContext::get_current_user()->is_readonly())
 		{
@@ -524,7 +517,7 @@ class DownloadItemFormController extends DefaultModuleController
 		$item = $this->get_item();
 
         $location_name = $this->is_duplication ? 'download-duplicate-' : 'download-edit-';
-		$location_id = $item->get_id() ? 'download-edit-'. $item->get_id() : '';
+		$location_id = $item->get_id() ? $location_name . $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
 		$graphical_environment = $response->get_graphical_environment();
@@ -543,12 +536,13 @@ class DownloadItemFormController extends DefaultModuleController
 		else
 		{
             $page_title = $this->is_duplication ? $this->lang['download.duplicate.item'] : $this->lang['download.edit.item'];
+            $page_url = $this->is_duplication ? DownloadUrlBuilder::duplicate($item->get_id()) : DownloadUrlBuilder::edit($item->get_id());
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
 			$graphical_environment->set_page_title($page_title . ': ' . $item->get_title(), $this->lang['download.module.title']);
 			$graphical_environment->get_seo_meta_data()->set_description($page_title);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url($this->is_duplication ? DownloadUrlBuilder::duplicate($item->get_id()) : DownloadUrlBuilder::edit($item->get_id()));
+			$graphical_environment->get_seo_meta_data()->set_canonical_url($page_url);
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -558,7 +552,7 @@ class DownloadItemFormController extends DefaultModuleController
 			}
 			$category = $item->get_category();
 			$breadcrumb->add($item->get_title(), DownloadUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
-            $breadcrumb->add($page_title, $this->is_duplication ? DownloadUrlBuilder::duplicate($item->get_id()) : DownloadUrlBuilder::edit($item->get_id()));
+            $breadcrumb->add($page_title, $page_url);
         }
 
 		return $response;

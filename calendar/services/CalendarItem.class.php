@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 06
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2013 02 25
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -103,6 +103,11 @@ class CalendarItem
 		return CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->contribution())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
+	public function is_authorized_to_duplicate()
+	{
+        return ModulesManager::get_module('calendar')->get_configuration()->has_duplication() && (CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations()->contribution($this->content->get_id_category()) && CategoriesAuthorizationsService::check_authorizations()->duplication($this->content->get_id_category())));
+    }
+
 	public function is_authorized_to_delete()
 	{
 		return CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->write() || (CategoriesAuthorizationsService::check_authorizations($this->content->get_id_category())->contribution() && !$this->content->is_approved())) && $this->content->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
@@ -188,8 +193,9 @@ class CalendarItem
 			Date::get_array_tpl_vars($this->end_date, 'end_date'),
 			array(
 				'C_APPROVED'                 => $this->content->is_approved(),
-				'C_CONTROLS'                 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+				'C_CONTROLS'                 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
 				'C_EDIT'                     => $this->is_authorized_to_edit(),
+				'C_DUPLICATE'                => $this->is_authorized_to_duplicate(),
 				'C_DELETE'                   => $this->is_authorized_to_delete(),
 				'C_DIFFERENT_DATE'           => $start_date != $end_date,
 				'C_HAS_THUMBNAIL'            => $this->content->has_thumbnail(),
@@ -243,6 +249,7 @@ class CalendarItem
 				'U_AUTHOR_CONTRIB' => CalendarUrlBuilder::display_member_items($author->get_id())->rel(),
 				'U_ITEM'           => $this->get_item_url(),
 				'U_EDIT'           => CalendarUrlBuilder::edit_item(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
+				'U_DUPLICATE'      => CalendarUrlBuilder::duplicate_item(!$this->parent_id ? $this->id : $this->parent_id)->rel(),
 				'U_DELETE'         => CalendarUrlBuilder::delete_item($this->id)->rel(),
 				'U_THUMBNAIL'      => $this->content->get_thumbnail()->rel(),
 				'U_SUSCRIBE'       => CalendarUrlBuilder::suscribe_item($this->id)->rel(),

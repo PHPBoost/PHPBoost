@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 04 14
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -133,6 +133,11 @@ class FaqItem
 		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
+	public function is_authorized_to_duplicate()
+	{
+		return ModulesManager::get_module('faq')->get_configuration()->has_duplication() && (CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && CategoriesAuthorizationsService::check_authorizations($this->id_category)->duplication()));
+	}
+
 	public function is_authorized_to_delete()
 	{
 		return CategoriesAuthorizationsService::check_authorizations($this->id_category)->moderation() || ((CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && !$this->is_approved())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
@@ -203,7 +208,7 @@ class FaqItem
 			array(
 			// Conditions
 			'C_APPROVED'         => $this->is_approved(),
-			'C_ACTION_USER'      => !$this->is_authorized_to_edit() && !$this->is_authorized_to_delete(),
+			'C_DUPLICATE'        => $this->is_authorized_to_duplicate(),
 			'C_EDIT'             => $this->is_authorized_to_edit(),
 			'C_DELETE'           => $this->is_authorized_to_delete(),
 			'C_USER_GROUP_COLOR' => !empty($user_group_color),
@@ -232,6 +237,7 @@ class FaqItem
 			'U_ITEM'           => $this->get_item_url(),
 			'U_ABSOLUTE_LINK'  => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->id)->absolute(),
 			'U_CATEGORY'       => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+			'U_DUPLICATE'      => FaqUrlBuilder::duplicate($this->id)->rel(),
 			'U_EDIT'           => FaqUrlBuilder::edit($this->id)->rel(),
 			'U_DELETE'         => FaqUrlBuilder::delete($this->id)->rel()
 		));

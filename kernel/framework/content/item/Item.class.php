@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 09
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -316,11 +316,8 @@ class Item
 
 	public function is_authorized_to_duplicate()
 	{
-        if (self::$module->get_configuration()->has_contribution())
-            return self::$module->get_configuration()->has_duplication() && ($this->get_authorizations_checker()->write() || $this->get_authorizations_checker()->duplication());
-        else
-            return self::$module->get_configuration()->has_duplication() && $this->get_authorizations_checker()->write();
-	}
+        return self::$module->get_configuration()->has_duplication() && ($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && $this->get_authorizations_checker()->duplication()));
+    }
 
 	public function is_authorized_to_edit()
 	{

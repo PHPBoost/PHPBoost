@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 07
+ * @version     PHPBoost 6.0 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 09 02
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -31,7 +31,7 @@ class FaqItemFormController extends DefaultModuleController
 	private function build_form(HTTPRequestCustom $request)
 	{
 		$form = new HTMLForm(__CLASS__);
-		$form->set_layout_title($this->get_item()->get_id() === null ? $this->lang['faq.add.item'] : ($this->lang['faq.edit.item']));
+		$form->set_layout_title($this->is_new_item ? $this->lang['faq.add.item'] : ($this->is_duplication ? $this->lang['faq.duplicate.item'] : $this->lang['faq.edit.item']));
 
 		$fieldset = new FormFieldsetHTML('faq', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -66,7 +66,7 @@ class FaqItemFormController extends DefaultModuleController
 
 	private function build_contribution_fieldset($form)
 	{
-		if ($this->get_item()->get_id() === null && $this->is_contributor_member())
+		if (($this->is_new_item || $this->is_duplication) && $this->is_contributor_member())
 		{
 			$fieldset = new FormFieldsetHTML('contribution', $this->lang['contribution.contribution']);
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.warning'], MessageHelper::WARNING)->render());
@@ -119,21 +119,20 @@ class FaqItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item && !$item->is_authorized_to_add())
 		{
-			if (!$item->is_authorized_to_add())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
 		}
-		else
+		elseif ($this->is_duplication && !$item->is_authorized_to_duplicate())
 		{
-			if (!$item->is_authorized_to_edit())
-			{
-				$error_controller = PHPBoostErrors::user_not_authorized();
-				DispatchManager::redirect($error_controller);
-			}
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
+		}
+		elseif (!$this->is_duplication && !$item->is_authorized_to_edit())
+		{
+            $error_controller = PHPBoostErrors::user_not_authorized();
+            DispatchManager::redirect($error_controller);
 		}
 		if (AppContext::get_current_user()->is_readonly())
 		{
@@ -152,7 +151,10 @@ class FaqItemFormController extends DefaultModuleController
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 			$item->set_id_category($this->form->get_value('id_category')->get_raw_value());
 
-		$item->set_content($this->form->get_value('answer'));
+        if ($this->is_duplication)
+            $item->set_content($this->form->get_value('answer') . $this->get_duplication_source());
+        else
+            $item->set_content($this->form->get_value('answer'));
 
 		if ($item->get_q_order() === null)
 		{
@@ -170,8 +172,19 @@ class FaqItemFormController extends DefaultModuleController
 		else if (CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->contribution() && !CategoriesAuthorizationsService::check_authorizations($item->get_id_category())->write())
 			$item->unapprove();
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item)
 		{
+			$id = FaqService::add($item);
+			$item->set_id($id);
+
+			if (!$this->is_contributor_member())
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+		}
+		elseif ($this->is_duplication)
+		{
+			$item->set_id(0);
+            $item->set_author_user(AppContext::get_current_user());
+            $item->set_creation_date(new Date());
 			$id = FaqService::add($item);
 			$item->set_id($id);
 
@@ -191,17 +204,24 @@ class FaqItemFormController extends DefaultModuleController
 		FaqService::clear_cache();
 	}
 
+    private function get_duplication_source()
+    {
+        $url = GeneralConfig::load()->get_site_url() . FaqService::get_item($this->request->get_value('id'))->get_item_url();
+        $title = FaqService::get_item($this->request->get_value('id'))->get_title();
+        return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
+    }
+
 	private function contribution_actions(FaqItem $item)
 	{
 		if ($this->is_contributor_member())
 		{
 			$contribution = new Contribution();
 			$contribution->set_id_in_module($item->get_id());
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				$contribution->set_description(stripslashes($this->form->get_value('contribution_description')));
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
-			
+
 			$contribution->set_entitled($item->get_title());
 			$contribution->set_fixing_url(FaqUrlBuilder::edit($item->get_id())->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
@@ -213,7 +233,7 @@ class FaqItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
 		}
 		else
 		{
@@ -241,14 +261,14 @@ class FaqItemFormController extends DefaultModuleController
 		}
 		elseif ($item->is_approved())
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				AppContext::get_response()->redirect(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id()), StringVars::replace_vars($this->lang['faq.message.success.add'], array('title' => $item->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id())), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('title' => $item->get_title())));
 		}
 		else
 		{
-			if ($this->is_new_item)
+			if ($this->is_new_item || $this->is_duplication)
 				AppContext::get_response()->redirect(FaqUrlBuilder::display_pending_items(), StringVars::replace_vars($this->lang['faq.message.success.add'], array('title' => $item->get_title())));
 			else
 				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending_items()), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('title' => $item->get_title())));
@@ -259,6 +279,7 @@ class FaqItemFormController extends DefaultModuleController
 	{
 		$item = $this->get_item();
 
+        $location_name = $this->is_duplication ? 'faq-duplicate-' : 'faq-edit-';
 		$location_id = $item->get_id() ? 'faq-edit-'. $item->get_id() : '';
 
 		$response = new SiteDisplayResponse($view, $location_id);
@@ -267,7 +288,7 @@ class FaqItemFormController extends DefaultModuleController
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['faq.module.title'], FaqUrlBuilder::home());
 
-		if ($item->get_id() === null)
+		if ($this->is_new_item)
 		{
 			$graphical_environment->set_page_title($this->lang['faq.add.item'], $this->lang['faq.module.title']);
 			$breadcrumb->add($this->lang['faq.add.item'], FaqUrlBuilder::add($item->get_id_category()));
@@ -276,12 +297,14 @@ class FaqItemFormController extends DefaultModuleController
 		}
 		else
 		{
+            $page_title = $this->is_duplication ? $this->lang['faq.duplicate.item'] : $this->lang['faq.edit.item'];
+			$page_url = $this->is_duplication ? FaqUrlBuilder::duplicate($item->get_id()) : FaqUrlBuilder::edit($item->get_id());
 			if (!AppContext::get_session()->location_id_already_exists($location_id))
 				$graphical_environment->set_location_id($location_id);
 
-			$graphical_environment->set_page_title($this->lang['faq.edit.item'], $this->lang['faq.module.title']);
-			$graphical_environment->get_seo_meta_data()->set_description($this->lang['faq.edit.item']);
-			$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::edit($item->get_id()));
+			$graphical_environment->set_page_title($page_title . ': ' . $item->get_title(), $this->lang['faq.module.title']);
+			$graphical_environment->get_seo_meta_data()->set_description($page_title);
+			$graphical_environment->get_seo_meta_data()->set_canonical_url($page_url);
 
 			$categories = array_reverse(CategoriesService::get_categories_manager()->get_parents($item->get_id_category(), true));
 			foreach ($categories as $id => $category)
@@ -291,7 +314,7 @@ class FaqItemFormController extends DefaultModuleController
 			}
 			$category = $item->get_category();
 			$breadcrumb->add($item->get_title(), FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id()));
-			$breadcrumb->add($this->lang['faq.edit.item'], FaqUrlBuilder::edit($item->get_id()));
+			$breadcrumb->add($page_title, $page_url);
 		}
 
 		return $response;
