@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 08 22
+ * @version     PHPBoost 6.0 - last update: 2025 01 15
  * @since       PHPBoost 3.0 - 2010 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -77,7 +77,7 @@ $lang['admin.cache.syndication.description'] = '
     <p>Via cette page de l\'administration de PHPBoost, vous pouvez vider le cache de façon à forcer PHPBoost à rechercher les données dans la base de données. C\'est particulièrement utile si vous avez modifié certaines choses manuellement dans la base de données. En effet, elles ne seront pas prises en compte car le cache aura toujours les valeurs précédentes.</p>
 ';
     // CSS
-$lang['admin.cache.css']             = 'Cache CSS';
+$lang['admin.cache.css']             = 'Cache CSS et JS';
 $lang['admin.cache.css.description'] = '
     <p>PHPBoost met en cache l\'ensemble des fichiers CSS et JS fournis par les thèmes et modules.
     En temps normal, à l\'affichage du site, un ensemble de fichiers css et js va être chargé. Le système de cache CSS quant à lui, va d\'abord optimiser les fichiers pour ensuite créer un seul et même fichier CSS condensé, et faire de même avec les fichiers Javascript.</p>

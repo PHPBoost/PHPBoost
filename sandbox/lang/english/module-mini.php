@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 10 24
+ * @version     PHPBoost 6.0 - last update: 2025 01 15
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,9 +29,9 @@ $lang['sandbox.mini.404']               = '404 errors';
 $lang['sandbox.mini.coms']              = 'Comments';
 $lang['sandbox.mini.database']          = 'Database';
 $lang['sandbox.mini.review']            = 'Files review';
-$lang['sandbox.mini.enable.css.cache']  = 'Enable the css cache';
-$lang['sandbox.mini.disable.css.cache'] = 'Disable the css cache';
-$lang['sandbox.mini.clean.css.cache']   = 'Refresh the css cache';
+$lang['sandbox.mini.enable.css.cache']  = 'Enable the CSS & JS cache';
+$lang['sandbox.mini.disable.css.cache'] = 'Disable the CSS & JS cache';
+$lang['sandbox.mini.clean.css.cache']   = 'Refresh the CSS & JS cache';
 $lang['sandbox.mini.clean.tpl.cache']   = 'Refresh the site cache';
 $lang['sandbox.mini.clean.rss.cache']   = 'Refresh the syndication cache';
 

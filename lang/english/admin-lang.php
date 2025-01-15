@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 08 22
+ * @version     PHPBoost 6.0 - last update: 2025 01 15
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -77,7 +77,7 @@ $lang['admin.cache.syndication.description'] = '
     <p>On this configuration page, you can clear the syndication cache. It\'s useful if you have manually updated data in the data base, without clearing it manually, changes aren\'t visible in the feeds.</p>
 ';
     // CSS
-$lang['admin.cache.css']             = 'CSS Cache';
+$lang['admin.cache.css']             = 'CSS & JS Cache';
 $lang['admin.cache.css.description'] = '
     <p>PHPBoost caches all the CSS and JS files provided by the themes and modules.
     Normally, the display site, a set of css files are going to be loaded. The cache CSS meanwhile, will first optimize files and then create a single CSS file hash, and did same thing with Javascript files.</p>
