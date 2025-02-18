@@ -66,7 +66,6 @@
 }
 
 /* --- content of elements --- */
-
 .constraint-status-right .bbcode-elements input,
 .constraint-status-right .bbcode-elements select,
 .constraint-status-right .bbcode-elements textarea { padding-left: 0.618em; }
@@ -97,6 +96,8 @@
 }
 
 /* --- BBCode bar icons --- */
+.cell-modal .cell-bbcode { max-width: 512px; }
+
 .bbcode-button {
 	display: inline-block;
 	padding: 0.309em;

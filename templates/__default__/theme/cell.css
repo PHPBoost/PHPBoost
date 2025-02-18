@@ -20,8 +20,8 @@
 .cell {
 	display: flex;
 	flex-direction: column;
-	border-style: solid;
 	border-width: 1px;
+	border-style: solid;
 	border-color: transparent;
 }
 
@@ -179,8 +179,7 @@
 /* --- form --- */
 .cell-textarea textarea { border-width: 0; }
 
-.cell-form .cell-label,
-.cell-form .cell-input { padding: 0.456em 0.618em; }
+.cell-form > * { padding: 0.456em 0.618em; }
 
 .cell-form .grouped-inputs { width: 100%; }
 
@@ -190,6 +189,7 @@
 
 .cell .formatter-title { display: block; }
 
+/* footer */
 .cell-footer {
 	padding: 0.618em;
 	text-align: center;
@@ -197,4 +197,33 @@
 
 @media (min-width: 769px) {
     .cell-footer { text-align: right; }
+}
+
+/* extra */
+.cell-body,
+.cell-list,
+.cell-table,
+.cell-textarea,
+.flex-wide { flex: 1 1 auto; }
+
+.cell-body,
+.cell-form {
+	display: flex;
+	flex-direction: column;
+}
+
+@media (min-width: 769px) {
+    .id-card .cell-body { flex-direction: row; ;}
+}
+
+.cell-form.grouped-inputs { flex-direction: row; }
+
+/* --- Options -------------------------------------------------------------- */
+@media (min-width:769px) {
+	.cell-options {
+		float: right;
+		min-width: 235px;
+		max-width: 50%;
+		margin-left: 0.618em;
+	}
 }

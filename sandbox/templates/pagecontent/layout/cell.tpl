@@ -1,54 +1,33 @@
 <div id="cell" class="sandbox-block">
     <header>
-        <h5>{@sandbox.layout.cell}</h5>
+        <h5>{@H|sandbox.layout.cell}</h5>
     </header>
+    <div class="content">{@H|sandbox.layout.cell.clue}</div>
 
     <h6>{@sandbox.layout.cell.columns}</h6>
     <div class="layout-content-demo">
 
-        <div class="cell-flex cell-tile cell-columns-2">
-            <article class="cell">
-                <header class="cell-header">
-                    <h2 class="cell-name">{@sandbox.layout.title}</h2>
+        <div class="cell-flex cell-columns-2">
+            <article class="cell" aria-label=".cell">
+                <header class="cell-header" aria-label=".cell-header">
+                    <h2 class="cell-name" aria-label=".cell-header > .cell-name">{@sandbox.layout.cell.title}</h2>
                 </header>
-                <div class="cell-infos">
-                    <div class="more">
-                        <span class="pinned">{@sandbox.layout.item}</span>
-                        <span class="pinned">{@sandbox.layout.item}</span>
+                <div class="cell-infos" aria-label=".cell-infos">
+                    <div class="more" aria-label=".cell-infos > .more">
+                        <span class="pinned" aria-label=".cell-infos > .more > .pinned">{@sandbox.layout.item}</span>
+                        <span class="pinned" aria-label=".cell-infos > .more > .pinned">{@sandbox.layout.item}</span>
                     </div>
-                    <div class="controls align-right">
+                    <div class="controls align-right" aria-label=".cell-infos > .controls > a">
                         <a href="#"><i class="fa fa-edit"></i></a>
                         <a href="#"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
-                    <div class="cell-thumbnail">
-                        <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
+                    <div class="cell-thumbnail" aria-label=".cell-thumbnail > (img + a.cell-thumbnail-caption)">
+                        <img src="{U_PICTURE}" alt="{@sandbox.layout.cell.title}">
                         <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                     </div>
-                <div class="cell-body">
+                <div class="cell-body" aria-label=".cell-body > .cell-content">
                     <div class="cell-content">{@sandbox.lorem.short.content}</div>
-                </div>
-            </article>
-            <article class="cell">
-                <header class="cell-header">
-                    <h2 class="cell-name">{@sandbox.layout.title}</h2>
-                </header>
-                <div class="cell-infos">
-                    <div class="more">
-                        <span class="pinned">{@sandbox.layout.item}</span>
-                        <span class="pinned">{@sandbox.layout.item}</span>
-                    </div>
-                    <div class="controls align-right">
-                        <a href="#"><i class="fa fa-edit"></i></a>
-                        <a href="#"><i class="fa fa-trash"></i></a>
-                    </div>
-                </div>
-                    <div class="cell-thumbnail">
-                        <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
-                        <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
-                    </div>
-                <div class="cell-body">
-                    <div class="cell-content">{@sandbox.lorem.medium.content}</div>
                 </div>
             </article>
         </div>
@@ -56,56 +35,34 @@
 
     <h6>{@sandbox.layout.cell.row}</h6>
     <div class="layout-content-demo">
-        <div class="cell-flex cell-tile cell-row">
-            <article class="cell">
-                <header class="cell-header">
-                    <h2 class="cell-name"><a href="#">{@sandbox.layout.title}</a></h2>
+        <div class="cell-flex cell-row">
+            <article class="cell" aria-label=".cell">
+                <header class="cell-header" aria-label="cell-header">
+                    <h2 class="cell-name" aria-label=".cell-header > .cell-name">{@sandbox.layout.cell.title}</h2>
                 </header>
-                <div class="cell-infos">
-                    <div class="more">
-                        <span class="pinned">{@sandbox.layout.item}</span>
-                        <span class="pinned">{@sandbox.layout.item}</span>
+                <div class="cell-infos" aria-label=".cell-infos">
+                    <div class="more" aria-label=".cell-infos > .more">
+                        <span class="pinned" aria-label=".cell-infos > .more > .pinned">{@sandbox.layout.item}</span>
+                        <span class="pinned" aria-label=".cell-infos > .more > .pinned">{@sandbox.layout.item}</span>
                     </div>
-                    <div class="controls align-right">
+                    <div class="controls align-right" aria-label=".cell-infos > .controls > a">
                         <a href="#"><i class="fa fa-edit"></i></a>
                         <a href="#"><i class="fa fa-trash"></i></a>
                     </div>
                 </div>
-                <div class="cell-thumbnail cell-center">
-                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
+                <div class="cell-thumbnail cell-center" aria-label=".cell-thumbnail > (img + a.cell-thumbnail-caption)">
+                    <img src="{U_PICTURE}" alt="{@sandbox.layout.cell.title}">
                     <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
                 </div>
-                <div class="cell-body">
-                    <div class="cell-content">{@sandbox.lorem.short.content}</div>
-                </div>
-            </article>
-            <article class="cell">
-                <header class="cell-header">
-                    <h2 class="cell-name"><a href="#">{@sandbox.layout.title}</a></h2>
-                </header>
-                <div class="cell-infos">
-                    <div class="more">
-                        <span class="pinned">{@sandbox.layout.item}</span>
-                        <span class="pinned">{@sandbox.layout.item}</span>
-                    </div>
-                    <div class="controls align-right">
-                        <a href="#"><i class="fa fa-edit"></i></a>
-                        <a href="#"><i class="fa fa-trash"></i></a>
-                    </div>
-                </div>
-                <div class="cell-thumbnail cell-center">
-                    <img src="{U_PICTURE}" alt="{@sandbox.layout.title}">
-                    <a href="#" class="cell-thumbnail-caption"><i class="fa fa-eye"></i></a>
-                </div>
-                <div class="cell-body">
-                    <div class="cell-content">{@sandbox.lorem.short.content}</div>
+                <div class="cell-body" aria-label=".cell-body">
+                    <div class="cell-content" aria-label=".cell-body > .cell-content">{@sandbox.lorem.short.content}</div>
                 </div>
             </article>
         </div>
     </div>
 
     <h6>{@sandbox.layout.cell.all}</h6>
-    <div class="cell-flex layout-content-demo cell-tile cell-columns-2">
+    <div class="cell-flex layout-content-demo cell-bordered cell-columns-2">
         <article class="cell">
             <header class="cell-header">
                 <h6 class="cell-name">{@sandbox.layout.title.more}</h6>
@@ -156,21 +113,27 @@
                 </div>
             </div>
             <div class="cell-form">
-                <div class="grouped-inputs">
-                    <label for="input-id" class="grouped-element">
-                        <span>Label</span>
-                    </label>
-                    <input class="grouped-element" id="input-id" type="text" placeholder="input text">
-                    <select name="" class="grouped-element">
-                        <option value="">select</option>
-                        <option value="">{@sandbox.layout.item}</option>
-                        <option value="">{@sandbox.layout.item}</option>
-                    </select>
-                    <a href="#" class="grouped-element"><i class="fa fa-caret-right"></i></a>
+                <div class="cell-input">
+                    <div class="grouped-inputs">
+                        <label for="input-id" class="grouped-element">
+                            <span>Label</span>
+                        </label>
+                        <input class="grouped-element" id="input-id" type="text" placeholder="input text">
+                        <select name="" class="grouped-element">
+                            <option value="">select</option>
+                            <option value="">{@sandbox.layout.item}</option>
+                            <option value="">{@sandbox.layout.item}</option>
+                        </select>
+                        <a href="#" class="grouped-element"><i class="fa fa-caret-right"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="cell-textarea">
-				<textarea name="textarea" rows="3">Textarea : {@sandbox.lorem.short.content}</textarea>
+            <div class="cell-form">
+                <div class="cell-input">
+                    <div class="cell-textarea">
+                        <textarea name="textarea" rows="3">Textarea : {@sandbox.lorem.short.content}</textarea>
+                    </div>
+                </div>
             </div>
             <div class="cell-form">
                 <fieldset class="fieldset-submit cell-center">
@@ -212,16 +175,16 @@
         </article>
         <article class="cell">
             <header class="cell-header">
-                <h6 class="cell-name">{@sandbox.layout.sandbox.table}</h6>
+                <h6 class="cell-name">{@sandbox.layout.table}</h6>
             </header>
             <div class="cell-table">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>{@sandbox.layout.title.sub}</th>
-                            <th>{@sandbox.layout.title.sub}</th>
-                            <th>{@sandbox.layout.title.sub}</th>
-                            <th>{@sandbox.layout.title.sub}</th>
+                            <th>{@sandbox.layout.header}</th>
+                            <th>{@sandbox.layout.header}</th>
+                            <th>{@sandbox.layout.header}</th>
+                            <th>{@sandbox.layout.header}</th>
                         </tr>
                     </thead>
                     <tbody>

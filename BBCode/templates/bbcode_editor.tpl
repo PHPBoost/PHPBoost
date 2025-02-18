@@ -79,7 +79,7 @@
 						</a>
 						<div id="block-color{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.color}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -94,7 +94,7 @@
 						</a>
 						<div id="block-bgcolor{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.bgcolor}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -109,7 +109,7 @@
 						</a>
 						<div id="block-size{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.size}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -137,7 +137,7 @@
 						</a>
 						<div id="block-font{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.font}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -177,7 +177,7 @@
 						</a>
 						<div id="block-align{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.align}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -211,7 +211,7 @@
 						</a>
 						<div id="block-positions{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.positions}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -250,7 +250,7 @@
 						</a>
 						<div id="block-title{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.title}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -294,7 +294,7 @@
 						</a>
 						<div id="block-list{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.list}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -326,7 +326,7 @@
 						</a>
 						<div id="block-table{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.table}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -364,7 +364,7 @@
 						</a>
 						<div id="block-container{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.container}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -397,7 +397,7 @@
 						</div>
 						<div id="block-custom-div{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.custom.div}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -426,7 +426,7 @@
 						</div>
 						<div id="block-fieldset{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.fieldset}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -446,7 +446,7 @@
 						</div>
 						<div id="block-abbr{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.abbr}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -471,7 +471,7 @@
 						</a>
 						<div id="block-quote{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.quote}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -500,7 +500,7 @@
 						</a>
 						<div id="block-hide{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.hide}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -534,7 +534,7 @@
 						</a>
 						<div id="block-style{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.style}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -598,7 +598,7 @@
 						</a>
 						<div id="block-url{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.link}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -627,7 +627,7 @@
 						</a>
 						<div id="block-mail{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.mail}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -656,7 +656,7 @@
 						</a>
 						<div id="block-wikipedia{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.wikipedia}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -701,7 +701,7 @@
 						</a>
 						<div id="block-feed{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.feed}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -741,7 +741,7 @@
 						</a>
 						<div id="block-anchor{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.anchor}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -778,7 +778,7 @@
 						</a>
 						<div id="block-sound{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.sound}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -809,7 +809,7 @@
 						</a>
 						<div id="block-movie{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.movie}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -874,7 +874,7 @@
 						</a>
 						<div id="block-lightbox{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.lightbox}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -915,7 +915,7 @@
 						</a>
 						<div id="block-figure{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.figure}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -978,7 +978,7 @@
 						</a>
 						<div id="block-smileys{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.smileys}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -1008,7 +1008,7 @@
 						</a>
 						<div id="block-emojis{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.emojis}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -1052,7 +1052,7 @@
 						</a>
 						<div id="block-fa{FIELD}" class="modal modal-animation">
 							<div class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.fa}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
@@ -1085,7 +1085,7 @@
 						</a>
 						<div id="block-code{FIELD}" class="modal modal-animation">
 							<div href="#close-code" class="close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="content-panel cell">
+							<div class="content-panel cell cell-bbcode">
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.code}</h6>
 									<a href="#cancel" class="error hide-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a>
