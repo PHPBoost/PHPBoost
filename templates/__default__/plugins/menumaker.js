@@ -32,7 +32,7 @@
 			cssmenu.prepend('<div id="menu-button-' + menu_title + '" class="menu-button">' + settings.title + '</div>');
 			jQuery(this).find(".cssmenu-img").prependTo(this);
 			jQuery(this).find(".cssmenu-img").clone().prependTo( "#menu-button-" + menu_title );
-			jQuery(this).find('#menu-button-' + menu_title).on('click', function(){
+			jQuery(this).find('#menu-button-' + menu_title).on('click', function() {
 				jQuery(this).toggleClass('menu-opened');
 				var mainmenu = jQuery(this).next('ul');
 				if (mainmenu.hasClass('open')) {
@@ -111,8 +111,7 @@
 })(jQuery);
 
 
-jQuery(document).ready(function(){
-
+jQuery(document).ready(function() {
 	var	location = window.location.href;
 	location = location.replace(window.location.origin, '');
 	jQuery('.cssmenu-title').each(function(){

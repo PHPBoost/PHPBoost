@@ -158,6 +158,7 @@ a.pinned { cursor: pointer; }
 
 /* --- Coast to coast elements --- */
 .flex-between {
+    width: 100%;
     display: flex !important;
 	justify-content: space-between;
 	flex-direction: row;
@@ -166,15 +167,16 @@ a.pinned { cursor: pointer; }
 
 .flex-between.flex-between-large { flex-direction: column; }
 
-.flex-between.flex-between-large > * { margin-bottom: 0.309em; }
+.flex-between.flex-between-large > * { margin-bottom: 0.309em !important; }
 
 @media (min-width: 769px) {
 	.flex-between.flex-between-large { flex-direction: row; }
 
-	.flex-between.flex-between-large > * { margin-bottom: 0; }
+	.flex-between.flex-between-large > * { margin-bottom: 0 !important; }
 }
 
 .flex-around {
+    width: 100%;
     display: flex !important;
 	justify-content: space-around;
 	flex-direction: row;
@@ -206,7 +208,7 @@ a.pinned { cursor: pointer; }
 /* --- Sizes --- */
 @media (min-width: 769px) {
 	.wmodo { width: 2.809em !important;   }
-	
+
 	.w5   { width: 5% !important;   }
 	.w10  { width: 10% !important;  }
 	.w20  { width: 20% !important;  }
@@ -269,14 +271,14 @@ strong,
 .align-justify  { text-align: justify; }
 
 /* --- Hidden --- */
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 @media (max-width: 768px) {
-	.hidden-small-screens { display: none; }
+	.hidden-small-screens { display: none !important; }
 }
 
 @media (min-width: 769px) {
-	.hidden-large-screens { display: none; }
+	.hidden-large-screens { display: none !important; }
 }
 
 .spacer { clear: both; }

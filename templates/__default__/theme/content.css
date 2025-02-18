@@ -58,15 +58,6 @@
 	}
 }
 
-.cat-description::before,
-.cat-description::after,
-.content::before,
-.content::after {
-    content: '';
-    display: block;
-    clear: both;
-}
-
 .several-items #comment-form .section-header { display: none; }
 
 aside:not(#menu-left):not(#menu-right) {
@@ -86,13 +77,6 @@ aside:not(#menu-left):not(#menu-right)::after {
 
 /* --- Id Card --- */
 .id-card { margin: 1.618em 0 0; }
-
-.id-card::after,
-.id-card::before {
-    content: '';
-    display: block;
-    clear: both;
-}
 
 /* --- Sibling links --- */
 .related-links {

@@ -22,6 +22,7 @@ body {
 .bgc-main	{ background-color: var(--bgc-main); color: var(--txt-main); }
 .bgc-sub    { background-color: var(--bgc-sub); color: var(--txt-sub); }
 .bgc-alt	{ background-color: var(--bgc-alt); color: var(--txt-alt); }
+.bgc-alt a  { color: var(--txt-alt); }
 
 #footer       { border-color: var(--bdr-alt); }
 #footer-infos { border-color: var(--bdr-alt); }
@@ -673,8 +674,9 @@ a[class*='lightcase-icon-']:hover {
 .tabs-container > .tabs-nav > ul > li a.active-tab { background-color: rgba(var(--main-rgb-t), 0.2); }
 
 .tooltip {
-	border-color: var(--bdr-main);
-	background-color: var(--bgc-main);
+	border-color: var(--bdr-sub);
+	background-color: var(--bgc-sub);
+	color: var(--txt-sub);
 }
 
 .wizard-container .wizard-header li .completed-step {
@@ -688,6 +690,10 @@ a[class*='lightcase-icon-']:hover {
 
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
+.cell-bordered .cell {
+	border-color: var(--bdr-main);
+}
+
 .cell-tile .cell {
 	background-color: var(--bgc-sub);
     color: var(--txt-sub);
@@ -699,7 +705,6 @@ a[class*='lightcase-icon-']:hover {
 .cell-list li:hover,
 .cell-list .current {
     background-color: rgba(var(--main-rgb-t), 0.1);
-    color: var(--main-tone);
 }
 
 .cell-mini .cell { background-color: transparent; }
