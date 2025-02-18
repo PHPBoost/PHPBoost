@@ -1,6 +1,5 @@
 <script>
-//sortable
-
+    //sortable
 	jQuery(document).ready(function() {
 		if (jQuery("#input_fields_${escape(HTML_ID)}")[0]) {
 			jQuery("#input_fields_${escape(HTML_ID)}").sortable({
