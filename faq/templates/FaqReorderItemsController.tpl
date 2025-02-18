@@ -133,7 +133,7 @@
 				# ELSE #
 					# IF NOT C_HIDE_NO_ITEM_MESSAGE #
 						<div class="message-helper bgc notice align-center">
-							{@common.no_item_now}
+							{@common.no.item.now}
 						</div>
 					# ENDIF #
 				# ENDIF #
