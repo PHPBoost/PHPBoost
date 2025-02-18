@@ -579,30 +579,40 @@
 	});
 
 // Scroll to anchor on .sticky-menu
-	jQuery('.sticky-menu').each(function(){
-		jQuery('.sticky-menu .cssmenu-title').on('click',function(){
-			var targetId = jQuery(this).attr("href"),
-				hash = targetId.substring(targetId.indexOf('#'));
-			if(hash != null || hash != targetId) {
-				if (parseInt(jQuery(window).width()) < 769)
-					menuOffset = jQuery('.sticky-menu > .cssmenu > ul > li > .cssmenu-title').innerHeight();
-				else
-					menuOffset = jQuery('.sticky-menu > .cssmenu').innerHeight();
-				history.pushState('', '', hash);
-				jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
-			}
-		});
-		// remove offload class if # is in current page
+    jQuery('.sticky-menu').each( function() {
+        jQuery('.sticky-menu .cssmenu-title').on('click', function() {
+            if (jQuery('#menu-button-navigation').css('display') === 'block')
+            {
+                jQuery('#menu-button-navigation').removeClass('menu-opened');
+                jQuery('.sticky-menu ul').each( function() { jQuery(this).removeClass('open').addClass('close') });
+            }
+            var targetId = jQuery(this).attr("href"),
+                hash = targetId.substring(targetId.indexOf('#'));
+            if (hash != null || hash != targetId)
+            {
+                if (parseInt(jQuery(window).width()) < 769)
+                    menuOffset = jQuery('.sticky-menu > .cssmenu > ul > li > .cssmenu-title').innerHeight();
+                else
+                    menuOffset = jQuery('.sticky-menu > .cssmenu').innerHeight();
+                history.pushState('', '', hash);
+                jQuery('html, body').animate({scrollTop:jQuery(hash).offset().top - menuOffset}, 'slow');
+            }
+        });
+
         var path = window.location.pathname,
             pathSplit = path.split('/');
         pathSplit = pathSplit[pathSplit.length-1];
-        jQuery('#component-submenu .has-sub ul .cssmenu-title.offload').each(function() {
+        jQuery(this).find('.has-sub ul .cssmenu-title.offload').each(function() {
             var href = jQuery(this).attr('href');
             if ( href.indexOf(pathSplit) != -1 )
                 jQuery(this).removeClass("offload");
         });
-
-	});
+    });
+    jQuery(document).on('click', function(event) {
+        if (!jQuery(event.target).closest('.sticky-menu').length) {
+            history.pushState('', '', ' ');
+        }
+    });
 
 // Recognise an anchor link then scroll to
 	jQuery('a[href*="/scrollto#"]').each(function() {
