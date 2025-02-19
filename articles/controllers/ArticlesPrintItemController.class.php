@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 16
+ * @version     PHPBoost 6.0 - last update: 2025 02 19
  * @since       PHPBoost 4.0 - 2013 06 03
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,6 +14,7 @@ class ArticlesPrintItemController extends AbstractItemController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
+		$this->get_item();
 		$this->check_authorizations();
 
 		$this->build_view();
@@ -27,7 +28,7 @@ class ArticlesPrintItemController extends AbstractItemController
 		{
 			try
 			{
-				$item = self::get_items_manager()->get_item(AppContext::get_request()->get_getint('id', 0));
+				$this->item = self::get_items_manager()->get_item($this->request->get_getint('id', 0));
 			}
 			catch (RowNotFoundException $e)
 			{
@@ -54,11 +55,9 @@ class ArticlesPrintItemController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		$article = $this->get_item();
+		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($this->item->get_id_category())->moderation() && $this->item->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
 
-		$not_authorized = !CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->write() && (!CategoriesAuthorizationsService::check_authorizations($article->get_id_category())->moderation() && $article->get_author_user()->get_id() != AppContext::get_current_user()->get_id());
-
-		switch ($article->get_publishing_state())
+		switch ($this->item->get_publishing_state())
 		{
 			case ArticlesItem::PUBLISHED:
 				if (!CategoriesAuthorizationsService::check_authorizations()->read() || $not_authorized)
@@ -73,7 +72,7 @@ class ArticlesPrintItemController extends AbstractItemController
 				}
 			break;
 			case ArticlesItem::DEFERRED_PUBLICATION:
-				if (!$article->is_published() && $not_authorized)
+				if (!$this->item->is_published() && $not_authorized)
 				{
 					$this->display_user_not_authorized_page();
 				}
