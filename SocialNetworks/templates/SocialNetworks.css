@@ -40,6 +40,7 @@ span.social-connect { padding: 1em 1.618em; }
 
 /* --- Color Social network --- */
 .blogger    { background-color: #f57d00; }
+.bluesky    { background-color: #1083fe; }
 .discord    { background-color: #7289DA; }
 .facebook   { background-color: #3b5998; }
 .flickr     { background-color: #f40083; }
@@ -60,15 +61,16 @@ span.social-connect { padding: 1em 1.618em; }
 .telegram   { background-color: #0088CC; }
 .tumblr     { background-color: #35465d; }
 .twitch     { background-color: #6441A4; }
-.twitter    { background-color: #1da1f2; }
 .viadeo     { background-color: #f07355; }
 .viber      { background-color: #675CA8; }
 .wechat     { background-color: #7BB32E; }
 .whatsapp   { background-color: #25D366; }
+.x-twitter  { background-color: #000000; }
 .yahoo      { background-color: #430297; }
 .youtube    { background-color: #ff0000; }
 
 .blogger:hover    { color: #f57d00; border-color: #f57d00; background-color: rgba(245, 125, 0, 0.4); }
+.blogger:hover    { color: #1083fe; border-color: #1083fe; background-color: rgba(16, 131, 254, 0.4); }
 .discord:hover    { color: #7289DA; border-color: #7289DA; background-color: rgba(114, 137, 218, 0.4); }
 .facebook:hover   { color: #3b5998; border-color: #3b5998; background-color: rgba(59, 89, 152, 0.4); }
 .flickr:hover     { color: #f40083; border-color: #f40083; background-color: rgba(244, 0, 131, 0.4); }
@@ -89,11 +91,11 @@ span.social-connect { padding: 1em 1.618em; }
 .telegram:hover   { color: #0088CC; border-color: #0088CC; background-color: rgba(0, 136, 204, 0.4); }
 .tumblr:hover     { color: #35465d; border-color: #35465d; background-color: rgba(53, 70, 93, 0.4); }
 .twitch:hover     { color: #6441A4; border-color: #6441A4; background-color: rgba(100, 65, 164, 0.4); }
-.twitter:hover    { color: #1da1f2; border-color: #1da1f2; background-color: rgba(29, 161, 242, 0.4); }
 .viadeo:hover     { color: #f07355; border-color: #f07355; background-color: rgba(240, 115, 85, 0.4); }
 .viber:hover      { color: #675CA8; border-color: #675CA8; background-color: rgba(104, 93, 168, 0.4); }
 .wechat:hover     { color: #7BB32E; border-color: #7BB32E; background-color: rgba(123, 179, 46, 0.4); }
 .whatsapp:hover   { color: #25D366; border-color: #25D366; background-color: rgba(37, 210, 102, 0.4); }
+.x-twitter:hover  { color: #000000; border-color: #000000; background-color: rgba(0, 0, 0, 0.4); }
 .yahoo:hover      { color: #430297; border-color: #430297; background-color: rgba(67, 2, 150, 0.4); }
 .youtube:hover    { color: #ff0000; border-color: #ff0000; background-color: rgba(255, 0, 0, 0.4); }
 

@@ -53,11 +53,12 @@
 			change_display : function() {
 				jQuery("#change-display-" + this.id).html('<i class="fa fa-spin fa-spinner"></i>');
 				jQuery.ajax({
-					url: '/SocialNetworks/index.php?url=/config/change_display',
+					url: '{CHANGE_DISPLAY}',
 					type: "post",
 					dataType: "json",
 					data: {'id' : this.id, 'token' : '{TOKEN}'},
 					success: function(returnData){
+                        console.log(returnData);
 						if (returnData.id != '') {
 							if (returnData.display) {
 								jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" aria-label="{@sn.display.share.link}"></i>');

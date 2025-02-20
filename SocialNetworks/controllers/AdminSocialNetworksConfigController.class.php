@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 11 14
+ * @version     PHPBoost 6.0 - last update: 2025 02 20
  * @since       PHPBoost 5.1 - 2018 01 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -55,6 +55,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 		}
 
 		$this->view->put_all(array(
+            'CHANGE_DISPLAY' => Url::to_rel('/SocialNetworks/index.php?url=/config/change_display'),
 			'C_MORE_THAN_ONE_SOCIAL_NETWORK' => $social_networks_number > 1,
 			'FORM' => $this->form->display()
 		));
