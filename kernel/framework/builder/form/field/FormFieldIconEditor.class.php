@@ -27,12 +27,15 @@ class FormFieldIconEditor extends AbstractFormField
 
         $value = TextHelper::deserialize($this->get_value());
         if($value)
+        foreach($value as $prefix => $icon)
+        {
             $view->put_all([
-                'C_PREFIX_FAS' => $value['prefix'] === 'fas',
-                'C_PREFIX_FAR' => $value['prefix'] === 'far',
-                'C_PREFIX_FAB' => $value['prefix'] === 'fab',
-                'ICON_VALUE' => $value['icon'],
+                'C_PREFIX_FAS' => $prefix === 'fas',
+                'C_PREFIX_FAR' => $prefix === 'far',
+                'C_PREFIX_FAB' => $prefix === 'fab',
+                'ICON_VALUE' => $icon,
             ]);
+        }
 
 		$view->put_all(array(
 			'NAME' => $this->get_html_id(),

@@ -11,10 +11,7 @@
             name="${escape(ICON)}"
             id="${escape(ICON)}"
             value="{ICON_VALUE}"
-            class="grouped-element fa-icon # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}"
-            placeholder="icon name *"
-            # IF C_DISABLED # disabled="disabled"# ENDIF #
-            # IF C_READONLY # readonly="readonly"# ENDIF # />
+            class="grouped-element fa-icon # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" />
         <span id="${escape(SELECTED)}" class="grouped-element icon-selected"></span>
     </div>
     <ul id="${escape(ICON_LIST)}" class="icon-list hidden"></ul>
@@ -33,6 +30,7 @@
             this.inputIcon.disabled = true;
 
             this.initEventListeners();
+            window.onload = this.checkValuesOnLoad.bind(this);
         }
 
         initEventListeners() {
@@ -43,11 +41,26 @@
             this.inputIcon.addEventListener('click', this.handleIconClick.bind(this));
         }
 
+        checkValuesOnLoad() {
+            if (this.prefixSelect.value) {
+                this.prefixChoice = this.prefixSelect.value;
+                this.inputIcon.disabled = false;
+                this.handlePrefixChoice();
+
+                if (this.inputIcon.value) {
+                    this.selectedIcon.innerHTML = '<i class="' + this.prefixChoice + ' fa-' + this.inputIcon.value.replace('fa-', '') + '"></i>';
+                }
+            }
+        }
+
         handlePrefixChange() {
             this.prefixChoice = this.prefixSelect.value;
             this.inputIcon.value = '';
             this.selectedIcon.innerHTML = '';
+            this.handlePrefixChoice();
+        }
 
+        handlePrefixChoice() {
             switch (this.prefixChoice) {
                 case 'fab':
                     this.inputIcon.placeholder = '{@form.icon.input}';
