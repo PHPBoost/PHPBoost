@@ -58,7 +58,6 @@
 					dataType: "json",
 					data: {'id' : this.id, 'token' : '{TOKEN}'},
 					success: function(returnData){
-                        console.log(returnData);
 						if (returnData.id != '') {
 							if (returnData.display) {
 								jQuery("#change-display-" + returnData.id).html('<i class="fa fa-eye" aria-label="{@sn.display.share.link}"></i>');

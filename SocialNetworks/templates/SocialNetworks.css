@@ -70,7 +70,7 @@ span.social-connect { padding: 1em 1.618em; }
 .youtube    { background-color: #ff0000; }
 
 .blogger:hover    { color: #f57d00; border-color: #f57d00; background-color: rgba(245, 125, 0, 0.4); }
-.blogger:hover    { color: #1083fe; border-color: #1083fe; background-color: rgba(16, 131, 254, 0.4); }
+.bluesky:hover    { color: #1083fe; border-color: #1083fe; background-color: rgba(16, 131, 254, 0.4); }
 .discord:hover    { color: #7289DA; border-color: #7289DA; background-color: rgba(114, 137, 218, 0.4); }
 .facebook:hover   { color: #3b5998; border-color: #3b5998; background-color: rgba(59, 89, 152, 0.4); }
 .flickr:hover     { color: #f40083; border-color: #f40083; background-color: rgba(244, 0, 131, 0.4); }
