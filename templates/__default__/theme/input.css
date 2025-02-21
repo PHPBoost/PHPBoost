@@ -259,3 +259,30 @@ a.grouped-element,
 	background-repeat: no-repeat;
 	background-size: contain;
 }
+
+/* --- Icon picker --- */
+select.fa-select {
+    width: 55px;
+    flex: 0;
+}
+
+.icon-list {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    max-height: 350px;
+    overflow-y: auto;
+    background-color: var(--bgc-main);
+    border: 1px solid var(--bdr-main);
+    z-index: 5;
+    list-style-type: none;
+    margin: 0;
+    padding: 0.309em;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.618em;
+}
+
+.icon-list li:hover {
+    cursor: pointer;
+}

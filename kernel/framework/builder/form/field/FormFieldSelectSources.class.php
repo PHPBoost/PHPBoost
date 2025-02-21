@@ -33,7 +33,6 @@ class FormFieldSelectSources extends AbstractFormField
 			'C_DISABLED' => $this->is_disabled()
 		));
 
-
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
