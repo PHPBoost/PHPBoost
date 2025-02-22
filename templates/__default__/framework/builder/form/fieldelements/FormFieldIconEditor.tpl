@@ -20,14 +20,14 @@
     class IconSelector_${escape(ID)} {
         constructor(prefix, icon, iconList, selected) {
             this.prefixSelect = document.getElementById(prefix);
-            this.inputIcon = document.getElementById(icon);
+            this.iconInput = document.getElementById(icon);
             this.iconList = document.getElementById(iconList);
             this.selectedIcon = document.getElementById(selected);
             this.prefixChoice = '';
             this.choosenList = [];
 
-            this.inputIcon.placeholder = '{@form.icon.select}';
-            this.inputIcon.disabled = true;
+            this.iconInput.placeholder = '{@form.icon.select}';
+            this.iconInput.disabled = true;
 
             this.initEventListeners();
             window.onload = this.checkValuesOnLoad.bind(this);
@@ -35,27 +35,27 @@
 
         initEventListeners() {
             this.prefixSelect.addEventListener('change', this.handlePrefixChange.bind(this));
-            this.inputIcon.addEventListener('focus', this.handleIconFocus.bind(this));
-            this.inputIcon.addEventListener('input', this.handleIconInput.bind(this));
-            this.inputIcon.addEventListener('blur', this.handleIconBlur.bind(this));
-            this.inputIcon.addEventListener('click', this.handleIconClick.bind(this));
+            this.iconInput.addEventListener('focus', this.handleIconFocus.bind(this));
+            this.iconInput.addEventListener('input', this.handleIconInput.bind(this));
+            this.iconInput.addEventListener('blur', this.handleIconBlur.bind(this));
+            this.iconInput.addEventListener('click', this.handleIconClick.bind(this));
         }
 
         checkValuesOnLoad() {
             if (this.prefixSelect.value) {
                 this.prefixChoice = this.prefixSelect.value;
-                this.inputIcon.disabled = false;
+                this.iconInput.disabled = false;
                 this.handlePrefixChoice();
 
-                if (this.inputIcon.value) {
-                    this.selectedIcon.innerHTML = '<i class="' + this.prefixChoice + ' fa-' + this.inputIcon.value.replace('fa-', '') + '"></i>';
+                if (this.iconInput.value) {
+                    this.selectedIcon.innerHTML = '<i class="' + this.prefixChoice + ' fa-' + this.iconInput.value.replace('fa-', '') + '"></i>';
                 }
             }
         }
 
         handlePrefixChange() {
             this.prefixChoice = this.prefixSelect.value;
-            this.inputIcon.value = '';
+            this.iconInput.value = '';
             this.selectedIcon.innerHTML = '';
             this.handlePrefixChoice();
         }
@@ -63,19 +63,19 @@
         handlePrefixChoice() {
             switch (this.prefixChoice) {
                 case 'fab':
-                    this.inputIcon.placeholder = '{@form.icon.input}';
-                    this.inputIcon.disabled = false;
+                    this.iconInput.placeholder = '{@form.icon.input}';
+                    this.iconInput.disabled = false;
                     this.choosenList = [{FAB}]; // Replace with actual list
                     break;
                 case 'fas':
                 case 'far':
-                    this.inputIcon.placeholder = '{@form.icon.input}';
-                    this.inputIcon.disabled = false;
+                    this.iconInput.placeholder = '{@form.icon.input}';
+                    this.iconInput.disabled = false;
                     this.choosenList = [{FAS}]; // Replace with actual list
                     break;
                 default:
-                    this.inputIcon.placeholder = '{@form.icon.select}';
-                    this.inputIcon.disabled = true;
+                    this.iconInput.placeholder = '{@form.icon.select}';
+                    this.iconInput.disabled = true;
                     this.choosenList = [];
             }
         }
@@ -86,13 +86,13 @@
         }
 
         handleIconInput() {
-            const query = this.inputIcon.value.toLowerCase();
+            const query = this.iconInput.value.toLowerCase();
             const filteredIcons = this.choosenList.filter(icon => this.matchQuery(icon, query));
 
             if (query === '') {
                 this.selectedIcon.innerHTML = '';
             } else {
-                this.selectedIcon.innerHTML = '<i class="' + this.prefixChoice + ' ' + this.inputIcon.value + '"></i>';
+                this.selectedIcon.innerHTML = '<i class="' + this.prefixChoice + ' ' + this.iconInput.value + '"></i>';
             }
 
             this.displayIcons(filteredIcons);
@@ -129,9 +129,9 @@
                 const li = document.createElement('li');
                 li.innerHTML = '<span aria-label="' + icon + '"><i class="' + this.prefixChoice + ' fa-fw fa-' + icon + '"></i><span>';
                 li.addEventListener('click', () => {
-                    this.inputIcon.value = 'fa-' + icon + '';
+                    this.iconInput.value = 'fa-' + icon + '';
                     this.iconList.innerHTML = '';
-                    this.inputIcon.focus();
+                    this.iconInput.focus();
                     this.selectedIcon.innerHTML = '<i class="' + this.prefixChoice + ' fa-' + icon + '"></i>';
                 });
                 this.iconList.appendChild(li);
