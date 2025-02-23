@@ -5,8 +5,6 @@
 			jQuery("#input_fields_${escape(HTML_ID)}").sortable({
 				handle: '.sortable-selector',
 				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-                afterMove: function(a, b, c) {
-                },
 				onDrop: function ($item, container, _super, event) {
 					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
 					$("body").removeClass(container.group.options.bodyClass);
@@ -29,6 +27,16 @@
                 jQuery(this).find('.input-radio').attr('id', 'field_is_default_${escape(HTML_ID)}_' + jQuery(this).index());
             # ENDIF #
         })
+    }
+
+    function move(id, direction)
+    {
+        var li = jQuery('#' + id).closest('li');
+        if(direction === 'up')
+            li.insertBefore( li.prev() );
+        if(direction === 'down')
+            li.insertAfter( li.next() );
+        change_ids();
     }
 
     // fields
@@ -60,8 +68,8 @@
 				jQuery('<input/>', {class : 'input-text grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{PLACEHOLDER}'}).appendTo('#' + id + '_inputs');
 				jQuery('#field_name_' + id).after(' ');
 				jQuery('<a/>', {class : 'delete-item grouped-element bgc-full error', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : ${escapejs(@common.delete)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
-				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : ${escapejs(@common.move.up)}, onclick : "var li = jQuery(this).closest('li');li.insertBefore(li.prev());change_ids();return false;"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
-				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : ${escapejs(@common.move.up)}, onclick : "move(this.id, 'up');change_ids();return false;"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "move(this.id, 'down');change_ids();return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
 				# IF C_DISPLAY_DEFAULT_RADIO #
 					jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
@@ -141,8 +149,8 @@
                 <span class="sortable-selector grouped-element" aria-label="{@common.move}">&nbsp;</span>
                 <input class="input-text grouped-element" type="text" name="field_name_${escape(HTML_ID)}_{fieldelements.ID}" id="field_name_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.TITLE}" placeholder="{PLACEHOLDER}"/>
                 <a class="delete-item grouped-element bgc-full error# IF NOT C_DELETE # icon-disabled# ENDIF #" href="javascript:FormFieldPossibleValues.delete_field({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@common.delete}"# IF C_DELETE # data-confirmation="delete-element"# ENDIF #><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-                <a href="#" class="move-up grouped-element" aria-label="{@common.move.up}" id="move-up-${escape(HTML_ID)}_{fieldelements.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-                <a href="#" class="move-down grouped-element" aria-label="{@common.move.down}" id="move-down-${escape(HTML_ID)}_{fieldelements.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                <a href="#" class="move-up grouped-element" aria-label="{@common.move.up}" id="move-up-${escape(HTML_ID)}_{fieldelements.ID}" onclick="move(this.id, 'up');return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                <a href="#" class="move-down grouped-element" aria-label="{@common.move.down}" id="move-down-${escape(HTML_ID)}_{fieldelements.ID}" onclick="move(this.id, 'down');return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
             </div>
 
             # IF C_DISPLAY_DEFAULT_RADIO #
@@ -152,21 +160,6 @@
                     });
                 </script>
             # ENDIF #
-            <script>
-                jQuery(document).ready(function() {
-                    jQuery("#move-up-${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
-                        var li = jQuery(this).closest('li');
-                        li.insertBefore( li.prev() );
-                        change_ids();
-                    });
-
-                    jQuery("#move-down-${escape(HTML_ID)}_{fieldelements.ID}").on('click',function(){
-                        var li = jQuery(this).closest('li');
-                        li.insertAfter( li.next() );
-                        change_ids();
-                    });
-                });
-            </script>
         </li>
     # END fieldelements #
 </ul>
