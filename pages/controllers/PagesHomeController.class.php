@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 22
+ * @version     PHPBoost 6.0 - last update: 2025 02 23
  * @since       PHPBoost 5.2 - 2020 06 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -70,15 +70,6 @@ class PagesHomeController extends DefaultSeveralItemsController
 	protected function get_template_to_use()
 	{
 		return new FileTemplate('pages/PagesHomeController.tpl');
-	}
-
-	public static function get_view($module_id = '')
-	{
-		$object = new self(self::$module_id);
-		$object->check_authorizations();
-		$object->init();
-		$object->build_view();
-		return $object->view;
 	}
 }
 ?>
