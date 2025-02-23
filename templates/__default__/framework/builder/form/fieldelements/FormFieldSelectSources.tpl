@@ -46,15 +46,17 @@
 
 				jQuery('<div/>', {'id' : id, class : 'sources-link grouped-inputs'}).appendTo('#input_fields_' + this.id_input);
 
-                jQuery('<span/>', {class : 'sortable-selector grouped-element', 'aria-label' : ${escapejs(@common.move)}}).html('&nbsp;').appendTo('#' + id + '_inputs');
+                		jQuery('<span/>', {class : 'sortable-selector grouped-element', 'aria-label' : ${escapejs(@common.move)}}).html('&nbsp;').appendTo('#' + id);
 
 				jQuery('<input/> ', {type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, class : 'input-name grouped-element', placeholder : '{@form.source.name}'}).appendTo('#' + id);
-				jQuery('#' + id).append(' ');
+				jQuery('#' + id).append('');
 
 				jQuery('<input/> ', {type : 'url', id : 'field_value_' + id, name : 'field_value_' + id, class : 'input-url grouped-element', placeholder : '{@form.source.url}'}).appendTo('#' + id);
 				jQuery('#' + id).append(' ');
 
-				jQuery('<a/> ', {href : 'javascript:FormFieldSelectSources.delete_field('+ this.integer +');', class : 'delete-item grouped-element bgc-full error', 'aria-label' : '{@form.delete.source}'}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+				jQuery('<a/>', {class : 'delete-item grouped-element bgc-full error', href : 'javascript:FormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : ${escapejs(@form.delete.source)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : ${escapejs(@common.move.up)}, onclick : "var li = jQuery(this).closest('li');li.insertBefore(li.prev());change_ids();return false;"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
 				this.integer++;
 			}
@@ -75,14 +77,14 @@
 
 <ul id="input_fields_${escape(ID)}" class="sortable-block">
 	# START fieldelements #
-		<li class="sources-link grouped-inputs" id="${escape(ID)}_{fieldelements.ID}">
-            <span class="sortable-selector grouped-element" aria-label="{@common.move}">&nbsp;</span>
-            <input class="input-name grouped-element" type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
-			<input class="input-url grouped-element" type="url" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}"/>
-            <a href="#" class="move-up grouped-element" aria-label="{@common.move.up}" id="move-up-${escape(ID)}_{fieldelements.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-            <a href="#" class="move-down grouped-element" aria-label="{@common.move.down}" id="move-down-${escape(ID)}_{fieldelements.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-            <a class="grouped-element bgc-full error" href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.delete.source}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
-            <script>
+	<li class="sources-link grouped-inputs" id="${escape(ID)}_{fieldelements.ID}">
+		<span class="sortable-selector grouped-element" aria-label="{@common.move}">&nbsp;</span>
+		<input class="input-name grouped-element" type="text" name="field_name_${escape(ID)}_{fieldelements.ID}" id="field_name_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.NAME}" placeholder="{@form.source.name}"/>
+		<input class="input-url grouped-element" type="url" name="field_value_${escape(ID)}_{fieldelements.ID}" id="field_value_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.VALUE}" placeholder="{@form.source.url}"/>
+		<a class="grouped-element bgc-full error" href="javascript:FormFieldSelectSources.delete_field({fieldelements.ID});" data-confirmation="delete-element" aria-label="{@form.delete.source}"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+            	<a href="#" class="move-up grouped-element" aria-label="{@common.move.up}" id="move-up-${escape(ID)}_{fieldelements.ID}" onclick="return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+		<a href="#" class="move-down grouped-element" aria-label="{@common.move.down}" id="move-down-${escape(ID)}_{fieldelements.ID}" onclick="return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+		<script>
                 jQuery(document).ready(function() {
                     jQuery("#move-up-${escape(ID)}_{fieldelements.ID}").on('click',function(){
                         var li = jQuery(this).closest('li');
@@ -96,7 +98,7 @@
                         change_ids();
                     });
                 });
-            </script>
+           	 </script>
         </li>
 	# END fieldelements #
 </ul>
