@@ -52,6 +52,7 @@
 					jQuery('<label/>', {class : 'radio', for : 'field_is_default_' + this.id_input + '_' + this.integer}).appendTo('#' + id + '_radio');
 					jQuery('<input/>', {class : 'input-radio', type : 'radio', 'aria-label' : ${escapejs(@common.default.by)}, id : 'field_is_default_' + this.id_input + '_' + this.integer, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio label');
 					jQuery('<span/>', {class : 'is-default-title'}).html('&nbsp;').appendTo('#' + id + '_radio label');
+					jQuery('#' + id + '_radio').after('&nbsp;');
 				# ENDIF #
 
 				jQuery('<div/>', {id : id + '_inputs', class: 'grouped-inputs flex-wide'}).appendTo('#' + id);
