@@ -59,8 +59,8 @@
 				jQuery('<input/>', {class : 'input-text grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{PLACEHOLDER}'}).appendTo('#' + id + '_inputs');
 				jQuery('#field_name_' + id).after(' ');
 				jQuery('<a/>', {class : 'delete-item grouped-element bgc-full error', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : ${escapejs(@common.delete)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
-				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : ${escapejs(@common.move.up)}, onclick : "function(){var li = jQuery(this).closest('li');li.insertBefore(li.prev());change_ids();return false;}"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
-				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "function(){var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;}"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : ${escapejs(@common.move.up)}, onclick : "var li = jQuery(this).closest('li');li.insertBefore(li.prev());change_ids();return false;"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
 				# IF C_DISPLAY_DEFAULT_RADIO #
 					jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
