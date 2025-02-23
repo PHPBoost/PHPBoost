@@ -51,8 +51,7 @@
 					jQuery('<div/>', {id : id + '_radio', class: 'form-field-radio'}).appendTo('#' + id);
 					jQuery('<label/>', {class : 'radio', for : 'field_is_default_' + this.id_input + '_' + this.integer}).appendTo('#' + id + '_radio');
 					jQuery('<input/>', {class : 'input-radio', type : 'radio', id : 'field_is_default_' + this.id_input + '_' + this.integer, name : 'field_is_default_' + this.id_input, value : this.integer}).appendTo('#' + id + '_radio label');
-					jQuery('<span/>', {class : 'is-default-title'}).html('&nbsp;').appendTo('#' + id + '_radio label');
-					jQuery('#' + id + '_radio').after(' ');
+					jQuery('<span/>', {class : 'is-default-title'}).html('&nbsp;').appendTo('#' + id + '_radio');
 				# ENDIF #
 
 				jQuery('<div/>', {id : id + '_inputs', class: 'grouped-inputs flex-wide'}).appendTo('#' + id);
@@ -60,8 +59,8 @@
 				jQuery('<input/>', {class : 'input-text grouped-element', type : 'text', id : 'field_name_' + id, name : 'field_name_' + id, placeholder : '{PLACEHOLDER}'}).appendTo('#' + id + '_inputs');
 				jQuery('#field_name_' + id).after(' ');
 				jQuery('<a/>', {class : 'delete-item grouped-element bgc-full error', href : 'javascript:FormFieldPossibleValues.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : "{@common.delete}"}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
-				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : "{@common.move.up}", onclick : "return false;"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
-				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : "{@common.move.down}", onclick : "return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : "{@common.move.up}", onclick : "function(){var li = jQuery(this).closest('li');li.insertBefore(li.prev());change_ids();return false;}"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
+				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : "{@common.move.down}", onclick : "function(){var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;}"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id + '_inputs');
 
 				# IF C_DISPLAY_DEFAULT_RADIO #
 					jQuery('<script/>').html('jQuery("#field_is_default_' + id + '").on(\'click\',function(){ jQuery("#uncheck_default_${escape(HTML_ID)}").show(); });').appendTo('#' + id);
