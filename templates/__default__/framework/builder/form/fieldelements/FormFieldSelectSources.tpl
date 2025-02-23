@@ -56,7 +56,7 @@
 
 				jQuery('<a/>', {class : 'delete-item grouped-element bgc-full error', href : 'javascript:FormFieldSelectSources.delete_field('+ this.integer +');', id : 'delete_' + id, 'aria-label' : ${escapejs(@form.delete.source)}}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 				jQuery('<a/>', {class : 'move-up grouped-element', href : '#', id : 'move-up-' + id, 'aria-label' : ${escapejs(@common.move.up)}, onclick : "var li = jQuery(this).closest('li');li.insertBefore(li.prev());change_ids();return false;"}).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + id);
-				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id');
+				jQuery('<a/>', {class : 'move-down grouped-element', href : '#', id : 'move-down-' + id, 'aria-label' : ${escapejs(@common.move.down)}, onclick : "var li = jQuery(this).closest('li');li.insertAfter(li.next());;change_ids();return false;"}).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + id);
 
 				this.integer++;
 			}
