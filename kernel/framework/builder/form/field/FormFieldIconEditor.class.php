@@ -6,13 +6,13 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 22
+ * @version     PHPBoost 6.0 - last update: 2025 02 23
  * @since       PHPBoost 6.0 - 2025 02 21
 */
 
 class FormFieldIconEditor extends AbstractFormField
 {
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -23,10 +23,12 @@ class FormFieldIconEditor extends AbstractFormField
 
 		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldIconEditor.tpl');
 		$view->add_lang(LangLoader::get_all_langs());
+
         $this->assign_common_template_variables($template);
 
         $value = TextHelper::deserialize($this->get_value());
         if($value)
+        {
             foreach($value as $prefix => $icon)
             {
                 $view->put_all([
@@ -36,8 +38,9 @@ class FormFieldIconEditor extends AbstractFormField
                     'ICON_VALUE' => $icon,
                 ]);
             }
+        }
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
             'PREFIX' => $this->get_html_id() . '_prefix',
@@ -46,11 +49,11 @@ class FormFieldIconEditor extends AbstractFormField
             'SELECTED' => $this->get_html_id() . '_selected',
             'FAS' => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/solid.css'),
             'FAB' => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/brand.css'),
-        ));
+        ]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-        ));
+        ]);
 
         return $template;
     }
