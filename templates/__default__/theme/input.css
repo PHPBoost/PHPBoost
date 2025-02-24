@@ -261,8 +261,8 @@ a.grouped-element,
 }
 
 /* --- Icon picker --- */
-select.fa-select {
-    width: 55px;
+select.icon-select {
+    width: auto;
     flex: 0;
 }
 

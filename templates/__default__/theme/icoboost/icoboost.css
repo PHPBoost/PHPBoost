@@ -40,31 +40,31 @@
     min-height: 1em;
 }
 
-.fa-iboost-email::before {
-    content: "\b900"; }
+.fa-iboost-email {
+    --fa: "\b900"; }
 
-.fa-iboost-logo-phpboost::before,
-.fa-iboost-phpboost::before,
-.fa-iboost-logo::before {
-    content: "\b000"; }
+.fa-iboost-logo-phpboost,
+.fa-iboost-phpboost,
+.fa-iboost-logo {
+    --fa: "\b000"; }
 
-.fa-iboost-phpboost-01::before {
-    content: "\b001"; }
+.fa-iboost-phpboost-01 {
+    --fa: "\b001"; }
 
-.fa-iboost-phpboost-02::before {
-    content: "\b002"; }
+.fa-iboost-phpboost-02 {
+    --fa: "\b002"; }
 
-.fa-iboost-phpboost-03::before {
-    content: "\b003"; }
+.fa-iboost-phpboost-03 {
+    --fa: "\b003"; }
 
-.fa-iboost-tag-51::before {
-    content: "\b051"; }
+.fa-iboost-tag-51 {
+    --fa: "\b051"; }
 
-.fa-iboost-tag-52::before {
-    content: "\b052"; }
+.fa-iboost-tag-52 {
+    --fa: "\b052"; }
 
-.fa-iboost-tag-60::before {
-    content: "\b060"; }
+.fa-iboost-tag-60 {
+    --fa: "\b060"; }
 
 /* Tri colors logo */
 .fa-stack.logo-stack {
@@ -89,11 +89,3 @@
 .color-tag.fa-iboost-tag-51 { color: #134F61; }
 .color-tag.fa-iboost-tag-52 { color: #16A086; }
 .color-tag.fa-iboost-tag-60 { color: #0B72B7; }
-
-/* Hack position */
-.iboost::before {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.12em;
-}

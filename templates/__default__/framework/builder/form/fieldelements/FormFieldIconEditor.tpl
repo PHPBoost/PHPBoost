@@ -1,10 +1,11 @@
 <div id="${escape(ID)}">
     <div class="grouped-inputs">
-        <select class="fa-select" name="${escape(PREFIX)}" id="${escape(PREFIX)}">
+        <select class="icon-select" name="${escape(PREFIX)}" id="${escape(PREFIX)}">
             <option value=""></option>
             <option value="fas"# IF C_PREFIX_FAS # selected# ENDIF #>fas</option>
             <option value="far"# IF C_PREFIX_FAR # selected# ENDIF #>far</option>
             <option value="fab"# IF C_PREFIX_FAB # selected# ENDIF #>fab</option>
+            <option value="fa iboost"# IF C_PREFIX_FAB # selected# ENDIF #>iboost</option>
         </select>
         <input
             type="text"
@@ -72,6 +73,11 @@
                     this.iconInput.placeholder = '{@form.icon.input}';
                     this.iconInput.disabled = false;
                     this.choosenList = [{FAS}]; // Replace with actual list
+                    break;
+                case 'fa iboost':
+                    this.iconInput.placeholder = '{@form.icon.input}';
+                    this.iconInput.disabled = false;
+                    this.choosenList = [{IBOOST}]; // Replace with actual list
                     break;
                 default:
                     this.iconInput.placeholder = '{@form.icon.select}';
