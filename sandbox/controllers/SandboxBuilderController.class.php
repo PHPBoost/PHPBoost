@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 09
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -98,6 +98,11 @@ class SandboxBuilderController extends DefaultModuleController
 		// TEXT FIELDS
 		$text_fields = new FormFieldsetHTML('text_field', $this->lang['sandbox.builder.text.fields']);
 			$form->add_fieldset($text_fields);
+
+			// Icon
+			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], [],
+				array('description' => '', 'class' => 'css-class')
+			));
 
 			// Text
 			$text_fields->add_field(new FormFieldTextEditor('text', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'],

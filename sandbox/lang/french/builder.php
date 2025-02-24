@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,6 +23,7 @@ $lang['sandbox.builder.title']   = 'Formulaire';
 $lang['sandbox.builder.preview'] = 'Prévisualisation';
 
 $lang['sandbox.builder.text.fields']     = 'Champs texte';
+$lang['sandbox.builder.icon.fields']     = 'Champs icône';
 $lang['sandbox.builder.textarea']        = 'Textarea';
 $lang['sandbox.builder.checked.choices'] = 'Radio / checkbox';
 $lang['sandbox.builder.selects']         = 'Sélecteurs';

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 23
+ * @version     PHPBoost 6.0 - last update: 2025 02 24
  * @since       PHPBoost 6.0 - 2025 02 21
 */
 
@@ -35,6 +35,7 @@ class FormFieldIconEditor extends AbstractFormField
                     'C_PREFIX_FAS' => $prefix === 'fas',
                     'C_PREFIX_FAR' => $prefix === 'far',
                     'C_PREFIX_FAB' => $prefix === 'fab',
+                    'C_PREFIX_IBOOST' => $prefix === 'fa iboost',
                     'ICON_VALUE' => $icon,
                 ]);
             }
@@ -49,6 +50,7 @@ class FormFieldIconEditor extends AbstractFormField
             'SELECTED' => $this->get_html_id() . '_selected',
             'FAS' => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/solid.css'),
             'FAB' => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/brand.css'),
+            'IBOOST' => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/icoboost/icoboost.css'),
         ]);
 
 		$template->assign_block_vars('fieldelements', [
@@ -60,7 +62,7 @@ class FormFieldIconEditor extends AbstractFormField
 
 	public function retrieve_value()
     {
-		$request = AppContext::get_request();
+        $request = AppContext::get_request();
 
 		$values = [];
         $icon_id = $this->get_html_id() . '_icon';

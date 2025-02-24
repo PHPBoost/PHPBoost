@@ -63,7 +63,7 @@ class SandboxIconsController extends DefaultModuleController
 					foreach($classes as $class)
 					{
 						if (TextHelper::strpos($class, 'fa-') !== false) {
-							$icon = str_replace('.', '',$class);
+							$icon = str_replace('.', '', $class);
 							if (TextHelper::strpos($class, 'fa-') !== false) {
 								$fa = $icon;
 							}
