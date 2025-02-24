@@ -125,7 +125,7 @@ $lang['form.avatar.management']     = 'Gestion de l\'avatar';
 $lang['form.required.field']        = 'Champ requis';
 $lang['form.required.field.clue']   = 'Obligatoire dans le profil du membre et à son inscription.';
 $lang['form.possible.values']       = 'Valeurs possibles';
-$lang['form.icon.select']           = 'Choisissez un préfix dans le selecteur';
+$lang['form.icon.select']           = 'Choisissez un préfixe dans le selecteur';
 $lang['form.icon.input']            = 'Choisissez une icône';
 $lang['form.icon.none']             = 'Aucune icône trouvée';
 
