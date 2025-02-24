@@ -12,6 +12,9 @@
 	var L_HIDE_HIDEBLOCK  = ${escapejs(@common.hide.text)};
 	var L_COPYTOCLIPBOARD = ${escapejs(@common.copy.to.clipboard)};
 
+	var L_PREV = ${escapejs(@common.previous)};
+	var L_NEXT = ${escapejs(@common.next)};
+
 	// CookieBar Variables
 	# IF C_COOKIEBAR_ENABLED #
 		var COOKIEBAR_DURATION        = {COOKIEBAR_DURATION};

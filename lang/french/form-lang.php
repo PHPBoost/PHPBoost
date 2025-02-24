@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 09
+ * @version     PHPBoost 6.0 - last update: 2025 02 21
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -125,6 +125,9 @@ $lang['form.avatar.management']     = 'Gestion de l\'avatar';
 $lang['form.required.field']        = 'Champ requis';
 $lang['form.required.field.clue']   = 'Obligatoire dans le profil du membre et à son inscription.';
 $lang['form.possible.values']       = 'Valeurs possibles';
+$lang['form.icon.select']           = 'Choisissez un préfix dans le selecteur';
+$lang['form.icon.input']            = 'Choisissez une icône';
+$lang['form.icon.none']             = 'Aucune icône trouvée';
 
 // Labels
 $lang['form.name']                       = 'Nom';

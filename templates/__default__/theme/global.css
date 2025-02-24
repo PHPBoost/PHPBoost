@@ -158,7 +158,6 @@ a.pinned { cursor: pointer; }
 
 /* --- Coast to coast elements --- */
 .flex-between {
-    width: 100%;
     display: flex !important;
 	justify-content: space-between;
 	flex-direction: row;

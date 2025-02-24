@@ -60,7 +60,7 @@
 // Multitabs
     jQuery('.modal-container [data-modal]').multiTabs({ pluginType: 'modal' });
     jQuery('.tabs-container [data-tabs]').multiTabs({ pluginType: 'tabs' });
-	
+
 	jQuery('.multiple-accordion').accordion();
 	jQuery('.single-accordion').accordion({
 		openSingle: true
@@ -170,9 +170,9 @@
 	});
 
 // Sidebar behaviour - needed to fix the BBCode troubles on long texts
-	jQuery('#main').theiaStickySidebar();
-	# IF C_HAS_LEFT_MENUS #jQuery('#menu-left').theiaStickySidebar();# ENDIF #
-	# IF C_HAS_RIGHT_MENUS #jQuery('#menu-right').theiaStickySidebar();# ENDIF #
+	// jQuery('#main').theiaStickySidebar();
+	// # IF C_HAS_LEFT_MENUS #jQuery('#menu-left').theiaStickySidebar();# ENDIF #
+	// # IF C_HAS_RIGHT_MENUS #jQuery('#menu-right').theiaStickySidebar();# ENDIF #
 
 // Add outline on element if only Tab key is pressed
     jQuery('*').on('focus', function(e) {

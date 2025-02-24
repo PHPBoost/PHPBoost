@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 05
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -56,7 +56,7 @@ $lang['menu.tools'] = 'Outils';
 
 $lang['menu.cache']                = 'Cache';
 $lang['menu.cache.syndication']    = 'Syndication';
-$lang['menu.cache.css']            = 'CSS';
+$lang['menu.cache.css']            = 'CSS & JS';
 $lang['menu.errors']               = 'Erreur';
 $lang['menu.errors.archived']      = 'Erreurs archivées';
 $lang['menu.errors.404']           = 'Erreurs 404';

@@ -7,7 +7,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
+        <a href="" class="print-button" onclick="hideButton(this); javascript:window.print();">
+            <span>{@common.print}</span>
+        </a>
 		<h1>{TITLE}</h1>
 		<div>{CONTENT}</div>
+        <script>
+            function hideButton(button) {
+                button.style.display = 'none';
+                console.log(button);
+            }
+        </script>
 	</body>
 </html>

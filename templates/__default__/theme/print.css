@@ -35,3 +35,15 @@ div, textarea, table, td, th, code, pre, samp {
 	hyphens: auto;
 	-webkit-hyphens: auto;
 }
+
+.print-button {
+    margin-top: 16px;
+    display: block;
+    text-align: center;
+}
+
+.print-button span {
+    display: inline;
+    padding: 8px;
+    background-color: #DDDDDD;
+}
