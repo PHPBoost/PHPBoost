@@ -15,7 +15,6 @@
         <script>
             function hideButton(button) {
                 button.style.display = 'none';
-                console.log(button);
             }
         </script>
 	</body>
