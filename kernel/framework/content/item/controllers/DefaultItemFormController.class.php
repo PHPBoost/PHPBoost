@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 13
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -295,7 +295,7 @@ class DefaultItemFormController extends AbstractItemController
 			}
 			else
 			{
-				$fieldset->add_field(new FormFieldCheckbox('publishing_state', $this->lang['form.approve'], $this->get_item()->get_publishing_state()));
+				$publication_fieldset->add_field(new FormFieldCheckbox('publishing_state', $this->lang['form.approve'], $this->get_item()->get_publishing_state()));
 			}
 		}
 	}
