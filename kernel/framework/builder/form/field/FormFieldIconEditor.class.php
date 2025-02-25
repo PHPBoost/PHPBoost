@@ -12,7 +12,7 @@
 
 class FormFieldIconEditor extends AbstractFormField
 {
-	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	public function __construct($id, $label, $value = '', array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
