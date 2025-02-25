@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 21
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 1.3 - 2005 11 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -128,6 +128,10 @@ $lang['form.possible.values']       = 'Valeurs possibles';
 $lang['form.icon.select']           = 'Choisissez un préfixe dans le sélecteur';
 $lang['form.icon.input']            = 'Choisissez une icône';
 $lang['form.icon.none']             = 'Aucune icône trouvée';
+$lang['form.icon.solid']            = 'Pleines';
+$lang['form.icon.regular']          = 'Déliées';
+$lang['form.icon.brand']           = 'Marques';
+$lang['form.icon.iboost']           = 'PHPBoost';
 
 // Labels
 $lang['form.name']                       = 'Nom';

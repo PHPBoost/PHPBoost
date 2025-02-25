@@ -99,11 +99,6 @@ class SandboxBuilderController extends DefaultModuleController
 		$text_fields = new FormFieldsetHTML('text_field', $this->lang['sandbox.builder.text.fields']);
 			$form->add_fieldset($text_fields);
 
-			// Icon
-			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], [],
-				array('description' => '', 'class' => 'css-class')
-			));
-
 			// Text
 			$text_fields->add_field(new FormFieldTextEditor('text', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'],
 				array('maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.clue'], 'class' => 'css-class'),
@@ -163,6 +158,11 @@ class SandboxBuilderController extends DefaultModuleController
 			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['sandbox.builder.password.field.confirm'], $this->lang['sandbox.builder.password.field.placeholder'],
 				array('description' => $security_config->get_internal_password_min_length() . $this->lang['sandbox.builder.password.field.clue'], 'class' => 'css-class'),
 				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+			));
+
+			// Icon
+			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], [],
+				array('description' => '', 'class' => 'css-class')
 			));
 
 		// TEXTAREA

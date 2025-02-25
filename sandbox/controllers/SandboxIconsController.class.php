@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,8 +28,8 @@ class SandboxIconsController extends DefaultModuleController
 	private function build_view()
 	{
 		$this->view->put_all(array(
-			'FAS'              => self::get_fa_list(PATH_TO_ROOT . '/sandbox/templates/fas.css', 'fas'),
-			'FAB'              => self::get_fa_list(PATH_TO_ROOT . '/sandbox/templates/fab.css', 'fab'),
+			'FAS'              => self::get_fa_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/solid.css', 'fas'),
+			'FAB'              => self::get_fa_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/brand.css', 'fab'),
 			'ICOMOON'         => self::build_markup('sandbox/pagecontent/icons/icomoon.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
@@ -48,7 +48,7 @@ class SandboxIconsController extends DefaultModuleController
 			$contents = explode('{', $property);
 			foreach($contents as $pseudo_class)
 			{
-				if (TextHelper::strpos($pseudo_class, 'content') !== false)
+				if (TextHelper::strpos($pseudo_class, '--fa') !== false)
 				{
 					$content = explode('"', $pseudo_class);
 					foreach($content as $row)
