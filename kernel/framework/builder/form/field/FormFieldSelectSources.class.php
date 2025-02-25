@@ -73,6 +73,7 @@ class FormFieldSelectSources extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
+
 		$values = array();
 		for ($i = 0; $i < $this->max_input; $i++)
 		{

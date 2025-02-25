@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 24
+ * @version     PHPBoost 6.0 - last update: 2025 02 25
  * @since       PHPBoost 6.0 - 2025 02 21
 */
 
@@ -84,7 +84,7 @@ class FormFieldIconEditor extends AbstractFormField
             if(!empty($prefix) && !empty($icon))
                 $values[$prefix] = $icon;
         }
-		return $this->set_value(TextHelper::serialize($values));
+		$this->set_value(TextHelper::serialize($values));
     }
 
 	public function get_icon_list($file)
