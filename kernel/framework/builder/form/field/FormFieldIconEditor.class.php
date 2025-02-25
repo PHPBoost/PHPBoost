@@ -44,7 +44,7 @@ class FormFieldIconEditor extends AbstractFormField
 		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
-            'PREFIX' => $this->get_html_id() . '_prefix',
+            'ICON_PREFIX' => $this->get_html_id() . '_prefix',
             'ICON' => $this->get_html_id() . '_icon',
             'ICON_LIST' => $this->get_html_id() . '_icon_list',
             'SELECTED' => $this->get_html_id() . '_selected',
@@ -60,6 +60,16 @@ class FormFieldIconEditor extends AbstractFormField
         return $template;
     }
 
+    public function validate()
+	{
+		try
+		{
+			$this->retrieve_value();
+			return true;
+		}
+		catch(Exception $ex){}
+	}
+
 	public function retrieve_value()
     {
         $request = AppContext::get_request();
@@ -71,17 +81,18 @@ class FormFieldIconEditor extends AbstractFormField
             $prefix_id = $this->get_html_id() . '_prefix';
             $prefix = $request->get_poststring($prefix_id);
             $icon = $request->get_poststring($icon_id);
-
             if(!empty($prefix) && !empty($icon))
                 $values[$prefix] = $icon;
         }
-		$this->set_value(TextHelper::serialize($values));
+		return $this->set_value(TextHelper::serialize($values));
     }
 
 	public function get_icon_list($file)
 	{
         $icons = [];
-		$css_file = file_get_contents($file);
+        $css_file = '';
+        if (file_exists($file))
+            $css_file = file_get_contents($file);
 		$properties_list = explode('}', $css_file);
         foreach($properties_list as $property)
         {
@@ -102,7 +113,12 @@ class FormFieldIconEditor extends AbstractFormField
 		return $iconList;
 	}
 
-	protected function get_default_template()
+    protected function compute_options(array &$field_options)
+	{
+        parent::compute_options($field_options);
+    }
+
+    protected function get_default_template()
     {
         return new FileTemplate('framework/builder/form/FormField.tpl');
     }
