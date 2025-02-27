@@ -1,6 +1,6 @@
 <div id="${escape(ID)}">
     <div class="grouped-inputs">
-        <select class="icon-select" name="${escape(ICON_PREFIX)}" id="${escape(ICON_PREFIX)}">
+        <select class="icon-select" name="${escape(ID)}_prefix" id="${escape(ID)}_prefix">
             <option value=""></option>
             <option value="fas"# IF C_PREFIX_FAS # selected# ENDIF #>{@form.icon.solid}</option>
             <option value="far"# IF C_PREFIX_FAR # selected# ENDIF #>{@form.icon.regular}</option>
@@ -9,13 +9,13 @@
         </select>
         <input
             type="text"
-            name="${escape(ICON)}"
-            id="${escape(ICON)}"
+            name="${escape(ID)}_icon"
+            id="${escape(ID)}_icon"
             value="{ICON_VALUE}"
             class="grouped-element fa-icon # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" />
-        <span id="${escape(SELECTED)}" class="grouped-element icon-selected"></span>
+        <span id="${escape(ID)}_selected" class="grouped-element icon-selected"></span>
     </div>
-    <ul id="${escape(ICON_LIST)}" class="icon-list hidden"></ul>
+    <ul id="${escape(ID)}_icon_list" class="icon-list hidden"></ul>
 </div>
 <script>
     class IconSelector_${escape(ID)} {
@@ -145,5 +145,5 @@
         }
     }
 
-    const iconSelector_${escape(ID)} = new IconSelector_${escape(ID)}('${escape(ICON_PREFIX)}', '${escape(ICON)}', '${escape(ICON_LIST)}', '${escape(SELECTED)}');
+    const iconSelector_${escape(ID)} = new IconSelector_${escape(ID)}('${escape(ID)}_prefix', '${escape(ID)}_icon', '${escape(ID)}_icon_list', '${escape(ID)}_selected');
 </script>
