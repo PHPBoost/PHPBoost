@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 25
+ * @version     PHPBoost 6.0 - last update: 2025 02 27
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -161,12 +161,12 @@ class SandboxBuilderController extends DefaultModuleController
 			));
 
 			// Icon
-			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], [],
+			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], '',
 				array('description' => '', 'class' => 'css-class')
 			));
 
-		// TEXTAREA
-		$textarea = new FormFieldsetHTML('textarea', $this->lang['sandbox.builder.textarea']);
+			// TEXTAREA
+			$textarea = new FormFieldsetHTML('textarea', $this->lang['sandbox.builder.textarea']);
 			$form->add_fieldset($textarea);
 
 			// Short multi line text
