@@ -29,8 +29,8 @@ class FormFieldIconEditor extends AbstractFormField
         	$this->assign_common_template_variables($template);
 
 	        $value = explode(' ', $this->get_value());
-		$prefix = ($value ? $value[0] : '');
-		$icon = ($value ? $value[1] : '');
+		$prefix = (isset($value[0]) ? $value[0] : '');
+		$icon = (isset($value[1]) ? $value[1] : '');
 
 		$view->put_all([
 			'C_PREFIX_FAS'    => $prefix === 'fas',
