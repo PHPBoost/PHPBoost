@@ -7,12 +7,6 @@
             <option value="fab"# IF C_PREFIX_FAB # selected# ENDIF #>{@form.icon.brand}</option>
             <option value="fa iboost"# IF C_PREFIX_FAB # selected# ENDIF #>{@form.icon.iboost}</option>
         </select>
-        <!--<input
-            type="text"
-            name="${escape(ID)}_prefix"
-            id="${escape(ID)}_prefix"
-            value=""
-            class="grouped-element fa-icon # IF C_READONLY #low-opacity # ENDIF #${escape(CLASS)}" />-->
         <input
             type="text"
             name="${escape(ID)}_icon"
@@ -72,21 +66,22 @@
                 case 'fab':
                     this.iconInput.placeholder = '{@form.icon.input}';
                     this.iconInput.disabled = false;
-                    this.choosenList = [{FAB}]; // Replace with actual list
+                    this.choosenList = [{FAB}];
                     break;
                 case 'fas':
                     this.iconInput.placeholder = '{@form.icon.input}';
                     this.iconInput.disabled = false;
-                    this.choosenList = [{FAS}]; // Replace with actual list
+                    this.choosenList = [{FAS}];
+                    break;
                 case 'far':
                     this.iconInput.placeholder = '{@form.icon.input}';
                     this.iconInput.disabled = false;
-                    this.choosenList = [{FAR}]; // Replace with actual list
+                    this.choosenList = [{FAR}];
                     break;
                 case 'fa iboost':
                     this.iconInput.placeholder = '{@form.icon.input}';
                     this.iconInput.disabled = false;
-                    this.choosenList = [{IBOOST}]; // Replace with actual list
+                    this.choosenList = [{IBOOST}];
                     break;
                 default:
                     this.iconInput.placeholder = '{@form.icon.select}';
