@@ -12,10 +12,10 @@
 
 interface HTMLElement
 {
-     /**
+    /**
      * Return the element
      * @return string
      */
-	function display();
+    function display();
 }
 ?>

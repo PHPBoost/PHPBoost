@@ -1,48 +1,43 @@
 # IF C_LAYOUT #
-	<section id="module-{MODULE_ID}" class="several-items items-table">
-		<header class="section-header">
-			<h1>{LAYOUT_TITLE}</h1>
-		</header>
-		<div class="sub-section">
-			<div class="content-container">
-				<div class="content">
+    <section id="module-{MODULE_ID}" class="several-items items-table">
+        <header class="section-header">
+            <h1>{LAYOUT_TITLE}</h1>
+        </header>
+        <div class="sub-section">
+            <div class="content-container">
+                <div class="content">
 # ENDIF #
-                # IF C_CSS_CLASSES #<div class="{CSS_CLASSES}"># ENDIF #
-                    # IF C_FILTERS #
-                        <div id="filters-{TABLE_ID}" class="html-table-filters">
-                            <a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@common.filter.items}# ENDIF #</a>
-                            <div class="filters-container">
-                                <span class="close-filters" aria-label="{@common.close}"><i class="far fa-window-close" aria-hidden="true"></i></span>
-                                <span class="reset-filters" aria-label="{@common.reset.filters}"><i class="fa fa-arrows-rotate" aria-hidden="true"></i></span>
-                                <script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
-                                # INCLUDE FILTERS #
+                    # IF C_CSS_CLASSES #<div class="{CSS_CLASSES}"># ENDIF #
+                        # IF C_FILTERS #
+                            <div id="filters-{TABLE_ID}" class="html-table-filters">
+                                <a href="" class="filter-button button bgc link-color"><i class="fa fa-sliders-h" aria-hidden="true"></i> # IF C_FILTERS_MENU_TITLE #{FILTERS_MENU_TITLE}# ELSE #{@common.filter.items}# ENDIF #</a>
+                                <div class="filters-container">
+                                    <span class="close-filters" aria-label="{@common.close}"><i class="far fa-window-close" aria-hidden="true"></i></span>
+                                    <span class="reset-filters" aria-label="{@common.reset.filters}"><i class="fa fa-arrows-rotate" aria-hidden="true"></i></span>
+                                    <script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+                                    # INCLUDE FILTERS #
+                                </div>
                             </div>
-                        </div>
-                        <script>
-                            jQuery('.filter-button').opensubmenu({
-                                osmTarget: '#filters-{TABLE_ID}',
-                                osmCloseExcept: '#filters-{TABLE_ID} .filters-container *',
-                                osmCloseButton: '.close-filters *',
-                            });
-                            var url = window.location.search;
-                            if (url.indexOf(',filters:') != -1)
-                                jQuery('.html-table-filters').addClass('opened');
-                            let currentUrl = window.location.href,
-                                updatedUrl = currentUrl.replace(window.location.search, '');
-                            jQuery('.reset-filters').on('click', function() {
-                                if (currentUrl !== updatedUrl) {
-                                    window.history.replaceState({ path: updatedUrl }, '', updatedUrl);
-                                    location.reload(true);
-                                }
-                            });
-                        </script>
-                    # ENDIF #
+                            <script>
+                                jQuery('.filter-button').opensubmenu({
+                                    osmTarget: '#filters-{TABLE_ID}',
+                                    osmCloseExcept: '#filters-{TABLE_ID} .filters-container *',
+                                    osmCloseButton: '.close-filters *',
+                                });
+                                var url = window.location.search;
+                                if (url.indexOf(',filters:') != -1)
+                                    jQuery('.html-table-filters').addClass('opened');
+                                let currentUrl = window.location.href,
+                                    updatedUrl = currentUrl.replace(window.location.search, '');
+                                jQuery('.reset-filters').on('click', function() {
+                                    if (currentUrl !== updatedUrl) {
+                                        window.history.replaceState({ path: updatedUrl }, '', updatedUrl);
+                                        location.reload(true);
+                                    }
+                                });
+                            </script>
+                        # ENDIF #
 
-                    # IF NOT C_HAS_ROWS #
-                        <div class="message-helper bgc notice">
-                            {@common.no.item.now}
-                        </div>
-                    # ELSE #
                         <form method="post" class="fieldset-content">
                             <div class="responsive-table">
                                 <table
@@ -82,32 +77,38 @@
                                     </thead>
 
                                     <tbody>
-                                        # START row #
-                                            <tr
-                                                # IF row.C_ID # id="{row.ID}"# ENDIF #
-                                                # IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
-                                                # IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
-                                                # IF C_MULTIPLE_DELETE_DISPLAYED #
-                                                    <td class="mini-checkbox">
-                                                        # IF row.C_DISPLAY_DELETE_INPUT #
-                                                            <label for="multiple-checkbox-{row.ELEMENTS_NUMBER}" class="checkbox" aria-label="{@common.select.element}">
-                                                                <input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENTS_NUMBER}" name="delete-checkbox-{row.ELEMENTS_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
-                                                                <span>&nbsp;</span>
-                                                            </label>
-                                                        # ENDIF #
-                                                    </td>
-                                                # ENDIF #
-                                                # START row.cell #
-                                                    <td
-                                                        # IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
-                                                        # IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
-                                                        # IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
-                                                        # IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
-                                                        {row.cell.VALUE}
-                                                    </td>
-                                                # END row.cell #
+                                        # IF NOT C_HAS_ROWS #
+                                            <tr>
+                                                <td colspan="{COLUMNS_NUMBER}"><div class="message-helper bgc notice">{@common.no.item.now}</div></td>
                                             </tr>
-                                        # END row #
+                                        # ELSE #
+                                            # START row #
+                                                <tr
+                                                    # IF row.C_ID # id="{row.ID}"# ENDIF #
+                                                    # IF row.C_CSS_CLASSES # class="{row.CSS_CLASSES}"# ENDIF #
+                                                    # IF row.C_CSS_STYLE # style="{row.CSS_STYLE}"# ENDIF #>
+                                                    # IF C_MULTIPLE_DELETE_DISPLAYED #
+                                                        <td class="mini-checkbox">
+                                                            # IF row.C_DISPLAY_DELETE_INPUT #
+                                                                <label for="multiple-checkbox-{row.ELEMENTS_NUMBER}" class="checkbox" aria-label="{@common.select.element}">
+                                                                    <input type="checkbox" class="multiple-checkbox" id="multiple-checkbox-{row.ELEMENTS_NUMBER}" name="delete-checkbox-{row.ELEMENTS_NUMBER}" onclick="delete_button_display({ELEMENTS_NUMBER});" />
+                                                                    <span>&nbsp;</span>
+                                                                </label>
+                                                            # ENDIF #
+                                                        </td>
+                                                    # ENDIF #
+                                                    # START row.cell #
+                                                        <td
+                                                            # IF row.cell.C_COLSPAN #colspan="{row.cell.COLSPAN}"# ENDIF #
+                                                            # IF row.cell.C_ID # id="{row.cell.ID}"# ENDIF #
+                                                            # IF row.cell.C_CSS_CLASSES # class="{row.cell.CSS_CLASSES}"# ENDIF #
+                                                            # IF row.cell.C_CSS_STYLE # style="{row.cell.CSS_STYLE}"# ENDIF #>
+                                                            {row.cell.VALUE}
+                                                        </td>
+                                                    # END row.cell #
+                                                </tr>
+                                            # END row #
+                                        # ENDIF #
                                     </tbody>
                                     # IF C_DISPLAY_FOOTER #
                                         <tfoot>
@@ -156,50 +157,49 @@
                                 </table>
                             </div>
                         </form>
-                    # ENDIF #
-                    # IF C_FILTERS #
-                        <script>
-                            function {SUBMIT_FUNCTION}() {
-                                var filters = new Array();
-                                var filtersObjects = new Array();
-                                var has_filter = false;
-                                # START filterElt #
-                                    filtersObjects.push({formId: ${escapejs(filterElt.FORM_ID)}, tableId: ${escapejs(filterElt.TABLE_ID)}});
-                                # END filterElt #
-                                for (var i = 0; i < filtersObjects.length; i++) {
-                                    var filter = filtersObjects[i];
-                                    var domFilter = jQuery('#' + filter.formId);
-                                    if (domFilter) {
-                                        if (domFilter.val() == 'on') {
-                                            if (domFilter.is(':checked')) {
-                                                var filterValue = '1';
+                        # IF C_FILTERS #
+                            <script>
+                                function {SUBMIT_FUNCTION}() {
+                                    var filters = new Array();
+                                    var filtersObjects = new Array();
+                                    var has_filter = false;
+                                    # START filterElt #
+                                        filtersObjects.push({formId: ${escapejs(filterElt.FORM_ID)}, tableId: ${escapejs(filterElt.TABLE_ID)}});
+                                    # END filterElt #
+                                    for (var i = 0; i < filtersObjects.length; i++) {
+                                        var filter = filtersObjects[i];
+                                        var domFilter = jQuery('#' + filter.formId);
+                                        if (domFilter) {
+                                            if (domFilter.val() == 'on') {
+                                                if (domFilter.is(':checked')) {
+                                                    var filterValue = '1';
+                                                } else {
+                                                    var filterValue = '0';
+                                                }
                                             } else {
-                                                var filterValue = '0';
+                                                var filterValue = domFilter.val();
+                                            }
+                                            if (filterValue) {
+                                                filters[filter.tableId] = filterValue;
+                                                has_filter = true;
                                             }
                                         } else {
-                                            var filterValue = domFilter.val();
+                                            window.alert('element ' + filter.formId + ' not found');
                                         }
-                                        if (filterValue) {
-                                            filters[filter.tableId] = filterValue;
-                                            has_filter = true;
-                                        }
-                                    } else {
-                                        window.alert('element ' + filter.formId + ' not found');
                                     }
+                                    var serializer = new UrlSerializedParameterEncoder();
+                                    var filtersUrl = has_filter ? ',filters:{' + serializer.encode(filters) + '}' : '';
+                                    var submitUrl = ${escapejs(SUBMIT_URL)} + filtersUrl;
+                                    window.location = submitUrl;
+                                    return false;
                                 }
-                                var serializer = new UrlSerializedParameterEncoder();
-                                var filtersUrl = has_filter ? ',filters:{' + serializer.encode(filters) + '}' : '';
-                                var submitUrl = ${escapejs(SUBMIT_URL)} + filtersUrl;
-                                window.location = submitUrl;
-                                return false;
-                            }
-                        </script>
-                    # ENDIF #
-                # IF C_CSS_CLASSES #</div># ENDIF #
-# IF C_LAYOUT #
-				</div>
-			</div>
-		</div>
-		<footer></footer>
-	</section>
+                            </script>
+                        # ENDIF #
+                    # IF C_CSS_CLASSES #</div># ENDIF #
+    # IF C_LAYOUT #
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+    </section>
 # ENDIF #
