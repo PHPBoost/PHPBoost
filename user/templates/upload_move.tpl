@@ -65,7 +65,7 @@
 					</div>
 					<div class="cell">
 						<div class="cell-body">
-							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/upload# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+							<script src="{PATH_TO_ROOT}/templates/__default__/plugins/upload.js"></script>
 							<script>
 								var path = '{PATH_TO_ROOT}/templates/{THEME}';
 								var selected_cat = {SELECTED_CAT};

@@ -57,5 +57,5 @@
 	<footer></footer>
 </section>
 <script>jQuery('#admin-sandbox-builder article a').on('click', function(){return false;});</script>
-<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form/validator# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
-<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form/form# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/validator.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form.js"></script>

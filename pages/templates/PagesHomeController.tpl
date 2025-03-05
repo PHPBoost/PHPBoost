@@ -99,4 +99,4 @@
 	# ENDIF #
 	<footer></footer>
 </section>
-<script src="{PATH_TO_ROOT}/pages/templates/js/pages# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js" defer></script>
+<script src="{PATH_TO_ROOT}/pages/templates/js/pages.js" defer></script>

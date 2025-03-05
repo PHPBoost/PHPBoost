@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 07
+ * @version     PHPBoost 6.0 - last update: 2025 03 05
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -767,7 +767,7 @@ class UpdateServices
 			MenuService::save($menu);
 			$menus_list = MenuService::get_menus_map();
 
-			MenuService::initialise($menus_list);
+			MenuService::initialize($menus_list);
 			MenuService::generate_cache();
 		}
 	}
@@ -1131,12 +1131,27 @@ class UpdateServices
 	private function delete_old_files_templates()
 	{
         $folder = new Folder(PATH_TO_ROOT . '/templates/default');
-		if ($folder->exists())
-		$folder->delete();
+		if ($folder->exists()) {
+            $folder->delete();
+        }
 
         $folder = new Folder(PATH_TO_ROOT . '/templates/base/images');
-		if ($folder->exists())
-		$folder->delete();
+		if ($folder->exists()) {
+            $folder->delete();
+        }
+
+        $folder = new Folder(PATH_TO_ROOT . '/templates/__default__/plugins');
+        if ($folder->exists()) {
+            foreach ($folder->get_files('.min.') as $file)
+            {
+                $file->delete();
+            }
+        }
+
+        $folder = new Folder(PATH_TO_ROOT . '/templates/__default__/plugins/form');
+        if ($folder->exists()) {
+            $folder->delete();
+        }
 
         $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
 		$file->delete();

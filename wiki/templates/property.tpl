@@ -184,7 +184,7 @@
 	<script>
 		var selected_cat = {move.SELECTED_CAT};
 	</script>
-	<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+	<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki.js"></script>
 
 	<section>
 		<header class="section-header">
@@ -393,7 +393,7 @@
 	<script>
 		var selected_cat = {remove.SELECTED_CAT};
 	</script>
-	<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+	<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki.js"></script>
 	<section>
 		<header class="section-header">
 			<h1>{remove.L_PAGE_TITLE}</h1>

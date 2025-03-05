@@ -14,12 +14,12 @@
                                 <div class="filters-container">
                                     <span class="close-filters" aria-label="{@common.close}"><i class="far fa-window-close" aria-hidden="true"></i></span>
                                     <span class="reset-filters" aria-label="{@common.reset.filters}"><i class="fa fa-arrows-rotate" aria-hidden="true"></i></span>
-                                    <script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+                                    <script src="{PATH_TO_ROOT}/templates/__default__/plugins/UrlSerializedParameterEncoder.js"></script>
                                     # INCLUDE FILTERS #
                                 </div>
                             </div>
                             <script>
-                                jQuery('.filter-button').opensubmenu({
+                                opensubmenu('.filter-button', {
                                     osmTarget: '#filters-{TABLE_ID}',
                                     osmCloseExcept: '#filters-{TABLE_ID} .filters-container *',
                                     osmCloseButton: '.close-filters *',
