@@ -1,12 +1,19 @@
-// Search string into string
+    /**
+     * Finds the position of the first occurrence of a substring in a string.
+     * @param {string} haystack - The string to search within.
+     * @param {string} needle - The substring to search for.
+     * @returns {number|boolean} The position of the first occurrence of the substring, or false if not found.
+     */
 	function strpos(haystack, needle)
 	{
 		var i = haystack.indexOf(needle, 0); // returns -1
 		return i >= 0 ? i : false;
 	}
 
-// BBCode block: Hide
-	// Add the informations : icon to hide/text to reveal content
+	/**
+     * Adds an icon and functionality to hide/show BBCode blocks once the DOM is fully loaded.
+     * @param {function} callback - The function to execute once the DOM is fully loaded.
+     */
 	var add_icon_bbcodeblockhide = (callback) => {
 		if (document.readyState != "loading") callback();
 		else document.addEventListener("DOMContentLoaded", callback);
@@ -44,23 +51,30 @@
 		})
 	});
 
-	// Hide/show content
-	function bb_hide(idcode, show, event)
-	{
-		var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
-		var show = (typeof show !== 'undefined') ? show : 0;
-		var elem = document.getElementById('formatter-hide-container-' + idcode);
+    /**
+     * Toggles the visibility of an element with the specified ID.
+     * @param {string|number} idcode - The ID of the element to toggle. Defaults to 0 if undefined.
+     * @param {number} show - Flag indicating whether to show the element. Defaults to 0 if undefined.
+     * @param {Event} event - The event object.
+     */
+    function bb_hide(idcode, show, event)
+    {
+        var idcode = (typeof idcode !== 'undefined') ? idcode : 0;
+        var show = (typeof show !== 'undefined') ? show : 0;
+        var elem = document.getElementById('formatter-hide-container-' + idcode);
 
-		event.stopPropagation();
+        event.stopPropagation();
 
-		elem.classList.toggle('formatter-show');
+        elem.classList.toggle('formatter-show');
 
-		if (show == 1) elem.removeAttribute('onClick');
-		else elem.setAttribute('onclick', "bb_hide(" + idcode + ", 1, event)");
-	}
+        if (show == 1) elem.removeAttribute('onClick');
+        else elem.setAttribute('onclick', "bb_hide(" + idcode + ", 1, event)");
+    }
 
-// BBCode block: Code
-	// Add button "Copy to clipboard" on Coding block
+    /**
+     * Adds a copy-to-clipboard button to code elements once the DOM is fully loaded.
+     * @param {function} callback - The function to execute once the DOM is fully loaded.
+     */
 	var add_button_copytoclipboard = (callback) => {
 		if (document.readyState != "loading") callback();
 		else document.addEventListener("DOMContentLoaded", callback);
@@ -74,7 +88,7 @@
 				var parent = document.createElement("span");
 				parent.setAttribute('id', "copy-code-" + i);
 				parent.setAttribute('class', "copy-code");
-				parent.setAttribute('aria-label', L_COPYTOCLIPBOARD);
+				parent.setAttribute('aria-label', L_COPY_TO_CLIPBOARD);
 				parent.setAttribute('onclick', "copy_code_clipboard(" + i + ")");
 
 				var child = document.createElement("i");
@@ -90,21 +104,13 @@
 		})
 	});
 
-// Function copy_code_clipboard
-	//
-	// Description :
-	// This function copy the content of your specific selection to clipboard.
-	//
-	// parameters : one
-	// {idcode} correspond to the ID selector you want to select.
-	//  - if it's a number : ID selector is 'copy-code-{idcode}-content'
-	//  - if it's a string : ID selector is '{idcode}'
-	//
-	// Return : -
-	//
-	// Comments :
-	// if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
-	//
+    /**
+     * Copies the content of a specified element to the clipboard.
+     * if container is an HTMLTextAreaElement, we use select() function of TextArea element instead of specific SelectElement function
+     * @param {string|number} idcode - The ID of the element to copy. 
+     *  - If a number, ID selector is converted to a string with the format 'copy-code-{idcode}-content'.
+     *  - If a string, ID selector is '{idcode}'
+     */
 	function copy_code_clipboard(idcode)
 	{
 		if ( Number.isInteger(idcode) )
@@ -117,102 +123,71 @@
 		else
 			SelectElement(ElementtoCopy);
 
-		try {
-			var successful = document.execCommand('copy');
-		}
-		catch(err) {
-			alert('Your browser do not authorize this operation');
-		}
+        navigator.clipboard.writeText(ElementtoCopy.value || ElementtoCopy.innerText).then(function() {
+            console.log('Text copied to clipboard');
+        }).catch(function(err) {
+            console.error('Error in copying text: ', err);
+        });
 	}
 
-//Function SelectElement
-	//
-	// Description :
-	// The content will be selected on your page as if you had selected it with your mouse
-	//
-	// parameters : one
-	// {element} correspond to the element you want to select
-	//
-	// Return : -
-	//
-	// Comments : -
-	//
-	function SelectElement(element) {
+    /**
+     * Selects the contents of the specified element.
+     * @param {HTMLElement} element - The HTML element whose contents will be selected.
+     */
+	function SelectElement(element)
+    {
 		var range = document.createRange();
 		range.selectNodeContents(element);
-
 		var selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
 	}
 
-//Function copy_to_clipboard
-	//
-	// Description :
-	// This function copy the content of parameter to clipboard.
-	//
-	// parameters : one
-	// {tocopy} correspond to the content you want to copy.
-	//
-	// Return : -
-	//
-	// Comments : -
-	//
-	function copy_to_clipboard(tocopy)
-	{
-		var dummy = jQuery('<input>').val(tocopy).appendTo('body').select()
+    /**
+     * Copies the content of parameter to the clipboard and displays an ephemeral message.
+     * @param {string} tocopy - The content to be copied to the clipboard.
+     */
+    function copy_to_clipboard(tocopy)
+    {
+        navigator.clipboard.writeText(tocopy).then(function() {
+            showEphemeralMessage(tocopy);
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+        });
+    }
 
-		try {
-			var successful = document.execCommand('copy');
-			alert(COPIED_TO_CLIPBOARD +'\n' + tocopy);
-		}
-		catch(err) {
-			alert('Your browser do not authorize this operation');
-		}
-	}
+    /**
+     * Displays an ephemeral message with the copied value.
+     * @param {string} value - The value to be displayed in the ephemeral message.
+     */
+    function showEphemeralMessage(value) {
+        var messageDiv = document.createElement('div');
+        messageDiv.classList.add('ephemeral', 'bgc-full', 'success');
+        messageDiv.innerHTML = L_COPIED_TO_CLIPBOARD + ' : <br />' + value;
 
-// Copy link to clipboard
-	//
-	// Description :
-	// This function copy the href of a link to clipboard.
-	//
-	// use class 'copy-link-to-clipboard' in the link
-	//
-	document.querySelectorAll('.copy-link-to-clipboard').forEach( el => {
-		el.addEventListener('click', event => {
-			event.preventDefault();
+        document.body.appendChild(messageDiv);
 
-			var hrefValue = el.getAttribute('href');
+        setTimeout(function() {
+            messageDiv.style.right = '0.618em';
+            messageDiv.style.opacity = '1';
+        }, 10);
 
-			document.addEventListener('copy', function(e) {
-				e.clipboardData.setData('text/plain', hrefValue);
-				e.preventDefault();
-			}, true);
+        setTimeout(function() {
+            messageDiv.style.opacity = '0';
+            setTimeout(function() {
+                document.body.removeChild(messageDiv);
+            }, 500);
+        }, 3000);
+    }
 
-			document.execCommand('copy');
-			alert(COPIED_TO_CLIPBOARD +'\n' + hrefValue);
-		});
-	});
-
-// Open submenu
-	// Function open_submenu
-	// for links submenu, in HTML onclick attribute
-	//
-	// Description :
-	// This function add CSS Class to the specified CSS ID
-	//
-	// parameters : three
-	// {myid} correspond to the specific element you want to add your CSS class
-	// {myclass} correspond to the name of CSS class you want to add to your specific element.
-	// {closeother} correspond to the name of CSS class you want to add to your specific element.
-	//
-	// Return : -
-	//
-	// Comments : if {myclass} is missing, we use CSS class "opened"
-	// Comments : if {closeother} is defined, we close every elements with {closeother} CSS class
-	// Comments : The variable elem contain the Element with the unique ID myid
-	// Comments : The variable elems contain all Elements with the class closeother
-	//
+	/**
+     * Opens a submenu with the specified ID and toggles its class.
+     * @param {string} myid - The ID of the submenu element to open.
+     * @param {string} [myclass="opened"] - The class to toggle on the submenu element. Defaults to "opened".
+     * @param {boolean|string} [closeother=false]
+     *  - If true, closes other submenus with the specified class.
+     *  - If a string, used as a selector to close other submenus.
+     */
 	function open_submenu(myid, myclass, closeother)
 	{
 		myclass = (typeof myclass !== 'undefined') ? myclass : "opened";
@@ -235,19 +210,11 @@
 		}
 	}
 
-	// closeother_submenu
-	// Function closeother_submenu
-	//
-	// Description :
-	// This function close submenu with a specified CSS Class
-	//
-	// parameters : three
-	// {elems} correspond to the list of specific elements you want to remove your CSS class
-	// {myclass} correspond to the name of CSS class you want to remove to each element.
-	//
-	// Return : -
-	//
-	//
+    /**
+     * Closes other submenus by removing the specified class.
+     * @param {NodeList} elems - The list of elements to close.
+     * @param {string} myclass - The class to remove from the elements.
+     */
 	function closeother_submenu(elems, myclass)
 	{
 		[].forEach.call(elems, function(el) {
@@ -255,70 +222,63 @@
 		});
 	}
 
-// plugin opensubmenu
-	// for content submenu in javascript script
-	//
-	// Description :
-	// This function add CSS Class to the specified CSS ID to open a submenu
-	//
-	// options : four
-	// {osmCloseExcept} correspond to the specific element you doesn't want to close on click.
-	// {osmCloseButton} correspond to the specific button for closed submenu.
-	// {osmTarget} correspond to the name of CSS class of you element you want to add a specific CSS class.
-	// {osmClass} correspond to the name of CSS class you want to add to your specific element.
-	//
-	// Return : -
-	//
-	// Comments :
-	//   - if {osmClass} is missing, ".opened" CSS class is used
-	//   - if {osmCloseButton} is missing, "a.close-button" element is used
-	//   - use CSS selector "." or "#" for {osmCloseExcept} and {osmTarget}
-	//   - for all children elements, use * in {osmCloseExcept} like '.myClass *'
-	//
-	(function($) {
-		$.fn.opensubmenu = function( options ) {
-			var defaults = jQuery(this), params = jQuery.extend({
-				osmCloseExcept: '',
-				osmCloseButton: 'a.close-button',
-				osmTarget: '',
-				osmClass: 'opened'
-			}, options);
+    /**
+     * Opens a submenu based on the provided selector and options.     *
+     * @param {string} selector - The CSS selector for the elements that trigger the submenu.
+     * @param {Object} options - The options for configuring the submenu behavior.
+     * @param {string} [options.osmCloseExcept] - Selector for elements that should not close the submenu.
+     * @param {string} [options.osmCloseButton] - Selector for the close button within the submenu.
+     * @param {string} [options.osmTarget] - Selector for the submenu target elements.
+     * @param {string} [options.osmClass] - The CSS class to add/remove for opening/closing the submenu.
+     * 
+     *  - use CSS selector "." or "#" for {osmCloseExcept} and {osmTarget}
+     *  - for all children elements, use * in {osmCloseExcept} like '.myClass *'
+     */
+    function opensubmenu(selector, options) {
+        var params = {
+            osmCloseExcept: '',
+            osmCloseButton: 'a.close-button',
+            osmTarget: '',
+            osmClass: 'opened',
+            ...options
+        };
 
-			return this.each(function() {
-				jQuery(this).on('click', function(event) {
-					event.preventDefault();
-					if (jQuery(this).closest(params.osmTarget).hasClass(params.osmClass))
-						jQuery(document).find(params.osmTarget).removeClass(params.osmClass);
-					else {
-						jQuery(document).find(params.osmTarget).removeClass(params.osmClass);
-						jQuery(this).closest(params.osmTarget).addClass(params.osmClass);
-					}
-					event.stopPropagation();
-				});
-				jQuery(document).on('click',function(event) {
-					if ((jQuery(event.target).is(params.osmCloseExcept) === false || jQuery(event.target).is(params.osmCloseButton) === true)) {
-						jQuery(document).find(params.osmTarget).removeClass(params.osmClass);
-					}
-				});
-			});
-		};
-	})(jQuery);
+        document.querySelectorAll(selector).forEach(function (element) {
+            element.addEventListener('click', function (event) {
+                event.preventDefault();
+                var target = element.closest(params.osmTarget);
+                if (target.classList.contains(params.osmClass)) {
+                    document.querySelectorAll(params.osmTarget).forEach(function (el) {
+                        el.classList.remove(params.osmClass);
+                    });
+                } else {
+                    document.querySelectorAll(params.osmTarget).forEach(function (el) {
+                        el.classList.remove(params.osmClass);
+                    });
+                    target.classList.add(params.osmClass);
+                }
+                event.stopPropagation();
+            });
+        });
 
-// Multiple checkboxes
-	// Function multiple_checkbox_check
-	//
-	// Description :
-	// This function check or uncheck all checkbox with specific id
-	//
-	// options : three
-	// {status} correspond to the status we need (check or uncheck).
-	// {elements_number} corresponds to the total number of elements displayed.
-	// {except_element} corresponds to an element to ignore.
-	//
-	// Return : -
-	//
-	// Comments :
-	//
+        document.addEventListener('click', function (event) {
+            if ((!event.target.matches(params.osmCloseExcept) || event.target.matches(params.osmCloseButton))) {
+                document.querySelectorAll(params.osmTarget).forEach(function (el) {
+                    el.classList.remove(params.osmClass);
+                });
+            }
+        });
+    }
+    // Usage example:
+    // opensubmenu('.your-selector', { osmTarget: '.your-target', osmClass: 'your-class' });
+
+    /**
+     * Checks or unchecks multiple checkboxes based on the given status.
+     * @param {boolean} status - The status to set for the checkboxes (true for checked, false for unchecked).
+     * @param {number} elements_number - The total number of checkbox elements.
+     * @param {number} [except_element=0] - The index of the checkbox to exclude from the operation.
+     * @param {boolean} delete_button_control - Whether to control the display of the delete button.
+     */
 	function multiple_checkbox_check(status, elements_number, except_element, delete_button_control)
 	{
 		delete_button_control = true;
@@ -340,18 +300,10 @@
 			delete_button_display(elements_number);
 	}
 
-	//Function delete_button_display
-	//
-	// Description :
-	// This function change the data-confirmation message of the delete all button and its display
-	//
-	// options : one
-	// {elements_number} corresponds to the total number of elements displayed.
-	//
-	// Return : -
-	//
-	// Comments :
-	//
+	/**
+     * Changes the data-confirmation message of the "delete all" button and its display
+     * @param {number} elements_number - The total number of elements displayed
+     */
 	function delete_button_display(elements_number)
 	{
 		var i;
@@ -456,26 +408,27 @@
 			alert(alert_empty_login);
 	}
 
-// Check if a function name exists
+    /**
+     * @author Kevin van Zonneveld
+     * @link https://kvz.io/
+     * @contributor Steve Clay
+     * @contributor Legaev Andrey
+     * @param {string} function_name 
+     * @returns 
+     */
 	function functionExists(function_name)
 	{
-		// https://kvz.io/
-		// + original by: Kevin van Zonneveld (https://kvz.io/)
-		// + improved by: Steve Clay
-		// + improved by: Legaev Andrey
-		// * example 1: function_exists('isFinite');
-		// * returns 1: true
-		if (typeof function_name == 'string')
-		{
+		if (typeof function_name == 'string') {
 			return (typeof window[function_name] == 'function');
-		}
-		else
-		{
+		} else {
 			return (function_name instanceof Function);
 		}
 	}
 
-// Includes synchronously a js file
+    /**
+     * Includes synchronously a js file
+     * @param {string} file - The path to the file location
+     */
 	function include(file)
 	{
 		if (window.document.getElementsByTagName)
@@ -487,7 +440,7 @@
 		}
 	}
 
-// Scroll position management (scroll-to-top + cookie-bar)
+    // Scroll position management (scroll-to-top + cookie-bar)
 	function scroll_to( position ) {
 		if ( position > 800) {
 			jQuery('#scroll-to-top').fadeIn();
@@ -527,7 +480,7 @@
 		});
 	});
 
-// Cookies, Cookiebar and BBCode management
+    // Cookies, Cookiebar and BBCode management
 	// Send cookie to client
 	function sendCookie(name, value, delay)
 	{
@@ -559,24 +512,36 @@
 		sendCookie(name,"",-1);
 	}
 
-// set cell's height to width (setInterval needed because of the display:hidden)
-	setInterval(function() {
-		jQuery('.square-cell').each(function(){
-			var cell_width = jQuery(this).outerWidth();
-			jQuery(this).outerHeight(cell_width + 'px');
-		});
-	}, 1);
+    /**
+     * Sets cell's height to width (setInterval is needed because of the display:hidden)
+     */
+	setInterval(() => {
+        const squareCells = document.querySelectorAll('.square-cell');
+        squareCells.forEach(cell => {
+            const cellWidth = cell.offsetWidth;
+            cell.style.height = cellWidth + 'px';
+        });
+    }, 1);
 
-// colorSurround add a colored square to the element and color its borders if it has.
-	jQuery.fn.extend ({
-		colorSurround: function() {
-			return this.each(function(){
-				var color = jQuery(this).data('color-surround');
-				jQuery(this).css('border-color', color);
-				jQuery(this).prepend('<span style="background-color: ' + color + ';" class="data-color-surround"></span>')
-			})
-		}
-	});
+    /**
+     * Applies a color surround effect to elements matching the provided selector.
+     * Sets border color and prepends a colored span element based on the
+     * `data-color-surround` dataset value of each element.
+     * 
+     * @param {string} selector - CSS selector string to target elements. Can be multiple comma-separated selectors (e.g. ".class1, .class2")
+     */
+    const colorSurround = (selector) => {
+        document.querySelectorAll(selector).forEach(element => {
+            const color = element.dataset.colorSurround;
+            if (color) {
+                element.style.borderColor = color;
+                const span = document.createElement('span');
+                span.style.backgroundColor = color;
+                span.classList.add('data-color-surround');
+                element.prepend(span);
+            }
+        });
+    };
 
 // Scroll to anchor on .sticky-menu
     jQuery('.sticky-menu').each( function() {
@@ -614,21 +579,39 @@
         }
     });
 
-// Recognise an anchor link then scroll to
-	jQuery('a[href*="/scrollto#"]').each(function() {
-		if(jQuery(this).hasClass('offload'))
-			jQuery(this).removeClass('offload');
-		var getLink = jQuery(this).attr('href'),
-			anchorSplit = getLink.split('#'),
-			realAnchor = '#' + anchorSplit[1];
-		jQuery(this).on('click', function(e) {
-			e.preventDefault();
-			history.pushState('', '', realAnchor);
-			jQuery('html, body').animate({scrollTop:jQuery(realAnchor).offset().top}, 'slow');
-		})
-	});
 
-// AJAX to upload one file from a single button
+    /**
+     * Recognise an anchor link then scroll to
+     */
+    document.querySelectorAll('a[href*="/scrollto#"]').forEach(anchor => {
+        if (anchor.classList.contains('offload')) {
+            anchor.classList.remove('offload');
+        }
+
+        const getLink = anchor.getAttribute('href');
+        const [, realAnchor] = getLink.split('#');
+
+        anchor.addEventListener('click', event => {
+            event.preventDefault();
+            history.pushState('', '', '#' + realAnchor);
+
+            const targetElement = document.getElementById(realAnchor);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+
+    /**
+     * AJAX to upload one file from a single button
+     * @param {HTMLElement} thisElement - The element that triggered the upload (typically a button)
+     * @param {string} targetId - ID of the input element to receive the uploaded file URL
+     * @param {string} token - Authentication token to include in the upload request
+     */
     function direct_upload(thisElement, targetId, token) 
     {
         const fileInput = document.createElement('input');
@@ -636,18 +619,18 @@
         fileInput.className = 'hidden';
         fileInput.name = 'upload_file';
         thisElement.parentNode.appendChild(fileInput);
-        
+
         fileInput.click();
-        
+
         const targetInput = document.getElementById(targetId);
-        
+
         fileInput.addEventListener('change', function () {
             targetInput.classList.remove('warning');
             const file = fileInput.files[0];
             const formData = new FormData();
             formData.append('upload_file', file);
             formData.append('token', token);
-            
+
             // Use AJAX to upload the file
             const xhr = new XMLHttpRequest();
             xhr.open('POST', PATH_TO_ROOT + '/user/ajax_upload.php', true);
@@ -673,4 +656,3 @@
             xhr.send(formData);
         });
     }
-    

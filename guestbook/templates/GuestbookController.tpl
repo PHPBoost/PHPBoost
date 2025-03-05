@@ -72,7 +72,7 @@
 														# IF messages.C_DELETE #
 															<a href="{messages.U_DELETE}" data-confirmation="delete-element" aria-label="{@common.delete}"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 														# ENDIF #
-														<a href="{U_SITE}{messages.U_ANCHOR}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#{messages.ID}</a>
+														<a href="#" onclick="copy_to_clipboard('{U_SITE}{messages.U_ANCHOR}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-hashtag" aria-hidden="true"></i>{messages.ID}</a>
 												<	/div>
 												</div>
 											</div>

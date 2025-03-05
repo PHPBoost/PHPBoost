@@ -5,7 +5,7 @@
 			url: ${escapejs(U_AJAX_CALENDAR)} + year + '/' + month + '/' + {ID_CATEGORY} + '/' + {MINI_MODULE},
 			success: function(returnData){
 				jQuery('#calendar').html(returnData);
-				jQuery('[data-color-surround]').colorSurround();
+				colorSurround('[data-color-surround]');
 			}
 		});
 
@@ -14,7 +14,7 @@
 				url: ${escapejs(U_AJAX_EVENTS)} + year + '/' + month + '/0/' + {ID_CATEGORY},
 				success: function(returnData){
 					jQuery('#events').html(returnData);
-					jQuery('[data-color-surround]').colorSurround();
+					colorSurround('[data-color-surround]');
 				}
 			});
 		# ENDIF #

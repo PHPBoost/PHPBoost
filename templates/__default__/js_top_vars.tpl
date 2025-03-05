@@ -4,16 +4,20 @@
 	var TOKEN        = "{TOKEN}";
 	var THEME        = "{THEME}";
 	var LANG         = "{LANG}";
-	var COPIED_TO_CLIPBOARD = ${escapejs(@common.copied.to.clipboard)};
-	var ARIA_TO_CLIPBOARD = ${escapejs(@common.copy.link.to.clipboard)};
+
+    // To clipboard
+    var L_COPIED_TO_CLIPBOARD = ${escapejs(@common.copied.to.clipboard)};
 
 	// BBCode Variables
 	var L_HIDE_MESSAGE    = ${escapejs(@common.hidden.text)};
 	var L_HIDE_HIDEBLOCK  = ${escapejs(@common.hide.text)};
-	var L_COPYTOCLIPBOARD = ${escapejs(@common.copy.to.clipboard)};
+	var L_COPY_TO_CLIPBOARD = ${escapejs(@common.copy.to.clipboard)};
 
-	var L_PREV = ${escapejs(@common.previous)};
-	var L_NEXT = ${escapejs(@common.next)};
+    // Media
+	var L_PREV  = ${escapejs(@common.previous)};
+	var L_NEXT  = ${escapejs(@common.next)};
+    var L_PLAY  = ${escapejs(@common.play)};
+    var L_PAUSE = ${escapejs(@common.pause)};
 
 	// CookieBar Variables
 	# IF C_COOKIEBAR_ENABLED #

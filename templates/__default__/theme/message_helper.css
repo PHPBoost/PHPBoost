@@ -83,6 +83,16 @@
 
 .floating-message-container .message-helper > a { cursor: pointer; }
 
+.ephemeral {
+    position: fixed;
+    top: 0.618em;
+    right: -400px;
+    max-width: 300px;
+    padding: 0.618em;
+    z-index: 1000;
+    transition: right 0.5s, opacity 0.5s;
+}
+
 .member-only,
 .moderator-only {
 	padding-left: 0.618em;

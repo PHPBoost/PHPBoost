@@ -96,7 +96,7 @@
 					</footer>
 				</article>
 				<script>
-					jQuery('#addon-menu-title-{langs_installed.LANG_NUMBER}').opensubmenu({
+					opensubmenu('#addon-menu-title-{langs_installed.LANG_NUMBER}', {
 						osmTarget: '.addon-menu-container'
 					});
 				</script>
@@ -133,12 +133,12 @@
 </form>
 
 <script>
-	jQuery('.addon-menu-title').opensubmenu({
+	opensubmenu('.addon-menu-title', {
 		osmTarget: '.addon-menu-title',
 		osmCloseExcept : '.addon-menu-checkbox, .addon-menu-checkbox *'
 	});
 
-	jQuery('.addon-auth').opensubmenu({
+	opensubmenu('.addon-auth', {
 		osmTarget: '.addon-auth-container',
 		osmCloseExcept: '.addon-auth-content *',
 		osmCloseButton: '.addon-auth-close i',

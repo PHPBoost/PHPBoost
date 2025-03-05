@@ -241,11 +241,11 @@
 
 									<a aria-label="{@common.scroll.to.top}" href="{U_TITLE_T}#go-top" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-top').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
 									<a aria-label="{@common.scroll.to.bottom}" href="{U_TITLE_T}#go-bottom" onclick="jQuery('html, body').animate({scrollTop:jQuery('#go-bottom').offset().top}, 'slow'); return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-									<a href="{U_SITE}{msg.U_VARS_ANCHOR}#m{msg.ID}" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#{msg.ID}</i></a>
+									<a href="#" onclick="copy_to_clipboard('{U_SITE}{msg.U_VARS_ANCHOR}#m{msg.ID}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-hashtag" aria-hidden="true">{msg.ID}</i></a>
 								</div>
 							</div>
 							<script>
-								jQuery('.message-actions-toggle-{msg.ID}').opensubmenu({
+								opensubmenu('.message-actions-toggle-{msg.ID}', {
 									osmTarget: '.message-actions-container-{msg.ID}',
 									osmCloseExcept : '.message-actions-content-{msg.ID} *'
 								});

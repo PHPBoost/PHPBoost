@@ -25,7 +25,7 @@
                         </div>
                         <div class="message-infos">
                             <time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}</time>
-                            <a href="#ID" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#ID</a>
+                            <a href="#" onclick="copy_to_clipboard('{U_SITE}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-hashtag" aria-hidden="true">ID</i></a>
                         </div>
                     </div>
                 </header>
@@ -105,7 +105,7 @@
             &lt;/div>
             &lt;div class="message-infos">
                 &lt;time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}&lt;/time>
-                &lt;a href="#ID" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#ID&lt;/a>
+                &lt;a href="#" onclick="copy_to_clipboard('{U_SITE}{U_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}">&lt;i class="fa fa-hashtag" aria-hidden="true">&lt;/i>ID&lt;/a>
             &lt;/div>
         &lt;/div>
     &lt;/header>

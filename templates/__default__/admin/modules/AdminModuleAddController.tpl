@@ -102,7 +102,7 @@
 	# ENDIF #
 </form>
 <script>
-	jQuery('.addon-auth').opensubmenu({
+	opensubmenu('.addon-auth', {
 		osmTarget: '.addon-auth-container',
 		osmCloseExcept: '.addon-auth-content *',
 		osmCloseButton: '.addon-auth-close i',

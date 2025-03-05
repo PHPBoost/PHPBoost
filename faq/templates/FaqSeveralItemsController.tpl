@@ -69,7 +69,7 @@
 							<div class="accordion-content faq-answer-container" itemprop="text">
 								<div class="controls align-right">
 									# IF C_PENDING_ITEMS #{items.ITEM_DATE} | # ENDIF #
-									<a href="{items.U_ITEM}" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-fw fa-anchor" aria-hidden="true"></i></a>
+									<a href="#" onclick="copy_to_clipboard('{items.U_ABSOLUTE_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-hashtag" aria-hidden="true"></i>{items.ID}</a>
 									# IF items.C_DUPLICATE #
 										<a class="offload" href="{items.U_DUPLICATE}"aria-label="{@common.duplicate}"><i class="far fa-fw fa-clone fa-fw" aria-hidden="true"></i> </a>
 									# ENDIF #

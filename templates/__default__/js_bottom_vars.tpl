@@ -106,7 +106,7 @@
 	});
 
 // Add a colored square to the element and color its borders if it has
-	jQuery('[data-color-surround]').colorSurround();
+	colorSurround('[data-color-surround]');
 
 // Owl Carousel
 	jQuery('[id*="slideboost-"] > br').remove();
