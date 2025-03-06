@@ -369,7 +369,7 @@
 						</ul>
 					</nav>
 					<div id="upload-personal" class="tabs tabs-animation first-tab">
-						<div class="content-panel">
+						<div class="modal-content">
 							<div id="new-multiple-files">
 								# INCLUDE MESSAGE_HELPER #
 								<form action="upload.php?f={FOLDER_ID}&amp;token={TOKEN}{POPUP}" enctype="multipart/form-data" method="post">
@@ -389,11 +389,11 @@
 												</span>
 											</div>
 											<div class="modal-container">
-												<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question" aria-hidden="true"></i></button>
-												<div id="upload-helper" class="modal modal-animation">
-													<div class="close-modal" aria-label="{@form.close}"></div>
-													<div class="content-panel">
-														<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+												<button class="button upload-help modal-button --upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question" aria-hidden="true"></i></button>
+												<div id="upload-helper" class="modal modal-half">
+													<div class="modal-overlay close-modal" aria-label="{@form.close}"></div>
+													<div class="modal-content">
+														<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 														<h3>{@upload.upload.helper}</h3>
 														# IF IS_ADMIN #
 															<p><strong>{@upload.max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
@@ -551,7 +551,7 @@
 						</div>
 					</div>
 					<div id="upload-shared" class="tabs tabs-animation">
-						<div class="content-panel">
+						<div class="modal-content">
 							# IF C_SHARED_FILES #
 								<div class="cell-flex cell-tile # IF C_POPUP #cell-inline# ELSE #cell-columns-4# ENDIF #">
 									# START shared_files #
