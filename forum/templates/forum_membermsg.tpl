@@ -22,7 +22,7 @@
 										<a class="{list.LEVEL_CLASS} offload" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}" # ENDIF # href="{list.U_USER_PROFILE}">
 											{list.USER_PSEUDO}
 										</a>
-										<span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-{list.ID}">
+										<span class="smaller modal-button --message-user-datas-{list.ID}" aria-label="{@common.see.profile.datas}">
 											<i class="far fa-eye" aria-hidden="true"></i>
 										</span>
 										<span class="sr-only"># IF C_USER_ONLINE #{@forum.connected.member)}# ELSE #{@forum.not.connected.member}# ENDIF #</span>
@@ -49,10 +49,10 @@
 							</div>
 						</div>
 					</header>
-					<div id="message-user-datas-{list.ID}" class="modal modal-animation">
-						<div class="close-modal" aria-label="{@common.close}"></div>
-						<div class="content-panel cell">
-							<div class="align-right"><a href="#" class="error hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+					<div id="message-user-datas-{list.ID}" class="modal">
+						<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+						<div class="modal-content cell">
+							<div class="align-right"><a href="#" class="error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 							<div class="cell-list">
 								<ul>
 									<li class="li-stretch">
