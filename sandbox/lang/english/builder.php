@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 25
+ * @version     PHPBoost 6.0 - last update: 2025 03 06
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -146,4 +146,8 @@ $lang['sandbox.builder.button.icon']           = 'With icon';
 $lang['sandbox.builder.button.confirm']        = 'With confirm';
 $lang['sandbox.builder.button.confirm.alert']  = 'This link will redirect to official website.';
 $lang['sandbox.builder.button.alternate.send'] = 'Alternate send button';
+
+// Modals
+$lang['sandbox.builder.modal']         = 'Modal button';
+$lang['sandbox.builder.modal.content'] = 'Lorem ipsum';
 ?>

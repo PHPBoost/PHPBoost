@@ -19,10 +19,10 @@
         &lt;/ul>
     &lt;/nav>
     &lt;div id="target_01_panel" class="tabs tabs-animation">
-        &lt;div class="content-panel">...&lt;/div>
+        &lt;div class="modal-content">...&lt;/div>
     &lt;/div>
     &lt;div id="target_02_panel" class="tabs tabs-animation">
-        &lt;div class="content-panel">...&lt;/div>
+        &lt;div class="modal-content">...&lt;/div>
     &lt;/div>
 &lt;/div></code></pre>
                 </div>

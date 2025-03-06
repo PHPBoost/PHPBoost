@@ -14,7 +14,7 @@
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </span>
                                 <span class="administrator" itemprop="author">{@sandbox.layout.messages.login}</span>
-								<span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-ID">
+								<span class="smaller modal-button --message-user-datas-ID" aria-label="{@common.see.profile.datas}">
 									<i class="far fa-eye" aria-hidden="true"></i>
 								</span>
                             </h3>
@@ -29,10 +29,10 @@
                         </div>
                     </div>
                 </header>
-                <div id="message-user-datas-ID" class="modal modal-animation">
-                    <div class="close-modal" aria-label="{@common.close}"></div>
-                    <div class="content-panel cell">
-                        <div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+                <div id="message-user-datas-ID" class="modal">
+                    <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                    <div class="modal-content cell">
+                        <div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
                         <div class="cell-list">
                             <ul>
                                 <li class="li-stretch">
@@ -94,7 +94,7 @@
                         &lt;i class="fa fa-user" aria-hidden="true">&lt;/i>
                     &lt;/span>
                     &lt;span class="administrator" itemprop="author">{@sandbox.layout.messages.login}&lt;/span>
-                    &lt;span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-ID">
+                    &lt;span class="smaller modal-button --message-user-datas-ID" aria-label="{@common.see.profile.datas}">
                         &lt;i class="far fa-eye" aria-hidden="true">&lt;/i>
                     &lt;/span>
                 &lt;/h3>
@@ -109,10 +109,10 @@
             &lt;/div>
         &lt;/div>
     &lt;/header>
-    &lt;div id="message-user-datas-ID" class="modal modal-animation">
-        &lt;div class="close-modal" aria-label="{@common.close}">&lt;/div>
-        &lt;div class="content-panel cell">
-            &lt;div class="align-right">&lt;a href="#" class="error big hide-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
+    &lt;div id="message-user-datas-ID" class="modal">
+        &lt;div class="modal-overlay close-modal" aria-label="{@common.close}">&lt;/div>
+        &lt;div class="modal-content cell">
+            &lt;div class="align-right">&lt;a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
             &lt;div class="cell-list">
                 &lt;ul>
                     &lt;li class="li-stretch">

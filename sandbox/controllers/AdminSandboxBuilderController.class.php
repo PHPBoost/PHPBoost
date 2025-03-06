@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 25
+ * @version     PHPBoost 6.0 - last update: 2025 03 06
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,6 +65,7 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			'SELECT_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/select.tpl'),
 			'DND_MARKUP'      => self::build_markup('sandbox/pagecontent/builder/dnd.tpl'),
 			'BUTTON_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/button.tpl'),
+			'MODAL_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/modal.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
@@ -154,7 +155,7 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			));
 
 			// Icon
-			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], [],
+			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], '',
 				array('description' => '', 'class' => 'css-class')
 			));
 
@@ -423,6 +424,13 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', $this->lang['sandbox.builder.button.alternate.send']));
 			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['sandbox.builder.button.icon'], 'fa fa-check', 'Submit', ''));
 			$buttons->add_element(new FormButtonSubmitImg($this->lang['sandbox.builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo.svg'), ''));
+
+        // MODALS
+        $modal = new FormFieldsetModal('modal', $this->lang['sandbox.builder.modal']);
+            // $modal->set_button_class('button bgc moderator');
+            // $modal->set_css_class('modal-half');
+            $form->add_fieldset($modal);
+            $modal->add_field(new FormFieldSpacer('modal_content', $this->lang['sandbox.builder.modal.content']));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');

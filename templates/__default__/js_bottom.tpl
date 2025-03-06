@@ -4,7 +4,8 @@
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/lightcase.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/linedtextarea.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/list_order.js"></script>
-<script src="{PATH_TO_ROOT}/templates/__default__/plugins/multitabs.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/modal.js"></script>
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tabs.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/precode.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
 <script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.multi.js"></script>

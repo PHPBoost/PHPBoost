@@ -17,6 +17,7 @@
                     <li><a href="{U_BUILDER}#Sandbox_Builder_vertical_fieldset" class="cssmenu-title offload"><span>{@sandbox.hashtag.vertical.form}</span></a></li>
                     <li><a href="{U_BUILDER}#Sandbox_Builder_horizontal_fieldset" class="cssmenu-title offload"><span>{@sandbox.hashtag.horizontal.form}</span></a></li>
                     <li><a href="{U_BUILDER}#Sandbox_Builder_buttons" class="cssmenu-title offload"><span>{@sandbox.hashtag.buttons}</span></a></li>
+                    <li><a href="{U_BUILDER}#Sandbox_Builder_buttons" class="cssmenu-title offload"><span>{@sandbox.hashtag.modal}</span></a></li>
                 </ul>
             </li>
             <li class="has-sub fwk-component">
@@ -41,7 +42,6 @@
                     <li><a href="{U_COMPONENT}#component-media" class="cssmenu-title offload"><span>{@sandbox.hashtag.media}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-progressbar" class="cssmenu-title offload"><span>{@sandbox.hashtag.progressbar}</span></a></li>
                     <li><a href="{U_COMPONENT}#component-notation" class="cssmenu-title offload"><span>{@sandbox.hashtag.notation}</span></a></li>
-                    <li><a href="{U_COMPONENT}#component-modal" class="cssmenu-title offload"><span>{@sandbox.hashtag.modal}</span></a></li>
                     <li class="has-sub">
                         <a href="{U_COMPONENT}#component-lists" class="cssmenu-title offload"><span>{@sandbox.hashtag.lists}</span></a>
                         <ul>

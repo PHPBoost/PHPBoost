@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 27
+ * @version     PHPBoost 6.0 - last update: 2025 03 06
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -72,6 +72,7 @@ class SandboxBuilderController extends DefaultModuleController
 			'SELECT_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/select.tpl'),
 			'DND_MARKUP'      => self::build_markup('sandbox/pagecontent/builder/dnd.tpl'),
 			'BUTTON_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/button.tpl'),
+			'MODAL_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/modal.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
@@ -415,7 +416,6 @@ class SandboxBuilderController extends DefaultModuleController
 			// formfield to use if there's no validation button on the page
 			// $captcha->add_field(new FormFieldCaptcha('captcha'));
 
-
 		// BUTTONS
 		$buttons = new FormFieldsetHTML('buttons', $this->lang['sandbox.builder.buttons']);
 			$form->add_fieldset($buttons);
@@ -439,7 +439,14 @@ class SandboxBuilderController extends DefaultModuleController
 			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['sandbox.builder.button.icon'], 'fa fa-check', 'Submit', ''));
 			$buttons->add_element(new FormButtonSubmitImg($this->lang['sandbox.builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo.svg'), ''));
 
-		// SUBMIT BUTTONS
+        // MODALS
+        $modal = new FormFieldsetModal('modal', $this->lang['sandbox.builder.modal']);
+            // $modal->set_button_class('button bgc moderator');
+            // $modal->set_css_class('modal-half');
+            $form->add_fieldset($modal);
+            $modal->add_field(new FormFieldSpacer('modal_content', $this->lang['sandbox.builder.modal.content']));
+
+        // SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');
 			$buttons_fieldset->add_element(new FormButtonReset());
 			$this->preview_button = new FormButtonSubmit($this->lang['sandbox.builder.preview'], 'previewl', 'alert("Hello world preview")');

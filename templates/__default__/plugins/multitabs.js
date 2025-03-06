@@ -11,7 +11,7 @@
         multiTabs: function(options) {
             var defaults = {
                 pluginType: '', // modal, accordion, tabs
-                contentClass: '.content-panel',
+                contentClass: '.modal-content',
                 animation: false,
                 animationClass: 'animated ',
                 animationIn: 'slideInLeft',
@@ -28,7 +28,7 @@
 
             if(options.pluginType == 'modal') {
                 jQuery('.modal-container').find(hashUrl).addClass('active-panel');
-                jQuery('.modal-container').on('click', '.hide-modal, .close-modal', function() {
+                jQuery('.modal-container').on('click', '.hide-modal close-modal, .modal-overlay close-modal', function() {
                     jQuery('.modal-container ' + hashUrl).removeClass('active-panel'); // remove activation class from the target
                     history.pushState('', '', ' '); // delete the hash of the url without apllying it
                     return false;
@@ -69,7 +69,7 @@
                         // history.pushState('', '', '#'+dataId); // set the hash of the url whitout apllying it
                         jQuery(targetPanel).siblings().removeClass('active-panel'); // remove all active panel
                         jQuery(targetPanel).addClass('active-panel'); // add activation class to the target
-                        jQuery(targetPanel).on('click', '.close-modal, .hide-modal', function() {
+                        jQuery(targetPanel).on('click', '.modal-overlay close-modal, .hide-modal close-modal', function() {
                             jQuery(targetPanel).removeClass('active-panel'); // remove activation class from the target
                             return false;
                         });
@@ -80,7 +80,7 @@
                         if(options.animation) { // if animate.css is active
                             jQuery(targetPanel).removeClass().css(animStyles);// remove all classes from target & add animation details attributes
                             jQuery(targetPanel).addClass('modal active-panel ' + options.animationClass + ' ' + options.animationIn); // then add necessary opening classes for animate.css
-                            jQuery(targetPanel).on('click', '.close-modal, .hide-modal', function(){
+                            jQuery(targetPanel).on('click', '.modal-overlay close-modal, .hide-modal close-modal', function(){
                                 jQuery(this).parent().removeClass(options.animationIn).addClass(options.animationOut); // change animation classes to closing ones
                         });
                         }

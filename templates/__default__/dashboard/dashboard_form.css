@@ -97,7 +97,7 @@ select {
 .form-element.third-field { width: 100%; }
 
 @media (min-width: 769px) {
-	.fieldset-content .modal .content-panel.fieldset-inset { width: 80%; }
+	.fieldset-content .modal .modal-content.fieldset-inset { width: 80%; }
 
 	.form-element { width: calc(100% / 2); }
 

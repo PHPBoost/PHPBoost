@@ -25,11 +25,11 @@
         \# ENDIF \#
     &lt;/div>
     &lt;div class="modal-container">
-        &lt;button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}">&lt;i class="fa fa-question">&lt;/i>&lt;/button>
-        &lt;div id="upload-helper" class="modal modal-animation">
-            &lt;div class="close-modal" aria-label="{@common.close}">&lt;/div>
-            &lt;div class="content-panel">
-                &lt;div class="align-right">&lt;a href="#" class="error big hide-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
+        &lt;button class="button upload-help modal-button --upload-helper" aria-label="{@upload.upload.helper}">&lt;i class="fa fa-question">&lt;/i>&lt;/button>
+        &lt;div id="upload-helper" class="modal modal-half">
+            &lt;div class="modal-overlay close-modal" aria-label="{@common.close}">&lt;/div>
+            &lt;div class="modal-content">
+                &lt;div class="align-right">&lt;a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
                 &lt;h3>{@upload.upload.helper}&lt;/h3>
                 \# IF IS_ADMIN \#
                     &lt;p>&lt;strong>{@upload.max.file.size} :&lt;/strong> \{MAX_FILE_SIZE_TEXT\}&lt;/p>

@@ -58,9 +58,6 @@
 		jQuery('.captcha-element').removeClass('wizard-step');
 
 // Multitabs
-    jQuery('.modal-container [data-modal]').multiTabs({ pluginType: 'modal' });
-    jQuery('.tabs-container [data-tabs]').multiTabs({ pluginType: 'tabs' });
-
 	jQuery('.multiple-accordion').accordion();
 	jQuery('.single-accordion').accordion({
 		openSingle: true

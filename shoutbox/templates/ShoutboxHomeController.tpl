@@ -21,7 +21,7 @@
 				</nav> -->
 				# IF C_WRITE #
 					<div id="add-message"> <!-- class="tabs tabs-animation" -->
-						<div class="content-panel">
+						<div class="modal-content">
 							<div id="comment-form">
 								# INCLUDE FORM #
 							</div>
@@ -29,7 +29,7 @@
 					</div>
 				# ENDIF #
 				<div id="message-list"> <!-- class="first-tab tabs tabs-animation" -->
-					<div class="content-panel">
+					<div class="modal-content">
 						# IF C_NO_MESSAGE #
 							<div class="message-helper bgc notice message-helper-small align-center">{@common.no.item.now}</div>
 						# ENDIF #

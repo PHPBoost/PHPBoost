@@ -666,10 +666,10 @@ a[class*='lightcase-icon-']:hover {
 
 .accordion-trigger > button { color: var(--txt-main); }
 
-.close-modal { color: var(--txt-alt); }
+.modal-overlay { color: var(--txt-alt); }
 
 .modal { background-color: rgba(var(--darken), 0.5); }
-.modal .content-panel { background-color: var(--bgc-main); }
+.modal .modal-content { background-color: var(--bgc-main); }
 
 .tabs-container > .tabs-nav > ul > li a.active-tab { background-color: rgba(var(--main-rgb-t), 0.2); }
 

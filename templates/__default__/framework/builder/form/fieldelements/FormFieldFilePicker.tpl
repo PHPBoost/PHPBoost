@@ -21,11 +21,11 @@
 		# ENDIF #
 	</div>
 	<div class="modal-container">
-		<button class="button upload-help" data-modal data-target="upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question"></i></button>
-		<div id="upload-helper" class="modal modal-animation">
-			<div class="close-modal" aria-label="{@common.close}"></div>
-			<div class="content-panel">
-				<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+		<button class="button upload-help modal-button --upload-helper" aria-label="{@upload.upload.helper}"><i class="fa fa-question"></i></button>
+		<div id="upload-helper" class="modal modal-half">
+			<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+			<div class="modal-content">
+				<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 				<h3>{@upload.upload.helper}</h3>
 				# IF IS_ADMIN #
 					<p><strong>{@upload.max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>

@@ -35,7 +35,7 @@
 	# IF NOT C_IS_LOCKED #
 		# IF C_DISPLAY_FORM #
 			<div id="add-comment"> <!--  class="tabs tabs-animation" -->
-				<div class="content-panel">
+				<div class="modal-content">
 						<div id="comment-form">
 							# INCLUDE COMMENT_FORM #
 						</div>
@@ -44,7 +44,7 @@
 		# ENDIF #
 	# ENDIF #
     <div id="comments-section"> <!-- class="first-tab tabs tabs-animation" -->
-        <div class="content-panel">
+        <div class="modal-content">
 			# IF C_COMMENTS #
 				# IF C_DISPLAY_DELETE_FORM #
 					<form action="{FORM_URL}" method="post" class="fieldset-content">

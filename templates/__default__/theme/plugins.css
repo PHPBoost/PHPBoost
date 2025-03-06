@@ -16,7 +16,7 @@
 [data-modal],
 [data-tabs] { cursor: pointer; }
 
-.content-panel { padding: 0.618em; }
+.modal-content { padding: 0.618em; }
 
 /* --- Multitabs Accordion -------------------------------------------------- */
 .accordion-container .accordion-controls { text-align: right; }
@@ -79,13 +79,13 @@
         height 0.3s ease;
 }
 
-.accordion .content-panel {
+.accordion .modal-content {
     border-width: 0 1px;
     border-style: solid;
     border-color: transparent;
 }
 
-li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
+li:last-child .accordion .modal-content { border-width: 0 1px 1px; }
 
 /* --- Multitabs Modals ----------------------------------------------------- */
 .modal {
@@ -112,7 +112,7 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
 }
 
-.modal .content-panel {
+.modal .modal-content {
     position: absolute;
     padding: 0.618em;
     top: 0;
@@ -122,14 +122,14 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
 }
 
-.modal.active-panel .content-panel {
+.modal.active-panel .modal-content {
     top: 2.618em;
     transition: all 0.3s cubic-bezier(0.5, 0.5, 0.5, 0.5) 0.3s;
 }
 
-.modal .content-panel .button { padding: 0.228em 0.618em; }
+.modal .modal-content .button { padding: 0.228em 0.618em; }
 
-.close-modal {
+.modal-overlay close-modal {
     position: fixed;
     top: 0;
     right: 0;
@@ -138,18 +138,18 @@ li:last-child .accordion .content-panel { border-width: 0 1px 1px; }
     cursor: pointer;
 }
 
-.hide-modal { padding: 0 0 0.228em 0; }
+.hide-modal close-modal { padding: 0 0 0.228em 0; }
 
 @media (min-width:769px) {
-    .modal .content-panel {
+    .modal .modal-content {
         padding: 1.618em;
         width: 80%;
         max-height: calc(100vh - 3.236em);
     }
 
-    .modal.modal-auto .content-panel { width: auto; }
+    .modal.modal-auto .modal-content { width: auto; }
 
-    .modal.active-panel .content-panel {
+    .modal.active-panel .modal-content {
         top: 50%;
         transform: translate(-50%, -50%);
         overflow: auto;

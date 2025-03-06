@@ -40,7 +40,7 @@
 
 .cell-thumbnail a:hover { color: var(--txt-alt); }
 
-.cell-modal .content-panel.cell { background-color: var(--bgc-main); }
+.cell-modal .modal-content.cell { background-color: var(--bgc-main); }
 
 .cell-textarea .form-element { border-color: transparent; }
 
