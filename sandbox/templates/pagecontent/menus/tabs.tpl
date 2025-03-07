@@ -11,18 +11,20 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;div class="tabs-container">
+<pre class="precode"><code>&lt;div class="tabs-container"> // 4 options to display tabs menu : tabs-top (default) | tabs-left | tabs-right | tabs-bottom
     &lt;nav id="lorem" class="tabs-nav">
-        &lt;ul>
-            &lt;li>&lt;a href="#" data-tabs="" data-target="target_01_panel">...&lt;/a>&lt;/li>
-            &lt;li>&lt;a href="#" data-tabs="" data-target="target_02_panel">...&lt;/a>&lt;/li>
+        &lt;ul class="tabs-items">
+            &lt;li>&lt;a href="#" class="tab-item --target_01_panel">...&lt;/a>&lt;/li>
+            &lt;li>&lt;a href="#" class="tab-item --target_02_panel">...&lt;/a>&lt;/li>
         &lt;/ul>
     &lt;/nav>
-    &lt;div id="target_01_panel" class="tabs tabs-animation">
-        &lt;div class="modal-content">...&lt;/div>
-    &lt;/div>
-    &lt;div id="target_02_panel" class="tabs tabs-animation">
-        &lt;div class="modal-content">...&lt;/div>
+    &lt;div class="tabs-wrapper">
+        &lt;div id="target_01_panel" class="tab-content">
+            &lt;div class="modal-content">...&lt;/div>
+        &lt;/div>
+        &lt;div id="target_02_panel" class="tab-content">
+            &lt;div class="modal-content">...&lt;/div>
+        &lt;/div>
     &lt;/div>
 &lt;/div></code></pre>
                 </div>

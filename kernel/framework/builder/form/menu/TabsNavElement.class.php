@@ -7,15 +7,13 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 03 13
- * @since       PHPBoost 5.2 - 2019 10 11
+ * @version     PHPBoost 6.0 - last update: 2025 03 07
+ * @since       PHPBoost 6.0 - 2025 03 07
 */
 
-class FormFieldMultitabsLinkElement
+class TabsNavElement
 {
 	private $title;
-	private $url;
-	private $trigger;
 	private $target;
 	private $class;
 	private $css_class;
@@ -30,10 +28,9 @@ class FormFieldMultitabsLinkElement
 	 * @param Url $img the action icon url
 	 * @param string $active_module the action active module
 	 */
-	public function __construct($title, $trigger = '', $target = '', $css_class = '', $img = '', $active_module = '', $class = '')
+	public function __construct($title, $target = '', $css_class = '', $img = '', $active_module = '', $class = '')
 	{
 		$this->title = $title;
-		$this->trigger = $trigger;
 		$this->target = $target;
 		$this->class = $class;
 		$this->css_class = $css_class;
@@ -47,14 +44,6 @@ class FormFieldMultitabsLinkElement
 	public function get_title()
 	{
 		return $this->title;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_trigger()
-	{
-		return $this->trigger;
 	}
 
 	/**

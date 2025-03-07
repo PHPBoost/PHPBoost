@@ -1,6 +1,6 @@
 class TabsBoost
 {
-    constructor(el, options = {})
+    constructor(el)
     {
         this.nav = document.getElementById(el);
         this.tabLinks = this.nav.querySelectorAll('.tab-item');
@@ -128,7 +128,7 @@ class TabsBoost
 
 // Instantiation
 document.addEventListener('DOMContentLoaded', function() {
-    const tabs = document.querySelectorAll('.tabsboost');
+    const tabs = document.querySelectorAll('.tabs-container');
     tabs.forEach(tab => {
         new TabsBoost(tab.id);
     });

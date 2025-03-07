@@ -57,7 +57,7 @@
 	if(jQuery('.captcha-element .form-element').length == 0)
 		jQuery('.captcha-element').removeClass('wizard-step');
 
-// Multitabs
+// Accordion
 	jQuery('.multiple-accordion').accordion();
 	jQuery('.single-accordion').accordion({
 		openSingle: true

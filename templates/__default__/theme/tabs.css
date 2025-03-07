@@ -1,4 +1,4 @@
-.tabsboost {
+.tabs-container {
     max-width: 100%;
     margin: 0 auto;
     margin-bottom: 1.228em;
@@ -6,8 +6,6 @@
     display: flex;
     flex-direction: column;
 }
-
-.tabsboost.tabs-vertical { flex-direction: row; }
 
 .tabs-nav {
     order: 1;
@@ -30,15 +28,6 @@
     order: 2;
 }
 
-.tabs-vertical > .tabs-nav,
-.tabs-vertical > .tabs-nav > .tabs-items {
-    flex-direction: column;
-}
-
-.tabs-right > .tabs-nav {
-    order: 2;
-}
-
 .tab-item {
     padding: 0.309em 0.618em;
     margin: 0 0 0.228em;
@@ -50,18 +39,20 @@
     border-color: var(--bdr-main);
     color: var(--txt-sub);
     background-color: var(--bgc-sub);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.228em;
+}
+
+.tab-item img {
+    max-width: 16px;
+    max-height: 16px;
 }
 
 .tabs-bottom > .tabs-nav > .tabs-items .tab-item {
     margin: 0.228em 0 0;
-}
-
-.tabs-left > .tabs-nav > .tabs-items .tab-item {
-    margin: 0 0.228em 0 0;
-}
-
-.tabs-right > .tabs-nav > .tabs-items .tab-item {
-    margin: 0 0 0 0.228em;
 }
 
 .tab-item.current-tab {
@@ -69,7 +60,7 @@
     color: var(--txt-main);
 }
 
-.tabs-container {
+.tabs-wrapper {
     order: 2;
     border-width: 1px;
     border-style: solid;
@@ -77,11 +68,7 @@
     padding: 1.228em;
 }
 
-.tabs-bottom > .tabs-container {
-    order: 1;
-}
-
-.tabs-right > .tabs-container {
+.tabs-bottom > .tabs-wrapper {
     order: 1;
 }
 
@@ -97,4 +84,42 @@
     opacity: 1;
     visibility: visible;
     height: auto;
+}
+
+@media (min-width: 769px) {
+    .tabs-container.tabs-left,
+    .tabs-container.tabs-right {
+        flex-direction: row;
+    }
+
+    .tabs-left > .tabs-nav,
+    .tabs-left > .tabs-nav > .tabs-items,
+    .tabs-right > .tabs-nav,
+    .tabs-right > .tabs-nav > .tabs-items {
+        flex-direction: column;
+    }
+
+    .tabs-right > .tabs-nav {
+        order: 2;
+    }
+
+    .tabs-left > .tabs-nav > .tabs-items .tab-item {
+        margin: 0 0.228em 0 0;
+    }
+
+    .tabs-right > .tabs-nav > .tabs-items .tab-item {
+        margin: 0 0 0 0.228em;
+    }
+
+    .tabs-right > .tabs-wrapper {
+        order: 1;
+    }
+}
+
+.tab-content.fieldset-inset {
+    padding: 0;
+}
+
+.tabs-container .fieldset-submit {
+    order: 3;
 }
