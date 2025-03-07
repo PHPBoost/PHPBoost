@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 06
+ * @version     PHPBoost 6.0 - last update: 2025 03 07
  * @since       PHPBoost 5.2 - 2025 03 06
 */
 
@@ -68,7 +68,7 @@ class FormFieldsetModal extends FormFieldsetHTML
 
 	protected function get_default_template()
 	{
-		return new FileTemplate('framework/builder/form/menu/FormFieldsetModal.tpl');
+		return new FileTemplate('framework/builder/form/FormFieldsetModal.tpl');
 	}
 }
 
