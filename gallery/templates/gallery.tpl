@@ -386,13 +386,13 @@
 
 													<a href="{U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a>
 													<div id="move{ID}" class="modal-container cell-modal inline-block cell-tile">
-														<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
-														<div id="gallery-pic-move-to" class="modal modal-animation">
-															<div class="close-modal" aria-label="{@common.close}"></div>
-															<div class="cell content-panel">
+														<a class="modal-button --gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-fw fa-share" aria-hidden="true"></i></a>
+														<div id="gallery-pic-move-to" class="modal">
+															<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+															<div class="cell modal-content">
 																<div class="cell-header">
 																	<div class="cell-name">{@common.move.to} :</div>
-																	<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+																	<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 																</div>
 																<div class="cell-input">
 																	<select name="{ID}cat" onchange="document.location = '{U_MOVE}'">
@@ -507,13 +507,13 @@
 														<a id="fihref{pics_list.ID}" href="javascript:display_rename_file('{pics_list.ID}','{pics_list.RENAME}','{pics_list.RENAME_CUT}');" aria-label="{@common.edit}"><i class="far fa-edit"></i></a>
 														<a href="{pics_list.U_DELETE}" aria-label="{@common.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt"></i></a>
 														<div id="move{pics_list.ID}" class="modal-container cell-modal cell-tile">
-															<a data-modal data-target="gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
-															<div id="gallery-pic-move-to" class="modal modal-animation">
-																<div class="close-modal" aria-label="{@common.close}"></div>
-																<div class="cell content-panel">
+															<a class="modal-button --gallery-pic-move-to" aria-label="{@common.move.to}"><i class="fa fa-fw fa-share" aria-hidden="true"></i></a>
+															<div id="gallery-pic-move-to" class="modal modal-quarter">
+																<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+																<div class="cell modal-content">
 																	<div class="cell-header">
 																		<div class="cell-name">{@common.move.to} :</div>
-																		<div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+																		<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 																	</div>
 																	<div class="cell-input">
 																		<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">
