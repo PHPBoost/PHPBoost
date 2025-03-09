@@ -11,20 +11,16 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;div class="tabs-container"> // 4 options to display tabs menu : tabs-top (default) | tabs-left | tabs-right | tabs-bottom
-    &lt;nav id="lorem" class="tabs-nav">
+<pre class="precode"><code>&lt;div id="lorem" class="tabs-container"> // 4 options to display tabs menu : tabs-top (default) | tabs-left | tabs-right | tabs-bottom
+    &lt;nav class="tabs-nav">
         &lt;ul class="tabs-items">
             &lt;li>&lt;a href="#" class="tab-item --target_01_panel">...&lt;/a>&lt;/li>
             &lt;li>&lt;a href="#" class="tab-item --target_02_panel">...&lt;/a>&lt;/li>
         &lt;/ul>
     &lt;/nav>
     &lt;div class="tabs-wrapper">
-        &lt;div id="target_01_panel" class="tab-content">
-            &lt;div class="modal-content">...&lt;/div>
-        &lt;/div>
-        &lt;div id="target_02_panel" class="tab-content">
-            &lt;div class="modal-content">...&lt;/div>
-        &lt;/div>
+        &lt;div id="target_01_panel" class="tab-content">...&lt;/div>
+        &lt;div id="target_02_panel" class="tab-content">...&lt;/div>
     &lt;/div>
 &lt;/div></code></pre>
                 </div>
