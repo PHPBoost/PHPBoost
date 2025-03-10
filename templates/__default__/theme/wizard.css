@@ -1,0 +1,76 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * Contains elements for responsive Wizard Menu.
+*/
+
+.wizard-container {
+	display: flex;
+	flex-direction: column;
+	transition-duration: 0.4s;
+}
+
+.wizard-container .wizard-header { padding: 10px; }
+
+.wizard-container .wizard-header ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	position: relative;
+}
+
+.wizard-container .wizard-header li {
+	flex: 1;
+	text-align: center;
+	position: relative;
+	transition-duration: 0.4s;
+}
+
+.wizard-container .wizard-header a {
+	display: block;
+	padding: 0.618em 0;
+    cursor: default;
+}
+
+.wizard-container .wizard-header a.completed-step { cursor: pointer; }
+
+.wizard-container .wizard-header a:hover { text-decoration: none; }
+
+.wizard-container .wizard-header li span {
+	position: relative;
+	z-index: 2;
+}
+
+.wizard-container .wizard-header .progress {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 0px;
+	transition-duration: 0.4s;
+	transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.wizard-container .wizard-step {
+	display: none;
+	animation-duration: 0.4s;
+}
+
+.wizard-container .wizard-step.active-step { display: block; }
+
+.wizard-container .wizard-navigator {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px;
+	display: block;
+	flex: 0;
+}
+
+@media (min-width: 768px) {
+	.wizard-container .wizard-header ul { flex-direction: row; }
+}

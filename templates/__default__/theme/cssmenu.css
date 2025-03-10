@@ -431,3 +431,46 @@
 
 .cssmenu-static.small-screen .submenu-button::after { content: '\f0d8'; }
 .cssmenu-static.small-screen .submenu-button.submenu-opened::after { content: '\f0d7'; }
+
+/* --- Cssmenu select (select converted to list) --- */
+.cssmenu-select,
+.cssmenu-select li,
+.cssmenu-select li .cssmenu-title {
+	width: 100%;
+	text-align: left;
+}
+
+.cssmenu-select ul li.has-sub > .cssmenu-title:after,
+.cssmenu-select ul li.has-sub:hover > .cssmenu-title:after {
+	content: '\f078';
+	transition: 0.2s;
+}
+
+.cssmenu-select.cssmenu-open ul li.has-sub > .cssmenu-title:after {
+	content: '\f077';
+	transition: 0.2s;
+}
+
+.cssmenu-select ul li.has-sub:hover ul { left: -9999px; }
+
+.cssmenu-select.cssmenu-open ul li.has-sub ul {
+    left: 0;
+    top: calc(100% - 0.1618rem)
+}
+
+.cssmenu-select li .cssmenu-title {
+	cursor: pointer;
+	font-size: 1.4rem;
+}
+
+.cssmenu-select .has-sub { margin-bottom: 0.1618em; }
+
+.cssmenu-select .has-sub > .cssmenu-title {
+	padding: 0.618em 1.618em 0.456em 0.618em !important;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+    margin-bottom: 0.1618rem;
+}
+
+
