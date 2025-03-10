@@ -303,3 +303,28 @@ a.wikipedia-link:after {
 	justify-content: flex-end;
 	padding: 0 0 0.228em 0;
 }
+
+/* --- tooltip --- */
+.tooltip { display: none; }
+
+@media (min-width: 769px) {
+    .tooltip {
+        display: block;
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+        position:absolute;
+        padding: 0.309em 0.618em;
+        font-size: 0.809em;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        max-width: 320px;
+        z-index: 10002;
+        transition: opacity 0.3s ease;
+    }
+
+    .tooltip.position-b { margin-top: 0.809em; }
+
+    .tooltip.display-none { display: none; }
+}
