@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 19
+ * @version     PHPBoost 6.0 - last update: 2025 03 10
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -193,6 +193,12 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
+        //modal
+		while (preg_match('`<span class="button bgc moderator modal-button --([^"]+)">([^"]+)</span><div id="([^"]+)" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>([^"]+)</div></div>`suU', $this->content))
+		{
+            $this->content = preg_replace_callback('`<span class="button bgc moderator modal-button --([^"]+)">([^"]+)</span><div id="([^"]+)" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>([^"]+)</div></div>`suU', array($this, 'unparse_modal'), $this->content);
+        }
+
 		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa([blrsdt])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
 
@@ -270,7 +276,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 	/**
 	 * @desc Callback which allows to unparse the fieldset tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
 	protected function unparse_fieldset($matches)
@@ -300,38 +306,26 @@ class BBCodeUnparser extends ContentFormattingUnparser
 
 	/**
 	 * @desc Callback which allows to unparse the div tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
 	protected function unparse_container($matches)
 	{
-		$id = '';
-		$class = '';
-		$style = '';
+        $id    = !empty($matches[1]) ? ' id="' . $matches[1] . '"' : '';
+        $class = !empty($matches[2]) ? ' class="' . $matches[2] . '"' : '';
+        $style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
 
-		if (!empty($matches[1]))
-		{
-			$id = ' id="' . $matches[1] . '"';
-		}
+        return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
+	}
 
-		if (!empty($matches[2]))
-		{
-			$class = ' class="' . $matches[2] . '"';
-		}
-
-		if (!empty($matches[3]))
-		{
-			$style = ' style="' . $matches[3] . '"';
-		}
-
-		if (!empty($id) || !empty($class) || !empty($style))
-		{
-			return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
-		}
-		else
-		{
-			return '[container]' . $matches[4] . '[/container]';
-		}
+	/**
+	 * @desc Callback which allows to unparse the div tag
+	 * @param array $matches Content matched by a regular expression
+	 * @return string The string in which the fieldset tag are parsed
+	 */
+	protected function unparse_modal($matches)
+	{
+		return '[modal=' . $matches[2] . ']' . $matches[4] . '[/modal]';
 	}
 }
 ?>

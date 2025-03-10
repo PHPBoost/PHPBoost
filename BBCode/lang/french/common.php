@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 11
+ * @version     PHPBoost 6.0 - last update: 2025 03 10
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -170,4 +170,30 @@ $lang['bbcode.html']               = 'Insérer du code html';
 $lang['bbcode.help']     = 'Aide BBcode';
 $lang['bbcode.collapse'] = 'Réduire le champ texte';
 $lang['bbcode.expand']   = 'Étendre le champ texte';
+
+// Layers
+$lang['bbcode.extra']                = 'Balises prédéfinies';
+$lang['bbcode.page.path']            = 'Chemin vers une page';
+$lang['bbcode.file.path']            = 'Chemin vers un fichier';
+$lang['bbcode.pin']                  = 'Étiquette';
+$lang['bbcode.pin.bgc']              = 'Couleur de l\'étiquette';
+$lang['bbcode.pin.bgc.none']         = 'Aucune';
+$lang['bbcode.pin.bgc.transparent']  = 'Transparente';
+$lang['bbcode.pin.bgc.full']         = 'Pleine';
+$lang['bbcode.pin.color.picker']     = 'Choisissez une couleur';
+$lang['bbcode.columns']              = 'Colonnes';
+$lang['bbcode.columns.number']       = 'Nombre de colonnes par ligne';
+$lang['bbcode.modal']                = 'Modal';
+$lang['bbcode.modal.name']           = 'Nom du modal';
+$lang['bbcode.modal.target']         = 'Cible du modal';
+$lang['bbcode.tabs']                 = 'Menu à onglets';
+$lang['bbcode.tabs.id']              = '* Identifiant du menu';
+$lang['bbcode.tabs.location']        = 'Emplacement des onglets';
+$lang['bbcode.tabs.location.top']    = 'Au dessus';
+$lang['bbcode.tabs.location.bottom'] = 'En dessous';
+$lang['bbcode.tabs.location.left']   = 'Sur la gauche';
+$lang['bbcode.tabs.location.right']  = 'Sur la droite';
+$lang['bbcode.tabs.number']          = 'Nombre d\'onglets';
+
+
 ?>

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 11
+ * @version     PHPBoost 6.0 - last update: 2025 03 10
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -169,4 +169,28 @@ $lang['bbcode.html']               = 'Html code';
 $lang['bbcode.help']     = 'BBcode help';
 $lang['bbcode.collapse'] = 'Collapse the text field';
 $lang['bbcode.expand']   = 'Expand the text field';
+
+// Layers
+$lang['bbcode.extra']                = 'Predefined tags';
+$lang['bbcode.page.path']            = 'Path to a page';
+$lang['bbcode.file.path']            = 'Path to a file';
+$lang['bbcode.pin']                  = 'Tag';
+$lang['bbcode.pin.bgc']              = 'Tag color';
+$lang['bbcode.pin.bgc.none']         = 'None';
+$lang['bbcode.pin.bgc.transparent']  = 'Transparent';
+$lang['bbcode.pin.bgc.full']         = 'Full';
+$lang['bbcode.pin.color.picker']     = 'Pick a color';
+$lang['bbcode.columns']              = 'Columnss';
+$lang['bbcode.columns.number']       = 'Columns number per row';
+$lang['bbcode.modal']                = 'Modal';
+$lang['bbcode.modal.name']           = 'Modal name';
+$lang['bbcode.modal.target']         = 'Modal target';
+$lang['bbcode.tabs']                 = 'Tabs menu';
+$lang['bbcode.tabs.id']              = '* Menu identifier';
+$lang['bbcode.tabs.location']        = 'Tabs location';
+$lang['bbcode.tabs.location.top']    = 'On top';
+$lang['bbcode.tabs.location.bottom'] = 'Below';
+$lang['bbcode.tabs.location.left']   = 'Left side';
+$lang['bbcode.tabs.location.right']  = 'Right side';
+$lang['bbcode.tabs.number']          = 'Tabs number';
 ?>

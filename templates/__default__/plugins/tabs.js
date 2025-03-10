@@ -39,7 +39,7 @@ class TabsBoost
                 } else if (firstLink) {
                     firstTabLinks.push(firstLink)
                 } else {
-                    firstTabLinks.push(ul.querySelector('li'))
+                    firstTabLinks.push(ul.querySelector('.tab-item'))
                 }
             });
 
@@ -101,9 +101,9 @@ class TabsBoost
             return siblings;
         }
         let nav = el.closest('.tabs-nav');
-        let ul = nav.querySelectorAll('ul');
+        let ul = nav.querySelectorAll('.tabs-items');
         ul.forEach(ul => {
-            let items = ul.querySelectorAll('li');
+            let items = ul.querySelectorAll('.tab-item');
             items.forEach(item => {
                 if (item.nodeType === 1 && item !== el) {
                     siblings.push(item);

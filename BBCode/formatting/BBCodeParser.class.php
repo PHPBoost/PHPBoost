@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 19
+ * @version     PHPBoost 6.0 - last update: 2025 03 10
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -286,7 +286,7 @@ class BBCodeParser extends ContentFormattingParser
 		//Title tag
 		if (!in_array('title', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[title=([1-6])\](.+)\[/title\]`iuU', array($this, 'parse_title'), $this->content);
+			$this->content = preg_replace_callback('`\[title=([1-5])\](.+)\[/title\]`iuU', array($this, 'parse_title'), $this->content);
 		}
 
 		//Image tag
@@ -359,11 +359,18 @@ class BBCodeParser extends ContentFormattingParser
 		{
 			$this->_parse_imbricated('[container', '`\[container(?: id="([^"]*)")?(?: class="([^"]*)")?(?: style="([^"]*)")?\](.+)\[/container\]`suU', '<div id="$1" class="$2" style="$3">$4</div>');
 		}
+
+		//Modal tag
+		if (!in_array('modal', $this->forbidden_tags))
+		{
+			// $this->_parse_imbricated('[modal=', '`\[modal=([^\]]+)\](.+)\[/modal\]`suU', '<span class="button bgc moderator modal-button --$1">$1</span><div id="$1" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>$2</div></div>');
+            $this->content = preg_replace_callback('`\[modal=([^\]]+)\](.+)\[/modal\]`suU', [$this, 'parse_modal'], $this->content);
+		}
 	}
 
 	/**
 	 * @desc Serializes a split content according to the table tag and generates the complete HTML code.
-	 * @param string[] $content Content of the parser split according to the table tag
+	 * @param array $content Content of the parser split according to the table tag
 	 */
 	protected function parse_imbricated_table(&$content)
 	{
@@ -431,7 +438,7 @@ class BBCodeParser extends ContentFormattingParser
 	/**
 	 * @descSerializes a split content according to the list tag
 	 * Generates the HTML code
-	 * @param string[] $content Content split according to the list tag
+	 * @param array $content Content split according to the list tag
 	 */
 	protected function parse_imbricated_list(&$content)
 	{
@@ -490,7 +497,7 @@ class BBCodeParser extends ContentFormattingParser
 
 	/**
 	 * @desc Callback treating the title tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the title tag are parsed
 	 */
 	protected function parse_title($matches)
@@ -514,9 +521,17 @@ class BBCodeParser extends ContentFormattingParser
 		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $class . $style .' />';
 	}
 
+    protected function parse_modal($matches)
+    {
+        $name = $matches[1];
+        $target = Url::encode_rewrite($matches[1]);
+        $content = $matches[2];
+        return '<span class="button bgc moderator modal-button --' . $target . '">' . $name . '</span><div id="' . $target . '" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>' . $content . '</div></div>';
+    }
+
 	/**
 	 * @desc Callback which clears the new line tag in the HTML generated code
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the new line tag are cleared
 	 */
 	protected static function clear_html_br($matches)

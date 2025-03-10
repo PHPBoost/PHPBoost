@@ -589,6 +589,194 @@
 					</li>
 				</ul>
 			</li>
+			<li class="bbcode-group bbcode-layers">
+                <a href="#layers" class="bbcode-group-title bbcode-button" aria-label="{@bbcode.extra}"><i class="fa fa-fw fa-layer-group" aria-hidden="true"></i></a>
+                <ul class="bbcode-container modal-container cell-modal cell-tile">
+                    <li class="bbcode-elements">
+						<a href="#page-path" class="bbcode-button close-bbcode-sub" onclick="bbcode_page_path('{FIELD}');" role="button" aria-label="{@bbcode.page.path}">
+							<i class="fa fa-fw fa-road" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li class="bbcode-elements">
+						<a href="#file-path" class="bbcode-button close-bbcode-sub" onclick="bbcode_file_path('{FIELD}');" role="button" aria-label="{@bbcode.file.path}">
+							<i class="fa fa-fw fa-sitemap fa-rotate-270" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li id="pin" class="bbcode-elements">
+						<a href="#pin" class="bbcode-button modal-button --block-pin{FIELD}" role="button" aria-label="{@bbcode.pin}">
+							<i class="fa fa-fw fa-tags" aria-hidden="true"></i>
+						</a>
+						<div id="block-pin{FIELD}" class="modal modal-half">
+							<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+							<div class="modal-content cell">
+                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
+                                <div class="cell-header">
+                                    <h6 class="cell-name">{@bbcode.pin.bgc}</h6>
+                                </div>
+                                <div class="cell-form">
+                                    <label for="no"><input type="radio" name="pinned-background" id="no" value="" checked="checked"> <span>{@bbcode.pin.bgc.none} &nbsp;</span></label>
+                                    <label for="bgc"><input type="radio" name="pinned-background" id="bgc" value="bgc"> <span>{@bbcode.pin.bgc.transparent} &nbsp;</span></label>
+                                    <label for="full"><input type="radio" name="pinned-background" id="full" value="bgc-full"> <span>{@bbcode.pin.bgc.full} &nbsp;</span></label>
+                                </div>
+								<div class="cell-header">
+									<h6 class="cell-name">{@bbcode.pin.color.picker}</h6>
+								</div>
+								<div class="cell-list cell-list-inline">
+                                    <ul id="pinned-color">
+                                        <li class="no-style">
+                                            <a href="#tag-moderator" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'moderator');" aria-label="moderator">
+                                                <i class="fa fa-fw fa-tag moderator" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-error" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'error');" aria-label="error">
+                                                <i class="fa fa-fw fa-tag error" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-warning" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'warning');" aria-label="warning">
+                                                <i class="fa fa-fw fa-tag warning" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-star" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'star');" aria-label="star">
+                                                <i class="fa fa-fw fa-tag star" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-success" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'success');" aria-label="success">
+                                                <i class="fa fa-fw fa-tag success" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-member" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'member');" aria-label="member">
+                                                <i class="fa fa-fw fa-tag member" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-question" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'question');" aria-label="question">
+                                                <i class="fa fa-fw fa-tag question" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-visitor" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'visitor');" aria-label="visitor">
+                                                <i class="fa fa-fw fa-tag visitor" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-link-color" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'link-color');" aria-label="link-color">
+                                                <i class="fa fa-fw fa-tag link-color" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-logo-color" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'logo-color');" aria-label="logo-color">
+                                                <i class="fa fa-fw fa-tag logo-color" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-notice" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'notice');" aria-label="notice">
+                                                <i class="fa fa-fw fa-tag notice" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-custom-author" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'custom-author');" aria-label="custom-author">
+                                                <i class="fa fa-fw fa-tag custom-author" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="no-style">
+                                            <a href="#tag-administrator" class="bbcode-button close-modal close-bbcode-sub" onclick="bbcode_pin('{FIELD}', 'administrator');" aria-label="administrator">
+                                                <i class="fa fa-fw fa-tag administrator" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+							</div>
+						</div>
+					</li>
+					<li id="columns" class="bbcode-elements">
+						<a href="#columns" class="bbcode-button modal-button --block-columns{FIELD}" role="button" aria-label="{@bbcode.columns}">
+							<i class="fa fa-fw fa-table-columns" aria-hidden="true"></i>
+						</a>
+						<div id="block-columns{FIELD}" class="modal modal-half">
+							<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+							<div class="modal-content cell">
+                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
+								<div class="cell-header">
+									<h6 class="cell-name">{@bbcode.columns}</h6>
+								</div>
+								<div class="cell-form">
+                                    <label class="cell-label" for="bb-cols{FIELD}">{@bbcode.columns.number}</label>
+                                    <div class="cell-input">
+                                        <input type="number" name="bb-cols{FIELD}" id="bb-cols{FIELD}" value="2" min="2" max="4">
+                                    </div>
+                                </div>
+								<div class="cell-footer">
+									<a href="#columns-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_column('{FIELD}');">{@bbcode.tags.add}</a>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li id="modal" class="bbcode-elements">
+						<a href="#modal" class="bbcode-button modal-button --block-modal{FIELD}" role="button" aria-label="{@bbcode.modal}">
+							<i class="fa fa-fw fa-expand" aria-hidden="true"></i>
+						</a>
+						<div id="block-modal{FIELD}" class="modal modal-half">
+							<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+							<div class="modal-content cell">
+                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
+								<div class="cell-header">
+									<h6 class="cell-name">{@bbcode.modal}</h6>
+								</div>
+								<div class="cell-form">
+                                    <label class="cell-label" for="bb-modal-name{FIELD}">{@bbcode.modal.name}</label>
+                                    <div class="cell-input">
+                                        <input type="text" name="bb-modal-name{FIELD}" id="bb-modal-name{FIELD}">
+                                    </div>
+                                </div>
+								<div class="cell-footer">
+									<a href="#modal-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_modal('{FIELD}');">{@bbcode.tags.add}</a>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li id="tabs" class="bbcode-elements">
+						<a href="#tabs" class="bbcode-button modal-button --block-tabs{FIELD}" role="button" aria-label="{@bbcode.tabs}">
+							<i class="fa fa-fw fa-table-list fa-rotate-90" aria-hidden="true"></i>
+						</a>
+						<div id="block-tabs{FIELD}" class="modal modal-half">
+							<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+							<div class="modal-content cell">
+                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
+								<div class="cell-header">
+									<h6 class="cell-name">{@bbcode.tabs}</h6>
+								</div>
+								<div class="cell-form">
+                                    <label class="cell-label" for="bb-tabs-id{FIELD}">{@bbcode.tabs.id}</label>
+                                    <div class="cell-input">
+                                        <input type="text" name="bb-tabs-id{FIELD}" id="bb-tabs-id{FIELD}">
+                                    </div>
+                                    <span>{@bbcode.tabs.location}</span>
+                                    <div class="cell-list cell-list-inline">
+                                        <ul>
+                                            <li><label for="top"><input type="radio" name="bb-tabs-location{FIELD}" id="top" value="top" checked="checked"> <span>{@bbcode.tabs.location.top} &nbsp;</span></label></li>
+                                            <li><label for="bottom"><input type="radio" name="bb-tabs-location{FIELD}" id="bottom" value="bottom"> <span>{@bbcode.tabs.location.bottom} &nbsp;</span></label></li>
+                                            <li><label for="left"><input type="radio" name="bb-tabs-location{FIELD}" id="left" value="left"> <span>{@bbcode.tabs.location.left} &nbsp;</span></label></li>
+                                            <li><label for="right"><input type="radio" name="bb-tabs-location{FIELD}" id="right" value="right"> <span>{@bbcode.tabs.location.right} &nbsp;</span></label></li>
+                                        </ul>
+                                    </div>
+                                    <label class="cell-label" for="bb-tabs-nb{FIELD}">{@bbcode.tabs.number}</label>
+                                    <div class="cell-input">
+                                        <input type="number" name="bb-tabs-nb{FIELD}" id="bb-tabs-nb{FIELD}" value="2" min="2" max="50">
+                                    </div>
+                                </div>
+								<div class="cell-footer">
+									<a href="#tabs-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_tabs('{FIELD}');">{@bbcode.tags.add}</a>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</li>
 			<li class="bbcode-group bbcode-links">
 				<a href="#links" class="bbcode-group-title bbcode-button" aria-label="{@bbcode.links}"><i class="fa fa-fw fa-link" aria-hidden="true"></i></a>
 				<ul class="bbcode-container cell-tile">

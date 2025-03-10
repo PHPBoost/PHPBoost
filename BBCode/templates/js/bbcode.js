@@ -421,3 +421,60 @@ function checkbox_revealer()
 	else
 		jQuery('.checkbox-revealer').closest('.cell').find('.cell-hidden').addClass('hidden');
 }
+
+// Layers
+
+function bbcode_page_path(field)
+{
+	insertbbcode('[container class="page-path"]\n\t[list]\n\t\t[*]', '\n\t[/list]\n[/container]', field);
+}
+
+function bbcode_file_path(field)
+{
+	insertbbcode('[container class="file-path"]\n\t[list]\n\t\t[*]\n\t\t[*]+', '\n\t[/list]\n[/container]', field);
+}
+
+function bbcode_pin(field, color)
+{
+    let checked = document.querySelector('input[name="pinned-background"]:checked').value;
+	insertbbcode('[container class="pinned ' + checked + ' ' + color + '"]', '[/container]', field);
+}
+
+function bbcode_column(field)
+{
+    var colNumber = document.getElementById('bb-cols' + field).value;
+	insertbbcode('[container class="cell-flex formatter-columns cell-columns-' + colNumber + '"]\n\t[container class="formatter-column"]', ' [/container]\n[/container]', field);
+}
+
+function bbcode_modal(field)
+{
+    var modalName = document.getElementById('bb-modal-name' + field).value;
+	insertbbcode('[modal=' + modalName + ']', '[/modal]', field);
+}
+
+function bbcode_tabs(field)
+{
+    var tabItem = tabContent = '',
+        tabsId = document.getElementById('bb-tabs-id' + field).value,
+        tabsBtnLoc = document.querySelector('input[name="bb-tabs-location' + field + '"]:checked').value,
+        tabsNb = document.getElementById('bb-tabs-nb' + field).value;
+
+    if (tabsId) {
+        for(var i = 1; i <= tabsNb; i++)
+        {
+            tabItem += '\t\t\t[container class="tab-item --tab-' + i + '"] [/container]\n';
+            tabContent += '\t\t[container id="tab-' + i + '" class="tab-content"] [/container]\n';
+        }
+        insertbbcode( '[container id="' + url_encode_rewrite(tabsId) + '" class="tabs-container tabs-' + tabsBtnLoc + '"]\n' +
+                '\t[container class="tabs-nav"]\n' +
+                    '\t\t[container class="tabs-items"]\n' +
+                        tabItem +
+                    '\t\t[/container]\n' +
+                '\t[/container]\n' +
+                '\t[container class="tabs-wrapper"]\n' +
+                    tabContent +
+                '\t[/container]\n' +
+                '[/container]', '', field
+        );
+    }
+}

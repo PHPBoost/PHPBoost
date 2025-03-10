@@ -188,6 +188,21 @@
 	jQuery(window).ready(function() {
 		jQuery('.content-preloader').animate({opacity: 1}, 300);
 	});
+
+// Construct list item for file path - Use + symbol to indent list items
+    document.querySelectorAll('.file-path > br').forEach(br => br.remove());
+    document.querySelectorAll('.file-path li').forEach(el => {
+        const span = document.createElement('span');
+        span.innerHTML = '&vdash;&nbsp;';
+        el.prepend(span);
+
+        let str = el.innerHTML;
+        const hyphenNb = (str.match(/\+/g) || []).length;
+        el.style.paddingLeft = hyphenNb * 1.1618 + 'em';
+        const newstr = str.replace(/\+/g, '');
+        el.innerHTML = newstr;
+    });
+
 </script>
 
 
