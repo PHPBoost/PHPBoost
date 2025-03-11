@@ -22,7 +22,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 	 * @param string $label Field label
 	 * @param FormFieldMultipleCheckboxOption[] $selected_options The selected options (can also be an array of string where strings are identifiers of selected options)
 	 * @param FormFieldMultipleCheckboxOption[] $available_options All the options managed by the field
-	 * @param string[] $field_options Map containing the options
+	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
 	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())

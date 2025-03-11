@@ -12,12 +12,12 @@
 class ModuleJsFiles implements JsFilesExtensionPoint
 {
     /**
-     * @var string[]
+     * @var array
      */
     private $js_files_always_displayed = [];
 
     /**
-     * @var string[]
+     * @var array
      */
     private $js_files_running_module_displayed = [];
 
@@ -47,7 +47,7 @@ class ModuleJsFiles implements JsFilesExtensionPoint
 
     /**
      * Get all JS files to display everytime, in the top_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public function get_top_js_files_always_displayed():array
     {
@@ -56,7 +56,7 @@ class ModuleJsFiles implements JsFilesExtensionPoint
 
     /**
      * Get all JS files to display everytime, in the bottom_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public function get_bottom_js_files_always_displayed():array
     {
@@ -65,7 +65,7 @@ class ModuleJsFiles implements JsFilesExtensionPoint
 
     /**
      * Get all JS files to display only in module, in the top_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public function get_top_js_files_running_module_displayed():array
     {
@@ -74,7 +74,7 @@ class ModuleJsFiles implements JsFilesExtensionPoint
 
     /**
      * Get all JS files to display only in module, in the bottom_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public function get_bottom_js_files_running_module_displayed():array
     {

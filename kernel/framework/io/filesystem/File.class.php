@@ -103,7 +103,7 @@ class File extends FileSystemElement
 
 	/**
 	 * Returns the content of the file grouped by lines.
-	 * @return string[] The list of the lines of the file.
+	 * @return array The list of the lines of the file.
 	 */
 	public function read_lines()
 	{

@@ -126,7 +126,7 @@ class DBQuerier implements SQLQuerier
 	 * retrieve a single row from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
-	 * @param string[] $columns the columns to retrieve.
+	 * @param array $columns the columns to retrieve.
 	 * @param string $condition the update condition beginning just after the where clause.
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map
@@ -208,7 +208,7 @@ class DBQuerier implements SQLQuerier
 	 * retrieve rows from the <code>$table_name</code> table matching the
 	 * <code>$condition</code> condition
 	 * @param string $table_name the name of the table on which work will be done
-	 * @param string[] $columns the columns to retrieve.
+	 * @param array $columns the columns to retrieve.
 	 * @param string $condition the update condition beginning just after the where clause.
 	 * For example, <code>"length > 50 and weight < 100"</code>
 	 * @param string[string] $parameters the query_var map

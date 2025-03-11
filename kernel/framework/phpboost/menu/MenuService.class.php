@@ -25,7 +25,7 @@ class MenuService
 	private static $querier;
 
 	/**
-	 * @var string[] the columns needed to instanciate a menu
+	 * @var array the columns needed to instanciate a menu
 	 */
 	private static $columns = array('id', 'object', 'class', 'block', 'position', 'enabled');
 

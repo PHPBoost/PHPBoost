@@ -108,7 +108,7 @@ class BBCodeHighlighter extends AbstractParser
 
 	/**
 	 * Callback which highlights the parameters of a complex tag
-	 * @param string[] $matches elements matched by the regular expression
+	 * @param array $matches elements matched by the regular expression
 	 * @return string The complex tag highlighted
 	 */
 	private function highlight_bbcode_tag_with_many_parameters($matches)

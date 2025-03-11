@@ -18,7 +18,7 @@ class FormatingHelper
 	/**
 	 * Parses a string with several default parameters. This methods exists to lighten the number of lines written.
 	 * @param string $content Content to parse
-	 * @param string[] $forbidden_tags List of the forbidden formatting tags
+	 * @param array $forbidden_tags List of the forbidden formatting tags
 	 * @param bool $addslashes if true, the parsed string will be escaped.
 	 * @return string The parsed string.
 	 */

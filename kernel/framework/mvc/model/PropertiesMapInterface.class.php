@@ -17,7 +17,7 @@ interface PropertiesMapInterface
     function populate($properties_map);
 
     /**
-     * @param string[] $properties_list
+     * @param array $properties_list
      * @return mixed[string]
      */
     function get_raw_value($properties_list);

@@ -19,7 +19,7 @@ class FormFieldDecimalNumberEditor extends FormFieldNumberEditor
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value
-	 * @param string[] $field_options Map containing the options
+	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())

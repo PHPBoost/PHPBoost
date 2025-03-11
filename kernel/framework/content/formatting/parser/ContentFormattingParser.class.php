@@ -17,11 +17,11 @@
 abstract class ContentFormattingParser extends AbstractParser
 {
 	/**
-	 * @var string[] Authorization of the HTML BBCode tag.
+	 * @var array Authorization of the HTML BBCode tag.
 	 */
 	protected $html_auth = array();
 	/**
-	 * @var string[] List of the BBCode forbidden tags
+	 * @var array List of the BBCode forbidden tags
 	 */
 	protected $forbidden_tags = array();
 
@@ -48,7 +48,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * Sets the tags which mustn't be parsed.
-	 * @param string[] $forbidden_tags list of the name of the tags which mustn't be parsed.
+	 * @param array $forbidden_tags list of the name of the tags which mustn't be parsed.
 	 */
 	public function set_forbidden_tags(array $forbidden_tags)
 	{
@@ -60,7 +60,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * Gets the forbidden tags.
-	 * @return string[] List of the forbidden tags
+	 * @return array List of the forbidden tags
 	 */
 	public function get_forbidden_tags()
 	{
@@ -89,7 +89,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	/**
 	 * Splits a string accorting to a tag name.
 	 * Works also with nested tags.
-	 * @param string $content Content to split, will be converted in a string[] variable containing the following pattern:
+	 * @param string $content Content to split, will be converted in a array variable containing the following pattern:
 	 * <ul>
 	 *  <li>The content between two tags (or at the begening or the end of the content)</li>
 	 *  <li>The parameter of the tag</li>
@@ -124,7 +124,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * @param $tag string BBCode tage name
 	 * @param $attributes string The regular expression (PCRE syntax) corresponding to the arguments which you want to match.
 	 * There mustn't be any matching parenthesis into that regular expression
-	 * @return string[] the split string
+	 * @return array the split string
 	 */
 	protected static function preg_split_safe_recurse($content, $tag, $attributes)
 	{
@@ -310,7 +310,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * @desc Callback which parses the font awasome icons tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
 	protected function parse_fa_tag($matches)
@@ -336,7 +336,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * @desc Callback which parses the html emojis
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the emo tag are parsed
 	 */
 	protected function parse_emoji_tag($matches)
@@ -346,7 +346,7 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * @desc Callback which parses the wikipedia tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
 	protected function parse_wikipedia_tag($matches)

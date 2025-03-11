@@ -27,7 +27,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
      * @param string $id Field id
      * @param string $label Field label
      * @param string $value Default value
-     * @param string[] $field_options Options
+     * @param array $field_options Options
      * @param FormFieldConstraint[] $constraints List of the constraints
      */
     public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())

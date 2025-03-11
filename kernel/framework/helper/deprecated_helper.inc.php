@@ -213,7 +213,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
  * @param string $dir_path Path of the file (relative from this page).
  * @param string $require_dir The name of the folder in which the configuration file should be. This folder must be in the bases file ($dir_path). If this directory doesn't exist, another will be read.
  * @param string $ini_name The name of the configuration file you want to know.
- * @return string[] The configuration values contained in the file $dir_path/$require_dir/$ini_name.
+ * @return array The configuration values contained in the file $dir_path/$require_dir/$ini_name.
  */
 function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
 {

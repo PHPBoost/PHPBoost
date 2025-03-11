@@ -17,7 +17,7 @@ class ValidationResult
 	private $title;
 
 	/**
-	 * @var string[]
+	 * @var array
 	 */
 	private $errors = array();
 
@@ -42,7 +42,7 @@ class ValidationResult
 
 	/**
 	 * Returns the list of the errors messages
-	 * @return string[] errors messages
+	 * @return array errors messages
 	 */
 	public function get_errors_messages()
 	{

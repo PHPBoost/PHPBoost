@@ -17,7 +17,7 @@ class FormFieldEditors extends FormFieldSimpleSelectChoice
      * @param string $id Field id
      * @param string $label Field label
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
-     * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+     * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
     public function __construct($id, $label, $value = 0, array $field_options = array(), array $constraints = array())

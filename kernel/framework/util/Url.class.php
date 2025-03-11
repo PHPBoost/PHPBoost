@@ -515,7 +515,7 @@ class Url
 
 	/**
 	 * replace a relative url by the corresponding absolute one
-	 * @param string[] $url_params Array containing the attributes containing the url and the url
+	 * @param array $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
 	private static function convert_url_to_absolute($url_params)
@@ -527,7 +527,7 @@ class Url
 
 	/**
 	 * replace an absolute url by the corresponding root relative one if possible
-	 * @param string[] $url_params Array containing the attributes containing the url and the url
+	 * @param array $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
 	private static function convert_url_to_root_relative($url_params)
@@ -539,7 +539,7 @@ class Url
 
 	/**
 	 * replace an absolute url by the corresponding relative one if possible
-	 * @param string[] $url_params Array containing the attributes containing the url and the url
+	 * @param array $url_params Array containing the attributes containing the url and the url
 	 * @return string the replaced url
 	 */
 	private static function convert_url_to_relative($url_params)

@@ -179,7 +179,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * @static
 	 * Handler which highlights a string matched by the preg_replace_callback function.
-	 * @param string[] $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?,
+	 * @param array $matches The matched contents: 0 => the whole string, 1 => the language, 2 => number count?,
 	 * 3 => multi line?, 4 => the code to highlight.
 	 * @return string the colored content
 	 */
@@ -245,7 +245,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * @static
 	 * Display the content only if it's a connected user.
-	 * @param string[] 1 => the content inside member tag.
+	 * @param array 1 => the content inside member tag.
 	 * @return string The content if it's a member or a generic message.
 	 */
 	private function callback_member_tag($matches)
@@ -260,7 +260,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * @static
 	 * Display the content only if it's a member user. The begining of the content is shown to visitors
-	 * @param string[] 1 => the content inside teaser tag.
+	 * @param array 1 => the content inside teaser tag.
 	 * @return string The content if it's a member or a generic message.
 	 */
 	private function callback_teaser_tag($matches)
@@ -275,7 +275,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * @static
 	 * Display the content only if it's a moderator user.
-	 * @param string[] 1 => the content inside moderator tag.
+	 * @param array 1 => the content inside moderator tag.
 	 * @return string The content if it's a moderator or a generic message.
 	 */
 	private function callback_moderator_tag($matches)
@@ -290,7 +290,7 @@ class ContentSecondParser extends AbstractParser
 	/**
 	 * @static
 	 * Parses the latex code and replaces it by an image containing the mathematic formula.
-	 * @param string[] $matches 0 => the whole tag, 1 => the latex code to parse.
+	 * @param array $matches 0 => the whole tag, 1 => the latex code to parse.
 	 * @return string The code of the image containing the formula.
 	 */
 	private function math_code($matches)
@@ -386,7 +386,7 @@ class ContentSecondParser extends AbstractParser
 	private static function inject_feed(array $matches)
 	{
 		$module = $matches[2];
-		$args = parent::parse_tag_args($matches[1], array('name', 'cat', 'number'));
+		$args = parent::parse_tag_args($matches[1], ['name', 'cat', 'number']);
 		$name = !empty($args['name']) ? $args['name'] : Feed::DEFAULT_FEED_NAME;
 		$cat = !empty($args['cat']) ? $args['cat'] : 0;
 		$tpl = false;

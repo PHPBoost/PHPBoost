@@ -72,7 +72,7 @@ interface TemplateData
 	 * Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
 	 * To know what syntax to use to browse a loop, see the class description, there are examples.
 	 * @param string $block_name Block name.
-	 * @param string[] $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
+	 * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 * @param Template[] $subtemplates The list of subtemplates to embed in the loop's iteration.
 	 */
 	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());

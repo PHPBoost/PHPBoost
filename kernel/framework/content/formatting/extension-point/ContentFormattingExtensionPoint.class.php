@@ -41,13 +41,13 @@ interface ContentFormattingExtensionPoint extends ExtensionPoint
 
 	/**
 	 * Sets the forbidden tags.
-	 * @param string[] $tags The list of the forbidden tags (each tag is represented by its string identifier)
+	 * @param array $tags The list of the forbidden tags (each tag is represented by its string identifier)
 	 */
 	function set_forbidden_tags(array $tags);
 
 	/**
 	 * Returns the list of the forbidden tags
-	 * @return string[] The list of the forbidden tags (each tag is represented by its string identifier)
+	 * @return array The list of the forbidden tags (each tag is represented by its string identifier)
 	 */
 	public function get_forbidden_tags();
 

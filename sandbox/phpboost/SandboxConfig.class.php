@@ -100,7 +100,7 @@ class SandboxConfig extends AbstractConfigData
 
 	/**
 	 * @method Set authorizations
-	 * @params string[] $array Array of authorizations
+	 * @params array $array Array of authorizations
 	 */
 	public function set_authorizations(Array $array)
 	{

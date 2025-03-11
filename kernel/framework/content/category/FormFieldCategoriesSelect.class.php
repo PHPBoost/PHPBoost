@@ -20,7 +20,7 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
      * @param string $id Field id
      * @param string $label Field label
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
-     * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+     * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      */
     public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, $field_options, CategoriesCache $categories_cache, array $select_options = array())
     {

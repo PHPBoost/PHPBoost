@@ -61,7 +61,7 @@ class HTMLForm implements HTMLElement
 	 */
 	private static $js_already_included = false;
 	/**
-	 * @var string[]
+	 * @var array
 	 */
 	private $validation_error_messages = array();
 	/**

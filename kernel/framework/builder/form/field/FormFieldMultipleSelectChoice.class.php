@@ -29,7 +29,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 	 * @param string $label Field label
 	 * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
 	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
-	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
 	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())

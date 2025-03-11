@@ -22,7 +22,7 @@ abstract class ExtensionPointProvider
 	private $id;
 
 	/**
-	 * @var string[] list of the extensions points provided
+	 * @var array list of the extensions points provided
 	 */
 	private $extensions_points = array();
 
@@ -73,7 +73,7 @@ abstract class ExtensionPointProvider
 
 	/**
 	 * Check the availability of the extensions points (hook)
-	 * @param string[] $extensions_points the names of the methods you want to check the availability
+	 * @param array $extensions_points the names of the methods you want to check the availability
 	 * @return bool true if all extensions points exist, false otherwise
 	 */
 	public function has_extensions_points(array $extensions_points)

@@ -546,7 +546,7 @@ class Date
 	 * Calculates and return date formats to use many variables in the TPL.
 	 * @param Date $date The concerned date
 	 * @param string $date_label The purpose of the date
-	 * @return string[] true if the date is correct and false otherwise.
+	 * @return array true if the date is correct and false otherwise.
 	 */
 	public static function get_array_tpl_vars($date, $date_label)
 	{

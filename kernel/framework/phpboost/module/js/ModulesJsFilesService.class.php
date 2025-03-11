@@ -31,7 +31,7 @@ class ModulesJsFilesService
 
     /**
      * Get all modules JS files always displayed in the top_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public static function get_top_js_files_always_displayed():array
     {
@@ -51,7 +51,7 @@ class ModulesJsFilesService
 
     /**
      * Get all modules JS files always displayed in the bottom_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public static function get_bottom_js_files_always_displayed():array
     {
@@ -71,7 +71,7 @@ class ModulesJsFilesService
 
     /**
      * Get all modules JS files displayed in the module, at the top_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public static function get_top_js_files_running_module_displayed():array
     {
@@ -95,7 +95,7 @@ class ModulesJsFilesService
 
     /**
      * Get all modules JS files displayed in the module, at the bottom_js
-     * @return string[] JS files
+     * @return array JS files
      */
     public static function get_bottom_js_files_running_module_displayed():array
     {

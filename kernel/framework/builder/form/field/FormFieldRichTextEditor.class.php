@@ -30,7 +30,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	 * @param string $id Field id
 	 * @param string $label Field label
 	 * @param string $value Default value
-	 * @param string[] $field_options options
+	 * @param array $field_options options
 	 * @param FormFieldConstraint[] $constraints The constraints
 	 */
 	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())

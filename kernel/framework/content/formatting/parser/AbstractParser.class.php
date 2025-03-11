@@ -23,9 +23,9 @@ abstract class AbstractParser implements FormattingParser
 	 */
 	protected $content = '';
 	/**
-	 * @var string[] List of the tags which have been picked up by the parser
+	 * @var array List of the tags which have been picked up by the parser
 	 */
-	protected $array_tags = array();
+	protected $array_tags = [];
 	/**
 	 * @var string Path to root of the page in which has been written the content to parse.
 	 */
@@ -37,9 +37,9 @@ abstract class AbstractParser implements FormattingParser
 	protected $page_path = '';
 
 	/**
-	 * @var string[] List of the tags to add from a module. Allows to add a tag [link] from pages or wiki from example
+	 * @var array List of the tags to add from a module. Allows to add a tag [link] from pages or wiki from example
 	 */
-	protected $module_special_tags = array();
+	protected $module_special_tags = [];
 
 	/**
 	 * Builds a Parser object.
@@ -132,15 +132,15 @@ abstract class AbstractParser implements FormattingParser
 	/**
 	 * Parses tag args to get allowed ones
 	 * @param string $matches The regular expression which matches the tag args
-	 * @param string $allowed_args The args that are allowed to be present
+	 * @param array $allowed_args The args that are allowed to be present
 	 */
-	protected static function parse_tag_args($matches, $allowed_args = array())
+	protected static function parse_tag_args($matches, $allowed_args = [])
 	{
 		$args = explode(' ', trim($matches));
-		$result = array();
+		$result = [];
 		foreach ($args as $arg)
 		{
-			$param = array();
+			$param = [];
 			if (!preg_match('`([a-z]+)="([^"]+)"`uU', $arg, $param))
 			{
 				break;

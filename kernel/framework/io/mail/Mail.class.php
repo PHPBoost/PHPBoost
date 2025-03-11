@@ -55,22 +55,22 @@ class Mail
 	var $headers = '';
 
 	/**
-	 * @var string[] Recipients of the mail. If they are more than one, a comma separates their addresses.
+	 * @var array Recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
 	var $recipients = array();
 
 	/**
-	 * @var string[] Cc recipients of the mail. If they are more than one, a comma separates their addresses.
+	 * @var array Cc recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
 	var $cc_recipients = array();
 
 	/**
-	 * @var string[] Bcc recipients of the mail. If they are more than one, a comma separates their addresses.
+	 * @var array Bcc recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
 	var $bcc_recipients = array();
 
 	/**
-	 * @var string[] Attachments of the mail. If they are more than one, a comma separates their addresses.
+	 * @var array Attachments of the mail. If they are more than one, a comma separates their addresses.
 	 */
 	var $attachments = array();
 

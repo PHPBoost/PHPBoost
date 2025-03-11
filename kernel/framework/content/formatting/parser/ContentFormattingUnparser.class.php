@@ -161,7 +161,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 
 	/**
 	 * @desc Callback which allows to unparse the font awasome icons tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
 	protected function unparse_fa_tag($matches)
@@ -195,7 +195,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 
 	/**
 	 * @desc Callback which allows to unparse the Wikipedia tag
-	 * @param string[] $matches Content matched by a regular expression
+	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
 	protected function unparse_wikipedia_tag($matches)

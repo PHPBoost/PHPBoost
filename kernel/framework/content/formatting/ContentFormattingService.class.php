@@ -151,7 +151,7 @@ class ContentFormattingService
 	/**
 	 * Returns the map of all the formatting types supported by the PHPBoost formatting editors and parsers.
 	 * The keys of the map are the tags identifiers and the values the tags names.
-	 * @return string[] The map
+	 * @return array The map
 	 */
 	public function get_available_tags()
 	{

@@ -15,7 +15,7 @@ class Backup
 {
 	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
 	/**
-	 * @var string[] List of the tables used by PHPBoost.
+	 * @var array List of the tables used by PHPBoost.
 	 */
 	public $tables = array();
 	/**
@@ -52,7 +52,7 @@ class Backup
 
 	/**
 	 * @desc Concatenates the query which drops the PHPBoost tables only if they exist to the backup SQL script.
-	 * @param string[] $table_list names of the tables which must be dropped by the query.
+	 * @param array $table_list names of the tables which must be dropped by the query.
 	 * If you want to generate the query which will drop all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
@@ -70,7 +70,7 @@ class Backup
 
 	/**
 	 * @desc Concatenates the tables creation to the SQL backup script.
-	 * @param string[] $table_list names of the tables which must be created by the backup script.
+	 * @param array $table_list names of the tables which must be created by the backup script.
 	 * If you want to generate the query which will create all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
@@ -161,7 +161,7 @@ class Backup
 	/**
 	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
 	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see https://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
-	* @return string[] Map containing the following structure:
+	* @return array Map containing the following structure:
 	* for each table: table_name => array(
 	* 	'name' => name of the table,
 	* 	'engine' => storage engine of the table,
@@ -183,7 +183,7 @@ class Backup
 
 	/**
 	 * @desc Retrieves the list of the tables used by PHPBoost.
-	 * @return string[] The list of the table names.
+	 * @return array The list of the table names.
 	 */
 	public function get_tables_list()
 	{

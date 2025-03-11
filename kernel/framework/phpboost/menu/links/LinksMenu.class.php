@@ -304,7 +304,7 @@ class LinksMenu extends LinksMenuElement
 	/**
 	* static method which returns all the menu types
 	*
-	* @return string[] The list of the menu types
+	* @return array The list of the menu types
 	* @static
 	*/
 	public static function get_menu_types_list()

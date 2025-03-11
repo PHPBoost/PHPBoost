@@ -22,7 +22,7 @@ class FormFieldCheckbox extends AbstractFormField
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param bool $value FormFieldCheckbox::CHECKED if it's checked by default or FormFieldCheckbox::UNCHECKED if not checked.
-	 * @param string[] $field_options Map containing the options
+	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
 	public function __construct($id, $label, $value = self::UNCHECKED, array $field_options = array(), array $constraints = array())

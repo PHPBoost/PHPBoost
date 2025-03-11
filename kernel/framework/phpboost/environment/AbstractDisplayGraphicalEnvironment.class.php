@@ -139,7 +139,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 	 * eg : <script src="/path/templates/__default__/plugins/@global.js"></script>
 	 * or : <script src="https://plop.com./script.js"></script>
      * @param string $html
-     * @return string[]
+     * @return array
      */
 	public function get_js_files_from_html(string $html):array
     {

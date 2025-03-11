@@ -40,7 +40,7 @@ class ExtensionPointProviderService
     /**
      * Returns all extension point <code>$extension_point</code> registered implementations
      * @param string $extension_point the requested extension point
-     * @param string[] $authorized_providers_ids the extension point providers that are allowed
+     * @param array $authorized_providers_ids the extension point providers that are allowed
      * to provide the extension point. If not specified, all providers are allowed
      * @return object[] the requested extension point implementations
      */

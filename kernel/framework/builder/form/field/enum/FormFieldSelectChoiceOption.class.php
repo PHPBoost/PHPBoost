@@ -19,7 +19,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	/**
 	 * @param $label string The label
 	 * @param $raw_value string The raw value
-	 * @param string[] $field_choice_options Map associating the parameters values to the parameters names.
+	 * @param array $field_choice_options Map associating the parameters values to the parameters names.
 	 */
 	public function __construct($label, $raw_value, $field_choice_options = array())
 	{

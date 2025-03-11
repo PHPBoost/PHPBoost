@@ -14,12 +14,12 @@
 class ModuleCssFiles implements CssFilesExtensionPoint
 {
 	/**
-	 * @var string[]
+	 * @var array
 	 */
 	private $css_files_always_displayed = array();
 
 	/**
-	 * @var string[]
+	 * @var array
 	 */
 	private $css_files_running_module_displayed = array();
 

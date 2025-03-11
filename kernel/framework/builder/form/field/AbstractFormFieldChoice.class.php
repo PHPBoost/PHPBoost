@@ -26,7 +26,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 	 * @param string $label Field label
 	 * @param FormFieldEnumOption Default value
 	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
-	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
 	public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())

@@ -99,7 +99,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @return string[] the names list of the installed modules (activated or not)
+	 * @return array the names list of the installed modules (activated or not)
 	 */
 	public static function get_installed_modules_ids_list()
 	{
@@ -107,7 +107,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @return string[] the names list of the installed modules (and activated)
+	 * @return array the names list of the installed modules (and activated)
 	 */
 	public static function get_activated_modules_ids_list()
 	{
@@ -115,7 +115,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @return string[] the list of modules that have the requested feature
+	 * @return array the list of modules that have the requested feature
 	 */
 	public static function get_activated_feature_modules($feature)
 	{
@@ -550,7 +550,7 @@ class ModulesManager
 	}
 
 	/**
-	 * @return string[] the names list of the modules for unauthorized FormFieldSelectChoiceOption
+	 * @return array the names list of the modules for unauthorized FormFieldSelectChoiceOption
 	 * @param string $feature Feature for which display the modules list.
 	 */
 	public static function generate_unauthorized_module_option($feature)

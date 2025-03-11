@@ -29,11 +29,11 @@ $lang['sandbox.layout.grid.clue'] = '
         </ul>
     </p>';
 $lang['sandbox.layout.grid.free']        = 'Affichage libre';
-$lang['sandbox.layout.grid.free.clue']   = 'Chaque élément enfant est tributaire de sa propres largeur (au maximum de 100% de la largeur de l \'élément parent). Les éléments enfants s\'alignent horizontalement jusqu\'au maximum de la largeur du parent, puis passent à la ligne automatiquement.';
+$lang['sandbox.layout.grid.free.clue']   = 'Chaque élément enfant est tributaire de sa propre largeur (au maximum de 100% de la largeur de l \'élément parent). Les éléments enfants s\'alignent horizontalement jusqu\'au maximum de la largeur du parent, puis passent à la ligne automatiquement.';
 $lang['sandbox.layout.grid.mosaic']      = 'Affichage en mosaïc';
 $lang['sandbox.layout.grid.mosaic.clue'] = 'Les éléments enfants sans dimension ont leur largeur définie par la classe du parent.';
 $lang['sandbox.layout.grid.list']        = 'Affichage en liste';
-$lang['sandbox.layout.grid.list.clue']   = 'Quelles que soient leur largeur, les éléments enfants sont affichés les uns en dessous des autres. S\'ils n\'ont pas de largeur, il prendront 100% de la largeur du parent';
+$lang['sandbox.layout.grid.list.clue']   = 'Quelles que soient leur largeur, les éléments enfants sont affichés les uns en dessous des autres. S\'ils n\'ont pas de largeur définie, il prendront 100% de la largeur du parent.';
 $lang['sandbox.layout.grid.forced']      = 'Affichage forcé';
 $lang['sandbox.layout.grid.forced.clue'] = 'Quel que soit le type d\'affichage de l\'élément parent, on peut forcer la largeur de chaque enfant et des classes prédéfinies sont disponibles. <span class="pinned small">(Pour les écrans > 1024px)</span>';
 

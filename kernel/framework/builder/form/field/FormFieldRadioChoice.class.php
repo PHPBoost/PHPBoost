@@ -19,7 +19,7 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 	 * @param string $label Field label
 	 * @param mixed $value Default value (either a FormFieldRadioChoiceOption object or a string corresponding to the FormFieldRadioChoiceOption raw value)
 	 * @param FormFieldRadioChoiceOption[] $options Enumeration of the possible values
-	 * @param string[] $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
+	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
 	public function __construct($id, $label, $value, $options, array $field_options = array(), array $constraints = array())

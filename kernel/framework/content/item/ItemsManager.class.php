@@ -76,7 +76,7 @@ class ItemsManager
 
 	/**
 	 * @desc Create a new item.
-	 * @param string[] $item new Item
+	 * @param array $item new Item
 	 */
 	public function add(Item $item)
 	{
@@ -86,7 +86,7 @@ class ItemsManager
 
 	/**
 	 * @desc Update an item.
-	 * @param string[] $item Item to update
+	 * @param array $item Item to update
 	 */
 	public function update(Item $item)
 	{
@@ -95,7 +95,7 @@ class ItemsManager
 
 	/**
 	 * @desc Delete an item.
-	 * @param string[] $item Item to delete
+	 * @param array $item Item to delete
 	 */
 	public function delete(Item $item)
 	{
@@ -147,7 +147,7 @@ class ItemsManager
 
 	/**
 	 * @desc Updates the views number of the item.
-	 * @param string[] $item Item to update
+	 * @param array $item Item to update
 	 */
 	public function update_views_number(Item $item)
 	{
