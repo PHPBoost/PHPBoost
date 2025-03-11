@@ -218,7 +218,10 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 	private function build_tabs_form()
 	{
 		$tabs_form = new HTMLForm('Sandbox_Tabs');
-		$tabs_form->set_css_class('tabs-container');
+        // Tabs content
+        $tabs_top = new FormFieldsetCapsTop('tabs_start');
+		$tabs_top->set_css_class('tabs-container');
+            $tabs_form->add_fieldset($tabs_top);
 
 		$tabs_menu = new TabsNavFieldset('tabs_menu', '');
 			$tabs_form->add_fieldset($tabs_menu);
@@ -234,8 +237,9 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			));
 
         // Tabs content
-        $caps_top = new FormFieldsetCapsTop('content_start');
-            $tabs_form->add_fieldset($caps_top);
+        $tabs_wrapper_top = new FormFieldsetCapsTop('content_start');
+            $tabs_wrapper_top->set_css_class('tabs-wrapper');
+            $tabs_form->add_fieldset($tabs_wrapper_top);
 
 			$tabs_01 = new TabsContentFieldset('tabs_01', $this->lang['sandbox.menu.panel'].' 1');
 			$tabs_form->add_fieldset($tabs_01);
@@ -263,8 +267,11 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_c', $this->lang['sandbox.lorem.short.content']));
 			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_d', $this->lang['sandbox.lorem.short.content']));
 
-            $caps_bottom = new FormFieldsetCapsBottom('content_end');
-            $tabs_form->add_fieldset($caps_bottom);
+            $tabs_wrapper_bottom = new FormFieldsetCapsBottom('content_end');
+            $tabs_form->add_fieldset($tabs_wrapper_bottom);
+
+            $tabs_bottom = new FormFieldsetCapsBottom('tabs_end');
+            $tabs_form->add_fieldset($tabs_bottom);
 
 		return $tabs_form;
 	}

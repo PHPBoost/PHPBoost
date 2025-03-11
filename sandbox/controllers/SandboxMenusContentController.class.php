@@ -151,6 +151,11 @@ class SandboxMenusContentController extends DefaultModuleController
 		$tabs_form = new HTMLForm('Tabs_form');
 		$tabs_form->set_css_class('tabs-container');
 
+        // Tabs content
+        $tabs_top = new FormFieldsetCapsTop('content_start');
+            $tabs_top->set_css_class('tabs-container');
+            $tabs_form->add_fieldset($tabs_top);
+
 		$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
 			$tabs_form->add_fieldset($tabs_menu);
 			$tabs_menu->set_css_class('tabs-nav');
@@ -165,8 +170,9 @@ class SandboxMenusContentController extends DefaultModuleController
 			));
 
         // Tabs content
-        $caps_top = new FormFieldsetCapsTop('content_start');
-            $tabs_form->add_fieldset($caps_top);
+        $tabs_wrapper_top = new FormFieldsetCapsTop('tabs_start');
+            $tabs_wrapper_top->set_css_class('tabs-wrapper');
+            $tabs_form->add_fieldset($tabs_wrapper_top);
 
 			$tabs_01 = new TabsContentFieldset('tabs_01', $this->lang['sandbox.menu.panel'].' 1');
 			$tabs_form->add_fieldset($tabs_01);
@@ -190,6 +196,9 @@ class SandboxMenusContentController extends DefaultModuleController
 
             $caps_bottom = new FormFieldsetCapsBottom('content_end');
             $tabs_form->add_fieldset($caps_bottom);
+
+            $tabs_bottom = new FormFieldsetCapsBottom('tabs_end');
+            $tabs_form->add_fieldset($tabs_bottom);
 
 		return $tabs_form;
 	}

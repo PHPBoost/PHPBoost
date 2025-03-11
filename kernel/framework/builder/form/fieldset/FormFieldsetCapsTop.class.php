@@ -11,13 +11,15 @@
 
 class FormFieldsetCapsTop extends AbstractFormFieldset
 {
+	protected $tag = '';
 	/**
 	 * constructor
-	 * @param string $name The name of the fieldset
+	 * @param string $tag The HTML tag of the fieldset
 	 */
-	public function __construct($id, $name = '', $options = [])
+	public function __construct($id, $tag = 'div', $options = [])
 	{
 		parent::__construct($id, $options);
+        $this->tag = $tag;
 	}
 
 	/**
@@ -31,12 +33,32 @@ class FormFieldsetCapsTop extends AbstractFormFieldset
 
 		$this->assign_template_fields($template);
 
+		$template->put_all(array(
+			'L_TAG' => $this->tag
+		));
+
 		return $template;
+	}
+
+	/**
+	 * @param string $tag The fieldset tag
+	 */
+	public function set_tag($tag)
+	{
+		$this->tag = $tag;
+	}
+
+	/**
+	 * @return string The fieldset tag
+	 */
+	public function get_tag()
+	{
+		return $this->tag;
 	}
 
 	protected function get_default_template()
 	{
-		return new FileTemplate('framework/builder/form/menu/FormFieldsetCapsTop.tpl');
+		return new FileTemplate('framework/builder/form/FormFieldsetCapsTop.tpl');
 	}
 }
 
