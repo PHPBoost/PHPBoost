@@ -1,49 +1,49 @@
 # IF C_EDITOR_NOT_ALREADY_INCLUDED #
-	<script>
-		function XMLHttpRequest_preview(field)
-		{
-			if( XMLHttpRequest_preview.arguments.length == 0 )
-				field = ${escapejs(FIELD)};
+    <script>
+        function XMLHttpRequest_preview(field)
+        {
+            if( XMLHttpRequest_preview.arguments.length == 0 )
+                field = ${escapejs(FIELD)};
 
-			var contents = jQuery('#' + field).val();
-			var preview_field = 'xmlhttprequest-preview' + field;
+            var contents = jQuery('#' + field).val();
+            var preview_field = 'xmlhttprequest-preview' + field;
 
-			if( contents != "" )
-			{
-				jQuery("#" + preview_field).slideDown(500);
+            if( contents != "" )
+            {
+                jQuery("#" + preview_field).slideDown(500);
 
-				jQuery('#loading-preview-' + field).show();
+                jQuery('#loading-preview-' + field).show();
 
-				jQuery.ajax({
-					url: PATH_TO_ROOT + "/kernel/framework/ajax/content_xmlhttprequest.php",
-					type: "post",
-					data: {
-						token: '{TOKEN}',
-						path_to_root: '{PHP_PATH_TO_ROOT}',
-						editor: 'BBCode',
-						page_path: '{PAGE_PATH}',
-						contents: contents,
-						ftags: '{FORBIDDEN_TAGS}'
-					},
-					success: function(returnData){
-						jQuery('#' + preview_field).html(returnData);
-						jQuery('html, body').animate({scrollTop: jQuery('#' + preview_field).offset().top - 100});
-						jQuery('#loading-preview-' + field).hide();
-					}
-				});
-			}
-			else
-				alert(${escapejs(@warning.text)});
-		}
-	</script>
+                jQuery.ajax({
+                    url: PATH_TO_ROOT + "/kernel/framework/ajax/content_xmlhttprequest.php",
+                    type: "post",
+                    data: {
+                        token: '{TOKEN}',
+                        path_to_root: '{PHP_PATH_TO_ROOT}',
+                        editor: 'BBCode',
+                        page_path: '{PAGE_PATH}',
+                        contents: contents,
+                        ftags: '{FORBIDDEN_TAGS}'
+                    },
+                    success: function(returnData){
+                        jQuery('#' + preview_field).html(returnData);
+                        jQuery('html, body').animate({scrollTop: jQuery('#' + preview_field).offset().top - 100});
+                        jQuery('#loading-preview-' + field).hide();
+                    }
+                });
+            }
+            else
+                alert(${escapejs(@warning.text)});
+        }
+    </script>
 
-	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+    <script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 # ENDIF #
 
 <div id="loading-preview-{FIELD}" class="loading-preview-container" style="display: none;">
-	<div class="loading-preview">
-		<i class="fa fa-spinner fa-2x fa-spin"></i>
-	</div>
+    <div class="loading-preview">
+        <i class="fa fa-spinner fa-2x fa-spin"></i>
+    </div>
 </div>
 <div id="xmlhttprequest-preview{FIELD}" class="xmlhttprequest-preview" style="display: none"></div>
 
@@ -613,10 +613,12 @@
                                 <div class="cell-header">
                                     <h6 class="cell-name">{@bbcode.pin.bgc}</h6>
                                 </div>
-                                <div class="cell-form">
-                                    <label for="no"><input type="radio" name="pinned-background" id="no" value="" checked="checked"> <span>{@bbcode.pin.bgc.none} &nbsp;</span></label>
-                                    <label for="bgc"><input type="radio" name="pinned-background" id="bgc" value="bgc"> <span>{@bbcode.pin.bgc.transparent} &nbsp;</span></label>
-                                    <label for="full"><input type="radio" name="pinned-background" id="full" value="bgc-full"> <span>{@bbcode.pin.bgc.full} &nbsp;</span></label>
+								<div class="cell-list cell-list-inline">
+                                    <ul>
+                                        <li><label for="no"><input type="radio" name="pinned-background" id="no" value="" checked="checked"> <span>{@bbcode.pin.bgc.none} &nbsp;</span></label></li>
+                                        <li><label for="bgc"><input type="radio" name="pinned-background" id="bgc" value="bgc"> <span>{@bbcode.pin.bgc.transparent} &nbsp;</span></label></li>
+                                        <li><label for="full"><input type="radio" name="pinned-background" id="full" value="bgc-full"> <span>{@bbcode.pin.bgc.full} &nbsp;</span></label></li>
+                                    </ul>
                                 </div>
 								<div class="cell-header">
 									<h6 class="cell-name">{@bbcode.pin.color.picker}</h6>
