@@ -23,7 +23,7 @@
 		<div id="openmodal-administration" class="modal">
 			<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="modal-content">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+				<span class="big error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
 				<div class="next-menu">
 					<a href="#change-modal" class="modal-button --openmodal-modules"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.modules}</a>
 					<a href="#change-modal" class="modal-button --openmodal-tools">{@menu.tools} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -77,7 +77,7 @@
 		<div id="openmodal-tools" class="modal">
 			<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="modal-content">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+            <span class="big error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
 				<div class="next-menu">
 					<a href="#change-modal" class="modal-button --openmodal-administration"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.administration}</a>
 					<a href="#change-modal" class="modal-button --openmodal-users">{@menu.users} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -118,7 +118,7 @@
 		<div id="openmodal-users" class="modal">
 			<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="modal-content">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+            <span class="big error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
 				<div class="next-menu">
 					<a href="#change-modal" class="modal-button --openmodal-tools"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.tools}</a>
 					<a href="#change-modal" class="modal-button --openmodal-content">{@menu.content} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -159,7 +159,7 @@
 		<div id="openmodal-content" class="modal">
 			<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="modal-content">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+            <span class="big error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
 				<div class="next-menu">
 					<a href="#change-modal" class="modal-button --openmodal-users"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.users}</a>
 					<a href="#change-modal" class="modal-button --openmodal-modules">{@menu.modules} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
@@ -210,7 +210,7 @@
 		<div id="openmodal-modules" class="modal">
 			<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
 			<div class="modal-content">
-				<div class="align-right"><a href="#cancel" class="big error hide-modal close-modal close-bbcode-sub" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+            <span class="big error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
 				<div class="next-menu">
 					<a href="#change-modal" class="modal-button --openmodal-content"><i aria-hidden="true" class="fa fa-arrow-left"></i> {@menu.content}</a>
 					<a href="#change-modal" class="modal-button --openmodal-administration">{@menu.administration} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>

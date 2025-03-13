@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 10
+ * @version     PHPBoost 6.0 - last update: 2025 03 13
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -526,7 +526,7 @@ class BBCodeParser extends ContentFormattingParser
         $name = $matches[1];
         $target = Url::encode_rewrite($matches[1]);
         $content = $matches[2];
-        return '<span class="button bgc moderator modal-button --' . $target . '">' . $name . '</span><div id="' . $target . '" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>' . $content . '</div></div>';
+        return '<button class="button expand-modal modal-button --' . $target . '">' . $name . '</button><div id="' . $target . '" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>' . $content . '</div></div>';
     }
 
 	/**

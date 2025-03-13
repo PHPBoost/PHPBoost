@@ -55,6 +55,7 @@
 
 @media (min-width:769px) {
     .modal .modal-content {
+        top: calc(50% + 50px);
         padding: 1.618em;
         width: 80%;
         max-height: calc(100vh - 3.236em);
@@ -72,6 +73,18 @@
         transform: translate(-50%, -50%);
         overflow-y: auto;
     }
+}
+
+.expand-modal { position: relative; }
+
+.expand-modal::after {
+    position: absolute;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.809em;
+    content: '\f065'; /* fa-expand */
+    top: 0.228em;
+    right: 0.309em;
 }
 
 /* colors.css */
