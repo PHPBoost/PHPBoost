@@ -4,30 +4,29 @@
  *
 */
 
-.cell header,
-.cell footer,
-.cell form,
-.cell-header button,
-.cell input,
-.cell label,
-.cell button,
-.cell .button,
-.cell select,
-.cell textarea,
-.cell .grouped-inputs,
-.cell .formatter-title { margin: 0 !important; }
-
 .cell {
 	display: flex;
 	flex-direction: column;
 	border-width: 1px;
 	border-style: solid;
 	border-color: transparent;
+
+    header,
+    footer,
+    form,
+    .cell-header button,
+    input,
+    label,
+    button,
+    .button,
+    select,
+    textarea,
+    .grouped-inputs,
+    .formatter-title { margin: 0 !important; }
+
+    &.new-content .cell-header { border-left-width: 3px; }
 }
 
-.cell .hidden { display: none !important; }
-
-.new-content .cell-header { border-left-width: 3px; }
 
 .cell-header {
 	display: flex;
@@ -44,10 +43,9 @@
 	min-width: 0;
 	padding: 0 0.309em 0 0;
 	margin: 0;
+    a,
+    span { display: block; }
 }
-
-.cell-name a,
-.cell-name span { display: block; }
 
 .cell-infos {
 	width: 100%;
@@ -74,45 +72,41 @@
 
 .cell-thumbnail-caption {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     opacity: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-.cell-thumbnail-caption:hover {
-    opacity: 1;
-	text-decoration: none;
+    &:hover {
+        opacity: 1;
+        text-decoration: none;
+    }
 }
 
 .cell-thumbnail iframe,
 .cell-thumbnail video {
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	inset: 0;
 }
 
 /* --- Position --- */
-.cell-start {
-	justify-content: flex-start;
-	align-items: flex-start;
-}
+.cell {
+    .cell-start {
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 
-.cell-center {
-	justify-content: center;
-	align-items: center;
-	margin: auto;
-}
+    .cell-center {
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
 
-.cell-end {
-	justify-content: flex-end;
-	align-items: flex-end;
+    .cell-end {
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
 }
 
 /* oversize */
@@ -130,12 +124,14 @@
 .cell-list ul {
 	margin: 0;
 	padding: 0;
+
+    li {
+        list-style-type: none;
+        padding: 0.228em 0.809em;
+    }
 }
 
-.cell-list ul li {
-	list-style-type: none;
-	padding: 0.228em 0.809em;
-}
+.cell-list ul 
 
 .cell-list ul li:first-child { padding: 0.456em 0.809em 0.228em; }
 .cell-list ul li:last-child  { padding: 0.228em 0.809em 0.456em; }

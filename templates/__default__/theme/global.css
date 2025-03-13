@@ -259,7 +259,6 @@ a.pinned { cursor: pointer; }
 .valign-bottom 	{ vertical-align: bottom; }
 
 /* --- Text --- */
-strong,
 .text-strong    { font-weight: bold; }
 .text-italic    { font-style: italic; }
 .text-underline { text-decoration: underline; }

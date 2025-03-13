@@ -15,26 +15,28 @@
 #breadcrumb {
 	padding: 0.618em;
 	font-size: 0.809em;
+
+    ol {
+        margin: 0;
+        list-style: none;
+    }
+
+    li {
+        display: inline;
+
+        &:not(.current):after { content: '/'; }
+    }
 }
-
-#breadcrumb ol {
-	margin: 0;
-	list-style: none;
-}
-
-#breadcrumb li { display: inline; }
-
-#breadcrumb li:not(.current):after { content: '/'; }
 
 /* --- Item infos --- */
 .more {
 	font-size: 0.809em;
 	font-style: italic;
-}
 
-.more .pinned {
-	border: none;
-	background-color: transparent !important;
+    .pinned {
+        border: none;
+        background-color: transparent !important;
+    }
 }
 
 /* --- Item control Icons (edit, delete, etc) --- */
@@ -138,10 +140,7 @@ aside:not(#menu-left):not(#menu-right)::after {
 .media-content iframe,
 .media-content [class$="-player"] {
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	inset: 0;
 }
 
 /* --- Progress bar --- */
@@ -328,3 +327,83 @@ a.wikipedia-link:after {
 
     .tooltip.display-none { display: none; }
 }
+
+/* --- Path to page --- */
+.page-path > br { display: none; }
+
+.page-path {
+    display: inline-block;
+
+    ul {
+        margin: 0;
+        display: inline-flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        list-style-type: none;
+
+        li {
+            background-color: var(--bgc-sub);
+            color: var(--txt-sub);
+            position: relative;
+            padding: 2px 5px;
+            margin: 0.1618em 20px 0 0;
+            line-height: 20px;
+
+            &:first-child { border-radius: 0.309em 0 0 0.309em; }
+
+            &:not(:first-child)::before {
+                position: absolute;
+                content: '';
+                left: -15px;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 0;
+                width: 0;
+                border-color: var(--bgc-sub);
+                border-left-color: transparent;
+                border-width: 12px;
+                border-style: solid;
+                z-index: -1;
+            }
+
+            &:not(:last-child)::after {
+                position: absolute;
+                content: '';
+                left: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                height: 0;
+                width: 0;
+                border-color: transparent;
+                border-left-color: var(--bgc-sub);
+                border-width: 13px;
+                border-style: solid;
+            }
+
+            &:last-child {
+                border-radius: 0 0.309em 0.309em 0;
+                background-color: var(--bgc-alt);
+                color: var(--txt-alt);
+                margin-right: 0;
+                &::before {
+                    border-color: var(--bgc-alt);
+                    border-left-color: transparent;
+                }
+            }
+        }
+    }
+}
+
+/* --- path to file --- */
+.file-path {
+    ul {
+        list-style-type: none;
+        margin: 0;
+    }
+
+    ul ul { padding-left: 1.618em; }
+
+    ul + br { display: none; }
+}
+
+.formatter-columns > br { display: none; }

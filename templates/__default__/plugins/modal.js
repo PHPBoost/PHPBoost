@@ -1,30 +1,41 @@
 class ModalBoost {
     constructor(el) {
-        const dataId = this.getModalId(el);
-        const targetPanel = document.getElementById(dataId);
+        this.button = el;
+        const dataId = this.getModalId(this.button);
+        this.targetPanel = document.getElementById(dataId);
 
-        if (!targetPanel) return;
+        if (!this.targetPanel) return;
 
-        // Move panel to body
-        document.body.appendChild(targetPanel);
+        if (this.hasClass('modal-pop')) {
+            this.parent = document.createElement('div');
+            this.parent.classList.add('modal-enclosure');
+            this.button.parentNode.insertBefore(this.parent, this.button);
+            this.parent.appendChild(this.button);
+            this.parent.appendChild(this.targetPanel);
+            this.targetPanel.classList.add('modal-pop', this.getClassName('modal-pop'));
+        } else {
+            // Move panel to body
+            document.body.appendChild(this.targetPanel);
+            this.targetPanel.classList.add('modal-full');
+        }
 
         // Trigger click event
         el.addEventListener('click', (e) => {
             e.preventDefault();
 
             // Remove active panel from siblings
-            targetPanel.parentElement.querySelectorAll('.modal').forEach(panel => {
+            this.targetPanel.parentElement.querySelectorAll('.modal').forEach(panel => {
                 panel.classList.remove('active-modal');
             });
 
             // Add active panel to target
-            targetPanel.classList.add('active-modal');
+            this.targetPanel.classList.add('active-modal');
 
             // Set URL hash
             window.history.pushState('', '', '#' + dataId);
 
             // Close modal events
-            this.setupModalCloseEvents(targetPanel);
+            this.setupModalCloseEvents(this.targetPanel);
         });
 
         // Check URL hash on page load
@@ -34,6 +45,29 @@ class ModalBoost {
         window.addEventListener('hashchange', () => {
             this.checkUrlHash();
         });
+    }
+
+    /** Checks if the slider has a specific class */
+    hasClass(e) {
+        const classList = this.button.classList;
+        for (let className of classList) {
+            if (className === e || className.startsWith(e)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Gets the complete classname of a specific class */
+    getClassName(e)
+    {
+        const classList = this.button.classList;
+        for (let className of classList) {
+            if (className === e || className.startsWith(e)) {
+                return className;
+            }
+        }
+        return null;
     }
 
     getModalId(el) {

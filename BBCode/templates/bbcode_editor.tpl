@@ -387,7 +387,7 @@
                         <a href="#html-container" class="bbcode-button{AUTH_CONTAINERS}# IF NOT C_DISABLED_CONTAINERS # modal-button --block-container{FIELD}# ENDIF #" role="button" aria-label="{@bbcode.container}">
                             <i class="far fa-fw fa-square" aria-hidden="true"></i>
                         </a>
-                        <div id="block-container{FIELD}" class="modal modal-half">
+                        <div id="block-container{FIELD}" class=" modal modal-half">
                             <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
                             <div class="modal-content cell cell-bbcode">
                                 <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
@@ -414,7 +414,7 @@
                                         </li>
                                         <li id="html-abbr" class="li-stretch{AUTH_MODAL}">
                                             <span class="bbcode-label"> {@bbcode.modal} </span>
-                                            <a href="#modal" class="button# IF NOT C_DISABLED_MODAL #  modal-button --block-modal{FIELD}# ENDIF #" role="button"> {@bbcode.tags.choice} </a>
+                                            <a href="#modal" class="button# IF NOT C_DISABLED_MODAL # modal-button --block-modal{FIELD}# ENDIF #" role="button"> {@bbcode.tags.choice} </a>
                                         </li>
                                     </ul>
                                 </nav>

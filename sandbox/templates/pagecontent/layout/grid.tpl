@@ -14,6 +14,8 @@
                     <article class="cell" style="width: 140px;"><div class="cell-grid-demo">width: 140px</div></article>
                     <article class="cell" style="width: 240px;"><div class="cell-grid-demo">width: 240px</div></article>
                     <article class="cell" style="width: 340px;"><div class="cell-grid-demo">width: 340px</div></article>
+                    <article class="cell" style="width: 140px;"><div class="cell-grid-demo">width: 140px</div></article>
+                    <article class="cell" style="width: 140px;"><div class="cell-grid-demo">width: 140px</div></article>
                     <article class="cell" style="width: 440px;"><div class="cell-grid-demo">width: 440px</div></article>
                 </div>
             </div>
@@ -26,6 +28,8 @@
     &lt;article style="width: 140px">... &lt;/article>
     &lt;article style="width: 240px">... &lt;/article>
     &lt;article style="width: 340px">... &lt;/article>
+    &lt;article style="width: 140px">... &lt;/article>
+    &lt;article style="width: 140px">... &lt;/article>
     &lt;article style="width: 440px">... &lt;/article>
 &lt;/div></code></pre>
                     </div>

@@ -12,9 +12,11 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-}
 
-.form-element.form-element-textarea { flex-direction: column; }
+    &.form-element-textarea { flex-direction: column; }
+
+    [id$="user_avatar"] img { max-width: 200px; }
+}
 
 .fieldset-description { margin: 0 1em 0.618em 1em; }
 
@@ -23,8 +25,6 @@
 
 	.fieldset-description { margin: 0 1.618em 1.482em 1.618em; }
 }
-
-.form-element [id$="user_avatar"] img { max-width: 200px; }
 
 .subtitle-label { font-size: 1.456em; }
 
@@ -133,10 +133,7 @@
 label[for="delete-all-checkbox"] { position: relative; }
 label[for="delete-all-checkbox"] span {
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+	inset: 0;
 }
 
 /* --- Fieldset --- */
