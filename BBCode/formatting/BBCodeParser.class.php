@@ -363,8 +363,7 @@ class BBCodeParser extends ContentFormattingParser
 		//Modal tag
 		if (!in_array('modal', $this->forbidden_tags))
 		{
-			// $this->_parse_imbricated('[modal=', '`\[modal=([^\]]+)\](.+)\[/modal\]`suU', '<span class="button bgc moderator modal-button --$1">$1</span><div id="$1" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>$2</div></div>');
-            $this->content = preg_replace_callback('`\[modal=([^\]]+)\](.+)\[/modal\]`suU', [$this, 'parse_modal'], $this->content);
+			$this->content = preg_replace_callback('`\[modal=([^\]]+)\](.+)\[/modal\]`suU', [$this, 'parse_modal'], $this->content);
 		}
 	}
 

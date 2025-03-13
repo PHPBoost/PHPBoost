@@ -42,7 +42,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			$this->unparse_table();
 		}
 
-		//Unparsage de la balise table.
+		//Unparsage de la balise list.
 		if (TextHelper::strpos($this->content, '<li class="formatter-li"') !== false)
 		{
 			$this->unparse_list();
@@ -194,9 +194,9 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
         //modal
-		while (preg_match('`<button class="button expand-modal modal-button --([^"]+)">([^"]+)</button><div id="([^"]+)" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>([^"]+)</div></div>`suU', $this->content))
+		while (preg_match('`<button class="button expand-modal modal-button --(.*)">(.*)</button><div id="([^"]+)" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>(.*)</div></div>`suU', $this->content))
 		{
-            $this->content = preg_replace_callback('`<button class="button expand-modal modal-button --([^"]+)">([^"]+)</button><div id="([^"]+)" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>([^"]+)</div></div>`suU', [$this, 'unparse_modal'], $this->content);
+            $this->content = preg_replace_callback('`<button class="button expand-modal modal-button --(.*)">(.*)</button><div id="([^"]+)" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>(.*)</div></div>`suU', [$this, 'unparse_modal'], $this->content);
         }
 
 		//FA Icon

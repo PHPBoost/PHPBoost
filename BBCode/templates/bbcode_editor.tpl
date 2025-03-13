@@ -166,6 +166,31 @@
                             </div>
                         </div>
                     </li>
+                    <li id="format-abbr" class="bbcode-elements">
+                        <a href="#abbr" class="bbcode-button{AUTH_ABBR}# IF NOT C_DISABLED_ABBR # modal-button --block-abbr{FIELD}# ENDIF #" role="button" aria-label="{@bbcode.abbr}">
+                            <i class="fa fa-fw fa-austral-sign" aria-hidden="true"></i>
+                        </a>
+                        <div id="block-abbr{FIELD}" class="modal modal-half">
+                            <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+                            <div class="modal-content cell cell-bbcode">
+                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                <div class="cell-header">
+                                    <h6 class="cell-name">{@bbcode.abbr}</h6>
+                                </div>
+                                <div class="cell-form">
+                                    <label for="bb_abbr_name{FIELD}" class="cell-label">{@bbcode.abbr}</label>
+                                    <div class="cell-input"><input type="text" id="bb_abbr_name{FIELD}"></div>
+                                </div>
+                                <div class="cell-form">
+                                    <label for="bb_abbr_desc{FIELD}" class="cell-label">{@bbcode.abbr.label}</label>
+                                    <div class="cell-input"><input type="text" id="bb_abbr_desc{FIELD}"></div>
+                                </div>
+                                <div class="cell-footer">
+                                    <a href="#abbr-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </li>
             <li class="bbcode-group bbcode-format">
@@ -387,12 +412,30 @@
                                             <span class="bbcode-label">{@bbcode.fieldset}</span>
                                             <a href="#fielset-select" class="button# IF NOT C_DISABLED_FIELDSET # modal-button --block-fieldset{FIELD}# ENDIF #" role="button"> {@bbcode.tags.choice} </a>
                                         </li>
-                                        <li id="html-abbr" class="li-stretch{AUTH_ABBR}">
-                                            <span class="bbcode-label"> {@bbcode.abbr} </span>
-                                            <a href="#abbr-select" class="button# IF NOT C_DISABLED_ABBR # modal-button --block-abbr{FIELD}# ENDIF #" role="button"> {@bbcode.tags.choice} </a>
+                                        <li id="html-abbr" class="li-stretch{AUTH_MODAL}">
+                                            <span class="bbcode-label"> {@bbcode.modal} </span>
+                                            <a href="#modal" class="button# IF NOT C_DISABLED_MODAL #  modal-button --block-modal{FIELD}# ENDIF #" role="button"> {@bbcode.tags.choice} </a>
                                         </li>
                                     </ul>
                                 </nav>
+                            </div>
+                        </div>
+                        <div id="block-modal{FIELD}" class="modal modal-half">
+                            <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+                            <div class="modal-content cell">
+                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
+                                <div class="cell-header">
+                                    <h6 class="cell-name">{@bbcode.modal}</h6>
+                                </div>
+                                <div class="cell-form">
+                                    <label class="cell-label" for="bb-modal-name{FIELD}">{@bbcode.modal.name}</label>
+                                    <div class="cell-input">
+                                        <input type="text" name="bb-modal-name{FIELD}" id="bb-modal-name{FIELD}">
+                                    </div>
+                                </div>
+                                <div class="cell-footer">
+                                    <a href="#modal-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_modal('{FIELD}');">{@bbcode.tags.add}</a>
+                                </div>
                             </div>
                         </div>
                         <div id="block-custom-div{FIELD}" class="modal modal-half">
@@ -441,26 +484,6 @@
                                 </div>
                                 <div class="cell-footer">
                                     <a href="#fielset-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_fieldset('{FIELD}');">{@bbcode.tags.add}</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="block-abbr{FIELD}" class="modal modal-half">
-                            <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-                            <div class="modal-content cell cell-bbcode">
-                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
-                                <div class="cell-header">
-                                    <h6 class="cell-name">{@bbcode.abbr}</h6>
-                                </div>
-                                <div class="cell-form">
-                                    <label for="bb_abbr_name{FIELD}" class="cell-label">{@bbcode.abbr}</label>
-                                    <div class="cell-input"><input type="text" id="bb_abbr_name{FIELD}"></div>
-                                </div>
-                                <div class="cell-form">
-                                    <label for="bb_abbr_desc{FIELD}" class="cell-label">{@bbcode.abbr.label}</label>
-                                    <div class="cell-input"><input type="text" id="bb_abbr_desc{FIELD}"></div>
-                                </div>
-                                <div class="cell-footer">
-                                    <a href="#abbr-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_abbr('{FIELD}');">{@bbcode.tags.add}</a>
                                 </div>
                             </div>
                         </div>
@@ -714,29 +737,6 @@
                                 </div>
                                 <div class="cell-footer">
                                     <a href="#columns-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_column('{FIELD}');">{@bbcode.tags.add}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li id="modal" class="bbcode-elements">
-                        <a href="#modal" class="bbcode-button modal-button --block-modal{FIELD}" role="button" aria-label="{@bbcode.modal}">
-                            <i class="fa fa-fw fa-expand" aria-hidden="true"></i>
-                        </a>
-                        <div id="block-modal{FIELD}" class="modal modal-half">
-                            <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-                            <div class="modal-content cell">
-                                <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
-                                <div class="cell-header">
-                                    <h6 class="cell-name">{@bbcode.modal}</h6>
-                                </div>
-                                <div class="cell-form">
-                                    <label class="cell-label" for="bb-modal-name{FIELD}">{@bbcode.modal.name}</label>
-                                    <div class="cell-input">
-                                        <input type="text" name="bb-modal-name{FIELD}" id="bb-modal-name{FIELD}">
-                                    </div>
-                                </div>
-                                <div class="cell-footer">
-                                    <a href="#modal-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_modal('{FIELD}');">{@bbcode.tags.add}</a>
                                 </div>
                             </div>
                         </div>
