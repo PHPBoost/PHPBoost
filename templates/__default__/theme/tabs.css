@@ -79,6 +79,7 @@
     border-style: solid;
     border-color: var(--bdr-main);
     padding: 1.228em;
+    flex: 1 1 auto;
 }
 
 .tabs-bottom > .tabs-wrapper {
