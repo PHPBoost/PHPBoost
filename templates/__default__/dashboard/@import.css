@@ -30,6 +30,7 @@
 @import url('../../__default__/theme/pushmenu.css') screen;
 @import url('../../__default__/theme/modal.css') screen;
 @import url('../../__default__/theme/tabs.css') screen;
+@import url('../../__default__/theme/tooltip.css') screen;
 @import url('../../__default__/theme/cell.css') screen;
 @import url('../../__default__/theme/cell_layout.css') screen;
 @import url('../../__default__/theme/pagination.css') screen;

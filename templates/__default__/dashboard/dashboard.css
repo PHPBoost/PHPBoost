@@ -57,10 +57,10 @@
 td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- modal --- */
-.modal-overlay { width: calc(100% - 230px); }
+.modal.modal-full { width: calc(100% - 230px); }
 
 @media (min-width: 769px) {
-    .modal {
+    .modal.modal-full {
         left: 230px;
         width: calc(100% - 230px);
     }
