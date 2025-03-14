@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 07 04
+ * @version     PHPBoost 6.0 - last update: 2025 03 14
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -80,14 +80,6 @@ class BBCodeEditor extends ContentEditor
 			$template->put_all(array(
 				'AUTH_POSITIONS' => ' bbcode-forbidden',
 				'C_DISABLED_POSITIONS' => true
-			));
-		}
-
-		if (in_array('p', $this->forbidden_tags) && in_array('block', $this->forbidden_tags) && in_array('container', $this->forbidden_tags) && in_array('fieldset', $this->forbidden_tags) && in_array('abbr', $this->forbidden_tags))
-		{
-			$template->put_all(array(
-				'AUTH_CONTAINERS' => ' bbcode-forbidden',
-				'C_DISABLED_CONTAINERS' => true
 			));
 		}
 

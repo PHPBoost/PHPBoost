@@ -128,29 +128,31 @@
 						<span class="bbcode-button# IF C_SMILEYS_DISABLED # icon-disabled# ELSE # modal-button --bb-shoutbox-smileys# ENDIF #" aria-label="{@bbcode.smileys}">
 							<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 						</span>
-						<div id="bb-shoutbox-smileys" class="modal modal-half">
-							<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-							<div class="modal-content cell">
-								<div class="cell-header">
-									<div class="cell-name">{@bbcode.smileys}</div>
-									<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-								</div>
-								<div class="cell-list cell-list-inline">
-									<ul>
-										# START smileys #
-											<li>
-												<span class="close-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-content');return false;" aria-label="{smileys.CODE}">
-													<img src="{smileys.URL}" alt="{smileys.CODE}" />
-												</span>
-											</li>
-										# END smileys #
-									</ul>
-								</div>
-							</div>
-						</div>
+						# IF NOT C_SMILEYS_DISABLED #
+                            <div id="bb-shoutbox-smileys" class="modal modal-half">
+                                <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                                <div class="modal-content cell">
+                                    <div class="cell-header">
+                                        <div class="cell-name">{@bbcode.smileys}</div>
+                                        <div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+                                    </div>
+                                    <div class="cell-list cell-list-inline">
+                                        <ul>
+                                            # START smileys #
+                                                <li>
+                                                    <span class="close-modal" onclick="insertbbcode('{smileys.CODE}', 'smile', 'shout-content');return false;" aria-label="{smileys.CODE}">
+                                                        <img src="{smileys.URL}" alt="{smileys.CODE}" />
+                                                    </span>
+                                                </li>
+                                            # END smileys #
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        # ENDIF #
 					</li>
 					<li id="emojis" class="bbcode-elements bbcode-block-shoutbox">
-						<span class="bbcode-button# IF C_EMOJIS_DISABLED # icon-disabled# ELSE # modal-button --block-emojis# ENDIF #" role="button" aria-label="{@bbcode.emojis}">
+						<span class="bbcode-button# IF C_EMOJIS_DISABLED # icon-disabled# ELSE # modal-button --block-emojis{FIELD}# ENDIF #" role="button" aria-label="{@bbcode.emojis}">
 							<span class="stacked">
 								<i class="far fa-fw fa-smile" aria-hidden="true"></i>
 								<span class="stack-event stack-top-right small">
@@ -158,45 +160,47 @@
 								</span>
 							</span>
 						</span>
-						<div id="block-emojis{FIELD}" class="modal">
-							<div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-							<div class="modal-content cell">
-								<div class="cell-header">
-									<div class="cell-name">{@bbcode.emojis}</div>
-									<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-								</div>
-								<div class="cell-content align-center">
-									{@H|bbcode.emojis.link}
-								</div>
-								<div class="cell-list cell-list-inline cell-overflow-y">
-									<ul class="flex-start">
-										# START emojis #
-											# IF emojis.C_CATEGORY #
-												</ul>
-												<ul class="flex-start">
-													<li> <h5>{emojis.CATEGORY_NAME}</h5> </li>
-												</ul>
-												<ul class="flex-start">
-											# ELSE #
-												# IF emojis.C_SUB_CATEGORY #
-													</ul>
-													<ul class="flex-start">
-														<li> <h6>{emojis.CATEGORY_NAME}</h6> </li>
-													</ul>
-													<ul class="flex-start">
-												# ELSE #
-													<li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
-														<span class="close-modal bigger emoji-tag" onclick="insertbbcode('{emojis.DECIMAL}', '', 'shout-content');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
-															{emojis.DECIMAL}
-														</span>
-													</li>
-												# ENDIF #
-											# ENDIF #
-										# END emojis #
-									</ul>
-								</div>
-							</div>
-						</div>
+						# IF NOT C_EMOJIS_DISABLED #
+                            <div id="block-emojis{FIELD}" class="modal modal-half">
+                                <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+                                <div class="modal-content cell">
+                                    <div class="cell-header">
+                                        <div class="cell-name">{@bbcode.emojis}</div>
+                                        <div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+                                    </div>
+                                    <div class="cell-content align-center">
+                                        {@H|bbcode.emojis.link}
+                                    </div>
+                                    <div class="cell-list cell-list-inline cell-overflow-y">
+                                        <ul class="flex-start">
+                                            # START emojis #
+                                                # IF emojis.C_CATEGORY #
+                                                    </ul>
+                                                    <ul class="flex-start">
+                                                        <li> <h5>{emojis.CATEGORY_NAME}</h5> </li>
+                                                    </ul>
+                                                    <ul class="flex-start">
+                                                # ELSE #
+                                                    # IF emojis.C_SUB_CATEGORY #
+                                                        </ul>
+                                                        <ul class="flex-start">
+                                                            <li> <h6>{emojis.CATEGORY_NAME}</h6> </li>
+                                                        </ul>
+                                                        <ul class="flex-start">
+                                                    # ELSE #
+                                                        <li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
+                                                            <span class="close-modal bigger emoji-tag" onclick="insertbbcode('{emojis.DECIMAL}', '', 'shout-content');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
+                                                                {emojis.DECIMAL}
+                                                            </span>
+                                                        </li>
+                                                    # ENDIF #
+                                                # ENDIF #
+                                            # END emojis #
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        # ENDIF #
 					</li>
 					<li class="bbcode-elements">
 						<a class="bbcode-button" href="#" onclick="# IF NOT C_BOLD_DISABLED #insertbbcode('[b]', '[/b]', 'shout-content');# ENDIF #return false;" aria-label="{@bbcode.bold}"><i class="fa fa-fw fa-bold# IF C_BOLD_DISABLED # icon-disabled# ENDIF #" aria-hidden="true"></i></a>

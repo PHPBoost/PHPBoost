@@ -128,7 +128,7 @@ abstract class AbstractParser implements FormattingParser
 			$this->content = preg_replace($regex, $replace, $this->content);
 		}
 	}
-	
+
 	/**
 	 * Parses tag args to get allowed ones
 	 * @param string $matches The regular expression which matches the tag args

@@ -222,7 +222,7 @@ function bbcode_table(field)
 
 function bbcode_custom_div(field)
 {
-	var cd_id    = document.getElementById('bb_cd_id' + field).value,
+	var cd_id    = url_encode_rewrite(document.getElementById('bb_cd_id' + field).value),
 		cd_class = document.getElementById('bb_cd_class' + field).value,
 		cd_style = document.getElementById('bb_cd_style' + field).value,
 		insert_id    = (cd_id != '' && cd_id != null) ? ' id="' + cd_id + '"' : '',
@@ -230,6 +230,12 @@ function bbcode_custom_div(field)
 		insert_style = (cd_style != '' && cd_style != null) ? ' style="' + cd_style + '"' : '';
 
 	insertbbcode('[container' + insert_id + insert_class + insert_style + ']', '[/container]', field);
+}
+
+function bbcode_modal(field)
+{
+    var modalName = document.getElementById('bb-modal-name' + field).value;
+	insertbbcode('[modal=' + modalName + ']', '[/modal]', field);
 }
 
 function bbcode_fieldset(field)
@@ -442,14 +448,13 @@ function bbcode_pin(field, color)
 
 function bbcode_column(field)
 {
-    var colNumber = document.getElementById('bb-cols' + field).value;
-	insertbbcode('[container class="cell-flex formatter-columns cell-columns-' + colNumber + '"]\n\t[container class="formatter-column"]', ' [/container]\n[/container]', field);
-}
-
-function bbcode_modal(field)
-{
-    var modalName = document.getElementById('bb-modal-name' + field).value;
-	insertbbcode('[modal=' + modalName + ']', '[/modal]', field);
+    var colNumber = document.getElementById('bb-cols' + field).value,
+        colContent = '';
+    for(var i = 1; i <= colNumber; i++)
+    {
+        colContent += '\t[container class="formatter-column"] [/container]\n';
+    }
+	insertbbcode('[container class="cell-flex formatter-columns cell-columns-' + colNumber + '"]\n' + colContent + '[/container]', '', field);
 }
 
 function bbcode_tabs(field)

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2025 03 14
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -24,18 +24,19 @@ $lang['editor.bgcolor']   = 'Couleur de fond';
 $lang['editor.size']      = 'Taille de police';
 $lang['editor.font']      = 'Police';
 $lang['editor.align']     = 'Alignement';
-$lang['editor.float']     = 'Elément flottant';
+$lang['editor.float']     = 'Élément flottant';
 $lang['editor.indent']    = 'Indentation';
 $lang['editor.sup']       = 'Exposant';
 $lang['editor.sub']       = 'Indice';
+$lang['editor.abbr']      = 'Abréviation';
 $lang['editor.title']     = 'Titre';
 $lang['editor.list']      = 'Liste';
 $lang['editor.table']     = 'Tableau';
 $lang['editor.paragraph'] = 'Paragraphe';
 $lang['editor.block']     = 'Bloc';
-$lang['editor.container'] = 'Conteneur personnalisable';
 $lang['editor.fieldset']  = 'Bloc champs';
-$lang['editor.abbr']      = 'Abréviation';
+$lang['editor.container'] = 'Conteneur personnalisable';
+$lang['editor.modal']     = 'Modal';
 $lang['editor.quote']     = 'Citation';
 $lang['editor.hide']      = 'Caché';
 $lang['editor.member']    = 'Cacher le contenu aux visiteurs';

@@ -363,7 +363,7 @@ class BBCodeParser extends ContentFormattingParser
 		//Modal tag
 		if (!in_array('modal', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[modal=([^\]]+)\](.+)\[/modal\]`suU', [$this, 'parse_modal'], $this->content);
+			$this->content = preg_replace_callback('`\[modal=(.*)\](.+)\[/modal\]`suU', [$this, 'parse_modal'], $this->content);
 		}
 	}
 

@@ -4,27 +4,28 @@ class ModalBoost {
         const dataId = this.getModalId(this.button);
         this.targetPanel = document.getElementById(dataId);
 
-        if (!this.targetPanel) return;
+        if (!this.targetPanel) {
+            return;
+        }
+        document.body.appendChild(this.targetPanel);
 
-        if (this.hasClass('modal-pop')) {
-            this.parent = document.createElement('div');
-            this.parent.classList.add('modal-enclosure');
-            this.button.parentNode.insertBefore(this.parent, this.button);
-            this.parent.appendChild(this.button);
-            this.parent.appendChild(this.targetPanel);
-            this.targetPanel.classList.add('modal-pop', this.getClassName('modal-pop'));
+        if (this.hasClass('modal-pop') && window.innerWidth > 768) {
+                this.parent = document.createElement('div');
+                this.parent.classList.add('modal-enclosure');
+                this.button.parentNode.insertBefore(this.parent, this.button);
+                this.parent.appendChild(this.button);
+                this.parent.appendChild(this.targetPanel);
+                this.targetPanel.classList.add('modal-pop', this.getClassName('modal-pop'));
         } else {
-            // Move panel to body
-            document.body.appendChild(this.targetPanel);
             this.targetPanel.classList.add('modal-full');
         }
 
         // Trigger click event
-        el.addEventListener('click', (e) => {
+        this.button.addEventListener('click', (e) => {
             e.preventDefault();
 
             // Remove active panel from siblings
-            this.targetPanel.parentElement.querySelectorAll('.modal').forEach(panel => {
+            document.querySelectorAll('.modal').forEach(panel => {
                 panel.classList.remove('active-modal');
             });
 

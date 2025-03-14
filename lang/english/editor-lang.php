@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 21
+ * @version     PHPBoost 6.0 - last update: 2025 03 14
  * @since       PHPBoost 3.0 - 2011 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -28,14 +28,15 @@ $lang['editor.float']     = 'Floating element';
 $lang['editor.indent']    = 'Indentation';
 $lang['editor.sup']       = 'Superscript';
 $lang['editor.sub']       = 'Subscript';
+$lang['editor.abbr']      = 'Abbreviation';
 $lang['editor.title']     = 'Title';
 $lang['editor.list']      = 'List';
 $lang['editor.table']     = 'Table';
 $lang['editor.paragraph'] = 'Paragraph';
 $lang['editor.block']     = 'Block';
-$lang['editor.container'] = 'Customizable container';
 $lang['editor.fieldset']  = 'Field set';
-$lang['editor.abbr']      = 'Abbreviation';
+$lang['editor.container'] = 'Customizable container';
+$lang['editor.modal']     = 'Modal';
 $lang['editor.quote']     = 'Quote';
 $lang['editor.hide']      = 'Hide';
 $lang['editor.member']    = 'Hiding content to visitors';
