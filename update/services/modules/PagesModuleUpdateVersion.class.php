@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 29
+ * @version     PHPBoost 6.0 - last update: 2025 03 14
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -33,6 +33,7 @@ class PagesModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/index.tpl',
 			'/templates/page.tpl',
 			'/templates/post.tpl',
+			'/templates/js/pages.min.js',
 			'/PagesUrlBuilder.class.php',
 			'/action.php',
 			'/admin_pages.php',
