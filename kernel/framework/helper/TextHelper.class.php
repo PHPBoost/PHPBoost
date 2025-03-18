@@ -291,14 +291,18 @@ class TextHelper
 		return unserialize(self:: is_base64($string) ? base64_decode($string) : $string);
 	}
 
-	public static function mb_unserialize($string)
-	{
-		$string = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($matches) {
-			if (isset($matches[2])) return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
-		}, $string
-		);
-		return unserialize($string);
-	}
+    public static function mb_unserialize($string)
+    {
+        $string = preg_replace_callback(
+            '!s:(\d+):"(.*?)";!s',
+            function ($matches) {
+                if (isset($matches[2])) {
+                    return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
+                }
+            }, $string
+        );
+        return unserialize($string);
+    }
 
 	private static function is_base64($string)
 	{
