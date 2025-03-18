@@ -5,12 +5,13 @@
  * @copyright   &copy; 2005-2023 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 5.2 - last update: 2023 02 22
+ * @version     PHPBoost 5.2 - last update: 2025 03 18
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Myster <https://www.phpboost.com/user/pm-3023>
 */
 
 class TextHelper
@@ -293,15 +294,27 @@ class TextHelper
 
     public static function mb_unserialize($string)
     {
+        // We first check if the string is serialized
+        if (!self::is_serialized($string)) {
+            return $string;
+        }
+
+        // Fixed string lengths for multi-byte characters
         $string = preg_replace_callback(
-            '!s:(\d+):"(.*?)";!s',
-            function ($matches) {
+            '/s:(\d+):"(.*?)";/s', 
+            function($matches) {
                 if (isset($matches[2])) {
+                    // Use strlen (not mb_strlen) to get the number of bytes
                     return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
                 }
+                return $matches[0];
             }, $string
         );
-        return unserialize($string);
+
+        // Attempt to deserialize
+        $result = @unserialize($string);
+        // In case of failure, the original string is returned
+        return ($result !== false) ? $result : $string;
     }
 
 	private static function is_base64($string)
