@@ -6,13 +6,14 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 06 11
+ * @version     PHPBoost 6.0 - last update: 2025 03 19
  * @since       PHPBoost 3.0 - 2010 11 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Myster <https://www.phpboost.com/user/pm-3023>
 */
 
 class SessionData
@@ -448,23 +449,50 @@ class SessionData
 		}
 	}
 
-	private static function init_from_row($user_id, $session_id, array $row)
-	{
-		$fixed_cached_data = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
-			return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
-		}, $row['cached_data']);
+    private static function init_from_row($user_id, $session_id, array $row)
+    {
+		// Correction function to be applied directly here
+        $fix_serialized = function($serialized_string) {
+            return preg_replace_callback(
+                '/s:(\d+):"(.*?)";/s',
+                function($matches) {
+                    if (isset($matches[2])) {
+                        // Use strlen to get size in bytes
+                        return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
+                    }
+                    return $matches[0];
+                },
+                $serialized_string
+            );
+        };
 
-		$data = new SessionData($user_id, $session_id);
-		$data->token = $row['token'];
-		$data->timestamp = $row['timestamp'];
-		$data->ip = $row['ip'];
-		$data->location_script = $row['location_script'];
-		$data->location_title = $row['location_title'];
-		$data->location_id = $row['location_id'];
-		$data->cached_data = TextHelper::unserialize($fixed_cached_data);
-		$data->data = TextHelper::unserialize($row['data']);
-		return $data;
-	}
+        // Correct serialized data before deserialization
+        $fixed_cached_data = $fix_serialized($row['cached_data']);
+        $fixed_data = $fix_serialized($row['data']);
+
+        $data = new SessionData($user_id, $session_id);
+        $data->token = $row['token'];
+        $data->timestamp = $row['timestamp'];
+        $data->ip = $row['ip'];
+        $data->location_script = $row['location_script'];
+        $data->location_title = $row['location_title'];
+        $data->location_id = $row['location_id'];
+
+        // Use unserialize directly after correction
+        $data->cached_data = unserialize($fixed_cached_data);
+        if ($data->cached_data  ===  false) {
+            // Fallback in case of failure
+            $data->cached_data = array();
+        }
+
+        $data->data = unserialize($fixed_data);
+        if ($data->data  ===  false) {
+            // Fallback in case of failure
+            $data->data = array();
+        }
+
+        return $data;
+    }
 
 	private static function fill_user_cached_data(SessionData $data)
 	{
