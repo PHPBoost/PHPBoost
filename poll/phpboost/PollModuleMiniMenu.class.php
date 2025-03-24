@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 15
+ * @version     PHPBoost 6.0 - last update: 2025 03 24
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -210,13 +210,13 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$fieldset->add_field(new FormFieldHidden('item_id', $item->get_id()));
 
 		if (!empty($previous_item_id))
-			$vote_form->add_button(new FormButtonButtonCssImg($previous_item_id, 'poll_mini_previous_nav(); return false;', 'previous', 'fas fa-arrow-alt-circle-left', '', 'previous', '', 'previous_id'));
+			$vote_form->add_button(new FormButtonButtonCssImg($previous_item_id, 'poll_mini_previous_nav(); return false;', 'previous', 'fas fa-arrow-alt-circle-left', '', 'previous-poll', '', 'previous_id'));
 
 		$submit_button = new FormButtonSubmit($this->lang['poll.vote.submit'], 'submit', 'poll_submit(); return false;');
 		$vote_form->add_button($submit_button);
 
 		if (!empty($next_item_id))
-			$vote_form->add_button(new FormButtonButtonCssImg($next_item_id, 'poll_mini_next_nav(); return false;', 'next', 'fas fa-arrow-alt-circle-right', '', 'next', '', 'next_id'));
+			$vote_form->add_button(new FormButtonButtonCssImg($next_item_id, 'poll_mini_next_nav(); return false;', 'next', 'fas fa-arrow-alt-circle-right', '', 'next-poll', '', 'next_id'));
 
 		return $vote_form;
 	}
