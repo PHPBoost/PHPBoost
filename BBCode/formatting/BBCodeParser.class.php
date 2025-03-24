@@ -525,7 +525,7 @@ class BBCodeParser extends ContentFormattingParser
         $name = $matches[1];
         $target = Url::encode_rewrite($matches[1]);
         $content = $matches[2];
-        return '<button class="button expand-modal modal-button --' . $target . '">' . $name . '</button><div id="' . $target . '" class="modal"><div class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></div><div class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>' . $content . '</div></div>';
+        return '<button class="button expand-modal modal-button --' . $target . '">' . $name . '</button><aside id="' . $target . '" class="modal"><span class="modal-overlay close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"></span><aside class="modal-content"><span class="error big hide-modal close-modal" aria-label="' . LangLoader::get_message('common.close', 'common-lang') . '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>' . $content . '</aside></aside>';
     }
 
 	/**
