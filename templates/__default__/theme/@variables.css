@@ -10,17 +10,17 @@
     --cell-gap : 1.236em;
 
     /* colors */
-    --txt-rgb-m: 85, 85, 85;
-    --txt-main:  #555555;
+    --txt-rgb-m: 49, 49, 49;
+    --txt-main:  #313131;
     --txt-rgb-s: 85, 85, 85;
     --txt-sub:  #555555;
-    --txt-rgb-a: 255, 255, 255;
-    --txt-alt:   #FFFFFF;
+    --txt-rgb-a: 255, 253, 250;
+    --txt-alt:   #FFFDFA;
 
-    --bgc-rgb-m: 255, 255, 255;
-    --bgc-main:  #FFFFFF;
-    --bgc-rgb-s: 236, 242, 249;
-    --bgc-sub:   #ECF2F8;
+    --bgc-rgb-m: 255, 253, 250;
+    --bgc-main:  #FFFDFA;
+    --bgc-rgb-s: 235, 245, 255;
+    --bgc-sub:   #EBF5FF;
     --bgc-rgb-a: 50, 100, 147;
     --bgc-alt:  #366493;
 

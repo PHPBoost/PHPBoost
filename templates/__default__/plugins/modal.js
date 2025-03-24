@@ -1,3 +1,11 @@
+/**
+ * @copyright   &copy; 2005-2025 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @version     PHPBoost 6.0 - last update: 2025 03 06
+ * @since       PHPBoost 6.0 - 2025 03 06
+*/
+
 class ModalBoost {
     constructor(el) {
         this.button = el;
@@ -10,12 +18,12 @@ class ModalBoost {
         document.body.appendChild(this.targetPanel);
 
         if (this.hasClass('modal-pop') && window.innerWidth > 768) {
-                this.parent = document.createElement('div');
-                this.parent.classList.add('modal-enclosure');
-                this.button.parentNode.insertBefore(this.parent, this.button);
-                this.parent.appendChild(this.button);
-                this.parent.appendChild(this.targetPanel);
-                this.targetPanel.classList.add('modal-pop', this.getClassName('modal-pop'));
+            this.parent = document.createElement('div');
+            this.parent.classList.add('modal-enclosure');
+            this.button.parentNode.insertBefore(this.parent, this.button);
+            this.parent.appendChild(this.button);
+            this.parent.appendChild(this.targetPanel);
+            this.targetPanel.classList.add('modal-pop', this.getClassName('modal-pop'));
         } else {
             this.targetPanel.classList.add('modal-full');
         }
@@ -88,6 +96,7 @@ class ModalBoost {
         closeButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 targetPanel.classList.remove('active-modal');
+                targetPanel.removeAttribute('open');
 
                 // Remove URL hash
                 window.history.pushState('', '', ' ');
