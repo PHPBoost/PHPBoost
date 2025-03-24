@@ -23,30 +23,30 @@ class CookiebarConfigUpdateVersion extends ConfigUpdateVersion
 			$unparser = new OldBBCodeUnparser();
 			$parser = new BBCodeParser();
 			$old_content = $old_config->get_property('cookiebar_content');
-
+			
 			$unparser->set_content($old_content);
 			$unparser->parse();
 			$parser->set_content($unparser->get_content());
 			$parser->parse();
-
+			
 			if ($parser->get_content() != $old_content)
 			{
 				$config->set_cookiebar_content($parser->get_content());
 			}
 
 			$old_about_content = $old_config->get_property('cookiebar_aboutcookie_content');
-
+			
 			$unparser->set_content($old_about_content);
 			$unparser->parse();
 			$parser->set_content($unparser->get_content());
 			$parser->parse();
-
+			
 			if ($parser->get_content() != $old_about_content)
 			{
 				$config->set_cookiebar_aboutcookie_content($parser->get_content());
 			}
 		}
-
+		
 		$this->save_new_config('kernel-cookiebar-config', $config);
 
 		return true;

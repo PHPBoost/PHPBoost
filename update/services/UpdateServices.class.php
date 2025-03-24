@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 14
+ * @version     PHPBoost 6.0 - last update: 2025 03 05
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -967,7 +967,7 @@ class UpdateServices
 
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/CategoriesCache.class.php');
 		$file->delete();
-
+		
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/controllers/AbstractCategoriesManageController.class.php');
 		$file->delete();
 
@@ -1002,18 +1002,6 @@ class UpdateServices
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/menu/FormFieldMultitabsLink.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/menu/FormFieldMultitabsLinkElement.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/menu/FormFieldMultitabsLinkList.class.php');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/menu/FormFieldsetMultitabsHTML.class.php');
 		$file->delete();
 	}
 
@@ -1165,18 +1153,6 @@ class UpdateServices
             $folder->delete();
         }
 
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/framework/builder/form/menu/FormFieldMultitabsLinkList.tpl');
-		$file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/framework/builder/form/menu/FormFieldsetMultitabsHTML.tpl');
-		$file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/plugins/multitabs.js');
-		$file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/theme/plugins.css');
-		$file->delete();
-
         $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
 		$file->delete();
 
@@ -1229,9 +1205,6 @@ class UpdateServices
 		$file->delete();
 
 		$file = new File(PATH_TO_ROOT . '/user/templates/UserMessagesController.tpl');
-		$file->delete();
-
-		$file = new File(PATH_TO_ROOT . '/user/templates/js/cookiebar.min.js');
 		$file->delete();
 	}
 }

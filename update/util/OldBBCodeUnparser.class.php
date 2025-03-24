@@ -317,7 +317,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 	/**
 	 * @desc Callback which allows to unparse the fieldset tag
-	 * @param array $matches Content matched by a regular expression
+	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
 	protected function unparse_fieldset($matches)
@@ -347,7 +347,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 	/**
 	 * @desc Callback which allows to unparse the Wikipedia tag
-	 * @param array $matches Content matched by a regular expression
+	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
 	protected function unparse_wikipedia_link($matches)
@@ -377,7 +377,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 	/**
 	 * @desc Callback which allows to unparse the div tag
-	 * @param array $matches Content matched by a regular expression
+	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
 	protected function unparse_container($matches)
