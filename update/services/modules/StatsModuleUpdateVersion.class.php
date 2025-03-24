@@ -6,6 +6,7 @@
  * @version     PHPBoost 6.0 - last update: 2022 04 24
  * @since       PHPBoost 5.2 - 2019 12 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class StatsModuleUpdateVersion extends ModuleUpdateVersion
@@ -15,10 +16,12 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('stats');
 
 		self::$delete_old_files_list = array(
+            '/controllers/StatsGraphsController.class.php',
 			'/lang/french/stats_french.php',
 			'/lang/english/stats_english.php',
 			'/phpboost/StatsHomePageExtensionPoint.class.php',
 			'/phpboost/StatsMenusExtensionPoint.class.php',
+            '/services/ImagesStats.class.php',
 			'/templates/admin_stats_management.tpl',
 			'/admin_stats.php',
 			'/display_stats.php',
@@ -26,7 +29,11 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 			'/stats_begin.php',
 			'/stats_functions.php',
 		);
-		
+
+        self::$delete_old_folders_list = [
+            '/templates/images'
+        ];
+
 		// Remove unknown bots in bots list
 		$file_path = PATH_TO_ROOT . '/stats/cache/robots.txt';
 		if (file_exists($file_path) && is_file($file_path) && is_writable($file_path))
@@ -43,7 +50,7 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 				fclose($file);
 			}
 		}
-		
+
 		// Remove old os list
 		$file_path = PATH_TO_ROOT . '/stats/cache/os.txt';
 		if (file_exists($file_path) && is_file($file_path) && is_writable($file_path))
