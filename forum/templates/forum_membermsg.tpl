@@ -52,73 +52,73 @@
 					<div id="message-user-datas-{list.ID}" class="modal">
 						<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
 						<div class="modal-content cell">
-							<div class="align-right"><a href="#" class="error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-							<div class="cell-list">
-								<ul>
-									<li class="li-stretch">
-										# IF list.C_USER_RANK #<span class="pinned {list.LEVEL_CLASS}">{list.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
-										# IF list.C_USER_RANK_ICON #<img class="valign-middle" src="{list.USER_RANK_ICON}" alt="{@user.rank}" /># ENDIF #
-									</li>
-									<li class="li-stretch">
-										<span>{@common.see.profile}</span>
-										<a href="{list.U_USER_PROFILE}" class="msg-link-pseudo {list.LEVEL_CLASS} offload" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}"# ENDIF #>{list.USER_PSEUDO}</a>
-									</li>
-									<li class="li-stretch">
-										<span>{@forum.registred.on} :</span>
-										<span>{list.USER_REGISTERED_DATE}</span>
-									</li>
-									# IF IS_USER_CONNECTED #
-										# IF list.C_USER_MSG #
-											<li class="li-stretch">
-												<span>{@forum.messages} :</span>
-												<a href="{list.U_USER_MEMBERMSG}" class="button submit smaller offload" aria-label="{@forum.show.member.messages}">{list.USER_MSG}</a>
-											</li>
-										# ENDIF #
-									# ENDIF #
-									# IF list.C_USER_PM #
-										<li class="li-stretch">
-											<span>{@user.pm} :</span>
-											<a href="{list.U_USER_PM}" class="button submit smaller user-pm offload" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
-										</li>
-									# ENDIF #
-									# IF list.C_USER_EMAIL #
-										<li class="li-stretch">
-											<span>{@user.email}</span>
-											<a href="{list.U_USER_EMAIL}" class="button submit smaller user-mail offload" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
-										</li>
-									# ENDIF #
-									# START list.ext_fields #
-										<li>
-											{list.ext_fields.BUTTON}
-										</li>
-									# END list.ext_fields #
-									# IF list.C_USER_GROUPS #
-										<li class="li-stretch">
-											<span>{@user.groups} :</span>
-										</li>
-											# START list.usergroups #
-												<li class="li-stretch">
-													<a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
-													# IF list.usergroups.C_IMG_USERGROUP #
-														<a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" /></a>
-													# ENDIF #
-												</li>
-											# END list.usergroups #
-										</li>
-									# ENDIF #
-									# IF list.C_USER_SIGN #<li>{list.USER_SIGN}</li># ENDIF #
-									# IF IS_MODERATOR #
-										<li class="li-stretch">
-											<span>Sanctions: {list.USER_WARNING}%</span>
-											<span>
-												<a class="offload" href="moderation_forum{list.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
-												<a class="offload" href="moderation_forum{list.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
-											</span>
-										</li>
-									# ENDIF #
-								</ul>
-							</div>
-						</div>
+                            <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                            <div class="cell-list">
+                                    <ul>
+                                        <li class="li-stretch">
+                                            # IF list.C_USER_RANK #<span class="pinned {list.LEVEL_CLASS}">{list.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #
+                                            # IF list.C_USER_RANK_ICON #<img class="valign-middle" src="{list.USER_RANK_ICON}" alt="{@user.rank}" /># ENDIF #
+                                        </li>
+                                        <li class="li-stretch">
+                                            <span>{@common.see.profile}</span>
+                                            <a href="{list.U_USER_PROFILE}" class="msg-link-pseudo {list.LEVEL_CLASS} offload" # IF list.C_GROUP_COLOR # style="color:{list.GROUP_COLOR}"# ENDIF #>{list.USER_PSEUDO}</a>
+                                        </li>
+                                        <li class="li-stretch">
+                                            <span>{@forum.registred.on} :</span>
+                                            <span>{list.USER_REGISTERED_DATE}</span>
+                                        </li>
+                                        # IF IS_USER_CONNECTED #
+                                            # IF list.C_USER_MSG #
+                                                <li class="li-stretch">
+                                                    <span>{@forum.messages} :</span>
+                                                    <a href="{list.U_USER_MEMBERMSG}" class="button submit smaller offload" aria-label="{@forum.show.member.messages}">{list.USER_MSG}</a>
+                                                </li>
+                                            # ENDIF #
+                                        # ENDIF #
+                                        # IF list.C_USER_PM #
+                                            <li class="li-stretch">
+                                                <span>{@user.pm} :</span>
+                                                <a href="{list.U_USER_PM}" class="button submit smaller user-pm offload" aria-label="{@user.contact.pm}"><i class="fa fa-people-arrows fa-fw"></i></a>
+                                            </li>
+                                        # ENDIF #
+                                        # IF list.C_USER_EMAIL #
+                                            <li class="li-stretch">
+                                                <span>{@user.email}</span>
+                                                <a href="{list.U_USER_EMAIL}" class="button submit smaller user-mail offload" aria-label="{@user.contact.email}"><i class="fa iboost fa-iboost-email fa-fw"></i></a>
+                                            </li>
+                                        # ENDIF #
+                                        # START list.ext_fields #
+                                            <li>
+                                                {list.ext_fields.BUTTON}
+                                            </li>
+                                        # END list.ext_fields #
+                                        # IF list.C_USER_GROUPS #
+                                            <li class="li-stretch">
+                                                <span>{@user.groups} :</span>
+                                            </li>
+                                                # START list.usergroups #
+                                                    <li class="li-stretch">
+                                                        <a href="{list.usergroups.U_USERGROUP}" class="user-group group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #>{list.usergroups.USERGROUP_NAME}</a>
+                                                        # IF list.usergroups.C_IMG_USERGROUP #
+                                                            <a href="{list.usergroups.U_USERGROUP}" class="user-group user-group-img group-{list.usergroups.USERGROUP_ID} offload"# IF list.usergroups.C_USERGROUP_COLOR # style="color: {list.usergroups.USERGROUP_COLOR}"# ENDIF #><img src="{PATH_TO_ROOT}/images/group/{list.usergroups.U_IMG_USERGROUP}" alt="{list.usergroups.USERGROUP_NAME}" /></a>
+                                                        # ENDIF #
+                                                    </li>
+                                                # END list.usergroups #
+                                            </li>
+                                        # ENDIF #
+                                        # IF list.C_USER_SIGN #<li>{list.USER_SIGN}</li># ENDIF #
+                                        # IF IS_MODERATOR #
+                                            <li class="li-stretch">
+                                                <span>Sanctions: {list.USER_WARNING}%</span>
+                                                <span>
+                                                    <a class="offload" href="moderation_forum{list.U_FORUM_WARNING}" aria-label="{@user.warnings.management}"><i class="fa fa-exclamation-triangle warning" aria-hidden="true"></i></a>
+                                                    <a class="offload" href="moderation_forum{list.U_FORUM_PUNISHEMENT}" aria-label="{@user.punishments.management}"><i class="fa fa-user-lock" aria-hidden="true"></i></a>
+                                                </span>
+                                            </li>
+                                        # ENDIF #
+                                    </ul>
+                                </div>
+                            </div>
 					</div>
 					<div class="message-content" >
 						<div class="float-right badges">

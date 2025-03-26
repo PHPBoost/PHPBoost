@@ -145,8 +145,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 	/**
 	 * @desc Return the array containing the result's data list
-	 * @param &string[][] $args The array containing the result's id list
-	 * @return string[] The array containing the result's data list
+	 * @param &array[] $args The array containing the result's id list
+	 * @return array The array containing the result's data list
 	 */
 	public function compute_search_results($args)
 	{
@@ -185,8 +185,8 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 
 	/**
 	 *  @desc Return the string to print the result
-	 *  @param &string[] $result_data the result's data
-	 *  @return string[] The string to print the result of a search element
+	 *  @param &array $result_data the result's data
+	 *  @return array The string to print the result of a search element
 	 */
 	public function parse_search_result($result_data)
 	{

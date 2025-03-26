@@ -32,7 +32,7 @@
                 <div id="message-user-datas-ID" class="modal">
                     <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
                     <div class="modal-content cell">
-                        <div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
+                        <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
                         <div class="cell-list">
                             <ul>
                                 <li class="li-stretch">
@@ -112,7 +112,7 @@
     &lt;div id="message-user-datas-ID" class="modal">
         &lt;div class="modal-overlay close-modal" aria-label="{@common.close}">&lt;/div>
         &lt;div class="modal-content cell">
-            &lt;div class="align-right">&lt;a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
+            &lt;span class="error big hide-modal close-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/span>
             &lt;div class="cell-list">
                 &lt;ul>
                     &lt;li class="li-stretch">

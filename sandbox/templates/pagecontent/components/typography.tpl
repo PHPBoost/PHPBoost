@@ -29,7 +29,7 @@
             <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
             <div class="formatter-content formatter-code">
                 <div class="no-style">
-<pre class="precode"><code>&lt;span class="smallest">{@sandbox.component.item.smallest}&lt;/span>
+<pre class="precode langage-html"><code>&lt;span class="smallest">{@sandbox.component.item.smallest}&lt;/span>
 &lt;span class="smaller">{@sandbox.component.item.smaller}&lt;/span>
 &lt;span class="small">{@sandbox.component.item.small}&lt;/span>
 &lt;span class="normal">{@sandbox.component.item}&lt;/span>

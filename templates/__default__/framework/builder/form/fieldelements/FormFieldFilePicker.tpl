@@ -25,8 +25,8 @@
 		<div id="upload-helper" class="modal modal-half">
 			<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
 			<div class="modal-content">
-				<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-				<h3>{@upload.upload.helper}</h3>
+                <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                <h3>{@upload.upload.helper}</h3>
 				# IF IS_ADMIN #
 					<p><strong>{@upload.max.file.size} :</strong> {MAX_FILE_SIZE_TEXT}</p>
 				# ELSE #

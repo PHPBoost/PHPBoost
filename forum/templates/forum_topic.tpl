@@ -257,8 +257,8 @@
 			<div id="message-user-datas-{msg.ID}" class="modal">
 				<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
 				<div class="modal-content cell">
-					<div class="align-right"><a href="#" class="error hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-					<div class="cell-list">
+                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                    <div class="cell-list">
 						<ul>
 							<li class="li-stretch">
 								# IF msg.C_USER_RANK #<span class="pinned {msg.FORUM_USER_LEVEL}">{msg.USER_RANK}</span># ELSE #<span class="error">{@user.banned}</span># ENDIF #

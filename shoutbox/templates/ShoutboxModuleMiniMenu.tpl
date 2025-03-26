@@ -132,9 +132,9 @@
                             <div id="bb-shoutbox-smileys" class="modal modal-half">
                                 <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
                                 <div class="modal-content cell">
+                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
                                     <div class="cell-header">
                                         <div class="cell-name">{@bbcode.smileys}</div>
-                                        <div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
                                     </div>
                                     <div class="cell-list cell-list-inline">
                                         <ul>
@@ -164,9 +164,9 @@
                             <div id="block-emojis{FIELD}" class="modal modal-half">
                                 <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
                                 <div class="modal-content cell">
+                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
                                     <div class="cell-header">
                                         <div class="cell-name">{@bbcode.emojis}</div>
-                                        <div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
                                     </div>
                                     <div class="cell-content align-center">
                                         {@H|bbcode.emojis.link}

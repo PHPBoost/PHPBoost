@@ -390,10 +390,10 @@
 														<div id="gallery-pic-move-to" class="modal">
 															<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
 															<div class="cell modal-content">
-																<div class="cell-header">
+                                                                <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                                                <div class="cell-header">
 																	<div class="cell-name">{@common.move.to} :</div>
-																	<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-																</div>
+                                                                </div>
 																<div class="cell-input">
 																	<select name="{ID}cat" onchange="document.location = '{U_MOVE}'">
 																		{CATEGORIES_LIST}
@@ -511,9 +511,9 @@
 															<div id="gallery-pic-move-to" class="modal modal-quarter">
 																<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
 																<div class="cell modal-content">
-																	<div class="cell-header">
+                                                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                                                    <div class="cell-header">
 																		<div class="cell-name">{@common.move.to} :</div>
-																		<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
 																	</div>
 																	<div class="cell-input">
 																		<select name="{pics_list.ID}cat" onchange="document.location = '{pics_list.U_MOVE}">

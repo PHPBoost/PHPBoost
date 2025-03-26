@@ -42,8 +42,8 @@
 								<div id="upload-helper" class="modal">
 									<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
 									<div class="modal-content">
-										<div class="align-right"><a href="#" class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
-										<h3>{@upload.upload.helper}</h3>
+                                        <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                        <h3>{@upload.upload.helper}</h3>
 										<p><strong>{@upload.allowed.extensions} :</strong> "{ALLOWED_EXTENSIONS}"</p>
 										<p><strong>{@gallery.max.width} :</strong> {MAX_WIDTH} {@common.unit.pixels}</p>
 										<p><strong>{@gallery.max.height} :</strong> {MAX_HEIGHT} {@common.unit.pixels}</p>
