@@ -19,6 +19,10 @@
     var L_PLAY  = ${escapejs(@common.play)};
     var L_PAUSE = ${escapejs(@common.pause)};
 
+    // Password
+    var HIDE_PASSWORD = ${escapejs(@user.password.hide)};
+    var REVEAL_PASSWORD = ${escapejs(@user.password.see)};
+
 	// CookieBar Variables
 	# IF C_COOKIEBAR_ENABLED #
 		var COOKIEBAR_DURATION        = {COOKIEBAR_DURATION};

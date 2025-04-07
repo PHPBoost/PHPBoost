@@ -19,6 +19,8 @@
 $lang['user.username']           = 'Username';
 $lang['user.username.tooltip']   = 'If you didn\'t checked "Choose a login" in your account, you have to connect with your email address.';
 $lang['user.password']           = 'Password';
+$lang['user.password.see']       = 'See the password';
+$lang['user.password.hide']      = 'Hide the password';
 $lang['user.sign.in']            = 'Sign in';
 $lang['user.connect']            = 'Connect';
 $lang['user.stay.connected']     = 'Stay connected';

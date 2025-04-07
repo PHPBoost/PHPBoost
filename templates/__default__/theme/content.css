@@ -226,7 +226,7 @@ aside:not(#menu-left):not(#menu-right)::after {
 .options .horizontal-fieldset-element,
 .options .horizontal-fieldset .form-element { margin: 0; }
 
-/* --- Coulor picker --- */
+/* --- Color picker --- */
 .color-picker {
 	position: absolute;
 	z-index: 100;
@@ -297,7 +297,7 @@ a.wikipedia-link:after {
 	clear: both;
 }
 
-/* --- calendar picker --- */
+/* --- Calendar picker --- */
 .calendar-block .hide-modal {
 	justify-content: flex-end;
 	padding: 0 0 0.228em 0;
@@ -382,3 +382,15 @@ a.wikipedia-link:after {
 }
 
 .formatter-columns > br { display: none; }
+
+/* --- Password revealer --- */
+.password-container {
+    position: relative;
+    display: inline-block;
+    input { padding-right: 1.618em; }
+    .toggle-password {
+        position: absolute;
+        right: 0.309em;
+        top: 0.309em;
+    }
+}

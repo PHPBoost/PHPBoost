@@ -656,3 +656,20 @@
             xhr.send(formData);
         });
     }
+
+// Hide/reveal password in password inputs
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordContainers = document.querySelectorAll('.password-container');
+
+        passwordContainers.forEach(container => {
+            const input = container.querySelector('input[type="password"]');
+            const toggleButton = container.querySelector('.toggle-password');
+
+            toggleButton.addEventListener('click', () => {
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                toggleButton.innerHTML = type === 'password' ? '<i class="fa fa-eye" aria-hidden="true"></i>' : '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+                toggleButton.setAttribute('aria-label', type === 'password' ? REVEAL_PASSWORD : HIDE_PASSWORD);
+            });
+        });
+    });

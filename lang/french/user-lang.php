@@ -19,6 +19,8 @@
 $lang['user.username']           = 'Identifiant de connexion';
 $lang['user.username.tooltip']   = 'Si vous n\'avez pas coché "Choisir un identifiant de connexion" dans votre profil, connectez-vous avec l\'adresse email que vous avez déclarée.';
 $lang['user.password']           = 'Mot de passe';
+$lang['user.password.see']       = 'Afficher le mot de passe';
+$lang['user.password.hide']      = 'Cacher le mot de passe';
 $lang['user.sign.in']            = 'Connexion';
 $lang['user.connect']            = 'Connecter';
 $lang['user.stay.connected']     = 'Rester connecté';
