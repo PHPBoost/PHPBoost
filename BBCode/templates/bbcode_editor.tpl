@@ -482,7 +482,7 @@
                         # IF NOT C_DISABLED_MODAL #
                             <div id="block-modal{FIELD}" class="modal modal-half">
                                 <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-                                <div class="modal-content cell">
+                                <div class="modal-content cell cell-bbcode">
                                     <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
                                     <div class="cell-header">
                                         <h6 class="cell-name">{@bbcode.modal}</h6>
@@ -650,7 +650,7 @@
                             </a>
                             <div id="block-pin{FIELD}" class="modal modal-half">
                                 <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-                                <div class="modal-content cell">
+                                <div class="modal-content cell cell-bbcode">
                                     <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
                                     <div class="cell-header">
                                         <h6 class="cell-name">{@bbcode.pin.bgc}</h6>
@@ -743,7 +743,7 @@
                             </a>
                             <div id="block-columns{FIELD}" class="modal modal-half">
                                 <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-                                <div class="modal-content cell">
+                                <div class="modal-content cell cell-bbcode">
                                     <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
                                     <div class="cell-header">
                                         <h6 class="cell-name">{@bbcode.columns}</h6>
@@ -766,7 +766,7 @@
                             </a>
                             <div id="block-tabs{FIELD}" class="modal modal-half">
                                 <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
-                                <div class="modal-content cell">
+                                <div class="modal-content cell cell-bbcode">
                                     <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
                                     <div class="cell-header">
                                         <h6 class="cell-name">{@bbcode.tabs}</h6>
@@ -1247,27 +1247,27 @@
                                     <div class="cell-content align-center">
                                         {@H|bbcode.emojis.link}
                                     </div>
-                                    <div class="cell-list cell-list-inline cell-overflow-y">
+                                    <div class="cell-list cell-list-inline cell-overflow-y emojis-list">
                                         <ul class="flex-start">
                                             # START emojis #
                                                 # IF emojis.C_CATEGORY #
                                                     </ul>
                                                     <ul class="flex-start">
-                                                        <li> <h5>{emojis.CATEGORY_NAME}</h5> </li>
+                                                        <li> <h6>{emojis.CATEGORY_NAME}</h6> </li>
                                                     </ul>
                                                     <ul class="flex-start">
                                                 # ELSE #
                                                     # IF emojis.C_SUB_CATEGORY #
                                                         </ul>
                                                         <ul class="flex-start">
-                                                            <li> <h6>{emojis.CATEGORY_NAME}</h6> </li>
+                                                            <li> <h5>{emojis.CATEGORY_NAME}</h5> </li>
                                                         </ul>
                                                         <ul class="flex-start">
                                                     # ELSE #
                                                         <li# IF emojis.C_END_LINE # class="hidden"# ENDIF #>
-                                                            <a href="#emoji" class="close-modal close-bbcode-sub bigger emoji-tag" onclick="insertbbcode('{emojis.DECIMAL}', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
+                                                            <span class="close-modal close-bbcode-sub bigger emoji-tag" onclick="insertbbcode('{emojis.DECIMAL}', '', '{FIELD}');" role="button"# IF emojis.C_NAME # aria-label="{emojis.NAME}"# ENDIF #>
                                                                 {emojis.DECIMAL}
-                                                            </a>
+                                                            </span>
                                                         </li>
                                                     # ENDIF #
                                                 # ENDIF #

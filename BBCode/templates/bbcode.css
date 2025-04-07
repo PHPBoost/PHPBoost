@@ -100,7 +100,7 @@
 }
 
 /* --- BBCode bar icons --- */
-.cell-modal .cell-bbcode { max-width: 512px; }
+.cell-bbcode { max-width: 512px; }
 
 .bbcode-button {
 	display: inline-block;
@@ -110,17 +110,11 @@
 }
 
 /* --- BBCode bar styles --- */
-#html-style .button.bgc-full {
-	padding: 0.228em 1.618em;
-}
-
-#emojis.bbcode-elements ul li {
-    h5 { padding: 0.618em 0.618em; }
-    h6 { padding: 0.618em 1.618em; }
-
-    span {
+.emojis-list {
+    li { padding: 0 !important; }
+    .emoji-tag {
         display: block;
-        padding: 0.228em 0.809em;
+        padding: 0.228em;
         cursor: pointer;
     }
 }
