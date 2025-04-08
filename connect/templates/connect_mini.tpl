@@ -40,7 +40,7 @@
 								<label for="password">
                                     <span class="password-container">
                                         <input type="password" id="password" name="password" placeholder="{@user.password}">
-                                        <span class="toggle-password" aria-label="@user.password.see"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                                        <span class="toggle-password" aria-label="{@user.password.see}"><i class="fa fa-eye" aria-hidden="true"></i></span>
                                     </span>
 									<span class="sr-only">{@user.password}</span>
 								</label>

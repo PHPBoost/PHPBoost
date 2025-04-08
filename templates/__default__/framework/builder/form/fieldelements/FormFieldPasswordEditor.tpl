@@ -8,5 +8,5 @@
         class="${escape(CLASS)}"
         # IF C_DISABLED # disabled="disabled" # ENDIF #
         # IF NOT C_AUTOCOMPLETE # autocomplete="off" # ENDIF # />
-    <span class="toggle-password" aria-label="@user.password.see"><i class="fa fa-eye" aria-hidden="true"></i></span>
+    <span class="toggle-password" aria-label="{@user.password.see}"><i class="fa fa-eye" aria-hidden="true"></i></span>
 </span>
