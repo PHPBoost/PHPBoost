@@ -77,8 +77,8 @@
     user-select: none;
 }
 
-.owl-carousel .owl-nav button.owl-prev,
-.owl-carousel .owl-nav button.owl-next,
+/* .owl-carousel .owl-nav button.owl-prev, */
+/* .owl-carousel .owl-nav button.owl-next, */
 .owl-carousel button.owl-dot {
     background: none;
     color: inherit;
@@ -194,4 +194,23 @@
     z-index: 1;
     height: 100%;
     width: 100%;
+}
+
+/* --- hack phpboost --- */
+.owl-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -1em;
+    right: -1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+        font-size: 1em;
+        padding: 0.309em 0.618em;
+        border-radius: 50%;
+        border: none;
+    }
 }

@@ -110,6 +110,11 @@
 	jQuery('[id*="slideboost-4-"]')
 		.addClass('owl-carousel')
 		.owlCarousel({
+            nav: true,
+            navText: [
+                '<span aria-label="' + ${escapejs(@common.previous)} + '"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>',
+                '<span aria-label="' + ${escapejs(@common.next)} + '"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>'
+            ],
 			autoplay: true,
 			autoplayTimeout: 3500,
 			loop: true,
@@ -126,6 +131,11 @@
 	jQuery('[id*="slideboost-3-"]')
 		.addClass('owl-carousel')
 		.owlCarousel({
+            nav: true,
+            navText: [
+                '<span aria-label="' + ${escapejs(@common.previous)} + '"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>',
+                '<span aria-label="' + ${escapejs(@common.next)} + '"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>'
+            ],
 			autoplay: true,
 			autoplayTimeout: 3500,
 			loop: true,
@@ -141,6 +151,11 @@
 	jQuery('[id*="slideboost-2-"]')
 		.addClass('owl-carousel')
 		.owlCarousel({
+            nav: true,
+            navText: [
+                '<span aria-label="' + ${escapejs(@common.previous)} + '"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>',
+                '<span aria-label="' + ${escapejs(@common.next)} + '"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>'
+            ],
 			autoplay: true,
 			autoplayTimeout: 3500,
 			loop: true,
@@ -155,6 +170,11 @@
 	jQuery('[id*="slideboost-1-"]')
 		.addClass('owl-carousel')
 		.owlCarousel({
+            nav: true,
+            navText: [
+                '<span aria-label="' + ${escapejs(@common.previous)} + '"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>',
+                '<span aria-label="' + ${escapejs(@common.next)} + '"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>'
+            ],
 			autoplay: true,
 			autoplayTimeout: 3500,
 			loop: true,
