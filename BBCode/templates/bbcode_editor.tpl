@@ -796,6 +796,33 @@
                                 </div>
                             </div>
                         </li>
+                        <li id="slider" class="bbcode-elements">
+                            <a href="#slider" class="bbcode-button modal-button --block-slide{FIELD}" role="button" aria-label="{@bbcode.slide}">
+                                <i class="fa fa-fw fa-panorama" aria-hidden="true"></i>
+                            </a>
+                            <div id="block-slide{FIELD}" class="modal modal-half">
+                                <div class="modal-overlay close-modal" role="button" aria-label="{@common.close}"></div>
+                                <div class="modal-content cell cell-bbcode">
+                                    <span class="error hide-modal close-modal close-bbcode-sub" aria-label="{@bbcode.tags.cancel}"><i class="far fa-circle-xmark" aria-hidden></i></span>
+                                    <div class="cell-header">
+                                        <h6 class="cell-name">{@bbcode.slide}</h6>
+                                    </div>
+                                    <div class="cell-form">
+                                        <label class="cell-label" for="bb-slide-id{FIELD}">{@bbcode.slide.id}</label>
+                                        <div class="cell-input">
+                                            <input type="text" name="bb-slide-id{FIELD}" id="bb-slide-id{FIELD}">
+                                        </div>
+                                        <label class="cell-label" for="bb-slide-nb{FIELD}">{@bbcode.slide.number}</label>
+                                        <div class="cell-input">
+                                            <input type="number" name="bb-slide-nb{FIELD}" id="bb-slide-nb{FIELD}" value="1" min="1" max="4">
+                                        </div>
+                                    </div>
+                                    <div class="cell-footer">
+                                        <a href="#slide-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_slide('{FIELD}');">{@bbcode.tags.add}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 # ENDIF #
             </li>

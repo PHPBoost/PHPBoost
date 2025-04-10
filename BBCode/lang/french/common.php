@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 10
+ * @version     PHPBoost 6.0 - last update: 2025 04 10
  * @since       PHPBoost 4.1 - 2014 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -194,6 +194,7 @@ $lang['bbcode.tabs.location.bottom'] = 'En dessous';
 $lang['bbcode.tabs.location.left']   = 'Sur la gauche';
 $lang['bbcode.tabs.location.right']  = 'Sur la droite';
 $lang['bbcode.tabs.number']          = 'Nombre d\'onglets';
-
-
+$lang['bbcode.slide']                = 'Carrousel';
+$lang['bbcode.slide.id']             = '* Identifiant du carrousel';
+$lang['bbcode.slide.number']         = 'Nombre d\'éléments visibles';
 ?>

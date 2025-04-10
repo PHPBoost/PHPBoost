@@ -194,3 +194,18 @@ pre[style*="display:inline;"] {
 		display: inline-block;
 	}
 }
+
+.formatter-carousel {
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+
+    &.owl-carousel .owl-nav {
+        left: -1.228em;
+        right: -1.309em;
+    }
+
+    & > * {
+        padding: 0.309em;
+    }
+}

@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 01
+ * @version     PHPBoost 6.0 - last update: 2025 04 10
  * @since       PHPBoost 1.2 - 2005 08 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -481,5 +481,15 @@ function bbcode_tabs(field)
                 '\t[/container]\n' +
                 '[/container]', '', field
         );
+    }
+}
+
+function bbcode_slide(field)
+{
+    var slideId = document.getElementById('bb-slide-id' + field).value,
+        slideNb = document.getElementById('bb-slide-nb' + field).value;
+
+    if (slideId) {
+        insertbbcode( '[container id="slideboost-' + slideNb + '-' + url_encode_rewrite(slideId) + '" class="formatter-carousel"]\n', '[/container]', field);
     }
 }
