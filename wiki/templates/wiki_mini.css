@@ -1,0 +1,53 @@
+/*
+* Copy this file into your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
+.wiki-mini-nav ul { 
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+}
+
+.menutree-title { 
+    padding: 0.456em 1.618em 0.456em 0.618em; 
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.menutree-title.active { background-color: var(--bgc-sub); }
+
+.menutree-title i { margin-right: 0.309em; }
+
+.wiki-mini-nav .sub-cat > ul { margin-left: 1.618em; }
+
+.wiki-mini-nav .has-sub { 
+    position: relative;
+    display: block;
+}
+
+.wiki-mini-nav .has-sub > .swap-handle { 
+    position: absolute; 
+    right: 0;
+    top: 0;
+    width: 1.809em;
+    height: 2.456em;
+}
+
+.wiki-mini-nav .has-sub > .swap-handle { cursor: zoom-in; }
+.wiki-mini-nav .has-sub.open > .swap-handle { cursor: zoom-out; }
+
+.wiki-mini-nav .has-sub > .swap-handle::after { 
+    font-family: 'Font Awesome 6 free';
+    font-weight: 900;
+    position: absolute;
+    right: 0.456em;
+    top: 50%;
+    transform: translateY(-50%);
+    content: '\f0d7';    
+}
+
+.wiki-mini-nav .has-sub.open > .swap-handle::after { 
+    content: '\f0d8';
+}

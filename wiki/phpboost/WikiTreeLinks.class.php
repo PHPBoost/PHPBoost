@@ -3,41 +3,31 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 06
+ * @version     PHPBoost 6.0 - last update: 2025 04 13
  * @since       PHPBoost 3.0 - 2013 12 03
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
-*/
+ */
 
-class WikiTreeLinks implements ModuleTreeLinksExtensionPoint
+class WikiTreeLinks extends DefaultTreeLinks
 {
-	public function get_actions_tree_links()
+	protected function get_module_additional_actions_tree_links(&$tree)
 	{
-		$lang = LangLoader::get_all_langs('wiki');
-		require_once(PATH_TO_ROOT . '/wiki/wiki_auth.php');
-		$id_cat = AppContext::get_request()->get_getstring('id_cat', 0);
-		$current_user = AppContext::get_current_user();
-		$config = WikiConfig::load();
+		$module_id = 'wiki';
+		$current_user = AppContext::get_current_user()->get_id();
+        $config = WikiConfig::load();
 
-		$tree = new ModuleTreeLinks();
+		$tree->add_link(new ModuleLink(LangLoader::get_message('contribution.members.list', 'contribution-lang'), WikiUrlBuilder::display_member_items(), WikiAuthorizationsService::check_authorizations()->read()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('wiki.my.items', 'common', $module_id), WikiUrlBuilder::display_member_items($current_user), WikiAuthorizationsService::check_authorizations()->write() || WikiAuthorizationsService::check_authorizations()->contribution() || WikiAuthorizationsService::check_authorizations()->moderation()));
+		$tree->add_link(new ModuleLink(LangLoader::get_message('wiki.my.tracked', 'common', $module_id), WikiUrlBuilder::tracked_member_items($current_user), WikiAuthorizationsService::check_authorizations()->write() || WikiAuthorizationsService::check_authorizations()->contribution() || WikiAuthorizationsService::check_authorizations()->moderation()));
 
-		$tree->add_link(new ModuleLink($lang['wiki.explorer.short'], new Url('/wiki/explorer.php')));
+        if ($config->get_homepage() !== WikiConfig::OVERVIEW) {
+            $tree->add_link(new ModuleLink(LangLoader::get_message('wiki.overview', 'common', $module_id), WikiUrlBuilder::overview()));
+        }
 
-		$tree->add_link(new ModuleLink($lang['wiki.category.add'], new Url('/wiki/post.php?type=cat' . ($id_cat > 0 ? '&amp;id_parent=' . $id_cat : '')), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT)));
-		$tree->add_link(new ModuleLink($lang['wiki.item.add'], new Url('/wiki/post.php' . ($id_cat > 0 ? '?id_parent=' . $id_cat : '')), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_ARTICLE)));
-
-		if ($current_user->check_level(User::MEMBER_LEVEL))
-		{
-			$tree->add_link(new ModuleLink($lang['wiki.tracked.items'], new Url('/wiki/favorites.php')));
-		}
-
-		$tree->add_link(new AdminModuleLink($lang['form.configuration'], new Url('/wiki/admin_wiki.php')));
-		$tree->add_link(new AdminModuleLink($lang['form.authorizations'], new Url('/wiki/admin_wiki_groups.php')));
-
-		if (ModulesManager::get_module('wiki')->get_configuration()->get_documentation())
-			$tree->add_link(new ModuleLink($lang['form.documentation'], ModulesManager::get_module('wiki')->get_configuration()->get_documentation(), $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT) || $current_user->check_auth($config->get_authorizations(), WIKI_CREATE_CAT)));
-
-		return $tree;
+        if ($config->get_homepage() !== WikiConfig::EXPLORER) {
+            $tree->add_link(new ModuleLink(LangLoader::get_message('wiki.explorer', 'common', $module_id), WikiUrlBuilder::explorer()));
+        }
 	}
 }
 ?>

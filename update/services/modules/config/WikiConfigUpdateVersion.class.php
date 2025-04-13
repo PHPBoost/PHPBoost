@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 11 03
+ * @version     PHPBoost 6.0 - last update: 2025 04 13
  * @since       PHPBoost 5.1 - 2018 12 19
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Max KODER <maxkoder@phpboost.com>
 */
 
 class WikiConfigUpdateVersion extends ConfigUpdateVersion
@@ -13,13 +14,6 @@ class WikiConfigUpdateVersion extends ConfigUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('wiki');
-
-		$this->config_parameters_to_modify = array(
-			'root_category_description' => array(
-				'parameter_name' => 'root_category_description',
-				'value' => $this->get_parsed_old_content('WikiConfig', 'index_text')
-			)
-		);
 	}
 
 	protected function build_new_config()
@@ -37,24 +31,42 @@ class WikiConfigUpdateVersion extends ConfigUpdateVersion
 		return false;
 	}
 
-	private function build_authorizations($old_auth)
+	private function build_authorizations($old_auth_array)
 	{
-		$new_auth = array();
+        $build_auth = [];
+		$auth_translation = [
+			// Old auth => New auth
+			0x01 => 2,  // Create article => WRITE_AUTHORIZATIONS
+			0x02 => 16, // Create Category => CATEGORIES_MANAGEMENT_AUTHORIZATIONS
+			0x04 => 32, // Restaure Archive => MANAGE_ARCHIVES_AUTHORIZATIONS
+			0x08 => 32, // Delete Archive => MANAGE_ARCHIVES_AUTHORIZATIONS
+			0x10 => 2,  // Edit => WRITE_AUTHORIZATIONS
+			0x20 => 8,  // Delete => MODERATION_AUTHORIZATIONS
+			0x40 => 8,  // Rename => MODERATION_AUTHORIZATIONS
+			0x80 => 8,  // Redirect => MODERATION_AUTHORIZATIONS
+			0x100 => 2, // Move => => WRITE_AUTHORIZATIONS
+			0x200 => 8, // Statut => MODERATION_AUTHORIZATIONS
+			// 0x400 => Comments are managed by kernel comments
+			0x800 => 8, // Restrictions => MODERATION_AUTHORIZATIONS
+			0x1000 => 1 // Read => READ_AUTHORIZATIONS
+		];
 
-		foreach ($old_auth as $level => $auth)
-		{
-			if (($auth - 4096) < 0 && in_array($level, array("r-1", "r0", "r1")))
-				$new_auth[$level] = $auth + 4096;
+		foreach ($old_auth_array as $level => $auth) {
+			$bits = 0x00;
+			if ($level === 'r1' || $level === 'r0') {
+				// We add Contribution Auth for members and admins
+				$bits = 0x04;
+			}
+			foreach ($auth_translation as $old_auth => $new_auth)
+			{
+				if (($auth & $old_auth) && !($bits & $new_auth)) {
+					$bits += $new_auth;
+				}
+
+			}
+			$build_auth[$level] = $bits;
 		}
-
-		if (!isset($new_auth['r-1']))
-			$new_auth['r-1'] = 5120;
-		if (!isset($new_auth['r0']))
-			$new_auth['r0'] = 5395;
-		if (!isset($new_auth['r1']))
-			$new_auth['r1'] = 8191;
-
-		return $new_auth;
+		return $build_auth;
 	}
 }
 ?>
