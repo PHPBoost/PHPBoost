@@ -150,7 +150,7 @@ $lang['common.powered.by']     = 'Humblement propulsé par';
 $lang['common.phpboost.right'] = 'Open Source';
 $lang['common.phpboost.link']  = 'Lien vers le site PHPBoost officiel';
 $lang['common.sql.request']    = ' Requêtes';
-$lang['common.achieved']       = 'Éxécuté en';
+$lang['common.achieved']       = 'Exécuté en';
 
 // Formatter
 $lang['common.hidden.text']       = 'Ce texte est caché, cliquer ici pour afficher son contenu.';
