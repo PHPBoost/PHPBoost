@@ -19,7 +19,6 @@ class WikiAuthorizationsService extends CategoriesAuthorizationsService
     protected function is_authorized($bit, $mode = Authorizations::AUTH_CHILD_PRIORITY)
     {
         $auth = CategoriesService::get_categories_manager('wiki')->get_heritated_authorizations($this->id_category, $bit, $mode);
-
         return AppContext::get_current_user()->check_auth($auth, $bit);
     }
 }

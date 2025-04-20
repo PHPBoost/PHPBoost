@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 13
+ * @version     PHPBoost 6.0 - last update: 2025 04 20
  * @since       PHPBoost 4.0 - 2014 08 24
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -80,7 +80,7 @@ class DownloadCategoriesFormController extends DefaultCategoriesFormController
 			<script>
 				<!--
 					jQuery(document).ready(function() {
-						jQuery("#' . __CLASS__ . '_authorizations > div").eq(4).hide();
+						jQuery("#' . __CLASS__ . '_authorizations > div").eq(5).hide();
 					});
 				-->
 			</script>'
