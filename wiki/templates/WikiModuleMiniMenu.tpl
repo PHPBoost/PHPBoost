@@ -54,7 +54,7 @@
 		</nav>
 	# ENDIF #
 </div>
-<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki.mini# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki.mini.js"></script>
 <script>
 	jQuery(document).ready(function() { 
 		jQuery('#wiki-mini-nav').menutree();

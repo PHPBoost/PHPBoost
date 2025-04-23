@@ -64,4 +64,4 @@
     </div>
 	<footer></footer>
 </section>
-<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+<script src="{PATH_TO_ROOT}/wiki/templates/js/wiki.js"></script>
