@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 10
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -52,7 +52,8 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		$tree = new ModuleTreeLinks();
 		$module_configuration = ModuleConfigurationManager::get($this->module_id);
 		$has_categories = $module_configuration->has_categories();
-		$this->authorizations = $has_categories ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id) : ItemsAuthorizationsService::check_authorizations($this->module_id);
+		$root_authorizations = $has_categories ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id) : ItemsAuthorizationsService::check_authorizations($this->module_id);
+		$this->authorizations = $has_categories ? CategoriesAuthorizationsService::check_authorizations(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), $this->module_id) : ItemsAuthorizationsService::check_authorizations($this->module_id);
 
 		if ($has_categories)
 		{
@@ -64,7 +65,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		{
 			$lang = ItemsService::get_items_lang($this->module_id);
 
-			$tree->add_link(new ModuleLink($lang['items.manage'], ItemsUrlBuilder::manage($this->module_id), $this->authorizations->moderation()));
+			$tree->add_link(new ModuleLink($lang['items.manage'], ItemsUrlBuilder::manage($this->module_id), $root_authorizations->moderation()));
 			$tree->add_link(new ModuleLink($lang['item.add'], $this->get_add_item_url(), $this->check_write_authorization()));
 
 			$this->get_module_additional_items_actions_tree_links($tree);

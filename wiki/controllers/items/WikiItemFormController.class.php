@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 14
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2022 11 18
  * @contributor Myster <MP : https://www.phpboost.com/user/pm-3023>
  */
@@ -258,7 +258,8 @@ class WikiItemFormController extends DefaultModuleController
 
     private function is_contributor_member()
     {
-        return (!WikiAuthorizationsService::check_authorizations()->write() && WikiAuthorizationsService::check_authorizations()->contribution());
+        $id_category = AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY);
+        return !WikiAuthorizationsService::check_authorizations($id_category)->write() && WikiAuthorizationsService::check_authorizations($id_category)->contribution();
     }
 
     private function get_item()

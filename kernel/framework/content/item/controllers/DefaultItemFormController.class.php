@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 25
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2020 05 16
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -123,11 +123,11 @@ class DefaultItemFormController extends AbstractItemController
 
 		if (self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
-			$search_category_children_options = new SearchCategoryChildrensOptions();
+            $search_category_children_options = new SearchCategoryChildrensOptions();
 			$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 			$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
-		}
+        }
 
 		$this->build_pre_content_fields($fieldset);
 
@@ -480,7 +480,21 @@ class DefaultItemFormController extends AbstractItemController
 
 	protected function is_contributor_member()
 	{
-		return (self::get_module_configuration()->has_contribution() && ((self::get_module_configuration()->has_categories() && !CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->write() && CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->contribution()) || (!self::get_module_configuration()->has_categories() && !ItemsAuthorizationsService::check_authorizations(self::$module_id)->write() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->contribution())));
+		return (
+            self::get_module_configuration()->has_contribution()
+            && (
+                (
+                    self::get_module_configuration()->has_categories()
+                    && CategoriesAuthorizationsService::check_authorizations(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), self::$module_id)->contribution()
+                    && !CategoriesAuthorizationsService::check_authorizations(AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY), self::$module_id)->write()
+                )
+                || (
+                    !self::get_module_configuration()->has_categories()
+                    && ItemsAuthorizationsService::check_authorizations(self::$module_id)->contribution()
+                    && !ItemsAuthorizationsService::check_authorizations(self::$module_id)->write()
+                )
+            )
+        );
 	}
 
 	protected function build_contribution_fieldset($form)

@@ -334,7 +334,7 @@ abstract class AbstractFormField implements FormField
 		return (count($this->constraints) > 0 || count($this->form_constraints) > 0);
 	}
 
-	public function get_js_validations()
+	public function get_js_validations() : array
 	{
 		$validations = array();
 		foreach ($this->constraints as $constraint)
@@ -639,6 +639,12 @@ abstract class AbstractFormField implements FormField
 		return $this->hidden;
 	}
 
+	/**
+	 * set_hidden
+	 *
+	 * @param  mixed $hidden
+	 * @return void
+	 */
 	public function set_hidden($hidden)
 	{
 		$this->hidden = $hidden;
