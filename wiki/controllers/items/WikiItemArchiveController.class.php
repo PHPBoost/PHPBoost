@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 03 27
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2022 11 18
  */
 
@@ -145,7 +145,7 @@ class WikiItemArchiveController extends DefaultModuleController
         $response = new SiteDisplayResponse($this->view);
 
         $graphical_environment = $response->get_graphical_environment();
-        $graphical_environment->set_page_title($item->get_item_content()->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->config->get_module_name());
+        $graphical_environment->set_page_title($item->get_title(), ($category->get_id() != Category::ROOT_CATEGORY ? $category->get_name() . ' - ' : '') . $this->config->get_module_name());
         $graphical_environment->get_seo_meta_data()->set_description($item->get_item_content()->get_real_summary());
         $graphical_environment->get_seo_meta_data()->set_canonical_url(WikiUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()));
 
