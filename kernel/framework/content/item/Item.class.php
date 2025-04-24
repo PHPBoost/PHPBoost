@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 25
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2019 12 20
  * @contributor xela <xela@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -44,7 +44,8 @@ class Item
 	const READ_AUTHORIZATIONS         = 1;
 	const WRITE_AUTHORIZATIONS        = 2;
 	const CONTRIBUTION_AUTHORIZATIONS = 4;
-	const MODERATION_AUTHORIZATIONS   = 8;
+	const DUPLICATION_AUTHORIZATIONS  = 8;
+	const MODERATION_AUTHORIZATIONS   = 16;
 
 	const NOT_PUBLISHED        = 0;
 	const PUBLISHED            = 1;

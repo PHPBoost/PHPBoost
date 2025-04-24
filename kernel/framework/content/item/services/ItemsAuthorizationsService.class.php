@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 13
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2020 01 01
 */
 
@@ -29,6 +29,11 @@ class ItemsAuthorizationsService
 	public function contribution()
 	{
 		return $this->is_authorized(Item::CONTRIBUTION_AUTHORIZATIONS);
+	}
+
+	public function duplication()
+	{
+		return $this->is_authorized(Item::DUPLICATION_AUTHORIZATIONS);
 	}
 
 	public function write()
