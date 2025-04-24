@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 04 13
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2022 11 18
  */
 
@@ -26,6 +26,22 @@ class WikiService
     public static function count($condition = '', $parameters = [])
     {
         return self::$db_querier->count(WikiSetup::$wiki_articles_table, $condition, $parameters);
+    }
+
+    /**
+     * @desc Count active items number.
+     * @param string $condition (optional) : Restriction to apply to the list of items
+     * @param array $parameters (optional) : parameters to apply to the list of items
+     */
+    public static function count_active($condition = '', $parameters = [])
+    {
+        $actives = self::$db_querier->select('SELECT i.*, c.*, member.*
+            FROM ' . WikiSetup::$wiki_articles_table . ' i
+            LEFT JOIN ' . WikiSetup::$wiki_contents_table . ' c ON c.item_id = i.id
+            LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = c.author_user_id
+            ' . $condition . '', $parameters);
+
+        return $actives->get_rows_count();
     }
 
     /**

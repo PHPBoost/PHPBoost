@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 04 13
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2022 11 18
  */
 
@@ -62,9 +62,9 @@ class WikiMemberItemsController extends DefaultModuleController
         $contributors = [];
         if ($result->get_rows_count() > 0)
         {
-            foreach ($result as $smallad)
+            foreach ($result as $article)
             {
-                $contributors[] = $smallad['author_user_id'];
+                $contributors[] = $article['author_user_id'];
             }
             $this->view->put('C_MEMBERS', count($contributors) > 0);
 
@@ -91,7 +91,9 @@ class WikiMemberItemsController extends DefaultModuleController
         $content_management_config = ContentManagementConfig::load();
 
         $condition = 'WHERE id_category IN :authorized_categories
-        AND (published = 1 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
+            AND (published = 1 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))
+            AND c.active_content = 1
+            AND c.author_user_id = :user_id';
         $parameters = [
             'user_id' => $this->get_member()->get_id(),
             'authorized_categories' => $this->authorized_categories,
@@ -109,8 +111,6 @@ class WikiMemberItemsController extends DefaultModuleController
             LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = i.id AND notes.module_name = \'wiki\'
             LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = i.id AND note.module_name = \'wiki\' AND note.user_id = :user_id
             ' . $condition . '
-            AND c.active_content = 1
-            AND c.author_user_id = :user_id
             ORDER BY c.update_date
             LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
                 'number_items_per_page' => $pagination->get_number_items_per_page(),
@@ -181,7 +181,7 @@ class WikiMemberItemsController extends DefaultModuleController
 
     private function get_pagination($condition, $parameters, $page)
     {
-        $items_number = WikiService::count($condition, $parameters);
+        $items_number = WikiService::count_active($condition, $parameters);
 
         $pagination = new ModulePagination($page, $items_number, (int)WikiConfig::load()->get_items_per_page());
         $pagination->set_url(WikiUrlBuilder::display_member_items($this->get_member()->get_id(), '%d'));

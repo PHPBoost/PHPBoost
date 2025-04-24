@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 04 13
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 1.6 - 2006 10 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
@@ -47,7 +47,7 @@ $url_controller_mappers = [
 
     new UrlControllerMapper('WikiIndexController', $config->get_homepage() == WikiConfig::OVERVIEW ? '`^/?$`' : '`^/overview/?$`'),
     new UrlControllerMapper('WikiExplorerController', $config->get_homepage() == WikiConfig::EXPLORER ? '`^/?$`' : '`^/explorer/?$`'),
-    new UrlControllerMapper('WikiCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', ['id_category', 'rewrited_name', 'page', 'subcategories_page']),
+    new UrlControllerMapper('WikiCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?([0-9]+)?/?$`', ['id_category', 'rewrited_name', 'page', 'subcategories_page']),
 ];
 DispatchManager::dispatch($url_controller_mappers);
 ?>
