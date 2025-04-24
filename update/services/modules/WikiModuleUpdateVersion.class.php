@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 04 13
+ * @version     PHPBoost 6.0 - last update: 2025 04 24
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Max KODER <maxkoder@phpboost.com>
@@ -154,14 +154,15 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 
 	protected function modify_content_before_change_tables()
 	{
-		// Delete redirections
-		$this->querier->delete(PREFIX . 'wiki_articles', 'WHERE redirect > 0');
-
 		// get articles
 		$result = PersistenceContext::get_querier()->select("SELECT * FROM " . PREFIX . "wiki_articles");
 		while ($row = $result->fetch()) {
 			$this->articles[$row['id']] = $row;
-			$this->articles_encoded_title[$row['id']] = $row['encoded_title'];
+            if (isset($row['encoded_title']))
+                $this->articles_encoded_title[$row['id']] = $row['encoded_title'];
+            // Delete redirections
+            if (isset($row['redirect']))
+                $this->querier->delete(PREFIX . 'wiki_articles', 'WHERE id = :id AND redirect > 0', ['id' => $row['id']]);
 		}
 		$result->dispose();
 
@@ -176,7 +177,8 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		$result = PersistenceContext::get_querier()->select("SELECT * FROM " . PREFIX . "wiki_contents");
 		$contents = [];
 		while ($row = $result->fetch()) {
-			$contents[$row['id_contents']] = $row;
+            if(isset($row['id_contents']))
+                $contents[$row['id_contents']] = $row;
 			if (!isset($this->articles[$row['id_article']]['creation']) || $this->articles[$row['id_article']]['creation'] < (int)$row['timestamp'])
 			{
 				$this->articles[$row['id_article']]['creation'] = (int)$row['timestamp'];
@@ -263,12 +265,10 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 		while ($row = $result->fetch())
         {
             // If the article is a category
-            if ($row['is_cat'] == 1) 
+            if ($row['is_cat'] == 1)
             {
                 // Set the article as category
-                $this->querier->update(PREFIX . 'wiki_cats', ['name' => stripslashes($row['title']), 'rewrited_name' => $row['rewrited_title'], 'description' => $row['content'], 'auth' => $row['auth']], 'WHERE id = :id', ['id' => $row['cat_id']]);
-                //  Then delete the article
-                $this->querier->delete(PREFIX . 'wiki_articles', 'WHERE id = :id', ['id' => $row['id']]);
+                $this->querier->update(PREFIX . 'wiki_cats', ['name' => stripslashes($row['title']), 'rewrited_name' => $row['rewrited_title'], 'description' => '', 'auth' => $row['auth']], 'WHERE id = :id', ['id' => $row['cat_id']]);
             }
             // Set content from old article
             $this->querier->update(PREFIX . 'wiki_contents', ['content_level' => $row['defined_status']], 'WHERE item_id = :id', ['id' => $row['id']]);
