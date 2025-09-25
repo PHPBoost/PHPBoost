@@ -60,9 +60,12 @@ td.alert-priority { border-width: 0 0 1px 0; }
 .modal.modal-full { width: calc(100% - 230px); }
 
 @media (min-width: 769px) {
-    .modal.modal-full {
-        left: 230px;
-        width: calc(100% - 230px);
+    .modal {
+        &.modal-full,
+        & .modal-overlay {
+            left: 230px;
+            width: calc(100% - 230px);
+        }
     }
 }
 
