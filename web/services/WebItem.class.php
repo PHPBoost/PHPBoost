@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 01 13
+ * @version     PHPBoost 6.0 - last update: 2025 09 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -351,7 +351,7 @@ class WebItem
 
 	public function is_authorized_to_duplicate()
 	{
-		return ModulesManager::get_module('download')->get_configuration()->has_duplication() && (CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && CategoriesAuthorizationsService::check_authorizations($this->id_category)->duplication()));
+		return ModulesManager::get_module('web')->get_configuration()->has_duplication() && (CategoriesAuthorizationsService::check_authorizations($this->id_category)->write() || (CategoriesAuthorizationsService::check_authorizations($this->id_category)->contribution() && CategoriesAuthorizationsService::check_authorizations($this->id_category)->duplication()));
 	}
 
 	public function is_authorized_to_delete()
