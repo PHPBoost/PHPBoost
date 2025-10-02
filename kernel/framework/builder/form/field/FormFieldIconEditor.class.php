@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 02 28
+ * @version     PHPBoost 6.0 - last update: 2025 10 02
  * @since       PHPBoost 6.0 - 2025 02 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -41,7 +41,7 @@ class FormFieldIconEditor extends AbstractFormField
             'ID'              => $this->get_html_id(),
             'FAS'             => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/solid.css'),
             'FAR'             => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/regular.css'),
-            'FAB'             => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/brand.css'),
+            'FAB'             => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/font-awesome/css/brands.css'),
             'IBOOST'          => self::get_icon_list(PATH_TO_ROOT . '/templates/__default__/theme/icoboost/icoboost.css')
         ]);
 
