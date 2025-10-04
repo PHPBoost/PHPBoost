@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 05
+ * @version     PHPBoost 6.0 - last update: 2025 10 04
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -1152,6 +1152,9 @@ class UpdateServices
         if ($folder->exists()) {
             $folder->delete();
         }
+
+        $file = new File(PATH_TO_ROOT . '/templates/__default__/dashboard/dashboard_content.css');
+		$file->delete();
 
         $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
 		$file->delete();

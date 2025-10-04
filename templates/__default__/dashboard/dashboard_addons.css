@@ -64,13 +64,10 @@
 }
 
 .multiple-select-menu-container .addon-menu-content {
-	top: auto;
-	bottom: 100%;
-	width: 190px;
-}
-
-@media (min-width: 769px) {
-	.multiple-select-menu-container .addon-menu-content { width: 180px; }
+        top: auto;
+        bottom: 100%;
+        width: 190px;
+    @media (min-width: 769px) { width: 180px; }
 }
 
 .opened + .addon-menu-content {
@@ -102,12 +99,13 @@
 }
 
 .addon-auth {
-	display: block;
-	text-align: right;
-	font-size: 1.309em;
+        display: block;
+        text-align: right;
+        font-size: 1.309em;
+    &.default-addon { cursor: not-allowed; }
 }
 
-.addon-auth.default-addon { cursor: not-allowed; }
+.addon-auth
 
 .addon-auth-content {
 	position: absolute;
@@ -135,17 +133,16 @@
 .advanced-auth-text { text-align: left; }
 
 .addon-auth-close {
-	display: block;
-	position: absolute;
-	bottom : 0.456em;
-	right: 0.456em;
-}
-
-.addon-auth-close i {
-	font-size: 1.482em;
-	width: 1em;
-	height: 1em;
-	padding: 1em;
+        display: block;
+        position: absolute;
+        bottom : 0.456em;
+        right: 0.456em;
+    i {
+        font-size: 1.482em;
+        width: 1em;
+        height: 1em;
+        padding: 1em;
+    }
 }
 
 /* --- Multiple selector --- */
@@ -157,15 +154,16 @@
 	right: 2.618em;
 }
 
-.multiple-select-button        { padding: 0.309em 0.809em; }
-.multiple-select-button button { padding: 0; }
-
-.multiple-select-menu {
-	display: inline-block;
-	padding: 0.809em 2.809em 1em 0.809em;
+.multiple-select-button {
+        padding: 0.309em 0.809em;
+    button { padding: 0; }
 }
 
-.multiple-select-menu:hover { text-decoration: none; }
+.multiple-select-menu {
+        display: inline-block;
+        padding: 0.809em 2.809em 1em 0.809em;
+    &:hover { text-decoration: none; }
+}
 
 .multiple-select-menu-container button.select-all-button {
 	display: inline-block;

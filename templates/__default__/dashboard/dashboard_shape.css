@@ -24,10 +24,6 @@ body {
 
 .body-wrapper { opacity: 0; }
 
-@media (min-width: 769px) {
-	/* body {font-size: 1.618em ;} */
-}
-
 /* --- Top header --- */
 #site-name-container {
 	padding: 1.618em 0.809em;
@@ -63,10 +59,7 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	min-height: 100vh;
-}
-
-@media (min-width: 769px) {
-	#global {
+    @media (min-width: 769px) {
 		width: 100%;
 		padding-left: 230px;
 	}
@@ -79,10 +72,9 @@ body {
 	overflow: hidden;
 }
 
-#admin-contents{ padding: 0.618em; }
-
-@media (min-width: 769px) {
-	#admin-contents{ padding: 0.618em 2em; }
+#admin-contents{
+    padding: 0.618em;
+    @media (min-width: 769px) { padding: 0.618em 2em; }
 }
 
 /* --- Search engine --- */

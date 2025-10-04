@@ -3,6 +3,24 @@
     border-width: 0 0 3px 0;
 	border-style: solid;
 	border-color: transparent;
+    @media (min-width: 769px) { border-width: 0 0 0 5px; }
+    @media (max-width: 768px) {
+		display: block;
+		padding: 0.309em;
+		text-align: center;
+		white-space: normal;
+	}
+}
+
+@media (max-width: 768px) {
+	.step-menu.cssmenu > ul > li > .cssmenu-title {
+        i {
+            display: inline-block;
+            padding: 0;
+        }
+
+        span { display: none; }
+	}
 }
 
 .row-current .cssmenu-title {
@@ -15,41 +33,6 @@
 	background-color: rgba(var(--main-rgb-t), 0.5);
 }
 
-@media (min-width: 769px) {
-    .step-menu .cssmenu-title { border-width: 0 0 0 5px; }
-}
-
-@media (max-width: 768px) {
-	.step-menu.cssmenu > ul > li.3-steps {
-        display: inline-block;
-		width: calc(100% / 3);
-	}
-
-	.step-menu.cssmenu > ul > li.4-steps {
-        display: inline-block;
-		width: calc(100% / 4);
-	}
-
-	.step-menu.cssmenu > ul > li.5-steps {
-        display: inline-block;
-		width: calc(100% / 5);
-	}
-
-    .step-menu .cssmenu-title {
-		display: block;
-		padding: 0.309em;
-		text-align: center;
-		white-space: normal;
-	}
-
-	.step-menu.cssmenu > ul > li > .cssmenu-title i {
-		display: inline-block;
-		padding: 0;
-	}
-
-	.step-menu.cssmenu > ul > li > .cssmenu-title span { display: none; }
-}
-
 /* --- Content -------------------------------------------------------------- */
 #global h1 {
 	padding: 0.809em;
@@ -60,22 +43,22 @@
 
 .admin-main { flex: 1 1 auto; }
 
-section header { margin-bottom: 0.809em; }
-
-section header h2 {
-	padding: 0.809em;
-	border-bottom: none;
-	font-weight: 400;
+section header {
+    margin-bottom: 0.809em;
+    h2 {
+        padding: 0.809em;
+        border-bottom: none;
+        font-weight: 400;
+    }
 }
 
 .next-step button {
 	margin: 0;
     padding: 1em 2em;
+    border-width: 1px 0 1px 1px;
+
+    &:last-child { border-width: 1px; }
 }
-
-.next-step button { border-width: 1px 0 1px 1px; }
-
-.next-step button:last-child { border-width: 1px; }
 
 /* --- Welcome -------------------------------------------------------------- */
 @media (min-width: 769px) {
@@ -117,9 +100,9 @@ section header h2 {
 	margin-top: -0.5em;
 	text-align: center;
 	color: rgba(var(--lighten), 0.7);
-}
 
-.update-in-progress-spinner span { display: block; }
+    span { display: block; }
+}
 
 /* --- Finish --------------------------------------------------------------- */
 .finish-menu ul {
@@ -127,26 +110,22 @@ section header h2 {
 	margin: 1.309em auto;
 	padding: 0;
 	list-style-type: none;
-}
 
-.finish-menu ul li {
-	display: inline-block;
-	padding: 0.809em;
-	width: 100%;
-	text-align: center;
-}
+    li {
+        display: inline-block;
+        padding: 0.809em;
+        width: 100%;
+        text-align: center;
+        @media (min-width: 769px) {
+            width: 200px;
+            vertical-align: top;
+        }
 
-.finish-menu ul li a { text-decoration: none; }
+        a { text-decoration: none; }
 
-.finish-menu ul li i,
-.finish-menu ul li span { display: block; }
-
-@media (min-width: 769px) {
-	.finish-menu ul li {
-		width: 200px;
-		vertical-align: top;
-	}
-
-	.finish-menu ul li i,
-	.finish-menu ul li span { display: block; }
+        i, span {
+            display: block;
+            @media (min-width: 769px) { display: block; }
+        }
+    }
 }

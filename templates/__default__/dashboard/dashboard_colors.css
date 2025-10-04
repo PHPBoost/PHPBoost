@@ -2,31 +2,31 @@
  * Copy this file into your theme to customize it.
  * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
  *
- * Contains all the elements colors of the dashboard if not in colors.css or if different
+ * Contains all the elements colors of the dashboard if not in or if different from colors.css
 */
 
  /* --- dashboard_shape.css --- */
-	body {
-		background-color: var(--bgc-sub);
-		color: var(--txt-main);
-	}
+body {
+    background-color: var(--bgc-sub);
+    color: var(--txt-main);
+}
 
-	#header-admin {
-		background-image: linear-gradient(to bottom, var(--main-tone) 0%, var(--main-dark) 100%);
-		background-color: var(--bgc-alt);
-		color: var(--txt-alt);
-	}
+#header-admin {
+    background-image: linear-gradient(to bottom, var(--main-tone) 0%, var(--main-dark) 100%);
+    background-color: var(--bgc-alt);
+    color: var(--txt-alt);
+}
 
-	#site-name { color: var(--txt-alt); }
+#site-name { color: var(--txt-alt); }
 
-	#footer {
-		background-color: var(--main-dark);
-		border-color: var(--main-tone);
-	}
+#footer {
+    background-color: var(--main-dark);
+    border-color: var(--main-tone);
 
-	#footer span { color: var(--txt-alt); }
+    span { color: var(--txt-alt); }
 
-	#footer a { color: var(--logo-tone); }
+    a { color: var(--logo-tone); }
+}
 
 /* --- Content --- */
 .options { background-color: var(--bgc-main); }
@@ -49,11 +49,11 @@
 
 /* --- Table --- */
 table thead th {
-	background-color: var(--bgc-alt);
-	color: var(--txt-alt);
-}
+    background-color: var(--bgc-alt);
+    color: var(--txt-alt);
 
-table thead th a { color: var(--txt-alt); }
+    a { color: var(--txt-alt); }
+}
 
 .html-table-header-sortable:hover a,
 .html-table-header-sortable.sort-active a {
@@ -68,9 +68,8 @@ table thead th a { color: var(--txt-alt); }
 .alert-very-high-priority { color: var(--error-tone); border-color: var(--error-tone); background-color: rgba(var(--error-rgb-t), 0.2); }
 
 /* --- Form elements --- */
-
-@media (min-width: 769px) {
-	.form-element { border-color: var(--bdr-main); }
+.form-element {
+	@media (min-width: 769px) { border-color: var(--bdr-main); }
 }
 
 /* --- Input --- */
@@ -87,25 +86,29 @@ textarea,
 select { background-color: var(--bgc-main); }
 
 /* --- Checkbox --- */
-.mini-checkbox .checkbox [type="checkbox"] + span::before {
-	background-color: var(--bgc-main);
-	box-shadow: 0 0 1px 2px rgba(var(--darken), 0.25);
+.mini-checkbox .checkbox [type="checkbox"] {
+    & + span::before {
+        background-color: var(--bgc-main);
+        box-shadow: 0 0 1px 2px rgba(var(--darken), 0.25);
+    }
+
+    &:checked + span::after { color: var(--main-tone); }
 }
 
-.mini-checkbox .checkbox [type="checkbox"]:checked + span::after { color: var(--main-tone); }
+.custom-checkbox .checkbox [type="checkbox"] {
+    & + span::before { border-color: var(--error-tone); }
 
-.custom-checkbox .checkbox [type="checkbox"] + span::before { border-color: var(--error-tone); }
+    &:checked + span::before { border-color: var(--success-tone); }
 
-.custom-checkbox .checkbox [type="checkbox"]:checked + span::before { border-color: var(--success-tone); }
+    & + span::after {
+        background-color: var(--error-tone);
+        color: var(--txt-alt);
+    }
 
-.custom-checkbox .checkbox [type="checkbox"] + span::after {
-	background-color: var(--error-tone);
-	color: var(--txt-alt);
-}
-
-.custom-checkbox .checkbox [type="checkbox"]:checked + span::after {
-	background-color: var(--success-tone);
-	color: var(--txt-alt);
+    &:checked + span::after {
+        background-color: var(--success-tone);
+        color: var(--txt-alt);
+    }
 }
 
 .custom-radio .radio [type="radio"]:not(:checked) + span::before,
@@ -160,7 +163,10 @@ nav.admin-index a { color: var(--txt-alt); }
 
 #admin-quick-menu { background-color: var(--administrator-tone); }
 
-#admin-quick-menu li .quick-link { color: var(--txt-alt); }
+#admin-quick-menu li .quick-link {
+    color: var(--txt-alt);
+    @media (max-width: 768px) { background-color: var(--administrator-tone); }
+}
 
 .js-menu-button { color: var(--txt-alt)}
 
@@ -180,13 +186,13 @@ nav.admin-index a { color: var(--txt-alt); }
 /* --- Menu Manager --- */
 @media (max-width: 768px) {
     .themesmanagement {
-    	background-color: var(--administrator-tone);
-    	color: var(--txt-alt);
-    }
+        background-color: var(--administrator-tone);
+        color: var(--txt-alt);
 
-    .themesmanagement select {
-        background-color: var(--bgc-main);
-        color: var(--administrator-tone)
+        select {
+            background-color: var(--bgc-main);
+            color: var(--administrator-tone)
+        }
     }
 }
 

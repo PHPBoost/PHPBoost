@@ -57,12 +57,12 @@
 td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- modal --- */
-.modal.modal-full { width: calc(100% - 230px); }
+.modal.modal-full { width: 100%; }
 
 @media (min-width: 769px) {
     .modal {
         &.modal-full,
-        & .modal-overlay {
+        .modal-overlay {
             left: 230px;
             width: calc(100% - 230px);
         }
@@ -81,17 +81,15 @@ td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- Text helper --- */
 .text-helper {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    span { width: 100%; }
 }
-
-.text-helper span { width: 100%; }
 
 @media (min-width: 769px) {
     .text-helper span { width: calc(100% / 2.1); }
 }
-
 
 /* --- Copy to clipboard --- */
 .copy-to-clipboard {
@@ -101,9 +99,10 @@ td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- Sortable menu edition --- */
 @media (min-width: 769px) {
-    .menu-elements-container .sortable-selector,
-    .menu-elements-container .sortable-actions { margin: 1.228em 0 0; }
-
+    .menu-elements-container {
+        .sortable-selector,
+        .sortable-actions { margin: 1.228em 0 0; }
+    }
 }
 
 /* --- Push menu --- */
@@ -114,7 +113,7 @@ td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- Debugger --- */
 @media (min-width: 769px) {
-    .debugger { margin-left : 240px; }
+    .debugger { margin-left : 230px; }
 }
 
 /* --- Config user default avatar */
@@ -127,12 +126,29 @@ td.alert-priority { border-width: 0 0 1px 0; }
         width: 48%;
     }
 
-    #AdminMemberConfigController_default_avatar_preview { margin-top: -30px; }
-
-    #AdminMemberConfigController_default_avatar_preview label { font-weight: bold;}
+    #AdminMemberConfigController_default_avatar_preview {
+            margin-top: -30px;
+        label { font-weight: bold;}
+    }
 }
 
 /* --- Phpinfo --- */
 @media (max-width: 768px) {
-    table.phpinfo td .bt-content {word-break: break-word;}
+    table.phpinfo td .bt-content { word-break: break-word; }
 }
+
+/* --- Home page --- */
+.welcome-desc h2 { padding: 0 0 0.382em; }
+
+.index-logo {
+	float: right;
+	width: 100px;
+	height: 100px;
+	background-image: url(../theme/images/logo.svg);
+	background-repeat: no-repeat;
+	background-position: center ;
+	background-size: contain;
+}
+
+/* --- System report --- */
+.system-report { font-family: monospace; }

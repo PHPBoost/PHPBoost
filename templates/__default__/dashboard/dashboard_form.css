@@ -28,10 +28,8 @@ fieldset[id*="advises"] .form-element {
 	padding: 0.618em;
 	width: 100%;
 	border-width: 0;
-}
 
-@media (min-width: 1367px) {
-	fieldset[id*="advises"] .form-element { width: calc(100% / 2); }
+    @media (min-width: 1367px) { width: calc(100% / 2); }
 }
 
 /* --- Inputs --- */
@@ -65,7 +63,6 @@ select {
 
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:not(:checked) + label::after,
 	[id*="_possible_values_"] .form-field-radio [type="radio"]:checked + label::after { top: -0.618em; }
-
 }
 
 /* --- Form elements --- */
@@ -148,17 +145,15 @@ select {
 .form-field-action-link ul li a { text-decoration: none; }
 
 /* --- Textarea --- */
-
 .form-element-textarea .form-field-textarea { display: block; }
 
 .form-element-preview, .form-element-reset {
 	margin-top: 0.309em;
 	text-align: center;
+
+    @media (min-width: 769px) { display: inline-block; }
 }
 
-@media (min-width: 769px) {
-	.form-element-preview, .form-element-reset { display: inline-block; }
-}
 
 /* --- Authorizations --- */
 .auth-setter,
