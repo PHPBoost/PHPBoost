@@ -39,7 +39,7 @@
 .wiki-mini-nav .has-sub.open > .swap-handle { cursor: zoom-out; }
 
 .wiki-mini-nav .has-sub > .swap-handle::after { 
-    font-family: 'Font Awesome 6 free';
+    font-family: 'Font Awesome 7 free';
     font-weight: 900;
     position: absolute;
     right: 0.456em;

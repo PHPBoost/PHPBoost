@@ -91,16 +91,16 @@
 	position: absolute;
 	display: inline-block;
 	content: '';
-	font-family: 'Font Awesome 6 Free';
+	font-family: 'Font Awesome 7 Free';
 	font-weight: 900;
 	font-size: 1rem;
 	top: 50%;
-	transform: translateY(-40%);
+	transform: translateY(-50%);
 }
 
 .cssmenu ul li.has-sub > .cssmenu-title::after {
 	right: 0.809em;
-	content: '\f067';
+	content: '\+';
 	transition: 0.2s;
 }
 
@@ -108,7 +108,7 @@
 
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
 	left: 0.809em;
-	content: '\f067';
+	content: '\+';
 }
 
 .cssmenu ul li.has-sub:hover > .cssmenu-title::after {
@@ -232,7 +232,7 @@
 	padding: 0.618em;
 	display: inline-block;
 	content: '\f0c9';
-	font-family: 'Font Awesome 6 Free';
+	font-family: 'Font Awesome 7 Free';
 	font-weight: 900;
 	font-size: 1.482rem;
 	right: 0;
@@ -258,7 +258,7 @@
 	position: absolute;
 	display: block;
 	content: '\f0d7';
-	font-family: 'Font Awesome 6 Free';
+	font-family: 'Font Awesome 7 Free';
 	font-weight: 900;
 	font-size: 1.482rem;
 	right: 0;
@@ -290,7 +290,7 @@
 .cssmenu-actionslinks .menu-button::after {
 	position: absolute;
 	display: block;
-	font-family: 'Font Awesome 6 Free';
+	font-family: 'Font Awesome 7 Free';
 	font-weight: 900;
 	font-size: 1.482rem;
 	content: "\f013";

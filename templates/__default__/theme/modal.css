@@ -120,7 +120,7 @@
 
 .expand-modal::after {
     position: absolute;
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     font-weight: 900;
     font-size: 0.809em;
     content: '\f065'; /* fa-expand */

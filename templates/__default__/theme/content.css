@@ -185,7 +185,7 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 .notation .star-width:before {
-	font-family: 'Font Awesome 6 Free';
+	font-family: 'Font Awesome 7 Free';
 	font-weight: 900;
 	left: 0;
 	top:0;
@@ -275,7 +275,7 @@ a.wikipedia-link:after {
 	top: 1px;
 	right: 0;
 	content: "\f266" ;
-	font-family: 'Font Awesome 6 Brands';
+	font-family: 'Font Awesome 7 Brands';
 	font-weight: 400;
 	font-size: 0.618em;
 }

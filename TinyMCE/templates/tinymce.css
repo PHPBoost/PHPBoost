@@ -56,7 +56,7 @@ div[id$="rich_text_field"].editor-tinymce.constraint-status-right .form-field-te
 .mce-content-body blockquote::before,
 .mce-content-body blockquote::after {
 	position: absolute;
-	font-family: 'Font Awesome 6 Free';
+	font-family: 'Font Awesome 7 Free';
 	font-weight: 900;
 	font-size: 1em;
 }
