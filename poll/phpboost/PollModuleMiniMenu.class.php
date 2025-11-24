@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -18,7 +18,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 	public $view;
 
 	private $vote_form;
-	private $vote = array();
+	private $vote = [];
 
 	public function get_default_block()
 	{
@@ -45,8 +45,8 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		return !Url::is_current_url(self::MODULE_ID) && ItemsAuthorizationsService::check_authorizations(self::MODULE_ID)->read();
 	}
 
-	// $msg_return = array(key of var lang => const MessageHelper::[SUCCESS, WARNING etc])
-	public function get_menu_content($item_id = 0, array $msg_return = array())
+	// $msg_return = [key of var lang => const MessageHelper::[SUCCESS, WARNING etc]]
+	public function get_menu_content($item_id = 0, array $msg_return = [])
 	{
 		$this->view = new FileTemplate('poll/PollModuleMiniMenu.tpl');
 		MenuService::assign_positions_conditions($this->view, $this->get_block());
@@ -79,7 +79,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 						$this->item->set_properties($poll_properties);
 						$url = ItemsUrlBuilder::display($this->item->get_id_category(), $this->item->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_rewrited_title(), $module_id = self::MODULE_ID);
 
-						$this->view->assign_block_vars('polls_map', array('TITLE' => $this->item->get_title(), 'U_ITEM' => $url->rel()));
+						$this->view->assign_block_vars('polls_map', ['TITLE' => $this->item->get_title(), 'U_ITEM' => $url->rel()]);
 					}
 					$polls_displayed_number++;
 				}
@@ -176,7 +176,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 			array('class' => 'no-label align-center text-strong')
 		));
 
-		$answers_list = array();
+		$answers_list = [];
 		$i = 1;
 		foreach ($item->get_answers_list() as $answer)
 		{
@@ -185,7 +185,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 				case 1:
 					$answers_list['single'][] = new FormFieldRadioChoiceOption($answer, $i);
 					break;
-				case 2;
+				case 2:
 					$answers_list['multiple'][] = new FormFieldMultipleCheckboxOption($i, $answer);
 					break;
 			}
@@ -194,14 +194,14 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 		if ($item->get_answers_type() == 1)
 		{
-			$fieldset->add_field(new FormFieldRadioChoice('single_vote', $this->lang['poll.vote.single.choice'], array(),
+			$fieldset->add_field(new FormFieldRadioChoice('single_vote', $this->lang['poll.vote.single.choice'], [],
 			$answers_list['single'],
 			array('class' => 'full-label')
 			));
 		}
 		elseif ($item->get_answers_type() == 2)
 		{
-			$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_vote', $this->lang['poll.vote.multiple.choice'], array(),
+			$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_vote', $this->lang['poll.vote.multiple.choice'], [],
 			$answers_list['multiple'],
 			array('class' => 'full-label')
 			));
