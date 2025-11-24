@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 03 27
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 1.2 - 2005 10 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -59,7 +59,8 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$categories_tree = CategoriesService::get_categories_manager('forum')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
-	$method->setAccessible(true);
+	if (\PHP_VERSION_ID < 80100)
+        $method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
 	$cat_list = '';
 	foreach ($categories_tree_options as $option)
@@ -196,7 +197,8 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$categories_tree = CategoriesService::get_categories_manager('forum')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
-	$method->setAccessible(true);
+	if (\PHP_VERSION_ID < 80100)
+        $method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
 	$cat_list = '';
 	foreach ($categories_tree_options as $option)

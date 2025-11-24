@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 03
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 5.0 - 2016 09 18
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -177,7 +177,8 @@ if (ForumAuthorizationsService::check_authorizations()->read() && AppContext::ge
 	$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 	$categories_tree = CategoriesService::get_categories_manager('forum')->get_select_categories_form_field('cats', '', Category::ROOT_CATEGORY, $search_category_children_options);
 	$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
-	$method->setAccessible(true);
+	if (\PHP_VERSION_ID < 80100)
+        $method->setAccessible(true);
 	$categories_tree_options = $method->invoke($categories_tree);
 	$cat_list = '';
 	foreach ($categories_tree_options as $option)
