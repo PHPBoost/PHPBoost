@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 15
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 1.2 - 2005 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -178,7 +178,8 @@ if (is_dir($dir)) //Si le dossier existe
 		$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 		$categories_tree = CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field('category', '', $id_category, $search_category_children_options);
 		$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
-		$method->setAccessible(true);
+		if (\PHP_VERSION_ID < 80100)
+            $method->setAccessible(true);
 		$categories_tree_options = $method->invoke($categories_tree);
 		$categories_list = '';
 		foreach ($categories_tree_options as $option)
@@ -249,7 +250,8 @@ if (is_dir($dir)) //Si le dossier existe
 
 			$categories_tree = CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field($j . 'cat', '', Category::ROOT_CATEGORY, $search_category_children_options);
 			$method = new ReflectionMethod('AbstractFormFieldChoice', 'get_options');
-			$method->setAccessible(true);
+			if (\PHP_VERSION_ID < 80100)
+                $method->setAccessible(true);
 			$categories_tree_options = $method->invoke($categories_tree);
 			$categories_list = '';
 			foreach ($categories_tree_options as $option)
