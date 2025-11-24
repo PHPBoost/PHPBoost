@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 22
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,7 +34,7 @@ class InstallDisplayResponse extends AbstractResponse
 		$this->init_steps();
 		$this->update_progress_bar();
 
-		$this->full_view->put_all(array(
+		$this->full_view->put_all([
 			'C_HAS_PREVIOUS_STEP'     => false,
 			'C_HAS_NEXT_STEP'         => false,
 			'C_ADDITIONAL_STYLESHEET' => !empty($additional_stylesheet),
@@ -45,7 +45,7 @@ class InstallDisplayResponse extends AbstractResponse
 			'PHPBOOST_VERSION'          => GeneralConfig::load()->get_phpboost_major_version(),
 
 			'U_RESTART' => InstallUrlBuilder::welcome()->rel(),
-		));
+		]);
 
 		parent::__construct($env, $this->full_view);
 	}
@@ -66,18 +66,18 @@ class InstallDisplayResponse extends AbstractResponse
 		$lang = in_array($lang, InstallationServices::get_available_langs()) ? $lang : InstallationServices::get_default_lang();
 
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
-		$langs = array();
+		$langs = [];
 		foreach ($lang_dir->get_folders('`^[a-z_-]+$`iu') as $folder)
 		{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $folder->get_name());
 			if (!empty($info_lang['name']))
 			{
-				$langs[] = array(
+				$langs[] = [
 					'LANG'				=> $folder->get_name(),
 					'LANG_NAME'			=> $info_lang['name'],
 					'LANG_IDENTIFIER'	=> $info_lang['identifier'],
 					'SELECTED'			=> $folder->get_name() == $lang ? 'selected="selected"' : ''
-				);
+                ];
 			}
 		}
 		$this->full_view->put('lang', $langs);
@@ -85,15 +85,15 @@ class InstallDisplayResponse extends AbstractResponse
 
 	private function init_steps()
 	{
-		$steps = array(
-			array('name' => $this->lang['install.step.introduction'], 'img' => 'home'),
-			array('name' => $this->lang['install.step.license'], 'img' => 'file'),
-			array('name' => $this->lang['install.step.server'], 'img' => 'cog'),
-			array('name' => $this->lang['install.step.database'], 'img' => 'server'),
-			array('name' => $this->lang['install.step.website'], 'img' => 'cogs'),
-			array('name' => $this->lang['install.step.admin'], 'img' => 'users'),
-			array('name' => $this->lang['install.step.end'], 'img' => 'check')
-		);
+		$steps = [
+			['name' => $this->lang['install.step.introduction'], 'img' => 'home'],
+			['name' => $this->lang['install.step.license'], 'img' => 'file'],
+			['name' => $this->lang['install.step.server'], 'img' => 'cog'],
+			['name' => $this->lang['install.step.database'], 'img' => 'server'],
+			['name' => $this->lang['install.step.website'], 'img' => 'cogs'],
+			['name' => $this->lang['install.step.admin'], 'img' => 'users'],
+			['name' => $this->lang['install.step.end'], 'img' => 'check']
+		];
 		$this->steps_number = count($steps);
 
 		for ($i = 0; $i < $this->steps_number; $i++)
@@ -119,11 +119,11 @@ class InstallDisplayResponse extends AbstractResponse
 				$row_class = 'row-next';
 			}
 
-			$this->full_view->assign_block_vars('step', array(
+			$this->full_view->assign_block_vars('step', [
 				'CSS_CLASS' => $row_class,
 				'IMG' => $steps[$i]['img'],
 				'NAME' => $steps[$i]['name']
-			));
+			]);
 		}
 	}
 
@@ -131,7 +131,7 @@ class InstallDisplayResponse extends AbstractResponse
 	{
 		for ($i = 1; $i <= floor(($this->current_step / $this->steps_number) * 24); $i++)
 		{
-			$this->full_view->assign_block_vars('progress_bar', array());
+			$this->full_view->assign_block_vars('progress_bar', []);
 		}
 	}
 }

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 28
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2009 12 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -33,11 +33,11 @@ if ($_GET || $_POST)
 
 	if (!empty($arguments_list))
 	{
-		$argv = array('phpboost', 'install');
+		$argv = ['phpboost', 'install'];
 		$has_db_pwd = $has_ws_locale = false;
 		foreach ($arguments_list as $id => $arg)
 		{
-			if (!empty($arg) && in_array($id, array('--db-host', '--db-port', '--db-user', '--db-pwd', '--db-schema', '--db-table-prefix', '--ws-server', '--ws-path', '--ws-name', '--ws-slogan', '--ws-desc', '--ws-locale', '--ws-timezone', '--u-login', '--u-pwd', '--u-email')))
+			if (!empty($arg) && in_array($id, ['--db-host', '--db-port', '--db-user', '--db-pwd', '--db-schema', '--db-table-prefix', '--ws-server', '--ws-path', '--ws-name', '--ws-slogan', '--ws-desc', '--ws-locale', '--ws-timezone', '--u-login', '--u-pwd', '--u-email']))
 			{
 				switch ($id)
 				{
@@ -88,7 +88,7 @@ if ($_GET || $_POST)
 	}
 }
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
 	new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
 	new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
@@ -96,7 +96,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
 	new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
 	new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
-);
+];
 DispatchManager::dispatch($url_controller_mappers);
 
 ?>

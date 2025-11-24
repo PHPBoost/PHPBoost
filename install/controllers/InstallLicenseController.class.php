@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 22
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 09 12
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -49,14 +49,17 @@ class InstallLicenseController extends InstallController
 		$license_content = file_get_contents('gpl-license.txt');
 		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
 		$fieldset->add_field(new FormFieldHTML('licenseContent', $license_block,
-			array('class' => 'full-field')
+			['class' => 'full-field']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['install.license.agreement'], FormFieldCheckbox::UNCHECKED,
-			array('class' => 'full-field custom-checkbox', 'required' => $this->lang['install.license.warning.agreement'])
+			[
+                'class' => 'full-field custom-checkbox',
+                'required' => $this->lang['install.license.warning.agreement']
+            ]
 		));
 
-		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
+		$action_fieldset = new FormFieldsetSubmit('actions', ['css_class' => 'fieldset-submit next-step']);
 		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::welcome(), 'fa fa-arrow-left'));
 		$this->submit = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'license');
 		$action_fieldset->add_element($this->submit);

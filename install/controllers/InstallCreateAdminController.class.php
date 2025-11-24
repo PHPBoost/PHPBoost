@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 10 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -60,58 +60,66 @@ class InstallCreateAdminController extends InstallController
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('display_name', $this->lang['user.display.name'], '',
-			array('maxlength' => 100, 'required' => true, 'events' => array('blur' => '
-				if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
-					HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
-				}')
-			),
-			array(new FormFieldConstraintLengthRange(3, 100, $this->lang['install.admin.login.length']))
+			[
+                'maxlength' => 100, 'required' => true,
+                'events' => ['blur' => '
+                    if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == ""){
+                        HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
+                    }'
+                ]
+            ],
+			[new FormFieldConstraintLengthRange(3, 100, $this->lang['install.admin.login.length'])]
 		));
 
-		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['install.admin.email'], '', array('required' => true)));
+		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['install.admin.email'], '',
+            ['required' => true]
+        ));
 
 		$fieldset->add_field(new FormFieldCheckbox('custom_login', $this->lang['user.username.custom'], false,
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'description'=> $this->lang['user.username.custom.clue'],
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("custom_login").getValue()) {
 						HTMLForms.getField("login").enable();
 					} else {
 						HTMLForms.getField("login").disable();
 					}'
-				)
-			)
+                ]
+            ]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['user.username'], '',
-			array('required' => true, 'hidden' => true, 'maxlength' => 25),
-			array(new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists())
+			['required' => true, 'hidden' => true, 'maxlength' => 25],
+			[new FormFieldConstraintLengthRange(3, 25), new FormFieldConstraintPHPBoostAuthLoginExists()]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['install.admin.password'], '',
-			array('description' => StringVars::replace_vars($this->lang['install.admin.password.clue'], array('number' => $security_config->get_internal_password_min_length())), 'required' => true),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length(), StringVars::replace_vars($this->lang['install.admin.password.length'], array('number' => $security_config->get_internal_password_min_length()))), new FormFieldConstraintPasswordStrength())
+			[
+                'required' => true,
+                'description' => StringVars::replace_vars($this->lang['install.admin.password.clue'], ['number' => $security_config->get_internal_password_min_length()])
+            ],
+			[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length(), StringVars::replace_vars($this->lang['install.admin.password.length'], ['number' => $security_config->get_internal_password_min_length()])), new FormFieldConstraintPasswordStrength()]
 		));
 
 		$fieldset->add_field($repeatPassword = new FormFieldPasswordEditor('repeatPassword', $this->lang['install.admin.password.repeat'], '',
-			array('required' => true),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
+			['required' => true],
+			[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength()]
 		));
 
 		$this->form->add_constraint(new FormConstraintFieldsEquality($password, $repeatPassword));
 
 		$fieldset->add_field(new FormFieldCheckbox('createSession', $this->lang['install.admin.connect.after.install'], true,
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['install.admin.autoconnect'], true,
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
-		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
+		$action_fieldset = new FormFieldsetSubmit('actions', ['css_class' => 'fieldset-submit next-step']);
 		$back = new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::website(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'admin');

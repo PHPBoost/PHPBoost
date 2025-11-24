@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 02 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -51,7 +51,7 @@ class InstallationServices
 		$langs_folder = new Folder(PATH_TO_ROOT . '/lang');
 		$langs_list = $langs_folder->get_folders();
 
-		$available_langs = array();
+		$available_langs = [];
 		foreach ($langs_list as $lang)
 		{
 			$available_langs[] = $lang->get_name();
@@ -131,16 +131,16 @@ class InstallationServices
 	private function try_db_connection($host, $port, $login, $password, $database, $tables_prefix)
 	{
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
-		$db_connection_data = array(
+		$db_connection_data = [
 			'dbms' => DBFactory::MYSQL,
 			'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
-			'driver_options' => array(),
+			'driver_options' => [],
 			'host' => $host,
 			'login' => $login,
 			'password' => $password,
 			'database' => $database,
 			'port' => $port
-		);
+        ];
 		$db_connection = new MySQLDBConnection();
 		DBFactory::init_factory($db_connection_data['dbms']);
 		DBFactory::set_db_connection($db_connection);
@@ -150,7 +150,7 @@ class InstallationServices
 	private function create_database($database)
 	{
 		try {
-			$database = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $database);
+			$database = str_replace(['/', '\\', '.', ' ', '"', '\''], '_', $database);
 			$database = PersistenceContext::get_dbms_utils()->create_database($database);
 			$databases_list = PersistenceContext::get_dbms_utils()->list_databases();
 			PersistenceContext::close_db_connection();
@@ -283,12 +283,12 @@ class InstallationServices
 
 	private function get_modules_not_installed()
 	{
-		$modules_not_installed = array();
+		$modules_not_installed = [];
 		$modules_folder = new Folder(PATH_TO_ROOT);
 		foreach ($modules_folder->get_folders() as $folder)
 		{
 			$folder_name = $folder->get_name();
-			if (!in_array($folder_name, array('admin', 'cache', 'images', 'install', 'kernel', 'lang', 'syndication', 'templates', 'update', 'upload', 'user')) && $folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
+			if (!in_array($folder_name, ['admin', 'cache', 'images', 'install', 'kernel', 'lang', 'syndication', 'templates', 'update', 'upload', 'user']) && $folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
 			{
 				try
 				{
@@ -301,7 +301,7 @@ class InstallationServices
 			}
 		}
 
-		@uasort($modules_not_installed, array(__CLASS__, 'callback_sort_modules_by_name'));
+		@uasort($modules_not_installed, [self::class, 'callback_sort_modules_by_name']);
 
 		return $modules_not_installed;
 	}
@@ -331,7 +331,7 @@ class InstallationServices
 
 	private function get_themes_not_installed()
 	{
-		$themes_not_installed = array();
+		$themes_not_installed = [];
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
 		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
 		{
@@ -349,7 +349,7 @@ class InstallationServices
 			}
 		}
 
-		@uasort($themes_not_installed, array(__CLASS__, 'callback_sort_themes_by_name'));
+		@uasort($themes_not_installed, [self::class, 'callback_sort_themes_by_name']);
 
 		return $themes_not_installed;
 	}
@@ -373,7 +373,7 @@ class InstallationServices
 
 	private function get_langs_not_installed()
 	{
-		$langs_not_installed = array();
+		$langs_not_installed = [];
 		$folder_containing_phpboost_langs = new Folder(PATH_TO_ROOT .'/lang/');
 		foreach($folder_containing_phpboost_langs->get_folders() as $folder)
 		{
@@ -391,7 +391,7 @@ class InstallationServices
 			}
 		}
 
-		@uasort($langs_not_installed, array(__CLASS__, 'callback_sort_langs_by_name'));
+		@uasort($langs_not_installed, [self::class, 'callback_sort_langs_by_name']);
 
 		return $langs_not_installed;
 	}
@@ -521,16 +521,16 @@ class InstallationServices
 	private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
 	{
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
-		$db_connection_data = array(
+		$db_connection_data = [
 			'dbms' => $dbms,
 			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
-			'driver_options' => array(),
+			'driver_options' => [],
 			'host' => $host,
 			'port' => $port,
 			'login' => $login,
 			'password' => $password,
 			'database' => $database,
-		);
+        ];
 		$this->connect_to_database($dbms, $db_connection_data, $database);
 		return $db_connection_data;
 	}
@@ -601,7 +601,7 @@ class InstallationServices
 	private function configure_mail_sender_system($administrator_email)
 	{
 		$mail_config = MailServiceConfig::load();
-		$mail_config->set_administrators_mails(array($administrator_email));
+		$mail_config->set_administrators_mails([$administrator_email]);
 		$mail_config->set_default_mail_sender($administrator_email);
 		MailServiceConfig::save();
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 20
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 10 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -69,14 +69,14 @@ class InstallServerConfigController extends InstallController
 	private function build_view()
 	{
 		$this->view = new FileTemplate('install/server-config.tpl');
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
 			'PHP_VERSION'          => $this->server_conf->get_phpversion(),
 			'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
 			'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_library(),
 			'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_library(),
 			'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_library()
-		));
+		]);
 		if (!$this->server_conf->has_mbstring_library())
 		{
 			$this->view->put('C_MBSTRING_ERROR', true);
@@ -100,14 +100,14 @@ class InstallServerConfigController extends InstallController
 
 	private function check_folders_permissions()
 	{
-		$folders = array();
+		$folders = [];
 		foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
 		{
-			$folders[] = array(
+			$folders[] = [
 				'NAME'        => $folder_name,
 				'EXISTS'      => $folder->exists(),
 				'IS_WRITABLE' => $folder->is_writable(),
-			);
+            ];
 		}
 		$this->view->put('folder', $folders);
 	}

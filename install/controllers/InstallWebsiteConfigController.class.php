@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -63,46 +63,53 @@ class InstallWebsiteConfigController extends InstallController
 		$this->form->add_fieldset($fieldset);
 
 		$host = new FormFieldUrlEditor('host', $this->lang['install.website.host'], $this->current_server_host(),
-		array('description' => $this->lang['install.website.host.clue'], 'required' => $this->lang['install.website.host.required']));
+            [
+                'description' => $this->lang['install.website.host.clue'],
+                'required' => $this->lang['install.website.host.required']
+            ]
+        );
 		$host->add_event('change', $this->warning_if_not_equals($host, $this->lang['install.website.host.warning']));
 		$fieldset->add_field($host);
 
 		$path = new FormFieldTextEditor('path', $this->lang['install.website.path'], $this->current_server_path(),
-		array('description' => $this->lang['install.website.path.clue']));
+            ['description' => $this->lang['install.website.path.clue']]
+        );
 		$path->add_event('change', $this->warning_if_not_equals($path, $this->lang['install.website.path.warning']));
 		$fieldset->add_field($path);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['install.website.name'], '', array('required' => $this->lang['install.website.name.required'])));
+		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['install.website.name'], '', 
+            ['required' => $this->lang['install.website.name.required']]
+        ));
 
 		$fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['install.website.slogan'], ''));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['install.website.description'], '',
-			array('description' => $this->lang['install.website.description.clue'])
+			['description' => $this->lang['install.website.description.clue']]
 		));
 
 		$fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['install.website.timezone'], 'Europe/Paris',
-			array('description' => $this->lang['install.website.timezone.clue'])
+			['description' => $this->lang['install.website.timezone.clue']]
 		));
 
 		$fieldset = new FormFieldsetHTML('security_config', $this->lang['user.security']);
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
-			array('min' => 6, 'max' => 30),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30))
+			['min' => 6, 'max' => 30],
+			[new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30)]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
 				new FormFieldSelectChoiceOption($this->lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
 				new FormFieldSelectChoiceOption($this->lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
 				new FormFieldSelectChoiceOption($this->lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG)
-			)
+            ]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		if ($this->distribution_config['default_captcha'])
@@ -114,7 +121,7 @@ class InstallWebsiteConfigController extends InstallController
 			$default_captcha::display_config_form_fields($fieldset, $this->locale);
 		}
 
-		$action_fieldset = new FormFieldsetSubmit('actions', array('css_class' => 'fieldset-submit next-step'));
+		$action_fieldset = new FormFieldsetSubmit('actions', ['css_class' => 'fieldset-submit next-step']);
 		$back = new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');
 		$action_fieldset->add_element($back);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'website');
