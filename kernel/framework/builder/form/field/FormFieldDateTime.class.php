@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -20,7 +20,7 @@ class FormFieldDateTime extends FormFieldDate
 	 */
 	private $five_minutes_step = false;
 
-	public function __construct($id, $label, Date $value = null, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, ?Date $value = null, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-datetime');
@@ -33,7 +33,7 @@ class FormFieldDateTime extends FormFieldDate
 	{
 		$template = parent::display();
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_HOUR'              => true,
 			'C_FIVE_MINUTES_STEP' => $this->five_minutes_step,
 
@@ -43,7 +43,7 @@ class FormFieldDateTime extends FormFieldDate
 			'L_AT' => LangLoader::get_message('common.on.date', 'common-lang'),
 			'L_H'  => LangLoader::get_message('date.unit.hour', 'date-lang'),
 			'L_MN' => LangLoader::get_message('date.unit.minute', 'date-lang')
-		));
+		]);
 
 		return $template;
 	}

@@ -8,13 +8,14 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 06 11
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2009 09 28
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor xela <xela@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Environment
@@ -91,18 +92,18 @@ class Environment
 
 	public static function enable_errors_and_exceptions_management()
 	{
-		set_error_handler(array(new IntegratedErrorHandler(), 'handle'));
-		set_exception_handler(array(new ExceptionHandler(), 'handle'));
+		set_error_handler([new IntegratedErrorHandler(), 'handle']);
+		set_exception_handler([new ExceptionHandler(), 'handle']);
 	}
 
 	public static function fit_to_php_configuration()
 	{
-		defined('ERROR_REPORTING') or define('ERROR_REPORTING', E_ALL | E_NOTICE | E_STRICT);
+		defined('ERROR_REPORTING') or define('ERROR_REPORTING', E_ALL | E_NOTICE);
 		@ini_set('display_errors', 'on');
 		@ini_set('display_startup_errors', 'on');
 		@error_reporting(ERROR_REPORTING);
-		set_error_handler(array(new ErrorHandler(), 'handle'));
-		set_exception_handler(array(new RawExceptionHandler(), 'handle'));
+		set_error_handler([new ErrorHandler(), 'handle']);
+		set_exception_handler([new RawExceptionHandler(), 'handle']);
 
 		//check (if function is enabled) and setup php for working with Unicode data
 		if (function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
@@ -189,7 +190,7 @@ class Environment
 		LangLoader::set_locale($locale);
 
 		global $LANG;
-		$LANG = array();
+		$LANG = [];
 		require_once(PATH_TO_ROOT . '/lang/' . $locale . '/errors.php');
 
 		AppContext::get_current_user()->update_visitor_display_name();
@@ -265,10 +266,10 @@ class Environment
 		PersistenceContext::get_querier()->delete(DB_TABLE_VISIT_COUNTER, 'WHERE id <> 1');
 
 		//We update the last changeday date
-		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, array('time' => $time, 'total' => 1), 'WHERE id = 1');
+		PersistenceContext::get_querier()->update(DB_TABLE_VISIT_COUNTER, ['time' => $time, 'total' => 1], 'WHERE id = 1');
 
 		//We insert this visitor as a today visitor
-		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => AppContext::get_request()->get_ip_address(), 'time' => $time, 'total' => 0));
+		PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, ['ip' => AppContext::get_request()->get_ip_address(), 'time' => $time, 'total' => 0]);
 	}
 
 	private static function remove_old_unactivated_member_accounts()
@@ -285,7 +286,7 @@ class Environment
 			{
 				if (($database_config->get_database_tables_optimization_day() == 7 && $current_date->get_day() == 1) || $database_config->get_database_tables_optimization_day() == $current_date->get_day_of_week())
 				{
-					$tables_to_optimize = array();
+					$tables_to_optimize = [];
 					foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
 					{
 						if (NumberHelper::round($table_info['data_free']/1024, 1) != 0)
@@ -411,7 +412,7 @@ class Environment
 	public static function get_phpboost_minor_version()
 	{
 		$file = new File(PATH_TO_ROOT . '/kernel/.build');
-		$build =  $file->read();
+		$build = $file->read();
 		$file->close();
 		return trim($build);
 	}

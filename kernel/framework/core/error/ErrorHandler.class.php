@@ -5,12 +5,13 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 01 31
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2009 09 30
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ErrorHandler
@@ -80,28 +81,24 @@ class ErrorHandler
 
 	private function process()
 	{
-		switch ($this->errno)
+		switch (true)
 		{
-			case E_USER_NOTICE:
-			case E_NOTICE:
+			case ($this->errno === E_USER_NOTICE || $this->errno === E_NOTICE):
 				$this->errdesc = 'Notice';
 				$this->errclass =  'notice';
 				break;
 				//Warning utilisateur.
-			case E_USER_WARNING:
-			case E_WARNING:
+			case ($this->errno === E_USER_WARNING || $this->errno === E_WARNING):
 				$this->errdesc = 'Warning';
 				$this->errclass =  'warning';
 				break;
 				//Strict standards
-			case E_STRICT:
+			case (version_compare(PHP_VERSION, '8.0.0') < 0 && $this->errno === E_STRICT):
 				$this->errdesc = 'Strict Standards';
 				$this->errclass =  'notice';
 				break;
-				//Erreur fatale.
-			case E_USER_ERROR:
-			case E_ERROR:
-			case E_RECOVERABLE_ERROR:
+				//Erreur fatale
+			case ($this->errno === E_USER_ERROR || $this->errno === E_ERROR || $this->errno === E_RECOVERABLE_ERROR):
 				$this->fatal = true;
 				$this->errdesc = 'Fatal Error';
 				$this->errclass =  'error';
@@ -111,6 +108,37 @@ class ErrorHandler
 				$this->errclass =  'question';
 				break;
 		}
+		// switch ($this->errno)
+		// {
+		// 	case E_USER_NOTICE:
+		// 	case E_NOTICE:
+		// 		$this->errdesc = 'Notice';
+		// 		$this->errclass =  'notice';
+		// 		break;
+		// 		//Warning utilisateur.
+		// 	case E_USER_WARNING:
+		// 	case E_WARNING:
+		// 		$this->errdesc = 'Warning';
+		// 		$this->errclass =  'warning';
+		// 		break;
+		// 		//Strict standards
+		// 	case E_STRICT:
+		// 		$this->errdesc = 'Strict Standards';
+		// 		$this->errclass =  'notice';
+		// 		break;
+		// 		//Erreur fatale.
+		// 	case E_USER_ERROR:
+		// 	case E_ERROR:
+		// 	case E_RECOVERABLE_ERROR:
+		// 		$this->fatal = true;
+		// 		$this->errdesc = 'Fatal Error';
+		// 		$this->errclass =  'error';
+		// 		break;
+		// 	default:
+		// 		$this->errdesc = 'Unknown Error';
+		// 		$this->errclass =  'question';
+		// 		break;
+		// }
 	}
 
 	private function display()

@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2017 08 27
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2010 09 04
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TemplateRenderingException extends Exception
@@ -21,7 +22,7 @@ class TemplateRenderingException extends Exception
 	private $offset = 0;
 	private $error_message = 0;
 
-	public function __construct($message, StringInputStream $input = null)
+	public function __construct($message, ?StringInputStream $input = null)
 	{
 		$this->error_message = $message;
 		if ($input != null)

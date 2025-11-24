@@ -6,15 +6,16 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 19
+ * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2009 09 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldDate extends AbstractFormField
 {
-	public function __construct($id, $label, Date $value = null, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, ?Date $value = null, array $field_options = [], array $constraints = [])
 	{
 		$constraints[] = new FormFieldConstraintDate();
 		parent::__construct($id, $label, $value, $field_options, $constraints);
@@ -30,9 +31,9 @@ class FormFieldDate extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'CALENDAR' => $this->get_calendar()->display()
-		));
+		]);
 
 		return $template;
 	}
