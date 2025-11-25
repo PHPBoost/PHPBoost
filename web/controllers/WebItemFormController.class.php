@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 04 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 25
  * @since       PHPBoost 4.1 - 2014 08 21
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Mipel <mipel@phpboost.com>
@@ -242,7 +242,7 @@ class WebItemFormController extends DefaultModuleController
 		$item = $this->get_item();
 
 		if (
-            ($this->is_new_item || !$item->is_authorized_to_add())
+            ($this->is_new_item && !$item->is_authorized_to_add())
             || ($this->is_duplication && !$item->is_authorized_to_duplicate())
             || (!$this->is_duplication && !$item->is_authorized_to_edit())
         )
