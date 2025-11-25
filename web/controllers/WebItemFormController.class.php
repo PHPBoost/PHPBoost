@@ -183,6 +183,13 @@ class WebItemFormController extends DefaultModuleController
 		$this->form = $form;
 	}
 
+    private function get_duplication_source()
+    {
+        $url = GeneralConfig::load()->get_site_url() . WebService::get_item($this->request->get_value('id'))->get_item_url();
+        $title = WebService::get_item($this->request->get_value('id'))->get_title();
+        return StringVars::replace_vars($this->lang['common.duplication.source'], ['url' => $url, 'title' => $title]);
+    }
+
 	private function build_contribution_fieldset($form)
 	{
 		if (($this->is_new_item || $this->is_duplication) && $this->is_contributor_member())
@@ -270,7 +277,7 @@ class WebItemFormController extends DefaultModuleController
 
 		$item->set_website_url(new Url($this->form->get_value('website_url')));
         if ($this->is_duplication)
-            $item->set_content($this->form->get_value('content') . $this->get_duplicaton_source());
+            $item->set_content($this->form->get_value('content') . $this->get_duplication_source());
         else
             $item->set_content($this->form->get_value('content'));
 		$item->set_summary(($this->form->get_value('summary_enabled') ? $this->form->get_value('summary') : ''));
