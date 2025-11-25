@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 09
+ * @version     PHPBoost 6.1 - last update: 2025 11 25
  * @since       PHPBoost 2.0 - 2008 08 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Repository
@@ -57,7 +58,8 @@ class Repository
 		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 
 		$html = curl_exec($curl);
-		curl_close($curl);
+		if (\PHP_VERSION_ID < 80100)
+            curl_close($curl);
 
 		return $html;
 	}

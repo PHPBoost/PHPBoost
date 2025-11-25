@@ -15,7 +15,7 @@ class Debug
 	const DISPLAY_DATABASE_QUERY = 'display_database_query';
 
 	private static $enabled = true;
-	private static $options = array();
+	private static $options = [];
 	private static $html_output = true;
 
 	public static function __static()

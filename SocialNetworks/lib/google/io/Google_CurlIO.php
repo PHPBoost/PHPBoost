@@ -123,7 +123,8 @@ class Google_CurlIO implements Google_IO {
     $respHttpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlErrorNum = curl_errno($ch);
     $curlError = curl_error($ch);
-    curl_close($ch);
+    if (\PHP_VERSION_ID < 80100)
+        curl_close($ch);
     if ($curlErrorNum != CURLE_OK) {
       throw new Google_IOException("HTTP Error: ($respHttpCode) $curlError");
     }

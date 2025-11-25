@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 22
+ * @version     PHPBoost 6.1 - last update: 2025 11 25
  * @since       PHPBoost 2.0 - 2008 07 06
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -358,7 +358,8 @@ class File extends FileSystemElement
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
 		$data = curl_exec($ch);
-		curl_close($ch);
+		if (\PHP_VERSION_ID < 80100)
+            curl_close($ch);
 		if ($data) 
 		{
 			$line = strtok($data, "\r\n");
@@ -367,7 +368,7 @@ class File extends FileSystemElement
 			{
 				if(false !== ($matches = explode(':', $line, 2))) 
 				{
-				  	$response_headers["{$matches[0]}"] = trim($matches[1]);
+                    $response_headers["{$matches[0]}"] = trim($matches[1]);
 				}  
 			}
 			if (preg_match("/HTTP\/\d[.\d]* (\d\d\d)/", $status_code, $matches)) 

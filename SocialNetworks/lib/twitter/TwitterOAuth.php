@@ -446,7 +446,8 @@ class TwitterOAuth extends Config
         $responseHeader = array_pop($parts);
         $this->response->setHeaders($this->parseHeaders($responseHeader));
 
-        curl_close($curlHandle);
+        if (\PHP_VERSION_ID < 80100)
+            curl_close($curlHandle);
 
         return $responseBody;
     }

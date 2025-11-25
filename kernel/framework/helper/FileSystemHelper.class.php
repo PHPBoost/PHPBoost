@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 07 06
+ * @version     PHPBoost 6.1 - last update: 2025 11 25
  * @since       PHPBoost 5.2 - 2019 02 14
  * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FileSystemHelper
@@ -120,7 +121,8 @@ class FileSystemHelper
 			$content = curl_exec($ch);
 			$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 			$downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
-			curl_close($ch);
+			if (\PHP_VERSION_ID < 80100)
+                curl_close($ch);
 			file_put_contents($file_name, $content);
 			if ($code === 200 && $downloaded_size) {
 				$original_size = File::get_remote_file_size($url);
@@ -177,7 +179,8 @@ class FileSystemHelper
             $content = curl_exec($ch);
             $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
-            curl_close($ch);
+            if (\PHP_VERSION_ID < 80100)
+                curl_close($ch);
             if ($code === 200 && $downloaded_size)
             {
                 return $content;
