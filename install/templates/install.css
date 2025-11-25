@@ -122,6 +122,6 @@ section header {
 
         a { text-decoration: none; }
 
-        i, span { display: block; }
+        span { display: block; }
     }
 }
