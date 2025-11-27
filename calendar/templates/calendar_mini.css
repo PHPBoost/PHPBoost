@@ -3,63 +3,61 @@
 * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
 */
 
-.mini-calendar #date-select-form .grouped-element,
-.mini-calendar #date-select-form select { border-width: 0; }
+.mini-calendar {
+    table-layout: fixed;
 
-.mini-calendar th,
-.mini-calendar td { width: calc(100% / 8); }
+    #date-select-form .grouped-element,
+    #date-select-form select { border-width: 0; }
 
-.mini-calendar { table-layout: fixed; }
+    th,
+    td { width: calc(100% / 8); }
 
-.mini-calendar .calendar-week span { display: block; }
+    .calendar-week span { display: block; }
 
-.mini-calendar .calendar-cell {
-	padding: 0.809em 0;
-	font-size: 0.809em;
+    .calendar-cell {
+        padding: 0.809em 0;
+        font-size: 0.809em;
+        @media (min-width: 769px) { font-size: 0.618em; }
+        @media (min-width: 1025px) { font-size: 0.809em; }
+    }
+
+    a:hover { text-decoration: none; }
+
+    td[class*="calendar-"],
+    td[class*="calendar-"]:last-child {
+        padding: 0;
+        border-width: 0;
+    }
+
+    td:not(.legend-line) a {
+        display: block;
+        position: relative;
+    }
+
+    .event-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        line-height: 0.456em;
+        padding: 0 0.309em 0.228em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    .event-spot {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        box-shadow: 0 0 1px 1px rgba(var(--darken), 0.2);
+        border-radius: 50%;
+    }
+
+    td.legend-line a.pinned { padding: 0 0.309em 0 1.618em; }
 }
-
-.mini-calendar a:hover { text-decoration: none; }
 
 @media (min-width: 769px) {
-	.mini-calendar .calendar-cell { font-size: 0.618em; }
-
 	.narrow-menu .mini-calendar .calendar-cell { padding: 0.456em 0; }
 }
-
-@media (min-width: 1025px) {
-	.mini-calendar .calendar-cell { font-size: 0.809em; }
-}
-
-.mini-calendar td[class*="calendar-"],
-.mini-calendar td[class*="calendar-"]:last-child {
-	padding: 0;
-	border-width: 0;
-}
-
-.mini-calendar td:not(.legend-line) a {
-    display: block;
-	position: relative;
-}
-
-.mini-calendar .event-container {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	line-height: 0.456em;
-	padding: 0 0.309em 0.228em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	text-align: center;
-}
-
-.mini-calendar .event-spot {
-	display: inline-block;
-	width: 4px;
-	height: 4px;
-	box-shadow: 0 0 1px 1px rgba(var(--darken), 0.2);
-	border-radius: 50%;
-}
-
-.mini-calendar td.legend-line a.pinned { padding: 0 0.309em 0 1.618em; }
