@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 2.0 - 2008 06 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,7 +42,7 @@ class MiniCalendar
 	 * @param string $form_name Name of the mini calendar in the HTML code (you will retrieve the data in that field).
 	 * This name must be a HTML identificator.
 	 */
-	public function __construct($html_id, Date $date = null)
+	public function __construct($html_id, ?Date $date = null)
 	{
 		$this->html_id = $html_id;
 		$this->num_instance = ++self::$num_instances;
@@ -89,7 +89,7 @@ class MiniCalendar
 		$template = new FileTemplate('framework/util/mini_calendar.tpl');
 		$template->add_lang(LangLoader::get_all_langs());
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_INCLUDE_JS' => !self::$js_inclusion_already_done,
 
 			'DEFAULT_DATE'    => !empty($this->date) ? $this->date->format(Date::FORMAT_ISO_DAY_MONTH_YEAR) : '',
@@ -99,7 +99,7 @@ class MiniCalendar
 			'MONTH'           => !empty($this->date) ? $this->date->get_month() : '',
 			'YEAR'            => !empty($this->date) ? $this->date->get_year()  : '',
 			'CALENDAR_STYLE'  => $this->style,
-		));
+		]);
 
 		self::$js_inclusion_already_done = true;
 

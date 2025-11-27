@@ -4,11 +4,12 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 14
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 3.0 - 2010 07 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StringInputStream
@@ -61,13 +62,13 @@ class StringInputStream
 		return $this->stream[$this->index - 1];
 	}
 
-	public function assert_next($pattern, $options = '', array &$matches = null)
+	public function assert_next($pattern, $options = '', ?array &$matches = null)
 	{
 		$subject = TextHelper::substr($this->stream, $this->index + 1);
 		return preg_match('`^(?:' . $pattern . ')`u' . $options, $subject, $matches);
 	}
 
-	public function consume_next($pattern, $options = '', array &$matches = null)
+	public function consume_next($pattern, $options = '', ?array &$matches = null)
 	{
 		if ($this->assert_next($pattern, $options, $matches))
 		{

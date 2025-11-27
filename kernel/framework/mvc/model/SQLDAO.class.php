@@ -7,9 +7,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 12 04
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 3.0 - 2009 10 02
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class SQLDAO implements DAO
@@ -52,7 +53,7 @@ abstract class SQLDAO implements DAO
 	/**
 	 * @var string[string] $fields_mapping[$property] => $db_field_name
 	 */
-	protected $fields_mapping = array();
+	protected $fields_mapping = [];
 
 	/**
 	 * @var string the delete prepared query
@@ -84,7 +85,7 @@ abstract class SQLDAO implements DAO
 	 * @param DBQuerier $querier the querier that will be used to interact with the database
 	 * @param MappingModel $model the model on which rely to provides services
 	 */
-	public function __construct(MappingModel $model, SQLQuerier $querier = null)
+	public function __construct(MappingModel $model, ?SQLQuerier $querier = null)
 	{
 		$this->model = $model;
 		if ($querier == null)
@@ -112,7 +113,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	public function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = array())
+	public function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = [])
 	{
 		$this->querier->update($this->table, $fields, $where, $parameters);
 	}
@@ -124,18 +125,18 @@ abstract class SQLDAO implements DAO
 			$this->delete_query = 'DELETE FROM ' . $this->table .
                 ' WHERE ' . $this->pk_db_field . '=:pk_value;';
 		}
-		$prepared_vars = array('pk_value' => $object->{$this->pk_getter}());
+		$prepared_vars = ['pk_value' => $object->{$this->pk_getter}()];
 		$this->querier->inject($this->delete_query, $prepared_vars);
 	}
 
 	// TODO delete_by_id
 
-	public function delete_all($where = DAO::WHERE_ALL, array $parameters = array())
+	public function delete_all($where = DAO::WHERE_ALL, array $parameters = [])
     {
 		$this->querier->delete($this->table, $where, $parameters);
     }
 
-    public function count($where = DAO::WHERE_ALL, array $parameters = array())
+    public function count($where = DAO::WHERE_ALL, array $parameters = [])
     {
         $this->querier->count($this->table, $where, $parameters);
     }
@@ -143,7 +144,7 @@ abstract class SQLDAO implements DAO
 	public function find_by_id($id)
 	{
 		$this->compute_find_by_id_query();
-		$parameters = array('id' => $id);
+		$parameters = ['id' => $id];
 		$query_result = $this->querier->select($this->find_by_id_query, $parameters);
 		$query_result->rewind();
 		if ($query_result->valid())
@@ -153,7 +154,7 @@ abstract class SQLDAO implements DAO
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
-	public function find_all($limit = DAO::FIND_ALL, $offset = 0, $order_by = array())
+	public function find_all($limit = DAO::FIND_ALL, $offset = 0, $order_by = [])
 	{
 		$query = '';
 		if (!empty($order_by))
@@ -174,7 +175,7 @@ abstract class SQLDAO implements DAO
 		return $this->find_by_criteria($query . ';');
 	}
 
-	public function find_by_criteria($criteria, $parameters = array())
+	public function find_by_criteria($criteria, $parameters = [])
 	{
 		$this->compute_find_by_criteria_query();
 		$full_query = $this->find_by_criteria_query . $criteria;
@@ -264,7 +265,7 @@ abstract class SQLDAO implements DAO
 	{
 		if ($this->update_query === null)
 		{
-			$fields_list = array();
+			$fields_list = [];
 			foreach ($this->fields_mapping as $property => $field)
 			{
 				$fields_list[] = $field . '=:' . $property;
@@ -285,10 +286,10 @@ abstract class SQLDAO implements DAO
 
 	private function compute_joins()
 	{
-		$left_joins = array();
+		$left_joins = [];
 		foreach ($this->model->get_joins() as $join)
 		{
-			$fields = array();
+			$fields = [];
 			$table_name = $join->get_table_name();
 			$left_joins[] = 'LEFT JOIN ' . $table_name . ' ON ' . $table_name . '.' .
 			$join->get_primary_key()->get_db_field_name() . '=' . $join->get_fk_db_field_name();

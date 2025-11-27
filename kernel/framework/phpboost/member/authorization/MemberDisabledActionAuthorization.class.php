@@ -11,8 +11,9 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 05
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 5.1 - 2018 11 04
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberDisabledActionAuthorization extends ActionAuthorization
@@ -24,9 +25,9 @@ class MemberDisabledActionAuthorization extends ActionAuthorization
 	 * @param string $description The description to use
 	 * @param RolesAuthorizations $roles The authorization roles
 	 */
-	public function __construct($label, $bit, $description = '', RolesAuthorizations $roles = null)
+	public function __construct($label, $bit, $description = '', ?RolesAuthorizations $roles = null)
 	{
-		parent::__construct($label, $bit, $description, $roles, array(User::VISITOR_LEVEL, User::MEMBER_LEVEL));
+		parent::__construct($label, $bit, $description, $roles, [User::VISITOR_LEVEL, User::MEMBER_LEVEL]);
 	}
 }
 ?>

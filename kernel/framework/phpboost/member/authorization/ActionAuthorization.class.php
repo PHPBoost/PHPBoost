@@ -10,9 +10,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 11 05
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 3.0 - 2010 03 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ActionAuthorization
@@ -25,7 +26,7 @@ class ActionAuthorization
 	 */
 	private $roles;
 
-	private $disabled_ranks = array();
+	private $disabled_ranks = [];
 
 	/**
 	 * Builds an ActionAuthorization from its properties
@@ -35,7 +36,7 @@ class ActionAuthorization
 	 * @param RolesAuthorizations $roles The authorization roles
 	 * @param mixed[] $disabled_ranks The ranks to disable in select
 	 */
-	public function __construct($label, $bit, $description = '', RolesAuthorizations $roles = null, $disabled_ranks = array())
+	public function __construct($label, $bit, $description = '', ?RolesAuthorizations $roles = null, $disabled_ranks = [])
 	{
 		$this->label = $label;
 		$this->bit = $bit;

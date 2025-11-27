@@ -4,9 +4,10 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 2.0 - 2008 06 16
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SitemapLink extends SitemapElement
@@ -56,7 +57,7 @@ class SitemapLink extends SitemapElement
 	 * Sitemap::PRIORITY_AVERAGE, Sitemap::PRIORITY_LOW, Sitemap::PRIORITY_MIN
 	 * @param Date $last_modification_date Last modification date of the target page
 	 */
-	public function __construct($name = '', Url $link = null, $change_freq = Sitemap::FREQ_MONTHLY, $priority = Sitemap::PRIORITY_AVERAGE, Date $last_modification_date = null)
+	public function __construct($name = '', ?Url $link = null, $change_freq = Sitemap::FREQ_MONTHLY, $priority = Sitemap::PRIORITY_AVERAGE, ?Date $last_modification_date = null)
 	{
 		$this->set_name($name);
 		$this->set_link($link);

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 5.1 - 2018 01 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -22,7 +22,7 @@ class ContentSharingActionsMenuLink
 	private $onclick_tag;
 	private $kernel_element;
 
-	public function __construct($id, $name, Url $url, $image_render_html, Template $tpl = null, $onclick_tag = 'javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700\');return false;', $kernel_element = false)
+	public function __construct($id, $name, Url $url, $image_render_html, ?Template $tpl = null, $onclick_tag = 'javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700\');return false;', $kernel_element = false)
 	{
 		$this->id = $id;
 		$this->name = $name;

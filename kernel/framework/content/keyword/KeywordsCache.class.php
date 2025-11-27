@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2020 01 23
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 5.1 - 2018 11 09
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class KeywordsCache implements CacheData
@@ -48,7 +49,7 @@ class KeywordsCache implements CacheData
 
 	public function has_keywords($id)
 	{
-		return array_key_exists($id, $this->keywords);
+		return array_key_exists($id ?? '', $this->keywords);
 	}
 
 	/**
