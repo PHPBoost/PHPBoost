@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 14
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -61,7 +61,7 @@ class PollItemController extends DefaultDisplayItemController
 				case 1:
 					$answers_list['single'][] = new FormFieldRadioChoiceOption($answer, $i, array('disable' => !$this->get_item()->user_is_empowered_to_vote()));
 					break;
-				case 2;
+				case 2:
 					$answers_list['multiple'][] = new FormFieldMultipleCheckboxOption($i, $answer, array('disable' => !$this->get_item()->user_is_empowered_to_vote()));
 					break;
 			}
