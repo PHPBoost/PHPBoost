@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 3.0 - 2010 01 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -127,7 +127,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 			$var = (int)$var;
 			return $var > 0 ? $var : max(0, $default_value);
 		case TUNSIGNED_DOUBLE:
-			$var = (double)$var;
+			$var = (float)$var;
 			return $var > 0.0 ? $var : max(0.0, $default_value);
 		case TSTRING_HTML:
 			return TextHelper::strprotect($var, TextHelper::HTML_NO_PROTECT); //Chaine non protégée pour l'html.
@@ -136,7 +136,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
 		case TARRAY:
 			return (array)$var;
 		case TDOUBLE:
-			return (double)$var;
+			return (float)$var;
 		case TNONE:
 			return $var;
 		default:
