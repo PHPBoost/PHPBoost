@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 04 13
+ * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 3.0 - 2012 04 09
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
@@ -12,7 +12,7 @@ class WikiCommentsTopic extends CommentsTopic
 {
     private $item;
 
-    public function __construct(WikiItem $item = null)
+    public function __construct(?WikiItem $item = null)
     {
         parent::__construct('wiki');
         $this->item = $item;
