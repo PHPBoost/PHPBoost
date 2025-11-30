@@ -33,7 +33,7 @@ class Debug
      * Enables the debug mode for the current script only.
      * @param mixed[string] $options see <code>self::enabled_debug_mode()</code> for information on this parameter
      */
-    public static function enabled_current_script_debug(array $options = array())
+    public static function enabled_current_script_debug(array $options = [])
     {
         self::$enabled = true;
         self::$options = $options;
@@ -49,7 +49,7 @@ class Debug
 	 *     at the first notice / warning / error encountered</li>
      * </ul>
 	 */
-	public static function enabled_debug_mode(array $options = array())
+	public static function enabled_debug_mode(array $options = [])
 	{
         self::$enabled = true;
         self::$options = $options;
@@ -62,7 +62,7 @@ class Debug
     public static function disable_debug_mode()
     {
         self::$enabled = false;
-        self::$options = array();
+        self::$options = [];
         self::write_debug_file();
     }
 
@@ -186,7 +186,7 @@ class Debug
 	{
 		$stack = self::get_exception_context()->getTrace();
 		unset($stack[0]);
-		return array_merge($stack, array());
+		return array_merge($stack, []);
 	}
 
 	/**
