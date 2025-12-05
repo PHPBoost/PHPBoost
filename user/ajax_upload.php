@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 02 20
+ * @version     PHPBoost 6.1 - last update: 2025 12 05
  * @since       PHPBoost 6.0 - 2024 02 18
 */
 
@@ -42,23 +42,29 @@ else
 
         if ($Upload->get_error() != '')
         { // Error, stop here
-            if ($Upload->get_error() == 'e_upload_max_weight') {
+            if ($Upload->get_error() == 'e_upload_max_weight')
+            {
                 echo json_encode([
                     'success' => false,
                     'url' => LangLoader::get_message('e_upload_max_weight', 'errors'),
                     'class' => 'warning'
                 ]);
             }
-            elseif ($Upload->get_error() != '')
-            { // Error, stop here
-                if ($Upload->get_error() == 'e_upload_invalid_format') 
-                {
-                    echo json_encode([
-                        'success' => false,
-                        'url' => LangLoader::get_message('e_upload_invalid_format', 'errors'),
-                        'class' => 'warning'
-                    ]);
-                }
+            elseif ($Upload->get_error() == 'e_upload_invalid_format')
+            {
+                echo json_encode([
+                    'success' => false,
+                    'url' => LangLoader::get_message('e_upload_invalid_format', 'errors'),
+                    'class' => 'warning'
+                ]);
+            }
+            else
+            {
+                echo json_encode([
+                    'success' => false,
+                    'url' => LangLoader::get_message('e_upload_error', 'errors'),
+                    'class' => 'warning'
+                ]);
             }
         }
         else

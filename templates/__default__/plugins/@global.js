@@ -617,7 +617,7 @@
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.className = 'hidden';
-        fileInput.name = 'upload_file';
+        fileInput.name = 'upload_file[]';
         thisElement.parentNode.appendChild(fileInput);
 
         fileInput.click();
@@ -628,12 +628,13 @@
             targetInput.classList.remove('warning');
             const file = fileInput.files[0];
             const formData = new FormData();
-            formData.append('upload_file', file);
+            formData.append('upload_file[]', file);
             formData.append('token', token);
 
             // Use AJAX to upload the file
             const xhr = new XMLHttpRequest();
             xhr.open('POST', PATH_TO_ROOT + '/user/ajax_upload.php', true);
+
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
