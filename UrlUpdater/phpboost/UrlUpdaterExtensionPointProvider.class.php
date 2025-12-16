@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 11 28
+ * @version     PHPBoost 6.1 - last update: 2025 12 16
  * @since       PHPBoost 4.0 - 2014 07 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,7 +11,7 @@
 
 class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 {
-	private $urls_mappings = array();
+	private $urls_mappings = [];
 
 	public function __construct()
 	{
@@ -20,11 +20,12 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		$this->urls_mappings = array();
+		$this->urls_mappings = [];
 
 		$actual_major_version = GeneralConfig::load()->get_phpboost_major_version();
 		$phpboost_5_1_release_date = new Date('2017-07-18');
 		$phpboost_6_0_release_date = new Date('2023-04-29');
+		$phpboost_6_1_release_date = new Date('2023-04-29'); // TODO: modify date on release
 
 		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_5_1_release_date))
 		{
@@ -46,9 +47,9 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
 					$this->urls_mappings[] = new UrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
-			
+
 			$result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('pages')->get_configuration()->get_items_table_name());
-			
+
 			while ($row = $result->fetch())
 			{
 				if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
@@ -68,6 +69,29 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		{
 			$this->urls_mappings[] = new UrlMapping('^stats/admin_stats\.php$', '/stats/admin/', 'L,R=301');
 			$this->urls_mappings[] = new UrlMapping('^stats/stats\.php$', '/stats/', 'L,R=301');
+		}
+
+		// Wiki
+		if (ModulesManager::is_module_installed('wiki') && ModulesManager::is_module_activated('wiki') && $actual_major_version >= '6.1' && GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_6_1_release_date))
+		{
+			$this->urls_mappings[] = new UrlMapping('^wiki/wiki\.php$', '/wiki/', 'L,R=301');
+
+			$categories = CategoriesService::get_categories_manager('wiki')->get_categories_cache()->get_categories();
+
+			foreach ($categories as $id => $category)
+			{
+				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
+					$this->urls_mappings[] = new UrlMapping('^wiki/' . $category->get_rewrited_name() . '$', '/wiki/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+			}
+
+			$result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('wiki')->get_configuration()->get_items_table_name());
+
+			while ($row = $result->fetch())
+			{
+				if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
+					$this->urls_mappings[] = new UrlMapping('^wiki/' . $row['rewrited_title'] . '$', '/wiki/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
+			}
+			$result->dispose();
 		}
 
 		//Old user rewrited urls replacement
