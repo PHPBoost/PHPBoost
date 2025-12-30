@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2025 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 06
+ * @version     PHPBoost 6.1 - last update: 2025 12 30
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -16,7 +16,8 @@ class PollItemFormController extends DefaultItemFormController
 		$this->init();
 		$this->check_authorizations();
 		$this->build_form();
-		$this->build_countdown_field();
+        if(!$this->is_contributor_member())
+            $this->build_countdown_field();
 
 		if ($this->get_item()->has_votes())
 		{
@@ -121,7 +122,8 @@ class PollItemFormController extends DefaultItemFormController
 	protected function save()
 	{
         $this->get_item()->set_close_poll($this->form->get_value('close_poll', FormFieldCheckbox::UNCHECKED));
-		$this->get_item()->set_countdown_display($this->form->get_value('countdown_display')->get_raw_value());
+        if(!$this->is_contributor_member())
+            $this->get_item()->set_countdown_display($this->form->get_value('countdown_display')->get_raw_value());
 
 		parent::save();
 
@@ -129,7 +131,7 @@ class PollItemFormController extends DefaultItemFormController
 			$this->get_item()->set_item_in_mini_module_map();
 		else
 			$this->get_item()->unset_item_in_mini_module_map();
-		
+
 		PollMiniMenuCache::invalidate();
 	}
 }
