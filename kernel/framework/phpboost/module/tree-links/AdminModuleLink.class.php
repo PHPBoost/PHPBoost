@@ -3,10 +3,10 @@
  * This class enables you to manages the PHPBoost packages which are nothing else than the modules.
  * @package     PHPBoost
  * @subpackage  Module\tree-links
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 05 01
+ * @version     PHPBoost 6.1 - last update: 2021 05 01
  * @since       PHPBoost 4.1 - 2013 11 15
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>

@@ -8,7 +8,7 @@
  * @author      Guilherme BLANCO <guilhermeblanco@hotmail.com>
  * @author      Jonathan WAGE <jonwage@gmail.com>
  * @author      Roman BORSCHEL <roman@code-factory.org>
- * @version     PHPBoost 6.0 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2014 12 22
  * @since       PHPBoost 4.0 - 2013 01 01
 */
 
@@ -23,7 +23,7 @@ function string_var_export($var) { return var_export($var, true); }
  * @author      Guilherme BLANCO <guilhermeblanco@hotmail.com>
  * @author      Jonathan WAGE <jonwage@gmail.com>
  * @author      Roman BORSCHEL <roman@code-factory.org>
- * @version     PHPBoost 6.0 - last update: 2016 11 14
+ * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 4.0 - 2013 01 01
  * @contributor mipel <mipel@phpboost.com>
 */

@@ -1,11 +1,11 @@
 /**
  * Linedtextarea jQuery plugin - Version: 3.0.1
- * @copyright   &copy; 2005-2025 PHPBoost - 2010 Alan Williamson
+ * @copyright   &copy; 2005-2026 PHPBoost - 2010 Alan Williamson
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Alan Williamson
  * @link
  * @doc         https://github.com/cotenoni/jquery-linedtextarea
- * @version     PHPBoost 6.0 - last update: 2020 09 18
+ * @version     PHPBoost 6.1 - last update: 2020 09 18
  * @since       PHPBoost 5.0 - 2017 03 04
  *
  */

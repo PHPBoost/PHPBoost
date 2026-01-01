@@ -1,10 +1,10 @@
 <?php
 /**
  * Abstract class that proposes a default implementation for the ContactFieldType interface.
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 11 15
+ * @version     PHPBoost 6.1 - last update: 2016 11 15
  * @since       PHPBoost 4.0 - 2013 07 31
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>

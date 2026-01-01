@@ -8,7 +8,7 @@
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Roman BORSCHEL <roman@code-factory.org>
- * @version     PHPBoost 6.0 - last update: 2018 08 27
+ * @version     PHPBoost 6.1 - last update: 2018 08 27
  * @since       PHPBoost 4.0 - 2013 01 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

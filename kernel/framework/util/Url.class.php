@@ -10,7 +10,7 @@
  *   <li>In forms, get the url with the relative() method. It's a faster way to display url</li>
  * </ul>
  * @package     Util
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 25

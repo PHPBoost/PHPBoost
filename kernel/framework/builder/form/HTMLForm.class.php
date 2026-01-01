@@ -7,10 +7,10 @@
  * validated when it looses the focus and the whole form is validated when the user submits it).
  * @package     Builder
  * @subpackage  Form
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 01 31
+ * @version     PHPBoost 6.1 - last update: 2024 01 31
  * @since       PHPBoost 3.0 - 2009 04 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -27,15 +27,15 @@ class HTMLForm implements HTMLElement
 	/**
 	 * @var FormConstraint[]
 	 */
-	private $constraints = array();
+	private $constraints = [];
 	/**
 	 * @var FormFieldset[]
 	 */
-	private $fieldsets = array();
+	private $fieldsets = [];
 	/**
 	 * @var FormButton[]
 	 */
-	private $buttons = array();
+	private $buttons = [];
 	/**
 	 * @var string
 	 */
@@ -63,7 +63,7 @@ class HTMLForm implements HTMLElement
 	/**
 	 * @var array
 	 */
-	private $validation_error_messages = array();
+	private $validation_error_messages = [];
 	/**
 	 * @var Template
 	 */
@@ -230,7 +230,7 @@ class HTMLForm implements HTMLElement
 
 		$template = $this->get_template_to_use();
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 			'C_HAS_REQUIRED_FIELDS'     => (self::$instance_id == 1) ? $this->has_required_fields() : false,
 			'C_FORM_CLASS'              => !empty($this->css_class),
@@ -247,15 +247,15 @@ class HTMLForm implements HTMLElement
 
 			'TITLE_VALIDATION_ERROR_MESSAGE' => LangLoader::get_message('warning.validation.error', 'warning-lang'),
 			'L_REQUIRED_FIELDS'              => LangLoader::get_message('form.required.fields', 'form-lang'),
-		));
+		]);
 
 		foreach ($this->validation_error_messages as $error_message)
 		{
 			if (!empty($error_message))
 			{
-				$template->assign_block_vars('validation_error_messages', array(
+				$template->assign_block_vars('validation_error_messages', [
 					'ERROR_MESSAGE' => $error_message
-				));
+				]);
 			}
 		}
 
@@ -263,20 +263,20 @@ class HTMLForm implements HTMLElement
 
 		foreach ($this->fieldsets as $fieldset)
 		{
-			$template->assign_block_vars('fieldsets', array(), array(
+			$template->assign_block_vars('fieldsets', [], [
 				'C_CAPTCHA' => $this->enable_captcha_protection,
 
 				'FIELDSET' => $fieldset->display()
-			));
+			]);
 
 			//Onsubmit constraints
 			foreach ($fieldset->get_onsubmit_validations() as $constraints)
 			{
 				foreach ($constraints as $constraint)
 				{
-					$template->assign_block_vars('check_constraints', array(
+					$template->assign_block_vars('check_constraints', [
 						'ONSUBMIT_CONSTRAINTS' => $constraint
-					));
+					]);
 				}
 			}
 		}
@@ -289,9 +289,9 @@ class HTMLForm implements HTMLElement
 			{
 				$buttons_fieldset->add_element($button);
 			}
-			$template->assign_block_vars('fieldsets', array(), array(
+			$template->assign_block_vars('fieldsets', [], [
 				'FIELDSET' => $buttons_fieldset->display()
-			));
+			]);
 		}
 
 		return $template;

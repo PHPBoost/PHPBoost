@@ -1,10 +1,10 @@
 <?php
 /**
  * This class provides an interface editor for contents.
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 04 09
+ * @version     PHPBoost 6.1 - last update: 2022 04 09
  * @since       PHPBoost 2.0 - 2008 07 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

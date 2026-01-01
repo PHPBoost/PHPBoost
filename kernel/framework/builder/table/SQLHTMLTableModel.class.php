@@ -2,10 +2,10 @@
 /**
  * @package     Builder
  * @subpackage  Table
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 03 23
+ * @version     PHPBoost 6.1 - last update: 2021 03 23
  * @since       PHPBoost 4.1 - 2015 01 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -27,7 +27,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return PersistenceContext::get_querier()->count($this->table, $this->sql_join . $this->get_filtered_clause($this->html_table->parameters->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
 	}
 
-	public function get_sql_results($sql_join = '', $select = array('*'))
+	public function get_sql_results($sql_join = '', $select = ['*'])
 	{
 		$limit = $this->html_table->get_nb_rows_per_page();
 		$offset = ($this->html_table->parameters->get_page_number() - 1) * $limit;
@@ -57,11 +57,11 @@ class SQLHTMLTableModel extends HTMLTableModel
 
 	private function get_filtered_clause(array $filters)
 	{
-		$this->parameters = array();
+		$this->parameters = [];
 		$clause = ' WHERE 1';
 		if (!empty($filters))
 		{
-			$sql_filters = array();
+			$sql_filters = [];
 			foreach ($filters as $filter)
 			{
 				$query_fragment = $filter->get_sql();

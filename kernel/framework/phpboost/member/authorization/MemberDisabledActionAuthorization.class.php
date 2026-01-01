@@ -8,7 +8,7 @@
  * In this class the select of Visitor and Member level is not possible.
  * @package     PHPBoost
  * @subpackage  Member\authorization
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 27

@@ -1,10 +1,10 @@
 /**
  * Responsive Table jQuery plugin - Version: 2.0
- * @copyright   &copy; 2005-2025 PHPBoost - 2014 Jerry Low
+ * @copyright   &copy; 2005-2026 PHPBoost - 2014 Jerry Low
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Jerry Low
  * @link        https://github.com/jerrylow/basictable
- * @version     PHPBoost 6.0 - last update: 2021 09 21
+ * @version     PHPBoost 6.1 - last update: 2021 09 21
  * @since       PHPBoost 5.0 - 2016 03 30
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *

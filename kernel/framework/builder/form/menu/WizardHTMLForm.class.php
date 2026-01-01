@@ -8,10 +8,10 @@
  *
  * @package     Builder
  * @subpackage  Form\menu
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 03
+ * @version     PHPBoost 6.1 - last update: 2019 11 03
  * @since       PHPBoost 5.2 - 2019 07 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */

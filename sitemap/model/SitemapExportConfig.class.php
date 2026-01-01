@@ -8,7 +8,7 @@
  * the research of your site.
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2016 10 24
+ * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 2.0 - 2008 06 16
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */

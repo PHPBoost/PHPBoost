@@ -1,11 +1,11 @@
 /**
  * Wizzy wizard jQuery plugin - Version:  0.6.1
- * @copyright   &copy; 2005-2025 PHPBoost - 2012 Nenad Kaevik
+ * @copyright   &copy; 2005-2026 PHPBoost - 2012 Nenad Kaevik
  * @license     https://github.com/NenadKaevik/wizzy
  * @link        https://nenadkaevik.github.io/wizzy/
  * @author      Nenad Kaevik
  * @doc         https://xpy.github.io/tipy/
- * @version     PHPBoost 6.0 - last update: 2020 05 21
+ * @version     PHPBoost 6.1 - last update: 2020 05 21
  * @since       PHPBoost 5.2 - 2019 07 29
  *
  * @patch		delete es6 (ie11) / replace

@@ -4,10 +4,10 @@
  * of the administration panel.
  * @package     PHPBoost
  * @subpackage  Environment
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 08 26
+ * @version     PHPBoost 6.1 - last update: 2024 08 26
  * @since       PHPBoost 3.0 - 2009 10 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Kevin MASSY <reidlos@phpboost.com>

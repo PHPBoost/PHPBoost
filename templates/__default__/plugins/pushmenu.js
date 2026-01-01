@@ -1,10 +1,10 @@
 /**
  * HC Off-canvas Nav - Version: 6.1.4
- * @copyright   &copy; 2005-2025 PHPBoost - 2014 Some Web Media
+ * @copyright   &copy; 2005-2026 PHPBoost - 2014 Some Web Media
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Some Web Media
  * @link        https://github.com/somewebmedia/hc-offcanvas-nav
- * @version     PHPBoost 6.0 - last update: 2022 02 10
+ * @version     PHPBoost 6.1 - last update: 2022 02 10
  * @since       PHPBoost 6.0 - 2020 01 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  *

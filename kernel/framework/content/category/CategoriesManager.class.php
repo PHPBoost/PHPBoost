@@ -4,10 +4,10 @@
  * It needs to have its first instantiation of a parameter child object CategoriesCache and as the second parameter to have a CategoriesItemsParameters object.
  * @package     Content
  * @subpackage  Category
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 31
+ * @version     PHPBoost 6.1 - last update: 2023 01 31
  * @since       PHPBoost 4.0 - 2013 01 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>

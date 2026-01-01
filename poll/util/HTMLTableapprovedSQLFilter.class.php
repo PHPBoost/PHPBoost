@@ -2,10 +2,10 @@
 /**
  * @package     Builder
  * @subpackage  Table\filter\sql
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 24
+ * @version     PHPBoost 6.1 - last update: 2021 06 24
  * @since       PHPBoost 5.0 - 2021 06 23
 */
 

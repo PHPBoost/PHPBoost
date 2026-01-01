@@ -3,10 +3,10 @@
  * This class is the basis of all the formatting processings that exist in PHPBoost.
  * @package     Content
  * @subpackage  Formatting\parser
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2019 11 14
+ * @version     PHPBoost 6.1 - last update: 2019 11 14
  * @since       PHPBoost 2.0 - 2007 11 29
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>

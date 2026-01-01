@@ -4,10 +4,10 @@
  *
  * @package     Builder
  * @subpackage  Form\field
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 04
+ * @version     PHPBoost 6.1 - last update: 2021 06 04
  * @since       PHPBoost 3.0 - 2010 01 08
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -92,20 +92,20 @@ abstract class AbstractFormField implements FormField
 	/**
 	 * @var FormFieldConstraint[]
 	 */
-	protected $constraints = array();
+	protected $constraints = [];
 	/**
 	 * @var FormConstraint[]
 	 */
-	protected $form_constraints = array();
+	protected $form_constraints = [];
 	/**
 	 * @var Template
 	 */
 	protected $template = null;
 
 	/**
-	 * @var string[string]
+	 * @var array
 	 */
-	protected $events = array();
+	protected $events = [];
 
 	/**
 	 * Constructs and set parameters to the field.
@@ -122,7 +122,7 @@ abstract class AbstractFormField implements FormField
 	 * @param array $field_options Map associating the parameters values to the parameters names.
 	 * @param FormFieldConstraint[] $constraints List of the constraints which must be checked when the form is been validated
 	 */
-	protected function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	protected function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		$this->set_id($id);
 		$this->set_label($label);
@@ -336,7 +336,7 @@ abstract class AbstractFormField implements FormField
 
 	public function get_js_validations() : array
 	{
-		$validations = array();
+		$validations = [];
 		foreach ($this->constraints as $constraint)
 		{
 			$validation = $constraint->get_js_validation($this);
@@ -518,7 +518,7 @@ abstract class AbstractFormField implements FormField
 
 	private function get_related_fields()
 	{
-		$related_fields = array();
+		$related_fields = [];
 		foreach ($this->form_constraints as $constraint)
 		{
 			foreach ($constraint->get_related_fields() as $field)

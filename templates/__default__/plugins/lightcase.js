@@ -1,11 +1,11 @@
 /**
  * Responsive lightbox Lightcase jQuery plugin - Version: 2.4.0
- * @copyright   &copy; 2005-2025 PHPBoost - 2017 Cornel Boppart
+ * @copyright   &copy; 2005-2026 PHPBoost - 2017 Cornel Boppart
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 6.0 - last update: 2020 12 27
+ * @version     PHPBoost 6.1 - last update: 2020 12 27
  * @since       PHPBoost 5.1 - 2017 09 17
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>

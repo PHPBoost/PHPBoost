@@ -3,10 +3,10 @@
  * This class manages all sessions for the users.
  * @package     PHPBoost
  * @subpackage  User\session
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2025 03 19
+ * @version     PHPBoost 6.1 - last update: 2025 03 19
  * @since       PHPBoost 3.0 - 2010 11 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
