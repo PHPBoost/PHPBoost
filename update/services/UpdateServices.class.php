@@ -219,7 +219,7 @@ class UpdateServices
 		$this->update_content();
 
 		// Updating content of content menus
-		// $this->update_content_menus();
+		$this->update_content_menus();
 
 		// Clear autoload
 		$this->clear_autoload();
@@ -290,7 +290,7 @@ class UpdateServices
 		if (!isset($columns['user_website']))
 		{
 			$lang = LangLoader::get('user-lang');
-			
+
 			$extended_field = new ExtendedField();
 			$extended_field->set_name($lang['user.extended.field.website']);
 			$extended_field->set_field_name('user_website');
@@ -377,7 +377,7 @@ class UpdateServices
 				$has_config_update_class = false;
 				$module_id = $folder->get_name();
 				$module = ModulesManager::get_module($module_id);
-				
+
 				$module_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
 				if ($folder->get_folders('/update/'))
 				{
@@ -434,7 +434,7 @@ class UpdateServices
 				$has_update_class = false;
 				$module_id = $folder->get_name();
 				$module = ModulesManager::get_module($module_id);
-				
+
 				$module_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
 				if ($folder->get_folders('/update/'))
 				{
@@ -661,14 +661,14 @@ class UpdateServices
 			$parser = new BBCodeParser();
 
 			$contents_list = array(
-				'(\' . $contents . \' LIKE "%href=\"%")',
-				'(\' . $contents . \' LIKE "%formatter-blockquote%")',
-				'(\' . $contents . \' LIKE "%class=\"success\"%")',
-				'(\' . $contents . \' LIKE "%class=\"question\"%")',
-				'(\' . $contents . \' LIKE "%class=\"notice\"%")',
-				'(\' . $contents . \' LIKE "%class=\"warning\"%")',
-				'(\' . $contents . \' LIKE "%class=\"error\"%")',
-				'(\' . $contents . \' LIKE "%title=\"%")'
+				'(' . $contents . ' LIKE "%href=\"%")',
+				'(' . $contents . ' LIKE "%formatter-blockquote%")',
+				'(' . $contents . ' LIKE "%class=\"success\"%")',
+				'(' . $contents . ' LIKE "%class=\"question\"%")',
+				'(' . $contents . ' LIKE "%class=\"notice\"%")',
+				'(' . $contents . ' LIKE "%class=\"warning\"%")',
+				'(' . $contents . ' LIKE "%class=\"error\"%")',
+				'(' . $contents . ' LIKE "%title=\"%")'
 			);
 
 			$contents_list = implode(' OR ', $contents_list);
@@ -718,15 +718,17 @@ class UpdateServices
 			$parser = new BBCodeParser();
 
 			$contents_list = array(
-				'(\' . $contents . \' LIKE "%href=\"%")',
-				'(\' . $contents . \' LIKE "%formatter-blockquote%")',
-				'(\' . $contents . \' LIKE "%class=\"success\"%")',
-				'(\' . $contents . \' LIKE "%class=\"question\"%")',
-				'(\' . $contents . \' LIKE "%class=\"notice\"%")',
-				'(\' . $contents . \' LIKE "%class=\"warning\"%")',
-				'(\' . $contents . \' LIKE "%class=\"error\"%")',
-				'(\' . $contents . \' LIKE "%title=\"%")'
+				'(' . $contents . ' LIKE "%href=\"%")',
+				'(' . $contents . ' LIKE "%formatter-blockquote%")',
+				'(' . $contents . ' LIKE "%class=\"success\"%")',
+				'(' . $contents . ' LIKE "%class=\"question\"%")',
+				'(' . $contents . ' LIKE "%class=\"notice\"%")',
+				'(' . $contents . ' LIKE "%class=\"warning\"%")',
+				'(' . $contents . ' LIKE "%class=\"error\"%")',
+				'(' . $contents . ' LIKE "%title=\"%")'
 			);
+
+			$contents_list = implode(' OR ', $contents_list);
 
 			$result = self::$db_querier->select('SELECT ' . $id . ', ' . $contents . ', class
 				FROM ' . $table . '
@@ -753,8 +755,8 @@ class UpdateServices
 				$menu = MenuService::load($row[$id]);
 				MenuService::save($menu);
 				$menus_list = MenuService::get_menus_map();
-				// Debug::stop($menus_list);
-				// MenuService::initialise(array($menus_list));
+
+				MenuService::initialize(array($menus_list));
 				MenuService::generate_cache();
 			}
 			$result->dispose();

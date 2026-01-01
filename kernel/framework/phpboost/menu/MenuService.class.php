@@ -46,7 +46,7 @@ class MenuService
 		$fragment = self::build_menu_list_query_conditions($class, $block, $enabled);
 		$menus = array();
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $fragment->get_query() . ' ORDER BY position ASC', $fragment->get_parameters());
-		
+
         foreach ($results as $row)
 		{
 			$menus[$row['id']] = self::initialize($row);
@@ -607,7 +607,7 @@ class MenuService
 	 * @param string[key] $db_result the map from the database with the Menu id and serialized object
 	 * @return Menu the menu object from the serialized one
 	 */
-	private static function initialize($db_result)
+	public static function initialize($db_result)
 	{
 		if (!ClassLoader::is_class_registered_and_valid($db_result['class']))
 		{
