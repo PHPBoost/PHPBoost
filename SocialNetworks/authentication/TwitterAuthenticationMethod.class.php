@@ -5,7 +5,7 @@
  * PHPBoost comes with a PHPBoostAuthenticationMethod which will be performed on the internal member
  * list. But it is possible to implement external authentication mecanism by providing others
  * implementations of this class to support LDAP authentication, OpenID, Facebook connect and more...
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2020 12 14

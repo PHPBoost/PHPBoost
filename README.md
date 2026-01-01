@@ -26,7 +26,6 @@ One branch per version.
 | 3.0 | --- | 28/07/2009 | ![No](https://img.shields.io/badge/-No-BF263C) |
 | other | branches for tests | --- | - |
 
-
 # How it works ?
 It requires a PHP/SQL web server with a remote access.  
 Install, configure and use it with a web browser.
