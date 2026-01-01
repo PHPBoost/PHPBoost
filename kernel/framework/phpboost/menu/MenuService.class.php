@@ -607,7 +607,7 @@ class MenuService
 	 * @param string[key] $db_result the map from the database with the Menu id and serialized object
 	 * @return Menu the menu object from the serialized one
 	 */
-	private static function initialize($db_result)
+	public static function initialize($db_result)
 	{
 		if (!ClassLoader::is_class_registered_and_valid($db_result['class']))
 		{
