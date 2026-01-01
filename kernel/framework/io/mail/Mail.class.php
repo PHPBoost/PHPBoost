@@ -3,7 +3,7 @@
  * This class allows you to send mails without having to deal with the mail headers and parameters.
  * @package     IO
  * @subpackage  Mail
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2021 06 23

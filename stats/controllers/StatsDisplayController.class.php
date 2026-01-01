@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2024 08 19
+ * @version     PHPBoost 6.0 - last update: 2024 06 29
  * @since       PHPBoost 6.0 - 2021 11 23
  * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
@@ -662,7 +662,7 @@ class StatsDisplayController extends DefaultModuleController
 			LIMIT :number_items_per_page OFFSET :display_from", [
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-			]);
+        ]);
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
@@ -792,22 +792,7 @@ class StatsDisplayController extends DefaultModuleController
 		$array_stats_displayed = [];
 		$array_stats_graph = [];
 
-		foreach ($array_stats as $browser => &$value) 
-        {
-			if (!isset($array_stats_info[$browser]))
-			{
-				// Unknown browser
-				if (isset($array_stats_displayed['other']))
-				{
-					// 'other' browser already tracked
-					$array_stats_displayed['other']['stat'] += $value;
-					$array_stats_graph[$this->lang['common.other']] += $value;
-					continue;
-				}
-				// We add stats for 'other'
-				$array_stats['other'] += $value;
-				continue;
-			}
+		foreach ($array_stats as $browser => $value) {
 			if ($browser === 'other')
 			{
 				$img = !empty($array_stats_info['other'][1]) ? '<img src="'. TPL_PATH_TO_ROOT . '/images/stats/' . $array_stats_info['other'][1] . '" alt="' . $this->lang['common.other'] . '" />' : '<img src="' . TPL_PATH_TO_ROOT . '/images/stats/other.png" alt="' . $this->lang['common.other'] . '" />';
@@ -875,7 +860,7 @@ class StatsDisplayController extends DefaultModuleController
 			DispatchManager::redirect($error_controller);
 		}
 	}
-	
+
 	/**
 	 * @return Template
 	 */

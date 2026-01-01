@@ -1,6 +1,6 @@
 /**
  * Wizzy wizard jQuery plugin - Version:  0.6.1
- * @copyright   &copy; 2005-2025 PHPBoost - 2012 Nenad Kaevik
+ * @copyright   &copy; 2005-2026 PHPBoost - 2012 Nenad Kaevik
  * @license     https://github.com/NenadKaevik/wizzy
  * @link        https://nenadkaevik.github.io/wizzy/
  * @author      Nenad Kaevik

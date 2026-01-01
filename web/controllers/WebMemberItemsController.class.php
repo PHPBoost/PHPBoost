@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 5.2 - 2020 12 05
 */
 
@@ -145,7 +145,7 @@ class WebMemberItemsController extends DefaultModuleController
 
 	private function check_authorizations()
 	{
-		if (!(CategoriesAuthorizationsService::check_authorizations()->write() || CategoriesAuthorizationsService::check_authorizations()->contribution() || CategoriesAuthorizationsService::check_authorizations()->moderation()))
+		if (!CategoriesAuthorizationsService::check_authorizations()->read())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);

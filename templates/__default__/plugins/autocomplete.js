@@ -1,6 +1,6 @@
 /**
  * Autocomplete jQuery plugin - Version: 1.4.7
- * @copyright   &copy; 2005-2025 PHPBoost - 2017 Tomas Kirda
+ * @copyright   &copy; 2005-2026 PHPBoost - 2017 Tomas Kirda
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Tomas Kirda
  * @link        https://github.com/devbridge/jQuery-Autocomplete

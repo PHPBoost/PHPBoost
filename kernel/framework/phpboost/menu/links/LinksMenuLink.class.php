@@ -3,7 +3,7 @@
  * A Simple menu link
  * @package     PHPBoost
  * @subpackage  Menu\links
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2022 02 04

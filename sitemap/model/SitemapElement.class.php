@@ -3,7 +3,7 @@
  * This abstract is the root of every object which can be contained by a Sitemap object.
  * Some SitemapElements objects can contain one or many SitemapElement objects therefore the elements
  * can be represented by a tree an each element has a depth in the tree.
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2016 10 24

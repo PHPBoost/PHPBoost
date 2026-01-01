@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2022 12 15
@@ -55,7 +55,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 		try {
 			$old_config = $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
 		} catch (RowNotFoundException $e) {}
-		
+
 		if ($serialize)
 		{
 			mb_internal_encoding('utf-8');
@@ -170,7 +170,7 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 			$unparser->parse();
 			$parser->set_content($unparser->get_content());
 			$parser->parse();
-			
+
 			if ($parser->get_content() != $root_description)
 			{
 				$config->$setter($parser->get_content());

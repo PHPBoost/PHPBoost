@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 23
+ * @version     PHPBoost 6.0 - last update: 2025 01 09
  * @since       PHPBoost 6.0 - 2021 04 20
 */
 
@@ -15,6 +15,7 @@ $lang['contribution.panel']          = 'Panneau de contributions';
 $lang['contribution.my.items']       = 'Mes contributions';
 $lang['contribution.contribution']   = 'Contribution';
 $lang['contribution.contributions']  = 'Contributions';
+$lang['contribution.contributors']   = 'Les contributeurs';
 $lang['contribution.details']        = 'Détails de la contribution';
 $lang['contribution.process']        = 'Traiter la contribution';
 $lang['contribution.not.processed']  = 'Non traitée';

@@ -3,7 +3,7 @@
  * This class manage single-line text fields with a link to access the upload modal form.
  * @package     Builder
  * @subpackage  Form\field
- * @copyright   &copy; 2005-2025 PHPBoost
+ * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.0 - last update: 2021 06 25
