@@ -386,7 +386,7 @@ class TextHelper
 
 	public static function deserialize($string)
 	{
-		return self::is_serialized($string) ? unserialize($string) : $string;
+		return self::is_serialized($string) ? self::mb_unserialize($string) : $string;
 	}
 
 	/**
