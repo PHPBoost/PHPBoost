@@ -13,6 +13,7 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 - Ability to associate a template with a menu to be able to customize it
 - Ability to disable the display of a link in the menus
 - Exclusion filters for menus
+- Adding Open in new window for links
 
 ## Kernel
 - Interface for viewing additional field values entered by members
