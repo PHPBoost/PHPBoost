@@ -91,12 +91,27 @@ class NginxFileCache implements CacheData
 		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
 
+		$this->add_section('UrlUpdater');
+
+        foreach ($modules as $module)
+		{
+			$id = $module->get_id();
+			if ($id == 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			{
+				$provider = $eps->get_provider($id);
+				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+				{
+                    $this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+				}
+			}
+		}
+
 		// Generate high priority rewriting rules
 		$first_high_priority_mapping = true;
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				$mappings_high_priority = array();
@@ -125,7 +140,7 @@ class NginxFileCache implements CacheData
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				$mappings_normal_priority = array();
@@ -148,7 +163,7 @@ class NginxFileCache implements CacheData
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				$mappings_low_priority = array();
