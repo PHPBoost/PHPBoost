@@ -180,6 +180,7 @@ class UpdateServices
 
 	public function execute()
 	{
+        $this->add_information_to_file('Start of the update from PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
 		$this->get_update_token();
 
 		Environment::try_to_increase_max_execution_time();
@@ -238,10 +239,11 @@ class UpdateServices
 
 		// Verification of the site installation date and correction if necessary
 		$this->check_installation_date();
-
 		// End of update: cache refresh
 		$this->delete_update_token();
 		$this->generate_cache();
+
+        $this->add_information_to_file('End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
 	}
 
 	public function put_site_under_maintenance()
@@ -290,7 +292,7 @@ class UpdateServices
 		if (!isset($columns['user_website']))
 		{
 			$lang = LangLoader::get('user-lang');
-			
+
 			$extended_field = new ExtendedField();
 			$extended_field->set_name($lang['user.extended.field.website']);
 			$extended_field->set_field_name('user_website');
@@ -377,7 +379,7 @@ class UpdateServices
 				$has_config_update_class = false;
 				$module_id = $folder->get_name();
 				$module = ModulesManager::get_module($module_id);
-				
+
 				$module_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
 				if ($folder->get_folders('/update/'))
 				{
@@ -755,7 +757,7 @@ class UpdateServices
 				$menu = MenuService::load($row[$id]);
 				MenuService::save($menu);
 				$menus_list = MenuService::get_menus_map();
-				// Debug::stop($menus_list);
+
 				MenuService::initialize(array($menus_list));
 				MenuService::generate_cache();
 			}
@@ -766,11 +768,6 @@ class UpdateServices
 				$object = new self('', false);
 				$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' content' . ($updated_content > 1 ? 's' : '') . ' updated');
 			}
-			MenuService::save($menu);
-			$menus_list = MenuService::get_menus_map();
-
-			MenuService::initialize($menus_list);
-			MenuService::generate_cache();
 		}
 	}
 
@@ -844,11 +841,9 @@ class UpdateServices
 	private function get_update_token()
 	{
 		$is_token_valid = false;
-		try
-		{
+		try {
 			$is_token_valid = $this->token->exists() && $this->token->read() == self::$token_file_content;
-		}
-		catch (IOException $ioe) {}
+		} catch (IOException $ioe) {}
 
 		if (!$is_token_valid)
 		{
@@ -969,7 +964,7 @@ class UpdateServices
 
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/CategoriesCache.class.php');
 		$file->delete();
-		
+
 		$file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/controllers/AbstractCategoriesManageController.class.php');
 		$file->delete();
 
