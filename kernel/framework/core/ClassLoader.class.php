@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 30
+ * @version     PHPBoost 6.1 - last update: 2026 01 14
  * @since       PHPBoost 3.0 - 2009 10 21
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -81,7 +81,7 @@ class ClassLoader
 			include_once(PATH_TO_ROOT . '/kernel/framework/util/Path.class.php');
 
 			$phpboost_classfile_pattern = '`\.class\.php$`';
-			$paths = ['/', '/kernel/framework/core/lang', '/kernel/framework/util/'];
+			$paths = ['/', '/kernel/framework/core/lang'];
 
 			foreach ($paths as $path)
 			{
@@ -148,7 +148,10 @@ class ClassLoader
 
 	protected static function inc($file)
 	{
-		return file_exists($file) && @include_once $file;
+		if (!file_exists($file))
+            return false;
+        include_once $file;
+        return true;
 	}
 
 	protected static function call_static_initializer($classname)
