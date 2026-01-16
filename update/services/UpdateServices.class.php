@@ -180,7 +180,7 @@ class UpdateServices
 
 	public function execute()
 	{
-        $this->add_information_to_file('Start of the update from PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
+        $this->add_information_to_file('Start of the update from PHPBoost ', GeneralConfig::load()->get_phpboost_major_version() . "\n");
 		$this->get_update_token();
 
 		Environment::try_to_increase_max_execution_time();
@@ -189,8 +189,8 @@ class UpdateServices
 		$this->delete_old_files();
 
 		// Uninstalling the UrlUpdater module to avoid problems
-		if (ModulesManager::is_module_installed('UrlUpdater'))
-			ModulesManager::uninstall_module('UrlUpdater');
+		// if (ModulesManager::is_module_installed('UrlUpdater'))
+		// 	ModulesManager::uninstall_module('UrlUpdater');
 
 		// Maintenance of the site if it is not already
 		$this->put_site_under_maintenance();
@@ -220,17 +220,17 @@ class UpdateServices
 		$this->update_content();
 
 		// Updating content of content menus
-		$this->update_content_menus();
+		// $this->update_content_menus();
 
 		// Clear autoload
 		$this->clear_autoload();
 
 		// Installation of the UrlUpdater module for rewriting the url of updated modules
-		$folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
-		if ($folder->exists())
-			ModulesManager::install_module('UrlUpdater');
-		else
-			$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
+		// $folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
+		// if ($folder->exists())
+		// 	ModulesManager::install_module('UrlUpdater');
+		// else
+		// 	$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
 
 		// Installing the SocialNetworks module
 		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks');
@@ -239,11 +239,12 @@ class UpdateServices
 
 		// Verification of the site installation date and correction if necessary
 		$this->check_installation_date();
+
 		// End of update: cache refresh
 		$this->delete_update_token();
-		$this->generate_cache();
+		// $this->generate_cache();
 
-        $this->add_information_to_file('End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
+        $this->add_information_to_file("\n" . 'End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
 	}
 
 	public function put_site_under_maintenance()
