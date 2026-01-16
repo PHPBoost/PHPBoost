@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 14
+ * @version     PHPBoost 6.1 - last update: 2026 01 16
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -20,7 +20,7 @@ class UpdateServices
 	const UNKNOWN_ERROR = 3;
 
 	// New version number
-	const NEW_KERNEL_VERSION = '6.0';
+	const NEW_KERNEL_VERSION = '6.1';
 
 	private static $token_file_content = '1';
 
@@ -180,7 +180,7 @@ class UpdateServices
 
 	public function execute()
 	{
-        $this->add_information_to_file('Start of the update from PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
+        $this->add_information_to_file('Start of the update from PHPBoost ', GeneralConfig::load()->get_phpboost_major_version() . "\n");
 		$this->get_update_token();
 
 		Environment::try_to_increase_max_execution_time();
@@ -243,7 +243,7 @@ class UpdateServices
 		// End of update: cache refresh
 		$this->delete_update_token();
 		$this->generate_cache();
-        $this->add_information_to_file('End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
+        $this->add_information_to_file("\n" . 'End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
 	}
 
 	public function put_site_under_maintenance()
@@ -768,11 +768,6 @@ class UpdateServices
 				$object = new self('', false);
 				$object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' content' . ($updated_content > 1 ? 's' : '') . ' updated');
 			}
-			MenuService::save($menu);
-			$menus_list = MenuService::get_menus_map();
-
-			MenuService::initialize($menus_list);
-			MenuService::generate_cache();
 		}
 	}
 

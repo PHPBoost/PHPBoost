@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 04 24
+ * @version     PHPBoost 6.1 - last update: 2026 01 16
  * @since       PHPBoost 4.0 - 2014 05 22
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  * @contributor Max KODER <maxkoder@phpboost.com>
@@ -279,5 +279,10 @@ class WikiModuleUpdateVersion extends ModuleUpdateVersion
 
 		// Set articles to "published"
 		$this->querier->update(PREFIX . 'wiki_articles', ['published' => 1], 'WHERE published = 0');
+	}
+
+	protected function update_content()
+	{
+		UpdateServices::update_table_content(PREFIX . 'wiki_contents', 'content', 'content_id');
 	}
 }
