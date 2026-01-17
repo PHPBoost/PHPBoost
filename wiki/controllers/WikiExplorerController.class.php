@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 04 13
+ * @version     PHPBoost 6.1 - last update: 2026 01 17
  * @since       PHPBoost 6.0 - 2022 11 18
  */
 
@@ -78,7 +78,7 @@ class WikiExplorerController extends DefaultModuleController
                     'CATEGORY_DESCRIPTION'  => $category->get_description(),
 
                     'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
-                    'U_CATEGORY'           => WikiUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
+                    'U_CATEGORY'           => WikiUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
                     'U_REORDER_ITEMS'      => WikiUrlBuilder::reorder_items($category->get_id(), $category->get_rewrited_name())->rel()
                 ]);
 
