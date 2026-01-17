@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 16
+ * @version     PHPBoost 6.1 - last update: 2026 01 17
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -189,8 +189,8 @@ class UpdateServices
 		$this->delete_old_files();
 
 		// Uninstalling the UrlUpdater module to avoid problems
-		if (ModulesManager::is_module_installed('UrlUpdater'))
-			ModulesManager::uninstall_module('UrlUpdater');
+		// if (ModulesManager::is_module_installed('UrlUpdater'))
+		// 	ModulesManager::uninstall_module('UrlUpdater');
 
 		// Maintenance of the site if it is not already
 		$this->put_site_under_maintenance();
@@ -220,17 +220,17 @@ class UpdateServices
 		$this->update_content();
 
 		// Updating content of content menus
-		$this->update_content_menus();
+		// $this->update_content_menus();
 
 		// Clear autoload
 		$this->clear_autoload();
 
 		// Installation of the UrlUpdater module for rewriting the url of updated modules
-		$folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
-		if ($folder->exists())
-			ModulesManager::install_module('UrlUpdater');
-		else
-			$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
+		// $folder = new Folder(PATH_TO_ROOT . '/UrlUpdater');
+		// if ($folder->exists())
+		// 	ModulesManager::install_module('UrlUpdater');
+		// else
+		// 	$this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
 
 		// Installing the SocialNetworks module
 		$folder = new Folder(PATH_TO_ROOT . '/SocialNetworks');
@@ -242,7 +242,7 @@ class UpdateServices
 
 		// End of update: cache refresh
 		$this->delete_update_token();
-		$this->generate_cache();
+		// $this->generate_cache();
         $this->add_information_to_file("\n" . 'End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
 	}
 
