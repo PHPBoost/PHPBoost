@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 09 29
+ * @version     PHPBoost 6.1 - last update: 2025 01 18
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -425,8 +425,8 @@ else
 
 			'ID'                    => $row['id'],
 			'NAME'                  => $name_cut,
-			'NAME_WITH_SLASHES'     => addslashes($row['name']),
-			'NAME_CUT_WITH_SLASHES' => addslashes($name_cut),
+			'NAME_WITH_SLASHES'     => addslashes($row['name'] ?? ''),
+			'NAME_CUT_WITH_SLASHES' => addslashes($name_cut ?? ''),
 			'DEL_TYPE'              => $show_member ? 'eptf' : 'delf',
 
 			'U_ONCHANGE_FOLDER' => "'admin_files" . url(".php?movef=" . $row['id'] . "&amp;to=' + this.options[this.selectedIndex].value + '") . "'",
