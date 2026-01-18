@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 18
+ * @version     PHPBoost 6.1 - last update: 2026 01 18
  * @since       PHPBoost 1.6 - 2007 03 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -445,14 +445,14 @@ else
 		$now = new Date();
 		if (!empty($folder_member) && empty($folder) || $show_shared)
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT up.id, up.shared, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
-	    	FROM " . DB_TABLE_UPLOAD . " up
-	    	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
-	        WHERE " . $where_clause . "
-	    	ORDER BY up.name", array(
-	            	'idcat' => 0,
-					'user_id' => $folder_member
-			));
+                $result = PersistenceContext::get_querier()->select("SELECT up.id, up.shared, up.name, up.path, up.size, up.type, up.timestamp, m.user_id, m.display_name, m.level, m.user_groups
+                FROM " . DB_TABLE_UPLOAD . " up
+                LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
+                WHERE " . $where_clause . "
+                ORDER BY up.name", array(
+                    'idcat' => 0,
+                    'user_id' => $folder_member
+                ));
 		}
 		else
 		{
