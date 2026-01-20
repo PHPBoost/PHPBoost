@@ -28,28 +28,28 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	public function parse()
 	{
-		//Isolement du code source et du code HTML qui ne sera pas protégé
+		// Isolation of source code and HTML code that will not be protected
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
 
 		$this->content = TextHelper::html_entity_decode($this->content);
 
-		//Smilies
+		// Smilies
 		$this->unparse_smilies();
 
-		//Module eventual special tags replacement
+		// Replacing special module tags
 		$this->unparse_module_special_tags();
 
-		//Remplacement des balises simples
+		// Replacing single tags
 		$this->unparse_simple_tags();
 
-		//Unparsage de la balise table.
+		// Unparsing table tag
 		if (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->unparse_table();
 		}
 
-		//Unparsage de la balise table.
+		// Unparsing list tag
 		if (TextHelper::strpos($this->content, '<li class="formatter-li"') !== false)
 		{
 			$this->unparse_list();
@@ -65,11 +65,11 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_smilies()
 	{
-		//Smilies
+		// Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
 		if (!empty($smileys_cache))
 		{
-			//Création du tableau de remplacement
+			// Creating replacement table
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
@@ -193,33 +193,33 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
-		##Nested tags
-		//Quotes
+		// Nested tags
+		// Quotes
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote]$2[/quote]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote=$1]$2[/quote]', $this->content);
 
-		//Hidden bloc
+		// Hidden bloc
 		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]', $this->content);
 
-		//Block
+		// Block
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 
-		//Container
+		// Container
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
 		{
 			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
 		}
 
-		##Callbacks
-		//Image
+		// Callbacks
+		// Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
-		//FA Icon
+		// FA Icon
 		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
-		//Fieldset
+		// Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
 		{
 			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', array($this, 'unparse_fieldset'), $this->content);
@@ -276,7 +276,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_table()
 	{
-		//On boucle pour parcourir toutes les imbrications
+		// looping to iterate through all the nests
 		while (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`suU', '[table$1]$2[/table]', $this->content);
@@ -300,7 +300,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_list()
 	{
-		//On boucle tant qu'il y a de l'imbrication
+		// looping as long as there is nesting
 		while (TextHelper::strpos($this->content, '<ul class="formatter-ul">') !== false)
 		{
 			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`suU', '[list$1]$2[/list]', $this->content);
@@ -352,7 +352,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_wikipedia_link($matches)
 	{
-		//On est dans la langue par défaut
+		// Default language
 		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
 		{
 			$lang = '';
@@ -362,7 +362,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			$lang = $matches[1];
 		}
 
-		//L'intitulé du lien est différent du nom de l'article
+		// Link title is different from the article name
 		if ($matches[2] != $matches[3])
 		{
 			$page_name = $matches[2];
