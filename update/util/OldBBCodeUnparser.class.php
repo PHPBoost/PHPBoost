@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 06 26
+ * @version     PHPBoost 6.0 - last update: 2026 01 20
  * @since       PHPBoost 5.1 - 2017 03 09
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -28,28 +28,28 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	public function parse()
 	{
-		// Isolation of source code and HTML code that will not be protected
+		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->unparse_html(self::PICK_UP);
 		$this->unparse_code(self::PICK_UP);
 
 		$this->content = TextHelper::html_entity_decode($this->content);
 
-		// Smilies
+		//Smilies
 		$this->unparse_smilies();
 
-		// Replacing special module tags
+		//Module eventual special tags replacement
 		$this->unparse_module_special_tags();
 
-		// Replacing single tags
+		//Remplacement des balises simples
 		$this->unparse_simple_tags();
 
-		// Unparsing table tag
+		//Unparsage de la balise table.
 		if (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->unparse_table();
 		}
 
-		// Unparsing list tag
+		//Unparsage de la balise table.
 		if (TextHelper::strpos($this->content, '<li class="formatter-li"') !== false)
 		{
 			$this->unparse_list();
@@ -65,11 +65,11 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_smilies()
 	{
-		// Smilies
+		//Smilies
 		$smileys_cache = SmileysCache::load()->get_smileys();
 		if (!empty($smileys_cache))
 		{
-			// Creating replacement table
+			//Création du tableau de remplacement
 			foreach ($smileys_cache as $code => $infos)
 			{
 				$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
@@ -152,8 +152,8 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[float=$1]$2[/float]",
 			"[anchor=$1][/anchor]",
 			"[anchor=$1]$2[/anchor]",
-			"[abbr]$1[/abbr]",
-			"[abbr=$1]$2[/abbr]",
+			"[acronym]$1[/acronym]",
+			"[acronym=$1]$2[/acronym]",
 			"[abbr]$1[/abbr]",
 			"[abbr=$1]$2[/abbr]",
 			"[mail=$1]$2[/mail]",
@@ -172,10 +172,10 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3]$1[/movie]",
 			"[movie=$2,$3,$4]$1[/movie]",
-			"[movie=$2,$3]$1[/movie]",
-			"[movie=$2,$3]$1[/movie]",
-			"[movie=$2,$3]$1[/movie]",
-			"[movie=$2,$3]$1[/movie]",
+			"[swf=$2,$3]$1[/swf]",
+			"[swf=$2,$3]$1[/swf]",
+			"[swf=$2,$3]$1[/swf]",
+			"[youtube=$2,$3]$1[/youtube]",
 			"[math]$1[/math]",
 			"[lightbox=$1]$2[/lightbox]",
 			"[lightbox=$1]$2[/lightbox]",
@@ -194,41 +194,41 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
 		##Nested tags
-		// Quotes
+		//Quotes
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote]$2[/quote]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`isuU', '[quote=$1]$2[/quote]', $this->content);
 
-		// Hidden bloc
+		//Hidden bloc
 		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]', $this->content);
 
-		// Block
+		//Block
 		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 
-		// Container
+		//Container
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
 		{
 			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
 		}
 
-		## Callbacks
-		// Image
+		##Callbacks
+		//Image
 		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: title="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
 
-		// FA Icon
+		//FA Icon
 		$this->content = preg_replace_callback('`<i class="fa([blrs])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: aria-hidden="true" title="([^"]+)?")?></i>`iuU', array($this, 'unparse_fa'), $this->content);
 
-		// Fieldset
+		//Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
 		{
 			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', array($this, 'unparse_fieldset'), $this->content);
 		}
 
-		// Wikipedia link
+		//Wikipedia link
 		$this->content = preg_replace_callback('`<a href="http://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link">(.*)</a>`suU', array($this, 'unparse_wikipedia_link'), $this->content);
 
-		// Indentation
+		//Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
 
 		// Feed
@@ -276,7 +276,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_table()
 	{
-		// looping to iterate through all the nests
+		//On boucle pour parcourir toutes les imbrications
 		while (TextHelper::strpos($this->content, '<table class="formatter-table"') !== false)
 		{
 			$this->content = preg_replace('`<table class="formatter-table"([^>]*)>(.*)</table>`suU', '[table$1]$2[/table]', $this->content);
@@ -300,7 +300,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_list()
 	{
-		// looping as long as there is nesting
+		//On boucle tant qu'il y a de l'imbrication
 		while (TextHelper::strpos($this->content, '<ul class="formatter-ul">') !== false)
 		{
 			$this->content = preg_replace('`<ul( style="[^"]+")? class="formatter-ul">(.*)</ul>`suU', '[list$1]$2[/list]', $this->content);
@@ -352,8 +352,8 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_wikipedia_link($matches)
 	{
-		// Default language
-		if ($matches[1] == LangLoader::get_message('editor.wikipedia.subdomain', 'editor-lang'))
+		//On est dans la langue par défaut
+		if ($matches[1] == LangLoader::get_message('wikipedia_subdomain', 'editor-common'))
 		{
 			$lang = '';
 		}
@@ -362,7 +362,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			$lang = $matches[1];
 		}
 
-		// Link title is different from the article name
+		//L'intitulé du lien est différent du nom de l'article
 		if ($matches[2] != $matches[3])
 		{
 			$page_name = $matches[2];
