@@ -14,33 +14,66 @@
 
 class StringVars
 {
+    /**
+     * @var array The parameters for replacement
+     */
 	private $parameters;
+    /**
+     * @var bool Whether to throw an exception for missing variables
+     */
 	private $strict;
 
-	public static function replace_vars($string, array $parameters, $strict = false)
+    /**
+     * Replaces variables in a string using the provided parameters.
+     *
+     * @param string $string The input string
+     * @param array $parameters The parameters for replacement
+     * @param bool $strict Whether to throw an exception for missing variables
+     * @return string The string with variables replaced
+     */
+	public static function replace_vars(string $string, array $parameters, bool $strict = false): string
 	{
 		if (empty($parameters))
 		{
 			return $string;
 		}
-		$string_var = new StringVars($strict);
+		$string_var = new self($strict);
 		return $string_var->replace($string, $parameters);
 	}
 
-	public function __construct($strict = false)
+    /**
+     * Constructs a new StringVars instance.
+     *
+     * @param bool $strict Whether to throw an exception for missing variables
+     */
+	public function __construct(bool $strict = false)
 	{
 		$this->strict = $strict;
 	}
 
-	public function replace($string, array $parameters)
+    /**
+     * Replaces variables in the string using the provided parameters.
+     *
+     * @param string $string The input string
+     * @param array $parameters The parameters for replacement
+     * @return string The string with variables replaced
+     */
+	public function replace(string $string, array $parameters): string
 	{
 		$this->parameters = $parameters;
-		return preg_replace_callback('`:([A-Za-z][\w_]+)`iu', array($this, 'replace_var'), !is_null($string) ? $string : '');
+        return preg_replace_callback('`:([A-Za-z][\w_]+)`iu', [$this, 'replace_var'], $string ?? '');
 	}
 
-	private function replace_var($captures)
+    /**
+     * Replaces a single variable in the string.
+     *
+     * @param array $captures The regex captures
+     * @return string The replaced value
+     * @throws RemainingStringVarException If strict mode is enabled and the variable is not found
+     */
+	private function replace_var(array $captures): string
 	{
-		$varname =& $captures[1];
+		$varname = $captures[1];
 		if (array_key_exists($varname, $this->parameters))
 		{
 			return $this->set_var($this->parameters[$varname]);
@@ -55,9 +88,15 @@ class StringVars
 		}
 	}
 
-	protected function set_var($parameter)
+    /**
+     * Sets the value for a variable.
+     *
+     * @param mixed $parameter The value to set
+     * @return string The value to use for replacement
+     */
+	protected function set_var($parameter): string
 	{
-		return $parameter;
+		return (string)$parameter;
 	}
 }
 ?>

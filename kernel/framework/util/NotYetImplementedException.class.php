@@ -10,9 +10,14 @@
 
 class NotYetImplementedException extends Exception
 {
-	public function __construct($message = null)
-	{
-		parent::__construct('not yet implemented' . ($message != null ? ':' . $message : ''));
-	}
+    /**
+     * Constructs the exception with an optional custom message.
+     *
+     * @param string|null $message Optional custom message to append
+     */
+    public function __construct(?string $message = null)
+    {
+        parent::__construct('not yet implemented' . ($message !== null ? ': ' . $message : ''));
+    }
 }
 ?>

@@ -10,23 +10,51 @@
 
 class StringOutputStream
 {
-	private $stream;
-	private $index = 0;
-	private $length;
+    /**
+     * @var string The stream content
+     */
+    private string $stream;
 
-	public function __construct($string = '')
-	{
-		$this->stream = $string;
-	}
+    /**
+     * @var int The current index in the stream
+     */
+    private int $index = 0;
 
-	public function write($string)
-	{
-		$this->stream .= $string;
-	}
+    /**
+     * @var int The length of the stream
+     */
+    private int $length;
 
-	public function to_string()
-	{
-		return $this->stream;
-	}
+    /**
+     * Constructs a new StringOutputStream.
+     *
+     * @param string $string The initial string content
+     */
+    public function __construct(string $string = '')
+    {
+        $this->stream = $string;
+        $this->length = TextHelper::strlen($this->stream);
+    }
+
+    /**
+     * Writes a string to the stream.
+     *
+     * @param string $string The string to write
+     */
+    public function write(string $string): void
+    {
+        $this->stream .= $string;
+        $this->length = TextHelper::strlen($this->stream);
+    }
+
+    /**
+     * Returns the stream as a string.
+     *
+     * @return string The stream content
+     */
+    public function to_string(): string
+    {
+        return $this->stream;
+    }
 }
 ?>

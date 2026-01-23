@@ -1,6 +1,6 @@
 <?php
 /**
- * implements the query var replacement method
+ * Implements the query var replacement method
  * @package     IO
  * @subpackage  DB
  * @copyright   &copy; 2005-2026 PHPBoost
@@ -12,19 +12,30 @@
 
 class SQLQueryVars extends StringVars
 {
-	/**
-	 * @var AbstractSQLQuerier
-	 */
-	private $querier;
+    /**
+     * @var AbstractSQLQuerier
+     */
+    private AbstractSQLQuerier $querier;
 
-	public function __construct(AbstractSQLQuerier $querier)
-	{
+    /**
+     * Constructs a new SQLQueryVars.
+     *
+     * @param AbstractSQLQuerier $querier The SQL querier
+     */
+    public function __construct(AbstractSQLQuerier $querier)
+    {
         $this->querier = $querier;
         $strict = true;
         parent::__construct($strict);
-	}
+    }
 
-	protected function set_var($parameter)
+    /**
+     * Sets the value for a variable, escaping it if necessary.
+     *
+     * @param mixed $parameter The value to set
+     * @return string The value to use for replacement
+     */
+    protected function set_var($parameter): string
     {
         if ($parameter === null)
         {
@@ -45,7 +56,7 @@ class SQLQueryVars extends StringVars
         }
         else
         {
-            return $parameter;
+            return (string)$parameter;
         }
     }
 }

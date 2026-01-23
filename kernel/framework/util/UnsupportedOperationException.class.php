@@ -11,7 +11,7 @@
 
 class UnsupportedOperationException extends Exception
 {
-    public function __construct($msg = 'operation is not supported')
+    public function __construct(string $msg = 'Operation is not supported')
     {
         parent::__construct($msg);
     }

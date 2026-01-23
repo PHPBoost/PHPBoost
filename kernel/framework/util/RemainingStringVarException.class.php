@@ -11,9 +11,14 @@
 
 class RemainingStringVarException extends Exception
 {
-	public function __construct($varname)
-	{
-		parent::__construct('the string var ":' . $varname . '" has not value');
-	}
+    /**
+     * Constructs the exception with the name of the missing variable.
+     *
+     * @param string $varname The name of the variable that has no value
+     */
+    public function __construct(string $varname)
+    {
+        parent::__construct('The string var ":'.$varname.'" has no value');
+    }
 }
 ?>

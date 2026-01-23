@@ -10,42 +10,54 @@
 
 class KeyGenerator
 {
-	public static function generate_key($length = null)
-	{
-		if ($length == null)
-		{
-			return self::string_hash(uniqid(mt_rand(), true), false);
-		}
-		else
-		{
-			return TextHelper::substr(self::string_hash(uniqid(mt_rand(), true), false), 0, $length);
-		}
-	}
+    /**
+     * Generates a key of the specified length.
+     *
+     * @param int|null $length The desired length of the key
+     * @return string The generated key
+     */
+    public static function generate_key(?int $length = null): string
+    {
+        if ($length === null)
+        {
+            return self::string_hash(uniqid((string)mt_rand(), true), false);
+        }
+        else
+        {
+            return TextHelper::substr(self::string_hash(uniqid((string)mt_rand(), true), false), 0, $length);
+        }
+    }
 
-	public static function generate_token()
-	{
-		return self::generate_key(16);
-	}
+    /**
+     * Generates a token of 16 characters.
+     *
+     * @return string The generated token
+     */
+    public static function generate_token(): string
+    {
+        return self::generate_key(16);
+    }
 
-	/**
-	 * Return a SHA256 hash of the $str string [with a salt]
-	 * @param string $string the string to hash
-	 * @param mixed $salt If true, add the default salt : md5($str)
-	 * if a string, use this string as the salt
-	 * if false, do not use any salt
-	 * @return string a SHA256 hash of the $string string [with a salt]
-	*/
-	public static function string_hash($string, $salt = true)
-	{
-		if ($salt === true)
-		{
-			$string = md5($string) . $string;
-		}
-		elseif ($salt !== false)
-		{
-			$string = $salt . $string;
-		}
-		return hash('sha256', $string);
-	}
+    /**
+     * Returns a SHA256 hash of the string, optionally with a salt.
+     *
+     * @param string $string The string to hash
+     * @param bool|string $salt If true, adds the default salt: md5($string).
+     * If a string, uses this string as the salt.
+     * If false, does not use any salt.
+     * @return string A SHA256 hash of the string, optionally with a salt
+     */
+    public static function string_hash(string $string, $salt = true): string
+    {
+        if ($salt === true)
+        {
+            $string = md5($string) . $string;
+        }
+        elseif ($salt !== false)
+        {
+            $string = (string)$salt . $string;
+        }
+        return hash('sha256', $string);
+    }
 }
 ?>
