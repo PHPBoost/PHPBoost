@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 22
+ * @version     PHPBoost 6.1 - last update: 2026 01 23
  * @since       PHPBoost 2.0 - 2008 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -21,27 +21,31 @@
 
 class Date
 {
-    const string DATE_NOW = 'now';
+    const DATE_NOW = 'now';
 
-    const int FORMAT_TIMESTAMP = 0;
-    const int FORMAT_DAY_MONTH = 1;
-    const int FORMAT_DAY_MONTH_YEAR = 2;
-    const int FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE = 3;
-    const int FORMAT_RFC2822 = 4;
-    const int FORMAT_ISO8601 = 5;
-    const int FORMAT_DAY_MONTH_YEAR_LONG = 6;
-    const int FORMAT_DAY_MONTH_YEAR_TEXT = 7;
-    const int FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 8;
-    const int FORMAT_RELATIVE = 9;
-    const int FORMAT_ISO_DAY_MONTH_YEAR = 10;
-    const int FORMAT_AGO = 11;
-    const int FORMAT_SINCE = 12;
-    const int FORMAT_DELAY = 13;
-    const int FORMAT_HOUR_MINUTE = 14;
-    const int FORMAT_DAY_MONTH_TEXT = 15;
+    const FORMAT_TIMESTAMP                       = 0;
+    const FORMAT_DAY_MONTH                       = 1;
+    const FORMAT_DAY_MONTH_YEAR                  = 2;
+    const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE      = 3;
+    const FORMAT_RFC2822                         = 4;
+    const FORMAT_ISO8601                         = 5;
+    const FORMAT_DAY_MONTH_YEAR_LONG             = 6;
+    const FORMAT_DAY_MONTH_YEAR_TEXT             = 7;
+    const FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT = 8;
+    const FORMAT_RELATIVE                        = 9;
+    const FORMAT_ISO_DAY_MONTH_YEAR              = 10;
+    const FORMAT_AGO                             = 11;
+    const FORMAT_SINCE                           = 12;
+    const FORMAT_DELAY                           = 13;
+    const FORMAT_HOUR_MINUTE                     = 14;
+    const FORMAT_DAY_MONTH_TEXT                  = 15;
 
+    /**
+     * @var DateTime Representation of date and time.
+     */
     private DateTime $date_time;
-    protected static array $lang;
+
+    protected static $lang;
 
     /**
      * Builds and initializes a date.
@@ -53,31 +57,56 @@ class Date
      * 	<li>Timezone::USER_TIMEZONE if it's an entry coming from the user (it's own timezone will be used)</li>
      * </ul>
      */
-    public function __construct(string|int|null $time = self::DATE_NOW, int $referencial_timezone = Timezone::USER_TIMEZONE)
+    public function __construct($time = self::DATE_NOW, int $referencial_timezone = Timezone::USER_TIMEZONE)
     {
         self::$lang = LangLoader::get('date-lang');
         $date_timezone = Timezone::get_timezone($referencial_timezone);
 
-        if (preg_match('`^([0-9]+)$`iu', (string)($time ?: '')))
+        if (preg_match('`^([0-9]+)$`iu', $time ? $time : ''))
         {
             $this->date_time = new DateTime();
             $this->date_time->setTimezone($date_timezone);
-            $this->date_time->setTimestamp($time ?: 0);
+            $this->date_time->setTimestamp($time ? (int)$time : 0);
         }
-        elseif (preg_match('`^-([0-9]+)$`iu', (string)($time ?: '')))
+        elseif (preg_match('`^-([0-9]+)$`iu', $time ? $time : ''))
         {
-            $this->date_time = new DateTime('@' . ($time ?: 0), $date_timezone);
+            $this->date_time = new DateTime('@' . $time ? '@' . $time : '', $date_timezone);
         }
         else
         {
-            $this->date_time = new DateTime($time ?: '', $date_timezone);
+            $this->date_time = new DateTime($time ? $time : '', $date_timezone);
         }
     }
 
     /**
      * Formats the date to a particular format.
+     * @param int $format One of the following enumeration:
+     * <ul>
+     * 	<li>Date::FORMAT_DAY_MONTH for a tiny formatting (only month and day)</li>
+     * 	<li>Date::FORMAT_DAY_MONTH_YEAR for a short formatting (month, day, year)</li>
+     * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE for a longer displaying (year, month, day, hour and minutes)</li>
+     *  <li>Date::FORMAT_TIMESTAMP for a timestamp</li>
+     * 	<li>Date::FORMAT_RFC822 to format according to what the RFC822 announces</li>
+     * 	<li>Date::FORMAT_ISO8601 to format according to what the ISO8601 announces</li>
+     * 	<li>Date::FORMAT_DAY_MONTH_YEAR_LONG</li>
+     * 	<li>Date::FORMAT_DAY_MONTH_YEAR_TEXT</li>
+     * 	<li>Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT</li>
+     * 	<li>Date::FORMAT_RELATIVE</li>
+     * 	<li>Date::FORMAT_ISO_DAY_MONTH_YEAR</li>
+     * 	<li>Date::FORMAT_AGO</li>
+     *  <li>Date::FORMAT_SINCE</li>
+     *  <li>Date::FORMAT_HOUR_MINUTE</li>
+     *  <li>Date::FORMAT_DAY_MONTH_TEXT</li>
+     * </ul>
+     * @param int $referencial_timezone One of the following enumeration:
+     * <ul>
+     * 	<li>Timezone::SERVER_TIMEZONE</li>
+     * 	<li>Timezone::SITE_TIMEZONE</li>
+     * 	<li>Timezone::USER_TIMEZONE</li>
+     * </ul>
+     * @return string The formatted date
      */
-    public function format(int|string $format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
+    public function format($format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
     {
         $this->compute_server_user_difference($referencial_timezone);
 
@@ -90,26 +119,48 @@ class Date
         {
             case self::FORMAT_TIMESTAMP:
                 return (string)$this->date_time->getTimestamp();
+                break;
+
             case self::FORMAT_DAY_MONTH:
                 return $this->date_time->format(self::$lang['date.format.day.month']);
+                break;
+
             case self::FORMAT_DAY_MONTH_YEAR:
                 return $this->date_time->format(self::$lang['date.format.day.month.year']);
+                break;
+
             case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
                 return $this->date_time->format(self::$lang['date.format.day.month.year.hour.minute']);
+                break;
+
             case self::FORMAT_RFC2822:
                 return $this->date_time->format('r');
+                break;
+
             case self::FORMAT_ISO8601:
                 return $this->date_time->format('c');
+                break;
+
             case self::FORMAT_DAY_MONTH_YEAR_LONG:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.year.long']));
+                break;
+
             case self::FORMAT_DAY_MONTH_YEAR_TEXT:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.year.text']));
+                break;
+
             case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.year.hour.minute.text']));
+                break;
+
             case self::FORMAT_RELATIVE:
                 return self::get_date_relative($this->get_timestamp(), $referencial_timezone);
+                break;
+
             case self::FORMAT_ISO_DAY_MONTH_YEAR:
                 return $this->date_time->format('Y-m-d');
+                break;
+
             case self::FORMAT_AGO:
                 $time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
                 if ($time !== self::$lang['date.instantly'])
@@ -117,6 +168,8 @@ class Date
                     $time = StringVars::replace_vars(self::$lang['date.ago'], ['time' => $time]);
                 }
                 return $time;
+                break;
+
             case self::FORMAT_SINCE:
                 $time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
                 if ($time !== self::$lang['date.instantly'])
@@ -124,12 +177,20 @@ class Date
                     $time = StringVars::replace_vars(self::$lang['date.since'], ['time' => $time]);
                 }
                 return $time;
+                break;
+
             case self::FORMAT_DELAY:
                 return self::get_date_delay($this, $referencial_timezone);
+                break;
+
             case self::FORMAT_HOUR_MINUTE:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.hour.minute']));
+                break;
+
             case self::FORMAT_DAY_MONTH_TEXT:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.text']));
+                break;
+
             default:
                 return '';
         }
@@ -137,21 +198,32 @@ class Date
 
     /**
      * Returns the relative time associated to the date
+     * @param int $timestamp
+     * @param int $referencial_timezone
+     * @return string The relative time
      */
     public static function get_date_relative(int $timestamp, int $referencial_timezone): string
     {
         $now = new Date(Date::DATE_NOW, $referencial_timezone);
-        $time_diff = ($now->get_timestamp() > $timestamp) ? $now->get_timestamp() - $timestamp : $timestamp - $now->get_timestamp();
+
+        if ($now->get_timestamp() > $timestamp)
+        {
+            $time_diff = $now->get_timestamp() - $timestamp;
+        }
+        else
+        {
+            $time_diff = $timestamp - $now->get_timestamp();
+        }
 
         $secondes = $time_diff;
-        $minutes = round($time_diff / 60);
-        $hours = round($time_diff / 3600);
-        $days = round($time_diff / 86400);
-        $weeks = round($time_diff / 604800);
-        $months = round($time_diff / 2419200);
-        $years = round($time_diff / 29030400);
+        $minutes  = round($time_diff/60);
+        $hours    = round($time_diff/3600);
+        $days     = round($time_diff/86400);
+        $weeks    = round($time_diff/604800);
+        $months   = round($time_diff/2419200);
+        $years    = round($time_diff/29030400);
 
-        if ($secondes === 1)
+        if ($secondes == 1)
         {
             return self::$lang['date.instantly'];
         }
@@ -187,14 +259,25 @@ class Date
 
     /**
      * Returns the delay between now and the date
+     * @param Date $date
+     * @param int $referencial_timezone
+     * @return string The relative time
      */
     public static function get_date_delay(Date $date, int $referencial_timezone): string
     {
         $now = new Date(Date::DATE_NOW, $referencial_timezone);
-        $time_diff = ($now->get_timestamp() > $date->get_timestamp()) ? $now->get_timestamp() - $date->get_timestamp() : $date->get_timestamp() - $now->get_timestamp();
 
-        $hours = round($time_diff / 3600);
-        $years = round($time_diff / 29030400);
+        if ($now->get_timestamp() > $date->get_timestamp())
+        {
+            $time_diff = $now->get_timestamp() - $date->get_timestamp();
+        }
+        else
+        {
+            $time_diff = $date->get_timestamp() - $now->get_timestamp();
+        }
+
+        $hours    = round($time_diff/3600);
+        $years    = round($time_diff/29030400);
 
         if ($time_diff < 30)
         {
@@ -204,7 +287,7 @@ class Date
         {
             return self::transform_date($date->date_time->format(self::$lang['date.format.hour.minute']));
         }
-        elseif ($hours > 24 && $hours < 48)
+        elseif (($hours > 24) && ($hours < 48))
         {
             return self::$lang['date.yesterday'];
         }
@@ -220,6 +303,7 @@ class Date
 
     /**
      * Returns the timestamp associated to the date
+     * @return int The timestamp
      */
     public function get_timestamp(): int
     {
@@ -228,6 +312,7 @@ class Date
 
     /**
      * Returns DateTime
+     * @return DateTime
      */
     public function get_date_time(): DateTime
     {
@@ -236,6 +321,8 @@ class Date
 
     /**
      * Returns the year of the date
+     * @param int $timezone The timezone in which you want this value
+     * @return string The year
      */
     public function get_year(int $timezone = Timezone::USER_TIMEZONE): string
     {
@@ -243,9 +330,6 @@ class Date
         return $this->date_time->format('Y');
     }
 
-    /**
-     * Sets the year of the date
-     */
     public function set_year(int $year, int $referential_timezone = Timezone::USER_TIMEZONE): void
     {
         $this->compute_server_user_difference($referential_timezone);
@@ -254,6 +338,8 @@ class Date
 
     /**
      * Returns the month of the date
+     * @param int $timezone The timezone in which you want this value
+     * @return string The month
      */
     public function get_month(int $timezone = Timezone::USER_TIMEZONE): string
     {
@@ -261,9 +347,6 @@ class Date
         return $this->date_time->format('m');
     }
 
-    /**
-     * Sets the month of the date
-     */
     public function set_month(int $month, int $referential_timezone = Timezone::USER_TIMEZONE): void
     {
         $this->compute_server_user_difference($referential_timezone);
@@ -272,15 +355,20 @@ class Date
 
     /**
      * Returns first characters (all per default) of the month name
+     * @param string $characters_number The characters number requested (usually 2 or 3)
+     * @param int $timezone The timezone in which you want this value
+     * @return string The first letters of the month name
      */
     public function get_month_text(string $characters_number = '', int $timezone = Timezone::USER_TIMEZONE): string
     {
         $this->compute_server_user_difference($timezone);
-        return Texthelper::ucfirst(TextHelper::mb_substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
+        return TextHelper::ucfirst(TextHelper::mb_substr(self::transform_date($this->date_time->format('F')), 0, $characters_number));
     }
 
     /**
      * Returns the week number of the date
+     * @param int $referential_timezone The timezone in which you want this value
+     * @return string The week number
      */
     public function get_week_number(int $referential_timezone = Timezone::USER_TIMEZONE): string
     {
@@ -288,9 +376,6 @@ class Date
         return $this->date_time->format('W');
     }
 
-    /**
-     * Sets the week number of the date
-     */
     public function set_week_number(int $week_number): void
     {
         $this->date_time->setISODate($this->get_year(), $week_number);
@@ -298,6 +383,8 @@ class Date
 
     /**
      * Returns the day of the date
+     * @param int $timezone The timezone in which you want this value
+     * @return string The day
      */
     public function get_day(int $timezone = Timezone::USER_TIMEZONE): string
     {
@@ -305,18 +392,12 @@ class Date
         return $this->date_time->format('j');
     }
 
-    /**
-     * Returns the day of the date (two digits)
-     */
     public function get_day_two_digits(int $timezone = Timezone::USER_TIMEZONE): string
     {
         $this->compute_server_user_difference($timezone);
         return $this->date_time->format('d');
     }
 
-    /**
-     * Sets the day of the date
-     */
     public function set_day(int $day, int $referential_timezone = Timezone::USER_TIMEZONE): void
     {
         $this->compute_server_user_difference($referential_timezone);
@@ -325,15 +406,20 @@ class Date
 
     /**
      * Returns first characters (all per default) of the day of week name
+     * @param string $characters_number The characters number requested (usually 2 or 3)
+     * @param int $timezone The timezone in which you want this value
+     * @return string The first letters of the day name
      */
     public function get_day_text(string $characters_number = '', int $timezone = Timezone::USER_TIMEZONE): string
     {
         $this->compute_server_user_difference($timezone);
-        return Texthelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
+        return TextHelper::ucfirst(TextHelper::substr(self::transform_date($this->date_time->format('l')), 0, $characters_number));
     }
 
     /**
      * Returns the day of the week (0 for sunday to 6 for saturday)
+     * @param int $timezone The timezone in which you want this value
+     * @return int The day of the year
      */
     public function get_day_of_week(int $timezone = Timezone::USER_TIMEZONE): int
     {
@@ -343,6 +429,8 @@ class Date
 
     /**
      * Returns the day of the year
+     * @param int $timezone The timezone in which you want this value
+     * @return int The day of the year
      */
     public function get_day_of_year(int $timezone = Timezone::USER_TIMEZONE): int
     {
@@ -350,16 +438,15 @@ class Date
         return (int)$this->date_time->format('z');
     }
 
-    /**
-     * Sets the day of the year
-     */
     public function set_day_of_year(int $day_of_year): void
     {
-        $this->date_time->modify($this->get_year() . '-01-00 ' . $day_of_year . 'days');
+        $this->date_time->modify($this->get_year() . '-01-00 ' . $day_of_year. 'days');
     }
 
     /**
      * Returns the hours of the date
+     * @param int $timezone The timezone in which you want this value
+     * @return string The hours
      */
     public function get_hours(int $timezone = Timezone::USER_TIMEZONE): string
     {
@@ -367,9 +454,6 @@ class Date
         return $this->date_time->format('H');
     }
 
-    /**
-     * Sets the hours of the date
-     */
     public function set_hours(int $hours, int $referential_timezone = Timezone::USER_TIMEZONE): void
     {
         $this->compute_server_user_difference($referential_timezone);
@@ -378,15 +462,13 @@ class Date
 
     /**
      * Returns the minutes of the date
+     * @return string The minutes
      */
     public function get_minutes(): string
     {
         return $this->date_time->format('i');
     }
 
-    /**
-     * Sets the minutes of the date
-     */
     public function set_minutes(int $minutes, int $referential_timezone = Timezone::USER_TIMEZONE): void
     {
         $this->compute_server_user_difference($referential_timezone);
@@ -395,15 +477,13 @@ class Date
 
     /**
      * Returns the seconds of the date
+     * @return string The seconds
      */
     public function get_seconds(): string
     {
         return $this->date_time->format('s');
     }
 
-    /**
-     * Sets the seconds of the date
-     */
     public function set_seconds(int $seconds, int $referential_timezone = Timezone::USER_TIMEZONE): void
     {
         $this->compute_server_user_difference($referential_timezone);
@@ -412,6 +492,7 @@ class Date
 
     /**
      * Exports the date according to the format YYYY-mm-dd
+     * @return string The formatted date
      */
     public function to_date(): string
     {
@@ -420,6 +501,8 @@ class Date
 
     /**
      * Tells whether this date is anterior to the given one
+     * @param Date $date The date to compare with
+     * @return bool
      */
     public function is_anterior_to(Date $date): bool
     {
@@ -428,6 +511,8 @@ class Date
 
     /**
      * Tells whether this date is posterior to the given one
+     * @param Date $date The date to compare with
+     * @return bool
      */
     public function is_posterior_to(Date $date): bool
     {
@@ -436,6 +521,8 @@ class Date
 
     /**
      * Tells whether this date equals the given one
+     * @param Date $date The date to compare with.
+     * @return bool true if the two dates are the same, false otherwise
      */
     public function equals(Date $date): bool
     {
@@ -444,22 +531,25 @@ class Date
 
     /**
      * Adds the given number of days to the date
+     * @param int $number_days The number of days to add.
      */
     public function add_days(int $number_days): void
     {
-        $this->date_time->modify('+' . $number_days . ' days');
+        $this->date_time->modify('+'.$number_days.' days');
     }
 
     /**
      * Adds the given number of weeks to the date
+     * @param int $number_weeks The number of weeks to add.
      */
     public function add_weeks(int $number_weeks): void
     {
-        $this->date_time->modify('+' . $number_weeks . ' weeks');
+        $this->date_time->modify('+'.$number_weeks.' weeks');
     }
 
     /**
      * Tells whether the year of the date is bissextile
+     * @return bool true if the year is bissextile, false otherwise
      */
     public function is_date_year_bissextile(): bool
     {
@@ -468,24 +558,22 @@ class Date
 
     /**
      * Determines whether a date is correct. For example the february 31st is not correct.
+     * @param int $month The month
+     * @param int $day The day
+     * @param int $year The year
+     * @return bool true if the date is correct and false otherwise.
      */
     private static function check_date(int $month, int $day, int $year): bool
     {
         return checkdate($month, $day, $year);
     }
 
-    /**
-     * Formats a date according to the specified format.
-     */
-    public static function to_format(string|int $time, int|string $format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
+    public static function to_format($time, $format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
     {
         $date = new Date($time, $referencial_timezone);
         return $date->format($format);
     }
 
-    /**
-     * Sets the default timezone.
-     */
     public static function set_default_timezone(): void
     {
         $default = @date_default_timezone_get();
@@ -494,6 +582,9 @@ class Date
 
     /**
      * Calculates and return date formats to use many variables in the TPL.
+     * @param Date $date The concerned date
+     * @param string $date_label The purpose of the date
+     * @return array true if the date is correct and false otherwise.
      */
     public static function get_array_tpl_vars(?Date $date, string $date_label): array
     {
@@ -504,46 +595,44 @@ class Date
 
         $date_label = TextHelper::strtoupper($date_label);
         return [
-            $date_label => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-            $date_label . '_TIMESTAMP' => $date->get_timestamp(),
-            $date_label . '_SHORT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
-            $date_label . '_SHORT_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
+            $date_label                       => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+            $date_label . '_TIMESTAMP'        => $date->get_timestamp(),
+            $date_label . '_SHORT'            => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
+            $date_label . '_SHORT_TEXT'       => $date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
             $date_label . '_SHORT_MONTH_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_LONG),
-            $date_label . '_FULL' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
-            $date_label . '_DAY' => $date->get_day(),
-            $date_label . '_DAY_TEXT' => $date->get_day_text(3),
-            $date_label . '_DAY_FULLTEXT' => $date->get_day_text(),
-            $date_label . '_DAY_MONTH' => $date->format(Date::FORMAT_DAY_MONTH),
-            $date_label . '_DAY_MONTH_TEXT' => $date->format(Date::FORMAT_DAY_MONTH_TEXT),
-            $date_label . '_WEEK' => $date->get_week_number(),
-            $date_label . '_MONTH' => $date->get_month(),
-            $date_label . '_MONTH_TEXT' => $date->get_month_text(3),
-            $date_label . '_MONTH_FULLTEXT' => $date->get_month_text(),
-            $date_label . '_YEAR' => $date->get_year(),
-            $date_label . '_HOUR_MINUTE' => $date->format(Date::FORMAT_HOUR_MINUTE),
-            $date_label . '_HOUR' => $date->get_hours(),
-            $date_label . '_MINUTE' => $date->get_minutes(),
-            $date_label . '_SECONDS' => $date->get_seconds(),
-            $date_label . '_ISO8601' => $date->format(Date::FORMAT_ISO8601),
-            $date_label . '_RFC2822' => $date->format(Date::FORMAT_RFC2822),
-            $date_label . '_AGO' => $date->format(Date::FORMAT_AGO),
-            $date_label . '_SINCE' => $date->format(Date::FORMAT_SINCE),
-            $date_label . '_DELAY' => $date->format(Date::FORMAT_DELAY),
-            $date_label . '_RELATIVE' => $date->format(Date::FORMAT_RELATIVE)
+            $date_label . '_FULL'             => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
+            $date_label . '_DAY'              => $date->get_day(),
+            $date_label . '_DAY_TEXT'         => $date->get_day_text(3),
+            $date_label . '_DAY_FULLTEXT'     => $date->get_day_text(),
+            $date_label . '_DAY_MONTH'        => $date->format(Date::FORMAT_DAY_MONTH),
+            $date_label . '_DAY_MONTH_TEXT'   => $date->format(Date::FORMAT_DAY_MONTH_TEXT),
+            $date_label . '_WEEK'             => $date->get_week_number(),
+            $date_label . '_MONTH'            => $date->get_month(),
+            $date_label . '_MONTH_TEXT'       => $date->get_month_text(3),
+            $date_label . '_MONTH_FULLTEXT'   => $date->get_month_text(),
+            $date_label . '_YEAR'             => $date->get_year(),
+            $date_label . '_HOUR_MINUTE'      => $date->format(Date::FORMAT_HOUR_MINUTE),
+            $date_label . '_HOUR'             => $date->get_hours(),
+            $date_label . '_MINUTE'           => $date->get_minutes(),
+            $date_label . '_SECONDS'          => $date->get_seconds(),
+            $date_label . '_ISO8601'          => $date->format(Date::FORMAT_ISO8601),
+            $date_label . '_RFC2822'          => $date->format(Date::FORMAT_RFC2822),
+            $date_label . '_AGO'              => $date->format(Date::FORMAT_AGO),
+            $date_label . '_SINCE'            => $date->format(Date::FORMAT_SINCE),
+            $date_label . '_DELAY'            => $date->format(Date::FORMAT_DELAY),
+            $date_label . '_RELATIVE'         => $date->format(Date::FORMAT_RELATIVE)
         ];
     }
 
     /**
      * Computes the time difference between the server and the current user
+     * @param int $referencial_timezone
      */
     private function compute_server_user_difference(int $referencial_timezone = Timezone::SERVER_TIMEZONE): void
     {
         $this->date_time->setTimezone(Timezone::get_timezone($referencial_timezone));
     }
 
-    /**
-     * Transforms date strings to localized format.
-     */
     private static function transform_date(string $date): string
     {
         $search = [
