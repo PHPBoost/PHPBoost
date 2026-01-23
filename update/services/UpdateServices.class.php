@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 07
+ * @version     PHPBoost 6.0 - last update: 2026 01 23
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -690,6 +690,8 @@ class UpdateServices
 				$unparser->parse();
 				$parser->set_content($unparser->get_content());
 				$parser->parse();
+                $content_br = preg_replace('#<br\s*\/>\s*\n\s*<br\s*\/>\s*\n\s*<br\s*\/>#', "<br />\n<br />", $parser->get_content());
+                $parser->set_content($content_br);
 
 				if ($parser->get_content() != $row[$contents])
 				{
