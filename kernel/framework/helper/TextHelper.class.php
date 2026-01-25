@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 05
+ * @version     PHPBoost 6.1 - last update: 2026 01 25
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -303,20 +303,22 @@ class TextHelper
 
         // Fixed string lengths for multi-byte characters
         $string = preg_replace_callback(
-            '/s:(\d+):"(.*?)";/s', 
-            function($matches) {
-                if (isset($matches[2])) {
-                    // Use strlen (not mb_strlen) to get the number of bytes
-                    return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
-                }
-                return $matches[0];
-            }, $string
+            '/s:(\d+):"(.*?)";/s',
+            function (array $matches) {
+                $value = $matches[2] ?? '';
+                $value = (string) $value;
+                return 's:' . strlen($value) . ':"' . $value . '";';
+            },
+            $string
         );
 
         // Attempt to deserialize
-        $result = @unserialize($string);
-        // In case of failure, the original string is returned
-        return ($result !== false) ? $result : $string;
+        $result = $result = unserialize($string, ['allowed_classes' => false]);
+        if ($result === false && $string !== 'b:0;') {
+            // treat as non‑serialized or log/debug
+            return $string;
+        }
+        return $result;
     }
 
 	private static function is_base64($string)
