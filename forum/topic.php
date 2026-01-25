@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 03
+ * @version     PHPBoost 6.0 - last update: 2026 01 24
  * @since       PHPBoost 1.2 - 2005 10 26
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -245,15 +245,16 @@ while ( $row = $result->fetch() )
 			'QUESTION'      => stripslashes($row['question']),
 
 			'U_POLL_RESULT' => url('.php?id=' . $id_get . '&amp;r=1&amp;pt=' . $page),
-			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token()),
-
+			'U_POLL_ACTION' => url('.php?id=' . $id_get . '&amp;p=' . $page . '&amp;token=' . AppContext::get_session()->get_token())
 		));
 
 		$array_voter = explode('|', $row['voter_id']);
 		if (in_array(AppContext::get_current_user()->get_id(), $array_voter) || $request->get_getvalue('r', 0) || AppContext::get_current_user()->get_id() === -1) //Déjà voté.
 		{
 			$array_answer = explode('|', $row['answers']);
-			$array_vote = explode('|', $row['votes']);
+            $votes_raw = isset($row['votes']) ? trim($row['votes']) : '';
+			$array_vote = array_filter(explode('|', $votes_raw), 'strlen');
+            $array_vote = array_map('intval', $array_vote);
 
 			$sum_vote = (int)array_sum($array_vote);
 			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
@@ -502,7 +503,7 @@ while ( $row = $result->fetch() )
 			));
 		}
 	}
-	
+
 	$user_additional_informations = HooksService::execute_hook_display_user_additional_informations_action('forum', $row);
 
 	foreach ($user_additional_informations as $info)

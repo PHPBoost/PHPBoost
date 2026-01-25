@@ -21,12 +21,13 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
 namespace Facebook;
 
 use Facebook\Authentication\AccessToken;
 use Facebook\Exceptions\FacebookSDKException;
 
-class FacebookApp implements \Serializable
+class FacebookApp
 {
     /**
      * @var string The app ID.
@@ -46,12 +47,9 @@ class FacebookApp implements \Serializable
      */
     public function __construct($id, $secret)
     {
-        if (!is_string($id)
-          // Keeping this for BC. Integers greater than PHP_INT_MAX will make is_int() return false
-          && !is_int($id)) {
-            throw new FacebookSDKException('The "app_id" must be formatted as a string since many app ID\'s are greater than PHP_INT_MAX on some systems.');
+        if (!is_string($id) && !is_int($id)) {
+            throw new FacebookSDKException('The "app_id" must be formatted as a string since many app IDs are greater than PHP_INT_MAX on some systems.');
         }
-        // We cast as a string in case a valid int was set on a 64-bit system and this is unserialised on a 32-bit system
         $this->id = (string) $id;
         $this->secret = $secret;
     }
@@ -87,24 +85,43 @@ class FacebookApp implements \Serializable
     }
 
     /**
-     * Serializes the FacebookApp entity as a string.
+     * Custom serialization for php 8+.
      *
-     * @return string
+     * @return array
      */
-    public function serialize()
+    public function __serialize(): array
     {
-        return implode('|', [$this->id, $this->secret]);
+        return [
+            'id' => $this->id,
+            'secret' => $this->secret,
+        ];
     }
 
     /**
-     * Unserializes a string as a FacebookApp entity.
+     * Custom unserialization for php 8+.
      *
-     * @param string $serialized
+     * @param array $data
      */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        list($id, $secret) = explode('|', $serialized);
-
-        $this->__construct($id, $secret);
+        $this->id = $data['id'];
+        $this->secret = $data['secret'];
     }
 }
+
+// Testing | Remove when done testing
+
+$app = new FacebookApp('123456', 'abcdef');
+
+// Serialize
+$serialized = serialize($app);
+echo $serialized . PHP_EOL;
+
+// Unserialize
+$unserialized = unserialize($serialized);
+echo 'App ID: ' . $unserialized->getId() . PHP_EOL;
+echo 'App Secret: ' . $unserialized->getSecret() . PHP_EOL;
+
+// Testing | Remove when done testing
+?>
+

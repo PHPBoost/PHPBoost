@@ -295,11 +295,29 @@ class TextHelper
 
 	public static function mb_unserialize($string)
 	{
-		$string = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($matches) {
-			if (isset($matches[2])) return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
-		}, $string
-		);
-		return unserialize($string);
+		// We first check if the string is serialized
+        if (!self::is_serialized($string)) {
+            return $string;
+        }
+
+        // Fixed string lengths for multi-byte characters
+        $string = preg_replace_callback(
+            '/s:(\d+):"(.*?)";/s',
+            function (array $matches) {
+                $value = $matches[2] ?? '';
+                $value = (string) $value;
+                return 's:' . strlen($value) . ':"' . $value . '";';
+            },
+            $string
+        );
+
+        // Attempt to deserialize
+        $result = $result = unserialize($string, ['allowed_classes' => false]);
+        if ($result === false && $string !== 'b:0;') {
+            // treat as non‑serialized or log/debug
+            return $string;
+        }
+        return $result;
 	}
 
 	private static function is_base64($string)
