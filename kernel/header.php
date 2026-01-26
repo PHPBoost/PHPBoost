@@ -11,48 +11,53 @@
 
 if (defined('PHPBOOST') !== true)
 {
-	exit;
+    exit;
 }
 
 $env = new SiteDisplayGraphicalEnvironment();
 $env->set_breadcrumb($Bread_crumb);
 
 if (isset($location_id) && !empty($location_id) && !AppContext::get_session()->location_id_already_exists($location_id))
-	$env->set_location_id($location_id);
+{
+    $env->set_location_id($location_id);
+}
 
 Environment::set_graphical_environment($env);
 
 if (!defined('TITLE'))
 {
-	define('TITLE', LangLoader::get_message('common.unknown', 'common-lang'));
+    define('TITLE', LangLoader::get_message('common.unknown', 'common-lang'));
 }
 
 $module_id = Environment::get_running_module_name();
 $section = '';
 if (!Environment::home_page_running() && ModulesManager::is_module_installed($module_id) && ModulesManager::is_module_activated($module_id))
 {
-	$section = ModulesManager::get_module($module_id)->get_configuration()->get_name();
+    $section = ModulesManager::get_module($module_id)->get_configuration()->get_name();
 }
 
 $env->set_page_title(TITLE, $section);
 if (defined('DESCRIPTION'))
 {
-	$env->get_seo_meta_data()->set_description(DESCRIPTION);
+    $env->get_seo_meta_data()->set_description(DESCRIPTION);
 }
 
 ob_start();
 
 if (isset($location_id) && !empty($location_id) && AppContext::get_session()->location_id_already_exists($location_id))
 {
-	$user_display_name = UserService::display_user_profile_link(AppContext::get_session()->get_user_on_location_id($location_id));
+    $user_display_name = UserService::display_user_profile_link(AppContext::get_session()->get_user_on_location_id($location_id));
 
-	$tpl = new StringTemplate('# INCLUDE MESSAGE_HELPER #');
+    $tpl = new StringTemplate('# INCLUDE MESSAGE_HELPER #');
 
-	$tpl->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.locked.content.description', 'warning-lang'), array('user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('warning.locked.content.another.user', 'warning-lang'))), MessageHelper::NOTICE));
+    $tpl->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars(
+        LangLoader::get_message('warning.locked.content.description', 'warning-lang'),
+        ['user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('warning.locked.content.another.user', 'warning-lang')]
+    ), MessageHelper::NOTICE));
 
-	$tpl->display();
+    $tpl->display();
 
-	require_once('../kernel/footer.php');
-	die();
+    require_once('../kernel/footer.php');
+    die();
 }
 ?>
