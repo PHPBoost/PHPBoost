@@ -18,9 +18,9 @@
 class BreadCrumb
 {
 	/**
-	 * @var string[string] List of the links
+	 * List of the links
 	 */
-	private $array_links = array();
+	private array $array_links = [];
 	/**
 	 * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
 	 */
@@ -36,7 +36,7 @@ class BreadCrumb
 		if (!empty($text))
 		{
 			$url = $target instanceof Url ? $target->rel() : $target;
-			$this->array_links[] = array($text, $url);
+			$this->array_links[] = [$text, $url];
 			return true;
 		}
 		else
@@ -78,12 +78,12 @@ class BreadCrumb
 		$position = 2;
 		foreach ($this->array_links as $key => $array)
 		{
-			$tpl->assign_block_vars('link_bread_crumb', array(
+			$tpl->assign_block_vars('link_bread_crumb', [
 				'C_CURRENT' => $output[0] == $array,
 				'URL'       => $array[1],
 				'TITLE'     => $array[0],
 				'POSITION'  => $position
-			));
+			]);
 			$position++;
 		}
 	}
@@ -93,7 +93,7 @@ class BreadCrumb
 	 */
 	public function clean()
 	{
-		$this->array_links = array();
+		$this->array_links = [];
 	}
 
 	/**

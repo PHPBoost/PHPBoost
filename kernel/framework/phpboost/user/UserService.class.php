@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2025 01 17
  * @since       PHPBoost 3.0 - 2012 03 31
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -295,7 +295,7 @@ class UserService
 	public static function remove_old_unactivated_member_accounts()
 	{
 		$user_account_settings = UserAccountsConfig::load();
-		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
+		$delay_unactiv_max = (int)$user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
 		if ($delay_unactiv_max > 0 && $user_account_settings->get_member_accounts_validation_method() != UserAccountsConfig::ADMINISTRATOR_USER_ACCOUNTS_VALIDATION)
 		{
 			$result = self::$querier->select_rows(DB_TABLE_INTERNAL_AUTHENTICATION, array('user_id'),
