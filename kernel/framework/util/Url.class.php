@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 23
+ * @version     PHPBoost 6.1 - last update: 2026 01 28
  * @since       PHPBoost 2.0 - 2009 01 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -176,10 +176,11 @@ class Url
     }
 
     /**
-     * @param string $url
-     * @return string
+     * Prepares a string for it to be used in an URL (with only a-z, 0-9 and - characters).
+     * @param string $string String to encode.
+     * @return string The encoded string.
      */
-    public static function encode_rewrite(string $url): string
+    public static function encode_rewrite($url): string
     {
         $url = mb_convert_encoding(TextHelper::html_entity_decode($url), 'ISO-8859-1', 'UTF-8');
         $url = TextHelper::strtolower(strtr($url, mb_convert_encoding('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöø°ÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>«»`|+.= #', 'ISO-8859-1', 'UTF-8'), '2aaaaaaaaaaaaoooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    --      c  ---    e         --- '));
@@ -622,3 +623,4 @@ class Url
         return TextHelper::strpos($current_url, $check_url) !== false;
     }
 }
+?>
