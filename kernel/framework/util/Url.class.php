@@ -180,7 +180,7 @@ class Url
      * @param string $string String to encode.
      * @return string The encoded string.
      */
-    public static function encode_rewrite($url): string
+    public static function encode_rewrite(?string $url): string
     {
         $url = mb_convert_encoding(TextHelper::html_entity_decode($url), 'ISO-8859-1', 'UTF-8');
         $url = TextHelper::strtolower(strtr($url, mb_convert_encoding('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöø°ÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>«»`|+.= #', 'ISO-8859-1', 'UTF-8'), '2aaaaaaaaaaaaoooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    --      c  ---    e         --- '));
