@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -47,10 +47,12 @@ class GalleryDisplayCategoryController extends ModuleController
 	{
 		global $Bread_crumb;
 
-		$g_idpics = (int)retrieve(GET, 'id', 0);
-		$g_views  = (bool)retrieve(GET, 'views', false);
-		$g_notes  = (bool)retrieve(GET, 'notes', false);
-		$g_sort   = retrieve(GET, 'sort', '');
+        $request = AppContext::get_request();
+
+		$g_idpics = $request->get_getint('id', 0);
+		$g_views  = $request->get_getbool('views', false);
+		$g_notes  = $request->get_getbool('notes', false);
+		$g_sort   = $request->get_getvalue('sort', '');
 		$g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 		//Récupération du mode d'ordonnement.
@@ -422,7 +424,7 @@ class GalleryDisplayCategoryController extends ModuleController
 			}
 			else
 			{
-				$sort = retrieve(GET, 'sort', '');
+				$sort = $request->get_getvalue('sort', '');
 
 				//On crée une pagination si le nombre de photos est trop important.
 				$page = AppContext::get_request()->get_getint('pp', 1);

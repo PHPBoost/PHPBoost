@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 15
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.2 - 2005 08 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,14 +17,16 @@ require_once('../kernel/header.php');
 
 $config = GalleryConfig::load();
 
-$g_idpics = (int)retrieve(GET, 'id', 0);
-$g_del    = (int)retrieve(GET, 'del', 0);
-$g_move   = (int)retrieve(GET, 'move', 0);
-$g_add    = (bool)retrieve(GET, 'add', false);
-$g_page   = (int)retrieve(GET, 'p', 1);
-$g_views  = (bool)retrieve(GET, 'views', false);
-$g_notes  = (bool)retrieve(GET, 'notes', false);
-$g_sort   = retrieve(GET, 'sort', '');
+$request = AppContext::get_request();
+
+$g_idpics = $request->get_getint('id', 0);
+$g_del    = $request->get_getint('del', 0);
+$g_move   = $request->get_getint('move', 0);
+$g_add    = $request->get_getbool('add', false);
+$g_page   = $request->get_getint('p', 1);
+$g_views  = $request->get_getbool('views', false);
+$g_notes  = $request->get_getbool('notes', false);
+$g_sort   = $request->get_getvalue('sort', '');
 $g_sort   = !empty($g_sort) ? 'sort=' . $g_sort : '';
 
 //Récupération du mode d'ordonnement.
@@ -104,8 +106,8 @@ elseif (isset($_FILES['gallery'])) //Upload
 		$Upload = new Upload($dir);
 
 		$idpic = 0;
-		$id_category_post = (int)retrieve(POST, '_cat', 0);
-		$name_post = retrieve(POST, 'name', '', TSTRING_AS_RECEIVED);
+		$id_category_post = $request->get_postint('_cat', 0);
+		$name_post        = $request->get_postvalue('name', '', TSTRING_AS_RECEIVED);
 
 		if (!$Upload->file('gallery', '`\.(' . implode('|', array_map('preg_quote', $authorized_pictures_extensions)) . ')+$`iu', Upload::UNIQ_NAME, $config->get_max_weight()))
 			$error = $Upload->get_error();
@@ -174,7 +176,7 @@ elseif ($g_add)
 	}
 
 	//Gestion erreur.
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = $request->get_getvalue('error', '');
 	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
 	if (in_array($get_error, $array_error))
 		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
