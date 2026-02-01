@@ -25,8 +25,8 @@ class Debug
         if ($file->exists())
         {
             include $file->get_path();
-            self::$enabled = $enabled;
-            self::$options = $options;
+            self::$enabled = $enabled ?? self::$enabled;
+            self::$options = $options ?? self::$options;
         }
     }
 
