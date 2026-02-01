@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 4.1 - 2015 02 15
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -23,10 +23,11 @@ class ForumHomeController extends DefaultModuleController
 
 	private function build_view()
 	{
+        $request = AppContext::get_request();
 		self::$module_id = 'forum';
 		global $nbr_msg_not_read, $top_view, $bottom_view;
 
-		$id_get = (int)retrieve(GET, 'id', 0);
+		$id_get = $request->get_getint('id', 0);
 		$categories_cache = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache();
 
 		try {

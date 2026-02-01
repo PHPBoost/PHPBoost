@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 10 03
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2007 02 15
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,15 +17,17 @@ require_once('../kernel/header_no_display.php');
 
 $lang = LangLoader::get_all_langs('forum');
 
-$track        = retrieve(GET, 't', '');
-$untrack      = retrieve(GET, 'ut', '');
-$track_pm     = retrieve(GET, 'tp', '');
-$untrack_pm   = retrieve(GET, 'utp', '');
-$track_mail   = retrieve(GET, 'tm', '');
-$untrack_mail = retrieve(GET, 'utm', '');
-$msg_d        = retrieve(GET, 'msg_d', '');
+$request = AppContext::get_request();
 
-if (retrieve(GET, 'refresh_unread', false)) //Affichage des messages non lus
+$track        = $request->get_getvalue('t', '');
+$untrack      = $request->get_getvalue('ut', '');
+$track_pm     = $request->get_getvalue('tp', '');
+$untrack_pm   = $request->get_getvalue('utp', '');
+$track_mail   = $request->get_getvalue('tm', '');
+$untrack_mail = $request->get_getvalue('utm', '');
+$msg_d        = $request->get_getvalue('msg_d', '');
+
+if ($request->get_getvalue('refresh_unread', false)) //Affichage des messages non lus
 {
 	$is_guest = (AppContext::get_current_user()->get_id() == -1);
 	$nbr_msg_not_read = 0;
@@ -149,7 +151,7 @@ elseif (!empty($msg_d))
 		echo ($topic['display_msg']) ? 2 : 1;
 	}
 }
-elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve(GET, 'punish_moderation_panel', false)) //Recherche d'un membre
+elseif ($request->get_getbool('warning_moderation_panel', false) || $request->get_getbool('punish_moderation_panel', false)) //Recherche d'un membre
 {
 	$login = TextHelper::strprotect(mb_convert_encoding(AppContext::get_request()->get_postvalue('login', ''), 'ISO-8859-1', 'UTF-8'));
 	$login = str_replace('*', '%', $login);
@@ -161,9 +163,9 @@ elseif ((bool)retrieve(GET, 'warning_moderation_panel', false) || (bool)retrieve
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			if (retrieve(GET, 'warning_moderation_panel', false))
+			if ($request->get_getvalue('warning_moderation_panel', false))
 				echo '<a href="moderation_forum.php?action=warning&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['level']).' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a><br />';
-			elseif (retrieve(GET, 'punish_moderation_panel', false))
+			elseif ($request->get_getvalue('punish_moderation_panel', false))
 				echo '<a href="moderation_forum.php?action=punish&amp;id=' . $row['user_id'] . '" class="'.UserService::get_level_class($row['level']).' offload"' . (!empty($group_color) ? ' style="color:' . $group_color . '"' : '') . '>' . $row['display_name'] . '</a><br />';
 
 			$i++;

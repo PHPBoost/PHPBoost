@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 10 03
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.2 - 2005 10 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,7 +16,9 @@ require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get_all_langs('forum');
 
-$id_get = (int)retrieve(GET, 'id', 0);
+$request = AppContext::get_request();
+
+$id_get = $request->get_getint('id', 0);
 
 $is_modo = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
@@ -56,10 +58,10 @@ define('TITLE', LangLoader::get_message('contribution.contribution', 'contributi
 
 require_once('../kernel/header.php');
 
-$new_get = retrieve(GET, 'new', '');
-$idt_get = retrieve(GET, 'idt', '');
-$error_get = retrieve(GET, 'error', '');
-$post_topic = (bool)retrieve(POST, 'post_topic', false);
+$new_get    = $request->get_getvalue('new', '');
+$idt_get    = $request->get_getvalue('idt', '');
+$error_get  = $request->get_getvalue('error', '');
+$post_topic = $request->get_postbool('post_topic', false);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('content');
@@ -101,7 +103,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
 			if ($is_modo)
-				$type = (int)retrieve(POST, 'type', 0);
+				$type = $request->get_postint('type', 0);
 			else
 				$type = 0;
 
@@ -111,9 +113,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 			if ($is_modo)
 				$check_status = ForumCategory::STATUS_UNLOCKED;
 
-			$content = retrieve(POST, 'content', '', TSTRING_UNCHANGE);
-			$title = retrieve(POST, 'title', '');
-			$subtitle = retrieve(POST, 'desc', '');
+			$content  = $request->get_postvalue('content', '', TSTRING_UNCHANGE);
+			$title    = $request->get_postvalue('title', '');
+			$subtitle = $request->get_postvalue('desc', '');
 
 			//Mod anti Flood
 			if ($check_time !== false && $check_status == ForumCategory::STATUS_UNLOCKED)
@@ -133,17 +135,17 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 					list($last_topic_id, $last_msg_id) = $Forumfct->Add_topic($id_get, $title, $subtitle, $content, $type); //Insertion nouveau topic.
 
 					//Ajout d'un sondage en plus du topic.
-					$question = retrieve(POST, 'question', '');
+					$question = $request->get_postvalue('question', '');
 					if (!empty($question))
 					{
-						$poll_type = (int)retrieve(POST, 'poll_type', 0);
+						$poll_type = $request->get_postint('poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 						$answers = array();
 						$nbr_votes = 0;
 						for ($i = 0; $i < 20; $i++)
 						{
-							$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
+							$answer = str_replace('|', '', $request->get_postvalue('a'.$i, ''));
 							if (!empty($answer))
 							{
 								$answers[$i] = $answer;
@@ -252,7 +254,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				AppContext::get_response()->redirect( url(HOST . SCRIPT . '?error=flood&id=' . $id_get . '&idt=' . $idt_get, '', '&') . '#message_helper');
 		}
 
-		$content = retrieve(POST, 'content', '', TSTRING_AS_RECEIVED);
+		$content = $request->get_postvalue('content', '', TSTRING_AS_RECEIVED);
 
 		//Si le topic n'est pas vérrouilé on ajoute le message.
 		if ($topic['status'] != 0 || $is_modo)
@@ -309,8 +311,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 		if (!ForumAuthorizationsService::check_authorizations($id_get)->write())
 			AppContext::get_response()->redirect(url(HOST . SCRIPT . '?error=c_write&id=' . $id_get, '', '&') . '#message_helper');
 
-		$id_m = (int)retrieve(GET, 'idm', 0);
-		$update = (bool)retrieve(GET, 'update', false);
+		$id_m   = $request->get_getint('idm', 0);
+		$update = $request->get_getint('update', false);
 
 		try {
 			$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
@@ -356,31 +358,31 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
 			if ($update && $post_topic)
 			{
-				$title = retrieve(POST, 'title', '');
-				$subtitle = retrieve(POST, 'desc', '');
-				$content = retrieve(POST, 'content', '', TSTRING_AS_RECEIVED);
-				$type = $is_modo ? (int)retrieve(POST, 'type', 0) : 0;
+				$title = $request->get_postvalue('title', '');
+				$subtitle = $request->get_postvalue('desc', '');
+				$content = $request->get_postvalue('content', '', TSTRING_AS_RECEIVED);
+				$type = $is_modo ? $request->get_postint('type', 0) : 0;
 
 				if (!empty($title) && !empty($content))
 				{
 					$Forumfct->Update_topic($idt_get, $id_m, $title, $subtitle, addslashes($content), $type, $user_id_msg); //Mise à jour du topic.
 
 					//Mise à jour du sondage en plus du topic.
-					$del_poll = (bool)retrieve(POST, 'del_poll', false);
-					$question = retrieve(POST, 'question', '');
+					$del_poll = $request->get_postbool('del_poll', false);
+					$question = $request->get_postvalue('question', '');
 					if (!empty($question) && !$del_poll) //Enregistrement du sondage.
 					{
 						//Mise à jour si le sondage existe, sinon création.
 						$check_poll = PersistenceContext::get_querier()->count(PREFIX . 'forum_poll', 'WHERE idtopic=:idtopic', array('idtopic' => $idt_get));
 
-						$poll_type = (int)retrieve(POST, 'poll_type', 0);
+						$poll_type = $request->get_postint('poll_type', 0);
 						$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 						$answers = array();
 						$nbr_votes = 0;
 						for ($i = 0; $i < 20; $i++)
 						{
-							$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
+							$answer = str_replace('|', '', $request->get_postvalue('a'.$i, ''));
 							if (!empty($answer))
 							{
 								$answers[$i] = $answer;
@@ -413,7 +415,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				} catch (RowNotFoundException $e) {}
 
 				//Gestion des erreurs à l'édition.
-				$get_error_e = retrieve(GET, 'errore', '');
+				$get_error_e = $request->get_getvalue('errore', '');
 				if ($get_error_e == 'incomplete_t')
 					$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 
@@ -551,9 +553,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				DispatchManager::redirect($error_controller);
 			}
 
-			if ($update && (bool)retrieve(POST, 'edit_msg', false))
+			if ($update && $request->get_postbool('edit_msg', false))
 			{
-				$content = retrieve(POST, 'content', '', TSTRING_AS_RECEIVED);
+				$content = $request->get_postvalue('content', '', TSTRING_AS_RECEIVED);
 				if (!empty($content))
 				{
 					$nbr_msg_before = $Forumfct->Update_msg($idt_get, $id_m, addslashes($content), $user_id_msg);
@@ -580,7 +582,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 				} catch (RowNotFoundException $e) {}
 
 				//Gestion des erreurs à l'édition.
-				$get_error_e = retrieve(GET, 'errore', '');
+				$get_error_e = $request->get_getvalue('errore', '');
 				if ($get_error_e == 'incomplete')
 					$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 

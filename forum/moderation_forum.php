@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.5 - 2006 08 08
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -17,10 +17,12 @@ require_once('../forum/forum_tools.php');
 
 $lang = LangLoader::get_all_langs('forum');
 
-$action = retrieve(GET, 'action', '');
-$id_get = (int)retrieve(GET, 'id', 0);
-$new_status = retrieve(GET, 'new_status', '');
-$get_del = retrieve(GET, 'del', '');
+$request = AppContext::get_request();
+
+$action     = $request->get_getvalue('action', '');
+$id_get     = $request->get_getint('id', 0);
+$new_status = $request->get_getvalue('new_status', '');
+$get_del    = $request->get_getvalue('del', '');
 
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($lang['user.moderation.panel'], '../forum/moderation_forum.php');
@@ -55,7 +57,7 @@ $vars_tpl = array(
 );
 
 //Redirection changement de catégorie.
-$change_cat = retrieve(POST, 'change_cat', '');
+$change_cat = $request->get_postvalue('change_cat', '');
 if (!empty($change_cat))
 {
 	$new_cat = '';
@@ -255,10 +257,10 @@ if ($action == 'alert') //Gestion des alertes
 elseif ($action == 'punish') //Gestion des utilisateurs
 {
 	$Bread_crumb->add($lang['user.punishments.management'], url('moderation_forum.php?action=alert'));
-	$readonly = (int)retrieve(POST, 'new_info', 0);
+	$readonly = $request->get_postint('new_info', 0);
 	$readonly = $readonly > 0 ? (time() + $readonly) : 0;
-	$readonly_content = retrieve(POST, 'action_content', '', TSTRING_UNCHANGE);
-	if (!empty($id_get) && retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	$readonly_content = $request->get_postvalue('action_content', '', TSTRING_UNCHANGE);
+	if (!empty($id_get) && $request->get_postvalue('valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -301,9 +303,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (retrieve(POST, 'search_member', false))
+		if ($request->get_postvalue('search_member', false))
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = $request->get_postvalue('login_mbr', '');
 			$user_id = 0;
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
@@ -443,9 +445,9 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 elseif ($action == 'warning') //Gestion des utilisateurs
 {
 	$Bread_crumb->add($lang['user.warnings.management'], url('moderation_forum.php?action=alert'));
-	$new_warning_level = (int)retrieve(POST, 'new_info', 0);
-	$warning_content = retrieve(POST, 'action_content', '', TSTRING_UNCHANGE);
-	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && (bool)retrieve(POST, 'valid_user', false)) //On met à  jour le niveau d'avertissement
+	$new_warning_level = $request->get_postint('new_info', 0);
+	$warning_content   = $request->get_postvalue('action_content', '', TSTRING_UNCHANGE);
+	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && $request->get_postbool('valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
@@ -503,9 +505,9 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
-		if (retrieve(POST, 'search_member', false))
+		if ($request->get_postvalue('search_member', false))
 		{
-			$login = retrieve(POST, 'login_member', '');
+			$login = $request->get_postvalue('login_member', '');
 			$user_id = 0;
 			try {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
@@ -604,7 +606,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		));
 	}
 }
-elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)) //Suppression de l'historique.
+elseif ($request->get_getvalue('del_h', false) && AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)) //Suppression de l'historique.
 {
 	PersistenceContext::get_dbms_utils()->truncate(PREFIX . 'forum_history');
 
@@ -612,7 +614,7 @@ elseif (retrieve(GET, 'del_h', false) && AppContext::get_current_user()->check_l
 }
 else //Panneau de modération
 {
-	$get_more = (int)retrieve(GET, 'more', 0);
+	$get_more = $request->get_getint('more', 0);
 
 	$view->put_all(array(
 		'C_FORUM_MODO_MAIN' => true,

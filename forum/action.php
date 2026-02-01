@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 10 03
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -13,26 +14,28 @@ require_once('../forum/forum_begin.php');
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 require_once('../kernel/header_no_display.php');
 
+$request = AppContext::get_request();
+
 // Variable GET.
-$idt_get = (int)retrieve(GET, 'id', 0);
-$idm_get = (int)retrieve(GET, 'idm', 0);
-$del = (bool)retrieve(GET, 'del', false);
-$alert = retrieve(GET, 'a', '');
-$read = (bool)retrieve(GET, 'read', false);
-$msg_d = (bool)retrieve(GET, 'msg_d', false);
-$lock_get = retrieve(GET, 'lock', '');
-$page_get = (int)retrieve(GET, 'p', 1);
-$selected = (string)retrieve(GET, 'selected', '');
+$idt_get  = $request->get_getint('id', 0);
+$idm_get  = $request->get_getint('idm', 0);
+$del      = $request->get_getbool('del', false);
+$alert    = $request->get_getvalue('a', '');
+$read     = $request->get_getbool('read', false);
+$msg_d    = $request->get_getbool('msg_d', false);
+$lock_get = $request->get_getvalue('lock', '');
+$page_get = $request->get_getint('p', 1);
+$selected = $request->get_getstring('selected', '');
 
-$track = retrieve(GET, 't', '');
-$untrack = retrieve(GET, 'ut', '');
-$track_pm = retrieve(GET, 'tp', '');
-$untrack_pm = retrieve(GET, 'utp', '');
-$track_mail = retrieve(GET, 'tm', '');
-$untrack_mail = retrieve(GET, 'utm', '');
+$track        = $request->get_getvalue('t', '');
+$untrack      = $request->get_getvalue('ut', '');
+$track_pm     = $request->get_getvalue('tp', '');
+$untrack_pm   = $request->get_getvalue('utp', '');
+$track_mail   = $request->get_getvalue('tm', '');
+$untrack_mail = $request->get_getvalue('utm', '');
 
-$poll = (bool)retrieve(POST, 'valid_forum_poll', false); //Sondage forum.
-$massive_action_type = retrieve(POST, 'massive_action_type', ''); //Opération de masse.
+$poll = $request->get_postbool('valid_forum_poll', false); //Sondage forum.
+$massive_action_type = $request->get_postvalue('massive_action_type', ''); //Opération de masse.
 
 $Forumfct = new Forum();
 
@@ -172,7 +175,7 @@ elseif (!empty($idt_get))
 
 			if ($info_poll['type'] == 0) //Réponse simple.
 			{
-				$id_answer = (int)retrieve(POST, 'forumpoll', 0);
+				$id_answer = $request->get_postint('forumpoll', 0);
 				if (isset($array_votes[$id_answer]))
 					$array_votes[$id_answer]++;
 			}
@@ -182,7 +185,7 @@ elseif (!empty($idt_get))
 				$nbr_answer = count($array_votes);
 				for ($i = 0; $i < $nbr_answer; $i++)
 				{
-					if (retrieve(POST, 'forumpoll' . $i, false))
+					if ($request->get_postvalue('forumpoll' . $i, false))
 						$array_votes[$i]++;
 				}
 			}
@@ -238,7 +241,7 @@ elseif (!empty($track) && AppContext::get_current_user()->check_level(User::MEMB
 }
 elseif (!empty($untrack) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
-	$tracking_type = (int)retrieve(GET, 'trt', 0);
+	$tracking_type = (int)$request->get_getvalue('trt', 0);
 	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 
 	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $untrack, '-' . $untrack . '.php', '&') . '#go-bottom');
