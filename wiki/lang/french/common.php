@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 04 13
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2007 10 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -72,7 +72,7 @@ $lang['wiki.level.sketch.message'] = 'Cette fiche manque de sources.<br />Vos co
 $lang['wiki.level.wip.message']    = 'Cette fiche est en cours de travaux, des modifications sont en cours de réalisation, n`hésitez pas à revenir plus tard la consulter.';
 
 $lang['wiki.level.custom']         = 'Niveau personnalisé';
-$lang['wiki.level.custom.content'] = 'Description du niveau personalisé';
+$lang['wiki.level.custom.content'] = 'Description du niveau personnalisé';
 
 // Form
 $lang['wiki.change.reason']       = 'Nature de la modification';
@@ -106,7 +106,7 @@ $lang['wiki.message.draft'] = '
     <div class="message-helper bgc warning">
         L\'édition d\'une fiche la place automatiquement en <b>brouillon</b>. Cela permet plusieurs validations sans en multiplier excessivement les archives.
         <br /><br />
-        <p>Pensez à modifier le status de publication en fin de travaux !</p>
+        <p>Pensez à modifier le statut de publication en fin de travaux !</p>
     </div>
 ';
 ?>
