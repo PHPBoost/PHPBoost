@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 13
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.5 - 2006 08 06
  * @contributor Regis VIARRE <crowkait@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,8 +14,10 @@
 
 require_once('../admin/admin_begin.php');
 
+$request = AppContext::get_request();
+
 // If file is readable
-$read_file = retrieve(GET, 'read_file', '', TSTRING_UNCHANGE);
+$read_file = $request->get_getvalue('read_file', '', TSTRING_UNCHANGE);
 if (!empty($read_file) && (TextHelper::substr($read_file, -4) == '.sql' || TextHelper::substr($read_file, -4) == '.zip'))
 {
 	// Read file if it exists
@@ -37,9 +39,9 @@ if (!empty($read_file) && (TextHelper::substr($read_file, -4) == '.sql' || TextH
 
 function check_backup_file(File $file)
 {
-	$reader = new BufferedFileReader($file);
+	$reader         = new BufferedFileReader($file);
 	$general_config = GeneralConfig::load();
-	$file_content = $reader->read_all();
+	$file_content   = $reader->read_all();
 
 	if (preg_match("`'kernel-general-config',`u", $file_content))
 	{
@@ -55,17 +57,15 @@ $lang = LangLoader::get_all_langs('database');
 define('TITLE', $lang['database.management']);
 require_once('../admin/admin_header.php');
 
-$request = AppContext::get_request();
-
-$repair = $request->get_postvalue('repair', false);
-$optimize = $request->get_postvalue('optimize', false);
+$repair        = $request->get_postvalue('repair', false);
+$optimize      = $request->get_postvalue('optimize', false);
 $tables_backup = $request->get_postvalue('backup', false);
-$query = $request->get_getint('query', 0);
-$del = $request->get_getvalue('del', '');
-$file = $request->get_getvalue('file', '');
-$error = $request->get_getvalue('error', '');
-$get_table = $request->get_getvalue('table', '');
-$action = $request->get_getvalue('action', '');
+$query         = $request->get_getint('query', 0);
+$del           = $request->get_getvalue('del', '');
+$file          = $request->get_getvalue('file', '');
+$error         = $request->get_getvalue('error', '');
+$get_table     = $request->get_getvalue('table', '');
+$action        = $request->get_getvalue('action', '');
 
 if ($action == 'backup_table' && !empty($get_table)) // Save for unic table
 	$tables_backup = true;
@@ -77,7 +77,7 @@ $view->put('TABLE_NAME', $get_table);
 
 if (!empty($query))
 {
-	$query = TextHelper::html_entity_decode(retrieve(POST, 'query', '', TSTRING_UNCHANGE));
+	$query = TextHelper::html_entity_decode($request->get_postvalue('query', '', TSTRING_UNCHANGE));
 
 	$view->put('C_DATABASE_QUERY', true);
 
@@ -105,21 +105,27 @@ if (!empty($query))
 							$view->put('C_HEAD', true);
 
 							foreach ($row as $field_name => $field_value)
+                            {
 								$view->assign_block_vars('head', array(
 									'FIELD_NAME' => $field_name
 								));
+                            }
 						}
 						// Parsing output values
 						foreach ($row as $field_name => $field_value)
-						$view->assign_block_vars('line.field', array(
-							'FIELD_NAME' => TextHelper::strprotect($field_value),
-							'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
-						));
+                        {
+                            $view->assign_block_vars('line.field', array(
+                                'FIELD_NAME' => TextHelper::strprotect($field_value),
+                                'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
+                            ));
+                        }
 
 						$i++;
 					}
 					$result->dispose();
-				} catch (MySQLQuerierException $e) {
+				}
+                catch (MySQLQuerierException $e)
+                {
 					$view->assign_block_vars('line', array());
 					$view->assign_block_vars('line.field', array(
 						'FIELD_NAME' => $e->GetMessage(),
@@ -133,7 +139,9 @@ if (!empty($query))
 				try {
 					$result = PersistenceContext::get_querier()->inject(str_replace('phpboost_', PREFIX, $q));
 					$affected_rows = $result->get_affected_rows();
-				} catch (MySQLQuerierException $e) {
+				}
+                catch (MySQLQuerierException $e)
+                {
 					$view->assign_block_vars('line', array());
 					$view->assign_block_vars('line.field', array(
 						'FIELD_NAME' => $e->GetMessage(),

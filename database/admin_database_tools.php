@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 13
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 2.0 - 2008 08 06
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -17,8 +17,10 @@ $lang = LangLoader::get_all_langs('database');
 define('TITLE', $lang['database.management']);
 require_once('../admin/admin_header.php');
 
-$table = retrieve(GET, 'table', '');
-$action = retrieve(GET, 'action', '');
+$request = AppContext::get_request();
+
+$table  = $request->get_getvalue('table', '');
+$action = $request->get_getvalue('action', '');
 
 $view = new FileTemplate('database/admin_database_tools.tpl');
 $view->add_lang($lang);
@@ -116,8 +118,8 @@ elseif (!empty($table) && $action == 'delete')
 {
 	AppContext::get_session()->csrf_get_protect(); // CSRF protection
 
-	$field = retrieve(GET, 'field', '');
-	$value = retrieve(GET, 'value', '');
+	$field = $request->get_getvalue('field', '');
+	$value = $request->get_getvalue('value', '');
 
 	if (!empty($value) && !empty($field))
 		PersistenceContext::get_querier()->delete($table, 'WHERE '.$field.'=:value', array('value' => $value));
@@ -130,14 +132,14 @@ elseif (!empty($table) && $action == 'update') // Update
 
 	$table_structure = $backup->extract_table_structure(array($table)); // Build table structure
 
-	$value = retrieve(GET, 'value', '');
-	$field = retrieve(GET, 'field', '');
-	$submit = retrieve(POST, 'submit', '');
+	$value  = $request->get_getvalue('value', '');
+	$field  = $request->get_getvalue('field', '');
+	$submit = $request->get_postvalue('submit', '');
 	if (!empty($submit)) // On query execute
 	{
 		$infos = array();
 		foreach ($table_structure['fields'] as $fields_info)
-			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
+			$infos[$fields_info['name']] = $request->get_postvalue($fields_info['name'], '', TSTRING_HTML);
 
 		PersistenceContext::get_querier()->update($table, $infos, 'WHERE ' . $field . ' = :value', array('value' => $value));
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
@@ -173,7 +175,7 @@ elseif (!empty($table) && $action == 'insert') // Update
 {
 	$table_structure = $backup->extract_table_structure(array($table)); // Build table structure
 
-	$submit = retrieve(POST, 'submit', '');
+	$submit = $request->get_postvalue('submit', '');
 	if (!empty($submit)) // On query execute
 	{
 		AppContext::get_session()->csrf_get_protect(); // CSRF protection
@@ -197,7 +199,7 @@ elseif (!empty($table) && $action == 'insert') // Update
 		{
 			if ($fields_info['name'] == $primary_key  && empty($field_value)) // Ignore if primary key is empty
 				continue;
-			$infos[$fields_info['name']] = retrieve(POST, $fields_info['name'], '', TSTRING_HTML);
+			$infos[$fields_info['name']] = $request->get_postvalue($fields_info['name'], '', TSTRING_HTML);
 		}
 
 		PersistenceContext::get_querier()->insert($table, $infos);
@@ -248,7 +250,7 @@ elseif (!empty($table) && $action == 'drop')
 }
 elseif (!empty($table) && $action == 'query')
 {
-	$query = retrieve(POST, 'query', '', TSTRING_UNCHANGE);
+	$query = $request->get_postvalue('query', '', TSTRING_UNCHANGE);
 
 	$view->put('C_DATABASE_TABLE_QUERY', true);
 
