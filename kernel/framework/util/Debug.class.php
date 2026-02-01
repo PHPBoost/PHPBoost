@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 23
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 3.0 - 2009 10 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -134,9 +134,9 @@ class Debug
 
     /**
      * Displays information on an exception and exits
-     * @param Exception $exception the exception to display information on
+     * @param Throwable $exception the exception to display information on
      */
-    public static function fatal(Exception $exception): void
+    public static function fatal(?Throwable $exception): void
     {
         if (!self::$html_output)
         {
@@ -193,10 +193,10 @@ class Debug
     /**
      * Gets the current stacktrace as a string
      * @param int $start_trace_index
-     * @param Exception|null $exception
+     * @param Throwable $exception
      * @return string
      */
-    public static function get_stacktrace_as_string(int $start_trace_index = 0, ?Exception $exception = null): string
+    public static function get_stacktrace_as_string(int $start_trace_index = 0, ?Throwable $exception = null): string
     {
         $string_stacktrace = '';
         $stacktrace = null;
@@ -232,9 +232,9 @@ class Debug
     /**
      * Prints the current stacktrace
      * @param int $start_trace_index
-     * @param Exception|null $exception
+     * @param Throwable $exception
      */
-    public static function print_stacktrace(int $start_trace_index = 0, ?Exception $exception = null): void
+    public static function print_stacktrace(int $start_trace_index = 0, ?Throwable $exception = null): void
     {
         if ($exception !== null)
         {
