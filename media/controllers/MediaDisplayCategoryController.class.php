@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 10 03
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 4.1 - 2015 02 04
  * @contributor Kevin MASSY <reidlos@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,11 +34,13 @@ class MediaDisplayCategoryController extends DefaultModuleController
 		$comments_config = CommentsConfig::load();
 		$content_management_config = ContentManagementConfig::load();
 
+        $request = AppContext::get_request();
+
 		// Category content
 		$page = AppContext::get_request()->get_getint('p', 1);
 		$subcategories_page = AppContext::get_request()->get_getint('subcategories_page', 1);
-		$get_sort = retrieve(GET, 'sort', '');
-		$get_mode = retrieve(GET, 'mode', '');
+		$get_sort = $request->get_getvalue('sort', '');
+		$get_mode = $request->get_getvalue('mode', '');
 		$mode = ($get_mode == 'asc') ? 'ASC' : 'DESC';
 		$unget = (!empty($get_sort) && !empty($mode)) ? '?sort=' . $get_sort . '&amp;mode=' . $get_mode : '';
 

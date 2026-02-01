@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 2.0 - 2008 10 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -28,10 +28,10 @@ $request = AppContext::get_request();
 
 $submit = $request->get_postvalue('submit', false);
 
-$invisible = (int)retrieve(GET, 'invisible', 0, TINTEGER);
-$add = (int)retrieve(GET, 'add', 0, TINTEGER);
-$edit = (int)retrieve(GET, 'edit', 0, TINTEGER);
-$delete = (int)retrieve(GET, 'del', 0, TINTEGER);
+$invisible = $request->get_getint('invisible', 0, TINTEGER);
+$add       = $request->get_getint('add', 0, TINTEGER);
+$edit      = $request->get_getint('edit', 0, TINTEGER);
+$delete    = $request->get_getint('del', 0, TINTEGER);
 
 // File status modification
 if ($invisible > 0)
@@ -253,17 +253,17 @@ elseif ($submit)
 	AppContext::get_session()->csrf_get_protect();
 
 	$media = array(
-		'idedit' => (int)retrieve(POST, 'idedit', 0, TINTEGER),
-		'title' => stripslashes(retrieve(POST, 'title', '', TSTRING)),
-		'id_category' => CategoriesService::get_categories_manager('media')->get_categories_cache()->has_categories() ? retrieve(POST, 'id_category', 0, TINTEGER) : Category::ROOT_CATEGORY,
-		'width' => min(retrieve(POST, 'width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
-		'height' => min(retrieve(POST, 'height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
-		'file_url' => new Url(retrieve(POST, 'u_media', '', TSTRING)),
-		'thumbnail' => new Url(retrieve(POST, 'thumbnail', '', TSTRING)),
-		'content' => retrieve(POST, 'content', '', TSTRING_PARSE),
-		'approved' => (bool)retrieve(POST, 'approved', false, TBOOL),
-		'contrib' => (bool)retrieve(POST, 'contrib', false, TBOOL),
-		'counterpart' => retrieve(POST, 'counterpart', '', TSTRING_PARSE)
+		'idedit'      => $request->get_postint('idedit', 0, TINTEGER),
+		'title'       => stripslashes($request->get_postvalue('title', '', TSTRING)),
+		'id_category' => CategoriesService::get_categories_manager('media')->get_categories_cache()->has_categories() ? $request->get_postvalue('id_category', 0, TINTEGER) : Category::ROOT_CATEGORY,
+		'width'       => min($request->get_postvalue('width', $config->get_max_video_width(), TINTEGER), $config->get_max_video_width()),
+		'height'      => min($request->get_postvalue('height', $config->get_max_video_height(), TINTEGER), $config->get_max_video_height()),
+		'file_url'    => new Url($request->get_postvalue('u_media', '', TSTRING)),
+		'thumbnail'   => new Url($request->get_postvalue('thumbnail', '', TSTRING)),
+		'content'     => $request->get_postvalue('content', '', TSTRING_PARSE),
+		'approved'    => $request->get_postbool('approved', false, TBOOL),
+		'contrib'     => $request->get_postbool('contrib', false, TBOOL),
+		'counterpart' => $request->get_postvalue('counterpart', '', TSTRING_PARSE)
 	);
 
 	$category = CategoriesService::get_categories_manager('media')->get_categories_cache()->get_category($media['id_category']);
