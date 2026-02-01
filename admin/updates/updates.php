@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 01 27
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,8 +19,10 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$check_updates = retrieve(GET, 'check', false);
-$update_type = retrieve(GET, 'type', '');
+$request = AppContext::get_request();
+
+$check_updates = $request->get_getvalue('check', false);
+$update_type = $request->get_getvalue('type', '');
 if (!in_array($update_type, array('', 'kernel', 'module', 'template')))
 {
 	$update_type = '';

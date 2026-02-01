@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 04
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2008 07 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -19,7 +19,9 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['admin.updates'] . ' - ' . $lang['admin.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$identifier = retrieve(GET, 'identifier', '');
+$request = AppContext::get_request();
+
+$identifier = $request->get_getvalue('identifier', '');
 $view = new FileTemplate('admin/updates/detail.tpl');
 $view->add_lang($lang);
 
@@ -34,7 +36,7 @@ if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updat
 if ($app instanceof Application)
 {
 	$installation_error = $installation_success = false;
-	if (retrieve(POST, 'execute_update', '') && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()))
+	if ($request->get_postvalue('execute_update', '') && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()))
 	{
 		$temporary_dir_path = PATH_TO_ROOT . '/cache/phpboost-diff';
 		$temporary_folder = new Folder($temporary_dir_path);

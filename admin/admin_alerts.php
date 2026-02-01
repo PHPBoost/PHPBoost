@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 02
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 2.0 - 2008 08 30
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -23,8 +23,10 @@ $view->add_lang($lang);
 define('NUM_ALERTS_PER_PAGE', 20);
 
 // Management of sorting criteria
-$criteria = retrieve(GET, 'criteria', 'current_status');
-$order = retrieve(GET, 'order', 'asc');
+$request = AppContext::get_request();
+
+$criteria = $request->get_getvalue('criteria', 'current_status');
+$order    = $request->get_getvalue('order', 'asc');
 
 if (!in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')))
 	$criteria = 'current_status';

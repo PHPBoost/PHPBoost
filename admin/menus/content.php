@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 02
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 2.0 - 2008 11 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,18 +17,20 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['menu.content.menu']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = (int)retrieve(REQUEST, 'id', 0);
-$id_post = (int)retrieve(POST, 'id', 0);
+$request = AppContext::get_request();
 
-$action = retrieve(REQUEST, 'action', '');
-$action_post = retrieve(POST, 'action', '');
+$id = (int)$request->get_value('id', 0);
+$id_post = (int)$request->get_postvalue('id', 0);
+
+$action = $request->get_value('action', '');
+$action_post = $request->get_postvalue('action', '');
 
 if ($action_post == 'save')
 {
 	// Save a Menu (New / Edit)
 	$menu = null;
 
-	$menu_name = retrieve(POST, 'name', '', TSTRING_UNCHANGE);
+	$menu_name = $request->get_postvalue('name', '', TSTRING_UNCHANGE);
 
 	if (!empty($id_post))
 	{   // Edit the Menu
@@ -45,22 +47,22 @@ if ($action_post == 'save')
 		AppContext::get_response()->redirect('menus.php');
 	}
 
-	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
-	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
+	$menu->enabled($request->get_postvalue('activ', Menu::MENU_NOT_ENABLED));
+	$menu->set_hidden_with_small_screens((bool)$request->get_postvalue('hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
-	$menu->set_display_title(retrieve(POST, 'display_title', false));
-	$menu->set_content(retrieve(POST, 'contents', '', TSTRING_UNCHANGE));
+	$menu->set_display_title($request->get_postvalue('display_title', false));
+	$menu->set_content($request->get_postvalue('contents', '', TSTRING_UNCHANGE));
 
 	// Filters
 	MenuAdminService::set_retrieved_filters($menu);
 
 	if ($menu->is_enabled())
 	{
-		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+		$menu->set_block($request->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
 	if ($menu->is_enabled())
 	{
-		$block = retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED);
+		$block = $request->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED);
 
 		if ($menu->get_block() == $block)
 		{   // Save the menu if enabled
@@ -107,7 +109,7 @@ $view->put_all(array(
 ));
 
 // Possible Locations.
-$block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
+$block = $request->get_getvalue('s', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
 	Menu::BLOCK_POSITION__TOP_HEADER     => $lang['menu.top.header'],
 	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 10 11
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2007 03 05
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
@@ -19,13 +19,15 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['menu.menus.management']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = (int)retrieve(GET, 'id', 0);
-$switchtheme = retrieve(GET, 'theme', '');
-$theme_name = !empty($switchtheme) ? $switchtheme : AppContext::get_current_user()->get_theme();
-$theme_post = retrieve(POST, 'theme', '');
+$request = AppContext::get_request();
 
-$action = retrieve(GET, 'action', '');
-$move = retrieve(GET, 'move', '');
+$id          = $request->get_getint('id', 0);
+$switchtheme = $request->get_getvalue('theme', '');
+$theme_name  = !empty($switchtheme) ? $switchtheme : AppContext::get_current_user()->get_theme();
+$theme_post  = $request->get_postvalue('theme', '');
+
+$action = $request->get_getvalue('action', '');
+$move   = $request->get_getvalue('move', '');
 
 function menu_admin_link($menu, $mode)
 {

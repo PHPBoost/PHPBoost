@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 03 06
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,24 +17,27 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['menu.links.menu']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$menu_id = (int)retrieve(REQUEST, 'id', 0);
-$action = retrieve(GET, 'action', '');
+$request = AppContext::get_request();
+
+$menu_id = $request->get_int('id', 0);
+$action  = $request->get_getvalue('action', '');
 
 if ($action == 'save')
 {   // Save a Menu (New / Edit)
-	$menu_uid = (int)retrieve(POST, 'menu_uid', 0);
+	$menu_uid = $request->get_postint('menu_uid', 0);
 
 	// Properties of the menu we are creating/editing
-	$type = retrieve(POST, 'menu_element_' . $menu_uid . '_type', LinksMenu::AUTOMATIC_MENU);
+	$type = $request->get_postvalue('menu_element_' . $menu_uid . '_type', LinksMenu::AUTOMATIC_MENU);
 
 	function build_menu_from_form($elements_ids, $level = 0)
 	{
+        global $request;
 		$menu = null;
 		$menu_element_id = $elements_ids['id'];
-		$menu_name  = retrieve(POST, 'menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
-		$menu_url   = retrieve(POST, 'menu_element_' . $menu_element_id . '_url', '');
-		$menu_image = retrieve(POST, 'menu_element_' . $menu_element_id . '_image', '');
-		$menu_icon  = retrieve(POST, 'menu_element_' . $menu_element_id . '_icon', '');
+		$menu_name  = $request->get_postvalue('menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
+		$menu_url   = $request->get_postvalue('menu_element_' . $menu_element_id . '_url', '');
+		$menu_image = $request->get_postvalue('menu_element_' . $menu_element_id . '_image', '');
+		$menu_icon  = $request->get_postvalue('menu_element_' . $menu_element_id . '_icon', '');
 
 		$array_size = count($elements_ids);
 
@@ -65,6 +68,7 @@ if ($action == 'save')
 
 	function build_menu_children_tree($element)
 	{
+        global $request;
 		$menu = array();
 
 		if (isset($element->children))
@@ -72,7 +76,7 @@ if ($action == 'save')
 			$children = array();
 			foreach($element->children[0] as $p => $t)
 			{
-				$menu_child_name = retrieve(POST, 'menu_element_' . $t->id . '_name', '', TSTRING_UNCHANGE);
+				$menu_child_name = $request->get_postvalue('menu_element_' . $t->id . '_name', '', TSTRING_UNCHANGE);
 				if (!empty($menu_child_name))
 					$children[$p] = build_menu_children_tree($t);
 			}
@@ -108,13 +112,13 @@ if ($action == 'save')
 	}
 
 	// Menu enabled?
-	$menu->enabled(retrieve(POST, 'menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
-	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
-	$menu->set_disabled_body((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_disabled_body', false));
-	$menu->set_pushed_content((bool)retrieve(POST, 'menu_element_' . $menu_uid . '_pushed_content', false));
-	$menu->set_block(retrieve(POST, 'menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
-	$menu->set_pushmenu_opening(retrieve(POST, 'menu_element_' . $menu_uid . '_open_type', Menu::PUSHMENU_LEFT));
-	$menu->set_pushmenu_expanding(retrieve(POST, 'menu_element_' . $menu_uid . '_tab_type', Menu::PUSHMENU_OVERLAP));
+	$menu->enabled($request->get_postvalue('menu_element_' . $menu_uid . '_enabled', Menu::MENU_NOT_ENABLED));
+	$menu->set_hidden_with_small_screens($request->get_postbool('menu_element_' . $menu_uid . '_hidden_with_small_screens', false));
+	$menu->set_disabled_body($request->get_postbool('menu_element_' . $menu_uid . '_disabled_body', false));
+	$menu->set_pushed_content($request->get_postbool('menu_element_' . $menu_uid . '_pushed_content', false));
+	$menu->set_block($request->get_postvalue('menu_element_' . $menu_uid . '_location', Menu::BLOCK_POSITION__NOT_ENABLED));
+	$menu->set_pushmenu_opening($request->get_postvalue('menu_element_' . $menu_uid . '_open_type', Menu::PUSHMENU_LEFT));
+	$menu->set_pushmenu_expanding($request->get_postvalue('menu_element_' . $menu_uid . '_tab_type', Menu::PUSHMENU_OVERLAP));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(
 		Menu::MENU_AUTH_BIT, 'menu_element_' . $menu_uid . '_auth'
 	));
@@ -165,7 +169,7 @@ $view->put_all(array(
 ));
 
 // Possible locations
-$block = retrieve(GET, 's', Menu::BLOCK_POSITION__HEADER, TINTEGER);
+$block = $request->get_getvalue('s', Menu::BLOCK_POSITION__HEADER, TINTEGER);
 $array_location = array(
 	Menu::BLOCK_POSITION__TOP_HEADER     => $lang['menu.top.header'],
 	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],

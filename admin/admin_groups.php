@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 03 29
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.2 - 2005 06 01
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -21,28 +21,28 @@ require_once('../admin/admin_header.php');
 
 $request = AppContext::get_request();
 
-$idgroup = $request->get_getint('id', 0);
-$idgroup_post = $request->get_postint('id', 0);
-$add = $request->get_getint('add', 0);
-$add_post = $request->get_postint('add', 0);
-$del_group = $request->get_getint('del', 0);
-$add_mbr = $request->get_postvalue('add_mbr', false);
-$del_mbr = $request->get_getint('del_mbr', 0);
-$user_id = $request->get_getint('user_id', 0);
-$valid = $request->get_postvalue('valid', false);
+$idgroup          = $request->get_getint('id', 0);
+$idgroup_post     = $request->get_postint('id', 0);
+$add              = $request->get_getint('add', 0);
+$add_post         = $request->get_postint('add', 0);
+$del_group        = $request->get_getint('del', 0);
+$add_mbr          = $request->get_postbool('add_mbr', false);
+$del_mbr          = $request->get_getint('del_mbr', 0);
+$user_id          = $request->get_getint('user_id', 0);
+$valid            = $request->get_postbool('valid', false);
 $data_group_limit = $request->get_postvalue('data_group_limit', '');
 
 $_NBR_ELEMENTS_PER_PAGE = 25;
 
 if ($valid && !empty($idgroup_post)) // group modification
 {
-	$name = retrieve(POST, 'name', '');
-	$img = retrieve(POST, 'img', '');
-	$auth_flood = (int)retrieve(POST, 'auth_flood', 1);
-	$pm_group_limit = (int)retrieve(POST, 'pm_group_limit', 75);
-	$color_group = retrieve(POST, 'color_group', '');
-	$color_group = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
-	$delete_group_color = (bool)retrieve(POST, 'delete_group_color', false);
+	$name               = $request->get_postvalue('name', '');
+	$img                = $request->get_postvalue('img', '');
+	$auth_flood         = $request->get_postint('auth_flood', 1);
+	$pm_group_limit     = $request->get_postint('pm_group_limit', 75);
+	$color_group        = $request->get_postvalue('color_group', '');
+	$color_group        = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
+	$delete_group_color = $request->get_postbool('delete_group_color', false);
 
 	if ($delete_group_color)
 		$color_group = '';
@@ -58,12 +58,12 @@ if ($valid && !empty($idgroup_post)) // group modification
 }
 elseif ($valid && $add_post) // Add group
 {
-	$name = retrieve(POST, 'name', '');
-	$img = retrieve(POST, 'img', '');
-	$auth_flood = (int)retrieve(POST, 'auth_flood', 1);
-	$pm_group_limit = (int)retrieve(POST, 'pm_group_limit', 75);
-	$color_group = retrieve(POST, 'color_group', '');
-	$color_group = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
+	$name           = $request->get_postvalue('name', '');
+	$img            = $request->get_postvalue('img', '');
+	$auth_flood     = $request->get_postint('auth_flood', 1);
+	$pm_group_limit = $request->get_postint('pm_group_limit', 75);
+	$color_group    = $request->get_postvalue('color_group', '');
+	$color_group    = TextHelper::substr($color_group, 0, 1) == '#' ? TextHelper::substr($color_group, 1) : $color_group;
 	$data_group_limit = $data_group_limit ? NumberHelper::numeric($data_group_limit, 'float') * 1024 : '5120';
 
 	if (!empty($name))
@@ -112,7 +112,7 @@ elseif (!empty($idgroup) && $add_mbr) // Add member to group
 {
 	AppContext::get_session()->csrf_get_protect(); // csrf protection
 
-	$login = retrieve(POST, 'login_mbr', '');
+	$login = $request->get_postvalue('login_mbr', '');
 	$user_id = 0;
 	try {
 		$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name=:login', array('login' => $login));
@@ -194,7 +194,7 @@ elseif (!empty($idgroup)) // Group editing interface
 	if (!empty($group['id']))
 	{
 		// errors management
-		$get_error = retrieve(GET, 'error', '');
+		$get_error = $request->get_getvalue('error', '');
 		if ($get_error == 'incomplete')
 		{
 			$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
@@ -279,12 +279,12 @@ elseif ($add) // Add group interface
 	$view->add_lang($lang);
 
 	// Errors management
-	$get_success = retrieve(GET, 'success', '');
+	$get_success = $request->get_getvalue('success', '');
 	if ($get_success == 1)
 	{
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.success'], MessageHelper::SUCCESS, 10));
 	}
-	$get_error = retrieve(GET, 'error', '');
+	$get_error = $request->get_getvalue('error', '');
 	if ($get_error == 'incomplete')
 	{
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
