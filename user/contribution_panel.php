@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 12 07
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 2.0 - 2008 07 21
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -14,16 +14,18 @@
 require_once('../kernel/begin.php');
 $lang = LangLoader::get_all_langs();
 
+$request = AppContext::get_request();
+
 if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) // If user is not member (guests have nothing to do here)
 {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
 }
 
-$contribution_id = (int)retrieve(GET, 'id', 0);
-$id_to_delete = (int)retrieve(GET, 'del', 0);
-$id_to_update = (int)retrieve(POST, 'idedit', 0);
-$id_update = (int)retrieve(GET, 'edit', 0);
+$contribution_id = $request->get_getint('id', 0);
+$id_to_delete    = $request->get_getint('del', 0);
+$id_to_update    = $request->get_postint('idedit', 0);
+$id_update       = $request->get_getint('edit', 0);
 
 if ($contribution_id > 0)
 {
@@ -74,9 +76,9 @@ elseif ($id_to_update > 0)
     }
 
 	// Retriving parts of contribution
-	$entitled = retrieve(POST, 'entitled', '', TSTRING_UNCHANGE);
-	$description = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
-	$status = retrieve(POST, 'status', Event::EVENT_STATUS_UNREAD);
+	$entitled = $request->get_postvalue('entitled', '', TSTRING_UNCHANGE);
+	$description = stripslashes($request->get_postvalue('contents', '', TSTRING_PARSE));
+	$status = $request->get_postvalue('status', Event::EVENT_STATUS_UNREAD);
 
 	// If title is not empty
 	if (!empty($entitled))
@@ -233,8 +235,8 @@ else
 	$page = AppContext::get_request()->get_getint('p', 1);
 
 	// Filters management
-	$criteria = retrieve(GET, 'criteria', 'current_status');
-	$order = retrieve(GET, 'order', 'asc');
+	$criteria = $request->get_getvalue('criteria', 'current_status');
+	$order = $request->get_getvalue('order', 'asc');
 
 	if (!in_array($criteria, array('entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id')))
 		$criteria = 'current_status';

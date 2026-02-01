@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 01 05
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2007 03 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,10 +18,12 @@ $lang = LangLoader::get_all_langs();
 $Bread_crumb->add($lang['user.users'], UserUrlBuilder::home()->rel());
 $Bread_crumb->add($lang['user.moderation.panel'], UserUrlBuilder::moderation_panel()->rel());
 
-$action = retrieve(GET, 'action', 'warning', TSTRING_UNCHANGE);
-$id_get = (int)retrieve(GET, 'id', 0);
-$valid_user = (bool)retrieve(POST, 'valid_user', false);
-$search_member = (bool)retrieve(POST, 'search_member', false);
+$request = AppContext::get_request();
+
+$action        = $request->get_getvalue('action', 'warning', TSTRING_UNCHANGE);
+$id_get        = $request->get_getint('id', 0);
+$valid_user    = $request->get_postbool('valid_user', false);
+$search_member = $request->get_postbool('search_member', false);
 
 switch ($action)
 {

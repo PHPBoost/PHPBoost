@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 05 31
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2007 07 07
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -18,11 +18,13 @@ $lang = LangLoader::get_all_langs();
 
 define('TITLE', $lang['upload.files.management']);
 
-$popup = retrieve(GET, 'popup', '');
-$editor = retrieve(GET, 'edt', '');
-$parse = retrieve(GET, 'parse', '');
-$no_path = retrieve(GET, 'no_path', '');
-$close_button = retrieve(GET, 'close_button', '');
+$request = AppContext::get_request();
+
+$popup = $request->get_getvalue('popup', '');
+$editor = $request->get_getvalue('edt', '');
+$parse = $request->get_getvalue('parse', '');
+$no_path = $request->get_getvalue('no_path', '');
+$close_button = $request->get_getvalue('close_button', '');
 $display_close_button = false;
 
 // Personal or shared files
@@ -41,7 +43,7 @@ if (!empty($popup)) // Popup
     $env = new SiteDisplayFrameGraphicalEnvironment();
     Environment::set_graphical_environment($env);
     ob_start();
-    $field = retrieve(GET, 'fd', '');
+    $field = $request->get_getvalue('fd', '');
 
     $display_close_button = $close_button != '0';
     $popup = '&popup=1&fd=' . $field . '&edt=' . $editor . '&parse=' . $parse . '&no_path=' . $no_path;
@@ -72,16 +74,16 @@ if (!AppContext::get_current_user()->check_auth($files_upload_config->get_author
     DispatchManager::redirect($error_controller);
 }
 
-$folder = (int)retrieve(GET, 'f', 0);
-$parent_folder = (int)retrieve(GET, 'fup', 0);
-$home_folder = (bool)retrieve(GET, 'root', false);
-$del_folder = (int)retrieve(GET, 'delf', 0);
-$del_file = (int)retrieve(GET, 'del', 0);
-$get_error = retrieve(GET, 'error', '');
-$get_l_error = retrieve(GET, 'erroru', '');
-$move_folder = (int)retrieve(GET, 'movefd', 0);
-$move_file = (int)retrieve(GET, 'movefi', 0);
-$to = retrieve(POST, 'new_cat', -1);
+$folder        = $request->get_getint('f', 0);
+$parent_folder = $request->get_getint('fup', 0);
+$home_folder   = $request->get_getbool('root', false);
+$del_folder    = $request->get_getint('delf', 0);
+$del_file      = $request->get_getint('del', 0);
+$get_error     = $request->get_getvalue('error', '');
+$get_l_error   = $request->get_getvalue('erroru', '');
+$move_folder   = $request->get_getint('movefd', 0);
+$move_file     = $request->get_getint('movefi', 0);
+$to            = $request->get_postvalue('new_cat', -1);
 
 if (!empty($parent_folder))
 { // folder change

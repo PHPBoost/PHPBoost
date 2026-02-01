@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 02 22
+ * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.5 - 2006 07 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -29,20 +29,20 @@ if (!$current_user->check_level(User::MEMBER_LEVEL))
 
 $request        = AppContext::get_request();
 
-$pm_get         = (int)retrieve(GET, 'pm', 0);
-$pm_id_get      = (int)retrieve(GET, 'id', 0);
-$pm_del_convers = (bool)retrieve(GET, 'del_convers', false);
-$quote_get      = (int)retrieve(GET, 'quote', 0);
-$page           = (int)retrieve(GET, 'p', 0);
-$post           = (bool)retrieve(GET, 'post', false);
-$pm_edit        = (int)retrieve(GET, 'edit', 0);
-$pm_del         = (int)retrieve(GET, 'del', 0);
-$read           = (bool)retrieve(GET, 'read', false);
-$convers        = (bool)retrieve(POST, 'convers', false);
-$prw_convers    = (bool)retrieve(POST, 'prw_convers', false);
-$prw            = (bool)retrieve(POST, 'prw', false);
-$pm_post        = (bool)retrieve(POST, 'pm', false);
-$edit_pm        = (bool)retrieve(POST, 'edit_pm', false);
+$pm_get         = $request->get_getint('pm', 0);
+$pm_id_get      = $request->get_getint('id', 0);
+$pm_del_convers = $request->get_getbool('del_convers', false);
+$quote_get      = $request->get_getint('quote', 0);
+$page           = $request->get_getint('p', 0);
+$post           = $request->get_getbool('post', false);
+$pm_edit        = $request->get_getint('edit', 0);
+$pm_del         = $request->get_getint('del', 0);
+$read           = $request->get_getbool('read', false);
+$convers        = $request->get_postbool('convers', false);
+$prw_convers    = $request->get_postbool('prw_convers', false);
+$prw            = $request->get_postbool('prw', false);
+$pm_post        = $request->get_postbool('pm', false);
+$edit_pm        = $request->get_postbool('edit_pm', false);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
@@ -94,9 +94,9 @@ if ($read)
 
 if ($convers && empty($pm_edit) && empty($pm_del)) // Sending conversation.
 {
-	$title    = retrieve(POST, 'title', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$login    = retrieve(POST, 'login', '');
+	$title    = $request->get_postvalue('title', '');
+	$contents = $request->get_postvalue('contents', '', TSTRING_UNCHANGE);
+	$login    = $request->get_postvalue('login', '');
 
 	$limit_group = $current_user->check_max_value(PM_GROUP_LIMIT, $user_accounts_config->get_max_private_messages_number());
 	// Checking sender email
@@ -177,7 +177,7 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 	else
 	{
 		// Errors management
-		$get_error = retrieve(GET, 'error', '');
+		$get_error = $request->get_getvalue('error', '');
 		switch ($get_error)
 		{
 			case 'e_unexist_user':
@@ -206,9 +206,9 @@ elseif (!empty($post) || (!empty($pm_get) && $pm_get != $current_user->get_id())
 }
 elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 {
-	$title = retrieve(POST, 'title', '');
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-	$login = retrieve(POST, 'login', '');
+	$title = $request->get_postvalue('title', '');
+	$contents = $request->get_postvalue('contents', '', TSTRING_UNCHANGE);
+	$login = $request->get_postvalue('login', '');
 
 	$view = new FileTemplate('user/pm.tpl');
 	$view->add_lang($lang);
@@ -233,7 +233,7 @@ elseif ($prw_convers && empty($mp_edit)) // Conversation preview.
 }
 elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 {
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$contents = $request->get_postvalue('contents', '', TSTRING_UNCHANGE);
 
 	// Retrieving conversation infos.
 	$convers_title = '';
@@ -261,7 +261,7 @@ elseif ($prw && empty($pm_edit) && empty($pm_del)) // Message preview
 }
 elseif ($pm_post && !empty($pm_id_get) && empty($pm_edit) && empty($pm_del)) // Sending messages.
 {
-	$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
+	$contents = $request->get_postvalue('contents', '', TSTRING_UNCHANGE);
 	if (!empty($contents))
 	{
 		// user_view_pm => number of messages unread by one of both user
@@ -505,8 +505,8 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 
 			if ($convers XOR $edit_pm)
 			{
-				$contents = stripslashes(retrieve(POST, 'contents', '', TSTRING_PARSE));
-				$title = retrieve(POST, 'title', '');
+				$contents = stripslashes($request->get_postvalue('contents', '', TSTRING_PARSE));
+				$title = $request->get_postvalue('title', '');
 
 				if ($edit_pm && !empty($contents))
 				{
@@ -548,8 +548,8 @@ elseif (!empty($pm_edit)) // Edit PM, if recipient hasn't read it yet
 
 				$view->put('KERNEL_EDITOR', $editor->display());
 
-				$contents = retrieve(POST, 'contents', '', TSTRING_UNCHANGE);
-				$title = retrieve(POST, 'title', '', TSTRING_UNCHANGE);
+				$contents = $request->get_postvalue('contents', '', TSTRING_UNCHANGE);
+				$title = $request->get_postvalue('title', '', TSTRING_UNCHANGE);
 
 				$Bread_crumb->add($lang['common.edit']);
 
@@ -653,7 +653,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 	// Message not read by the other user view_status => 0.
 	// Message read by the other user view_status => 1.
 	$is_guest_in_convers = false;
-	$page = (int)retrieve(GET, 'p', 0); // Reddefine the $page variable to take redirects into account
+	$page = $request->get_getint('p', 0); // Reddefine the $page variable to take redirects into account
 	$quote_last_msg = ($page > 1) ? 1 : 0; // Substracting 1 to retrieve the last message from the previous page
 	$i = 0;
 	$j = 0;
@@ -763,7 +763,7 @@ elseif (!empty($pm_id_get)) // Messages associated with the conversation.
 		));
 
 		// Errors management
-		$get_error = retrieve(GET, 'error', '');
+		$get_error = $request->get_getvalue('error', '');
 		switch ($get_error)
 		{
 			case 'e_incomplete':
