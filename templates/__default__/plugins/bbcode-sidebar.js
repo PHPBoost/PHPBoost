@@ -7,81 +7,68 @@
 */
 
 // Auto resize textarea on focus
-jQuery.fn.autoResize = function(){
-	let resize = e => {
-		e.style.height = '';
-		e.style.height = e.scrollHeight + 'px';
-	};
-	return this.each((i,e) => {
-		e.style.overflow = 'hidden';
-		resize(e);
-		jQuery(e).bind('input', e => {
-			resize(e.target);
-		})
-	})
+jQuery.fn.autoResize = function() {
+    let resize = e => {
+        e.style.height = '';
+        e.style.height = e.scrollHeight + 'px';
+    };
+
+    return this.each((i, e) => {
+        e.style.overflow = 'hidden';
+        resize(e);
+        resize(e.target);
+    });
 };
 
-jQuery('.bbcode-sidebar > textarea').each(function () {
-	var y,
-		$this = jQuery(this),
-		$thisHeight = jQuery(this).outerHeight(),
-		offset = $this.offset(),
-		tools = $this.siblings('.bbcode-bar'),
-		preview = $this.siblings('.xmlhttprequest-preview'),
-		parent = $this.closest('.form-element-textarea'),
-		sidebar = tools.outerHeight();
-	$this.height($this[0].scrollHeight);
-	preview.appendTo(parent);
+jQuery('.bbcode-sidebar > textarea').each(function() {
+    var y,
+        $this = jQuery(this),
+        $thisHeight = jQuery(this).outerHeight(),
+        offset = $this.offset(),
+        tools = $this.siblings('.bbcode-bar'),
+        preview = $this.siblings('.xmlhttprequest-preview'),
+        parent = $this.closest('.form-element-textarea'),
+        sidebar = tools.outerHeight();
 
-	$this.on('mouseup', function (event) {
-		var container = $this.parent().outerHeight();
-		(y = event.pageY - offset.top), sidebar > y ?
-			tools.css({ top: '0.809em', bottom: 'auto' }) :
-			y > container - sidebar ?
-				tools.css({ top: 'auto', bottom: '0.809em' }) :
-				tools.css({ top: y - sidebar / 2 + 'px', bottom: 'auto' });
-	}),
-		
-	jQuery('#resize-textarea').on('click', function () {
-		if (jQuery(this).hasClass('collapse'))
-		{
-			$this.css('height', $thisHeight + 'px');
-			tools.css({ top: '0.809em', bottom: 'auto' });
-			jQuery(this)
-				.attr('aria-label', EXPAND)
-				.children()
-				.removeClass('fa-compress')
-				.addClass('fa-expand');
-		}
-		else
-		{
-			$this.autoResize();
-			jQuery('#resize-textarea')
-				.attr('aria-label', COLLAPSE)
-				.children()
-				.removeClass('fa-expand')
-				.addClass('fa-compress');
-		}		
-	});
+    $this.height($this[0].scrollHeight);
+    preview.appendTo(parent);
 
-	$this.focus(function(){
-		$this.autoResize();
-		jQuery("#resize-textarea")
-			.addClass('collapse')
-			.attr('aria-label', COLLAPSE)
-			.children()
-			.removeClass('fa-expand')
-			.addClass('fa-compress');
-	})
+    $this.on('mouseup', function(event) {
+        var container = $this.parent().outerHeight();
+        (y = event.pageY - offset.top), sidebar > y ?
+            tools.css({ top: '0.809em', bottom: 'auto' }) :
+            y > container - sidebar ?
+                tools.css({ top: 'auto', bottom: '0.809em' }) :
+                tools.css({ top: y - sidebar / 2 + 'px', bottom: 'auto' });
+    });
+
+    jQuery('#resize-textarea').on('click', function() {
+        if (jQuery(this).hasClass('collapse')) {
+            $this.css('height', $thisHeight + 'px');
+            tools.css({ top: '0.809em', bottom: 'auto' });
+            jQuery(this)
+                .attr('aria-label', EXPAND)
+                .children()
+                .removeClass('fa-compress')
+                .addClass('fa-expand');
+        } else {
+            $this.autoResize();
+            jQuery('#resize-textarea')
+                .attr('aria-label', COLLAPSE)
+                .children()
+                .removeClass('fa-expand')
+                .addClass('fa-compress');
+        }
+    });
 });
 
-jQuery('.bbcode-group-title, .close-bbcode-sub').each(function(){
-	var mainButtonParent = jQuery(this).closest('.bbcode-group');
-	jQuery(this).on('click', function() {
-		mainButtonParent.toggleClass('bbcode-sub');
-		if(mainButtonParent.siblings().hasClass('bbcode-sub')) 
-			mainButtonParent.siblings().removeClass('bbcode-sub');
-		if (jQuery(this).is('#resize-textarea'))
-			jQuery(this).toggleClass('collapse');
-	});
+jQuery('.bbcode-group-title, .close-bbcode-sub').each(function() {
+    var mainButtonParent = jQuery(this).closest('.bbcode-group');
+    jQuery(this).on('click', function() {
+        mainButtonParent.toggleClass('bbcode-sub');
+        if (mainButtonParent.siblings().hasClass('bbcode-sub'))
+            mainButtonParent.siblings().removeClass('bbcode-sub');
+        if (jQuery(this).is('#resize-textarea'))
+            jQuery(this).toggleClass('collapse');
+    });
 });
