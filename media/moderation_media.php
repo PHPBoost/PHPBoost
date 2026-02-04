@@ -108,9 +108,9 @@ else
 
 	if ($filter)
 	{
-		$state = retrieve(POST, 'state', 'all', TSTRING);
-		$id_category = (int)retrieve(POST, 'id_category', 0, TINTEGER);
-		$sub_cats = (bool)retrieve(POST, 'sub_cats', false, TBOOL);
+		$state = $request->get_postvalue('state', 'all', TSTRING);
+		$id_category = (int)$request->get_postvalue('id_category', 0, TINTEGER);
+		$sub_cats = (bool)$request->get_postvalue('sub_cats', false, TBOOL);
 
 		if ($state == "visible")
 			$db_where = MEDIA_STATUS_APPROVED;
