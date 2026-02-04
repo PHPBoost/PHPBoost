@@ -27,12 +27,12 @@ $view->add_lang($lang);
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
 
-$search = retrieve(REQUEST, 'q', '');
-$unsecure_search = stripslashes(retrieve(REQUEST, 'q', ''));
-$search_in = retrieve(POST, 'search_in', 'all');
-$selected_modules = retrieve(POST, 'searched_modules', '');
+$search = request->get_value('q', '');
+$unsecure_search = stripslashes(request->get_value('q', ''));
+$search_in = $request->get_postvalue('search_in', 'all');
+$selected_modules = $request->get_postvalue('searched_modules', '');
 $selected_modules = !empty($selected_modules) ? explode(',', $selected_modules) : array();
-$query_mode = (bool)retrieve(POST, 'query_mode', true);
+$query_mode = (bool)$request->get_postvalue('query_mode', true);
 
 if ($search_in !== 'all')
 {

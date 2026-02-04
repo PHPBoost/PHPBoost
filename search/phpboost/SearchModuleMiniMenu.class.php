@@ -40,8 +40,9 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 	public function get_menu_content()
 	{
 		$lang = LangLoader::get_all_langs('search');
+        $request = AppContext::get_request();
 
-		$search = retrieve(REQUEST, 'q', '');
+		$search = $request->get_value('q', '');
 
 		$view = new FileTemplate('search/search_mini.tpl');
 		$view->add_lang($lang);

@@ -35,12 +35,12 @@ if ($valid)
 {
 	if (!$weighting)
 	{
-		$authorized_modules = retrieve(POST, 'authorized_modules', array());
+		$authorized_modules = $request->get_postvalue('authorized_modules', array());
 		$authorized_modules = !empty($authorized_modules) ? explode(',', $authorized_modules[0]) : $authorized_modules;
 		$config = SearchConfig::load();
-		$config->set_nb_results_per_page(retrieve(POST, 'nb_results_p', 15));
-		$config->set_cache_lifetime(retrieve(POST, 'cache_time', 15));
-		$config->set_cache_max_uses(retrieve(POST, 'max_use', 200));
+		$config->set_nb_results_per_page($request->get_postvalue('nb_results_p', 15));
+		$config->set_cache_lifetime($request->get_postvalue('cache_time', 15));
+		$config->set_cache_max_uses($request->get_postvalue('max_use', 200));
 		$config->set_unauthorized_providers($authorized_modules);
 		$config->set_authorizations(Authorizations::build_auth_array_from_form(SearchAuthorizationsService::READ_AUTHORIZATIONS));
 		SearchConfig::save();
@@ -56,7 +56,7 @@ if ($valid)
 		foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
 		{
 			if ($provider->search() !== false)
-				$search_weightings->add_module_weighting($module_id, retrieve(POST, $module_id, SearchWeightings::DEFAULT_WEIGHTING));
+				$search_weightings->add_module_weighting($module_id, $request->get_postvalue($module_id, SearchWeightings::DEFAULT_WEIGHTING));
 		}
 		SearchConfig::load()->set_weightings($search_weightings);
 		SearchConfig::save();

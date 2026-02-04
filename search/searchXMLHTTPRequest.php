@@ -19,10 +19,10 @@ $lang = LangLoader::get_all_langs('search');
 //--------------------------------------------------------------------- Params
 $request = AppContext::get_request();
 
-$search_txt = retrieve(POST, 'q', '');
-$module_id = TextHelper::strtolower(retrieve(POST, 'moduleName', ''));
-$id_search = retrieve(POST, 'idSearch', -1);
-$selected_modules = retrieve(POST, 'searched_modules', array());
+$search_txt = $request->get_postvalue('q', '');
+$module_id = TextHelper::strtolower($request->get_postvalue('moduleName', ''));
+$id_search = $request->get_postvalue('idSearch', -1);
+$selected_modules = $request->get_postvalue('searched_modules', array());
 
 //------------------------------------------------------------- Other includes
 require_once(PATH_TO_ROOT . '/search/search.inc.php');
