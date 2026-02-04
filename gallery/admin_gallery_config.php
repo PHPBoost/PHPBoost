@@ -29,46 +29,46 @@ $view->add_lang($lang);
 //Si c'est confirmé on execute
 if ($valid)
 {
-	$config->set_mini_max_width(retrieve(POST, 'mini_max_width', 150));
-	$config->set_mini_max_height(retrieve(POST, 'mini_max_height', 150));
-	$config->set_max_width(retrieve(POST, 'max_width', 800));
-	$config->set_max_height(retrieve(POST, 'max_height', 600));
-	$config->set_max_weight(retrieve(POST, 'max_weight', 1024));
-	$config->set_quality(retrieve(POST, 'quality', 80));
-	if (retrieve(POST, 'logo_enabled', ''))
+	$config->set_mini_max_width($request->get_postvalue('mini_max_width', 150));
+	$config->set_mini_max_height($request->get_postvalue('mini_max_height', 150));
+	$config->set_max_width($request->get_postvalue('max_width', 800));
+	$config->set_max_height($request->get_postvalue('max_height', 600));
+	$config->set_max_weight($request->get_postvalue('max_weight', 1024));
+	$config->set_quality($request->get_postvalue('quality', 80));
+	if ($request->get_postvalue('logo_enabled', ''))
 		$config->enable_logo();
 	else
 		$config->disable_logo();
-	$config->set_logo(TextHelper::strprotect(retrieve(POST, 'logo', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
-	$config->set_logo_transparency(retrieve(POST, 'logo_transparency', 40));
-	$config->set_logo_horizontal_distance(retrieve(POST, 'logo_horizontal_distance', 5));
-	$config->set_logo_vertical_distance(retrieve(POST, 'logo_vertical_distance', 5));
-	$config->set_categories_number_per_page(retrieve(POST, 'categories_number_per_page', 10));
-	$config->set_columns_number(retrieve(POST, 'columns_number', 4));
-	$config->set_pics_number_per_page(retrieve(POST, 'pics_number_per_page', 16));
+	$config->set_logo(TextHelper::strprotect($request->get_postvalue('logo', ''), TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE));
+	$config->set_logo_transparency($request->get_postvalue('logo_transparency', 40));
+	$config->set_logo_horizontal_distance($request->get_postvalue('logo_horizontal_distance', 5));
+	$config->set_logo_vertical_distance($request->get_postvalue('logo_vertical_distance', 5));
+	$config->set_categories_number_per_page($request->get_postvalue('categories_number_per_page', 10));
+	$config->set_columns_number($request->get_postvalue('columns_number', 4));
+	$config->set_pics_number_per_page($request->get_postvalue('pics_number_per_page', 16));
 
-	if (retrieve(POST, 'title_enabled', ''))
+	if ($request->get_postvalue('title_enabled', ''))
 		$config->enable_title();
 	else
 		$config->disable_title();
-	if (retrieve(POST, 'notes_number_displayed', ''))
+	if ($request->get_postvalue('notes_number_displayed', ''))
 		$config->display_notes_number();
 	else
 		$config->hide_notes_number();
-	if (retrieve(POST, 'views_counter_enabled', ''))
+	if ($request->get_postvalue('views_counter_enabled', ''))
 		$config->enable_views_counter();
 	else
 		$config->disable_views_counter();
-	if (retrieve(POST, 'author_displayed', ''))
+	if ($request->get_postvalue('author_displayed', ''))
 		$config->enable_author_display();
 	else
 		$config->disable_author_display();
-	$config->set_member_max_pics_number(retrieve(POST, 'member_max_pics_number', 0));
-	$config->set_moderator_max_pics_number(retrieve(POST, 'moderator_max_pics_number', 0));
-	$config->set_pics_enlargement_mode(retrieve(POST, 'pics_enlargement_mode', GalleryConfig::FULL_SCREEN));
-	$config->set_scroll_type(retrieve(POST, 'scroll_type', GalleryConfig::VERTICAL_DYNAMIC_SCROLL));
-	$config->set_pics_number_in_mini(retrieve(POST, 'pics_number_in_mini', 8));
-	$config->set_mini_pics_speed(retrieve(POST, 'mini_pics_speed', 6));
+	$config->set_member_max_pics_number($request->get_postvalue('member_max_pics_number', 0));
+	$config->set_moderator_max_pics_number($request->get_postvalue('moderator_max_pics_number', 0));
+	$config->set_pics_enlargement_mode($request->get_postvalue('pics_enlargement_mode', GalleryConfig::FULL_SCREEN));
+	$config->set_scroll_type($request->get_postvalue('scroll_type', GalleryConfig::VERTICAL_DYNAMIC_SCROLL));
+	$config->set_pics_number_in_mini($request->get_postvalue('pics_number_in_mini', 8));
+	$config->set_mini_pics_speed($request->get_postvalue('mini_pics_speed', 6));
 	$config->set_authorizations(Authorizations::build_auth_array_from_form(Category::READ_AUTHORIZATIONS, Category::WRITE_AUTHORIZATIONS, Category::MODERATION_AUTHORIZATIONS, Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS));
 
 	GalleryConfig::save();
