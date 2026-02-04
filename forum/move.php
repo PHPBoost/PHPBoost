@@ -120,19 +120,19 @@ if (!empty($id_get)) //Déplacement du sujet.
 
 	$view->display();
 }
-elseif (!empty($id_post)) //Déplacement du topic
+elseif (!empty($id_post)) // Moving topic
 {
 	$id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id = :id', array('id' => $id_post));
 	if (ForumAuthorizationsService::check_authorizations($id_category)->moderation()) //Accès en édition
 	{
-		$to = (int)retrieve(POST, 'to', $id_category); //Catégorie cible.
+		$to = $request->get_postint('to', $id_category); //Catégorie cible.
 		$category_to = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($to);
 		if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY && $id_category != $to)
 		{
-			//Instanciation de la class du forum.
+			//Instanciation off the forum.
 			$Forumfct = new Forum();
 
-			$Forumfct->Move_topic($id_post, $id_category, $to); //Déplacement du topic
+			$Forumfct->Move_topic($id_post, $id_category, $to); // Moving topic
 
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $id_post, '-' .$id_post  . '.php', '&'));
 		}
@@ -190,7 +190,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		DispatchManager::redirect($error_controller);
 	}
 
-	$to = (int)retrieve(POST, 'to', $cat['id']); //Catégorie cible.
+	$to = (int)$request->get_postvalue('to', $cat['id']); //Catégorie cible.
 
 	//Listing des catégories disponibles, sauf celle qui va être supprimée.
 	$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -313,7 +313,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		DispatchManager::redirect($error_controller);
 	}
 
-	$to = (int)retrieve(POST, 'to', 0); //Catégorie cible.
+	$to = (int)$request->get_postvalue('to', 0); //Catégorie cible.
 
 	if (!ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation()) //Accès en édition
 	{
@@ -332,10 +332,10 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 	$category_to = CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_category($to);
 	if (!empty($to) && $category_to->get_id_parent() != Category::ROOT_CATEGORY)
 	{
-		$title = retrieve(POST, 'title', '');
-		$subtitle = retrieve(POST, 'desc', '');
-		$content = retrieve(POST, 'content', '', TSTRING_PARSE);
-		$type = (int)retrieve(POST, 'type', 0);
+		$title = $request->get_postvalue('title', '');
+		$subtitle = $request->get_postvalue('desc', '');
+		$content = $request->get_postvalue('content', '', TSTRING_PARSE);
+		$type = (int)$request->get_postvalue('type', 0);
 
 		//Requête de "scindage" du topic.
 		if (!empty($to) && !empty($content) && !empty($title))
@@ -346,17 +346,17 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 			$last_topic_id = $Forumfct->Cut_topic($id_post_msg, $msg['idtopic'], $topic['id_category'], $to, $title, $subtitle, $content, $type, $msg['user_id'], $topic['last_user_id'], $topic['last_msg_id']); //Scindement du topic
 
 			//Ajout d'un sondage en plus du topic.
-			$question = retrieve(POST, 'question', '');
+			$question = $request->get_postvalue('question', '');
 			if (!empty($question))
 			{
-				$poll_type = (int)retrieve(POST, 'poll_type', 0);
+				$poll_type = (int)$request->get_postvalue('poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
 				$answers = array();
 				$nbr_votes = 0;
 				for ($i = 0; $i < 20; $i++)
 				{
-					$answer = str_replace('|', '', retrieve(POST, 'a'.$i, ''));
+					$answer = str_replace('|', '', $request->get_postvalue('a'.$i, ''));
 					if (!empty($answer))
 					{
 						$answers[$i] = $answer;

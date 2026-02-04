@@ -96,8 +96,8 @@ if (!empty($alert_post))
 	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert_post));
 	if (empty($nbr_alert)) //On enregistre
 	{
-		$alert_title = $request->get_poststring('title', '');
-		$alert_content = retrieve(POST, 'content', '', TSTRING_PARSE);
+		$alert_title   = $request->get_poststring('title', '');
+		$alert_content = $request->get_postvalue('content', '', TSTRING_PARSE);
 
 		//Instanciation de la class du forum.
 		$Forumfct = new Forum;
