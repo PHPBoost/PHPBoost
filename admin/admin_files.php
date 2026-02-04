@@ -30,20 +30,20 @@ if ($item_id)
 	PersistenceContext::get_querier()->update(PREFIX . "upload", array('shared' => $status), 'WHERE id = :id', array('id' => $item_id));
 }
 
-$folder = $request->get_getint('f', 0);
+$folder        = $request->get_getint('f', 0);
 $folder_member = $request->get_getint('fm', 0);
 $parent_folder = $request->get_getint('fup', 0);
-$home_folder = $request->get_getvalue('root', false);
-$del_folder = $request->get_getint('delf', 0);
-$empty_folder = $request->get_getint('eptf', 0);
-$del_file = $request->get_getint('del', 0);
-$get_error = $request->get_getvalue('error', '');
-$get_l_error = $request->get_getvalue('erroru', '');
-$show_member = $request->get_getvalue('showm', false);
-$show_shared = $request->get_getvalue('showp', false);
-$move_folder = $request->get_getint('movefd', 0);
-$move_file = $request->get_getint('movefi', 0);
-$to = retrieve(POST, 'new_cat', -1);
+$home_folder   = $request->get_getvalue('root', false);
+$del_folder    = $request->get_getint('delf', 0);
+$empty_folder  = $request->get_getint('eptf', 0);
+$del_file      = $request->get_getint('del', 0);
+$get_error     = $request->get_getvalue('error', '');
+$get_l_error   = $request->get_getvalue('erroru', '');
+$show_member   = $request->get_getvalue('showm', false);
+$show_shared   = $request->get_getvalue('showp', false);
+$move_folder   = $request->get_getint('movefd', 0);
+$move_file     = $request->get_getint('movefi', 0);
+$to            = $request->get_postvalue('new_cat', -1);
 
 if ($parent_folder) // Changing folder
 {

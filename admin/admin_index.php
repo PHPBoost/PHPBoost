@@ -18,10 +18,10 @@ define('TITLE', $lang['admin.administration']);
 require_once('../admin/admin_header.php');
 
 // Save writing pad
-$writingpad = retrieve(POST, 'writingpad', '');
+$writingpad = $request->get_postvalue('writingpad', '');
 if (!empty($writingpad))
 {
-	$content = retrieve(POST, 'writing_pad_content', '', TSTRING_UNCHANGE);
+	$content = $request->get_postvalue('writing_pad_content', '', TSTRING_UNCHANGE);
 
 	$writing_pad_content = WritingPadConfig::load();
 	$writing_pad_content->set_content($content);

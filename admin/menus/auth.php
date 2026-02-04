@@ -17,8 +17,8 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['menu.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$id = (int)retrieve(REQUEST, 'id', 0);
-$post = (int)retrieve(POST, 'id', -1) >= 0;
+$id   = $request->get_int('id', 0);
+$post = $request->get_postvalue('id', -1) >= 0;
 
 $menu = MenuService::load($id);
 
@@ -27,12 +27,12 @@ if ($menu == null)
 
 if ($post)
 {   // Edit a Menu authorizations
-	$menu->enabled(retrieve(POST, 'activ', Menu::MENU_NOT_ENABLED));
+	$menu->enabled($request->get_postvalue('activ', Menu::MENU_NOT_ENABLED));
 	if ($menu->is_enabled())
 	{
-		$menu->set_block(retrieve(POST, 'location', Menu::BLOCK_POSITION__NOT_ENABLED));
+		$menu->set_block($request->get_postvalue('location', Menu::BLOCK_POSITION__NOT_ENABLED));
 	}
-	$menu->set_hidden_with_small_screens((bool)retrieve(POST, 'hidden_with_small_screens', false));
+	$menu->set_hidden_with_small_screens($request->get_postbool('hidden_with_small_screens', false));
 	$menu->set_auth(Authorizations::build_auth_array_from_form(Menu::MENU_AUTH_BIT));
 
 	// Filters
