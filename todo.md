@@ -5,9 +5,9 @@ Please feel free to contribute to this list or contribute your own ideas.
 Ideas with a #number come from PHPBoost.com members [via the bugtracker](https://www.phpboost.com/bugtracker/unsolved/date/desc/)
 
 ## Administration
-- Ability to upload an archive with several smilies
+- **Done** Ability to upload several smilies at once
 - Graphic personalization interface of the site, modification of the site colors
-- log everything done in the administration
+- **Done** log everything done in the administration
 
 #### Menus
 - Ability to associate a template with a menu to be able to customize it
@@ -29,15 +29,15 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 
 #### Upload
 1. **WIP** Redesign of upload interface and its operation, addition of Api
-    1. **Done** Drag & drop
-    1. **Done** Ability to upload several files in a row
-    1. Upload with Ajax and progress bar
-    1. Ability to modify file list before upload
-    1. Ability to upload files in any folder
-    1. New form field in Ajax to choose files without going through the popup
+1. **Done** Drag & drop
+1. **Done** Ability to upload several files in a row
+1. Upload with Ajax and progress bar
+1. Ability to modify file list before upload
+1. Ability to upload files in any folder
+1. **Done** New form field in Ajax to choose files without going through the popup
 
 ## Files
-- Cleaning all language variables [Trello private doc](https://trello.com/c/Lrqy2NPq/86-lang)
+- **Done** Cleaning all language variables [Trello private doc](https://trello.com/c/Lrqy2NPq/86-lang)
 - Image editor with js interface to resize, rotate, scale, etc.
 
 ## Comments
@@ -57,7 +57,7 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 #### Forum
 - Ability to declare a nickname when posting as a visitor
 - Subject Prefix (#1080)
-- No-answer topic page (#1225)
+- **Done** No-answer topic page (#1225)
 - New global rights for groups with moderation on member messages
 - Ability to create semi-automatic messages for moderators
 - Ability of automatic shedding of subjects (configuration)
@@ -73,10 +73,11 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 - Ability to set an uplaod limit depending on groups
 
 #### Search
-- Keyword centralization system, tag cloud management.
+- **Done** Keyword centralization system, tag cloud management.
 
 #### Poll
-- **WIP** Upgrade to MVC
+- **Done** Upgrade to MVC
 
 #### Wiki
+- **Done** modify the module to MVC
 - System for recording articles by differences, line by line for a reduced footprint during successive editions
