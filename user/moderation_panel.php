@@ -51,9 +51,9 @@ $view = new FileTemplate('user/moderation_panel.tpl');
 $view->add_lang($lang);
 
 $view->put_all(array(
-	'U_WARNING'          => UserUrlBuilder::moderation_panel('warning')->rel(),
-	'U_PUNISH'           => UserUrlBuilder::moderation_panel('punish')->rel(),
-	'U_BAN'              => UserUrlBuilder::moderation_panel('ban')->rel()
+	'U_WARNING' => UserUrlBuilder::moderation_panel('warning')->rel(),
+	'U_PUNISH'  => UserUrlBuilder::moderation_panel('punish')->rel(),
+	'U_BAN'     => UserUrlBuilder::moderation_panel('ban')->rel()
 ));
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
@@ -62,9 +62,9 @@ $editor->set_identifier('action_contents');
 if ($action == 'punish')
 {
 	// User management
-	$readonly_duration = (int)retrieve(POST, 'new_info', 0);
+	$readonly_duration = $request->get_postint('new_info', 0);
 	$readonly = $readonly_duration > 0 ? (time() + $readonly_duration) : 0;
-	$readonly_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
+	$readonly_contents = $request->get_postvalue('action_contents', '', TSTRING_UNCHANGE);
 	if (!empty($id_get) && $valid_user) // Update of warning level
 	{
 		if ($id_get != AppContext::get_current_user()->get_id())
@@ -88,16 +88,16 @@ if ($action == 'punish')
 
 	$view->put_all(array(
 		'C_USER' => true,
-		'L_ACTION_INFO'     => $lang['user.punishments.management'],
-		'U_XMLHTTPREQUEST'  => 'punish_user',
-		'U_ACTION'          => UserUrlBuilder::moderation_panel('punish')->rel()
+		'L_ACTION_INFO'    => $lang['user.punishments.management'],
+		'U_XMLHTTPREQUEST' => 'punish_user',
+		'U_ACTION'         => UserUrlBuilder::moderation_panel('punish')->rel()
 	));
 
 	if (empty($id_get)) // Warned member list
 	{
 		if ($search_member)
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = $request->get_postvalue('login_mbr', '');
 
 			$user_id = 0;
 			try {
@@ -112,8 +112,8 @@ if ($action == 'punish')
 
 		$view->put_all(array(
 			'C_USER_LIST' => true,
-			'L_TITLE'				 => $lang['user.punishments.management'],
-			'L_INFO'                 => $lang['user.punish.until'],
+			'L_TITLE' => $lang['user.punishments.management'],
+			'L_INFO'  => $lang['user.punish.until'],
 		));
 
 		$i = 0;
@@ -192,14 +192,14 @@ if ($action == 'punish')
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 		$view->put_all(array(
 			'C_USER_INFO' => true,
-			'C_USER_GROUP_COLOR'     => !empty($group_color),
-			'LOGIN'                  => $member['display_name'],
-			'USER_LEVEL_CLASS'       => UserService::get_level_class($member['level']),
-			'USER_GROUP_COLOR'       => $group_color,
-			'KERNEL_EDITOR'          => $editor->display(),
-			'ALTERNATIVE_PM'         => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $lang['user.readonly.changed']) : str_replace('%date%', '1 ' . $lang['date.minute'], $lang['user.readonly.changed']),
-			'INFO'                   => $array_sanction[$key_sanction],
-			'SELECT'                 => $select,
+			'C_USER_GROUP_COLOR' => !empty($group_color),
+			'LOGIN'              => $member['display_name'],
+			'USER_LEVEL_CLASS'   => UserService::get_level_class($member['level']),
+			'USER_GROUP_COLOR'   => $group_color,
+			'KERNEL_EDITOR'      => $editor->display(),
+			'ALTERNATIVE_PM'     => ($key_sanction > 0) ? str_replace('%date%', $array_sanction[$key_sanction], $lang['user.readonly.changed']) : str_replace('%date%', '1 ' . $lang['date.minute'], $lang['user.readonly.changed']),
+			'INFO'               => $array_sanction[$key_sanction],
+			'SELECT'             => $select,
 			'REPLACE_VALUE' => 'replace_value = parseInt(replace_value);'. "\n" .
 				'array_time = new Array(' . (implode(', ', $array_time)) . ');' . "\n" .
 				'array_sanction = new Array(\'' . implode('\', \'', array_map('addslashes', $array_sanction)) . '\');'. "\n" .
@@ -219,17 +219,17 @@ if ($action == 'punish')
 				'} else' . "\n" .
 				'	document.getElementById(\'action_contents\').disabled = \'disabled\';' . "\n" .
 				'document.getElementById(\'action_info\').innerHTML = replace_value;',
-			'REGEX'            => '/[0-9]+ [a-zéèêA-Z]+/u',
-			'U_PM'             => UserUrlBuilder::personnal_message($id_get)->rel(),
-			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
-			'U_PROFILE'        => UserUrlBuilder::profile($id_get)->rel()
+			'REGEX'         => '/[0-9]+ [a-zéèêA-Z]+/u',
+			'U_PM'          => UserUrlBuilder::personnal_message($id_get)->rel(),
+			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
+			'U_PROFILE'     => UserUrlBuilder::profile($id_get)->rel()
 		));
 	}
 }
 else if ($action == 'warning')
 {
-	$new_warning_level = (int)retrieve(POST, 'new_info', 0);
-	$warning_contents = retrieve(POST, 'action_contents', '', TSTRING_UNCHANGE);
+	$new_warning_level = $request->get_postint('new_info', 0);
+	$warning_contents = $request->get_postvalue('action_contents', '', TSTRING_UNCHANGE);
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
 	{
 		try {
@@ -264,16 +264,16 @@ else if ($action == 'warning')
 
 	$view->put_all(array(
 		'C_USER' => true,
-		'L_ACTION_INFO'     => $lang['user.warnings.management'],
-		'U_XMLHTTPREQUEST'  => 'warning_user',
-		'U_ACTION'          => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
+		'L_ACTION_INFO'    => $lang['user.warnings.management'],
+		'U_XMLHTTPREQUEST' => 'warning_user',
+		'U_ACTION'         => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
 	));
 
 	if (empty($id_get)) // List of warned members
 	{
 		if ($search_member)
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = $request->get_postvalue('login_mbr', '');
 
 			$user_id = 0;
 			try {
@@ -288,8 +288,8 @@ else if ($action == 'warning')
 
 		$view->put_all(array(
 			'C_USER_LIST' => true,
-			'L_TITLE'				 => $lang['user.warnings.management'],
-			'L_INFO'                 => $lang['user.warning.level'],
+			'L_TITLE' => $lang['user.warnings.management'],
+			'L_INFO'  => $lang['user.warning.level'],
 		));
 
 		$i = 0;
@@ -350,26 +350,26 @@ else if ($action == 'warning')
 
 		$view->put_all(array(
 			'C_USER_INFO' => true,
-			'C_USER_GROUP_COLOR'     => !empty($group_color),
-			'LOGIN'                  => $member['display_name'],
-			'USER_LEVEL_CLASS'       => UserService::get_level_class($member['level']),
-			'USER_GROUP_COLOR'       => $group_color,
-			'KERNEL_EDITOR'          => $editor->display(),
-			'ALTERNATIVE_PM'         => str_replace('%level%', $member['warning_percentage'], $lang['user.warning.level.changed']),
-			'INFO'                   => $lang['user.warning.level'] . ': ' . $member['warning_percentage'] . '%',
-			'SELECT'                 => $select,
-			'REPLACE_VALUE'          => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($lang['user.warning.level']) . ': \' + replace_value + \'%\';',
-			'REGEX'                  => '/ [0-9]+%/u',
-			'U_ACTION_INFO'          => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
-			'U_PM'                   => UserUrlBuilder::personnal_message($id_get)->rel(),
-			'U_PROFILE'              => UserUrlBuilder::profile($id_get)->rel(),
-			'L_INFO'                 => $lang['user.warning.level'],
+			'C_USER_GROUP_COLOR' => !empty($group_color),
+			'LOGIN'              => $member['display_name'],
+			'USER_LEVEL_CLASS'   => UserService::get_level_class($member['level']),
+			'USER_GROUP_COLOR'   => $group_color,
+			'KERNEL_EDITOR'      => $editor->display(),
+			'ALTERNATIVE_PM'     => str_replace('%level%', $member['warning_percentage'], $lang['user.warning.level.changed']),
+			'INFO'               => $lang['user.warning.level'] . ': ' . $member['warning_percentage'] . '%',
+			'SELECT'             => $select,
+			'REPLACE_VALUE'      => 'contents = contents.replace(regex, \' \' + replace_value + \'%\');' . "\n" . 'document.getElementById(\'action_info\').innerHTML = \'' . addslashes($lang['user.warning.level']) . ': \' + replace_value + \'%\';',
+			'REGEX'              => '/ [0-9]+%/u',
+			'U_ACTION_INFO'      => UserUrlBuilder::moderation_panel('warning', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
+			'U_PM'               => UserUrlBuilder::personnal_message($id_get)->rel(),
+			'U_PROFILE'          => UserUrlBuilder::profile($id_get)->rel(),
+			'L_INFO'             => $lang['user.warning.level'],
 		));
 	}
 }
 else
 {
-	$user_ban_duration = retrieve(POST, 'user_ban', '', TSTRING_UNCHANGE);
+	$user_ban_duration = $request->get_postvalue('user_ban', '', TSTRING_UNCHANGE);
 	$user_ban = $user_ban_duration > 0 ? (time() + $user_ban_duration) : 0;
 	if ($valid_user && !empty($id_get)) // User ban
 	{
@@ -406,7 +406,7 @@ else
 	{
 		if ($search_member)
 		{
-			$login = retrieve(POST, 'login_mbr', '');
+			$login = $request->get_postvalue('login_mbr', '');
 
 			$user_id = 0;
 			try {
