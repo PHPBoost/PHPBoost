@@ -16,13 +16,15 @@ include_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$page_path_to_root = retrieve(REQUEST, 'path_to_root', '');
-$page_path = retrieve(REQUEST, 'page_path', '');
+$request = AppContext::get_request();
+
+$page_path_to_root = $request->get_value('path_to_root', '');
+$page_path = $request->get_value('page_path', '');
 
 //Quel éditeur utiliser ? Si ce n'est pas précisé on prend celui par défaut de l'utilisateur
-$editor = retrieve(REQUEST, 'editor', ContentFormattingConfig::load()->get_default_editor());
+$editor = $request->get_value('editor', ContentFormattingConfig::load()->get_default_editor());
 
-$contents = stripslashes(retrieve(POST, 'contents', ''));
+$contents = stripslashes($request->get_postvalue('contents', ''));
 
 if (empty($contents))
 {
@@ -30,7 +32,7 @@ if (empty($contents))
 	DispatchManager::redirect($error_controller);
 }
 
-$ftags = retrieve(POST, 'ftags', TSTRING_UNCHANGE);
+$ftags = $request->get_postvalue('ftags', TSTRING_UNCHANGE);
 $forbidden_tags = explode(',', $ftags);
 
 $formatting_factory = AppContext::get_content_formatting_service()->create_factory($editor);

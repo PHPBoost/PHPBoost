@@ -127,7 +127,8 @@ class MiniCalendar
      */
     public static function retrieve_date(string $calendar_name): ?Date
     {
-        $value = retrieve(REQUEST, $calendar_name, '', TSTRING_UNCHANGE);
+        $request = AppContext::get_request();
+        $value = $request->get_value($calendar_name, '', TSTRING_UNCHANGE);
         return (preg_match('`^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$`', $value) > 0) ? new Date($value) : null;
     }
 }

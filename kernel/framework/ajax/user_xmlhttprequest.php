@@ -16,10 +16,12 @@ require_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location();
 require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
-$login = TextHelper::substr(retrieve(POST, 'login', ''), 0, 25);
-$display_name = TextHelper::substr(retrieve(POST, 'display_name', ''), 0, 100);
-$email = retrieve(POST, 'mail', '');
-$user_id = retrieve(POST, 'user_id', '');
+$request = AppContext::get_request();
+
+$login        = TextHelper::substr($request->get_postvalue('login', ''), 0, 25);
+$display_name = TextHelper::substr($request->get_postvalue('display_name', ''), 0, 100);
+$email        = $request->get_postvalue('mail', '');
+$user_id      = $request->get_postvalue('user_id', '');
 
 $db_querier = PersistenceContext::get_querier();
 
