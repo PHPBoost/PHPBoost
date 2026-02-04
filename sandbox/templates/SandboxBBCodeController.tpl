@@ -1,23 +1,23 @@
 <section id="module-sandbox-bbcode">
-	<header class="section-header">
-		<h1>
-			{@sandbox.module.title} - {@sandbox.bbcode}
-		</h1>
-	</header>
+    <header class="section-header">
+        <h1>
+            {@sandbox.module.title} - {@sandbox.bbcode}
+        </h1>
+    </header>
 
-	# INCLUDE SANDBOX_SUBMENU #
+    # INCLUDE SANDBOX_SUBMENU #
 
-	<div class="sub-section"><div class="content-container"><div class="content">{@H|sandbox.bbcode.description}</div></div></div>
+    <div class="sub-section"><div class="content-container"><div class="content">{@H|sandbox.bbcode.description}</div></div></div>
 
-	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TYPOGRAPHY #</div></div></div>
+    <div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TYPOGRAPHY #</div></div></div>
 
-	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE BLOCKS #</div></div></div>
+    <div class="sub-section"><div class="content-container"><div class="content"># INCLUDE BLOCKS #</div></div></div>
 
-	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE CODE #</div></div></div>
+    <div class="sub-section"><div class="content-container"><div class="content"># INCLUDE CODE #</div></div></div>
 
-	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE LIST #</div></div></div>
+    <div class="sub-section"><div class="content-container"><div class="content"># INCLUDE LIST #</div></div></div>
 
-	<div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TABLE #</div></div></div>
+    <div class="sub-section"><div class="content-container"><div class="content"># INCLUDE TABLE #</div></div></div>
 
     <footer></footer>
 </section>
