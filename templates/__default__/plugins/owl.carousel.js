@@ -1538,6 +1538,12 @@
 		}
 	};
 
+    function toCamelCase(str) {
+        return str.replace(/-([a-z])/g, function (g) {
+            return g[1].toUpperCase();
+        });
+    }
+
 	/**
 	 * Triggers a public event.
 	 * @todo Remove `status`, `relatedTarget` should be used instead.
@@ -1552,7 +1558,7 @@
 	Owl.prototype.trigger = function(name, data, namespace, state, enter) {
 		var status = {
 			item: { count: this._items.length, index: this.current() }
-		}, handler = $.camelCase(
+		}, handler = toCamelCase(
 			$.grep([ 'on', name, namespace ], function(v) { return v })
 				.join('-').toLowerCase()
 		), event = $.Event(
