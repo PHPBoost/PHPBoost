@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 06 15
+ * @version     PHPBoost 6.1 - last update: 2026 02 06
  * @since       PHPBoost 1.2 - 2005 06 20
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -16,6 +16,8 @@ $lang = LangLoader::get_all_langs();
 
 define('TITLE', $lang['admin.administration']);
 require_once('../admin/admin_header.php');
+
+$request = AppContext::get_request();
 
 // Save writing pad
 $writingpad = $request->get_postvalue('writingpad', '');
