@@ -1012,12 +1012,14 @@
 	 * @returns {Array.<String>} - The invalidated parts.
 	 */
 	Owl.prototype.invalidate = function(part) {
-		if ($.type(part) === 'string') {
-			this._invalidated[part] = true;
-			this.is('valid') && this.leave('valid');
-		}
-		return $.map(this._invalidated, function(v, i) { return i });
-	};
+        if (typeof part === 'string') {
+            this._invalidated[part] = true;
+            if (this.is('valid')) {
+                this.leave('valid');
+            }
+        }
+        return Object.keys(this._invalidated);
+    };
 
 	/**
 	 * Resets the absolute position of the current item.
