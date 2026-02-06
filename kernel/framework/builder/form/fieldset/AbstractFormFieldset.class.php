@@ -162,7 +162,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 	/**
 	 * @return FormField
 	 */
-	public function get_field($field_id)
+	public function get_field($field_id): FormField
 	{
 		return $this->fields[$field_id];
 	}

@@ -40,7 +40,7 @@ class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter imp
 
     protected function get_sql_value_parameter_prefix()
     {
-        return __CLASS__ . '_' . self::$param_id_index++;
+        return self::class . '_' . self::$param_id_index++;
     }
 }
 
