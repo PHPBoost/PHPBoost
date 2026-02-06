@@ -12,5 +12,6 @@
 
 interface FormElement extends HTMLElement
 {
+    public function set_hidden($hidden);
 }
 ?>
