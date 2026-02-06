@@ -7,9 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 24
+ * @version     PHPBoost 6.1 - last update: 2026 02 06
  * @since       PHPBoost 2.0 - 2009 04 28
  * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface FormField extends FormElement
@@ -81,6 +82,11 @@ interface FormField extends FormElement
 	 * Enables the field
 	 */
 	function enable();
+
+    /**
+     * Tells whether the field is hidden
+     */
+    public function set_hidden($hidden);
 
 	/**
 	 * Validates the field by cheching if all the constraints are satisfied.
