@@ -8,7 +8,6 @@
  * @version 2.3.4
  * @author Bartosz Wojciechowski
  * @author David Deutsch
- * @contributor Sebastien Lartigue
  * @license The MIT License (MIT)
  * @todo Lazy Load Icon
  * @todo prevent animationend bubling
