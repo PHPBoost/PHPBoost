@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 13
+ * @version     PHPBoost 6.1 - last update: 2026 02 09
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -174,12 +174,13 @@ class BBCodeParser extends ContentFormattingParser
 			'mail' => '`(?<=\s|^)([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})(?=\s|\n|\r|<|$)`iuU',
 			'mail2' => '`\[mail=([a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4})\]([^\n\r\t\f]+)\[/mail\]`iuU',
 			'url1' => '`\[url\]((?!javascript:)' . Url::get_wellformness_regex() . ')\[/url\]`isuU',
-			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/url\]`isuU',
-			'url3' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\]\[/url\]`isuU',
-			'url4' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')<`isuU',
-			'url5' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isuU',
-			'url6' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')\)(\s|<+)`isuU',
-			'url7' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ') \)(\s|<+)`isuU',
+			'url2' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ') target\](.*)\[/url\]`isuU',
+			'url3' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\](.*)\[/url\]`isuU',
+			'url4' => '`\[url=((?!javascript:)' . Url::get_wellformness_regex() . ')\]\[/url\]`isuU',
+			'url5' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')<`isuU',
+			'url6' => '`(\s+)(' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')(\s|<+)`isuU',
+			'url7' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ')\)(\s|<+)`isuU',
+			'url8' => '`(\s+)\((' . Url::get_wellformness_regex(RegexHelper::REGEX_MULTIPLICITY_REQUIRED) . ') \)(\s|<+)`isuU',
 			'youtube1' => '`\[youtube=([0-9]{1,3}),([0-9]{1,3})\]((?:https?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}+(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/youtube\]`iuU',
 			'youtube2' => '`\[youtube\]((?:https?)://([a-z0-9-]+\.)*[a-z0-9-]+\.[a-z]{2,4}+(?:[a-z0-9~_-]+/)*(?:[a-z0-9_+.:?/=#%@&;,-])*)\[/youtube\]`iuU',
 			'dailymotion1' => '`\[dailymotion=([0-9]{1,3}),([0-9]{1,3})\]((?:https?)://(?:([a-z0-9-]+\.)*)?[a-z0-9-]+\.[a-z]{2,4}(/[a-z0-9~_-]+)*)\[/dailymotion\]`iuU',
@@ -221,12 +222,13 @@ class BBCodeParser extends ContentFormattingParser
 			'mail' => "<a href=\"mailto:$1\">$1</a>",
 			'mail2' => "<a href=\"mailto:$1\">$2</a>",
 			'url1' => '<a class="offload" href="$1">$1</a>',
-			'url2' => '<a class="offload" href="$1">$6</a>',
-			'url3' => '<a class="offload" href="$1">$1</a>',
-			'url4' => '$1<a class="offload" href="$2">$2</a><',
-			'url5' => '$1<a class="offload" href="$2">$2</a> ',
-			'url6' => '$1(<a class="offload" href="$2">$2</a>) ',
-			'url7' => '$1(<a class="offload" href="$2">$2</a> ) ',
+			'url2' => '<a class="offload" href="$1" target="_blank" rel="noopener">$6</a>',
+			'url3' => '<a class="offload" href="$1">$6</a>',
+			'url4' => '<a class="offload" href="$1">$1</a>',
+			'url5' => '$1<a class="offload" href="$2">$2</a><',
+			'url6' => '$1<a class="offload" href="$2">$2</a> ',
+			'url7' => '$1(<a class="offload" href="$2">$2</a>) ',
+			'url8' => '$1(<a class="offload" href="$2">$2</a> ) ',
 			'youtube1' => '[[MEDIA]]insertYoutubePlayer(\'$3\', $1, $2);[[/MEDIA]]',
 			'youtube2' => '[[MEDIA]]insertYoutubePlayer(\'$1\', 560, 315);[[/MEDIA]]',
 			'dailymotion1' => '[[MEDIA]]insertDailymotionPlayer(\'$3\', $1, $2);[[/MEDIA]]',
@@ -255,6 +257,7 @@ class BBCodeParser extends ContentFormattingParser
 				$this->forbidden_tags[] = 'url5';
 				$this->forbidden_tags[] = 'url6';
 				$this->forbidden_tags[] = 'url7';
+				$this->forbidden_tags[] = 'url8';
 			}
 			if (in_array('mail', $this->forbidden_tags))
 			{

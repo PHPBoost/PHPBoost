@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 13
+ * @version     PHPBoost 6.1 - last update: 2026 02 09
  * @since       PHPBoost 2.0 - 2008 07 03
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -89,6 +89,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`<abbr class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<abbr title="([^"]+)?" class="formatter-abbr">(.*)</abbr>`isuU',
 			'`<a href="mailto:(.*)">(.*)</a>`isuU',
+			'`<a(?: class="offload")?(?: aria-label="([^"]+)?")? href="([^"]+)" target="_blank" rel="noopener">(.*)</a>`isuU',
 			'`<a(?: class="offload")?(?: aria-label="([^"]+)?")? href="([^"]+)"(?: target="([^"]+)")?>(.*)</a>`isuU',
 			'`<h1 class="formatter-title">(.*)</h1>`isuU',
 			'`<h2 class="formatter-title">(.*)</h2>`isuU',
@@ -132,6 +133,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[abbr]$1[/abbr]",
 			"[abbr=$1]$2[/abbr]",
 			"[mail=$1]$2[/mail]",
+			"[url=$2 target]$3[/url]",
 			"[url=$2]$4[/url]",
 			"[title=1]$1[/title]",
 			"[title=1]$1[/title]",

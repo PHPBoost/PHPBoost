@@ -853,6 +853,15 @@
                                             <input id="bb_link_name{FIELD}" type="text" name="bb_link_name{FIELD}">
                                         </div>
                                     </div>
+                                    <div class="cell-form">
+                                        <label class="cell-label" for="bb_link_target{FIELD}">{@common.open.new.window}</label>
+                                        <div class="cell-input">
+                                            <label class="checkbox" for="">
+                                                <input id="bb_link_target{FIELD}" type="checkbox" name="bb_link_target{FIELD}" />
+                                                <span>&nbsp;<span class="sr-only">{@common.select}</span></span>
+                                            </label>
+                                        </div>
+                                    </div>
                                     <div class="cell-footer">
                                         <a href="#url-insert" class="button close-modal close-bbcode-sub" onclick="bbcode_link('{FIELD}');">{@bbcode.tags.add}</a>
                                     </div>
