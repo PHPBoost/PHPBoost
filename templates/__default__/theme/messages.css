@@ -77,6 +77,7 @@
 	opacity: 0;
 	visibility: hidden;
     transition: 0.3s;
+    text-wrap: nowrap;
 }
 
 [class^="message-actions-container"].opened [class^="message-actions-content"] {
@@ -87,7 +88,7 @@
     transition: 0.3s;
 }
 
-[class^="message-actions-container"] .controls a { padding: 0.228em 0.618em; }
+[class^="message-actions-container"] .controls a { padding: 0.1618em 0.618em; }
 
 @media (min-width: 769px) {
     [class^="message-actions-toggle-"] { display: none; }
