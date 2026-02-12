@@ -66,7 +66,7 @@ class ReCaptchaConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'recaptcha', 'config');
+		return ConfigManager::load(self::class, 'recaptcha', 'config');
 	}
 
 	/**
