@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 25
+ * @version     PHPBoost 6.1 - last update: 2026 02 13
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -307,13 +307,14 @@ class TextHelper
             function (array $matches) {
                 $value = $matches[2] ?? '';
                 $value = (string) $value;
-                return 's:' . strlen($value) . ':"' . $value . '";';
+                return 's:' . mb_strlen($value, '8bit') . ':"' . $value . '";';
             },
             $string
         );
 
         // Attempt to deserialize
-        $result = $result = unserialize($string, ['allowed_classes' => false]);
+        $result = @unserialize(trim($string), ['allowed_classes' => false]);
+
         if ($result === false && $string !== 'b:0;') {
             // treat as non‑serialized or log/debug
             return $string;
