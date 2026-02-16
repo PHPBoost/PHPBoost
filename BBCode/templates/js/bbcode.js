@@ -272,10 +272,10 @@ function bbcode_link(field)
 {
 	var link_url = document.getElementById('bb_link_url' + field).value,
 		link_name = document.getElementById('bb_link_name' + field).value,
-		link_target = document.getElementById('bb_link_target' + field).value,
+		link_target = document.getElementById('bb_link_target' + field).checked,
 		insert_url = (link_url != '' && link_url != null) ? '=' + link_url : '',
 		insert_name = (link_name != '' && link_name != null) ? link_name : '',
-		insert_target = (link_target != '' && link_target != null) ? ' target' : '';
+		insert_target = link_target ? ' target' : '';
 
 	insertbbcode('[url' + insert_url + insert_target + ']' + insert_name, '[/url]', field);
 }
