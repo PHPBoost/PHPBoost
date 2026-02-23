@@ -30,22 +30,22 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		if (GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_5_1_release_date))
 		{
 			//Old categories management urls replacement
-			$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/categories([^.]*)?$', '$1/categories$2', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^([a-zA-Z/]+)/admin/categories([^.]*)?$', '$1/categories$2', 'L,R=301');
 			//Old modules elements management urls replacement
-			$this->urls_mappings[] = new UrlMapping('^([a-zA-Z/]+)/admin/manage([^.]*)?$', '$1/manage$2', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^([a-zA-Z/]+)/admin/manage([^.]*)?$', '$1/manage$2', 'L,R=301');
 		}
 
 		// Pages
 		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && $actual_major_version >= '6.0' && GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_6_0_release_date))
 		{
-			$this->urls_mappings[] = new UrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
 
 			$categories = CategoriesService::get_categories_manager('pages')->get_categories_cache()->get_categories();
 
 			foreach ($categories as $id => $category)
 			{
 				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
-					$this->urls_mappings[] = new UrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+					$this->urls_mappings[] = new HighPriorityUrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
 
 			$result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('pages')->get_configuration()->get_items_table_name());
@@ -53,7 +53,7 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			while ($row = $result->fetch())
 			{
 				if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
-					$this->urls_mappings[] = new UrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
+					$this->urls_mappings[] = new HighPriorityUrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
 			}
 			$result->dispose();
 		}
@@ -61,27 +61,27 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		// Poll
 		if (ModulesManager::is_module_installed('poll') && ModulesManager::is_module_activated('poll') && $actual_major_version >= '6.0')
 		{
-			$this->urls_mappings[] = new UrlMapping('^poll/poll\.php$', '/poll/', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^poll/poll\.php$', '/poll/', 'L,R=301');
 		}
 
 		// Stats
 		if (ModulesManager::is_module_installed('stats') && ModulesManager::is_module_activated('stats') && $actual_major_version >= '6.0')
 		{
-			$this->urls_mappings[] = new UrlMapping('^stats/admin_stats\.php$', '/stats/admin/', 'L,R=301');
-			$this->urls_mappings[] = new UrlMapping('^stats/stats\.php$', '/stats/', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^stats/admin_stats\.php$', '/stats/admin/', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^stats/stats\.php$', '/stats/', 'L,R=301');
 		}
 
 		// Wiki
 		if (ModulesManager::is_module_installed('wiki') && ModulesManager::is_module_activated('wiki') && $actual_major_version >= '6.1' && GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_6_1_release_date))
 		{
-			$this->urls_mappings[] = new UrlMapping('^wiki/wiki\.php$', '/wiki/', 'L,R=301');
+			$this->urls_mappings[] = new HighPriorityUrlMapping('^wiki/wiki\.php$', '/wiki/', 'L,R=301');
 
 			$categories = CategoriesService::get_categories_manager('wiki')->get_categories_cache()->get_categories();
 
 			foreach ($categories as $id => $category)
 			{
 				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
-					$this->urls_mappings[] = new UrlMapping('^wiki/' . $category->get_rewrited_name() . '$', '/wiki/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+					$this->urls_mappings[] = new HighPriorityUrlMapping('^wiki/' . $category->get_rewrited_name() . '$', '/wiki/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
 			}
 
 			$result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('wiki')->get_configuration()->get_items_table_name());
@@ -89,20 +89,20 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 			while ($row = $result->fetch())
 			{
 				if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
-					$this->urls_mappings[] = new UrlMapping('^wiki/' . $row['rewrited_title'] . '$', '/wiki/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
+					$this->urls_mappings[] = new HighPriorityUrlMapping('^wiki/' . $row['rewrited_title'] . '$', '/wiki/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
 			}
 			$result->dispose();
 		}
 
 		//Old user rewrited urls replacement
-		$this->urls_mappings[] = new UrlMapping('^user/login/?$', '/login/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/aboutcookie/?$', '/aboutcookie/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/registration/?$', '/registration/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/registration/confirm/?([a-z0-9]+)?/?$', '/registration/confirm/$1', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/password/lost/?$', '/password/lost/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/password/change/?([a-z0-9]+)?/?$', '/password/change/$1', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/error/403/?$', '/error/403/', 'L,R=301');
-		$this->urls_mappings[] = new UrlMapping('^user/error/404/?$', '/error/404/', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/login/?$', '/login/', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/aboutcookie/?$', '/aboutcookie/', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/registration/?$', '/registration/', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/registration/confirm/?([a-z0-9]+)?/?$', '/registration/confirm/$1', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/password/lost/?$', '/password/lost/', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/password/change/?([a-z0-9]+)?/?$', '/password/change/$1', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/error/403/?$', '/error/403/', 'L,R=301');
+		$this->urls_mappings[] = new HighPriorityUrlMapping('^user/error/404/?$', '/error/404/', 'L,R=301');
 
 		return new UrlMappings($this->urls_mappings);
 	}
