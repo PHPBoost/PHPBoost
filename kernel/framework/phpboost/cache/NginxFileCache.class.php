@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 14
+ * @version     PHPBoost 6.1 - last update: 2026 02 23
  * @since       PHPBoost 5.2 - 2019 10 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -91,27 +91,12 @@ class NginxFileCache implements CacheData
 		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
 
-		$this->add_section('UrlUpdater');
-
-        foreach ($modules as $module)
-		{
-			$id = $module->get_id();
-			if ($id == 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
-			{
-				$provider = $eps->get_provider($id);
-				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
-				{
-                    $this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
-				}
-			}
-		}
-
 		// Generate high priority rewriting rules
 		$first_high_priority_mapping = true;
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				$mappings_high_priority = array();
@@ -140,7 +125,7 @@ class NginxFileCache implements CacheData
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				$mappings_normal_priority = array();
@@ -163,7 +148,7 @@ class NginxFileCache implements CacheData
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				$mappings_low_priority = array();
