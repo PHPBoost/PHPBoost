@@ -6,12 +6,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 05 24
+ * @version     PHPBoost 6.0 - last update: 2026 02 23
  * @since       PHPBoost 3.0 - 2009 10 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTTPRequestCustom
@@ -456,9 +457,9 @@ class HTTPRequestCustom
 	
 	public function get_location_info_by_ip()
 	{
-		$ip_data = @json_decode(file_get_contents('http://www.geoplugin.net/json.gp?ip=' . $this->get_ip_address()));
-		if($ip_data && $ip_data->geoplugin_countryName != null)
-			return $ip_data->geoplugin_countryCode;
+        $ip_data = @json_decode(file_get_contents('http://ip-api.com/json/' . $this->get_ip_address()));
+        if($ip_data && $ip_data->status === 'success' && isset($ip_data->countryCode))
+            return $ip_data->countryCode;
 		
 		return '';
 	}
