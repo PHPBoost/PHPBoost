@@ -37,24 +37,30 @@ class UrlUpdaterExtensionPointProvider extends ExtensionPointProvider
 		// Pages
 		if (ModulesManager::is_module_installed('pages') && ModulesManager::is_module_activated('pages') && $actual_major_version >= '6.0' && GeneralConfig::load()->get_site_install_date()->is_anterior_to($phpboost_6_0_release_date))
 		{
-			$this->urls_mappings[] = new HighPriorityUrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
+			$pages_config = ModulesManager::get_module('pages')->get_configuration();
+            $cats_table = $pages_config->get_categories_table_name();
 
-			$categories = CategoriesService::get_categories_manager('pages')->get_categories_cache()->get_categories();
+            if (!empty($cats_table) && $cats_table !== PREFIX)  // ← garde-fou
+            {
+                $this->urls_mappings[] = new HighPriorityUrlMapping('^pages/pages\.php$', '/pages/', 'L,R=301');
 
-			foreach ($categories as $id => $category)
-			{
-				if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
-					$this->urls_mappings[] = new HighPriorityUrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
-			}
-			
-			$result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('pages')->get_configuration()->get_items_table_name());
-			
-			while ($row = $result->fetch())
-			{
-				if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
-					$this->urls_mappings[] = new HighPriorityUrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
-			}
-			$result->dispose();
+                $categories = CategoriesService::get_categories_manager('pages')->get_categories_cache()->get_categories();
+
+                foreach ($categories as $id => $category)
+                {
+                    if ($id != Category::ROOT_CATEGORY && $category instanceof Category)
+                        $this->urls_mappings[] = new HighPriorityUrlMapping('^pages/' . $category->get_rewrited_name() . '$', '/pages/' . $id . '-' . $category->get_rewrited_name() . '/', 'L,R=301');
+                }
+
+                $result = PersistenceContext::get_querier()->select('SELECT id, rewrited_title, id_category	FROM ' . ModulesManager::get_module('pages')->get_configuration()->get_items_table_name());
+
+                while ($row = $result->fetch())
+                {
+                    if ($row['id_category'] == Category::ROOT_CATEGORY || isset($categories[$row['id_category']]))
+                        $this->urls_mappings[] = new HighPriorityUrlMapping('^pages/' . $row['rewrited_title'] . '$', '/pages/' . $row['id_category'] . '-' . ($row['id_category'] == Category::ROOT_CATEGORY ? 'root' : $categories[$row['id_category']]->get_rewrited_name()) . '/' . $row['id'] . '-' . $row['rewrited_title'] . '/', 'L,R=301');
+                }
+                $result->dispose();
+            }
 		}
 
 		// Poll
