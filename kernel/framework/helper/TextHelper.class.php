@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 03 10
+ * @version     PHPBoost 6.0 - last update: 2026 03 15
  * @since       PHPBoost 3.0 - 2010 01 24
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -295,30 +295,68 @@ class TextHelper
 
 	public static function mb_unserialize($string)
 	{
-		// We first check if the string is serialized
-        if (!self::is_serialized($string)) {
-            return $string;
-        }
-
-        // Fixed string lengths for multi-byte characters
-        $string = preg_replace_callback(
-            '/s:(\d+):"(.*?)";/s',
-            function (array $matches) {
-                $value = $matches[2] ?? '';
-                $value = (string) $value;
-                return 's:' . strlen($value) . ':"' . $value . '";';
-            },
-            $string
-        );
-
-        // Attempt to deserialize
-        $result = $result = unserialize($string, ['allowed_classes' => false]);
-        if ($result === false && $string !== 'b:0;') {
-            // treat as non‑serialized or log/debug
-            return $string;
-        }
-        return $result;
+		$string = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($matches) {
+			if (isset($matches[2])) return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
+		}, $string
+		);
+		return unserialize($string);
 	}
+
+    public static function safe_unserialize($data)
+    {
+        if (empty($data) || !is_string($data))
+            return $data;
+
+        $out = '';
+        $i   = 0;
+        $len = strlen($data);
+
+        while ($i < $len)
+        {
+            if ($i + 2 < $len && $data[$i] === 's' && $data[$i + 1] === ':')
+            {
+                $colon = strpos($data, ':"', $i + 2);
+                if ($colon !== false && ctype_digit(substr($data, $i + 2, $colon - $i - 2)))
+                {
+                    $n             = (int) substr($data, $i + 2, $colon - $i - 2);
+                    $content_start = $colon + 2;
+
+                    // Cas 1 : N est déjà un octet-count correct
+                    if ($content_start + $n + 2 <= $len
+                        && $data[$content_start + $n]     === '"'
+                        && $data[$content_start + $n + 1] === ';')
+                    {
+                        $out .= substr($data, $i, $content_start + $n + 2 - $i);
+                        $i    = $content_start + $n + 2;
+                        continue;
+                    }
+
+                    // Cas 2 : N est un char-count (mbstring.func_overload)
+                    $char_offset   = mb_strlen(substr($data, 0, $content_start), 'UTF-8');
+                    $content_chars = mb_substr($data, $char_offset, $n, 'UTF-8');
+                    $byte_len      = strlen($content_chars);
+
+                    if ($content_start + $byte_len + 2 <= $len
+                        && $data[$content_start + $byte_len]     === '"'
+                        && $data[$content_start + $byte_len + 1] === ';')
+                    {
+                        $out .= 's:' . $byte_len . ':"' . $content_chars . '";';
+                        $i    = $content_start + $byte_len + 2;
+                        continue;
+                    }
+                }
+            }
+
+            $out .= $data[$i];
+            $i++;
+        }
+
+        $result = @unserialize($out);
+        if ($result === false && $data !== 'b:0;')
+            $result = @unserialize($data);
+
+        return $result;
+    }
 
 	private static function is_base64($string)
 	{
@@ -387,7 +425,7 @@ class TextHelper
 
 	public static function deserialize($string)
 	{
-		return self::is_serialized($string) ? self::mb_unserialize($string) : $string;
+		return self::is_serialized($string) ? unserialize($string) : $string;
 	}
 
 	/**

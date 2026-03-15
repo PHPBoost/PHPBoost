@@ -14,9 +14,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 11 04
+ * @version     PHPBoost 6.0 - last update: 2026 03 15
  * @since       PHPBoost 3.0 - 2009 09 16
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ConfigManager
@@ -87,7 +88,7 @@ class ConfigManager
 			throw new ConfigNotFoundException($name);
 		}
 
-		$required_value = @unserialize($result['value']);
+		$required_value = TextHelper::safe_unserialize($result['value']);
 		if ($required_value === false)
 		{
 			throw new ConfigNotFoundException($name);

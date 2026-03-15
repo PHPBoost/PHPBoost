@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 07
+ * @version     PHPBoost 6.0 - last update: 2026 03 15
  * @since       PHPBoost 3.0 - 2012 02 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
@@ -770,8 +770,6 @@ class UpdateServices
                 $menu = MenuService::load($row[$id]);
                 MenuService::save($menu);
                 $menus_list = MenuService::get_menus_map();
-                // Debug::stop($menus_list);
-                MenuService::initialize([$menus_list]);
                 MenuService::generate_cache();
             }
             $result->dispose();

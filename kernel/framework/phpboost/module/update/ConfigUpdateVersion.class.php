@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 12 15
+ * @version     PHPBoost 6.0 - last update: 2026 03 15
  * @since       PHPBoost 3.0 - 2012 02 27
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ConfigUpdateVersion implements UpdateVersion
@@ -50,19 +51,90 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 	}
 
 	protected function get_old_config($serialize = true)
-	{
-		$old_config = array();
-		try {
-			$old_config = $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
-		} catch (RowNotFoundException $e) {}
+    {
+        $old_config = array();
+        try {
+            $old_config = $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 
+                'WHERE name = :config_name', array('config_name' => $this->get_config_name()));
+        } catch (RowNotFoundException $e) {}
 
-		if ($serialize)
-		{
-			mb_internal_encoding('utf-8');
-			return TextHelper::deserialize($old_config);
-		}
-		return $old_config;
-	}
+        if ($serialize)
+        {
+            return self::fix_and_unserialize($old_config);
+        }
+        return $old_config;
+    }
+
+    /**
+     * Désérialise une chaîne PHP potentiellement corrompue par mbstring.func_overload.
+     * Lorsque mbstring.func_overload = 2 ou 7, PHP's serialize() utilise mb_strlen()
+     * (nombre de caractères) au lieu de strlen() (nombre d'octets) pour les valeurs s:N.
+     * Ce parseur corrige les longueurs en testant d'abord N comme octet-count,
+     * puis comme char-count si la vérification échoue.
+     */
+    private static function fix_and_unserialize($data)
+    {
+        if (empty($data) || !is_string($data))
+            return $data;
+
+        $out  = '';
+        $i    = 0;
+        $len  = strlen($data);
+
+        while ($i < $len)
+        {
+            // Détecte le pattern s:N:"
+            if ($i + 2 < $len && $data[$i] === 's' && $data[$i + 1] === ':')
+            {
+                // Lire le nombre N
+                $colon = strpos($data, ':"', $i + 2);
+                if ($colon !== false && ctype_digit(substr($data, $i + 2, $colon - $i - 2)))
+                {
+                    $n             = (int) substr($data, $i + 2, $colon - $i - 2);
+                    $content_start = $colon + 2;          // position du 1er octet du contenu
+
+                    // === Cas 1 : N est déjà un octet-count correct ===
+                    if ($content_start + $n + 2 <= $len
+                        && $data[$content_start + $n]     === '"'
+                        && $data[$content_start + $n + 1] === ';')
+                    {
+                        // Pas de correction nécessaire, copier tel quel
+                        $out .= substr($data, $i, $content_start + $n + 2 - $i);
+                        $i    = $content_start + $n + 2;
+                        continue;
+                    }
+
+                    // === Cas 2 : N est un char-count (mbstring.func_overload) ===
+                    // Extraire N caractères UTF-8 depuis content_start
+                    $char_offset   = mb_strlen(substr($data, 0, $content_start), 'UTF-8');
+                    $content_chars = mb_substr($data, $char_offset, $n, 'UTF-8');
+                    $byte_len      = strlen($content_chars);
+
+                    if ($content_start + $byte_len + 2 <= $len
+                        && $data[$content_start + $byte_len]     === '"'
+                        && $data[$content_start + $byte_len + 1] === ';')
+                    {
+                        // Corriger : écrire s:byte_len:"content";
+                        $out .= 's:' . $byte_len . ':"' . $content_chars . '";';
+                        $i    = $content_start + $byte_len + 2;
+                        continue;
+                    }
+                }
+            }
+
+            // Octet ordinaire : copier sans modification
+            $out .= $data[$i];
+            $i++;
+        }
+
+        $result = @unserialize($out);
+
+        // Dernier recours : tenter la désérialisation de la chaîne originale
+        if ($result === false && $data !== 'b:0;')
+            $result = @unserialize($data);
+
+        return $result;
+    }
 
 	protected function save_new_config($name, ConfigData $data)
 	{

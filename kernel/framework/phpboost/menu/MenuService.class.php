@@ -7,11 +7,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2022 02 24
+ * @version     PHPBoost 6.0 - last update: 2026 03 15
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MenuService
@@ -616,6 +617,7 @@ class MenuService
 		}
 		else
 		{
+            mb_internal_encoding('UTF-8');
 			$fixed_object = preg_replace_callback( '!s:(\d+):"(.*?)";!u', function($match) {
 				return ($match[1] == TextHelper::strlen($match[2])) ? $match[0] : 's:' . TextHelper::strlen($match[2]) . ':"' . $match[2] . '";';
 			}, $db_result['object']);
