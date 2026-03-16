@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2026 03 15
+ * @version     PHPBoost 6.0 - last update: 2026 03 16
  * @since       PHPBoost 2.0 - 2008 11 13
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -610,7 +610,7 @@ class MenuService
 	 */
 	public static function initialize($db_result)
 	{
-		if (!ClassLoader::is_class_registered_and_valid($db_result['class']))
+		if (empty($db_result['class']) || !ClassLoader::is_class_registered_and_valid($db_result['class']))
 		{
 			$menu = new ContentMenu('Unable to load the menu');
 			$menu->set_content('Unable to load the menu with the following class : ' . $db_result['class']);
