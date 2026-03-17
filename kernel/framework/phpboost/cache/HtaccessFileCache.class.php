@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 17
+ * @version     PHPBoost 6.0 - last update: 2026 03 17
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -204,6 +204,20 @@ class HtaccessFileCache implements CacheData
 						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 					}
 				}
+			}
+		}
+
+        // Write UrlUpdater redirect rules (R=301) BEFORE all dispatcher rules.
+		// UrlUpdater's UrlMapping objects must fire before wiki/pages dispatcher rules
+		// otherwise the dispatcher catches old-format URLs before the redirect can apply.
+		if ($eps->provider_exists('UrlUpdater', UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			$this->add_section('UrlUpdater redirect rules (high priority)');
+			$provider = $eps->get_provider('UrlUpdater');
+			foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+			{
+				if (!($mapping instanceof DispatcherUrlMapping))
+					$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 			}
 		}
 

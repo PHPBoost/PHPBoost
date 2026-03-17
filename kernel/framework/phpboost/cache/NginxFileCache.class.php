@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 01 17
+ * @version     PHPBoost 6.0 - last update: 2026 03 17
  * @since       PHPBoost 5.2 - 2019 10 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -116,6 +116,24 @@ class NginxFileCache implements CacheData
 
 					$this->add_section($id);
 					$this->add_url_mapping($mappings_high_priority);
+				}
+			}
+		}
+
+        // Write UrlUpdater redirect rules BEFORE all dispatcher rules.
+		// Plain UrlMapping objects (R=301) from UrlUpdater must fire before wiki/pages
+		// dispatcher rules, otherwise the dispatcher catches old-format URLs first.
+		if ($eps->provider_exists('UrlUpdater', UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			$this->add_section('UrlUpdater redirect rules (high priority)');
+			$provider = $eps->get_provider('UrlUpdater');
+			foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+			{
+				if (!($mapping instanceof DispatcherUrlMapping))
+				{
+					// Use permanent redirect for mappings with R=301 option
+					$is_redirect = strpos($mapping->options(), 'R=301') !== false || strpos($mapping->options(), 'redirect') !== false;
+					$this->add_line('rewrite ^/' . ltrim($mapping->from(), '^') . ' ' . $this->general_config->get_site_path() . '/' . ltrim($mapping->to(), '/') . ($is_redirect ? ' permanent;' : ' break;'));
 				}
 			}
 		}
