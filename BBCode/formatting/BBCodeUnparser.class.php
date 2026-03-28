@@ -136,7 +136,6 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[url=$2 target]$3[/url]",
 			"[url=$2]$4[/url]",
 			"[title=1]$1[/title]",
-			"[title=1]$1[/title]",
 			"[title=2]$1[/title]",
 			"[title=3]$1[/title]",
 			"[title=4]$1[/title]",
