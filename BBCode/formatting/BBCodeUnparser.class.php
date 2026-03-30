@@ -116,6 +116,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 			'`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU',
 			'`<span class="emoji-tag">(.*)</span>`isuU',
+			'`<code style="display:inline-block;?">(.*)</code>`isuU',		
 		);
 
 		$array_preg_replace = array(
@@ -136,7 +137,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[url=$2 target]$3[/url]",
 			"[url=$2]$4[/url]",
 			"[title=1]$1[/title]",
-			"[title=1]$1[/title]",
+//			"[title=1]$1[/title]",
 			"[title=2]$1[/title]",
 			"[title=3]$1[/title]",
 			"[title=4]$1[/title]",
@@ -160,15 +161,17 @@ class BBCodeUnparser extends ContentFormattingUnparser
 			"[moderator]$1[/moderator]",
 			"[teaser]$1[/teaser]",
 			"$1",
+			"[c]$1[/c]",
 		);
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 		$array_str = array(
-			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
-			'<sub>', '</sub>', '<pre>', '</pre>'
+			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<i>', '</i>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
+			'<sub>', '</sub>', '<pre>', '</pre>', '<cite>', '</cite>', '<mark>', '</mark>', '<q>', '</q>', '<ins>', '</ins>', '<del>', '</del>'
 			);
 		$array_str_replace = array(
-			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
+			'&#13;', '[strong]', '[/strong]', '[em]', '[/em]', '[i]', '[/i]', '[strike]', '[/strike]', '[s]', '[/s]', '[p]', '[/p]', '[sup]', '[/sup]',
+			'[sub]', '[/sub]', '[pre]', '[/pre]', '[cite]', '[/cite]', '[mark]', '[/mark]', '[q]', '[/q]', '[ins]', '[/ins]', '[del]', '[/del]'
 		);
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
