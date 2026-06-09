@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 02 27
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldThumbnail extends AbstractFormField
@@ -18,7 +18,7 @@ class FormFieldThumbnail extends AbstractFormField
 	const DEFAULT_VALUE = 'default';
 	const CUSTOM = 'custom';
 
-	public function __construct($id, $label = '', $value = self::NONE, $default_picture = '', array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label = '', $value = self::NONE, $default_picture = '', array $field_options = [], array $constraints = [])
 	{
 		$this->default_picture = self::get_default_thumbnail_url($default_picture);
 		parent::__construct($id, $label, $value, $field_options, $constraints);
@@ -38,7 +38,7 @@ class FormFieldThumbnail extends AbstractFormField
 		$real_file_url = $this->get_value() == self::DEFAULT_VALUE ? $this->default_picture : $this->get_value();
 		$file_type = new FileType(new File($real_file_url));
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_DEFAULT_THUMBNAIL_URL' => $this->default_picture,
 			'C_PREVIEW_HIDDEN'        => !$this->get_value() || !$file_type->is_picture(),
 			'C_AUTH_UPLOAD'           => FileUploadConfig::load()->is_authorized_to_access_interface_files(),
@@ -48,11 +48,11 @@ class FormFieldThumbnail extends AbstractFormField
 			'C_DEFAULT_CHECKED'       => $this->get_value() && ($this->get_value() == self::DEFAULT_VALUE || $this->get_value() == $this->default_picture),
 			'C_CUSTOM_CHECKED'        => $this->get_value() && $this->get_value() != self::DEFAULT_VALUE && $this->get_value() != $this->default_picture,
 			'DEFAULT_THUMBNAIL_URL'   => Url::to_rel($this->default_picture)
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -63,7 +63,9 @@ class FormFieldThumbnail extends AbstractFormField
 		$module_id = Environment::get_running_module_name();
 		$parent_theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_configuration()->get_parent_theme();
 
-		$module_url = PATH_TO_ROOT . '/' . $module_id . '/templates/images/' . $file_name;
+		// Get module template path (new /modules structure with fallback to root)
+		$module_template_path = FileTemplateLoader::get_module_template_path($module_id);
+		$module_url = $module_template_path . '/images/' . $file_name;
 		$module_file = new File($module_url);
 		$module_theme_url = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . $module_id . '/images/' . $file_name;
 		$module_theme_file = new File($module_theme_url);

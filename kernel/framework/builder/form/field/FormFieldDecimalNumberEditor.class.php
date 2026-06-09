@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 06 03
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 06 01
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldDecimalNumberEditor extends FormFieldNumberEditor
@@ -22,7 +22,7 @@ class FormFieldDecimalNumberEditor extends FormFieldNumberEditor
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		$this->pattern = '`^[0-9]+([\.|,][0-9]{1,2})?$`iu';
 		parent::__construct($id, $label, $value, $field_options, $constraints);

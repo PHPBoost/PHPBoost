@@ -3,9 +3,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 01 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 05 22
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminFilesConfigController extends DefaultAdminController
@@ -39,47 +39,47 @@ class AdminFilesConfigController extends DefaultAdminController
 	{
 		$extensions = $this->get_extensions_list();
 
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 
 		$fieldset = new FormFieldsetHTML('files-config', $this->lang['upload.files.config']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('size_limit', $this->lang['upload.size.limit'], NumberHelper::round($this->file_upload_config->get_maximum_size_upload() / 1024, 2),
-			array(
+			[
 				'class' => 'third-field',
 				'min' => 0, 'step' => 0.05, 'required' => true,
 				'description' => $this->lang['upload.size.limit.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('bandwidth_protect', $this->lang['upload.bandwidth.protect'], $this->file_upload_config->get_enable_bandwidth_protect(),
-			array(
+			[
 				'class' => 'custom-checkbox third-field',
 				'description' => $this->lang['upload.bandwidth.protect.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_file_thumbnail', $this->lang['upload.display.thumbnails'], $this->file_upload_config->get_display_file_thumbnail(),
-			array(
+			[
 				'class' => 'custom-checkbox third-field',
 				'description' => $this->lang['upload.display.thumbnails.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('extensions', ''));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('authorized_extensions', $this->lang['upload.authorized.extensions'], $this->file_upload_config->get_authorized_extensions(), $extensions['authorized_extensions_select'],
-			array('class' => 'half-field top-field', 'size' => 12)
+			['class' => 'half-field top-field', 'size' => 12]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('extend_extensions', $this->lang['upload.authorized.extensions.more'],  $extensions['extend_extensions'],
-			array(
+			[
 				'class' => 'half-field top-field',
 				'description' => $this->lang['upload.authorized.extensions.clue']
-			)
+			]
 		));
 
-		$auth_settings = new AuthorizationsSettings(array(new VisitorDisabledActionAuthorization($this->lang['upload.files.manager.authorizations'], FileUploadConfig::AUTH_FILES_BIT)));
+		$auth_settings = new AuthorizationsSettings([new VisitorDisabledActionAuthorization($this->lang['upload.files.manager.authorizations'], FileUploadConfig::AUTH_FILES_BIT)]);
 		$auth_settings->build_from_auth_array($this->file_upload_config->get_authorization_enable_interface_files());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
@@ -103,7 +103,7 @@ class AdminFilesConfigController extends DefaultAdminController
 		$this->file_upload_config->set_display_file_thumbnail($this->form->get_value('display_file_thumbnail'));
 
 		$authorized_extensions = $this->form->get_value('authorized_extensions');
-		$authorized_extensions = array();
+		$authorized_extensions = [];
 		foreach ($this->form->get_value('authorized_extensions') as $field => $option)
 		{
 			$authorized_extensions[] = $option->get_raw_value();
@@ -132,24 +132,24 @@ class AdminFilesConfigController extends DefaultAdminController
 		HtaccessFileCache::regenerate();
 		NginxFileCache::regenerate();
 
-		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['upload.files.config'], 'url' => AdminFilesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', 'kernel', ['title' => $this->lang['upload.files.config'], 'url' => AdminFilesUrlBuilder::configuration()->rel()]);
 	}
 
 	private function get_extensions_list()
 	{
 		$authorized_extensions = $this->file_upload_config->get_authorized_extensions();
-		$array_extensions_type = array(
-			$this->lang['upload.option.image'] => array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef'),
-			$this->lang['upload.option.archives'] => array('rar', 'zip', 'gz', '7z'),
-			$this->lang['upload.option.text'] => array('txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'),
-			$this->lang['upload.option.media'] => array('mp3', 'ogg', 'webm', 'mpg', 'mov', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'),
-			$this->lang['upload.option.miscellaneous'] => array('ttf', 'tex', 'rtf', 'psd', 'iso')
-		);
+		$array_extensions_type = [
+			$this->lang['upload.option.image'] => ['jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef'],
+			$this->lang['upload.option.archives'] => ['rar', 'zip', 'gz', '7z'],
+			$this->lang['upload.option.text'] => ['txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv'],
+			$this->lang['upload.option.media'] => ['mp3', 'ogg', 'webm', 'mpg', 'mov', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv'],
+			$this->lang['upload.option.miscellaneous'] => ['ttf', 'tex', 'rtf', 'psd', 'iso']
+		];
 
-		$select_options = array();
+		$select_options = [];
 		foreach ($array_extensions_type as $file_type => $array_extensions)
 		{
-			$select_options[] = new FormFieldSelectChoiceGroupOption($file_type, array());
+			$select_options[] = new FormFieldSelectChoiceGroupOption($file_type, []);
 			foreach ($array_extensions as $key => $extension)
 			{
 				$extension_key = array_search($extension, $authorized_extensions);
@@ -161,7 +161,7 @@ class AdminFilesConfigController extends DefaultAdminController
 			}
 		}
 
-		return array('authorized_extensions_select' => $select_options, 'extend_extensions' => implode(', ', $authorized_extensions));
+		return ['authorized_extensions_select' => $select_options, 'extend_extensions' => implode(', ', $authorized_extensions)];
 	}
 }
 ?>

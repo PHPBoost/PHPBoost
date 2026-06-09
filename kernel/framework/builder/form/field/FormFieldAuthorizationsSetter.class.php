@@ -5,16 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 11 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 03 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldAuthorizationsSetter extends AbstractFormField
 {
-	public function __construct($id, AuthorizationsSettings $value, array $field_options = array())
+	public function __construct($id, AuthorizationsSettings $value, array $field_options = [])
 	{
 		parent::__construct($id, '', $value, $field_options);
 	}
@@ -30,14 +30,14 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 
 		foreach ($this->get_value()->get_actions() as $action)
 		{
-			$template->assign_block_vars('actions', array(
+			$template->assign_block_vars('actions', [
 				'ID' => 'auth' . $action->get_bit(),
 				'HTML_ID' => $this->get_html_id() . 'auth' . $action->get_bit(),
 				'BIT' => $action->get_bit(),
 				'LABEL' => $action->get_label(),
 				'DESCRIPTION' => $action->get_description(),
-				'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->build_auth_array(), array(), $this->get_html_id() . $action->get_bit(), $this->is_disabled(), $this->is_disabled(), $action->get_disabled_ranks())
-			));
+				'AUTH_FORM' => Authorizations::generate_select($action->get_bit(), $action->build_auth_array(), [], $this->get_html_id() . $action->get_bit(), $this->is_disabled(), $this->is_disabled(), $action->get_disabled_ranks())
+			]);
 		}
 
 		return $template;
@@ -55,11 +55,11 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		{
 			if ($request->has_parameter('groups_auth' . $this->get_html_id() . $action->get_bit()))
 			{
-				$roles_auths = self::get_action_auth($action, $request->get_array('groups_auth' . $this->get_html_id() . $action->get_bit(), array()));
+				$roles_auths = self::get_action_auth($action, $request->get_array('groups_auth' . $this->get_html_id() . $action->get_bit(), []));
 				$roles_auths = self::clean_groups_auths($roles_auths);
 				if ($request->has_parameter('members_auth' . $this->get_html_id() . $action->get_bit()))
 				{
-					$member_auths = self::get_action_auth($action, $request->get_array('members_auth' . $this->get_html_id() . $action->get_bit(), array()));
+					$member_auths = self::get_action_auth($action, $request->get_array('members_auth' . $this->get_html_id() . $action->get_bit(), []));
 					foreach (self::clean_members_auths($member_auths) as $member => $auth)
 					{
 						$roles_auths[$member] = $auth;
@@ -77,7 +77,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 
 	private static function get_action_auth(ActionAuthorization $action, array $values)
 	{
-		$auth_array = array();
+		$auth_array = [];
 		foreach ($values as $role_htlm_id)
 		{
 			$role = TextHelper::substr($role_htlm_id, TextHelper::strlen($action->get_bit()) - 1);
@@ -88,7 +88,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 
 	private static function clean_groups_auths(array $auths)
 	{
-		$g_auths = array();
+		$g_auths = [];
 		foreach ($auths as $role => $auth)
 		{
 			if ($role != '0' || !empty($role) || !is_null($role))
@@ -101,7 +101,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 
 	private static function clean_members_auths(array $auths)
 	{
-		$m_auths = array();
+		$m_auths = [];
 		foreach ($auths as $member_id => $auth)
 		{
 			if ($member_id != 0)

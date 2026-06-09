@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 06 03
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 11 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldAjaxUserAutoComplete extends FormFieldAjaxCompleter
@@ -35,7 +35,7 @@ class FormFieldAjaxUserAutoComplete extends FormFieldAjaxCompleter
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		$field_options['file'] = TPL_PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/users_autocomplete&token='. AppContext::get_session()->get_token();
 		parent::__construct($id, $label, $value, $field_options, $constraints);

@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 05 20
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminServerPHPInfoController extends AdminController
@@ -17,8 +17,8 @@ class AdminServerPHPInfoController extends AdminController
 		phpinfo();
 		$phpinfo = ob_get_contents();
 		$phpinfo = preg_replace('`^.*<body>`isu', '', $phpinfo);
-		$phpinfo = str_replace(array('class="e"', 'class="v"', '<table>', '<th>', '</body></html>'),
-		array('', '',  '<table class="table-no-header phpinfo">', '<td>', ''), $phpinfo);
+		$phpinfo = str_replace(['class="e"', 'class="v"', '<table>', '<th>', '</body></html>'],
+		['', '',  '<table class="table-no-header phpinfo">', '<td>', ''], $phpinfo);
 		ob_end_clean();
 		ob_start();
 

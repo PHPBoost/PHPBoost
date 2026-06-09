@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldMultiLineTextEditor extends AbstractFormField
@@ -30,7 +30,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
      * @param array $field_options Options
      * @param FormFieldConstraint[] $constraints List of the constraints
      */
-    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -50,10 +50,10 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 
     private function assign_textarea_template_variables(Template $template)
     {
-        $template->put_all(array(
+        $template->put_all([
             'ROWS' => $this->rows,
             'COLS' => $this->cols
-        ));
+        ]);
     }
 
     protected function compute_options(array &$field_options)

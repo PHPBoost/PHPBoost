@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 01 11
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldCaptcha extends AbstractFormField
@@ -27,7 +27,7 @@ class FormFieldCaptcha extends AbstractFormField
 	{
 		$this->captcha = AppContext::get_captcha_service()->get_default_factory();
 
-		$field_options = $this->is_enabled() && $this->captcha->is_visible() ? array('required' => true) : array();
+		$field_options = $this->is_enabled() && $this->captcha->is_visible() ? ['required' => true] : [];
 		parent::__construct($id, LangLoader::get_message('form.captcha', 'form-lang'), false, $field_options);
 	}
 
@@ -59,11 +59,11 @@ class FormFieldCaptcha extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_IS_ENABLED' => $this->is_enabled(),
 			'C_IS_VISIBLE' => $this->captcha->is_visible(),
 			'CAPTCHA' => $this->captcha->display(),
-		));
+		]);
 
 		return $template;
 	}

@@ -3,12 +3,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 08 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminCommentsConfigController extends DefaultAdminController
@@ -47,15 +47,15 @@ class AdminCommentsConfigController extends DefaultAdminController
 
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 
 		$fieldset = new FormFieldsetHTML('comments-config', $this->lang['comment.configuration']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('comments_enabled', $this->lang['comment.enable'], $this->configuration->are_comments_enabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("comments_enabled").getValue()) {
 						HTMLForms.getField("visitor_email_enabled").enable();
 						HTMLForms.getField("comments_number_display").enable();
@@ -71,66 +71,66 @@ class AdminCommentsConfigController extends DefaultAdminController
 						HTMLForms.getField("forbidden_tags").disable();
 						HTMLForms.getField("comments_unauthorized_modules").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('visitor_email_enabled', $this->lang['comment.visitor.email'], $this->configuration->is_visitor_email_enabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'description' => $this->lang['comment.visitor.email.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('comments_number_display', $this->lang['comment.display.number'], $this->configuration->get_comments_number_display(),
-			array(
+			[
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
-			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number']))
+			],
+			[new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number'])]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_links_comment', $this->lang['comment.max.links'], $this->configuration->get_max_links_comment(),
-			array(
+			[
 				'required' => true,
 				'hidden' => !$this->configuration->are_comments_enabled()
-			),
-			array(new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number']))
+			],
+			[new FormFieldConstraintRegex('`^([0-9]+)$`iu', '', $this->lang['warning.regex.number'])]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('order_display_comments', $this->lang['comment.display.order'], $this->configuration->get_order_display_comments(),
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['comment.display.order.asc'], CommentsConfig::ASC_ORDER),
 				new FormFieldSelectChoiceOption($this->lang['comment.display.order.desc'], CommentsConfig::DESC_ORDER)
-			),
-			array('hidden' => !$this->configuration->are_comments_enabled())
+			],
+			['hidden' => !$this->configuration->are_comments_enabled()]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('format', ''));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['form.forbidden.tags'], $this->configuration->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
-			array(
+			[
 				'size' => 12,
 				'hidden' => !$this->configuration->are_comments_enabled()
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('comments_unauthorized_modules', $this->lang['form.forbidden.module'], $this->configuration->get_comments_unauthorized_modules(), ModulesManager::generate_unauthorized_module_option('comments'),
-			array(
+			[
 				'size' => 12,
 				'description' => $this->lang['comment.forbidden.module.clue'],
 				'hidden' => !$this->configuration->are_comments_enabled()
-			)
+			]
 		));
 
 		$fieldset = new FormFieldsetHTML('authorization', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], CommentsAuthorizations::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.write'], CommentsAuthorizations::POST_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], CommentsAuthorizations::MODERATE_AUTHORIZATIONS)
-		));
+		]);
 		$auth_settings->build_from_auth_array($this->configuration->get_authorizations());
 		$fieldset->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
@@ -150,7 +150,7 @@ class AdminCommentsConfigController extends DefaultAdminController
 
 			$this->configuration->set_comments_number_display($this->form->get_value('comments_number_display'));
 
-			$forbidden_tags = array();
+			$forbidden_tags = [];
 			foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 			{
 				$forbidden_tags[] = $option->get_raw_value();
@@ -160,7 +160,7 @@ class AdminCommentsConfigController extends DefaultAdminController
 			$this->configuration->set_max_links_comment($this->form->get_value('max_links_comment'));
 			$this->configuration->set_order_display_comments($this->form->get_value('order_display_comments')->get_raw_value());
 
-			$unauthorized_modules = array();
+			$unauthorized_modules = [];
 			foreach ($this->form->get_value('comments_unauthorized_modules') as $field => $option)
 			{
 				$unauthorized_modules[] = $option->get_raw_value();
@@ -173,12 +173,12 @@ class AdminCommentsConfigController extends DefaultAdminController
 		$this->configuration->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		CommentsConfig::save();
 
-		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['comment.configuration'], 'url' => DispatchManager::get_url('/admin/content/', '/comments/config/')->rel()));
+		HooksService::execute_hook_action('edit_config', 'kernel', ['title' => $this->lang['comment.configuration'], 'url' => DispatchManager::get_url('/admin/content/', '/comments/config/')->rel()]);
 	}
 
 	private function generate_forbidden_tags_option()
 	{
-		$options = array();
+		$options = [];
 		$available_tags = AppContext::get_content_formatting_service()->get_available_tags();
 		foreach ($available_tags as $identifier => $name)
 		{

@@ -3,9 +3,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 04 11
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
 class CLIClearCacheCommand implements CLICommand
@@ -48,6 +48,10 @@ class CLIClearCacheCommand implements CLICommand
         $cache_service->clear_css_cache();
         CLIOutput::writeln('[clear] JS cache');
         $cache_service->clear_js_cache();
+        CLIOutput::writeln('htaccess has been regenerated');
+        HtaccessFileCache::regenerate();
+        CLIOutput::writeln('Nginx has been regenerated');
+        NginxFileCache::regenerate();
         CLIOutput::writeln('cache has been successfully cleared');
     }
 }

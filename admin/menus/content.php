@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 11 23
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -102,15 +102,15 @@ $view->add_lang($lang);
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 
-$view->put_all(array(
+$view->put_all([
 	'C_EDIT' => $edit,
 	'KERNEL_EDITOR' => $editor->display(),
 	'ACTION' => 'save',
-));
+]);
 
 // Possible Locations.
 $block = $request->get_getvalue('s', Menu::BLOCK_POSITION__HEADER, TINTEGER);
-$array_location = array(
+$array_location = [
 	Menu::BLOCK_POSITION__TOP_HEADER     => $lang['menu.top.header'],
 	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
 	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
@@ -120,7 +120,7 @@ $array_location = array(
 	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
 	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
 	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
-);
+];
 
 if ($edit)
 {
@@ -134,7 +134,7 @@ if ($edit)
 	$block = $menu->get_block();
 	$content = $menu->get_content();
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 		'C_ENABLED' => $menu->is_enabled(),
 
@@ -143,15 +143,15 @@ if ($edit)
 		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
 		'CONTENTS' => !empty($content) ? FormatingHelper::unparse($content) : '',
 		'DISPLAY_TITLE_CHECKED' => $menu->get_display_title() ? 'checked="checked"' : ''
-	));
+	]);
 }
 else
 {
-	$view->put_all(array(
+	$view->put_all([
 		'C_ENABLED' => true,
-		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, array(), array(-1 => true, 0 => true, 1 => true, 2 => true)),
+		'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, [], [-1 => true, 0 => true, 1 => true, 2 => true]),
 		'DISPLAY_TITLE_CHECKED' => 'checked="checked"'
-	));
+	]);
 
 	// Create a new generic menu
 	$menu = new ContentMenu('');
@@ -168,7 +168,7 @@ foreach ($array_location as $key => $name)
 MenuAdminService::add_filter_fieldset($menu, $view);
 
 
-$view->put_all(array('LOCATIONS' => $locations));
+$view->put_all(['LOCATIONS' => $locations]);
 $view->display();
 
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');

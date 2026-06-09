@@ -1,13 +1,14 @@
 # Kernel
-cache/*
-stats/cache/*
-robots.txt
-sitemap.xml
 kernel/db/config.php
-*.swp
-*.orig
-*.htaccess
-update/update_log.txt
+
+# Cache
+cache/*
+!cache/addons/.empty
+!cache/backup/.empty
+!cache/css/.htaccess
+!cache/js/.htaccess
+!cache/syndication/.empty
+!cache/tpl/.htaccess
 
 # Images & files
 images/group/*
@@ -15,51 +16,44 @@ images/avatars/*
 images/maths/*
 images/customization/*
 images/smileys/*
-gallery/pics/*
 upload/*
 
-# Non official modules
-BasicSimple
-birthday
-broadcast
-CategoriesMenus
-countdown
-CMSMigrant
-dictionary
-EasyCss
-GoogleAnalytics
-HomeCustom
-HomeLanding
-lastcoms
-PHPBoostOfficial
-quotes
-recipe
-ServerStatus
-smallads
-spots
-steam
-teamspeak
-video
-WikiStatus
-wikitree
+# Modules
+!modules
+# Ignore modules => PHPBoost/Modules
+modules/*.*
+modules/*
+# Exceptions
+!modules/.empty
+!modules/connect
+!modules/lobby
+!modules/pages
 
-# Non official graphic templates
+# Themes
 !templates
-# Ignore template directories :
+# Ignore themes => PHPBoost/Themes
 templates/*.*
 templates/*
-# Except following templates :
+# Exceptions
 !templates/base
 !templates/__default__
 
-# Non official languages
+# Languages
 !lang
-# Ignore language directories :
+# Ignore languages => PHPBoost/Langs
 lang/*.*
 lang/*
-# Except following languages :
+# Exceptions :
 !lang/french
 !lang/english
+
+# Root
+robots.txt
+sitemap.xml
+*.swp
+*.orig
+*.htaccess
+nginx.conf
 
 # Editor folder/file projects
 nbproject
@@ -67,9 +61,8 @@ nbproject
 *.sublime-workspace
 *.tags
 *.tags_swap
+*.vscode
+*.github
 
 # Directories starting by a dot (.)
 .*/
-
-# nginx file configuration
-nginx.conf

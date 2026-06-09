@@ -4,29 +4,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2015 01 06
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 10 31
- * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
 */
 
 class AjaxRequest implements View
 {
-	const GET = 'get';
+	const GET  = 'get';
 	const POST = 'post';
 
-	const BEFORE_SEND = 'beforeSend';
-	const AJAX_SEND = 'ajaxSend';
-	const SUCCESS = 'success';
-	const AJAX_SUCCESS = 'ajaxSuccess';
-	const ERROR = 'error';
-	const AJAX_ERROR = 'ajaxError';
-	const COMPLETE = 'complete';
+	const BEFORE_SEND   = 'beforeSend';
+	const AJAX_SEND     = 'ajaxSend';
+	const SUCCESS       = 'success';
+	const AJAX_SUCCESS  = 'ajaxSuccess';
+	const ERROR         = 'error';
+	const AJAX_ERROR    = 'ajaxError';
+	const COMPLETE      = 'complete';
 	const AJAX_COMPLETE = 'ajaxComplete';
 
 	private $target;
-	private $method = self::POST;
-	private $events = array();
-	private $parameters = array();
+	private $method     = self::POST;
+	private $events     = [];
+	private $parameters = [];
 
 	public function __construct($target, $onsuccess, $onfailure = null)
 	{
@@ -45,12 +45,12 @@ class AjaxRequest implements View
 		$this->method = $method;
 	}
 
-	public function set_success_callback($onsuccess)
+	public function set_onsuccess_callback($onsuccess)
 	{
 		$this->add_event_callback(self::SUCCESS, $onsuccess);
 	}
 
-	public function set_failure_callback($onfailure = null)
+	public function set_onfailure_callback($onfailure = null)
 	{
 		if ($onfailure != null)
 		{
@@ -94,16 +94,16 @@ class AjaxRequest implements View
 	{
 		$tpl->put('TARGET', $this->target);
 		$tpl->put('METHOD', $this->method);
-		$events = array();
+		$events = [];
 		foreach ($this->events as $event => $callback)
 		{
-			$events[] = array('NAME' => $event, 'CALLBACK' => $callback);
+			$events[] = ['NAME' => $event, 'CALLBACK' => $callback];
 		}
 		$tpl->put('event', $events);
-		$params = array();
+		$params = [];
 		foreach ($this->parameters as $key => $value)
 		{
-			$params[] = array('NAME' => $key, 'VALUE' => $value);
+			$params[] = ['NAME' => $key, 'VALUE' => $value];
 		}
 		$tpl->put('param', $params);
 	}

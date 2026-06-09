@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 11 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 01 09
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
@@ -33,7 +33,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	 * @param array $field_options options
 	 * @param FormFieldConstraint[] $constraints The constraints
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		$this->formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		parent::__construct($id, $label, '', $field_options, $constraints);
@@ -58,7 +58,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 		$editor = $this->formatter->get_editor();
 		$editor->set_identifier($this->get_html_id());
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_EDITOR_ENABLED'       => true,
 			'C_RESET_BUTTON_ENABLED' => $this->reset_value !== null,
 
@@ -67,7 +67,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 			'VALUE'          => $this->get_raw_value(),
 			'PREVIEW_BUTTON' => $this->get_preview_button_code(),
 			'RESET_BUTTON'   => $this->get_reset_button_code()
-		));
+		]);
 	}
 
 	private function get_preview_button_code()
@@ -83,7 +83,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 	{
 		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_ONCLICK_FUNCTION' => true,
 
 			'HTML_ID' => $this->get_html_id(),
@@ -92,7 +92,7 @@ class FormFieldRichTextEditor extends FormFieldMultiLineTextEditor
 			'L_RESET'         => LangLoader::get_message('form.reset', 'form-lang'),
 			'ONCLICK_ACTIONS' => (AppContext::get_current_user()->get_editor() == 'TinyMCE' ? 'setTinyMceContent(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');' :
 				'HTMLForms.getField("' . $this->get_id() . '").setValue(' . TextHelper::to_js_string($this->unparse_value($this->reset_value)) . ');')
-		));
+		]);
 
 		return $template->render();
 	}

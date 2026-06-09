@@ -3,16 +3,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 12 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 13
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AdminError404Service
 {
 	public static function list_404_errors()
 	{
-		return AdminError404DAO::instance()->find_all(DAO::FIND_ALL, 0, array(array('column' => 'times', 'way' => SQLQuerier::ORDER_BY_DESC)));
+		return AdminError404DAO::instance()->find_all(DAO::FIND_ALL, 0, [['column' => 'times', 'way' => SQLQuerier::ORDER_BY_DESC]]);
 	}
 
 	public static function clear_404_errors_list()
@@ -28,7 +28,7 @@ class AdminError404Service
 			$requested_url = TextHelper::substr($_SERVER['REQUEST_URI'], 0, 255);
 			$from_url = (string)TextHelper::substr($request->get_url_referrer(), 0, 255);
 			$error_404 = null;
-			$result = AdminError404DAO::instance()->find_by_criteria('WHERE requested_url=:requested_url AND from_url=:from_url', array('requested_url' => $requested_url, 'from_url' => $from_url));
+			$result = AdminError404DAO::instance()->find_by_criteria('WHERE requested_url=:requested_url AND from_url=:from_url', ['requested_url' => $requested_url, 'from_url' => $from_url]);
 			if ($result->get_rows_count() > 0 && $result->has_next())
 			{
 				$error_404 = $result->fetch();

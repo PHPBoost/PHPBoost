@@ -5,17 +5,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 02 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldSelectSources extends AbstractFormField
 {
 	private $max_input = 20;
 
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -27,45 +27,45 @@ class FormFieldSelectSources extends AbstractFormField
 		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectSources.tpl');
 		$view->add_lang(LangLoader::get_all_langs());
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled()
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
 		foreach ($this->get_value() as $name => $value)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'VALUE' => $value,
 				'NAME' => $name
-			));
+			]);
 			$i++;
 		}
 
 		if ($i == 0)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'VALUE' => '',
 				'NAME' => ''
-			));
+			]);
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'NBR_FIELDS' => $i == 0 ? 1 : $i,
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -74,7 +74,7 @@ class FormFieldSelectSources extends AbstractFormField
 	{
 		$request = AppContext::get_request();
 
-		$values = array();
+		$values = [];
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$field_name_id = 'field_name_' . $this->get_html_id() . '_' . $i;

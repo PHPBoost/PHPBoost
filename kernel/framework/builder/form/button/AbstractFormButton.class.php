@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 11 30
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class AbstractFormButton implements FormButton
@@ -37,7 +37,7 @@ abstract class AbstractFormButton implements FormButton
 	public function display()
 	{
 		$template = $this->get_template();
-		$template->put_all(array(
+		$template->put_all([
 			'LABEL' => $this->label,
 			'HTML_NAME' => $this->get_html_name(),
 			'CSS_CLASS' => $this->css_class,
@@ -45,7 +45,7 @@ abstract class AbstractFormButton implements FormButton
 			'DATA_CONFIRMATION' => $this->data_confirmation,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
-		));
+		]);
 		return $template;
 	}
 

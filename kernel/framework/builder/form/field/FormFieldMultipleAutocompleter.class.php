@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 01 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMultipleAutocompleter extends AbstractFormField
@@ -21,7 +21,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 	private $file;
 	private $name_parameter = 'value';
 
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -42,22 +42,22 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 		$i = 0;
 		foreach ($this->get_value() as $value)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'VALUE' => $value
-			));
+			]);
 			$i++;
 		}
 
 		if ($i == 0)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'VALUE' => ''
-			));
+			]);
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
@@ -68,11 +68,11 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 			'METHOD' =>  $this->method,
 			'NAME_PARAMETER' =>  $this->name_parameter,
 			'FILE' =>  $this->file,
-        ));
+        ]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-        ));
+        ]);
 
         return $template;
     }
@@ -80,7 +80,7 @@ class FormFieldMultipleAutocompleter extends AbstractFormField
 	public function retrieve_value()
     {
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$id = 'field_' . $this->get_html_id() . '_' . $i;

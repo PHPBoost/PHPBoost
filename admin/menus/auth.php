@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 02
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 01 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -54,14 +54,14 @@ $view->add_lang($lang);
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 
-$view->put_all(array(
+$view->put_all([
 	'KERNEL_EDITOR' => $editor->display(),
 	'ACTION'        => 'save',
-));
+]);
 
 // Possible Locations.
 $block = $menu->get_block();
-$array_location = array(
+$array_location = [
 	Menu::BLOCK_POSITION__TOP_HEADER     => $lang['menu.top.header'],
 	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
 	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
@@ -71,7 +71,7 @@ $array_location = array(
 	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
 	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
 	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
-);
+];
 
 $locations = '';
 foreach ($array_location as $key => $name)
@@ -79,7 +79,7 @@ foreach ($array_location as $key => $name)
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
-$view->put_all(array(
+$view->put_all([
 	'C_ENABLED'                        => $menu->is_enabled(),
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 
@@ -87,7 +87,7 @@ $view->put_all(array(
 	'NAME'       => $menu->get_formated_title(),
 	'LOCATIONS'  => $locations,
 	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
-));
+]);
 
 // Filters
 MenuAdminService::add_filter_fieldset($menu, $view);

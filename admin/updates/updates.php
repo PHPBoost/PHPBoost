@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2008 07 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -23,7 +23,7 @@ $request = AppContext::get_request();
 
 $check_updates = $request->get_getvalue('check', false);
 $update_type = $request->get_getvalue('type', '');
-if (!in_array($update_type, array('', 'kernel', 'module', 'template')))
+if (!in_array($update_type, ['', 'kernel', 'module', 'template']))
 {
 	$update_type = '';
 }
@@ -39,7 +39,7 @@ $view->add_lang($lang);
 $updates_availables = 0;
 
 $update_alerts = AdministratorAlertService::find_by_criteria(null, 'updates');
-$updates = array();
+$updates = [];
 foreach ($update_alerts as $update_alert)
 {
 	// Builds the asked updates (kernel updates, module updates, theme updates or all of them)
@@ -91,7 +91,7 @@ foreach ($updates as $update)
 	$length = TextHelper::strlen($short_description) > $maxlength ?  $maxlength + TextHelper::strpos(TextHelper::substr($short_description, $maxlength), ' ') : 0;
 	$length = $length > ($maxlength * 1.1) ? $maxlength : $length;
 
-	$view->assign_block_vars('apps', array(
+	$view->assign_block_vars('apps', [
 		'TYPE'               => $update->get_type(),
 		'NAME'               => $update->get_name(),
 		'VERSION'            => $update->get_version(),
@@ -100,17 +100,17 @@ foreach ($updates as $update)
 		'PRIORITY_CSS_CLASS' => $priority_css_class,
 
 		'L_PRIORITY'           => $lang[$priority],
-	));
+	]);
 
 	$updates_availables++;
 }
 
 $server_configuration = new ServerConfiguration();
-$view->put_all(array(
-	'C_AUTOMATIC_UPDATE_CHECK_AVAILABLE' => ((function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen()) || (function_exists('simplexml_load_string') && $server_configuration->has_curl_library())),
+$view->put_all([
+	'C_AUTOMATIC_UPDATE_CHECK_AVAILABLE' => ((function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen()) || (function_exists('simplexml_load_string') && $server_configuration->has_curl_extension())),
 	'C_UPDATES'                          => $updates_availables,
 	'U_CHECK'                            => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
-));
+]);
 
 $view->display();
 

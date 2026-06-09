@@ -4,10 +4,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 08 23
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -26,17 +26,17 @@ $user_id      = $request->get_postvalue('user_id', '');
 $db_querier = PersistenceContext::get_querier();
 
 if (!empty($login) && !empty($user_id))
-	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login AND user_id != :user_id', array('login' => $login, 'user_id' => $user_id));
+	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login AND user_id != :user_id', ['login' => $login, 'user_id' => $user_id]);
 elseif (!empty($email) && !empty($user_id))
-	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE email=:email AND user_id != :user_id', array('email' => $email, 'user_id' => $user_id));
+	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE email=:email AND user_id != :user_id', ['email' => $email, 'user_id' => $user_id]);
 elseif (!empty($display_name) && !empty($user_id))
-	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE display_name=:display_name AND user_id != :user_id', array('display_name' => $display_name, 'user_id' => $user_id));
+	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE display_name=:display_name AND user_id != :user_id', ['display_name' => $display_name, 'user_id' => $user_id]);
 elseif (!empty($display_name))
-	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', array('display_name' => $display_name));
+	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', ['display_name' => $display_name]);
 elseif (!empty($login))
-	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login', array('login' => $login));
+	echo $db_querier->count(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login', ['login' => $login]);
 elseif (!empty($email))
-	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $email));
+	echo $db_querier->count(DB_TABLE_MEMBER, 'WHERE email=:email', ['email' => $email]);
 else
 	echo -1;
 ?>

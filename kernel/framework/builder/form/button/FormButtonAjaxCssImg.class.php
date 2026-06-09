@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 10 18
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2014 05 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class FormButtonAjaxCssImg extends AbstractFormButton

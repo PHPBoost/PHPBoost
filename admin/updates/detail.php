@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2008 07 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -36,7 +36,7 @@ if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updat
 if ($app instanceof Application)
 {
 	$installation_error = $installation_success = false;
-	if ($request->get_postvalue('execute_update', '') && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()))
+	if ($request->get_postvalue('execute_update', '') && $server_configuration->has_curl_extension() && Url::check_url_validity($app->get_autoupdate_url()))
 	{
 		$temporary_dir_path = PATH_TO_ROOT . '/cache/phpboost-diff';
 		$temporary_folder = new Folder($temporary_dir_path);
@@ -53,12 +53,12 @@ if ($app instanceof Application)
 
 			for ($processed_version = $actual_minor_version ; $processed_version < $new_minor_version ; $processed_version++)
 			{
-				$url = str_replace(array($major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version), array($major_version . '.' . $processed_version, $major_version . '.' . ($processed_version + 1)), $app->get_autoupdate_url());
+				$url = str_replace([$major_version . '.' . ($new_minor_version - 1), $major_version . '.' . $new_minor_version], [$major_version . '.' . $processed_version, $major_version . '.' . ($processed_version + 1)], $app->get_autoupdate_url());
 
 				$download_status = FileSystemHelper::download_remote_file($url, $temporary_dir_path);
 				if (!$download_status)
 				{
-					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars($lang['warning.download.file.error'], array('filename' => $url)), MessageHelper::ERROR));
+					$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars($lang['warning.download.file.error'], ['filename' => $url]), MessageHelper::ERROR));
 					$installation_error = true;
 					break;
 				}
@@ -82,7 +82,7 @@ if ($app instanceof Application)
 			$download_status = FileSystemHelper::download_remote_file($app->get_autoupdate_url(), $temporary_dir_path);
 			if (!$download_status)
 			{
-				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars($lang['warning.download.file.error'], array('filename' => $app->get_autoupdate_url())), MessageHelper::ERROR));
+				$view->put('MESSAGE_HELPER', MessageHelper::display(StringVars::replace_vars($lang['warning.download.file.error'], ['filename' => $app->get_autoupdate_url()]), MessageHelper::ERROR));
 				$installation_error = true;
 			}
 		}
@@ -234,9 +234,9 @@ if ($app instanceof Application)
 			break;
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_DISPLAY_LINKS_AND_PRIORITY' => !$installation_success && $app->check_compatibility() && ($app->get_type() == 'kernel' ? version_compare(Environment::get_phpboost_version(), $app->get_version(), '<') : true),
-		'C_DISPLAY_UPDATE_BUTTON'      => $app->get_autoupdate_url() != '' && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()) && !$installation_error,
+		'C_DISPLAY_UPDATE_BUTTON'      => $app->get_autoupdate_url() != '' && $server_configuration->has_curl_extension() && Url::check_url_validity($app->get_autoupdate_url()) && !$installation_error,
 		'C_NEW_FEATURES'               => $has_new_feature,
 		'C_APP_WARNING'                => $has_warning,
 		'C_IMPROVEMENTS'               => $has_improvements,
@@ -260,25 +260,25 @@ if ($app instanceof Application)
 		'U_APP_UPDATE'   => $app->get_update_url(),
 
 		'L_APP_UPDATE_MESSAGE' => $update->get_entitled(),
-	));
+	]);
 
 	foreach ($authors as $author)
-		$view->assign_block_vars('authors', array(
+		$view->assign_block_vars('authors', [
 			'NAME'  => $author['name'],
 			'EMAIL' => $author['email']
-		));
+		]);
 
 	foreach ($new_features as $new_feature)
-		$view->assign_block_vars('new_features', array('DESCRIPTION' => $new_feature));
+		$view->assign_block_vars('new_features', ['DESCRIPTION' => $new_feature]);
 
 	foreach ($improvements as $improvement)
-		$view->assign_block_vars('improvements', array('DESCRIPTION' => $improvement));
+		$view->assign_block_vars('improvements', ['DESCRIPTION' => $improvement]);
 
 	foreach ($bug_corrections as $bug_correction)
-		$view->assign_block_vars('bugs', array('DESCRIPTION' => $bug_correction));
+		$view->assign_block_vars('bugs', ['DESCRIPTION' => $bug_correction]);
 
 	foreach ($security_improvements as $security_improvement)
-		$view->assign_block_vars('security', array('DESCRIPTION' => $security_improvement));
+		$view->assign_block_vars('security', ['DESCRIPTION' => $security_improvement]);
 }
 else
 {

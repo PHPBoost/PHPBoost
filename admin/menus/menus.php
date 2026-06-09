@@ -3,12 +3,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 03 05
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -108,7 +108,7 @@ $menus_blocks = MenuService::get_menus_map();
 
 function get_block($position)
 {
-	$blocks = array(
+	$blocks = [
 		Menu::BLOCK_POSITION__TOP_HEADER     => 'mod_topheader',
 		Menu::BLOCK_POSITION__HEADER         => 'mod_header',
 		Menu::BLOCK_POSITION__SUB_HEADER     => 'mod_subheader',
@@ -119,7 +119,7 @@ function get_block($position)
 		Menu::BLOCK_POSITION__FOOTER         => 'mod_footer',
 		Menu::BLOCK_POSITION__LEFT           => 'mod_left',
 		Menu::BLOCK_POSITION__RIGHT          => 'mod_right'
-	);
+	];
 
 	return $blocks[$position];
 }
@@ -179,7 +179,7 @@ $view->add_lang($lang);
 
 $menu_template = new FileTemplate('admin/menus/menu.tpl');
 $menu_template->add_lang($lang);
-$menu_template->put_all(array(
+$menu_template->put_all([
 	'I_TOPHEADER'     => Menu::BLOCK_POSITION__TOP_HEADER,
 	'I_HEADER'        => Menu::BLOCK_POSITION__HEADER,
 	'I_SUBHEADER'     => Menu::BLOCK_POSITION__SUB_HEADER,
@@ -191,7 +191,7 @@ $menu_template->put_all(array(
 	'I_RIGHT'         => Menu::BLOCK_POSITION__RIGHT,
 
 	'U_TOKEN' => AppContext::get_session()->get_token(),
-));
+]);
 
 foreach ($menus_blocks as $block_id => $menus)
 {
@@ -206,15 +206,15 @@ foreach ($menus_blocks as $block_id => $menus)
 		$enabled = $menu->is_enabled();
 
 		if (!$enabled)
-		   $block_id = Menu::BLOCK_POSITION__NOT_ENABLED;
+            $block_id = Menu::BLOCK_POSITION__NOT_ENABLED;
 
 		$edit_link = menu_admin_link($menu, 'edit');
 		$del_link = menu_admin_link($menu, 'delete');
 
-		$mini = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT));
-		$vertical_position = in_array($block_id, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
+		$mini = in_array($block_id, [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__NOT_ENABLED, Menu::BLOCK_POSITION__RIGHT]);
+		$vertical_position = in_array($block_id, [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]);
 
-		$menu_tpl->put_all(array(
+		$menu_tpl->put_all([
 			'C_DISPLAY'    => $enabled,
 			'C_EDIT'       => !empty($edit_link),
 			'C_DELETE'     => !empty($del_link),
@@ -234,9 +234,9 @@ foreach ($menus_blocks as $block_id => $menus)
 			'U_UP'     => menu_admin_link($menu, 'up'),
 			'U_DOWN'   => menu_admin_link($menu, 'down'),
 			'U_MOVE'   => menu_admin_link($menu, 'move'),
-		));
+		]);
 
-		$view->assign_block_vars(get_block($block_id), array('MENU' => $menu_tpl->render()));
+		$view->assign_block_vars(get_block($block_id), ['MENU' => $menu_tpl->render()]);
 		$i++;
 	}
 }
@@ -245,16 +245,16 @@ foreach(ThemesManager::get_activated_themes_map() as $theme => $properties)
 {
 	$configuration = $properties->get_configuration();
 	$selected = (empty($theme_name) ? AppContext::get_current_user()->get_theme() == $theme : $theme_name == $theme) ? ' selected="selected"' : '';
-	$view->assign_block_vars('themes', array(
+	$view->assign_block_vars('themes', [
 		'NAME'     => $configuration->get_name(),
 		'THEME_ID' => $theme,
 		'SELECTED' => $selected
-	));
+	]);
 }
 
 $columns_disable = ThemesManager::get_theme($theme_name)->get_columns_disabled();
 
-$view->put_all(array(
+$view->put_all([
 	'C_RIGHT_COLUMN'          => $columns_disable->right_columns_is_disabled(),
 	'C_LEFT_COLUMN'           => $columns_disable->left_columns_is_disabled(),
 	'C_FOOTER_COLUMN'         => $columns_disable->footer_is_disabled(),
@@ -296,7 +296,7 @@ $view->put_all(array(
 	'RIGHT_MENUS_NUMBER'          => count($menus_blocks[Menu::BLOCK_POSITION__RIGHT]),
 
 	'U_TOKEN' => AppContext::get_session()->get_token(),
-));
+]);
 $view->display();
 require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>

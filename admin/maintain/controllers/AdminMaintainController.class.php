@@ -3,9 +3,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 07 12
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2014 09 11
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminMaintainController extends DefaultAdminController
@@ -35,7 +35,7 @@ class AdminMaintainController extends DefaultAdminController
 
 	private function init()
 	{
-		$this->maintain_delay_list = array(
+		$this->maintain_delay_list = [
 			60    => '1 ' . $this->lang['date.minute'],
 			300   => '5 ' . $this->lang['date.minutes'],
 			600   => '10 ' . $this->lang['date.minutes'],
@@ -50,21 +50,21 @@ class AdminMaintainController extends DefaultAdminController
 			25200 => '7 ' . $this->lang['date.hours'],
 			28800 => '8 ' . $this->lang['date.hours'],
 			57600 => '16 ' . $this->lang['date.hours']
-		);
+		];
 
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
 
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 
 		$fieldset = new FormFieldsetHTML('maintain', $this->lang['admin.maintenance']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_type', $this->lang['admin.maintenance.type'], $this->get_maintain_type(), $this->build_maintain_select_options(),
-			array(
-				'events' => array('change' => '
+			[
+				'events' => ['change' => '
 					if (HTMLForms.getField("maintain_type").getValue() == "during") {
 						HTMLForms.getField("maintain_during").enable();
 						HTMLForms.getField("maintain_until").disable();
@@ -75,45 +75,45 @@ class AdminMaintainController extends DefaultAdminController
 						HTMLForms.getField("maintain_during").disable();
 						HTMLForms.getField("maintain_until").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('maintain_during', $this->lang['admin.maintenance.type.during'], $this->get_maintain_during_select_option(), $this->build_maintain_during_select_options(),
-			array('required' => true, 'hidden' => $this->get_maintain_type() != 'during')
+			['required' => true, 'hidden' => $this->get_maintain_type() != 'during']
 		));
 
 		$fieldset->add_field(new FormFieldDate('maintain_until', $this->lang['admin.maintenance.type.until'], $this->get_maintain_until_date(),
-			array('required' => true, 'hidden' => $this->get_maintain_type() != 'until')
+			['required' => true, 'hidden' => $this->get_maintain_type() != 'until']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_duration', $this->lang['admin.maintenance.display.duration'], $this->maintenance_config->get_display_duration(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("display_duration").getValue()) {
 						HTMLForms.getField("display_duration_for_admin").enable();
 					} else {
 						HTMLForms.getField("display_duration_for_admin").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_duration_for_admin', $this->lang['admin.maintenance.admin.display.duration'], $this->maintenance_config->get_display_duration_for_admin(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'hidden' => !$this->maintenance_config->get_display_duration()
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $this->lang['admin.maintenance.text'], $this->maintenance_config->get_message(),
-			array('rows' => 14, 'cols' => 47)
+			['rows' => 14, 'cols' => 47]
 		));
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new VisitorDisabledActionAuthorization($this->lang['admin.maintenance.authorization'], MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS),
-		));
+		]);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->maintenance_config->get_auth());
 		$fieldset->add_field($auth_setter);
@@ -146,12 +146,12 @@ class AdminMaintainController extends DefaultAdminController
 
 	private function build_maintain_select_options()
 	{
-		$options = array(
+		$options = [
 			new FormFieldSelectChoiceOption($this->lang['common.no'], 'disabled'),
 			new FormFieldSelectChoiceOption($this->lang['admin.maintenance.type.during'], 'during'),
 			new FormFieldSelectChoiceOption($this->lang['admin.maintenance.type.until'], 'until'),
 			new FormFieldSelectChoiceOption($this->lang['admin.maintenance.type.unlimited'], 'unlimited')
-		);
+		];
 
 		return $options;
 	}
@@ -182,7 +182,7 @@ class AdminMaintainController extends DefaultAdminController
 
 	private function build_maintain_during_select_options()
 	{
-		$options = array(new FormFieldSelectChoiceOption('', ''));
+		$options = [new FormFieldSelectChoiceOption('', '')];
 
 		foreach ($this->maintain_delay_list as $key => $value)
 		{
@@ -242,7 +242,7 @@ class AdminMaintainController extends DefaultAdminController
 
 		MaintenanceConfig::save();
 
-		HooksService::execute_hook_action('edit_config', 'kernel', array('title' => $this->lang['admin.maintenance'], 'url' => AdminMaintainUrlBuilder::maintain()->rel()));
+		HooksService::execute_hook_action('edit_config', 'kernel', ['title' => $this->lang['admin.maintenance'], 'url' => AdminMaintainUrlBuilder::maintain()->rel()]);
 	}
 }
 ?>

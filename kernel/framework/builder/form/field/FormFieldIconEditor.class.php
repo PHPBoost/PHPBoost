@@ -6,14 +6,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 10 02
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2025 02 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldIconEditor extends AbstractFormField
 {
-    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
         $this->set_css_form_field_class('form-field-icon');

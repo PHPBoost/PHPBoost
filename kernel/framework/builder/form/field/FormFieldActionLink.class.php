@@ -7,9 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 03 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 04 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldActionLink extends AbstractFormField
@@ -37,7 +37,7 @@ class FormFieldActionLink extends AbstractFormField
 	 */
 	public function display()
 	{
-		$field = new FormFieldActionLinkList($this->id, array($this->action));
+		$field = new FormFieldActionLinkList($this->id, [$this->action]);
 		return $field->display();
 	}
 

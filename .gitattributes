@@ -5,3 +5,9 @@
 *.woff2 binary
 
 *.tpl text diff=html linguist-language=html
+
+# Explicitly mark binaries to keep them untouched
+*.png binary
+*.jpg binary
+*.gif binary
+*.webp binary

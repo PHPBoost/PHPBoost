@@ -3,21 +3,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 25
 */
 
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
-
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-
-
-$url_controller_mappers = array(
-new UrlControllerMapper('MenuControllerConfigurationsList', '`^(?:/configs(?:/list)?)?/?$`'),
-new UrlControllerMapper('MenuControllerConfigurationEdit', '`^/configs/([0-9]+)/edit/?$`',
-array('menu_config_id'))
-);
+$url_controller_mappers = [
+    new UrlControllerMapper('MenuControllerConfigurationsList', '`^(?:/configs(?:/list)?)?/?$`'),
+    new UrlControllerMapper('MenuControllerConfigurationEdit', '`^/configs/([0-9]+)/edit/?$`',
+    ['menu_config_id'])
+];
 DispatchManager::dispatch($url_controller_mappers);
 
 ?>

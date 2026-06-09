@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 25
 */
 
@@ -26,12 +26,12 @@ class MenuInstanceDAO extends SQLDAO
 		$tablename = PREFIX . 'menu_instance';
 		$primary_key = new MappingModelField('id');
 
-		$fields = array(
+		$fields = [
 		new MappingModelField('menu_id'),
 		new MappingModelField('menu_configuration_id'),
 		new MappingModelField('block'),
 		new MappingModelField('position'),
-		);
+		];
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields);
 

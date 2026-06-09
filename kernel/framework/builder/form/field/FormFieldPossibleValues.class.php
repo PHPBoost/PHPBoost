@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 01 12
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 09 15
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class FormFieldPossibleValues extends AbstractFormField
@@ -21,7 +21,7 @@ class FormFieldPossibleValues extends AbstractFormField
 	protected $placeholder = '';
 	private $unique_input_value = false;
 
-	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label = '', array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		if ($this->is_required())
@@ -51,12 +51,12 @@ class FormFieldPossibleValues extends AbstractFormField
 			if (!empty($options))
 			{
 				$has_default = $options['is_default'] ? true : $has_default;
-				$tpl->assign_block_vars('fieldelements', array(
+				$tpl->assign_block_vars('fieldelements', [
 					'ID'         => $i,
 					'NAME'       => $name,
 					'IS_DEFAULT' => (int) $options['is_default'],
 					'TITLE'      => stripslashes($options['title'])
-				));
+				]);
 				$i++;
 			}
 		}
@@ -65,16 +65,16 @@ class FormFieldPossibleValues extends AbstractFormField
 		{
 			for ($i = 0 ; $i < $this->min_input ; $i++)
 			{
-				$tpl->assign_block_vars('fieldelements', array(
+				$tpl->assign_block_vars('fieldelements', [
 					'ID'         => $i,
 					'NAME'       => '',
 					'IS_DEFAULT' => 0,
 					'TITLE'      => ''
-				));
+				]);
 			}
 		}
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'C_HAS_DEFAULT_VALUE'     => $has_default,
 			'C_DELETE'				  => $i > $this->min_input,
 			'C_REQUIRED'              => $this->is_required(),
@@ -89,11 +89,11 @@ class FormFieldPossibleValues extends AbstractFormField
 			'MAX_INPUT'     => $this->max_input,
 			'PLACEHOLDER'   => $this->placeholder ? $this->placeholder : $lang['form.name'],
 			'FIELDS_NUMBER' => $i,
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $tpl->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -101,7 +101,7 @@ class FormFieldPossibleValues extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 		$field_is_default = 'field_is_default_' . $this->get_html_id();
 		$default_field = $request->get_postint($field_is_default, -1);
 		for ($i = 0; $i <= $this->max_input; $i++)
@@ -111,10 +111,10 @@ class FormFieldPossibleValues extends AbstractFormField
 			{
 				if ($request->get_poststring($field_name))
 				{
-					$values[preg_replace('/\s+/u', '', $request->get_poststring($field_name))] = array(
+					$values[preg_replace('/\s+/u', '', $request->get_poststring($field_name))] = [
 						'is_default' => $default_field == $i,
 						'title' => addslashes($request->get_poststring($field_name))
-					);
+					];
 				}
 			}
 		}

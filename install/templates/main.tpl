@@ -20,6 +20,7 @@ ${resources('install/common')}
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tabs.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
@@ -93,9 +94,7 @@ ${resources('install/common')}
 			<div id="admin-main">
 				<div id="admin-contents">
 					<section>
-						<header>
-							<h1>{STEP_TITLE}</h1>
-						</header>
+						<header><h1>{STEP_TITLE}</h1></header>
 						<article>
 							# INCLUDE INSTALL_STEP #
 						</article>
@@ -111,6 +110,17 @@ ${resources('install/common')}
 			jQuery('.lang-selector').selectImg({
 				ariaLabel : ${escapejs(@common.click.to.select)}
 			});
+            jQuery('*').on('focus', function(e) {
+                $this = jQuery(this);
+                jQuery(window).keyup(function (e) {
+                    var code = (e.keyCode ? e.keyCode : e.which);
+                    if (code == 9) {
+                        $this.addClass('focus-on-tab');
+                    }
+                });
+            }).on('click', function(e) {
+                jQuery(this).removeClass('focus-on-tab');
+            });
 		</script>
 	</body>
 </html>

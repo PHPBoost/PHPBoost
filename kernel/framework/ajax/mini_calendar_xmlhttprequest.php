@@ -4,11 +4,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 01 25
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -50,16 +50,16 @@ if ($calendar_type == 'date')
 
 	if (!checkdate($month, $day, $year))
 	{
-		list($year, $month, $day) = array(date('Y'), date('n'), date('j'));
+		list($year, $month, $day) = [date('Y'), date('n'), date('j')];
 	}
 	$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
-	$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
-	$array_l_month = array($lang['date.january'], $lang['date.february'], $lang['date.march'], $lang['date.april'], $lang['date.may'], $lang['date.june'],
-	$lang['date.july'], $lang['date.august'], $lang['date.september'], $lang['date.october'], $lang['date.november'], $lang['date.december']);
+	$array_month = [31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31];
+	$array_l_month = [$lang['date.january'], $lang['date.february'], $lang['date.march'], $lang['date.april'], $lang['date.may'], $lang['date.june'],
+	$lang['date.july'], $lang['date.august'], $lang['date.september'], $lang['date.october'], $lang['date.november'], $lang['date.december']];
 	$month_day = $array_month[$month - 1];
 
-	$view->put_all(array(
+	$view->put_all([
 		'FIELD'           => $field,
 		'INPUT_FIELD'     => $input_field,
 		'CALENDAR_NUMBER' => $calendar_number,
@@ -69,22 +69,22 @@ if ($calendar_type == 'date')
 		'PREVIOUS_MONTH'  => ($month == 1) ? 12 : ($month - 1),
 		'NEXT_YEAR'       => ($month == 12) ? ($year + 1) : $year,
 		'NEXT_MONTH'      => ($month == 12) ? 1 : ($month + 1)
-	));
+	]);
 
 	//Génération des select.
 	for ($i = 1; $i <= 12; $i++)
 	{
 		$selected = ($month == $i) ? 'selected="selected"' : '';
-		$view->assign_block_vars('month', array(
+		$view->assign_block_vars('month', [
 			'MONTH' => '<option value="' . $i . '" ' . $selected . '>' . TextHelper::htmlspecialchars($array_l_month[$i - 1]) . '</option>'
-		));
+		]);
 	}
 	for ($i = 1900; $i <= 2521; $i++)
 	{
 		$selected = ($year == $i) ? 'selected="selected"' : '';
-		$view->assign_block_vars('year', array(
+		$view->assign_block_vars('year', [
 			'YEAR' => '<option value="' . $i . '" ' . $selected . '>' . $i . '</option>'
-		));
+		]);
 	}
 
 	//Premier jour du mois.
@@ -103,7 +103,7 @@ if ($calendar_type == 'date')
 	{
 		if ($i >= $first_day && $i < $last_day)
 		{
-			$date = StringVars::replace_vars(':year-:month-:day', array('year' => $year, 'month' => $month, 'day' => ($j < 10 && TextHelper::substr($j, 0, 1) != 0) ? '0' . $j : $j));
+			$date = StringVars::replace_vars(':year-:month-:day', ['year' => $year, 'month' => $month, 'day' => ($j < 10 && TextHelper::substr($j, 0, 1) != 0) ? '0' . $j : $j]);
 			$class ='';
 			if ( (($i % 7) == 6) || (($i % 7) == 0))
 			{
@@ -124,13 +124,13 @@ if ($calendar_type == 'date')
 			$class = 'calendar-none';
 		}
 
-		$view->assign_block_vars('day', array(
+		$view->assign_block_vars('day', [
 			'DAY'         => $contents,
 			'CLASS'       => $class,
 			'CHANGE_LINE' => (($i % 7) == 0 && $i != 42),
 			'INPUT_FIELD' => $input_field,
 			'DATE'        => $date,
-		));
+		]);
 	}
 }
 else

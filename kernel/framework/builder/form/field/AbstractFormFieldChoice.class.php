@@ -7,10 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 abstract class AbstractFormFieldChoice extends AbstractFormField
@@ -18,7 +18,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 	/**
 	 * @var FormFieldEnumOption[]
 	 */
-	private $options = array();
+	private $options = [];
 
 	/**
 	 * Constructs a FormFieldChoice.
@@ -29,7 +29,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $options, array $field_options = [], array $constraints = [])
 	{
 		foreach ($options as $option)
 		{
@@ -75,7 +75,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 
 	protected function clear_options()
 	{
-		$this->options = array();
+		$this->options = [];
 	}
 
 	/**

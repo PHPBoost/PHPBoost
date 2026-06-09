@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 06 03
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 06 01
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldRangeEditor extends FormFieldNumberEditor
@@ -28,7 +28,7 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-range');
@@ -43,7 +43,7 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldRangeEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'C_MIN' => $this->min !== null,
 			'MIN' => $this->min,
 			'C_MAX' => $this->max != 0,
@@ -62,13 +62,13 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 			'C_PATTERN' => $this->has_pattern(),
 			'PATTERN' => $this->pattern,
 			'C_VERTICAL' => $this->is_vertical()
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

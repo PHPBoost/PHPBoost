@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 06 03
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 12 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
@@ -31,7 +31,7 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
      * @param array $field_options Map containing the options
      * @param FormFieldConstraint[] $constraints The constraints checked during the validation
      */
-    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -45,7 +45,7 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
 
         $field = new FileTemplate('framework/builder/form/fieldelements/FormFieldShortMultiLineTextEditor.tpl');
 
-        $field->put_all(array(
+        $field->put_all([
 			'ROWS' => $this->rows,
 			'COLS' => $this->cols,
 			'WIDTH' => ($this->width > 0) ? 'width: ' . $this->width . '%;' : '',
@@ -57,13 +57,13 @@ class FormFieldShortMultiLineTextEditor extends FormFieldMultiLineTextEditor
 			'CSS_CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly()
-        ));
+        ]);
 
         $this->assign_common_template_variables($template);
 
-        $template->assign_block_vars('fieldelements', array(
+        $template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-        ));
+        ]);
 
         return $template;
     }

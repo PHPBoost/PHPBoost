@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 06 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 05 20
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldNumberEditor extends AbstractFormField
@@ -35,7 +35,7 @@ class FormFieldNumberEditor extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-number');
@@ -50,7 +50,7 @@ class FormFieldNumberEditor extends AbstractFormField
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldNumberEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'C_MIN' => $this->min !== null,
 			'MIN' => $this->min,
 			'C_MAX' => $this->max !== null,
@@ -70,13 +70,13 @@ class FormFieldNumberEditor extends AbstractFormField
 			'PATTERN' => $this->pattern,
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

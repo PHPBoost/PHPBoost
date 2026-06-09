@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 11 13
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');
@@ -34,20 +34,21 @@ if ($action == 'save')
         global $request;
 		$menu = null;
 		$menu_element_id = $elements_ids['id'];
-		$menu_name  = $request->get_postvalue('menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
-		$menu_url   = $request->get_postvalue('menu_element_' . $menu_element_id . '_url', '');
-		$menu_image = $request->get_postvalue('menu_element_' . $menu_element_id . '_image', '');
-		$menu_icon  = $request->get_postvalue('menu_element_' . $menu_element_id . '_icon', '');
+		$menu_name   = $request->get_postvalue('menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
+		$menu_url    = $request->get_postvalue('menu_element_' . $menu_element_id . '_url', '');
+		$menu_target = $request->get_postvalue('menu_element_' . $menu_element_id . '_target', '');
+		$menu_image  = $request->get_postvalue('menu_element_' . $menu_element_id . '_image', '');
+		$menu_icon   = $request->get_postvalue('menu_element_' . $menu_element_id . '_icon', '');
 
 		$array_size = count($elements_ids);
 
 		if ($array_size == 1 && $level > 0)
 		{   // If it's a menu, there's only one element;
-			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
+			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_target, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
 		}
 		else
 		{
-			$menu = new LinksMenu($menu_name, $menu_url, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
+			$menu = new LinksMenu($menu_name, $menu_url, $menu_target, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
 
 			// We unset the id key of the array
 			unset($elements_ids['id']);
@@ -69,11 +70,11 @@ if ($action == 'save')
 	function build_menu_children_tree($element)
 	{
         global $request;
-		$menu = array();
+		$menu = [];
 
 		if (isset($element->children))
 		{
-			$children = array();
+			$children = [];
 			foreach($element->children[0] as $p => $t)
 			{
 				$menu_child_name = $request->get_postvalue('menu_element_' . $t->id . '_name', '', TSTRING_UNCHANGE);
@@ -81,17 +82,17 @@ if ($action == 'save')
 					$children[$p] = build_menu_children_tree($t);
 			}
 			$menu = array_merge(
-				array('id' => $element->id),
+				['id' => $element->id],
 				$children
 			);
 		}
 		else
-			$menu = array('id' => $element->id);
+			$menu = ['id' => $element->id];
 
 		return $menu;
 	}
 
-	$menu_tree = array('id' => $menu_uid);
+	$menu_tree = ['id' => $menu_uid];
 	$links_list = json_decode(TextHelper::html_entity_decode(AppContext::get_request()->get_value('menu_tree')));
 
 	foreach($links_list as $position => $tree)
@@ -161,16 +162,20 @@ lateral_menu();
 $view = new FileTemplate('admin/menus/links.tpl');
 $view->add_lang($lang);
 
-$view->put_all(array(
+$view->put_all([
 	'C_EDIT' => $menu_id > 0,
 	'ACTION' => 'save',
 
-	'J_AUTH_FORM' => str_replace(array("&quot;", "<!--", "-->"), array('"', "", ""), TextHelper::to_js_string(Authorizations::generate_select(Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT), array(), 'menu_element_##UID##_auth'))),
-));
+	'J_AUTH_FORM' => str_replace(
+        ["&quot;", "<!--", "-->"],
+        ['"', "", ""],
+        TextHelper::to_js_string(Authorizations::generate_select(Menu::MENU_AUTH_BIT, ['r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT], [], 'menu_element_##UID##_auth'))
+    ),
+]);
 
 // Possible locations
 $block = $request->get_getvalue('s', Menu::BLOCK_POSITION__HEADER, TINTEGER);
-$array_location = array(
+$array_location = [
 	Menu::BLOCK_POSITION__TOP_HEADER     => $lang['menu.top.header'],
 	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
 	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
@@ -180,7 +185,7 @@ $array_location = array(
 	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
 	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
 	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
-);
+];
 
 $edit_menu_tpl = new FileTemplate('admin/menus/menu_edition.tpl');
 $edit_menu_tpl->add_lang($lang);
@@ -200,80 +205,81 @@ else
 	$menu = new LinksMenu('', '', '', '', LinksMenu::AUTOMATIC_MENU);
 }
 
-$view->put_all(array(
+$view->put_all([
 	'C_ENABLED'                        => !empty($menu_id) ? $menu->is_enabled() : true,
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 	'C_PUSHMENU_DISABLED_BODY'         => $menu->is_disabled_body(),
 	'C_PUSHMENU_PUSHED_CONTENT'        => $menu->is_pushed_content(),
 
-	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'),
-	'MENU_ID'    => $menu->get_id(),
-	'MENU_TREE'  => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-	'MENU_NAME'  => $menu->get_title(),
-	'MENU_URL'   => $menu->get_url(true),
-	'MENU_IMG'   => $menu->get_image(true),
-	'MENU_ICON'  => $menu->get_icon(),
-	'ID'         => $menu->get_uid()
-));
+	'AUTH_MENUS'  => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth(), [], 'menu_element_' . $menu->get_uid() . '_auth'),
+	'MENU_ID'     => $menu->get_id(),
+	'MENU_TREE'   => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+	'MENU_NAME'   => $menu->get_title(),
+	'MENU_URL'    => $menu->get_url(true),
+	'MENU_TARGET' => $menu->get_target(),
+	'MENU_IMG'    => $menu->get_image(true),
+	'MENU_ICON'   => $menu->get_icon(),
+	'ID'          => $menu->get_uid()
+]);
 
 foreach (LinksMenu::get_menu_types_list() as $type_name)
 {
-	$view->assign_block_vars('type', array(
+	$view->assign_block_vars('type', [
 		'NAME'     => $type_name,
 		'L_NAME'   => $lang['menu.' . $type_name],
 		'SELECTED' => $menu->get_type() == $type_name ? ' selected="selected"' : ''
-	));
+	]);
 }
 
 foreach ($array_location as $key => $name)
 {
-	$view->assign_block_vars('location', array(
+	$view->assign_block_vars('location', [
 		'C_SELECTED' => $block == $key,
 		'VALUE'      => $key,
 		'NAME'       => $name
-	));
+	]);
 }
 
 // Types of pushmenu opening
-$array_opening = array(
+$array_opening = [
 	Menu::PUSHMENU_LEFT   => $lang['menu.push.opening.type.left'],
 	Menu::PUSHMENU_RIGHT  => $lang['menu.push.opening.type.right'],
 	Menu::PUSHMENU_TOP    => $lang['menu.push.opening.type.top'],
 	Menu::PUSHMENU_BOTTOM => $lang['menu.push.opening.type.bottom']
-);
+];
 
 foreach ($array_opening as $key => $name)
 {
-	$view->assign_block_vars('opening', array(
+	$view->assign_block_vars('opening', [
 		'C_SELECTED' => $menu->get_pushmenu_opening() == $key,
 
 		'VALUE' => $key,
 		'NAME'  => $name
-	));
+	]);
 }
 
 // Types of pushmenu expanding tabs
-$array_expanding = array(
+$array_expanding = [
 	Menu::PUSHMENU_OVERLAP => $lang['menu.push.expansion.type.overlap'],
 	Menu::PUSHMENU_EXPAND  => $lang['menu.push.expansion.type.expand'],
 	Menu::PUSHMENU_NONE    => $lang['menu.push.expansion.type.none']
-);
+];
 
 foreach ($array_expanding as $key => $name)
 {
-	$view->assign_block_vars('expanding', array(
+	$view->assign_block_vars('expanding', [
 		'C_SELECTED' => $menu->get_pushmenu_expanding() == $key,
 		'VALUE' => $key,
 		'NAME' => $name
-	));
+	]);
 }
 
 // Filters
 MenuAdminService::add_filter_fieldset($menu, $view);
 
-$view->put_all(array(
+$view->put_all([
 	'ID_MAX' => AppContext::get_uid()
-));
+]);
 
 $view->display();
 

@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 09 12
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallLicenseController extends InstallController
@@ -41,16 +41,19 @@ class InstallLicenseController extends InstallController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('licenseForm', '', false);
+        if (InstallationServices::check_server())
+        {
+            $redirect_url = InstallUrlBuilder::database()->rel();
+        }
+        else
+        {
+            $redirect_url = InstallUrlBuilder::server_configuration()->rel();
+        }
+
+        $this->form = new HTMLForm('licenseForm', $redirect_url, false);
 
 		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['install.license.terms']);
 		$this->form->add_fieldset($fieldset);
-
-		$license_content = file_get_contents('gpl-license.txt');
-		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
-		$fieldset->add_field(new FormFieldHTML('licenseContent', $license_block,
-			['class' => 'full-field']
-		));
 
 		$fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['install.license.agreement'], FormFieldCheckbox::UNCHECKED,
 			[
@@ -73,7 +76,14 @@ class InstallLicenseController extends InstallController
 	private function create_response()
 	{
 		$view = new FileTemplate('install/license.tpl');
-		$view->put('LICENSE_FORM', $this->form->display());
+
+		$license_content = file_get_contents('gpl-license.txt');
+		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
+
+		$view->put_all([
+            'LICENSE_FORM' => $this->form->display(),
+            'LICENSE_CONTENT' => $license_content
+        ]);
 		$step_title = $this->lang['install.license.title'];
 		$response = new InstallDisplayResponse(1, $step_title, $this->lang, $view);
 		return $response;

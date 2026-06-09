@@ -1,24 +1,21 @@
-<header>
-	<h2>{@install.welcome.message}</h2>
-</header>
+<header></header>
 
 <div class="content">
 	<div class="cell-flex cell-columns-2">
 		<div class="cell">
-			<div class="cell-content">
+			<header><h2>{@H|install.welcome.message}</h2></header>
+            <div class="cell-content">
 				{@H|install.welcome.description}
-			</div>
+            </div>
+            <header><h2>${set(@install.welcome.distribution, ['distribution': @distribution.name])}</h2></header>
+            <p>${html(@install.welcome.distribution.description)}</p>
+            <p>${html(@distribution.description)}</p>
 		</div>
-		<div class="cell align-center">
-			<div class="cell-thumbnail">
-				<img src="templates/images/PHPBoost_car.webp" alt="{@install.title}" />
-			</div>
-		</div>
-	</div>
-	<div class="form-field-free-large">
-		<h3>${set(@install.welcome.distribution, ['distribution': @distribution.name])}</h3>
-		<p>${html(@install.welcome.distribution.description)}</p>
-		<p>${html(@distribution.description)}</p>
+        <div class="cell align-center">
+            <div class="cell-thumbnail">
+                <img src="templates/images/installboost.webp" alt="{@install.title}" />
+            </div>
+        </div>
 	</div>
 </div>
 

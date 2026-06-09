@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 02 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 03 04
 */
 
@@ -16,13 +16,13 @@ class AdminExtendedFieldChangeFieldDisplayController extends AbstractController
 
 		if ($id !== 0)
 		{
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('display' => (int)$display), 'WHERE id = :id', array(
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['display' => (int)$display], 'WHERE id = :id', [
 				'id' => $id
-			));
+			]);
 			ExtendedFieldsCache::invalidate();
 		}
 
-		return new JSONResponse(array('id' => $id, 'display' => (int)$display));
+		return new JSONResponse(['id' => $id, 'display' => (int)$display]);
 	}
 }
 ?>

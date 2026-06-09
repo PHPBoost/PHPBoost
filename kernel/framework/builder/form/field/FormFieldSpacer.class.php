@@ -11,13 +11,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 12 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.2 - 2019 12 20
 */
 
 class FormFieldSpacer extends AbstractFormField
 {
-	public function __construct($id, $value, array $properties = array())
+	public function __construct($id, $value, array $properties = [])
 	{
 		parent::__construct($id, '', $value, $properties);
 	}
@@ -31,9 +31,9 @@ class FormFieldSpacer extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'HTML' => $this->get_value()
-		));
+		]);
 
 		return $template;
 	}

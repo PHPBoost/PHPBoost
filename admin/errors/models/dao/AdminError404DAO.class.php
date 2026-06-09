@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 13
 */
 
@@ -29,7 +29,7 @@ class AdminError404DAO extends SQLDAO
 		$tablename = PREFIX . 'errors_404';
 		$primary_key = new MappingModelField('id');
 
-		$fields = array(new MappingModelField('requested_url'), new MappingModelField('from_url'), new MappingModelField('times'));
+		$fields = [new MappingModelField('requested_url'), new MappingModelField('from_url'), new MappingModelField('times')];
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields);
 

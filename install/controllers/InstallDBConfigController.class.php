@@ -3,12 +3,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 10 04
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallDBConfigController extends InstallController
@@ -64,52 +64,69 @@ class InstallDBConfigController extends InstallController
 
 	private function build_form()
 	{
+        if (InstallationServices::check_server())
+            {
+                $back_url = InstallUrlBuilder::license();
+            }
+            else
+            {
+                $back_url = InstallUrlBuilder::server_configuration();
+            }
+
 		$this->form = new HTMLForm('databaseForm', '', false);
 
-		$fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['install.dbms.parameters']);
-		$this->form->add_fieldset($fieldset_server);
+		$fieldset = new FormFieldsetHTML('serverConfig', $this->lang['install.db.parameters.config']);
+		$this->form->add_fieldset($fieldset);
 
-		$fieldset_server->add_field(new FormFieldTextEditor('host', $this->lang['install.dbms.host'], 'localhost',
+		$fieldset->add_field(new FormFieldTextEditor('host', $this->lang['install.dbms.host'], 'localhost',
 			[
+                'class' => 'half-field',
+
                 'description' => $this->lang['install.dbms.host.clue'],
                 'required' => $this->lang['install.db.required.host']
             ]
 		));
 
-		$fieldset_server->add_field(new FormFieldTextEditor('port', $this->lang['install.dbms.port'], '3306',
+		$fieldset->add_field(new FormFieldTextEditor('port', $this->lang['install.dbms.port'], '3306',
 			[
+                'class' => 'half-field',
+
                 'description' => $this->lang['install.dbms.port.clue'],
                 'required' => $this->lang['install.db.required.port']
             ],
 			[new FormFieldConstraintIntegerRange(1, 65536)]
 		));
 
-		$fieldset_server->add_field(new FormFieldTextEditor('login', $this->lang['install.dbms.login'], 'root',
+		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['install.dbms.login'], 'root',
 			[
+                'class' => 'half-field',
+
                 'description' => $this->lang['install.dbms.login.clue'],
                 'required' => $this->lang['install.db.required.login']
             ]
 		));
 
-		$fieldset_server->add_field(new FormFieldPasswordEditor('password', $this->lang['install.dbms.password'], '',
-			['description' => $this->lang['install.dbms.password.clue']]
+		$fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['install.dbms.password'], '',
+			[
+                'class' => 'half-field',
+                'description' => $this->lang['install.dbms.password.clue']
+            ]
 		));
-
-		$fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['install.schema.properties']);
-		$this->form->add_fieldset($fieldset_schema);
 
 		$schema = new FormFieldTextEditor('schema', $this->lang['install.schema'], '',
             [
+                'class' => 'half-field',
                 'description' => $this->lang['install.schema.clue'],
                 'required' => $this->lang['install.db.required.schema']
             ],
             [new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu')]
         );
 		$schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
-		$fieldset_schema->add_field($schema);
+		$fieldset->add_field($schema);
 
-		$fieldset_schema->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['install.schema.table.prefix'], 'phpboost_',
+		$fieldset->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['install.schema.table.prefix'], 'phpboost_',
 			[
+                'class' => 'half-field',
                 'description' => $this->lang['install.schema.table.prefix.clue'],
                 'required' => true
             ],
@@ -133,7 +150,7 @@ class InstallDBConfigController extends InstallController
 		$this->overwrite_fieldset->disable();
 
 		$action_fieldset = new FormFieldsetSubmit('actions', ['css_class' => 'fieldset-submit next-step']);
-		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
+		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], $back_url, 'fa fa-arrow-left'));
 		$this->check_button = new FormButtonSubmitCssImg($this->lang['install.db.config.check'], 'fa fa-sync', 'check_database');
 		$action_fieldset->add_element($this->check_button);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'database');

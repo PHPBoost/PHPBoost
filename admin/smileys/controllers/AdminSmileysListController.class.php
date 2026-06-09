@@ -3,16 +3,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 05 22
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminSmileysListController extends DefaultAdminController
 {
 	private $elements_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -25,17 +25,17 @@ class AdminSmileysListController extends DefaultAdminController
 
 	private function build_table()
 	{
-		$table_model = new HTMLTableModel('table', array(
+		$table_model = new HTMLTableModel('table', [
 			new HTMLTableColumn($this->lang['admin.smiley']),
 			new HTMLTableColumn($this->lang['admin.code']),
-			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
-		), new HTMLTableSortingRule(''), HTMLTableModel::NO_PAGINATION);
+			new HTMLTableColumn($this->lang['common.moderation'], '', ['sr-only' => true])
+		], new HTMLTableSortingRule(''), HTMLTableModel::NO_PAGINATION);
 
 		$table = new HTMLTable($table_model);
 
 		$table_model->set_caption($this->lang['admin.smileys.management']);
 
-		$results = array();
+		$results = [];
 		foreach(SmileysCache::load()->get_smileys() as $code => $row)
 		{
 			$this->elements_number++;
@@ -45,11 +45,11 @@ class AdminSmileysListController extends DefaultAdminController
 
 			$delete_link = new DeleteLinkHTMLElement(AdminSmileysUrlBuilder::delete($row['idsmiley']));
 
-			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], array('id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => $row['idsmiley'], 'aria-label' => $row['idsmiley']))),
+			$results[] = new HTMLTableRow([
+				new HTMLTableRowCell(new ImgHTMLElement(Url::to_rel('/images/smileys/') . $row['url_smiley'], ['id' => 'smiley-' . $row['idsmiley'] . '-img', 'alt' => $row['idsmiley'], 'aria-label' => $row['idsmiley']])),
 				new HTMLTableRowCell($code),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
-			));
+			]);
 		}
 		$table->set_rows(count($results), $results);
 
@@ -67,7 +67,7 @@ class AdminSmileysListController extends DefaultAdminController
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
 					if (isset($this->ids[$i]))
-						PersistenceContext::get_querier()->delete(DB_TABLE_SMILEYS, 'WHERE idsmiley = :id', array('id' => $this->ids[$i]));
+						PersistenceContext::get_querier()->delete(DB_TABLE_SMILEYS, 'WHERE idsmiley = :id', ['id' => $this->ids[$i]]);
 				}
 			}
 			SmileysCache::invalidate();

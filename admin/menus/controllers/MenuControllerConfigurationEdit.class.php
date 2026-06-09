@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 27
 */
 
@@ -33,8 +33,8 @@ class MenuControllerConfigurationEdit extends AdminController
 		catch (ObjectNotFoundException $exception)
 		{
 			$error_controller = new UserErrorController(
-			    'Menu configuration does not exists',
-			    'The requested menu configuration ' . $request->get_value('menu_config_id') . ' does not exists',
+                'Menu configuration does not exists',
+                'The requested menu configuration ' . $request->get_value('menu_config_id') . ' does not exists',
 			UserErrorController::FATAL
 			);
 
@@ -60,12 +60,12 @@ class MenuControllerConfigurationEdit extends AdminController
 		$menu_config = MenuConfigurationDAO::instance()->find_by_id($this->object_id);
 
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'NAME' => $menu_config->get_name(),
 			'MATCH_REGEX' => $menu_config->get_match_regex(),
 			'U_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->rel(),
 			'U_LIST' => MenuUrlBuilder::menu_configuration_list()->rel()
-		));
+		]);
 	}
 
 	private function load_env()

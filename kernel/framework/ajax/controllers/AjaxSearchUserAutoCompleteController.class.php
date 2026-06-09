@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 06 26
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AjaxSearchUserAutoCompleteController extends AbstractController
@@ -18,7 +18,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
     {
         $is_admin = AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
         $number_admins = UserService::count_admin_members();
-        $suggestions = array();
+        $suggestions = [];
 
         $raw_value = trim($request->get_value('value', ''));
         // Replace * by % for LIKE, but keep the value as a parameter
@@ -33,7 +33,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
                 'SELECT user_id, display_name, level, user_groups
                 FROM ' . DB_TABLE_MEMBER . '
                 WHERE display_name LIKE :value',
-                array('value' => $like_value)
+                ['value' => $like_value]
             );
 
             while ($row = $result->fetch())
@@ -47,9 +47,9 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
                     $edit_link = new EditLinkHTMLElement(UserUrlBuilder::edit_profile($row['user_id']));
 
                     if ($row['level'] != User::ADMINISTRATOR_LEVEL || ($row['level'] == User::ADMINISTRATOR_LEVEL && $number_admins > 1))
-                        $delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '', array('title' => LangLoader::get_message('common.delete', 'common-lang'), 'data-confirmation' => 'delete-element'), 'fa fa-delete');
+                        $delete_link = new DeleteLinkHTMLElement(AdminMembersUrlBuilder::delete($row['user_id']), '', ['title' => LangLoader::get_message('common.delete', 'common-lang'), 'data-confirmation' => 'delete-element'], 'fa fa-delete');
                     else
-                        $delete_link = new DeleteLinkHTMLElement('', '', array('onclick' => 'return false;'), 'icon-disabled');
+                        $delete_link = new DeleteLinkHTMLElement('', '', ['onclick' => 'return false;'], 'icon-disabled');
 
                     $suggestion .= $edit_link->display() . '&nbsp;' . $delete_link->display() . '&nbsp;';
                 }
@@ -57,7 +57,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
                 $profile_link = new LinkHTMLElement(
                     UserUrlBuilder::profile($row['user_id'])->rel(),
                     $row['display_name'],
-                    array('style' => (!empty($user_group_color) ? 'color:' . $user_group_color : '')),
+                    ['style' => (!empty($user_group_color) ? 'color:' . $user_group_color : '')],
                     UserService::get_level_class($row['level'])
                 );
 
@@ -69,7 +69,7 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
         }
         catch (Exception $e) {}
 
-        return new JSONResponse(array('suggestions' => $suggestions));
+        return new JSONResponse(['suggestions' => $suggestions]);
     }
 }
 ?>

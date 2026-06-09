@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 10 02
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallServerConfigController extends InstallController
@@ -60,7 +60,7 @@ class InstallServerConfigController extends InstallController
 
 	private function handle_form()
 	{
-		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_library())
+		if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_extension())
 		{
 			AppContext::get_response()->redirect(InstallUrlBuilder::database());
 		}
@@ -68,24 +68,28 @@ class InstallServerConfigController extends InstallController
 
 	private function build_view()
 	{
-		$this->view = new FileTemplate('install/server-config.tpl');
+		$this->view = new FileTemplate('install/server.tpl');
 		$this->view->put_all([
 			'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
 			'PHP_VERSION'          => $this->server_conf->get_phpversion(),
 			'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
-			'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_library(),
-			'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_library(),
-			'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_library()
+			'HAS_GD_EXTENSION'       => $this->server_conf->has_gd_extension(),
+			'HAS_CURL_EXTENSION'     => $this->server_conf->has_curl_extension(),
+			'HAS_ZIP_EXTENSION'      => $this->server_conf->has_zip_extension(),
+			'HAS_MBSTRING_EXTENSION' => $this->server_conf->has_mbstring_extension()
 		]);
-		if (!$this->server_conf->has_mbstring_library())
+
+        if (!$this->server_conf->has_mbstring_extension())
 		{
 			$this->view->put('C_MBSTRING_ERROR', true);
 		}
-		if (!PHPBoostFoldersPermissions::validate())
+
+        if (!PHPBoostFoldersPermissions::validate())
 		{
 			$this->view->put('C_FOLDERS_ERROR', true);
 		}
-		try
+
+        try
 		{
 			$this->view->put('URL_REWRITING_KNOWN', true);
 			$this->view->put('URL_REWRITING_AVAILABLE', $this->server_conf->has_url_rewriting());
@@ -94,7 +98,8 @@ class InstallServerConfigController extends InstallController
 		{
 			$this->view->put('URL_REWRITING_KNOWN', false);
 		}
-		$this->check_folders_permissions();
+
+        $this->check_folders_permissions();
 		$this->view->put('CONTINUE_FORM', $this->form->display());
 	}
 

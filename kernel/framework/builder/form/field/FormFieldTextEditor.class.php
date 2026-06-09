@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 06 03
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldTextEditor extends AbstractFormField
@@ -32,7 +32,7 @@ class FormFieldTextEditor extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-text');
@@ -47,7 +47,7 @@ class FormFieldTextEditor extends AbstractFormField
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldTextEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
@@ -62,13 +62,13 @@ class FormFieldTextEditor extends AbstractFormField
 			'PATTERN' => $this->pattern,
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

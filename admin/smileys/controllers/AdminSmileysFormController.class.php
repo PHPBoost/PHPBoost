@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 03 29
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 05 22
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminSmileysFormController extends DefaultAdminController
@@ -64,10 +64,10 @@ class AdminSmileysFormController extends DefaultAdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFilePicker('file', '',
-			array(
+			[
 				'class' => 'full-field', 'multiple' => true,
 				'authorized_extensions' => implode('|', array_map('preg_quote', FileUploadConfig::load()->get_authorized_picture_extensions()))
-			)
+			]
 		));
 
 		$this->upload_submit_button = new FormButtonDefaultSubmit();
@@ -131,34 +131,34 @@ class AdminSmileysFormController extends DefaultAdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('code_smiley', $this->lang['admin.smiley.code'], $this->smiley['code_smiley'],
-			array('maxlength' => 50, 'required' => true)
+			['maxlength' => 50, 'required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('url_smiley', $this->lang['admin.available.smileys'], $this->smiley['url_smiley'],
 			$this->generate_available_smileys_pictures_list(),
-			array(
+			[
 				'description' => $this->lang['admin.available.smileys.clue'],
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("url_smiley").getValue() != \'\') {
 						jQuery(\'#smiley-img\').attr(\'src\', \'' . Url::to_rel('/images/smileys/') . '\' + HTMLForms.getField("url_smiley").getValue());
 						HTMLForms.getField("img_smiley").enable();
 					} else {
 						HTMLForms.getField("img_smiley").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$img_smiley = new ImgHTMLElement($this->smiley['idsmiley'] ? Url::to_rel('/images/smileys/') . $this->smiley['url_smiley'] : '',
-			array(
+			[
 				'id' => 'smiley-img',
 				'alt' => $this->smiley['code_smiley'],
 				'aria-label' => $this->smiley['code_smiley']
-			)
+			]
 		);
 
 		$fieldset->add_field(new FormFieldFree('img_smiley', $this->lang['form.picture.preview'], $img_smiley->display(),
-			array('hidden' => !$this->smiley['idsmiley'])
+			['hidden' => !$this->smiley['idsmiley']]
 		));
 
 		$this->smiley_submit_button = new FormButtonDefaultSubmit();
@@ -175,11 +175,11 @@ class AdminSmileysFormController extends DefaultAdminController
 		{
 			if (!$this->smiley['idsmiley'])
 			{
-				$check_smiley = PersistenceContext::get_querier()->count(DB_TABLE_SMILEYS, 'WHERE code_smiley=:code_smiley', array('code_smiley' => $code_smiley));
+				$check_smiley = PersistenceContext::get_querier()->count(DB_TABLE_SMILEYS, 'WHERE code_smiley=:code_smiley', ['code_smiley' => $code_smiley]);
 
 				if (empty($check_smiley))
 				{
-					PersistenceContext::get_querier()->insert(DB_TABLE_SMILEYS, array('code_smiley' => $code_smiley, 'url_smiley' => $url_smiley));
+					PersistenceContext::get_querier()->insert(DB_TABLE_SMILEYS, ['code_smiley' => $code_smiley, 'url_smiley' => $url_smiley]);
 
 				 	// Regenerate smileys cache
 					SmileysCache::invalidate();
@@ -193,7 +193,7 @@ class AdminSmileysFormController extends DefaultAdminController
 			}
 			else
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_SMILEYS, array('url_smiley' => $url_smiley, 'code_smiley' => $code_smiley), 'WHERE idsmiley = :id', array('id' => $this->smiley['idsmiley']));
+				PersistenceContext::get_querier()->update(DB_TABLE_SMILEYS, ['url_smiley' => $url_smiley, 'code_smiley' => $code_smiley], 'WHERE idsmiley = :id', ['id' => $this->smiley['idsmiley']]);
 
 				// Regenerate smileys cache
 				SmileysCache::invalidate();
@@ -205,7 +205,7 @@ class AdminSmileysFormController extends DefaultAdminController
 
 	private function generate_available_smileys_pictures_list()
 	{
-		$smileys_array = $options = array();
+		$smileys_array = $options = [];
 		$folder_phpboost_smileys = new Folder($this->smileys_path);
 		foreach ($folder_phpboost_smileys->get_files('`\.(png|webp|jpg|bmp|gif)$`iu') as $smileys)
 			$smileys_array[] = $smileys->get_name();
@@ -223,7 +223,7 @@ class AdminSmileysFormController extends DefaultAdminController
 			}
 			$result->dispose();
 
-			$options = array(new FormFieldSelectChoiceOption('--', ''));
+			$options = [new FormFieldSelectChoiceOption('--', '')];
 		}
 
 		foreach ($smileys_array as $smiley)
@@ -241,7 +241,7 @@ class AdminSmileysFormController extends DefaultAdminController
 			{
 				try
 				{
-					$this->smiley = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SMILEYS, array('idsmiley', 'code_smiley', 'url_smiley'), 'WHERE idsmiley = :id', array('id' => $id));
+					$this->smiley = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SMILEYS, ['idsmiley', 'code_smiley', 'url_smiley'], 'WHERE idsmiley = :id', ['id' => $id]);
 				}
 				catch(RowNotFoundException $e)
 				{
@@ -251,7 +251,7 @@ class AdminSmileysFormController extends DefaultAdminController
 			}
 			else
 			{
-				$this->smiley = array('idsmiley' => 0, 'code_smiley' => '', 'url_smiley' => '');
+				$this->smiley = ['idsmiley' => 0, 'code_smiley' => '', 'url_smiley' => ''];
 			}
 		}
 		return $this->smiley;

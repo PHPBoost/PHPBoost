@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 01 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMailEditor extends FormFieldTextEditor
@@ -29,7 +29,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		if (isset($field_options['multiple']))
 		{
@@ -54,7 +54,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldMailEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
@@ -68,13 +68,13 @@ class FormFieldMailEditor extends FormFieldTextEditor
 			'C_MULTIPLE' => $this->is_multiple(),
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

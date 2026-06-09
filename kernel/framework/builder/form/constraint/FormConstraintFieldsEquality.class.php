@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 04
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormConstraintFieldsEquality implements FormConstraint
@@ -64,12 +64,12 @@ class FormConstraintFieldsEquality implements FormConstraint
 	public function get_validation_error_message()
 	{
 		return StringVars::replace_vars($this->js_message,
-			array('field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()));
+			['field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()]);
 	}
 
 	public function get_related_fields()
 	{
-		return array($this->first_field, $this->second_field);
+		return [$this->first_field, $this->second_field];
 	}
 }
 

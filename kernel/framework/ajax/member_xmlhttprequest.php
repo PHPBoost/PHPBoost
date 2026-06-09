@@ -4,11 +4,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 07 12
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 01 25
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../../..');
@@ -40,7 +40,7 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", array('login' => $login . '%'));
+		$result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", ['login' => $login . '%']);
 		while ($row = $result->fetch())
 		{
 			if (!empty($member))
@@ -84,7 +84,7 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", array('login' => $login . '%'));
+		$result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", ['login' => $login . '%']);
 		while ($row = $result->fetch())
 		{
 			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);

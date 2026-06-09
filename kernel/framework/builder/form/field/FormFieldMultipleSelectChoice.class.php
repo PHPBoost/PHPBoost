@@ -10,17 +10,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMultipleSelectChoice extends AbstractFormField
 {
 	private $selected_options;
-	private $options = array();
+	private $options = [];
 	private $size = 4;
 
 	/**
@@ -32,7 +32,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $selected_options, $field_options, $constraints);
 
@@ -48,7 +48,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 
 	public function set_selected_options(array $selected_options)
 	{
-		$value = array();
+		$value = [];
 
 		foreach ($selected_options as $option)
 		{
@@ -76,7 +76,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		{
 			$selected_options = $request->get_array($this->get_html_id());
 
-			$value = array();
+			$value = [];
 			foreach ($this->get_options() as $option)
 			{
 				if (in_array($option->get_raw_value(), $selected_options))
@@ -88,7 +88,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		}
 		else
 		{
-			$this->set_value(array());
+			$this->set_value([]);
 		}
 	}
 
@@ -101,9 +101,9 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $this->get_html_code()->render(),
-		));
+		]);
 
 		return $template;
 	}
@@ -114,7 +114,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		$view = new FileTemplate('framework/builder/form/FormFieldMultipleSelectChoice.tpl');
 		$view->add_lang($lang);
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_DISABLED' => $this->is_disabled(),
 			'C_REQUIRED' => $this->is_required(),
 			'C_MULTIPLE_SELECT_TO_LIST' => $this->is_multiple_select_to_list(),
@@ -128,7 +128,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 			'L_SELECT_ALL' => $lang['form.select.all'],
 			'L_UNSELECT_ALL' => $lang['form.select.none'],
 			'L_SELECT_EXPLAIN' => $lang['form.select.multiple.clue']
-		));
+		]);
 
 		foreach ($this->get_options() as $multiple_select_option)
 		{
@@ -152,9 +152,9 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 				}
 			}
 
-			$view->assign_block_vars('options', array(
+			$view->assign_block_vars('options', [
 				'OPTION' => $multiple_select_option->display()
-			));
+			]);
 		}
 		return $view;
 	}
