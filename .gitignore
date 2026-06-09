@@ -2,7 +2,7 @@
 kernel/db/config.php
 
 # Cache
-cache/*
+#cache/*
 !cache/addons/.empty
 !cache/backup/.empty
 !cache/css/.htaccess
