@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 09
  * @since       PHPBoost 1.6 - 2007 03 05
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -284,16 +284,16 @@ $view->put_all([
 	'I_FOOTER'        => Menu::BLOCK_POSITION__FOOTER,
 	'I_LEFT'          => Menu::BLOCK_POSITION__LEFT,
 	'I_RIGHT'         => Menu::BLOCK_POSITION__RIGHT,
-	'AVAILABLE_MENUS_NUMBER'      => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED]),
-	'HEADER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__HEADER]),
-	'TOP_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__TOP_HEADER]),
-	'SUB_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__SUB_HEADER]),
-	'TOP_CENTRAL_MENUS_NUMBER'    => count($menus_blocks[Menu::BLOCK_POSITION__TOP_CENTRAL]),
-	'BOTTOM_CENTRAL_MENUS_NUMBER' => count($menus_blocks[Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),
-	'TOP_FOOTER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__TOP_FOOTER]),
-	'FOOTER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__FOOTER]),
-	'LEFT_MENUS_NUMBER'           => count($menus_blocks[Menu::BLOCK_POSITION__LEFT]),
-	'RIGHT_MENUS_NUMBER'          => count($menus_blocks[Menu::BLOCK_POSITION__RIGHT]),
+	'AVAILABLE_MENUS_NUMBER'      => count($menus_blocks[Menu::BLOCK_POSITION__NOT_ENABLED] ?? []),
+	'HEADER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__HEADER] ?? []),
+	'TOP_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__TOP_HEADER] ?? []),
+	'SUB_HEADER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__SUB_HEADER] ?? []),
+	'TOP_CENTRAL_MENUS_NUMBER'    => count($menus_blocks[Menu::BLOCK_POSITION__TOP_CENTRAL] ?? []),
+	'BOTTOM_CENTRAL_MENUS_NUMBER' => count($menus_blocks[Menu::BLOCK_POSITION__BOTTOM_CENTRAL] ?? []),
+	'TOP_FOOTER_MENUS_NUMBER'     => count($menus_blocks[Menu::BLOCK_POSITION__TOP_FOOTER] ?? []),
+	'FOOTER_MENUS_NUMBER'         => count($menus_blocks[Menu::BLOCK_POSITION__FOOTER] ?? []),
+	'LEFT_MENUS_NUMBER'           => count($menus_blocks[Menu::BLOCK_POSITION__LEFT] ?? []),
+	'RIGHT_MENUS_NUMBER'          => count($menus_blocks[Menu::BLOCK_POSITION__RIGHT] ?? []),
 
 	'U_TOKEN' => AppContext::get_session()->get_token(),
 ]);
