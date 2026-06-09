@@ -2,13 +2,7 @@
 kernel/db/config.php
 
 # Cache
-#cache/*
-!cache/addons/.empty
-!cache/backup/.empty
-!cache/css/.htaccess
-!cache/js/.htaccess
-!cache/syndication/.empty
-!cache/tpl/.htaccess
+cache/*
 
 # Images & files
 images/group/*
