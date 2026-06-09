@@ -17,7 +17,7 @@ $lang = LangLoader::get_all_langs();
 define('TITLE', $lang['menu.administration']);
 require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
-$request = AppContext::get_request(); 
+$request = AppContext::get_request();
 
 $id   = $request->get_int('id', 0);
 $post = $request->get_postvalue('id', -1) >= 0;
