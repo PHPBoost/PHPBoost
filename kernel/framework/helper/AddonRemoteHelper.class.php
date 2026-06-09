@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 29
+ * @version     PHPBoost 6.1 - last update: 2026 06 09
  * @since       PHPBoost 6.1 - 2026 03 29
 */
 
@@ -49,7 +49,9 @@ class AddonRemoteHelper
         $body = curl_exec($ch);
         $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $err  = curl_error($ch);
-        curl_close($ch);
+
+        if (\PHP_VERSION_ID < 80100)
+            curl_close($ch);
 
         if ($body === false || !empty($err) || $http < 200 || $http >= 300)
             return false;
@@ -67,7 +69,8 @@ class AddonRemoteHelper
         curl_setopt($ch, CURLOPT_USERAGENT,      'PHPBoost/' . GeneralConfig::load()->get_phpboost_major_version());
         curl_exec($ch);
         $http_code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        if (\PHP_VERSION_ID < 80100)
+            curl_close($ch);
         return $http_code >= 200 && $http_code < 300;
     }
 

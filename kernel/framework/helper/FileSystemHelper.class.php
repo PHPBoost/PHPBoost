@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 09
  * @since       PHPBoost 5.2 - 2019 02 14
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,6 +18,8 @@ class FileSystemHelper
      */
     public static function remove_folder(string $folder, bool $protect_folder = false, string $first_folder_name = '', string $parent_folder = ''): bool
     {
+        $result = false;
+
         if ($protect_folder && empty($first_folder_name)) {
             $first_folder_name = $folder;
         }
@@ -34,7 +36,7 @@ class FileSystemHelper
 
         if ($handle !== false) {
             while ($item = readdir($handle)) {
-                $protect_folder_delete = $protect_folder ? !preg_match('/' . $first_folder_name . '/', $item) : true;
+                $protect_folder_delete = $protect_folder ? !preg_match('/' . preg_quote($first_folder_name, '/') . '/', $item) : true;
 
                 if ($item != "." && $item != ".." && $protect_folder_delete) {
                     $full_path = $folder . $item;
@@ -48,12 +50,10 @@ class FileSystemHelper
 
             closedir($handle);
 
-            $protect_folder_delete = $protect_folder ? !preg_match('/' . $first_folder_name . '/', $folder) : true;
+            $protect_folder_delete = $protect_folder ? !preg_match('/' . preg_quote($first_folder_name, '/') . '/', $folder) : true;
             if ($protect_folder_delete) {
                 $result = rmdir($folder);
             }
-        } else {
-            $result = false;
         }
 
         return $result;
@@ -118,9 +118,8 @@ class FileSystemHelper
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
 
-        if (\PHP_VERSION_ID < 80100) {
+        if (\PHP_VERSION_ID < 80100)
             curl_close($ch);
-        }
 
         file_put_contents($file_name, $content);
 
@@ -170,9 +169,8 @@ class FileSystemHelper
             $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
 
-            if (\PHP_VERSION_ID < 80100) {
+            if (\PHP_VERSION_ID < 80100)
                 curl_close($ch);
-            }
 
             if ($code === 200 && $downloaded_size) {
                 return $content;

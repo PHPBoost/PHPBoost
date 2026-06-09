@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 09
  * @since       PHPBoost 2.0 - 2009 01 14
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -226,13 +226,10 @@ class Url
                 $result = curl_exec($curl);
 
                 if ($result !== false)
-                {
                     $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-                }
+
                 if (\PHP_VERSION_ID < 80100)
-                {
                     curl_close($curl);
-                }
             }
             else
             {
