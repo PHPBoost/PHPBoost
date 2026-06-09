@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NotationService
@@ -79,17 +79,17 @@ class NotationService
 					$star_width = 'star-width-0';
 				}
 
-				$view->assign_block_vars('star', array(
+				$view->assign_block_vars('star', [
 					'I' => $i,
 					'STAR_EMPTY' => $star_empty,
 					'STAR_HALF'  => $star_half,
 					'STAR_FULL'  => $star_full,
 					'STAR_WIDTH' => $star_width
-				));
+				]);
 			}
 
 			$count_notes = $notation->get_notes_number();
-			$view->put_all(array(
+			$view->put_all([
 				'C_STATIC_DISPLAY' => true,
 				'C_NOTES'          => $count_notes > 0,
 
@@ -97,7 +97,7 @@ class NotationService
 				'NOTES_NUMBER'   => $notation->get_notes_number(),
 				'AVERAGE_NOTES'  => $average_notes,
 				'NOTATION_SCALE' => $notation->get_notation_scale(),
-			));
+			]);
 
 			return $view->render();
 		}
@@ -168,17 +168,17 @@ class NotationService
 					$star_width = 'star-width-0';
 				}
 
-				$view->assign_block_vars('star', array(
+				$view->assign_block_vars('star', [
 					'I' => $i,
 					'STAR_EMPTY' => $star_empty,
 					'STAR_HALF'  => $star_half,
 					'STAR_FULL'  => $star_full,
 					'STAR_WIDTH' => $star_width
-				));
+				]);
 			}
 
 			$count_notes = $notation->get_notes_number();
-			$view->put_all(array(
+			$view->put_all([
 				'C_JS_NOT_ALREADY_INCLUDED' => !self::$js_already_included,
 				'C_NOTES' => $count_notes > 0,
 				'C_SEVERAL_NOTES' => $count_notes > 1,
@@ -189,7 +189,7 @@ class NotationService
 				'NOTES_NUMBER' => $count_notes,
 				'AVERAGE_NOTES' => $average_notes,
 				'ALREADY_NOTE' => $notation->user_already_noted(),
-			));
+			]);
 
 			self::$js_already_included = true;
 
@@ -222,7 +222,7 @@ class NotationService
 	{
 		try {
 			$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
-			$parameters = array('module_name' => $module_name, 'id_in_module' => $id_in_module);
+			$parameters = ['module_name' => $module_name, 'id_in_module' => $id_in_module];
 
 			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
@@ -238,7 +238,7 @@ class NotationService
 	{
 		try {
 			$condition = 'WHERE module_name=:module_name';
-			$parameters = array('module_name' => $module_name);
+			$parameters = ['module_name' => $module_name];
 
 			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
@@ -253,7 +253,7 @@ class NotationService
 	{
 		try {
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'notes_number', 'WHERE module_name = :module_name AND id_in_module = :id_in_module',
-			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
+			['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()]);
 		} catch (RowNotFoundException $e) {
 			return 0;
 		}
@@ -266,7 +266,7 @@ class NotationService
 	{
 		try {
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'average_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module',
-			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
+			['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()]);
 		} catch (RowNotFoundException $e) {
 			return 0;
 		}
@@ -281,17 +281,17 @@ class NotationService
 			return self::$db_querier->select_single_row_query('SELECT average_notes, notes_number, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
 			WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
 			FROM ' . DB_TABLE_AVERAGE_NOTES . '
-			WHERE module_name = :module_name AND id_in_module = :id_in_module', array(
+			WHERE module_name = :module_name AND id_in_module = :id_in_module', [
 				'module_name' => $notation->get_module_name(),
 				'id_in_module' => $notation->get_id_in_module(),
 				'user_id' => $notation->get_user_id()
-			));
+			]);
 		} catch (RowNotFoundException $e) {
-			return array(
+			return [
 				'average_notes' => 0,
 				'notes_number' => 0,
 				'user_already_noted' => 0
-			);
+			];
 		}
 	}
 
@@ -300,42 +300,42 @@ class NotationService
 		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
 			$note_is_valid = $notation->get_note() >= 0 && $notation->get_note() <= $notation->get_notation_scale() ? true : false;
-			$member_already_notation = self::$db_querier->count(DB_TABLE_NOTE, 'WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module', array(
+			$member_already_notation = self::$db_querier->count(DB_TABLE_NOTE, 'WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module', [
 				'module_name' => $notation->get_module_name(),
 				'id_in_module' => $notation->get_id_in_module(),
 				'user_id' => $notation->get_user_id()
-			));
+			]);
 
 			if (!$member_already_notation && $note_is_valid)
 			{
-				$properties = array(
+				$properties = [
 					'module_name'  => $notation->get_module_name(),
 					'id_in_module' => $notation->get_id_in_module(),
 					'user_id'      => $notation->get_user_id(),
 					'note'         => $notation->get_note()
-				);
+				];
 
 				self::$db_querier->insert(DB_TABLE_NOTE, $properties);
-				HooksService::execute_hook_action('notation', $notation->get_module_name(), array_merge($properties, array('notation_scale' => $notation->get_notation_scale())));
+				HooksService::execute_hook_action('notation', $notation->get_module_name(), array_merge($properties, ['notation_scale' => $notation->get_notation_scale()]));
 
 				$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
-				$parameters = array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module());
+				$parameters = ['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()];
 
 				$nbr_notes = self::$db_querier->count(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 				if ($nbr_notes == 0)
 				{
-					self::$db_querier->insert(DB_TABLE_AVERAGE_NOTES, array(
+					self::$db_querier->insert(DB_TABLE_AVERAGE_NOTES, [
 						'module_name' => $notation->get_module_name(),
 						'id_in_module' => $notation->get_id_in_module(),
 						'average_notes' => self::calculates_average_notes($notation),
 						'notes_number' => 1
-					));
+					]);
 				}
 				else
 				{
-					self::$db_querier->update(DB_TABLE_AVERAGE_NOTES, array(
+					self::$db_querier->update(DB_TABLE_AVERAGE_NOTES, [
 						'average_notes' => self::calculates_average_notes($notation),
-						'notes_number' => self::get_notes_number($notation) + 1)
+						'notes_number' => self::get_notes_number($notation) + 1]
 					, $condition, $parameters);
 				}
 			}
@@ -349,8 +349,8 @@ class NotationService
 	private static function calculates_average_notes(Notation $notation)
 	{
 		try {
-			$result = self::$db_querier->select_rows(DB_TABLE_NOTE, array('note'), 'WHERE module_name=:module_name AND id_in_module=:id_in_module',
-			array('module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()));
+			$result = self::$db_querier->select_rows(DB_TABLE_NOTE, ['note'], 'WHERE module_name=:module_name AND id_in_module=:id_in_module',
+			['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()]);
 
 			$notes = 0;
 			while ($row = $result->fetch())

@@ -6,12 +6,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 07 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 03 31
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 define('RANK_TYPE', 1);
@@ -29,7 +29,7 @@ class User
 	protected $id = -1;
 	protected $level = -1;
 	protected $is_admin;
-	protected $groups = array();
+	protected $groups = [];
 
 	protected $display_name;
 	protected $email;
@@ -295,7 +295,7 @@ class User
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id'                 => $this->id,
 			'level'              => $this->level,
 			'locale'             => $this->locale,
@@ -308,7 +308,7 @@ class User
 			'warning_percentage' => $this->warning_percentage,
 			'display_name'       => $this->display_name,
 			'groups'             => $this->groups
-		);
+		];
 	}
 
 	public function init_robot_user($robot_name)
@@ -323,7 +323,7 @@ class User
 
 	public static function get_visitor_properties($display_name = null, $level = self::VISITOR_LEVEL)
 	{
-		return array(
+		return [
 			'user_id'              => Session::VISITOR_SESSION_ID,
 			'display_name'         => $display_name !== null ? $display_name : LangLoader::get_message('user.guest', 'user-lang'),
 			'level'                => $level,
@@ -340,7 +340,7 @@ class User
 			'warning_percentage'   => 0,
 			'delay_banned'         => 0,
 			'delay_readonly'       => 0
-		);
+		];
 	}
 }
 ?>

@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 03 15
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 07 08
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsConfig extends AbstractConfigData
@@ -133,16 +133,16 @@ class CommentsConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::COMMENTS_ENABLED             => true,
 			self::VISITOR_EMAIL_ENABLED        => true,
-			self::COMMENTS_UNAUTHORIZED_MODULE => array(),
-			self::AUTHORIZATIONS               => array('r1' => 7, 'r0' => 3, 'r-1' => 3),
+			self::COMMENTS_UNAUTHORIZED_MODULE => [],
+			self::AUTHORIZATIONS               => ['r1' => 7, 'r0' => 3, 'r-1' => 3],
 			self::COMMENTS_NUMBER_DISPLAY      => 15,
-			self::FORBIDDEN_TAGS               => array(),
+			self::FORBIDDEN_TAGS               => [],
 			self::MAX_LINKS_COMMENT            => 2,
 			self::ORDER_DISPLAY_COMMENTS       => self::DESC_ORDER
-		);
+		];
 	}
 
 	/**
@@ -151,7 +151,7 @@ class CommentsConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'comments-config');
+		return ConfigManager::load(self::class, 'kernel', 'comments-config');
 	}
 
 	/**

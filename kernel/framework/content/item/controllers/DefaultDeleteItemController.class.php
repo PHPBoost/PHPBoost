@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 01 12
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 12 20
 */
 
@@ -54,7 +54,7 @@ class DefaultDeleteItemController extends AbstractItemController
 
 	protected function display_response()
 	{
-		AppContext::get_response()->redirect(($this->request->get_url_referrer() && !TextHelper::strstr($this->request->get_url_referrer(), $this->get_display_item_url()) ? $this->request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->lang['items.message.success.delete'], array('title' => $this->item->get_title())));
+		AppContext::get_response()->redirect(($this->request->get_url_referrer() && !TextHelper::strstr($this->request->get_url_referrer(), $this->get_display_item_url()) ? $this->request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->lang['items.message.success.delete'], ['title' => $this->item->get_title()]));
 	}
 
 	/**

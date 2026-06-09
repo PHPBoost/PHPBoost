@@ -1,15 +1,40 @@
+<style>
+	ul.sortable-block {
+		min-height: 10px;
+	}
+	ul.sortable-block-disabled {
+		pointer-events: none;
+		min-height: 0;
+	}
+</style>
 <script>
-	jQuery(document).ready(function() {
-		if (jQuery('ul#categories')[0]) {
-			jQuery('ul#categories').sortable({
+	var sortableInstances = [];
+
+	function init_all_sortables() {
+		sortableInstances.forEach(function(inst) { inst.destroy(); });
+		sortableInstances = [];
+		jQuery('ul#categories, ul#categories ul.sortable-block:not(.sortable-block-disabled)').each(function() {
+			var instance = Sortable.create(this, {
+				group: {
+					name: 'categories',
+					pull: true,
+					put: true
+				},
 				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-				onDrop: function ($item, container, _super, event) {
+				animation: 150,
+				fallbackOnBody: true,
+				onEnd: function (evt) {
+					init_all_sortables();
 					change_reposition_pictures();
-					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
-					$("body").removeClass(container.group.options.bodyClass);
 				}
 			});
+			sortableInstances.push(instance);
+		});
+	}
+
+	jQuery(document).ready(function() {
+		if (jQuery('ul#categories')[0]) {
+			init_all_sortables();
 			change_reposition_pictures();
 		}
 	});
@@ -19,10 +44,22 @@
 		jQuery('#tree').val(JSON.stringify(get_sortable_sequence()));
 	}
 
+	function get_ul_sequence(ul) {
+		var sequence = [];
+		jQuery(ul).children('li').each(function() {
+			var item = { id: jQuery(this).data('id') };
+			var childUl = jQuery(this).children('ul.sortable-block')[0];
+			if (childUl && jQuery(childUl).children('li').length > 0) {
+				item.children = [get_ul_sequence(childUl)];
+			}
+			sequence.push(item);
+		});
+		return sequence;
+	}
+
 	function get_sortable_sequence()
 	{
-		var sequence = jQuery('ul#categories').sortable('serialize').get();
-		return sequence[0];
+		return get_ul_sequence(document.getElementById('categories'));
 	}
 
 	function change_children_reposition_pictures(list)

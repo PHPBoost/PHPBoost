@@ -6,13 +6,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 02 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 08 10
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 abstract class ContentFormattingUnparser extends AbstractParser
@@ -85,7 +85,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 				{
 					$this->content = str_replace('[HTML_UNPARSE_TAG_' . $i . ']', '[html]' . $this->array_tags['html_unparse'][$i] . '[/html]', $this->content);
 				}
-				$this->array_tags['html_unparse'] = array();
+				$this->array_tags['html_unparse'] = [];
 			}
 			return true;
 		}
@@ -143,14 +143,14 @@ abstract class ContentFormattingUnparser extends AbstractParser
 			{
 				for ($i = 0; $i < $content_length; $i++)
 				$this->content = str_replace('[CODE_UNPARSE_TAG_' . $i . ']', $this->array_tags['code_unparse'][$i], $this->content);
-				$this->array_tags['code_unparse'] = array();
+				$this->array_tags['code_unparse'] = [];
 			}
 			return true;
 		}
 	}
 
 	/**
-	 * @desc Unparsed module special tags if any.
+	 * Unparsed module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
 	 */
 	protected function unparse_module_special_tags()
@@ -160,14 +160,14 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which allows to unparse the font awasome icons tag
+	 * Callback which allows to unparse the font awasome icons tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
 	protected function unparse_fa_tag($matches)
 	{
 		$fa_code = '';
-		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd', 't'));
+		$special_fa = in_array($matches[1], ['b', 'l', 'r', 's', 'd', 't']);
 		$options_list = isset($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 
@@ -194,7 +194,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which allows to unparse the Wikipedia tag
+	 * Callback which allows to unparse the Wikipedia tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */

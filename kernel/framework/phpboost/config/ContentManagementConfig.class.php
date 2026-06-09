@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 04 29
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 07 07
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class ContentManagementConfig extends AbstractConfigData
@@ -230,16 +230,16 @@ class ContentManagementConfig extends AbstractConfigData
 
 	protected function get_default_values()
 	{
-		return array(
+		return [
 			self::ANTI_FLOOD_ENABLED               => false,
 			self::ANTI_FLOOD_DURATION              => 7,
-			self::USED_CAPTCHA_MODULE              => 'QuestionCaptcha',
+			self::USED_CAPTCHA_MODULE              => 'qaptcha',
 			self::NEW_CONTENT_ENABLED              => true,
 			self::NEW_CONTENT_DURATION             => 5,
-			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array(),
+			self::NEW_CONTENT_UNAUTHORIZED_MODULES => [],
 			self::NOTATION_ENABLED                 => true,
 			self::NOTATION_SCALE                   => 5,
-			self::NOTATION_UNAUTHORIZED_MODULES    => array(),
+			self::NOTATION_UNAUTHORIZED_MODULES    => [],
 			self::CONTENT_SHARING_ENABLED          => true,
 			self::CONTENT_SHARING_EMAIL_ENABLED    => true,
 			self::CONTENT_SHARING_PRINT_ENABLED    => true,
@@ -247,8 +247,8 @@ class ContentManagementConfig extends AbstractConfigData
 			self::OPENGRAPH_ENABLED                => true,
 			self::SITE_DEFAULT_PICTURE_URL         => '',
 			self::ID_CARD_ENABLED              	   => true,
-			self::ID_CARD_UNAUTHORIZED_MODULES => array(),
-		);
+			self::ID_CARD_UNAUTHORIZED_MODULES => [],
+		];
 	}
 
 	/**
@@ -257,7 +257,7 @@ class ContentManagementConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'content-management');
+		return ConfigManager::load(self::class, 'kernel', 'content-management');
 	}
 
 	/**

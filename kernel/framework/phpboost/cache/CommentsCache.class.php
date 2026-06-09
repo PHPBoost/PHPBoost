@@ -5,21 +5,21 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 02 10
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 24
 */
 
 class CommentsCache implements CacheData
 {
-	private $comments = array();
-	private $users_comments_number = array();
+	private $comments = [];
+	private $users_comments_number = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->comments = array();
+		$this->comments = [];
 
 		$result = PersistenceContext::get_querier()->select("
 			SELECT comments.*, topic.*, member.*
@@ -31,7 +31,7 @@ class CommentsCache implements CacheData
 
 		while ($row = $result->fetch())
 		{
-			$this->comments[$row['id']] = array(
+			$this->comments[$row['id']] = [
 				'id' => $row['id'],
 				'id_topic' => $row['id_topic'],
 				'module_id' => $row['module_id'],
@@ -42,7 +42,7 @@ class CommentsCache implements CacheData
 				'timestamp' => $row['timestamp'],
 				'path' => $row['path'],
 				'user_id' => $row['user_id']
-			);
+			];
 			$this->users_comments_number[$row['user_id']] = (isset($this->users_comments_number[$row['user_id']]) && is_int($this->users_comments_number[$row['user_id']])) ? $this->users_comments_number[$row['user_id']]++ : 1;
 		}
 	}
@@ -74,7 +74,7 @@ class CommentsCache implements CacheData
 
 	public function get_comments_by_module($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
 	{
-		$comments = array();
+		$comments = [];
 		foreach ($this->comments as $id_comment => $informations)
 		{
 			if ($informations['module_id'] == $module_id && $informations['topic_identifier'] == $topic_identifier)

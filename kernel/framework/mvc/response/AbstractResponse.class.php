@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 06
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 18
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractResponse implements Response
@@ -33,7 +33,7 @@ abstract class AbstractResponse implements Response
 
 			$view = new StringTemplate('# INCLUDE MESSAGE #');
 
-			$view->put('MESSAGE', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.locked.content.description', 'warning-lang'), array('user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('warning.locked.content.another.user', 'warning-lang'))), MessageHelper::NOTICE));
+			$view->put('MESSAGE', MessageHelper::display(StringVars::replace_vars(LangLoader::get_message('warning.locked.content.description', 'warning-lang'), ['user_display_name' => $user_display_name ? $user_display_name : LangLoader::get_message('warning.locked.content.another.user', 'warning-lang')]), MessageHelper::NOTICE));
 		}
 
 		$this->view = $view;

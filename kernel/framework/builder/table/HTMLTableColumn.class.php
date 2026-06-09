@@ -6,9 +6,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 02 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class HTMLTableColumn extends HTMLTableRowCell
@@ -16,7 +16,7 @@ class HTMLTableColumn extends HTMLTableRowCell
 	private $sortable_parameter = '';
 	private $name_sr_only = false;
 
-	public function __construct($name, $sortable_parameter = '', $options = array())
+	public function __construct($name, $sortable_parameter = '', $options = [])
 	{
 		$this->sortable_parameter = $sortable_parameter;
 		$css_class = isset($options['css_class']) ? $options['css_class'] : '';

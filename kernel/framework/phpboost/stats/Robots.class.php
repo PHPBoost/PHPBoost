@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 04 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 06
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class Robots
@@ -34,7 +34,7 @@ class Robots
 			{
 				$result = (preg_match('`x86_64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`x64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`compatible; ([^/]+)`iu', $user_agent, $matches)) ? $matches[1] : $user_agent;
 				$result = preg_split('`(\ |;|\/|\+)`', $result);
-				$result = TextHelper::ucfirst(str_replace(array('(', ')'), '', $result[0]));
+				$result = TextHelper::ucfirst(str_replace(['(', ')'], '', $result[0]));
 				$result = preg_replace('`bot[0-9\.]+$`iu', 'Bot', $result);
 				$result = (preg_match('`bot`iu', $result) && !preg_match('`robot`iu', $result)) ? preg_replace('`bot$`iu', 'Bot', $result) : $result;
 				$result = preg_replace('`spider$`iu', 'Spider', $result);
@@ -49,12 +49,12 @@ class Robots
 	// Robots with user-agents that don't match the regex
 	private static function get_robots_list()
 	{
-		return array(
+		return [
 			'360Spider',
 			'Applebot',
 			'AppEngine-Google',
 			'YisouSpider',
-		);
+		];
 	}
 }
 ?>

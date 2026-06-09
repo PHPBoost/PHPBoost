@@ -7,9 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 23
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.2 - 2019 10 26
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NginxFileCache implements CacheData
@@ -39,6 +39,20 @@ class NginxFileCache implements CacheData
 
 			$this->add_bandwidth_protection();
 		}
+        else
+        {
+            $site_path = $this->general_config->get_site_path();
+            $this->add_section('Module routing without URL rewriting');
+
+            $this->add_line('location ~ ^/([a-zA-Z0-9_-]+)/?$ {');
+            $this->add_line("\trewrite ^/([a-zA-Z0-9_-]+)/?$ " . $site_path . '/modules/$1/index.php last;');
+            $this->add_line('}');
+            $this->add_empty_line();
+
+            $this->add_line('location ~ ^/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_\-.]+\.php)(.*)$ {');
+            $this->add_line("\trewrite ^/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_\\-.]+\\.php)(.*)$ " . $site_path . '/modules/$1/$2$3 last;');
+            $this->add_line('}');
+        }
 
 		$this->set_default_charset();
 
@@ -99,7 +113,7 @@ class NginxFileCache implements CacheData
 			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
-				$mappings_high_priority = array();
+				$mappings_high_priority = [];
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping && $mapping->is_high_priority())
@@ -120,7 +134,47 @@ class NginxFileCache implements CacheData
 			}
 		}
 
+		// Write UrlUpdater redirect rules BEFORE all dispatcher rules.
+		// Plain UrlMapping objects (R=301) from UrlUpdater must fire before wiki/pages
+		// dispatcher rules, otherwise the dispatcher catches old-format URLs first.
+		if ($eps->provider_exists('UrlUpdater', UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			$this->add_section('UrlUpdater redirect rules (high priority)');
+			$provider = $eps->get_provider('UrlUpdater');
+			foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+			{
+				if (!($mapping instanceof DispatcherUrlMapping))
+				{
+					// Use permanent redirect for mappings with R=301 option
+					$is_redirect = strpos($mapping->options(), 'R=301') !== false || strpos($mapping->options(), 'redirect') !== false;
+					$this->add_line('rewrite ^/' . ltrim($mapping->from(), '^') . ' ' . $this->general_config->get_site_path() . '/' . ltrim($mapping->to(), '/') . ($is_redirect ? ' permanent;' : ' break;'));
+				}
+			}
+		}
+
 		$this->add_section('Modules rules');
+
+        $this->add_section('Skip rewriting for existing files and handle direct index.php');
+        $this->add_line('# Skip rewriting for existing files');
+        $this->add_line('if (-f $request_filename) {');
+        $this->add_line('	break;');
+        $this->add_line('}');
+        $this->add_empty_line();
+        $this->add_line('# Skip rewriting for existing directories');
+        $this->add_line('if (-d $request_filename) {');
+        $this->add_line('	break;');
+        $this->add_line('}');
+        $this->add_empty_line();
+        $this->add_line('if (!-f $request_filename) {');
+        $this->add_line('    if ($request_uri !~* "(\.php|/)$") {');
+        $this->add_line('        rewrite ^(.*)$ ' . $this->general_config->get_site_path() . '/modules/$1/ permanent;');
+        $this->add_line('    }');
+        $this->add_line('}');
+        $this->add_empty_line();
+        $this->add_line('# Handle direct index.php requests for all modules');
+        $this->add_line('location ~ ^/([a-zA-Z0-9_-]+)/index\.php$ {');
+        $this->add_line('	rewrite ^/([a-zA-Z0-9_-]+)/index\.php$ ' . $this->general_config->get_site_path() . '/modules/$1/index.php break;');
+        $this->add_line('}');
 
 		foreach ($modules as $module)
 		{
@@ -128,11 +182,12 @@ class NginxFileCache implements CacheData
 			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
-				$mappings_normal_priority = array();
+				$mappings_normal_priority = [];
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping && (!$mapping->is_high_priority() && !$mapping->is_low_priority()))
 						$mappings_normal_priority[] = $mapping;
+					// Skip plain UrlMapping for UrlUpdater — already written in high-priority section above
 				}
 
 				if (!empty($mappings_normal_priority))
@@ -151,7 +206,7 @@ class NginxFileCache implements CacheData
 			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
-				$mappings_low_priority = array();
+				$mappings_low_priority = [];
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping && $mapping->is_low_priority())
@@ -177,7 +232,7 @@ class NginxFileCache implements CacheData
 	{
 		$this->add_section('User');
 
-		$rules = array('RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$ /user/pm.php?pm=$1&id=$2&p=$3&quote=$4 [L,QSA]');
+		$rules = ['RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$ /user/pm.php?pm=$1&id=$2&p=$3&quote=$4 [L,NC,QSA]'];
 
 		$eps = AppContext::get_extension_provider_service();
 		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
@@ -189,39 +244,48 @@ class NginxFileCache implements CacheData
 		$this->add_line('	rewrite ' . str_replace('^', '^/', $match) . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' break;');
 	}
 
-	private function add_url_mapping($mapping_list, $rules = array())
-	{
-		if ($mapping_list instanceof UrlMappingsExtensionPoint)
-			$mapping_list = $mapping_list->list_mappings();
+	private function add_url_mapping($mapping_list, $rules = [])
+    {
+        if ($mapping_list instanceof UrlMappingsExtensionPoint)
+            $mapping_list = $mapping_list->list_mappings();
 
-		$locations = array();
-		foreach ($mapping_list as $mapping)
-		{
-			preg_match('#([\w_-]*)/#', $mapping->from(), $matches);
-			$locations[$matches[0]][] = array('from' => $mapping->from(), 'to' => $mapping->to());
-		}
+        $locations = [];
+        foreach ($mapping_list as $mapping)
+        {
+            preg_match('#([\w_-]*)/#', $mapping->from(), $matches);
+            $locations[$matches[0]][] = ['from' => $mapping->from(), 'to' => $mapping->to()];
+        }
 
-		$first_location = true;
-		foreach ($locations as $location => $element)
-		{
-			$this->add_line('location /' . substr($location, 0, -1) . ' {');
-			if ($first_location && !empty($rules))
-			{
-				foreach ($rules as $rule)
-				{
-					$this->add_line(str_replace(array('DIR', 'RewriteRule', '^', '[L,QSA]', '[L]'), array($this->general_config->get_site_path(), '	rewrite', '^/', 'break;', 'break;'), $rule));
-				}
-			}
-			$first_location = false;
+        $first_location = true;
+        foreach ($locations as $location => $element)
+        {
+            $module_name = substr($location, 0, -1);
 
-			foreach ($element as $parameters)
-			{
-				$this->add_rewrite_rule($parameters['from'], $parameters['to']);
-			}
-			$this->add_line('}');
-			next($locations) !== false ? $this->add_empty_line() : '';
-		}
-	}
+            $this->add_line('location /' . $module_name . ' {');
+
+            // ADD THIS: Handle ANY .php file requests in the module
+            $this->add_line('	# Handle direct .php file requests');
+            $this->add_line('	if ($request_uri ~ ^/' . $module_name . '/([a-zA-Z0-9_-]+\.php)(.*)$) {');
+            $this->add_line('		rewrite ^/' . $module_name . '/([a-zA-Z0-9_-]+\.php)(.*)$ ' . $this->general_config->get_site_path() . '/modules/' . $module_name . '/$1$2 break;');
+            $this->add_line('	}');
+
+            if ($first_location && !empty($rules))
+            {
+                foreach ($rules as $rule)
+                {
+                    $this->add_line(str_replace(['DIR', 'RewriteRule', '^', '[L,NC,QSA]', '[L]'], [$this->general_config->get_site_path(), '	rewrite', '^/', 'break;', 'break;'], $rule));
+                }
+            }
+            $first_location = false;
+
+            foreach ($element as $parameters)
+            {
+                $this->add_rewrite_rule($parameters['from'], $parameters['to']);
+            }
+            $this->add_line('}');
+            next($locations) !== false ? $this->add_empty_line() : '';
+        }
+    }
 
 	private function force_redirection_if_available()
 	{
@@ -402,6 +466,14 @@ class NginxFileCache implements CacheData
 		$this->add_line('add_header X-Permitted-Cross-Domain-Policies "master-only"');
 		$this->add_line('# Prevent mime based attacks');
 		$this->add_line('add_header X-Content-Type-Options "nosniff"');
+        $this->add_line('');
+        $this->add_line('# Prevent Rewrite for font files');
+        $this->add_line('location ~* \.(eot|otf|ttf|woff|woff2)$ {');
+        $this->add_line('   add_header Access-Control-Allow-Origin "*" always;');
+        $this->add_line('   # optionally:');
+        $this->add_line('   add_header Access-Control-Allow-Methods "GET, OPTIONS" always;');
+        $this->add_line('   add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept" always;');
+        $this->add_line('}');
 	}
 
 	private function disable_file_etags()

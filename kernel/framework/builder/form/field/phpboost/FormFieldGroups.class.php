@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 16
 */
 
@@ -19,7 +19,7 @@ class FormFieldGroups extends FormFieldMultipleSelectChoice
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
-    public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value = 0, $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
@@ -27,7 +27,7 @@ class FormFieldGroups extends FormFieldMultipleSelectChoice
     private function generate_options()
 	{
 		$groups = GroupsCache::load()->get_groups();
-		$options = array();
+		$options = [];
 		foreach ($groups as $id => $informations)
 		{
 			$options[] = new FormFieldSelectChoiceOption($informations['name'], $id);

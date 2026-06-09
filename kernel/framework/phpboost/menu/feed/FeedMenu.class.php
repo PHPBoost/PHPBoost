@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 04 07
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 01 14
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FeedMenu extends Menu
@@ -49,19 +49,26 @@ class FeedMenu extends Menu
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
 		if (!empty($module_id) && file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
-			$tpl = new FileTemplate('/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
-		elseif (!empty($module_id) && file_exists(PATH_TO_ROOT . '/' . $module_id . '/templates/feed.tpl'))
-			$tpl = new FileTemplate('/' . $module_id . '/templates/feed.tpl');
+			$tpl = new FileTemplate('templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
+		elseif (!empty($module_id))
+		{
+			// Check new /modules structure with fallback to root
+			$module_template_path = FileTemplateLoader::get_module_template_path($module_id);
+			if (file_exists(PATH_TO_ROOT . $module_template_path . '/feed.tpl'))
+				$tpl = new FileTemplate($module_template_path . '/feed.tpl');
+			else
+				$tpl = new FileTemplate('framework/menus/feed.tpl');
+		}
 		else
 			$tpl = new FileTemplate('framework/menus/feed.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'NAME' => $name,
 			'ID' => $id,
 			'C_NAME' => !empty($name),
 			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT),
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $hidden_with_small_screens
-		));
+		]);
 
 		return $tpl;
 	}

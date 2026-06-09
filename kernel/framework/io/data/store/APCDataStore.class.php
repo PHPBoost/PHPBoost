@@ -9,11 +9,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 09 16
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class APCDataStore implements DataStore
@@ -24,7 +24,7 @@ class APCDataStore implements DataStore
 
 	private static $apc_fields_id = '_apc_fields';
 
-	private $apc_fields = array();
+	private $apc_fields = [];
 
 	public function __construct($cache_id)
 	{
@@ -124,7 +124,7 @@ class APCDataStore implements DataStore
 		}
 		else
 		{
-			$this->apc_fields = array();
+			$this->apc_fields = [];
 		}
 	}
 

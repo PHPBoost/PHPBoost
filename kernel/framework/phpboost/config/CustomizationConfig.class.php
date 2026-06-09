@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 08 30
 */
 
@@ -57,10 +57,10 @@ class CustomizationConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::FAVICON_PATH => '/favicon.ico',
 			self::HEADER_LOGO_PATH_ALL_THEMES => null
-		);
+		];
 	}
 
 	/**
@@ -69,7 +69,7 @@ class CustomizationConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'customization-config');
+		return ConfigManager::load(self::class, 'kernel', 'customization-config');
 	}
 
 	/**

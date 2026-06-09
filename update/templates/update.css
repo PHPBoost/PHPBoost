@@ -66,9 +66,9 @@ section header {
 }
 
 /* --- Server configuration ------------------------------------------------- */
-#chmod .message-helper {
-	display: inline-block;
-	width: calc(50% - 0.809em);
+.checked-element {
+    padding: 0.618em;
+    border: 1px solid var(--bdr-main);
 }
 
 /* --- Execute -------------------------------------------------------------- */
@@ -123,9 +123,6 @@ section header {
 
         a { text-decoration: none; }
 
-        i, span {
-            display: block;
-            @media (min-width: 769px) { display: block; }
-        }
+        span { display: block; }
     }
 }

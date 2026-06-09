@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 07 31
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.2 - 2019 07 31
 */
 
@@ -16,7 +16,7 @@ class WizardFormFieldsetSubmit extends FormFieldsetHTML
 	 */
 	private $buttons;
 
-	public function __construct($id, $options = array())
+	public function __construct($id, $options = [])
 	{
 		if (!isset($options['css_class']))
 		{

@@ -5,40 +5,40 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 12 08
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 12 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberShortTextExtendedField extends AbstractMemberExtendedField
 {
-	public static $brands_pictures_list = array(
-		'bitbucket' => array('title' => 'Bitbucket', 'picture' => 'fa-bitbucket'),
-		'deviantart' => array('title' => 'Deviantart', 'picture' => 'fa-deviantart'),
-		'facebook' => array('title' => 'Facebook', 'picture' => 'fa-facebook'),
-		'github' => array('title' => 'Github', 'picture' => 'fa-github'),
-		'google' => array('title' => 'Google+', 'picture' => 'fa-google-plus-g'),
-		'hotmail' => array('title' => 'Hotmail', 'picture' => 'fa-windows'),
-		'instagram' => array('title' => 'Instagram', 'picture' => 'fa-instagram'),
-		'linkedin' => array('title' => 'Linkedin', 'picture' => 'fa-linkedin'),
-		'live' => array('title' => 'Live', 'picture' => 'fa-windows'),
-		'msn' => array('title' => 'MSN', 'picture' => 'fa-windows'),
-		'outlook' => array('title' => 'Outlook', 'picture' => 'fa-windows'),
-		'skype' => array('title' => 'Skype', 'picture' => 'fa-skype'),
-		'steam' => array('title' => 'Steam', 'picture' => 'fa-steam'),
-		'twitch' => array('title' => 'Twitch', 'picture' => 'fa-twitch'),
-		'twitter' => array('title' => 'Twitter', 'picture' => 'fa-twitter'),
-		'yahoo' => array('title' => 'Yahoo', 'picture' => 'fa-yahoo'),
-		'youtube' => array('title' => 'Youtube', 'picture' => 'fa-youtube')
-	);
+	public static $brands_pictures_list = [
+		'bitbucket'  => ['title' => 'Bitbucket', 'picture' => 'fa-bitbucket'],
+		'deviantart' => ['title' => 'Deviantart', 'picture' => 'fa-deviantart'],
+		'facebook'   => ['title' => 'Facebook', 'picture' => 'fa-facebook'],
+		'github'     => ['title' => 'Github', 'picture' => 'fa-github'],
+		'google'     => ['title' => 'Google+', 'picture' => 'fa-google-plus-g'],
+		'hotmail'    => ['title' => 'Hotmail', 'picture' => 'fa-windows'],
+		'instagram'  => ['title' => 'Instagram', 'picture' => 'fa-instagram'],
+		'linkedin'   => ['title' => 'Linkedin', 'picture' => 'fa-linkedin'],
+		'live'       => ['title' => 'Live', 'picture' => 'fa-windows'],
+		'msn'        => ['title' => 'MSN', 'picture' => 'fa-windows'],
+		'outlook'    => ['title' => 'Outlook', 'picture' => 'fa-windows'],
+		'skype'      => ['title' => 'Skype', 'picture' => 'fa-skype'],
+		'steam'      => ['title' => 'Steam', 'picture' => 'fa-steam'],
+		'twitch'     => ['title' => 'Twitch', 'picture' => 'fa-twitch'],
+		'x-twitter'  => ['title' => 'X-Twitter', 'picture' => 'fa-x-twitter'],
+		'yahoo'      => ['title' => 'Yahoo', 'picture' => 'fa-yahoo'],
+		'youtube'    => ['title' => 'Youtube', 'picture' => 'fa-youtube']
+	];
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->lang = LangLoader::get_all_langs();
-		$this->set_disable_fields_configuration(array('possible_values'));
+		$this->set_disable_fields_configuration(['possible_values']);
 		$this->set_name($this->lang['user.field.type.short.text']);
 	}
 
@@ -70,9 +70,9 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 				$display_constraint = true;
 		}
 
-		$fieldset->add_field(new $field_class($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), array(
-			'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()),
-			($display_constraint ? array($this->constraint($regex)) : array())
+		$fieldset->add_field(new $field_class($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), [
+			'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()],
+			($display_constraint ? [$this->constraint($regex)] : [])
 		));
 	}
 
@@ -104,9 +104,9 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 				$display_constraint = true;
 		}
 
-		$fieldset->add_field(new $field_class($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), array(
-			'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()),
-			($display_constraint ? array($this->constraint($regex)) : array())
+		$fieldset->add_field(new $field_class($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), [
+			'required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()],
+			($display_constraint ? [$this->constraint($regex)] : [])
 		));
 	}
 
@@ -115,7 +115,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		$value = $member_extended_field->get_value();
 		if ($value !== null && !empty($value))
 		{
-			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $this->get_value($member_extended_field, $value));
+			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $this->get_value($member_extended_field, $value)];
 		}
 	}
 

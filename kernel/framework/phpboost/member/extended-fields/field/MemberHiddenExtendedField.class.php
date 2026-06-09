@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 12 08
 */
 
@@ -14,7 +14,7 @@ class MemberHiddenExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('name', 'description', 'field_type', 'regex', 'authorizations', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(['name', 'description', 'field_type', 'regex', 'authorizations', 'possible_values', 'default_value']);
 		$this->set_name('');
 	}
 

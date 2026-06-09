@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 01 30
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 07
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserPublicationsController extends AbstractController
@@ -28,7 +28,7 @@ class UserPublicationsController extends AbstractController
 		}
 		else if ($user_id != $this->user->get_id())
 		{
-			if (UserService::user_exists('WHERE user_id = :id', array('id' => $user_id)))
+			if (UserService::user_exists('WHERE user_id = :id', ['id' => $user_id]))
 				$this->user = UserService::get_user($user_id);
 			else
 			{
@@ -53,17 +53,17 @@ class UserPublicationsController extends AbstractController
 	{
 		$modules_with_publications = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 
-        $this->view->put_all(array(
+        $this->view->put_all([
             'C_CURRENT_USER' => $this->user->get_id() == AppContext::get_current_user()->get_id(),
             'USER_NAME' => $this->user->get_display_name()
-        ));
+        ]);
 
-        foreach (array_merge(array('user' => true), ModulesManager::get_activated_modules_map_sorted_by_localized_name()) as $id => $installed_module)
+        foreach (array_merge(['user' => true], ModulesManager::get_activated_modules_map_sorted_by_localized_name()) as $id => $installed_module)
 		{
 			if (in_array($id, array_keys($modules_with_publications)))
 			{
 				$module = $modules_with_publications[$id];
-				$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '_mini.png');
+				$module_icon = new File(PATH_TO_ROOT . '/modules/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '_mini.png');
 				$is_picture = false;
 				if($module->get_publications_module_icon() != '')
 					$thumbnail = $module->get_publications_module_icon();
@@ -79,13 +79,13 @@ class UserPublicationsController extends AbstractController
 				else
 					$thumbnail = 'fa fa-cube';
 
-				$this->view->assign_block_vars('user_publications', array(
+				$this->view->assign_block_vars('user_publications', [
 					'C_ICON_IS_PICTURE'   => $is_picture,
 					'MODULE_NAME'         => $module->get_publications_module_name(),
 					'MODULE_THUMBNAIL'    => $thumbnail,
 					'U_MODULE_VIEW'       => $module->get_publications_module_view($this->user->get_id()),
 					'PUBLICATIONS_NUMBER' => (int)$module->get_publications_number($this->user->get_id())
-				));
+				]);
 			}
 		}
 	}
@@ -96,7 +96,7 @@ class UserPublicationsController extends AbstractController
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($title);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.messages'], array('name' => $this->user->get_display_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.messages'], ['name' => $this->user->get_display_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::publications($this->user->get_id()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

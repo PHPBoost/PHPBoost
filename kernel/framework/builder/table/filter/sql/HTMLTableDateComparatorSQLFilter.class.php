@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 02 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.0 - 2017 04 13
 */
 
@@ -30,7 +30,7 @@ abstract class HTMLTableDateComparatorSQLFilter extends AbstractHTMLTableFilter 
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' ' . $this->get_sql_comparator_symbol() . ' :' . $parameter_name;
-		$parameters = array($parameter_name => $this->get_value()->get_timestamp());
+		$parameters = [$parameter_name => $this->get_value()->get_timestamp()];
 		return new SQLFragment($query, $parameters);
 	}
 

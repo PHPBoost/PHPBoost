@@ -7,9 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 04 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 08 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ExtendedFieldsDatabaseService
@@ -29,7 +29,7 @@ class ExtendedFieldsDatabaseService
 
 		self::$db_querier->inject(
 			"INSERT INTO " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " (name, position, field_name, description, field_type, possible_values, default_value, required, display, regex, freeze, auth)
-			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_value, :required, :display, :regex, :freeze, :auth)", array(
+			VALUES (:name, :position, :field_name, :description, :field_type, :possible_values, :default_value, :required, :display, :regex, :freeze, :auth)", [
                 'name' => TextHelper::htmlspecialchars($extended_field->get_name()),
                 'position' => $extended_field->get_position(),
 				'field_name' => $extended_field->get_field_name(),
@@ -42,7 +42,7 @@ class ExtendedFieldsDatabaseService
 				'regex' => TextHelper::htmlspecialchars($extended_field->get_regex()),
 				'freeze' => (int)$extended_field->get_is_freeze(),
 				'auth' => TextHelper::serialize($extended_field->get_authorization()),
-		));
+		]);
 	}
 
 	public static function update_extended_field(ExtendedField $extended_field)
@@ -57,7 +57,7 @@ class ExtendedFieldsDatabaseService
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
 			name = :name, field_name = :field_name, description = :description, field_type = :field_type, possible_values = :possible_values, default_value = :default_value, required = :required, display = :display, regex = :regex, freeze = :freeze, auth = :auth
 			WHERE id = :id"
-			, array(
+			, [
                 'name' => TextHelper::htmlspecialchars($extended_field->get_name()),
 				'field_name' => $extended_field->get_field_name(),
 				'description' => TextHelper::htmlspecialchars($extended_field->get_description()),
@@ -70,7 +70,7 @@ class ExtendedFieldsDatabaseService
 				'freeze' => (int)$extended_field->get_is_freeze(),
 				'auth' => TextHelper::serialize($extended_field->get_authorization()),
 				'id' => $extended_field->get_id(),
-		));
+		]);
 
 		// If change field type, delete old informations
 		if ($former_field_type !== $new_field_type)
@@ -89,17 +89,17 @@ class ExtendedFieldsDatabaseService
 		{
 			self::$db_querier->inject(
 				"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE id = :id"
-				, array(
+				, [
 					'id' => $id,
-			));
+			]);
 		}
 		else if (!empty($field_name))
 		{
 			self::$db_querier->inject(
 				"DELETE FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " WHERE field_name = :field_name"
-				, array(
+				, [
 					'field_name' => $field_name,
-			));
+			]);
 		}
 	}
 
@@ -109,10 +109,10 @@ class ExtendedFieldsDatabaseService
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
 			display = :display
 			WHERE id = :id"
-			, array(
+			, [
 				'display' => (int)$extended_field->get_display(),
 				'id' => $extended_field->get_id(),
-		));
+		]);
 	}
 
 	public static function update_extended_field_display_by_field_name(ExtendedField $extended_field)
@@ -121,20 +121,20 @@ class ExtendedFieldsDatabaseService
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
 			display = :display
 			WHERE field_name = :field_name"
-			, array(
+			, [
 				'display' => (int)$extended_field->get_display(),
 				'field_name' => $extended_field->get_field_name(),
-		));
+		]);
 	}
 
 	public static function select_data_field_by_id(ExtendedField $extended_field)
 	{
-		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE id = '" . $extended_field->get_id() . "'");
+		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['*'], "WHERE id = '" . $extended_field->get_id() . "'");
 	}
 
 	public static function select_data_field_by_field_name(ExtendedField $extended_field)
 	{
-		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), "WHERE field_name = '" . $extended_field->get_field_name() . "'");
+		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['*'], "WHERE field_name = '" . $extended_field->get_field_name() . "'");
 	}
 
 	public static function check_field_exist_by_field_name(ExtendedField $extended_field)
@@ -154,7 +154,7 @@ class ExtendedFieldsDatabaseService
 
 	private static function delete_empty_fields_member(ExtendedField $extended_field)
 	{
-		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", array('value' => ''));
+		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", ['value' => '']);
 	}
 
 	private static function add_extended_field_to_member(ExtendedField $extended_field)

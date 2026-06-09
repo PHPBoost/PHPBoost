@@ -5,15 +5,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 13
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 01 24
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor xela <xela@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Myster <https://www.phpboost.com/user/pm-3023>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Myster <https://www.phpboost.com/user/pm-3023>
 */
 
 class TextHelper
@@ -116,7 +116,7 @@ class TextHelper
 	public static function to_js_string($string, $add_quotes = true)
 	{
 		$bounds = $add_quotes ? '\'' : '';
-		return $bounds . ($string ? str_replace(array("\r\n", "\r", "\n", '"', '\\\\\''), array('\n', '\n', '\n', '&quot;', '\\\''), addcslashes($string, '\'')) : '') . $bounds;
+		return $bounds . ($string ? str_replace(["\r\n", "\r", "\n", '"', '\\\\\''], ['\n', '\n', '\n', '&quot;', '\\\''], addcslashes($string, '\'')) : '') . $bounds;
 	}
 
 	/**
@@ -128,7 +128,7 @@ class TextHelper
 	public static function to_json_string($string, $add_quotes = true)
 	{
 		$bounds = $add_quotes ? '"' : '';
-		return $bounds . ($string ? str_replace(array("\r\n", "\r", "\n",), array('\n', '\n', '\n',), addcslashes($string, '"')) : '') . $bounds;
+		return $bounds . ($string ? str_replace(["\r\n", "\r", "\n",], ['\n', '\n', '\n',], addcslashes($string, '"')) : '') . $bounds;
 	}
 
 	public static function htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
@@ -303,7 +303,7 @@ class TextHelper
 
         // Fixed string lengths for multi-byte characters
         $string = preg_replace_callback(
-            '/s:(\d+):"(.*?)";/s',
+            '/s:(\d+):"((?:[^"]|(?<=\\\\)")*)";/s',  // Better regex to handle escaped quotes
             function (array $matches) {
                 $value = $matches[2] ?? '';
                 $value = (string) $value;
@@ -312,13 +312,21 @@ class TextHelper
             $string
         );
 
-        // Attempt to deserialize
-        $result = @unserialize(trim($string), ['allowed_classes' => false]);
+        // Deserialize with all classes allowed — PHPBoost config objects (MaintenanceConfig,
+        // GeneralConfig, etc.) are stored as serialized class instances and must be
+        // reconstructed with their class definitions intact. Using allowed_classes => false
+        // would turn every object into __PHP_Incomplete_Class, breaking config loading.
+        $result = @unserialize(trim($string));
 
         if ($result === false && $string !== 'b:0;') {
-            // treat as non‑serialized or log/debug
-            return $string;
+            $cleaned = trim($string);
+            $result = @unserialize($cleaned);
+
+            if ($result === false) {
+                return $string;
+            }
         }
+
         return $result;
     }
 
@@ -426,7 +434,7 @@ class TextHelper
 	 */
 	public static function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
 	{
-		$lines = array();
+		$lines = [];
 		while (!empty($string))
 		{
 			// We got a line with a break in it somewhere before the end

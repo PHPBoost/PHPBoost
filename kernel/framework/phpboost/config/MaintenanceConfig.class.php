@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 29
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 07 05
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MaintenanceConfig extends AbstractConfigData
@@ -127,15 +127,15 @@ class MaintenanceConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ENABLED => false,
 			self::UNLIMITED_DURATION => false,
 			self::END_DATE => new Date(),
 			self::MESSAGE => LangLoader::get_message('admin.maintenance', 'admin-lang'),
-			self::AUTH => array(),
+			self::AUTH => [],
 			self::DISPLAY_DURATION => true,
 			self::DISPLAY_DURATION_FOR_ADMIN => true
-		);
+		];
 	}
 
 	/**
@@ -144,7 +144,7 @@ class MaintenanceConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'maintenance');
+		return ConfigManager::load(self::class, 'kernel', 'maintenance');
 	}
 
 	/**

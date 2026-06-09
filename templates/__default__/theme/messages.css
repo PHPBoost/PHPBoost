@@ -43,6 +43,8 @@
     flex-direction: column;
     justify-content: space-between;
     flex: 1 1 auto;
+
+    a i { display: inline;}
 }
 
 .message-user-infos-preview,

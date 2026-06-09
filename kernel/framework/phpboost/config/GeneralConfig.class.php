@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 07 05
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GeneralConfig extends AbstractConfigData
@@ -102,18 +102,18 @@ class GeneralConfig extends AbstractConfigData
 		$site_url = self::get_default_site_url();
 		$site_path = self::get_default_site_path();
 
-		return array(
-			self::SITE_URL => $site_url,
-			self::SITE_PATH => $site_path,
-			self::SITE_NAME => '',
-			self::SITE_SLOGAN => '',
-			self::SITE_DESCRIPTION => '',
-			self::MODULE_HOME_PAGE => '',
-			self::OTHER_HOME_PAGE => '',
-			self::PHPBOOST_VERSION => '6.1',
+		return [
+			self::SITE_URL          => $site_url,
+			self::SITE_PATH         => $site_path,
+			self::SITE_NAME         => '',
+			self::SITE_SLOGAN       => '',
+			self::SITE_DESCRIPTION  => '',
+			self::MODULE_HOME_PAGE  => '',
+			self::OTHER_HOME_PAGE   => '',
+			self::PHPBOOST_VERSION  => '6.1',
 			self::SITE_INSTALL_DATE => new Date(Date::DATE_NOW, Timezone::SERVER_TIMEZONE),
-			self::SITE_TIMEZONE => 'Europe/Paris',
-		);
+			self::SITE_TIMEZONE     => 'Europe/Paris',
+		];
 	}
 
 	public static function get_default_site_url()
@@ -133,10 +133,10 @@ class GeneralConfig extends AbstractConfigData
 
 	private static function remove_dirs_from_root($path)
 	{
-        $root_path_fragments = array();
+        $root_path_fragments = [];
         $path_fragments = explode('/', $path);
         $depth = 1;
-		if (!in_array(PATH_TO_ROOT, array('.', '', null)))
+		if (!in_array(PATH_TO_ROOT, ['.', '', null]))
 		{
 			$depth = count(explode('/', PATH_TO_ROOT)) + 1;
 		}
@@ -204,7 +204,7 @@ class GeneralConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'general-config');
+		return ConfigManager::load(self::class, 'kernel', 'general-config');
 	}
 
 	/**

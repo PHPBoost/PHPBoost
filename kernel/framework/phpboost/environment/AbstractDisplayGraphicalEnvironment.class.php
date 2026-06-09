@@ -7,12 +7,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 08 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 06
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvironment
@@ -241,7 +241,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		if (AppContext::get_current_user()->is_admin() && !AppContext::get_request()->get_is_localhost())
 		{
 			$display_message_install = !$this->is_folder_deleted('install');
-			$display_message_update = !$this->is_folder_deleted('update');
+			$display_message_update  = !$this->is_folder_deleted('update');
 
 			if ($display_message_install || $display_message_update)
 			{

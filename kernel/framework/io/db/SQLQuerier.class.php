@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 01
 */
 
@@ -23,10 +23,10 @@ interface SQLQuerier
 	 * If not (there's a lot of chance that you have forgotten to register this
 	 * query var in the <code>$parameters</code> map), the query var won't be replaced</p>
 	 * @param string $query the query to execute
-	 * @param string[string] $parameters the query_var map
+	 * @param string[] $parameters the query_var map
 	 * @return SelectQueryResult the query result set
 	 */
-	function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC);
+	function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC);
 
 	/**
 	 * executes the <code>$query</code> sql request.
@@ -37,10 +37,10 @@ interface SQLQuerier
 	 * If not (there's a lot of chance that you have forgotten to register this
 	 * query var in the <code>$parameters</code> map), the query var won't be replaced</p>
 	 * @param string $query the query to execute
-	 * @param string[string] $parameters the query_var map
+	 * @param string[] $parameters the query_var map
 	 * @return InjectQueryResult the query result
 	 */
-	function inject($query, $parameters = array());
+	function inject($query, $parameters = []);
 
 	function enable_query_translator();
 

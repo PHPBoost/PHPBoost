@@ -45,9 +45,8 @@
 	}
 
 	.sortable-selector:after {
+	font: var(--fa-font-solid);
 		content: "\f0b2";
-		font-family: 'Font Awesome 7 Free';
-		font-weight: 900;
 	}
 }
 

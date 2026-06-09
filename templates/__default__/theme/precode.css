@@ -5,6 +5,12 @@ pre.precode {
     white-space: pre;
 }
 
+pre[class*="language-"] {
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+}
+
 pre.precode code,
 pre.precode .line-number {
     font-family: Monospace;

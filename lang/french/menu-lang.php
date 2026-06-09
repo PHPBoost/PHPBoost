@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 02 25
+ * @version     PHPBoost 6.1 - last update: 2026 06 01
  * @since       PHPBoost 3.0 - 2011 10 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -45,11 +45,12 @@ $lang['menu.configuration']          = 'Configuration';
 $lang['menu.configuration.general']  = 'Configuration générale';
 $lang['menu.configuration.advanced'] = 'Configuration avancée';
 $lang['menu.configuration.email']    = 'Configuration des email';
+$lang['menu.configuration.addons']   = 'Serveurs d\'extensions';
 $lang['menu.themes']                 = 'Thèmes';
 $lang['menu.langs']                  = 'Langues';
 $lang['menu.alerts']                 = 'Alertes';
 $lang['menu.maintenance']            = 'Maintenance';
-$lang['menu.updates']                = 'Mises à jour';
+$lang['menu.manual.updates']         = 'Mises à jour manuelles';
 $lang['menu.updates.kernel']         = 'Noyau';
 
 $lang['menu.tools'] = 'Outils';
@@ -63,6 +64,8 @@ $lang['menu.errors.404']           = 'Erreurs 404';
 $lang['menu.server']               = 'Serveur';
 $lang['menu.server.phpinfo']       = 'PHP info';
 $lang['menu.server.system.report'] = 'Rapport système';
+
+$lang['menu.addons'] = 'Extensions';
 
 $lang['menu.users'] = 'Utilisateurs';
 

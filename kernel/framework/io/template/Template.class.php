@@ -52,7 +52,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 03
 */
 
@@ -79,7 +79,7 @@ interface Template extends View
 
 	/**
      * Assigns template variables. It could be simple variables, loop or subtemplates.
-     * @param mixed[string] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
+     * @param mixed[] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
      */
     function put_all(array $vars);
 
@@ -97,7 +97,7 @@ interface Template extends View
 	 * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 * @param Template[] $subtemplates A list
 	 */
-	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
+	function assign_block_vars($block_name, array $array_vars, array $subtemplates = []);
 
 	/**
 	 * Displays the template.
@@ -106,7 +106,7 @@ interface Template extends View
 
 	/**
      * Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-     * @param string[string] $lang the language map
+     * @param string[] $lang the language map
      */
     function add_lang(array $lang);
 

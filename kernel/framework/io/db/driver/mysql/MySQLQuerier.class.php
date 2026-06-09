@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 01
 */
 
@@ -22,13 +22,13 @@ class MySQLQuerier extends AbstractSQLQuerier
 		$this->query_var_replacator = new SQLQueryVars($this);
 	}
 
-	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	public function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
 		$resource = $this->execute($query, $parameters);
 		return new MySQLSelectQueryResult($query, $parameters, $resource, $fetch_mode);
 	}
 
-	public function inject($query, $parameters = array())
+	public function inject($query, $parameters = [])
 	{
 		$resource = $this->execute($query, $parameters);
 		return new MySQLInjectQueryResult($query, $parameters, $resource, $this->link);

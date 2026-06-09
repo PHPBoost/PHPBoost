@@ -1,0 +1,87 @@
+/*
+* Copy this file into your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
+#module-connect  #login { cursor: help; }
+
+#module-connect .social-connect { display: inline-block; }
+
+#module-connect .js-menu-button {
+	display: block;
+	padding: 0.309em 0.809em;
+	position: relative;
+}
+
+#module-connect .js-menu-button .stacked { margin: 0 0 0 0.809em; }
+
+#module-connect .js-menu-button::after {
+	font: var(--fa-font-solid);
+	content: '\f0d7';
+	position: absolute;
+	right: 0.809em;
+}
+
+#module-connect.active-connect .js-menu-button::after { content: '\f0d8'; }
+
+#module-connect .cell-list-inline ul {
+	flex-direction: column;
+	flex-wrap: nowrap;
+}
+
+#module-connect .cell-list .li-spaced a { padding: 0.618em; }
+
+#module-connect .cell-list li:hover { background-color: transparent; }
+
+#module-connect .li-spaced {
+	padding: 0.456em;
+	width: 100%;
+}
+
+@media (min-width: 769px) {
+	#module-connect .js-menu-button { display: none; }
+
+	#module-connect .cell-list-inline ul {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	#module-connect .li-spaced { width: auto; }
+
+	#module-connect .cell-list .li-spaced a { padding: 0 0.618em 0 0; }
+}
+
+.connect-container-horizontal {
+	opacity: 0;
+	visibility: hidden;
+	width: 100%;
+	z-index: 200;
+	height: 0;
+}
+
+.active-connect .connect-container-horizontal {
+	opacity: 1;
+	visibility: visible;
+	height: auto;
+}
+
+.active-connect .js-menu-button,
+.js-menu-button:hover { text-decoration: none; }
+
+@media (min-width: 769px) {
+	#module-connect .connect-container-horizontal {
+		opacity: 1;
+		visibility: visible;
+		height: auto;
+	}
+
+	#module-connect .cell-list-inline .connect-container form { display: inline-flex; }
+
+	#module-connect .cell-list .connect-container li { padding: 0.309em; }
+
+	#module-connect .cell-list .connect-container .autoconnect {
+		padding: 0.618em 0;
+		display: inline-block;
+	}
+}

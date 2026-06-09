@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 03 13
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 04 12
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -20,6 +20,7 @@
 $lang['addon.multiple.select']     = 'Selection management';
 $lang['addon.multiple.install']    = 'Install selection';
 $lang['addon.multiple.uninstall']  = 'Uninstall selection';
+$lang['addon.multiple.delete']     = 'Delete selection';
 $lang['addon.multiple.enable']     = 'Enable selection';
 $lang['addon.multiple.disable']    = 'Disable selection';
 $lang['addon.multiple.upgrade']    = 'Upgrade selection';
@@ -32,6 +33,10 @@ $lang['addon.authorizations']      = 'Autorisations';
 $lang['addon.authorizations.save'] = 'Save autorisations';
 $lang['addon.upload.clue']         = 'The uploaded archive must be in <span class="text-strong">zip or gzip</span> format and must not exceed <span class="text-strong">:max_size</span>. If exceeded, drop the folder extracted from the archive :addon of your site on your FTP. ';
 
+$lang['addon.add.tab.github']  = 'From GitHub';
+$lang['addon.add.tab.website'] = 'From a website';
+$lang['addon.add.tab.server']  = 'Available on this server';
+$lang['addon.add.tab.archive'] = 'From a compressed file';
 // Langs
 $lang['addon.langs.directory']       = 'in the <span class ="text-strong pinned question">lang</span> folder';
 $lang['addon.langs']                 = 'Languages';
@@ -59,14 +64,14 @@ $lang['addon.langs.default.clue']  = 'The default language can not be uninstalle
 $lang['addon.modules.directory']       = 'at the <span class ="text-strong pinned question">root</span>';
 $lang['addon.modules']                 = 'Modules';
 $lang['addon.modules.management']      = 'Module management';
-$lang['addon.modules.add']             = 'Add a module';
 $lang['addon.modules.update']          = 'Update a module';
 $lang['addon.modules.delete']          = 'Delete or deactivate a module';
 $lang['addon.modules.delete.multiple'] = 'Delete or deactivate modules';
 $lang['addon.modules.installed']       = 'Installed modules';
-$lang['addon.modules.available']       = 'Available modules';
 $lang['addon.modules.select.all']      = 'Select all modules';
 $lang['addon.modules.no.icon']         = 'No icon';
+    // add
+$lang['addon.modules.add']             = 'Add a module';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.';
 $lang['addon.modules.warning.install'] = 'The installed modules are automatically enabled. Do not forget to disable them if necessary.';
@@ -90,6 +95,34 @@ $lang['addon.modules.drop.multiple'] = 'Delete all modules\'s files';
     // Upgrade
 $lang['addon.modules.upgrade']     = 'Update';
 $lang['addon.modules.upgrade.all'] = 'Update selected modules';
+    // Management
+$lang['addon.module.disable']           = '<strong>Disable</strong><br />Data and files will not be deleted';
+$lang['addon.module.uninstall']         = '<strong>Uninstall</strong><br />Data will not be deleted but files will not be deleted';
+$lang['addon.module.delete']            = '<strong>Delete</strong><br />Data and files will be deleted';
+$lang['addon.module.warning.uninstall'] = 'The module <strong>:module</strong> has been uninstalled successfully';
+$lang['addon.module.warning.delete']    = 'The module <strong>:module</strong> has been deleted successfully';
+    // Configuration
+$lang['addon.sub.directory']         = 'Subdirectory';
+$lang['addon.github.configuration']  = 'Configuration of GitHub repositories';
+$lang['addon.github.token']          = 'GitHub API Token';
+$lang['addon.github.token.clue']     = 'Link to the GitHub api.github.com site to create a free token';
+$lang['addon.modules.repos.add']     = 'Add a GitHub repository for modules';
+$lang['addon.themes.repos.add']      = 'Add a GitHub repository for themes';
+$lang['addon.langs.repos.add']       = 'Add a GitHub repository for languages';
+$lang['addon.repos.owner']           = 'Repository Owner';
+$lang['addon.repos.repository']      = 'Repository name';
+$lang['addon.servers.configuration'] = 'Configuration of download websites';
+$lang['addon.servers.configuration.clue'] = '
+    The site must contain the following subfolders
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/modules/</span>
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/</span>
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/</span>
+';
+$lang['addon.caches.configuration'] = 'Resource Caching';
+$lang['addon.caches.configuration.clue'] = 'Click the button below to update the lists of available extensions';
+$lang['addon.servers.add']     = 'Add a download website';
+$lang['addon.servers.website'] = 'Website name';
+$lang['addon.servers.url']     = 'Website URL';
 
 // Themes
 $lang['addon.themes.directory']       = 'in the <span class ="text-strong pinned question">templates</span> folder';
@@ -128,4 +161,36 @@ $lang['addon.themes.upload'] = 'Upload theme';
     // Drop
 $lang['addon.themes.drop']          = 'Delete all the theme\'s files';
 $lang['addon.themes.drop.multiple'] = 'Delete all themes\'s files';
+
+// ---- Remote addon sources (GitHub / Website) ----
+
+$lang['addon.refresh.cache'] = 'Refresh cache';
+$lang['addon.add.source']    = 'Add a repository';
+// GitHub
+$lang['addon.github.running.repo']   = 'Running repository';
+$lang['addon.github.choose.repo']    = 'Choose a repository';
+$lang['addon.github.custom.repo']    = 'Use a custom repository';
+$lang['addon.github.load.repo']      = 'Load this repository';
+$lang['addon.github.view.repo']      = 'View on GitHub';
+$lang['addon.github.no.addon.found'] = 'No compatible addon found in this repository.';
+$lang['addon.github.token.missing']  = 'This token is missing. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
+$lang['addon.github.bad.token']      = 'The GitHub token is invalid or the JSON file is missing. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
+
+// Website
+$lang['addon.website.running.server'] = 'Running server';
+$lang['addon.website.choose.server']  = 'Choose a download server';
+$lang['addon.website.custom.server']  = 'Use a custom server';
+$lang['addon.website.load']           = 'Load this server';
+$lang['addon.website.no.addon.found'] = 'No compatible addon found on this server.';
+
+// Common
+$lang['addon.loading']               = 'Loading&hellip;';
+$lang['addon.installing']            = 'Installing&hellip;';
+$lang['addon.already.installed']     = 'Already installed';
+$lang['addon.source.error']          = 'Unable to reach the source. Check the address or your connection.';
+$lang['addon.sub.directory']         = 'Subdirectory';
+$lang['addon.sub.directory.optional']   = 'Optional';
+$lang['addon.themes.already.installed'] = 'This theme is already installed.';
+$lang['addon.langs.already.installed']  = 'This language is already installed.';
+$lang['addon.warning.download.error']   = 'Download failed. Check the URL or your network connection.';
 ?>

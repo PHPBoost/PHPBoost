@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 05 16
 */
 
@@ -41,10 +41,10 @@ class CSSCacheConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ACTIVATED => true,
 			self::OPTIMIZATION_LEVEL => CSSFileOptimizer::HIGH_OPTIMIZATION
-		);
+		];
 	}
 
 	/**
@@ -53,7 +53,7 @@ class CSSCacheConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'css-cache-config');
+		return ConfigManager::load(self::class, 'kernel', 'css-cache-config');
 	}
 
 	/**

@@ -10,10 +10,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 11 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AuthenticationMethod
@@ -52,9 +52,9 @@ abstract class AuthenticationMethod
 
 	protected function check_user_bannishment($user_id)
 	{
-		$infos = array();
+		$infos = [];
 		try {
-			$infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('warning_percentage', 'delay_banned'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			$infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['warning_percentage', 'delay_banned'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 		} catch (RowNotFoundException $e) {
 		}
 
@@ -101,7 +101,7 @@ abstract class AuthenticationMethod
 
 	protected function update_user_last_connection_date($user_id)
 	{
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['last_connection_date' => time()], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 	}
 }
 ?>

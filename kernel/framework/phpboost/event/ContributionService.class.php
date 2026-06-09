@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 09 02
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 21
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContributionService
@@ -36,10 +36,10 @@ class ContributionService
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.poster_id
 		WHERE id = :id AND contribution_type = :contribution_type
-		ORDER BY creation_date DESC", array(
+		ORDER BY creation_date DESC", [
 			'id' => $id_contrib,
 			'contribution_type' => self::CONTRIBUTION_TYPE
-		));
+		]);
 
 		$properties = $result->fetch();
 
@@ -67,7 +67,7 @@ class ContributionService
 	 */
 	public static function get_all_contributions($criteria = 'creation_date', $order = 'desc')
 	{
-		$array_result = array();
+		$array_result = [];
 
 		//On liste les contributions
 		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.display_name poster_login, poster_member.level poster_level, poster_member.user_groups poster_groups, fixer_member.display_name fixer_login, fixer_member.level fixer_level, fixer_member.user_groups fixer_groups, identifier, id_in_module, type, description
@@ -75,9 +75,9 @@ class ContributionService
 		LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
 		WHERE contribution_type = :contribution_type
-		ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . ", creation_date DESC", array(
+		ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . ", creation_date DESC", [
 			'contribution_type' => self::CONTRIBUTION_TYPE
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$contri = new Contribution();
@@ -103,12 +103,12 @@ class ContributionService
 	 */
 	public static function find_by_criteria($module, $id_in_module = null, $type = null, $identifier = null, $poster_id = null, $fixer_id = null)
 	{
-		$criterias = array();
+		$criterias = [];
 
 		//The module parameter must be specified and of string type, otherwise we can't continue
 		if (empty($module) || !is_string($module))
 		{
-			return array();
+			return [];
 		}
 
 		$criterias[] = "module = '" . TextHelper::strprotect($module) . "'";
@@ -138,7 +138,7 @@ class ContributionService
 			$criterias[] = "fixer_id = '" . intval($fixer_id) . "'";
 		}
 
-		$array_result = array();
+		$array_result = [];
 
 		$result = self::$db_querier->select("SELECT id, entitled, fixing_url, auth, current_status, module, creation_date, fixing_date, poster_id, fixer_id, poster_member.display_name poster_login, fixer_member.display_name fixer_login, identifier, id_in_module, type, description
 		FROM " . DB_TABLE_EVENTS  . " c
@@ -170,12 +170,12 @@ class ContributionService
 			$creation_date = $contribution->get_creation_date();
 			$fixing_date = $contribution->get_fixing_date();
 
-			self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $contribution->get_entitled(), 'description' => $contribution->get_description(), 'fixing_url' => $contribution->get_fixing_url(), 'module' => $contribution->get_module(), 'current_status' => $contribution->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'fixing_date' => $fixing_date->get_timestamp(), 'auth' => TextHelper::serialize($contribution->get_auth()), 'poster_id' => $contribution->get_poster_id(), 'fixer_id' => $contribution->get_fixer_id(), 'id_in_module' => $contribution->get_id_in_module(), 'identifier' => $contribution->get_identifier(), 'type' => $contribution->get_type()), 'WHERE id = :id', array('id' => $contribution->get_id()));
+			self::$db_querier->update(DB_TABLE_EVENTS, ['entitled' => $contribution->get_entitled(), 'description' => $contribution->get_description(), 'fixing_url' => $contribution->get_fixing_url(), 'module' => $contribution->get_module(), 'current_status' => $contribution->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'fixing_date' => $fixing_date->get_timestamp(), 'auth' => TextHelper::serialize($contribution->get_auth()), 'poster_id' => $contribution->get_poster_id(), 'fixer_id' => $contribution->get_fixer_id(), 'id_in_module' => $contribution->get_id_in_module(), 'identifier' => $contribution->get_identifier(), 'type' => $contribution->get_type()], 'WHERE id = :id', ['id' => $contribution->get_id()]);
 		}
 		else //We create it
 		{
 			$creation_date = $contribution->get_creation_date();
-			$result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $contribution->get_entitled(), 'description' => $contribution->get_description(), 'fixing_url' => $contribution->get_fixing_url(), 'module' => $contribution->get_module(), 'current_status' => $contribution->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'fixing_date' => 0, 'auth' => TextHelper::serialize($contribution->get_auth()), 'poster_id' => $contribution->get_poster_id(), 'fixer_id' => $contribution->get_fixer_id(), 'id_in_module' => $contribution->get_id_in_module(), 'identifier' => $contribution->get_identifier(), 'type' => $contribution->get_type(), 'contribution_type' => self::CONTRIBUTION_TYPE));
+			$result = self::$db_querier->insert(DB_TABLE_EVENTS, ['entitled' => $contribution->get_entitled(), 'description' => $contribution->get_description(), 'fixing_url' => $contribution->get_fixing_url(), 'module' => $contribution->get_module(), 'current_status' => $contribution->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'fixing_date' => 0, 'auth' => TextHelper::serialize($contribution->get_auth()), 'poster_id' => $contribution->get_poster_id(), 'fixer_id' => $contribution->get_fixer_id(), 'id_in_module' => $contribution->get_id_in_module(), 'identifier' => $contribution->get_identifier(), 'type' => $contribution->get_type(), 'contribution_type' => self::CONTRIBUTION_TYPE]);
 			$contribution->set_id($result->get_last_inserted_id());
 		}
 
@@ -196,7 +196,7 @@ class ContributionService
 		//If it exists in database
 		if ($contribution->get_id() > 0)
 		{
-			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE id = :id', array('id' => $contribution->get_id()));
+			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE id = :id', ['id' => $contribution->get_id()]);
 			//We reset the id
 			$contribution->set_id(0);
 
@@ -211,7 +211,7 @@ class ContributionService
 	 */
 	public static function delete_contribution_module($module_id)
 	{
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module = :module_id', array('module_id' => $module_id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module = :module_id', ['module_id' => $module_id]);
 	}
 
 	/**
@@ -236,18 +236,18 @@ class ContributionService
 	 */
 	public static function compute_number_contrib_for_each_profile()
 	{
-		$array_result = array('r2' => 0, 'r1' => 0, 'r0' => 0);
+		$array_result = ['r2' => 0, 'r1' => 0, 'r0' => 0];
 
 		$result = self::$db_querier->select("SELECT auth FROM " . DB_TABLE_EVENTS  . "
-		WHERE current_status = :current_status AND contribution_type = :contribution_type", array(
+		WHERE current_status = :current_status AND contribution_type = :contribution_type", [
 			'current_status' => Event::EVENT_STATUS_UNREAD,
 			'contribution_type' => self::CONTRIBUTION_TYPE
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			if (!($this_auth = TextHelper::unserialize($row['auth'])))
 			{
-				$this_auth = array();
+				$this_auth = [];
 			}
 
 			//We can count only for ranks. For groups and users we can't generalize because there can be intersection problems. Yet, we know the maximum number of contributions they can see, and we can be sure if they have at least 1.

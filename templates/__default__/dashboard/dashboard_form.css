@@ -91,7 +91,9 @@ select {
 
 .form-element.full-field,
 .form-element.half-field,
-.form-element.third-field { width: 100%; }
+.form-element.third-field,
+.form-element.two-third-field,
+.form-element.three-quarter-field { width: 100%; }
 
 @media (min-width: 769px) {
 	.fieldset-content .modal .modal-content.fieldset-inset { width: 80%; }
@@ -101,12 +103,16 @@ select {
 	.form-element.form-subtitle { padding: 1.618em 1.618em 0.618em 0; }
 
 	.form-element.half-field,
-	.form-element.third-field { width: calc(100% / 2); }
+	.form-element.third-field,
+	.form-element.two-third-field,
+	.form-element.three-quarter-field { width: calc(100% / 2); }
 }
 
 @media (min-width: 1025px) {
 	.form-element.half-field  { width: calc(100% / 2); }
 	.form-element.third-field { width: calc(100% / 3); }
+	.form-element.two-third-field { width: calc(100% / 3 * 2); }
+	.form-element.three-quarter-field { width: calc(100% / 4 * 3); }
 }
 
 @media (min-width: 1281px) {

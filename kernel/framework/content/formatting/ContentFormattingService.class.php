@@ -7,10 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 20
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentFormattingService
@@ -113,7 +113,7 @@ class ContentFormattingService
 
 	public function get_available_editors()
 	{
-		$available_editors = array();
+		$available_editors = [];
 		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
 		{
 			$available_editors[$id] = $provider->get_name();
@@ -136,9 +136,9 @@ class ContentFormattingService
 
 				if ($default_editor !== $id_module)
 				{
-					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor),
-						'WHERE editor=:old_editor', array('old_editor' => $id_module
-					));
+					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['editor' => $default_editor],
+						'WHERE editor=:old_editor', ['old_editor' => $id_module
+					]);
 				}
 				else
 					return LangLoader::get_message('warning.is.default.editor', 'warning-lang');
@@ -156,7 +156,7 @@ class ContentFormattingService
 	public function get_available_tags()
 	{
 		$lang = LangLoader::get_all_langs();
-		return array(
+		return [
 			'b'              => $lang['editor.bold'],
 			'i'              => $lang['editor.italic'],
 			'u'              => $lang['editor.underline'],
@@ -204,7 +204,7 @@ class ContentFormattingService
 			'html'           => $lang['editor.html'],
 			'charmap'        => $lang['editor.charmap'],
 			'insertdatetime' => $lang['editor.date.time'],
-		);
+		];
 	}
 }
 ?>

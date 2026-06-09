@@ -7,7 +7,7 @@
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Roman Borschel <roman@code-factory.org>
- * @version     PHPBoost 6.1 - last update: 2013 01 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 01
 */
 
@@ -23,10 +23,10 @@ abstract class Type
     const CODE_LOB = 3;
 
     /** Map of already instantiated type objects. One instance per type (flyweight). */
-    protected static $_typeObjects = array();
+    protected static $_typeObjects = [];
 
     /** The map of supported doctrine mapping types. */
-    private static $_typesMap = array(
+    private static $_typesMap = [
         'array' => 'ArrayType',
         'object' => 'ObjectType',
         'boolean' => 'BooleanType',
@@ -42,7 +42,7 @@ abstract class Type
         'decimal' => 'DecimalType',
         'double' => 'DoubleType',
         'float' => 'FloatType',
-    );
+    ];
 
     /* Prevent instantiation and force use of the factory method. */
     protected function __construct() {}

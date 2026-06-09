@@ -11,10 +11,10 @@
  * @author      Jonathan WAGE <jonwage@gmail.com>
  * @author      Roman BORSCHEL <roman@code-factory.org>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     PHPBoost 6.1 - last update: 2018 08 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 abstract class AbstractPlatform
@@ -71,7 +71,7 @@ abstract class AbstractPlatform
 	 */
 	public function getWildcards()
 	{
-		return array('%', '_');
+		return ['%', '_'];
 	}
 
 	/**
@@ -341,13 +341,13 @@ abstract class AbstractPlatform
 	 * These expressions will be matched against the first parameter.
 	 *
 	 * @param string $column        the value that should be matched against
-	 * @param string|array(string)  values that will be matched against $column
+	 * @param string|[string]  values that will be matched against $column
 	 * @return string logical expression
 	 */
 	public function getInExpression($column, $values)
 	{
 		if ( ! is_array($values)) {
-			$values = array($values);
+			$values = [$values];
 		}
 		$values = $this->getIdentifiers($values);
 
@@ -458,7 +458,7 @@ abstract class AbstractPlatform
 	 * @param array $options The table constraints.
 	 * @return array The sequence of SQL statements.
 	 */
-	public function getCreateTableSql($table, array $columns, array $options = array())
+	public function getCreateTableSql($table, array $columns, array $options = [])
 	{
 		$columnListSql = $this->getColumnDeclarationListSql($columns);
 
@@ -531,12 +531,12 @@ abstract class AbstractPlatform
 	 *                                 each field.
 	 *
 	 *                                 Example
-	 *                                    array(
-	 *                                        'fields' => array(
-	 *                                            'user_name' => array(),
-	 *                                            'last_login' => array()
-	 *                                        )
-	 *                                    )
+	 *                                    [
+	 *                                        'fields' => [
+	 *                                            'user_name' => [],
+	 *                                            'last_login' => []
+	 *                                        ]
+	 *                                    ]
 	 * @return string
 	 */
 	public function getCreateConstraintSql($table, $name, $definition)
@@ -549,7 +549,7 @@ abstract class AbstractPlatform
 			$query .= ' UNIQUE';
 		}
 
-		$fields = array();
+		$fields = [];
 		foreach (array_keys($definition['fields']) as $field) {
 			$fields[] = $field;
 		}
@@ -669,7 +669,7 @@ abstract class AbstractPlatform
 	 */
 	public function getColumnDeclarationListSql(array $fields)
 	{
-		$queryFields = array();
+		$queryFields = [];
 		foreach ($fields as $fieldName => $field) {
 			$query = $this->getColumnDeclarationSql($fieldName, $field);
 			$queryFields[] = $query;
@@ -819,7 +819,7 @@ abstract class AbstractPlatform
 	 */
 	public function getCheckDeclarationSql(array $definition)
 	{
-		$constraints = array();
+		$constraints = [];
 		foreach ($definition as $field => $def) {
 			if (is_string($def)) {
 				$constraints[] = 'CHECK (' . $def . ')';
@@ -877,7 +877,7 @@ abstract class AbstractPlatform
 	 */
 	public function getIndexFieldDeclarationListSql(array $fields)
 	{
-		$ret = array();
+		$ret = [];
 		foreach ($fields as $field => $definition) {
 			if (is_array($definition)) {
 				$ret[] = $field;
@@ -1036,10 +1036,10 @@ abstract class AbstractPlatform
 		}
 
 		if ( ! is_array($definition['local'])) {
-			$definition['local'] = array($definition['local']);
+			$definition['local'] = [$definition['local']];
 		}
 		if ( ! is_array($definition['foreign'])) {
-			$definition['foreign'] = array($definition['foreign']);
+			$definition['foreign'] = [$definition['foreign']];
 		}
 
 		$sql .= implode(', ', $definition['local'])

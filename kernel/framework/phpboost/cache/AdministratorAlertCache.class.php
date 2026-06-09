@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 08 10
 */
 
@@ -21,13 +21,13 @@ class AdministratorAlertCache implements CacheData
 	{
 		$querier = PersistenceContext::get_querier();
 
-		$parameters = array(
+		$parameters = [
 			'current_status' => AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD,
 			'contribution_type' => ADMINISTRATOR_ALERT_TYPE
-		);
+		];
 		$this->unread_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE current_status = :current_status AND contribution_type = :contribution_type', $parameters);
 
-		$parameters = array('contribution_type' => ADMINISTRATOR_ALERT_TYPE);
+		$parameters = ['contribution_type' => ADMINISTRATOR_ALERT_TYPE];
 		$this->all_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE contribution_type = :contribution_type', $parameters);
 
 	}

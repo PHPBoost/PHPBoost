@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 04 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2013 08 30
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class Notification extends Event
@@ -30,9 +30,14 @@ class Notification extends Event
 	private $module_id = '';
 
 	/**
+	 * @var Date The fixing date of the notification.
+	 */
+	private $fixing_date = '';
+
+	/**
 	 * @var array Authorization array containing the people who can read the contribution.
 	 */
-	private $auth = array();
+	private $auth = [];
 
 	/**
 	 * Builds a Contribution object.

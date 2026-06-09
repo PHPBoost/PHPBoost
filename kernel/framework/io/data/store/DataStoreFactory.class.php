@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2015 06 29
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 09
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class DataStoreFactory

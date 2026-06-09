@@ -1,0 +1,70 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+*/
+
+:root {
+    /* pbt-blue */
+    --blue-xlite :   #99c1f1;
+    --blue-lite :    #62a0ea;
+    --blue-tone :    #3584e4;
+    --blue-dark :    #1c71d8;
+    --blue-xdark :   #1a5fb4;
+
+    /* pbt-green */
+    --green-xlite :  #8ff0a4;
+    --green-lite :   #57e389;
+    --green-tone :   #33d17a;
+    --green-dark :   #2ec27e;
+    --green-xdark :  #26a269;
+
+    /* pbt-yellow */
+    --yellow-xlite : #f9f06b;
+    --yellow-lite :  #f8e45c;
+    --yellow-tone :  #f6d32d;
+    --yellow-dark :  #f5c211;
+    --yellow-xdark : #e5a50a;
+
+    /* pbt-orange */
+    --orange-xlite : #ffbe6f;
+    --orange-lite :  #ffa348;
+    --orange-tone :  #ff7800;
+    --orange-dark :  #e66100;
+    --orange-xdark : #c64600;
+
+    /* pbt-red */
+    --red-xlite :    #f66151;
+    --red-lite :     #ed333b;
+    --red-tone :     #e01b24;
+    --red-dark :     #c01c28;
+    --red-xdark :    #a51d2d;
+
+    /* pbt-purple */
+    --purple-xlite : #dc8add;
+    --purple-lite :  #c061cb;
+    --purple-tone :  #9141ac;
+    --purple-dark :  #813d9c;
+    --purple-xdark : #613583;
+
+    /* pbt-brown */
+    --brown-xlite :  #cdab8f;
+    --brown-lite :   #b5835a;
+    --brown-tone :   #986a44;
+    --brown-dark :   #865e3c;
+    --brown-xdark :  #63452c;
+
+    /* pbt-white */
+    --white-xlite :  #ffffff;
+    --white-lite :   #f6f5f4;
+    --white-tone :   #deddda;
+    --white-dark :   #c0bfbc;
+    --white-xdark :  #9a9996;
+
+    /* pbt-black */
+    --black-xlite :  #77767b;
+    --black-lite :   #5e5c64;
+    --black-tone :   #3d3846;
+    --black-dark :   #241f31;
+    --black-xdark :  #000000;
+}

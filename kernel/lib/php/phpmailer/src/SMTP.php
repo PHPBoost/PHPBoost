@@ -362,7 +362,7 @@ class SMTP
         //Connect to the SMTP server
         $this->edebug(
             "Connection: opening to $host:$port, timeout=$timeout, options=" .
-            (count($options) > 0 ? var_export($options, true) : 'array()'),
+            (count($options) > 0 ? var_export($options, true) : '[]'),
             self::DEBUG_CONNECTION
         );
 

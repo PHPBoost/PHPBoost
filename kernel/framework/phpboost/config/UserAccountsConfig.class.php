@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 01 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserAccountsConfig extends AbstractConfigData
@@ -478,7 +478,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$server_configuration = new ServerConfiguration();
 
-		return array(
+		return [
 			self::DISPLAY_TYPE                               => self::TABLE_VIEW,
 			self::ITEMS_PER_PAGE                             => 25,
 			self::ITEMS_PER_ROW                              => 2,
@@ -489,18 +489,18 @@ class UserAccountsConfig extends AbstractConfigData
 			self::REGISTRATION_AGREEMENT_PROPERTY            => LangLoader::get_message('user.registration.agreement', 'user-lang'),
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY      => 20,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY              => FormFieldCheckbox::CHECKED,
-			self::ENABLE_AVATAR_AUTO_RESIZING                => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+			self::ENABLE_AVATAR_AUTO_RESIZING                => $server_configuration->has_gd_extension() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			self::DEFAULT_AVATAR_URL_PROPERTY                => FormFieldThumbnail::DEFAULT_VALUE,
 			self::MAX_AVATAR_WIDTH_PROPERTY                  => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY                 => 120,
 			self::MAX_AVATAR_WEIGHT_PROPERTY                 => 20,
-			self::AUTH_READ_MEMBERS                          => array('r0' => 1, 'r1' => 1),
+			self::AUTH_READ_MEMBERS                          => ['r0' => 1, 'r1' => 1],
 			self::DEFAULT_LANG                               => 'english',
 			self::DEFAULT_THEME                              => 'base',
 			self::MAX_PRIVATE_MESSAGES_NUMBER                => 50,
 			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME         => true,
 			self::ALLOW_USERS_TO_CHANGE_EMAIL                => true
-		);
+		];
 	}
 
 	/**
@@ -509,7 +509,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'user-accounts');
+		return ConfigManager::load(self::class, 'kernel', 'user-accounts');
 	}
 
 	/**

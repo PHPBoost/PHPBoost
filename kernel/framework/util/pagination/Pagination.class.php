@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 22
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Pagination
@@ -74,10 +74,10 @@ class Pagination
 	{
 		$this->view = new FileTemplate('framework/util/pagination.tpl');
 		$this->view->add_lang(LangLoader::get_all_langs());
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_LIGHT_PAGINATION' => $type == self::LIGHT_PAGINATION,
 			'C_FULL_PAGINATION'  => $type == self::FULL_PAGINATION,
-		));
+		]);
 	}
 
 	private function generate_first_page_pagination()
@@ -112,7 +112,7 @@ class Pagination
 
 	private function add_pagination_page($name, $page_number, $is_current_page = false)
 	{
-		$this->view->assign_block_vars('page', array(
+		$this->view->assign_block_vars('page', [
 			'C_PREVIOUS_PAGE' => $name == self::PREV_LINK,
 			'C_NEXT_PAGE'     => $name == self::NEXT_LINK,
 			'C_CURRENT_PAGE'  => $is_current_page,
@@ -122,7 +122,7 @@ class Pagination
 			'U_PAGE' => $this->get_url($page_number),
 
 			'L_PAGE'    => $is_current_page ? LangLoader::get_message('common.pagination.current', 'common-lang') : LangLoader::get_message('common.page', 'common-lang') . " " . $page_number,
-		));
+		]);
 	}
 
 	private function get_url($page_number)

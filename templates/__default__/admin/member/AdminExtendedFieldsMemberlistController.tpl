@@ -1,26 +1,30 @@
+<!-- === AdminExtendedFieldsMemberlistController.tpl === -->
 <script>
 	var ExtendedFields = function(id){
 		this.id = id;
+        this._sortable = null;
 	};
 
 	ExtendedFields.prototype = {
 		init_sortable : function() {
-			jQuery("ul#lists").sortable({
-				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-				onDrop: function ($item, container, _super, event) {
-					ExtendedFields.change_reposition_pictures();
-					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
-					$("body").removeClass(container.group.options.bodyClass);
-				}
-			});
+				var self = this;
+				this._sortable = Sortable.create(document.getElementById('lists'), {
+					handle: '.sortable-selector',
+					animation: 150,
+					onEnd: function() {
+						self.change_reposition_pictures();
+					}
+				});
 		},
 		serialize_sortable : function() {
 			jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 		},
 		get_sortable_sequence : function() {
-			var sequence = jQuery("ul#lists").sortable("serialize").get();
-			return sequence[0];
+				var sequence = [];
+				jQuery('ul#lists').children('li').each(function() {
+					sequence.push({ id: jQuery(this).data('id') });
+				});
+				return sequence;
 		},
 		change_reposition_pictures : function() {
 			sequence = this.get_sortable_sequence();

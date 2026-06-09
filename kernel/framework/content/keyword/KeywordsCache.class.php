@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.1 - 2018 11 09
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class KeywordsCache implements CacheData
@@ -16,14 +16,14 @@ class KeywordsCache implements CacheData
 
 	public function synchronize()
 	{
-		$this->keywords = array();
+		$this->keywords = [];
 		$result = PersistenceContext::get_querier()->select('SELECT relation.id_in_module, relation.id_keyword, keyword.*
 			FROM ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation
 			LEFT JOIN ' . DB_TABLE_KEYWORDS . ' keyword ON keyword.id = relation.id_keyword
 			WHERE relation.module_id = :module_id
-			ORDER BY relation.id_keyword', array(
+			ORDER BY relation.id_keyword', [
 				'module_id' => self::get_module_identifier()
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$keyword = new Keyword();
@@ -44,7 +44,7 @@ class KeywordsCache implements CacheData
 		{
 			return $this->keywords[$id_in_module];
 		}
-		return array();
+		return [];
 	}
 
 	public function has_keywords($id)
@@ -58,7 +58,7 @@ class KeywordsCache implements CacheData
 	 */
 	public static function load($module_id = '')
 	{
-		return CacheManager::load(__CLASS__, ($module_id ? $module_id : self::get_module_identifier()), 'keywords');
+		return CacheManager::load(self::class, ($module_id ? $module_id : self::get_module_identifier()), 'keywords');
 	}
 
 	/**

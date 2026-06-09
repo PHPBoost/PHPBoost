@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 10 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 07 08
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class ServerEnvironmentConfig extends AbstractConfigData
@@ -171,7 +171,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::URL_REWRITING_ENABLED     => false,
 			self::REDIRECTION_WWW_ENABLED   => false,
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
@@ -182,7 +182,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::NGINX_MANUAL_CONTENT      => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
-		);
+		];
 	}
 
 	/**
@@ -191,7 +191,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'server-environment-config');
+		return ConfigManager::load(self::class, 'kernel', 'server-environment-config');
 	}
 
 	/**

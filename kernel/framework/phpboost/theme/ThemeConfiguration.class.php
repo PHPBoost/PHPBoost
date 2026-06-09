@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 03 15
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 04 10
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ThemeConfiguration
@@ -174,7 +174,7 @@ class ThemeConfiguration
 		$this->columns_disabled  = isset($config['columns_disabled']) ? $this->parse_columns_disabled_array($config['columns_disabled']) : new ColumnsDisabled();
 		$this->variable_width    = isset($config['variable_width']) ? (bool)$config['variable_width'] : '';
 		$this->width             = isset($config['width']) ? $config['width'] : '';
-		$this->pictures          = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : array();
+		$this->pictures          = isset($config['pictures']) ? $this->parse_pictures_array($config['pictures']) : [];
 		$this->parent_theme      = isset($config['parent_theme']) && !empty($config['parent_theme']) ? $config['parent_theme'] : '__default__';
 		$this->repository        = isset($config['repository']) && !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
 
@@ -213,7 +213,7 @@ class ThemeConfiguration
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'addon_type'        => $this->addon_type,
 			'name'              => $this->name,
 			'description'       => $this->description,
@@ -233,7 +233,7 @@ class ThemeConfiguration
 			'width'             => $this->width,
 			'pictures'          => $this->pictures,
 			'parent_theme'      => $this->parent_theme
-		);
+		];
 	}
 }
 ?>

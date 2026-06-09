@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2021 03 22
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLFragmentBuilder
@@ -15,7 +15,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 	private static $param_id_index = 0;
 
 	private $db_field;
-	private $options = array();
+	private $options = [];
 
 	public function __construct($name, $label = '', $db_field = 'id_category')
 	{
@@ -28,7 +28,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 
 		$this->options = FormFieldCategoriesSelect::generate_options('', $search_category_children_options, true);
 
-		$select = CategoriesService::get_categories_manager()->get_select_categories_form_field($db_field, $label, '', $search_category_children_options, array(), $this->options);
+		$select = CategoriesService::get_categories_manager()->get_select_categories_form_field($db_field, $label, '', $search_category_children_options, [], $this->options);
 
 		parent::__construct($name, $select);
 	}
@@ -40,7 +40,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->get_value()->get_raw_value() != 'all' ? $this->db_field . ' = :' . $parameter_name : '';
-		$parameters = array($parameter_name => $this->get_value()->get_raw_value());
+		$parameters = [$parameter_name => $this->get_value()->get_raw_value()];
 		return new SQLFragment($query, $parameters);
 	}
 
@@ -74,7 +74,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 
     protected function get_sql_value_parameter_prefix()
     {
-        return __CLASS__ . '_' . self::$param_id_index++;
+        return self::class . '_' . self::$param_id_index++;
     }
 }
 

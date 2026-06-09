@@ -5,26 +5,26 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 11 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 08 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ExtendedFieldsCache implements CacheData
 {
-	private $extended_fields = array();
+	private $extended_fields = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->extended_fields = array();
+		$this->extended_fields = [];
 		$querier = PersistenceContext::get_querier();
 
-		$result = $querier->select_rows(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('*'), 'ORDER BY position');
+		$result = $querier->select_rows(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['*'], 'ORDER BY position');
 		while ($row = $result->fetch())
 		{
 			$auth = TextHelper::unserialize($row['auth']);
@@ -34,21 +34,21 @@ class ExtendedFieldsCache implements CacheData
 			}, $row['possible_values']);
 			$possible_values = TextHelper::unserialize($fixed_possible_values);
 
-			$this->extended_fields[$row['id']] = array(
+			$this->extended_fields[$row['id']] = [
 				'id' => $row['id'],
 				'position' => !empty($row['position']) ? $row['position'] : '',
 				'name' => !empty($row['name']) ? $row['name'] : '',
 				'field_name' => !empty($row['field_name']) ? $row['field_name'] : '',
 				'description' => !empty($row['description']) ? $row['description'] : '',
 				'field_type' => !empty($row['field_type']) ? $row['field_type'] : '',
-				'possible_values' => !empty($possible_values) ? $possible_values : array(),
+				'possible_values' => !empty($possible_values) ? $possible_values : [],
 				'default_value' => !empty($row['default_value']) ? $row['default_value'] : '',
 				'required' => !empty($row['required']) ? (bool)$row['required'] : false,
 				'display' => !empty($row['display']) ? (bool)$row['display'] : false,
 				'freeze' => !empty($row['freeze']) ? (bool)$row['freeze'] : false,
 				'regex' => !empty($row['regex']) ? $row['regex'] : '',
-				'auth' => !empty($auth) ? $auth : array()
-			);
+				'auth' => !empty($auth) ? $auth : []
+			];
 		}
 		$result->dispose();
 	}
@@ -89,7 +89,7 @@ class ExtendedFieldsCache implements CacheData
 
 	public function get_websites_or_emails_extended_field_field_types()
 	{
-		$list = array();
+		$list = [];
 
 		foreach ($this->extended_fields as $id => $field_options)
 		{

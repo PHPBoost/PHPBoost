@@ -1,0 +1,18 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @since       PHPBoost 3.0 - 2010 01 17
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
+class BbcodeSetup extends DefaultModuleSetup
+{
+	public function uninstall()
+	{
+		return AppContext::get_content_formatting_service()->uninstall_editor('bbcode');
+	}
+}
+?>

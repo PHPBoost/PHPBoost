@@ -8,10 +8,10 @@
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Roman BORSCHEL <roman@code-factory.org>
- * @version     PHPBoost 6.1 - last update: 2018 08 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 /**
@@ -127,7 +127,7 @@ class MySqlPlatform extends AbstractPlatform
      * concat() accepts an arbitrary number of parameters. Each parameter
      * must contain an expression or an array with expressions.
      *
-     * @param string|array(string) strings that will be concatinated.
+     * @param string|[string] strings that will be concatinated.
      * @override
      */
     public function getConcatExpression()
@@ -372,34 +372,34 @@ class MySqlPlatform extends AbstractPlatform
      *                       The indexes of the array entries are the names of the fields of the table an
      *                       the array entry values are associative arrays like those that are meant to be
      *                       passed with the field definitions to get[Type]Declaration() functions.
-     *                          array(
-     *                              'id' => array(
+     *                          [
+     *                              'id' => [
      *                                  'type' => 'integer',
      *                                  'unsigned' => 1
      *                                  'notnull' => 1
      *                                  'default' => 0
-     *                              ),
-     *                              'name' => array(
+     *                              ],
+     *                              'name' => [
      *                                  'type' => 'text',
      *                                  'length' => 12
-     *                              ),
-     *                              'password' => array(
+     *                              ],
+     *                              'password' => [
      *                                  'type' => 'text',
      *                                  'length' => 12
-     *                              )
-     *                          );
+     *                              ]
+     *                          ];
      * @param array $options  An associative array of table options:
-     *                          array(
+     *                          [
      *                              'comment' => 'Foo',
      *                              'charset' => 'utf8',
      *                              'collate' => 'utf8_unicode_ci',
      *                              'type'    => 'innodb',
-     *                          );
+     *                          ];
      *
      * @return void
      * @override
      */
-    public function getCreateTableSql($name, array $fields, array $options = array())
+    public function getCreateTableSql($name, array $fields, array $options = [])
     {
         if ( ! $name) {
             throw DoctrineException::missingTableName();
@@ -434,7 +434,7 @@ class MySqlPlatform extends AbstractPlatform
         }
         $query.= 'TABLE ' . $name . ' (' . $queryFields . ')';
 
-        $optionStrings = array();
+        $optionStrings = [];
 
         if (isset($options['comment'])) {
             $optionStrings['comment'] = 'COMMENT = ' . $this->quote($options['comment'], 'text');
@@ -575,38 +575,38 @@ class MySqlPlatform extends AbstractPlatform
      *                                 as defined by the Metabase parser.
      *
      *                            Example
-     *                                array(
+     *                                [
      *                                    'name' => 'userlist',
-     *                                    'add' => array(
-     *                                        'quota' => array(
+     *                                    'add' => [
+     *                                        'quota' => [
      *                                            'type' => 'integer',
      *                                            'unsigned' => 1
-     *                                        )
-     *                                    ),
-     *                                    'remove' => array(
-     *                                        'file_limit' => array(),
-     *                                        'time_limit' => array()
-     *                                    ),
-     *                                    'change' => array(
-     *                                        'name' => array(
+     *                                        ]
+     *                                    ],
+     *                                    'remove' => [
+     *                                        'file_limit' => [],
+     *                                        'time_limit' => []
+     *                                    ],
+     *                                    'change' => [
+     *                                        'name' => [
      *                                            'length' => '20',
-     *                                            'definition' => array(
+     *                                            'definition' => [
      *                                                'type' => 'text',
      *                                                'length' => 20,
-     *                                            ),
-     *                                        )
-     *                                    ),
-     *                                    'rename' => array(
-     *                                        'sex' => array(
+     *                                            ],
+     *                                        ]
+     *                                    ],
+     *                                    'rename' => [
+     *                                        'sex' => [
      *                                            'name' => 'gender',
-     *                                            'definition' => array(
+     *                                            'definition' => [
      *                                                'type' => 'text',
      *                                                'length' => 1,
      *                                                'default' => 'M',
-     *                                            ),
-     *                                        )
-     *                                    )
-     *                                )
+     *                                            ],
+     *                                        ]
+     *                                    ]
+     *                                ]
      *
      * @param boolean $check     indicates whether the function should just check if the DBMS driver
      *                           can perform the requested table alterations if the value is true or
@@ -660,7 +660,7 @@ class MySqlPlatform extends AbstractPlatform
             }
         }
 
-        $rename = array();
+        $rename = [];
         if ( ! empty($changes['rename']) && is_array($changes['rename'])) {
             foreach ($changes['rename'] as $fieldName => $field) {
                 $rename[$field['name']] = $fieldName;
@@ -793,7 +793,7 @@ class MySqlPlatform extends AbstractPlatform
             throw DoctrineException::indexFieldsArrayRequired();
         }
         if ( ! is_array($definition['fields'])) {
-            $definition['fields'] = array($definition['fields']);
+            $definition['fields'] = [$definition['fields']];
         }
 
         $query = $type . ' `' . $name . '`';
@@ -812,7 +812,7 @@ class MySqlPlatform extends AbstractPlatform
      */
     public function getIndexFieldDeclarationListSql(array $fields)
     {
-        $declFields = array();
+        $declFields = [];
 
         foreach ($fields as $fieldName => $field) {
             $fieldString = '`' . $fieldName . '`';

@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 03 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class UserUsersListController extends AbstractController
@@ -15,7 +15,7 @@ class UserUsersListController extends AbstractController
 	private $lang;
 	private $view;
 	private $elements_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -38,13 +38,13 @@ class UserUsersListController extends AbstractController
 
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 
 		$fieldset = new FormFieldsetHTML('search_member', $this->lang['user.search.member']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('member', $this->lang['user.display.name'], '',
-			array('description' => $this->lang['user.search.joker'])
+			['description' => $this->lang['user.search.joker']]
 		));
 
 		$this->view->put('FORM', $form->display());
@@ -54,7 +54,7 @@ class UserUsersListController extends AbstractController
 	{
 		$number_admins = UserService::count_admin_members();
 
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', array(
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, 'table', [
 			new HTMLTableColumn($this->lang['user.display.name'], 'display_name'),
 			new HTMLTableColumn($this->lang['user.registration.date'], 'registration_date'),
 			new HTMLTableColumn($this->lang['user.last.connection'], 'last_connection_date'),
@@ -62,11 +62,11 @@ class UserUsersListController extends AbstractController
 			new HTMLTableColumn($this->lang['user.email']),
 			new HTMLTableColumn($this->lang['user.contact']),
 			new HTMLTableColumn($this->lang['user.publications']),
-			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
-		), new HTMLTableSortingRule('last_connection_date', HTMLTableSortingRule::DESC));
+			new HTMLTableColumn($this->lang['common.moderation'], '', ['sr-only' => true])
+		], new HTMLTableSortingRule('last_connection_date', HTMLTableSortingRule::DESC));
 
 		$table_model->set_filters_menu_title($this->lang['user.filter.members']);
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['user.rank'], array(2 => $this->lang['user.administrators'], 1 => $this->lang['user.moderators'], 0 => $this->lang['user.members'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('level', 'filter2', $this->lang['user.rank'], [2 => $this->lang['user.administrators'], 1 => $this->lang['user.moderators'], 0 => $this->lang['user.members']]));
 		$table_model->add_filter(new HTMLTableContainsTextSQLFilter('email', 'filter3', $this->lang['user.email']));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('registration_date', 'filter4', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
@@ -78,8 +78,8 @@ class UserUsersListController extends AbstractController
 
 		$table_model->set_layout_title($this->lang['user.members.management']);
 
-		$results = array();
-		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id', array('m.*', 'ia.approved', 'ia.login'));
+		$results = [];
+		$result = $table_model->get_sql_results('m LEFT JOIN ' . DB_TABLE_INTERNAL_AUTHENTICATION .' ia ON ia.user_id = m.user_id', ['m.*', 'ia.approved', 'ia.login']);
 		foreach ($result as $row)
 		{
 			$user = new User();
@@ -96,8 +96,8 @@ class UserUsersListController extends AbstractController
 			else
             {
                 $table->hide_multiple_delete();
-				$edit_link = new EditLinkHTMLElement('', '', array('aria-label' => '', 'disabled' => true), 'd-none');
-				$delete_link = new DeleteLinkHTMLElement('', '', array('aria-label' => '', 'disabled' => true), 'd-none');
+				$edit_link = new EditLinkHTMLElement('', '', ['aria-label' => '', 'disabled' => true], 'd-none');
+				$delete_link = new DeleteLinkHTMLElement('', '', ['aria-label' => '', 'disabled' => true], 'd-none');
             }
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
@@ -109,16 +109,16 @@ class UserUsersListController extends AbstractController
 				$contributions_number += $module->get_publications_number($row['user_id']);
 			}
 
-			$results[] = new HTMLTableRow(array(
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level()))),
+			$results[] = new HTMLTableRow([
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level()))),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) && (empty($row['login']) || $row['approved']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never']),
 				new HTMLTableRowCell(UserService::get_level_lang($user->get_level())),
-				new HTMLTableRowCell((int)$user->get_show_email() ? new LinkHTMLElement('mailto:' . $user->get_email(), '<i class="fa fa-fw iboost fa-iboost-email"></i>', array('aria-label' => $this->lang['user.email']), '') : ''),
-				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), '<i class="fa fa-fw fa-people-arrows"></i>', array('aria-label' => $this->lang['user.private.message']), '')),
+				new HTMLTableRowCell((int)$user->get_show_email() ? new LinkHTMLElement('mailto:' . $user->get_email(), '<i class="fa fa-fw iboost fa-iboost-email"></i>', ['aria-label' => $this->lang['user.email']], '') : ''),
+				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::personnal_message($row['user_id']), '<i class="fa fa-fw fa-people-arrows"></i>', ['aria-label' => $this->lang['user.private.message']], '')),
 				new HTMLTableRowCell(new LinkHTMLElement(UserUrlBuilder::publications($row['user_id']), $contributions_number)),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
-			));
+			]);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 
@@ -148,7 +148,7 @@ class UserUsersListController extends AbstractController
 								UserService::delete_by_id($user->get_id());
 							}
 							catch (RowNotFoundException $ex) {}
-							HooksService::execute_hook_action('delete_user', 'user', array_merge($user->get_properties(), array('title' => $user->get_display_name())));
+							HooksService::execute_hook_action('delete_user', 'user', array_merge($user->get_properties(), ['title' => $user->get_display_name()]));
 						}
 						if ($user->is_admin() && UserService::count_admin_members() == 1)
 							$last_admin_delete = true;

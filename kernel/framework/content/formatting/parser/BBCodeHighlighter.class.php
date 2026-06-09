@@ -1,21 +1,21 @@
 <?php
 /**
- * This class is a highlighter for the PHPBoost BBCode language.
+ * This class is a highlighter for the PHPBoost Bbcode language.
  * It supplies the highlighted code written in XHTML.
  * @package     Content
  * @subpackage  Formatting\parser
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 06 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 08 29
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
-class BBCodeHighlighter extends AbstractParser
+class BbcodeHighlighter extends AbstractParser
 {
 	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
 	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;
@@ -37,7 +37,7 @@ class BBCodeHighlighter extends AbstractParser
 	private static $bbcode_list_item_color = '#00AF07';
 
 	/**
-	 * Builds a BBCodeHighlighter objet
+	 * Builds a BbcodeHighlighter objet
 	 */
 	public function __construct()
 	{
@@ -61,7 +61,7 @@ class BBCodeHighlighter extends AbstractParser
 		$this->content = str_replace('[*]', '<span style="color:' . self::$bbcode_list_item_color . ';">[*]</span>', $this->content);
 
 		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa', 'emoji', 'member', 'teaser', 'moderator', 'container');
+		$simple_tags = ['b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa', 'emoji', 'member', 'teaser', 'moderator', 'container'];
 
 		foreach ($simple_tags as $tag)
 		{
@@ -72,7 +72,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'abbr', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'youtube', 'fa');
+		$tags_with_simple_property = ['img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'abbr', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'youtube', 'fa'];
 
 		foreach ($tags_with_simple_property as $tag)
 		{
@@ -83,13 +83,13 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take several parameters. The syntax is the same as XML parameters
-		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia', 'container');
+		$tags_with_many_parameters = ['table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia', 'container'];
 
 		foreach ($tags_with_many_parameters as $tag)
 		{
 			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isuU', $this->content))
 			{
-				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isuU', array($this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
+				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isuU', [$this, 'highlight_bbcode_tag_with_many_parameters'], $this->content);
 			}
 		}
 
@@ -103,7 +103,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Te be able to handle the nested tags, we replaced [ by /[/, we do the reverse replacement now
-		$this->content = str_replace(array('/[/', '/]/'), array('[', ']'), $this->content);
+		$this->content = str_replace(['/[/', '/]/'], ['[', ']'], $this->content);
 	}
 
 	/**

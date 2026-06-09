@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 09 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class UserHomeProfileController extends AbstractController
@@ -47,7 +47,7 @@ class UserHomeProfileController extends AbstractController
 
 		$registration_since = !empty($this->user->get_registration_date()) ? Date::to_format($this->user->get_registration_date(), Date::FORMAT_SINCE) : $this->lang['common.unknown'];
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_USER_AUTH_FILES'                     => $is_authorized_files_panel,
 			'C_USER_INDEX'                          => true,
 			'C_UNREAD_CONTRIBUTION'                 => $contribution_number != 0,
@@ -82,15 +82,15 @@ class UserHomeProfileController extends AbstractController
 			'USER_LEVEL_CLASS'                      => UserService::get_level_class($this->user->get_level()),
 
 			'USER_SUBSCRIBE_DATE'					=> $this->lang['user.registered'] . " " . $registration_since
-		));
+		]);
 
 		$modules_with_publications = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
-		foreach (array_merge(array('user' => true), ModulesManager::get_activated_modules_map_sorted_by_localized_name()) as $id => $installed_module)
+		foreach (array_merge(['user' => true], ModulesManager::get_activated_modules_map_sorted_by_localized_name()) as $id => $installed_module)
 		{
 			if (in_array($id, array_keys($modules_with_publications)))
 			{
 				$module = $modules_with_publications[$id];
-				$module_icon = new File(PATH_TO_ROOT . '/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '.png');
+				$module_icon = new File(PATH_TO_ROOT . '/modules/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '.png');
 				$is_picture = false;
 				if($module->get_publications_module_icon() != '')
 				{
@@ -108,13 +108,13 @@ class UserHomeProfileController extends AbstractController
 				else
 					$thumbnail = 'fa fa-fw fa-cube';
 
-				$this->view->assign_block_vars('user_publications', array(
+				$this->view->assign_block_vars('user_publications', [
 					'C_ICON_IS_PICTURE'   => $is_picture,
 					'MODULE_NAME'         => $module->get_publications_module_name(),
 					'MODULE_THUMBNAIL'    => $thumbnail,
 					'U_MODULE_VIEW'       => $module->get_publications_module_view($this->user->get_id()),
 					'PUBLICATIONS_NUMBER' => (int)$module->get_publications_number($this->user->get_id())
-				));
+				]);
 			}
 		}
 	}

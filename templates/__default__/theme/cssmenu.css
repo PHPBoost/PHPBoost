@@ -88,11 +88,10 @@
 
 .cssmenu ul li.has-sub > .cssmenu-title::after,
 .cssmenu-right ul li.has-sub > .cssmenu-title:before {
+	font: var(--fa-font-solid);
+	content: '';
 	position: absolute;
 	display: inline-block;
-	content: '';
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-size: 1rem;
 	top: 50%;
 	transform: translateY(-50%);
@@ -228,12 +227,11 @@
 }
 
 .small-screen .menu-button::after {
+	font: var(--fa-font-solid);
+	content: '\f0c9';
 	position: absolute;
 	padding: 0.618em;
 	display: inline-block;
-	content: '\f0c9';
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-size: 1.482rem;
 	right: 0;
 	top: 0;
@@ -255,11 +253,10 @@
 }
 
 .small-screen .submenu-button::after {
+	font: var(--fa-font-solid);
+	content: '\f0d7';
 	position: absolute;
 	display: block;
-	content: '\f0d7';
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-size: 1.482rem;
 	right: 0;
 	top: 0;
@@ -288,12 +285,11 @@
 }
 
 .cssmenu-actionslinks .menu-button::after {
+	font: var(--fa-font-solid);
+	content: "\f013";
 	position: absolute;
 	display: block;
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-size: 1.482rem;
-	content: "\f013";
 	top: 0;
 	right: 0;
 	padding: 0.228em 0.618em;

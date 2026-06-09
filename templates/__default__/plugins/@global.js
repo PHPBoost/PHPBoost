@@ -11,7 +11,7 @@
 	}
 
 	/**
-     * Adds an icon and functionality to hide/show BBCode blocks once the DOM is fully loaded.
+     * Adds an icon and functionality to hide/show Bbcode blocks once the DOM is fully loaded.
      * @param {function} callback - The function to execute once the DOM is fully loaded.
      */
 	var add_icon_bbcodeblockhide = (callback) => {
@@ -177,7 +177,7 @@
             setTimeout(function() {
                 document.body.removeChild(messageDiv);
             }, 500);
-        }, 3000);
+        }, 5000);
     }
 
 	/**
@@ -262,7 +262,10 @@
         });
 
         document.addEventListener('click', function (event) {
-            if ((!event.target.matches(params.osmCloseExcept) || event.target.matches(params.osmCloseButton))) {
+            const inExcept = params.osmCloseExcept && event.target.matches(params.osmCloseExcept);
+            const onCloseButton = params.osmCloseButton && event.target.matches(params.osmCloseButton);
+
+            if (!inExcept || onCloseButton) {
                 document.querySelectorAll(params.osmTarget).forEach(function (el) {
                     el.classList.remove(params.osmClass);
                 });
@@ -287,8 +290,10 @@
 
 		for (i = 1; i <= elements_number; i++)
 		{
-			if (jQuery('#multiple-checkbox-' + i)[0] && i != except_element)
-				jQuery('#multiple-checkbox-' + i)[0].checked = status;
+            var checkbox = jQuery('#multiple-checkbox-' + i)[0];
+            if (checkbox && i != except_element && !checkbox.disabled) {
+                checkbox.checked = status;
+            }
 		}
 
 		try {
@@ -411,8 +416,8 @@
     /**
      * @author Kevin van Zonneveld
      * @link https://kvz.io/
-     * @contributor Steve Clay
-     * @contributor Legaev Andrey
+     * @author      Steve Clay
+     * @author      Legaev Andrey
      * @param {string} function_name 
      * @returns 
      */
@@ -480,7 +485,7 @@
 		});
 	});
 
-    // Cookies, Cookiebar and BBCode management
+    // Cookies, Cookiebar and Bbcode management
 	// Send cookie to client
 	function sendCookie(name, value, delay)
 	{

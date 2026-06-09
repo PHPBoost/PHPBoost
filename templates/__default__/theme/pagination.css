@@ -1,4 +1,5 @@
 /*
+ * pagination.css
  * Copy this file into your theme to customize it.
  * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
  *
@@ -34,7 +35,8 @@
 
 .light-pagination .pagination-item a { border-radius: 50em; }
 
-.pagination-item a:hover {
+.pagination-item:hover {
+    transform: scale(1.1);
 	transition: all 0.1s linear;
 	text-decoration: none;
 }

@@ -3,10 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserExtensionPointProvider extends ExtensionPointProvider
@@ -26,7 +27,7 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 
 	public function commands()
 	{
-		return new CLICommandsList(array('user' => 'CLIUserManagementCommand'));
+		return new CLICommandsList(['user' => 'CLIUserManagementCommand']);
 	}
 
 	public function user()
@@ -41,7 +42,10 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(
+		return new UrlMappings([
+			new DispatcherUrlMapping('/user/index.php', 'pm/?$'),
+			new DispatcherUrlMapping('/user/index.php', 'pm-([0-9]+)/?$'),
+			new DispatcherUrlMapping('/user/index.php', 'pm-[0-9]+-([0-9]+)/?$'),
 			new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$'),
 			new DispatcherUrlMapping('/user/index.php', 'login/?$', 'root', 'login/'),
 			new DispatcherUrlMapping('/user/index.php', 'aboutcookie/?$', 'root', 'aboutcookie/'),
@@ -51,14 +55,14 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 			new DispatcherUrlMapping('/user/index.php', 'password/change/?([a-z0-9]+)?/?$', 'root', 'password/change/$1'),
 			new DispatcherUrlMapping('/user/index.php', 'error/403/?$', 'root', 'error/403/'),
 			new DispatcherUrlMapping('/user/index.php', 'error/404/?$', 'root', 'error/404/')
-		));
+		]);
 	}
 
 	public function comments()
 	{
-		return new CommentsTopics(array(
+		return new CommentsTopics([
 			new UserEventsCommentsTopic()
-		));
+		]);
 	}
 }
 ?>

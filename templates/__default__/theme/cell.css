@@ -22,7 +22,7 @@
     select,
     textarea,
     .grouped-inputs,
-    .formatter-title { margin: 0 !important; }
+    .formatter-title { margin: 0; }
 
     &.new-content .cell-header { border-left-width: 3px; }
 }
@@ -127,26 +127,26 @@
 
     li {
         list-style-type: none;
-        padding: 0.228em 0.809em;
+        padding: 0.228em 0.456em;
+
+        &.li-stretch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &.li-stretch-large {
+                flex-direction: column;
+                @media (min-width: 769px) { flex-direction: row; }
+            }
+        }
     }
+
+    li:first-child { padding: 0.456em 0.456em 0.228em; }
+    li:last-child  { padding: 0.228em 0.456em 0.456em; }
+    li:only-child  { padding: 0.456em 0.456em 0.456em; }
+
 }
 
-.cell-list ul 
-
-.cell-list ul li:first-child { padding: 0.456em 0.809em 0.228em; }
-.cell-list ul li:last-child  { padding: 0.228em 0.809em 0.456em; }
-
-.cell-list ul li.li-stretch {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.cell-list ul li.li-stretch.li-stretch-large { flex-direction: column;}
-
-@media (min-width: 769px) {
-	.cell-list ul li.li-stretch.li-stretch-large { flex-direction: row;}
-}
 
 .cell-list .button { width: auto; }
 

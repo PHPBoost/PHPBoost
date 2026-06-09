@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 06
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class Folder extends FileSystemElement
@@ -20,11 +20,11 @@ class Folder extends FileSystemElement
 	/**
 	 * @var File[] List of the files contained by this folder.
 	 */
-	private $files = array();
+	private $files = [];
 	/**
 	 * @var Folder[] List of the folders contained by this folder.
 	 */
-	private $folders = array();
+	private $folders = [];
 
 	/**
 	 * Builds a Folder object.
@@ -63,8 +63,8 @@ class Folder extends FileSystemElement
 	{
 		if (!$this->opened)
 		{
-			$this->files = array();
-			$this->folders = array();
+			$this->files = [];
+			$this->folders = [];
 			$path = $this->get_path();
 			if ($dh = @opendir($path))
 			{
@@ -112,7 +112,7 @@ class Folder extends FileSystemElement
 			return $this->files;
 		}
 
-		$files = array();
+		$files = [];
 		foreach ($this->files as $file)
 		{
 			if ($regex_exclude_files)
@@ -147,7 +147,7 @@ class Folder extends FileSystemElement
 			return $this->folders;
 		}
 
-		$folders = array();
+		$folders = [];
 		foreach ($this->folders as $folder)
 		{
 			if (preg_match($regex, $folder->get_name()))

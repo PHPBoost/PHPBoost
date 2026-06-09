@@ -13,14 +13,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2009 01 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('SERVER_URL', $_SERVER['PHP_SELF']);
@@ -219,7 +219,7 @@ class Url
             }
 
             $server_configuration = new ServerConfiguration();
-            if ($server_configuration->has_curl_library())
+            if ($server_configuration->has_curl_extension())
             {
                 $curl = curl_init($url->absolute());
                 curl_setopt($curl, CURLOPT_NOBODY, true);
@@ -276,10 +276,10 @@ class Url
     }
 
     /**
-     * @param string $url
+     * @param Url $url
      * @return int
      */
-    public static function get_url_file_size(string $url): int
+    public static function get_url_file_size(Url $url): int
     {
         $file_size = 0;
 

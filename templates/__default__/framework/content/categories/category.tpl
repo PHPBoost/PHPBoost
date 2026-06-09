@@ -35,11 +35,11 @@
 		});
 	</script>
 
-	# IF C_ALLOWED_TO_HAVE_CHILDS #
-		<ul id="subcat-{ID}" class="sortable-block">
+	<ul id="subcat-{ID}" class="sortable-block# IF NOT C_ALLOWED_TO_HAVE_CHILDS # sortable-block-disabled# ENDIF #">
+		# IF C_ALLOWED_TO_HAVE_CHILDS #
 			# START children #
 				{children.child}
 			# END children #
-		</ul>
-	# ENDIF #
+		# ENDIF #
+	</ul>
 </li>

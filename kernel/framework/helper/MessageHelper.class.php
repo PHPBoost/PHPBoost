@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 11 17
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 01 07
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class MessageHelper
@@ -68,7 +68,7 @@ class MessageHelper
 				$group_only = true;
 		}
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'ID'                => KeyGenerator::generate_key(4),
 			'MESSAGE_CSS_CLASS' => $css_class . ($display_small ? ' message-helper-small' : ''),
 			'MESSAGE_IMG'       => $image,
@@ -80,7 +80,7 @@ class MessageHelper
 			'C_MODERATOR_ONLY'  => $type == self::MODERATOR_ONLY,
 			'C_ADMIN_ONLY'      => $type == self::ADMIN_ONLY,
 			'C_GROUP_ONLY'      => $group_only
-		));
+		]);
 
 		return $tpl;
 	}

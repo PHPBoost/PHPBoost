@@ -7,10 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 09 08
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 04 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('FEEDS_PATH', PATH_TO_ROOT . '/cache/syndication/');
@@ -98,7 +98,7 @@ class Feed
 		{
 			$view->put_all(array_merge(
 				Date::get_array_tpl_vars($this->data->get_date(), 'date'),
-				array(
+				[
 				'THIS_YEAR'    => date('Y'),
 				'TITLE'        => $this->data->get_title(),
 				'RAW_TITLE'    => TextHelper::htmlspecialchars($this->data->get_title()),
@@ -108,7 +108,7 @@ class Feed
 				'LANG'         => $this->data->get_lang(),
 
 				'U_LINK' => $this->data->get_link(),
-			)));
+			]));
 
 			$items = $this->data->subitems($number, $begin_at);
 			foreach ($items as $item)
@@ -116,7 +116,7 @@ class Feed
 				$enclosure = $item->get_enclosure();
 				$view->assign_block_vars('item', array_merge(
 					Date::get_array_tpl_vars($item->get_date(), 'date'),
-					array(
+					[
 					'C_ENCLOSURE' => $enclosure !== null,
 					'C_IMG'       => ($item->get_image_url() != ''),
 
@@ -131,7 +131,7 @@ class Feed
 					'U_LINK' => $item->get_link(),
 					'U_GUID' => $item->get_guid(),
 					'U_IMG'  => $item->get_image_url(),
-				)));
+				]));
 			}
 		}
 
@@ -297,10 +297,10 @@ class Feed
 	{
 		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 
-		$feed_menu->put_all(array(
+		$feed_menu->put_all([
 			'U_FEED_RSS' => SyndicationUrlBuilder::rss($module_id, $id_cat)->absolute(),
 			'U_FEED_ATOM' => SyndicationUrlBuilder::atom($module_id, $id_cat)->absolute()
-		));
+		]);
 
 		return $feed_menu->render();
 	}

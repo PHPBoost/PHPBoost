@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 03 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 01 10
 */
 
@@ -45,7 +45,7 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 	 */
 	public function get_kernel_additional_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS_PER_ROW               => 2,
 			self::ITEMS_DEFAULT_SORT_FIELD    => 'date',
 			self::ITEMS_DEFAULT_SORT_MODE     => TextHelper::strtolower(Item::DESC),
@@ -63,8 +63,8 @@ class DefaultRichModuleConfig extends DefaultModuleConfig
 			self::ROOT_CATEGORY_DESCRIPTION   => CategoriesService::get_default_root_category_description(self::$module_id),
 			self::DISPLAY_TYPE                => self::GRID_VIEW,
 			self::DISPLAY_OPTIONS             => self::MORE_OPTIONS,
-			self::DEFERRED_OPERATIONS         => array()
-		);
+			self::DEFERRED_OPERATIONS         => []
+		];
 	}
 }
 ?>

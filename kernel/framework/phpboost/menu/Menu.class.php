@@ -6,39 +6,39 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 10 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 11 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class Menu
 {
-	const MENU_AUTH_BIT = 1;
+	const MENU_AUTH_BIT      = 1;
 	const MENU_ENABLE_OR_NOT = 42;
-	const MENU_ENABLED = true;
-	const MENU_NOT_ENABLED = false;
+	const MENU_ENABLED       = true;
+	const MENU_NOT_ENABLED   = false;
 
-	const BLOCK_POSITION__NOT_ENABLED = 0;
-	const BLOCK_POSITION__HEADER = 1;
-	const BLOCK_POSITION__SUB_HEADER = 2;
-	const BLOCK_POSITION__TOP_CENTRAL = 3;
+	const BLOCK_POSITION__NOT_ENABLED    = 0;
+	const BLOCK_POSITION__HEADER         = 1;
+	const BLOCK_POSITION__SUB_HEADER     = 2;
+	const BLOCK_POSITION__TOP_CENTRAL    = 3;
 	const BLOCK_POSITION__BOTTOM_CENTRAL = 4;
-	const BLOCK_POSITION__TOP_FOOTER = 5;
-	const BLOCK_POSITION__FOOTER = 6;
-	const BLOCK_POSITION__LEFT = 7;
-	const BLOCK_POSITION__RIGHT = 8;
-	const BLOCK_POSITION__TOP_HEADER = 9;
-	const BLOCK_POSITION__ALL = 10;
+	const BLOCK_POSITION__TOP_FOOTER     = 5;
+	const BLOCK_POSITION__FOOTER         = 6;
+	const BLOCK_POSITION__LEFT           = 7;
+	const BLOCK_POSITION__RIGHT          = 8;
+	const BLOCK_POSITION__TOP_HEADER     = 9;
+	const BLOCK_POSITION__ALL            = 10;
 
-	const PUSHMENU_LEFT = 'left';
-	const PUSHMENU_RIGHT = 'right';
-	const PUSHMENU_TOP = 'top';
+	const PUSHMENU_LEFT   = 'left';
+	const PUSHMENU_RIGHT  = 'right';
+	const PUSHMENU_TOP    = 'top';
 	const PUSHMENU_BOTTOM = 'bottom';
 
 	const PUSHMENU_OVERLAP = 'overlap';
-	const PUSHMENU_EXPAND = 'expand';
-	const PUSHMENU_NONE = 'false';
+	const PUSHMENU_EXPAND  = 'expand';
+	const PUSHMENU_NONE    = 'false';
 
 	const MENU__CLASS = 'Menu';
 
@@ -54,7 +54,7 @@ abstract class Menu
 	public $title = '';
 	/**
 	 * @access protected
-	 * @var int[string] Represents the Menu authorisations array
+	 * @var int[] Represents the Menu authorisations array
 	 */
 	public $auth = null;
 	/**
@@ -106,7 +106,7 @@ abstract class Menu
 	 * @access protected
 	 * @var Array<Filter> The filter list
 	 */
-	public $filters = array();
+	public $filters = [];
 	/**
 	 * @access protected
 	 * @var Template the template of the menu
@@ -171,12 +171,12 @@ abstract class Menu
 	 */
 	protected function assign_common_template_variables(Template $template)
 	{
-		$template->put_all(array(
+		$template->put_all([
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
 			'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
-		));
+		]);
 	}
 
 	/**
@@ -250,7 +250,7 @@ abstract class Menu
 	/**
 	 * @return array the authorization array $auth
 	 */
-	public function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => self::MENU_AUTH_BIT, 'r0' => self::MENU_AUTH_BIT, 'r1' => self::MENU_AUTH_BIT); }
+	public function get_auth() { return is_array($this->auth) ? $this->auth : ['r-1' => self::MENU_AUTH_BIT, 'r0' => self::MENU_AUTH_BIT, 'r1' => self::MENU_AUTH_BIT]; }
 	/**
 	 * @return int the $id of the menu in the database
 	 */
@@ -292,14 +292,14 @@ abstract class Menu
 	*/
 	public function get_pushmenu_expanding() { return $this->pushmenu_expanding; }
 	/**
-	* @return string the menu filters
+	* @return array the menu filters
 	*/
 	public function get_filters() { return $this->filters; }
 
 	/**
 	* Sets the filters of the menu
 	*
-	* @param Array<Filter> $filters Filters of the menu
+	* @param array $filters Filters of the menu
 	*/
 	public function set_filters($filters) { $this->filters = $filters; }
 

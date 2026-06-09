@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 10 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 10 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class SEOMetaData
@@ -21,7 +21,7 @@ class SEOMetaData
 	private $canonical_url;
 	private $picture_url;
 	private $page_type = 'website';
-	private $additionnal_properties = array();
+	private $additionnal_properties = [];
 
 	public function set_title($title, $section = '', $page = 1)
 	{

@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 08 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2014 01 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
@@ -38,7 +38,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 		$js_bottom_tpl->add_lang($lang);
 		$js_bottom_tpl->put('JS_BOTTOM', $this->get_bottom_js_files_html_code());
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FAVICON' => $customization_config->favicon_exists(),
 
 			'FAVICON'      => Url::to_rel($customization_config->get_favicon_path()),
@@ -48,7 +48,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 			'JS_TOP'       => $js_top_tpl,
 			'JS_BOTTOM'    => $js_bottom_tpl,
 			'BODY'         => new StringTemplate($content)
-		));
+		]);
 
 		$view->display();
 	}

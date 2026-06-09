@@ -8,10 +8,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 11 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class UnreadContributionsCache implements CacheData
@@ -19,8 +19,8 @@ class UnreadContributionsCache implements CacheData
 	private $admin = 0;
 	private $moderators = false;
 	private $members = false;
-	private $groups = array();
-	private $users = array();
+	private $groups = [];
+	private $users = [];
 
 	/**
 	 * {@inheritdoc}
@@ -195,9 +195,9 @@ class UnreadContributionsCache implements CacheData
 	 * Loads and returns the unread contribution cached data.
 	 * @return UnreadContributionsCache The cached data
 	 */
-	public static function load()
+	public static function load(): UnreadContributionsCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'unread-contributions');
+		return CacheManager::load(self::class, 'kernel', 'unread-contributions');
 	}
 
 	/**

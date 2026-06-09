@@ -5,18 +5,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 03 31
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 abstract class AbstractFormFieldset implements FormFieldset
 {
-	private $validation_error_messages = array();
+	private $validation_error_messages = [];
 	private $form_id = '';
-	protected $fields = array();
-	protected $elements = array();
+	protected $fields = [];
+	protected $elements = [];
 	protected $description = '';
 	protected $id = '';
 	/**
@@ -30,7 +30,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 	 */
 	private $template = null;
 
-	public function __construct($id, $options = array())
+	public function __construct($id, $options = [])
 	{
 		$this->id = $id;
 		$this->compute_options($options);
@@ -138,7 +138,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 
 	public function get_onsubmit_validations()
 	{
-		$validations = array();
+		$validations = [];
 		foreach ($this->fields as $field)
 		{
 			$validations[] = $field->get_js_validations();
@@ -199,16 +199,16 @@ abstract class AbstractFormFieldset implements FormFieldset
 	{
 		$js_tpl = new FileTemplate('framework/builder/form/AddFieldsetJS.tpl');
 
-		$js_tpl->put_all(array(
+		$js_tpl->put_all([
 			'ID' => $this->id,
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->disabled,
 			'FORM_ID' => $this->form_id
-		));
+		]);
 
 		$template->put('ADD_FIELDSET_JS', $js_tpl);
 
-		$template->put_all(array(
+		$template->put_all([
             'C_DESCRIPTION' => !empty($this->description),
             'DESCRIPTION' => $this->description,
 			'ID' => $this->id,
@@ -216,13 +216,13 @@ abstract class AbstractFormFieldset implements FormFieldset
 			'C_DISABLED' => $this->disabled,
 			'CSS_CLASS' => $this->css_class,
 			'FORM_ID' => $this->form_id
-		));
+		]);
 
 		foreach($this->elements as $element)
 		{
-			$template->assign_block_vars('elements', array(), array(
+			$template->assign_block_vars('elements', [], [
 				'ELEMENT' => $element->display(),
-			));
+			]);
 		}
 	}
 

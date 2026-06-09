@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 06 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 25
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class EditCommentBuildForm extends AbstractCommentsBuildForm
@@ -48,10 +48,10 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 		$fieldset = new FormFieldsetHTML('edit_comment', $lang['comment.edit']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], $this->get_contents(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], $this->get_contents(), [
 			'formatter' => $this->get_formatter(),
-			'rows' => 10, 'cols' => 47, 'required' => true),
-			array((!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()) : ''))
+			'rows' => 10, 'cols' => 47, 'required' => true],
+			[(!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()) : '')]
 		));
 
 		$form->add_button($submit_button = new FormButtonDefaultSubmit());

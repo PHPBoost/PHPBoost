@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 23
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 03 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Mail
@@ -57,22 +57,22 @@ class Mail
 	/**
 	 * @var array Recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $recipients = array();
+	var $recipients = [];
 
 	/**
 	 * @var array Cc recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $cc_recipients = array();
+	var $cc_recipients = [];
 
 	/**
 	 * @var array Bcc recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $bcc_recipients = array();
+	var $bcc_recipients = [];
 
 	/**
 	 * @var array Attachments of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $attachments = array();
+	var $attachments = [];
 
 	/**
 	 * @var string Tells whether the content contains HTML code
@@ -138,7 +138,7 @@ class Mail
 
 	public function clear_recipients()
 	{
-		$this->recipients = array();
+		$this->recipients = [];
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Mail
 
 	public function clear_cc_recipients()
 	{
-		$this->cc_recipients = array();
+		$this->cc_recipients = [];
 	}
 
 	/**
@@ -174,7 +174,7 @@ class Mail
 
 	public function clear_bcc_recipients()
 	{
-		$this->bcc_recipients = array();
+		$this->bcc_recipients = [];
 	}
 
 	private static function check_mail($mail)
@@ -184,7 +184,7 @@ class Mail
 
 	/**
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_recipients()
 	{
@@ -193,7 +193,7 @@ class Mail
 
 	/**
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_cc_recipients()
 	{
@@ -202,7 +202,7 @@ class Mail
 
 	/**
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_bcc_recipients()
 	{
@@ -211,7 +211,7 @@ class Mail
 
 	/**
 	 * Returns email attachments list.
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_attachments()
 	{
@@ -220,7 +220,7 @@ class Mail
 
 	/**
 	 * Sets the mail attachments
-	 * @param string[string] $attachments Mail attachments
+	 * @param string[] $attachments Mail attachments
 	 */
 	public function set_attachments(Array $attachments)
 	{

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 02 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 12 23
 */
 
@@ -30,7 +30,7 @@ class DefaultRichCategoriesCache extends DefaultCategoriesCache
 		if (empty($description))
 		{
 			$lang = ItemsService::get_items_lang(self::$module->get_id());
-			$description = StringVars::replace_vars($lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars($lang['items.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]);
 		}
 		return $description;
 	}

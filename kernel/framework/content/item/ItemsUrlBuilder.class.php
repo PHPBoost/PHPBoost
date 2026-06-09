@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 10
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 12 20
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsUrlBuilder
@@ -149,7 +149,7 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function specific_page($page_id, $module_id = '', $additional_parameters = array())
+	public static function specific_page($page_id, $module_id = '', $additional_parameters = [])
 	{
 		$additional_parameters = (!empty($additional_parameters) ? implode('/', $additional_parameters) . '/' : '');
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $page_id . '/' . $additional_parameters);

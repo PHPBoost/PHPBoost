@@ -1,0 +1,28 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @since       PHPBoost 5.2 - 2020 06 15
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+*/
+
+####################################################
+#                       French                     #
+####################################################
+
+$lang['categories'] = $lang['items'] = [];
+
+$lang['categories'][] = [
+	'category.name'        => 'Test',
+	'category.description' => 'Catégorie de test'
+];
+
+$lang['items'][] = [
+	'item.title'   => 'Une première page',
+	'item.content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem vel odio eligendi, esse nostrum quo sunt consectetur ea earum laudantium voluptate sequi harum,
+    sint voluptates cumque, minima a in sit. Accusantium eum a, rerum libero fugiat quae vero sequi officia!',
+	'item.summary' => ''
+];
+?>

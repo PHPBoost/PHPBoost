@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2013 11 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleTreeLinksService
@@ -27,11 +27,11 @@ class ModuleTreeLinksService
 
 			$module = ModulesManager::get_module($module_name);
 
-			$view->put_all(array(
+			$view->put_all([
 				'C_DISPLAY' => $actions_tree_links->has_visible_links(),
 				'ID' => $module_name,
 				'MODULE_NAME' => $module_name != 'user' ? $module->get_configuration()->get_name() : $lang['user.users'],
-			));
+			]);
 
 			if ($module_name != 'user')
 			{
@@ -39,9 +39,9 @@ class ModuleTreeLinksService
 				if (!empty($home_page))
 				{
 					$module_home = new ModuleLink($lang['common.home'], new Url('/' . $module->get_id() . '/' . $home_page));
-					$view->assign_block_vars('element', array(), array(
+					$view->assign_block_vars('element', [], [
 						'ELEMENT' => $module_home->export()
-					));
+					]);
 				}
 			}
 
@@ -63,7 +63,7 @@ class ModuleTreeLinksService
 		$fa_icon = $configuration->get_fa_icon();
 		$hexa_icon = $configuration->get_hexa_icon();
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_HAS_IMG'      => $img->exists(),
 			'C_FA_ICON'      => !empty($fa_icon),
 			'C_HEXA_ICON'    => !empty($hexa_icon),
@@ -76,25 +76,25 @@ class ModuleTreeLinksService
 			'HEXA_ICON' => $hexa_icon,
 
 			'U_LINK' => preg_match('/' . $id_module . '/', $admin_main_page) ? Url::to_rel($admin_main_page) : TPL_PATH_TO_ROOT . '/' . $id_module . '/' . $admin_main_page,
-		));
+		]);
 
 		$tree_links = self::get_tree_links($id_module);
 		if ($tree_links !== null)
 		{
 			$actions_tree_links = $tree_links->get_actions_tree_links();
 
-			$view->put_all(array(
+			$view->put_all([
 				'C_HAS_SUB_LINK' => $actions_tree_links->has_links(),
 				'C_DISPLAY' => $actions_tree_links->has_links() || !empty($admin_main_page)
-			));
+			]);
 
 			$home_page = $configuration->get_home_page();
 			if (!empty($home_page))
 			{
 				$module_home = new ModuleLink($lang['common.home'], new Url('/' . $id_module . '/' . $home_page));
-				$view->assign_block_vars('element', array(), array(
+				$view->assign_block_vars('element', [], [
 					'ELEMENT' => $module_home->export()
-				));
+				]);
 			}
 
 			return self::display($actions_tree_links, $view);
@@ -113,9 +113,9 @@ class ModuleTreeLinksService
 			{
 				if ($element->is_visible())
 				{
-					$view->assign_block_vars('element', array(), array(
+					$view->assign_block_vars('element', [], [
 						'ELEMENT' => $element->export()
-					));
+					]);
 				}
 			}
 		}

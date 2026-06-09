@@ -119,11 +119,10 @@
 .expand-modal { position: relative; }
 
 .expand-modal::after {
-    position: absolute;
-    font-family: 'Font Awesome 7 Free';
-    font-weight: 900;
-    font-size: 0.809em;
+	font: var(--fa-font-solid);
     content: '\f065'; /* fa-expand */
+    position: absolute;
+    font-size: 0.809em;
     top: 0.228em;
     right: 0.309em;
 }

@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 10 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 08 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FileUploadConfig extends AbstractConfigData
@@ -77,8 +77,8 @@ class FileUploadConfig extends AbstractConfigData
 
 	public function get_authorized_picture_extensions()
 	{
-		$pictures_extensions = array('jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp');
-		$authorized_pictures_extensions = array();
+		$pictures_extensions = ['jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp'];
+		$authorized_pictures_extensions = [];
 
 		foreach ($pictures_extensions as $extension)
 		{
@@ -91,19 +91,19 @@ class FileUploadConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
-			self::AUTHORIZATION_ENABLE_INTERFACE_FILES => array('r0' => 1, 'r1' => 1),
+		return [
+			self::AUTHORIZATION_ENABLE_INTERFACE_FILES => ['r0' => 1, 'r1' => 1],
 			self::MAXIMUM_SIZE_UPLOAD => 512,
 			self::ENABLE_BANDWIDTH_PROTECTION => true,
 			self::DISPLAY_FILE_THUMBNAIL => true,
-			self::AUTHORIZED_EXTENSIONS => array(
+			self::AUTHORIZED_EXTENSIONS => [
 				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef',
 				'rar', 'zip', 'gz', '7z',
 				'txt', 'doc', 'docx', 'pdf', 'ppt', 'xls', 'odt', 'odp', 'ods', 'odg', 'odc', 'odf', 'odb', 'xcf', 'csv',
 				'mp3','ogg', 'mpg', 'mov', 'wav', 'wmv', 'midi', 'mng', 'qt', 'mp4', 'mkv', 'webm',
 				'ttf', 'tex', 'rtf', 'psd', 'iso'
-			)
-		);
+			]
+		];
 	}
 
 	/**
@@ -112,7 +112,7 @@ class FileUploadConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'file-upload-config');
+		return ConfigManager::load(self::class, 'kernel', 'file-upload-config');
 	}
 
 	/**

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 02 29
 */
 
@@ -18,59 +18,37 @@ class UpdateUrlBuilder
         self::$locale = $locale;
     }
 
-    /**
-     * @return Url
-     */
-    public static function introduction()
+    public static function introduction(): Url
     {
         return self::url('/introduction');
     }
 
-    /**
-     * @return Url
-     */
-    public static function server_configuration()
+    public static function server_configuration(): Url
     {
         return self::url('/server');
     }
 
-    /**
-     * @return Url
-     */
-    public static function database()
+    public static function database(): Url
     {
         return self::url('/database');
     }
 
-    /**
-     * @return Url
-     */
-    public static function update()
+    public static function update(): Url
     {
         return self::url('/execute');
     }
 
-    /**
-     * @return Url
-     */
-    public static function config()
+    public static function config(): Url
     {
         return self::url('/config');
     }
 
-    /**
-     * @return Url
-     */
-    public static function finish()
+    public static function finish(): Url
     {
         return self::url('/finish');
     }
 
-    /**
-     * @param string the url path from the dispatcher root
-     * @return Url
-     */
-    private static function url($path)
+    private static function url(string $path): Url
     {
         if (self::$locale  != UpdateController::DEFAULT_LOCALE)
         {

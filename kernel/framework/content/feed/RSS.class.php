@@ -7,9 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.4 - 2005 03 10
- * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
 */
 
 class RSS extends Feed

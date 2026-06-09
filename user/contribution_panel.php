@@ -3,12 +3,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor ph-7 <me@ph7.me>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      ph-7 <me@ph7.me>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -98,7 +98,7 @@ elseif ($id_to_update > 0)
 
 		// Saving in database
 		ContributionService::save_contribution($contribution);
-		HooksService::execute_hook_action($status == Event::EVENT_STATUS_PROCESSED ? 'process_contribution' : 'edit_contribution', $contribution->get_module(), array_merge($contribution->get_properties(), array('title' => $contribution->get_entitled(), 'url' => $contribution->get_fixing_url())));
+		HooksService::execute_hook_action($status == Event::EVENT_STATUS_PROCESSED ? 'process_contribution' : 'edit_contribution', $contribution->get_module(), array_merge($contribution->get_properties(), ['title' => $contribution->get_entitled(), 'url' => $contribution->get_fixing_url()]));
 
 		AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel($contribution->get_id()));
 	}
@@ -125,7 +125,7 @@ elseif ($id_to_delete > 0)
 
 	CommentsService::delete_comments_topic_module('user', $id_to_delete);
 	ContributionService::delete_contribution($contribution);
-	HooksService::execute_hook_action('delete_contribution', $contribution->get_module(), array_merge($contribution->get_properties(), array('title' => $contribution->get_entitled(), 'url' => $contribution->get_fixing_url())));
+	HooksService::execute_hook_action('delete_contribution', $contribution->get_module(), array_merge($contribution->get_properties(), ['title' => $contribution->get_entitled(), 'url' => $contribution->get_fixing_url()]));
 
 	AppContext::get_response()->redirect(UserUrlBuilder::contribution_panel());
 }
@@ -143,9 +143,9 @@ $view->add_lang($lang);
 
 if ($contribution_id > 0)
 {
-	$view->put_all(array(
+	$view->put_all([
 		'C_CONSULT_CONTRIBUTION' => true
-	));
+	]);
 
 	$comments_topic = new UserEventsCommentsTopic();
 	$comments_topic->set_id_in_module($contribution_id);
@@ -153,13 +153,13 @@ if ($contribution_id > 0)
 
 	$contributor = PersistenceContext::get_querier()->select('SELECT *
 		FROM ' . DB_TABLE_MEMBER . ' member
-		WHERE user_id = :user_id', array('user_id' => $contribution->get_poster_id()))->fetch();
+		WHERE user_id = :user_id', ['user_id' => $contribution->get_poster_id()])->fetch();
 
 	$contributor_group_color = User::get_group_color($contributor['user_groups'], $contributor['level']);
 
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($contribution->get_creation_date(), 'creation_date'),
-		array(
+		[
 		'C_WRITE_AUTH'               => AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT),
 		'C_UNPROCESSED_CONTRIBUTION' => $contribution->get_status() != Event::EVENT_STATUS_PROCESSED,
 		'C_CONTRIBUTOR_GROUP_COLOR'  => !empty($contributor_group_color),
@@ -175,33 +175,33 @@ if ($contribution_id > 0)
 
 		'U_CONTRIBUTOR_PROFILE' => UserUrlBuilder::profile($contribution->get_poster_id())->rel(),
 		'FIXING_URL'            => Url::to_rel($contribution->get_fixing_url())
-	)));
+	]));
 
 	// If contribution has been validated
 	if ($contribution->get_status() == Event::EVENT_STATUS_PROCESSED)
 	{
 		$fixer = PersistenceContext::get_querier()->select('SELECT *
 			FROM ' . DB_TABLE_MEMBER . ' member
-			WHERE user_id = :user_id', array('user_id' => $contribution->get_fixer_id()))->fetch();
+			WHERE user_id = :user_id', ['user_id' => $contribution->get_fixer_id()])->fetch();
 
 		$fixer_group_color = User::get_group_color($fixer['user_groups'], $fixer['level']);
 
 		$view->put_all(array_merge(
 			Date::get_array_tpl_vars($contribution->get_fixing_date(), 'fixing_date'),
-			array(
+			[
 			'C_CONTRIBUTION_FIXED'  => true,
 			'C_REFEREE_GROUP_COLOR' => !empty($fixer_group_color),
 			'FIXER'                 => $fixer['display_name'],
 			'REFEREE_LEVEL_CLASS'   => UserService::get_level_class($fixer['level']),
 			'REFEREE_GROUP_COLOR'   => $fixer_group_color,
 			'U_REFEREE_PROFILE'     => UserUrlBuilder::profile($contribution->get_fixer_id())->rel()
-		)));
+		]));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'U_EDIT'   => url('contribution_panel.php?edit=' . $contribution_id),
 		'U_DELETE' => url('contribution_panel.php?del=' . $contribution_id . '&amp;token=' . AppContext::get_session()->get_token())
-	));
+	]);
 }
 
 // Contribution modification
@@ -210,7 +210,7 @@ elseif ($id_update > 0)
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('contents');
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_EDIT_CONTRIBUTION' => true,
 
 		'KERNEL_EDITOR'                         => $editor->display(),
@@ -220,13 +220,13 @@ elseif ($id_update > 0)
 		'EVENT_STATUS_UNREAD_SELECTED'          => $contribution->get_status() == Event::EVENT_STATUS_UNREAD ? ' selected="selected"' : '',
 		'EVENT_STATUS_BEING_PROCESSED_SELECTED' => $contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED ? ' selected="selected"' : '',
 		'EVENT_STATUS_PROCESSED_SELECTED'       => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED ? ' selected="selected"' : '',
-	));
+	]);
 }
 else
 {
-	$view->put_all(array(
+	$view->put_all([
 		'C_CONTRIBUTION_LIST' => true
-	));
+	]);
 
 	// Contributions number
 	$num_contributions = 1;
@@ -238,7 +238,7 @@ else
 	$criteria = $request->get_getvalue('criteria', 'current_status');
 	$order = $request->get_getvalue('order', 'asc');
 
-	if (!in_array($criteria, array('entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id')))
+	if (!in_array($criteria, ['entitled', 'module', 'status', 'creation_date', 'fixing_date', 'poster_id', 'fixer_id']))
 		$criteria = 'current_status';
 	$order = $order == 'desc' ? 'desc' : 'asc';
 
@@ -257,7 +257,7 @@ else
 				$view->assign_block_vars('contributions', array_merge(
 					Date::get_array_tpl_vars($contribution->get_creation_date(), 'creation_date'),
 					Date::get_array_tpl_vars($contribution->get_fixing_date(), 'fixing_date'),
-					array(
+					[
 					'C_AUTHOR_GROUP_COLOR'  => !empty($poster_group_color),
 					'C_REFEREE_GROUP_COLOR' => !empty($fixer_group_color),
 
@@ -277,7 +277,7 @@ else
 					'U_CONSULT'         => PATH_TO_ROOT . '/user/' . url('contribution_panel.php?id=' . $contribution->get_id()),
 					'C_FIXED'           => $contribution->get_status() == Event::EVENT_STATUS_PROCESSED,
 					'C_PROCESSING'      => $contribution->get_status() == Event::EVENT_STATUS_BEING_PROCESSED
-				)));
+				]));
 			}
 
 			$num_contributions++;
@@ -294,14 +294,14 @@ else
 	}
 
 	if ($num_contributions > 1)
-		$view->put_all(array(
+		$view->put_all([
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION'   => $pagination->display()
-		));
+		]);
 	else
-		$view->put_all(array(
+		$view->put_all([
 			'C_NO_CONTRIBUTION' => true
-		));
+		]);
 
 	// List of modules with contribution
 	$i_module = 0;
@@ -322,7 +322,7 @@ else
 			$thumbnail = $img->exists() ? $img_url : '';
 			$fa_icon = $configuration->get_fa_icon();
 			$hexa_icon = $configuration->get_hexa_icon();
-			$view->assign_block_vars('module', array(
+			$view->assign_block_vars('module', [
 				'C_IMG'       => $img->exists(),
 				'C_FA_ICON'   => !empty($fa_icon),
 				'C_HEXA_ICON' => !empty($hexa_icon),
@@ -335,17 +335,17 @@ else
 				'MODULE_ID'     => $module->get_id(),
 				'MODULE_NAME'   => $module->get_configuration()->get_name(),
 				'LINK_TITLE'    => sprintf($lang['contribution.contribute.in.module.name'], $module->get_configuration()->get_name())
-			));
+			]);
 			$i_module++;
 		}
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_CONTRIBUTION_MODULE' => $i_module > 0
-	));
+	]);
 
 	// Sorting management
-	$view->put_all(array(
+	$view->put_all([
 		'C_ORDER_ENTITLED_ASC'       => $criteria== 'entitled' && $order == 'asc',
 		'U_ORDER_ENTITLED_ASC'       => url('contribution_panel.php?p=' . $page . '&amp;criteria=entitled&amp;order=asc'),
 		'C_ORDER_ENTITLED_DESC'      => $criteria== 'entitled' && $order == 'desc',
@@ -374,7 +374,7 @@ else
 		'U_ORDER_REFEREE_ASC'        => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixer_id&amp;order=asc'),
 		'C_ORDER_REFEREE_DESC'       => $criteria== 'fixer_id' && $order == 'desc',
 		'U_ORDER_REFEREE_DESC'       => url('contribution_panel.php?p=' . $page . '&amp;criteria=fixer_id&amp;order=desc')
-	));
+	]);
 }
 
 $view->display();

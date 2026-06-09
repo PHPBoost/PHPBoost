@@ -5,15 +5,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 26
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 {
-	private static $options = array();
+	private static $options = [];
 
 	/**
      * Constructs a FormFieldCategoriesSelect.
@@ -22,7 +22,7 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      */
-    public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, $field_options, CategoriesCache $categories_cache, array $select_options = array())
+    public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, $field_options, CategoriesCache $categories_cache, array $select_options = [])
     {
 		parent::__construct($id, $label, $value, ($select_options ? $select_options : self::generate_options($value, $search_category_children_options, false, $categories_cache)), $field_options);
     }
@@ -33,9 +33,9 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 		$root_category = $categories[Category::ROOT_CATEGORY];
 
 		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
-			return array();
+			return [];
 
-		self::$options = array();
+		self::$options = [];
 		if ($all_categories_option)
 			self::$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('category.all.categories', 'category-lang'), 'all');
 

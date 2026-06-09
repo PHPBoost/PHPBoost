@@ -7,12 +7,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 26
- * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Authorizations
@@ -28,7 +28,7 @@ class Authorizations
 	 */
 	public static function build_auth_array_from_form()
 	{
-		$array_auth_all = array();
+		$array_auth_all = [];
 		$sum_auth = 0;
 		$nbr_arg = func_num_args();
 
@@ -68,7 +68,7 @@ class Authorizations
 	 */
 	public static function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
 	{
-		$array_auth_all = array();
+		$array_auth_all = [];
 		$sum_auth = 0;
 
 		//Récupération du tableau des autorisation.
@@ -96,17 +96,17 @@ class Authorizations
 	 * @return String The formated select.
 	 * @static
 	 */
-	public static function generate_select($auth_bit, $array_auth = array(), $array_ranks_default = array(), $idselect = '', $disabled = false, $disabled_advanced_auth = false, $disabled_ranks = array())
+	public static function generate_select($auth_bit, $array_auth = [], $array_ranks_default = [], $idselect = '', $disabled = false, $disabled_advanced_auth = false, $disabled_ranks = [])
 	{
 		$lang = LangLoader::get_all_langs();
 
 		//Récupération du tableau des rangs.
-		$array_ranks = array(
+		$array_ranks = [
 			User::VISITOR_LEVEL       => $lang['user.guest'],
 			User::MEMBER_LEVEL        => $lang['user.member'],
 			User::MODERATOR_LEVEL     => $lang['user.moderator'],
 			User::ADMINISTRATOR_LEVEL => $lang['user.administrator']
-		);
+		];
 
 		//Identifiant du select, par défaut la valeur du bit de l'autorisation.
 		$idselect = ((string)$idselect == '') ? $auth_bit : $idselect;
@@ -114,12 +114,12 @@ class Authorizations
 		$view = new FileTemplate('framework/groups_auth.tpl');
 		$view->add_lang($lang);
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_ADVANCED_AUTH' => !$disabled_advanced_auth,
 
 			'SELECT_ID'       => $idselect,
 			'DISABLED_SELECT' => (empty($disabled) ? 'if (disabled == 0)' : ''),
-		));
+		]);
 
 		##### Génération d'une liste à sélection multiple des rangs et membres #####
 		//Liste des rangs
@@ -129,13 +129,13 @@ class Authorizations
 			//Si il s'agit de l'administrateur, il a automatiquement l'autorisation
 			if ($idrank == 2)
 			{
-				$view->assign_block_vars('ranks_list', array(
+				$view->assign_block_vars('ranks_list', [
 					'ID'        => $j,
 					'RANK_ID'   => $idrank,
 					'RANK_NAME' => $group_name,
 					'DISABLED'  => '',
 					'SELECTED'  => ' selected="selected"'
-				));
+				]);
 			}
 			else
 			{
@@ -146,14 +146,14 @@ class Authorizations
 				}
 				$selected = (isset($array_ranks_default[$idrank]) && $array_ranks_default[$idrank] === true && empty($disabled)) ? 'selected="selected"' : $selected;
 
-				$view->assign_block_vars('ranks_list', array(
+				$view->assign_block_vars('ranks_list', [
 					'C_DISABLED' => !empty($disabled) || in_array($idrank, $disabled_ranks),
 
 					'ID'        => $j,
 					'RANK_ID'   => $idrank,
 					'RANK_NAME' => $group_name,
 					'SELECTED'  => $selected
-				));
+				]);
 			}
 			$j++;
 		}
@@ -168,18 +168,18 @@ class Authorizations
 				$selected = ' selected="selected"';
 			}
 
-			$view->assign_block_vars('groups_list', array(
+			$view->assign_block_vars('groups_list', [
 				'C_DISABLED' => !empty($disabled),
 
 				'GROUP_ID'   => $idgroup,
 				'GROUP_NAME' => $group_name,
 				'SELECTED'   => $selected
-			));
+			]);
 		}
 
 		##### Génération du formulaire pour les autorisations membre par membre. #####
 		//Recherche des membres autorisé.
-		$array_auth_members = array();
+		$array_auth_members = [];
 		if (is_array($array_auth))
 		{
 			foreach ($array_auth as $type => $auth)
@@ -193,21 +193,21 @@ class Authorizations
 		}
 		$advanced_auth = count($array_auth_members) > 0;
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_ADVANCED_AUTH_OPEN' => $advanced_auth,
 			'C_NO_GROUP'           => count($groups_name) == 0
-		));
+		]);
 
 		//Listing des membres autorisés.
 		if ($advanced_auth)
 		{
-			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, array('user_id, display_name'), 'WHERE user_id IN :user_ids', array('user_ids' => str_replace('m', '', array_keys($array_auth_members))));
+			$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_MEMBER, ['user_id, display_name'], 'WHERE user_id IN :user_ids', ['user_ids' => str_replace('m', '', array_keys($array_auth_members))]);
 			while ($row = $result->fetch())
 			{
-				$view->assign_block_vars('members_list', array(
+				$view->assign_block_vars('members_list', [
 					'USER_ID' => $row['user_id'],
 					'LOGIN'   => $row['display_name']
-				));
+				]);
 			}
 
 			$result->dispose();
@@ -264,7 +264,7 @@ class Authorizations
 	public static function merge_auth($parent, $child, $auth_bit, $mode)
 	{
 		//Parcours des différents types d'utilisateur
-		$merged = array();
+		$merged = [];
 
 		if (!is_array($child))
 		{
@@ -387,7 +387,7 @@ class Authorizations
 			if (is_array($array_auth_groups))
 			{
 				//Ajout des autorisations supérieures si une autorisations inférieure est autorisée. Ex: Membres autorisés implique modérateurs autorisés.
-				$array_level = array(0 => 'r-1', 1 => 'r0', 2 => 'r1');
+				$array_level = [0 => 'r-1', 1 => 'r0', 2 => 'r1'];
 				$min_auth = 3;
 				foreach ($array_level as $level => $key)
 				{

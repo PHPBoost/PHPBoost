@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 09 19
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
@@ -15,7 +15,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('field_required', 'regex', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(['field_required', 'regex', 'possible_values', 'default_value']);
 		$this->set_name(LangLoader::get_message('user.field.type.pm.email','user-lang'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
@@ -26,7 +26,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$fieldset->add_field(new FormFieldCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), false,
-			array('description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -35,7 +35,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$fieldset->add_field(new FormFieldCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
-			array('description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required()]
 		));
 	}
 

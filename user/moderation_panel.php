@@ -3,12 +3,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 03 20
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
@@ -50,11 +50,11 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If u
 $view = new FileTemplate('user/moderation_panel.tpl');
 $view->add_lang($lang);
 
-$view->put_all(array(
+$view->put_all([
 	'U_WARNING' => UserUrlBuilder::moderation_panel('warning')->rel(),
 	'U_PUNISH'  => UserUrlBuilder::moderation_panel('punish')->rel(),
 	'U_BAN'     => UserUrlBuilder::moderation_panel('ban')->rel()
-));
+]);
 
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('action_contents');
@@ -81,17 +81,17 @@ if ($action == 'punish')
 		SessionData::recheck_cached_data_from_user_id($id_get);
 		$user = UserService::get_user($id_get);
 		$sanctions_duration = FormFieldMemberSanction::get_sanctions_duration();
-		HooksService::execute_hook_action('user_punishment', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_readonly' => $readonly_duration)), isset($sanctions_duration[$readonly_duration]) ? $sanctions_duration[$readonly_duration] : '');
+		HooksService::execute_hook_action('user_punishment', $user->get_id(), array_merge($user->get_properties(), ['title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_readonly' => $readonly_duration]), isset($sanctions_duration[$readonly_duration]) ? $sanctions_duration[$readonly_duration] : '');
 
 		AppContext::get_response()->redirect(HOST . DIR . url('/user/moderation_panel.php?action=punish', '', '&'));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_USER' => true,
 		'L_ACTION_INFO'    => $lang['user.punishments.management'],
 		'U_XMLHTTPREQUEST' => 'punish_user',
 		'U_ACTION'         => UserUrlBuilder::moderation_panel('punish')->rel()
-	));
+	]);
 
 	if (empty($id_get)) // Warned member list
 	{
@@ -101,7 +101,7 @@ if ($action == 'punish')
 
 			$user_id = 0;
 			try {
-				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', ['name' => '%' . $login . '%']);
 			} catch (RowNotFoundException $ex) {}
 
 			if (!empty($user_id) && !empty($login))
@@ -110,24 +110,24 @@ if ($action == 'punish')
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish'));
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_USER_LIST' => true,
 			'L_TITLE' => $lang['user.punishments.management'],
 			'L_INFO'  => $lang['user.punish.until'],
-		));
+		]);
 
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, delay_readonly
 		FROM " . PREFIX . "member
 		WHERE delay_readonly > :now
-		ORDER BY delay_readonly DESC", array(
+		ORDER BY delay_readonly DESC", [
 			'now' => time()
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$view->assign_block_vars('member_list', array(
+			$view->assign_block_vars('member_list', [
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 
 				'LOGIN'            => $row['display_name'],
@@ -138,7 +138,7 @@ if ($action == 'punish')
 				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => UserUrlBuilder::moderation_panel('punish', $row['user_id'])->rel(),
 				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
-			));
+			]);
 
 			$i++;
 		}
@@ -146,16 +146,16 @@ if ($action == 'punish')
 
 		if ($i === 0)
 		{
-			$view->put_all(array(
+			$view->put_all([
 				'C_EMPTY_LIST' => true,
 				'L_NO_USER'    => $lang['user.no.punished.user'],
-			));
+			]);
 		}
 	}
 	else // Display of user infos
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'delay_readonly'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -164,8 +164,8 @@ if ($action == 'punish')
 		// Creating select form
 		$select = '';
 		// Warning duration
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array($lang['common.no'], '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], '10 ' . TextHelper::strtolower($lang['date.years']));
+		$array_time = [0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000];
+		$array_sanction = [$lang['common.no'], '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], '10 ' . TextHelper::strtolower($lang['date.years'])];
 
 		$diff = ($member['delay_readonly'] - time());
 		$key_sanction = 0;
@@ -190,7 +190,7 @@ if ($action == 'punish')
 		}
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
-		$view->put_all(array(
+		$view->put_all([
 			'C_USER_INFO' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 			'LOGIN'              => $member['display_name'],
@@ -223,7 +223,7 @@ if ($action == 'punish')
 			'U_PM'          => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO' => UserUrlBuilder::moderation_panel('punish', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE'     => UserUrlBuilder::profile($id_get)->rel()
-		));
+		]);
 	}
 }
 else if ($action == 'warning')
@@ -233,7 +233,7 @@ else if ($action == 'warning')
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
 	{
 		try {
-			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
+			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['user_id', 'level', 'email'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -255,19 +255,19 @@ else if ($action == 'warning')
 				}
 				SessionData::recheck_cached_data_from_user_id($id_get);
 				$user = UserService::get_user($id_get);
-				HooksService::execute_hook_action('user_warning', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'warning_percentage' => $new_warning_level)), $user->get_warning_percentage() . ' %');
+				HooksService::execute_hook_action('user_warning', $user->get_id(), array_merge($user->get_properties(), ['title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'warning_percentage' => $new_warning_level]), $user->get_warning_percentage() . ' %');
 			}
 		}
 
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_USER' => true,
 		'L_ACTION_INFO'    => $lang['user.warnings.management'],
 		'U_XMLHTTPREQUEST' => 'warning_user',
 		'U_ACTION'         => UserUrlBuilder::moderation_panel('warning')->rel() . '&amp;' . AppContext::get_session()->get_token()
-	));
+	]);
 
 	if (empty($id_get)) // List of warned members
 	{
@@ -277,7 +277,7 @@ else if ($action == 'warning')
 
 			$user_id = 0;
 			try {
-				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', ['name' => '%' . $login . '%']);
 			} catch (RowNotFoundException $ex) {}
 
 			if (!empty($user_id) && !empty($login))
@@ -286,11 +286,11 @@ else if ($action == 'warning')
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_USER_LIST' => true,
 			'L_TITLE' => $lang['user.warnings.management'],
 			'L_INFO'  => $lang['user.warning.level'],
-		));
+		]);
 
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, warning_percentage
@@ -301,7 +301,7 @@ else if ($action == 'warning')
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$view->assign_block_vars('member_list', array(
+			$view->assign_block_vars('member_list', [
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 
 				'LOGIN'            => $row['display_name'],
@@ -312,7 +312,7 @@ else if ($action == 'warning')
 				'U_ACTION_USER' => UserUrlBuilder::moderation_panel('warning', $row['user_id'])->rel(),
 				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel()
-			));
+			]);
 
 			$i++;
 		}
@@ -320,16 +320,16 @@ else if ($action == 'warning')
 
 		if ($i === 0)
 		{
-			$view->put_all(array(
+			$view->put_all([
 				'C_EMPTY_LIST' => true,
 				'L_NO_USER'    => $lang['user.no.user.warning'],
-			));
+			]);
 		}
 	}
 	else // Display of user infos
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'warning_percentage'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -348,7 +348,7 @@ else if ($action == 'warning')
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_USER_INFO' => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 			'LOGIN'              => $member['display_name'],
@@ -364,7 +364,7 @@ else if ($action == 'warning')
 			'U_PM'               => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_PROFILE'          => UserUrlBuilder::profile($id_get)->rel(),
 			'L_INFO'             => $lang['user.warning.level'],
-		));
+		]);
 	}
 }
 else
@@ -374,7 +374,7 @@ else
 	if ($valid_user && !empty($id_get)) // User ban
 	{
 		try {
-			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'display_name', 'warning_percentage', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
+			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['user_id', 'display_name', 'warning_percentage', 'email'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -389,18 +389,18 @@ else
 		SessionData::recheck_cached_data_from_user_id($id_get);
 		$user = UserService::get_user($id_get);
 		$sanctions_duration = FormFieldMemberSanction::get_sanctions_duration();
-		HooksService::execute_hook_action('user_ban', $user->get_id(), array_merge($user->get_properties(), array('title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_banned' => $user_ban_duration)), isset($sanctions_duration[$user_ban_duration]) ? $sanctions_duration[$user_ban_duration] : '');
+		HooksService::execute_hook_action('user_ban', $user->get_id(), array_merge($user->get_properties(), ['title' => $user->get_display_name(), 'url' => UserUrlBuilder::profile($user->get_id())->rel(), 'delay_banned' => $user_ban_duration]), isset($sanctions_duration[$user_ban_duration]) ? $sanctions_duration[$user_ban_duration] : '');
 
 		AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_USER' => true,
 		'L_ACTION_INFO'     => $lang['user.bans.management'],
 
 		'U_XMLHTTPREQUEST'  => 'ban_user',
 		'U_ACTION'          => UserUrlBuilder::moderation_panel('ban')->rel() . '&amp;token=' . AppContext::get_session()->get_token()
-	));
+	]);
 
 	if (empty($id_get)) // List of already warned users
 	{
@@ -410,7 +410,7 @@ else
 
 			$user_id = 0;
 			try {
-				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', array('name' => '%' . $login . '%'));
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', ['name' => '%' . $login . '%']);
 			} catch (RowNotFoundException $ex) {}
 
 			if (!empty($user_id) && !empty($login))
@@ -419,25 +419,25 @@ else
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_USER_LIST' => true,
 
 			'L_TITLE' => $lang['user.bans.management'],
 			'L_INFO'  => $lang['user.ban.until'],
-		));
+		]);
 
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, delay_banned, warning_percentage
 		FROM " . PREFIX . "member
 		WHERE delay_banned > :now OR warning_percentage = 100
-		ORDER BY delay_banned", array(
+		ORDER BY delay_banned", [
 			'now' => time()
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$view->assign_block_vars('member_list', array(
+			$view->assign_block_vars('member_list', [
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 
 				'LOGIN'            => $row['display_name'],
@@ -448,7 +448,7 @@ else
 				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => UserUrlBuilder::moderation_panel('ban', $row['user_id'])->rel(),
 				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel(),
-			));
+			]);
 
 			$i++;
 		}
@@ -456,16 +456,16 @@ else
 
 		if ($i === 0)
 		{
-			$view->put_all(array(
+			$view->put_all([
 				'C_EMPTY_LIST' => true,
 				'L_NO_USER'    => $lang['user.no.ban'],
-			));
+			]);
 		}
 	}
 	else // Display of user infos
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_banned', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'delay_banned', 'warning_percentage'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -473,7 +473,7 @@ else
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_USER_BAN'         => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 
@@ -485,11 +485,11 @@ else
 			'U_PM'             => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO'    => UserUrlBuilder::moderation_panel('ban', $id_get)->rel() . '&amp;token=' . AppContext::get_session()->get_token(),
 			'U_PROFILE'        => UserUrlBuilder::profile($id_get)->rel(),
-		));
+		]);
 
 		// Ban duration
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array($lang['common.no'], '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], $lang['user.unlimited']);
+		$array_time = [0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000];
+		$array_sanction = [$lang['common.no'], '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], $lang['user.unlimited']];
 
 		$diff = ($member['delay_banned'] - time());
 		$key_sanction = 0;
@@ -513,9 +513,9 @@ else
 		foreach ($array_time as $key => $time)
 		{
 			$selected = ($key_sanction == $key) ? 'selected="selected"' : '' ;
-			$view->assign_block_vars('select_ban', array(
+			$view->assign_block_vars('select_ban', [
 				'TIME' => '<option value="' . $time . '" ' . $selected . '>' . $array_sanction[$key] . '</option>'
-			));
+			]);
 		}
 	}
 }

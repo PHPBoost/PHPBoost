@@ -5,9 +5,9 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      1rosehip
  * @link        https://github.com/1rosehip/jplist-es6
- * @version     PHPBoost 6.1 - last update: 2020 12 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 09 23
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * @patch       replace
  *      jplist -> listorder

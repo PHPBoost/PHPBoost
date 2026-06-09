@@ -5,7 +5,27 @@
  * Contains css for addons menu in modules/themes/langs administration page
 */
 
-.addon { position: relative; }
+.addons-container {
+    margin: 1.236em 0 0;
+}
+
+.addon-header > * {
+    padding: 0.618em 0.309em 0.309em 1.618em;
+}
+
+.addon {
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    margin-bottom: 0.309em;
+}
+
+.cell-list ul {
+    & li.addon {
+        padding: 0.228em;
+    }
+}
 
 .disabled-addon { opacity: 0.5 }
 
@@ -30,12 +50,11 @@
 
 .multiple-select-menu-container .addon-menu-title::after,
 .addon-with-menu .addon-menu-title::after {
+	font: var(--fa-font-solid);
+	content: '\f0d7';
 	position: absolute;
 	top: 0.618em;
 	right: 5px;
-	content: '\f0d7';
-	font-family: 'Font Awesome 7 free';
-	font-weight: 900;
 }
 
 .addon-with-menu .opened.addon-menu-title::after { content: '\f0d8'; }
@@ -67,7 +86,7 @@
         top: auto;
         bottom: 100%;
         width: 190px;
-    @media (min-width: 769px) { width: 180px; }
+    @media (min-width: 769px) { width: 200px; }
 }
 
 .opened + .addon-menu-content {
@@ -91,7 +110,7 @@
 	z-index: 1;
 	top: 100%;
 	left: 0;
-	padding: 8px 1px 10px 10px;
+	padding: 8px 5px 11px 10px;
 }
 
 .addon-menu-checkbox .checkbox {
@@ -105,18 +124,19 @@
     &.default-addon { cursor: not-allowed; }
 }
 
-.addon-auth
-
 .addon-auth-content {
 	position: absolute;
 	z-index: 1;
-	top: 0.618em;
 	left: -9999px;
 	width: auto;
 	padding: 0.456em 0.456em;
 	border-width: 1px;
 	border-style: solid;
     border-color: transparent;
+}
+
+.addon-auth-close {
+    cursor: pointer;
 }
 
 .opened > .addon-auth-content {
@@ -126,6 +146,10 @@
 
 @media (min-width: 769px) {
 	.theme-element .opened > .addon-auth-content { bottom: 0.309em; }
+}
+
+.actions-container > * {
+    margin-left: 0.309em !important;
 }
 
 .addon-auth-content select { max-height: 185px; }
@@ -174,4 +198,22 @@
 .hexa-icon {
 	font-size: 2.618em;
 	line-height: 0.9;
+}
+
+/* 6.1 */
+.addon-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addon-infos {
+    min-width: 90px;
+    &.addon-large { min-width: 170px; }
+}
+
+.addon-source-selector summary {
+    cursor: pointer;
+    padding: 0.618em;
+    text-align: right;
 }

@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 02 06
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractCategoriesFormController extends ModuleController
@@ -54,9 +54,9 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			$this->set_properties();
 			$this->save();
 			if ($this->is_new_category)
-				AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
+				AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), ['name' => $this->get_category()->get_name()]));
 			else
-				AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
+				AppContext::get_response()->redirect($this->form->get_value('referrer') ? $this->form->get_value('referrer') : $this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), ['name' => $this->get_category()->get_name()]));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -66,7 +66,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 
 	protected function build_form(HTTPRequestCustom $request)
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->get_title());
 
 		$fieldset = new FormFieldsetHTML('category', self::$lang['form.parameters']);
@@ -75,23 +75,23 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), ['required' => true]));
 
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
-			array(
-				'events' => array('click' => '
+			[
+				'events' => ['click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
 						HTMLForms.getField("rewrited_name").enable();
 					} else {
 						HTMLForms.getField("rewrited_name").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
-			array(
+			[
 				'description' => self::$lang['form.rewrited.title.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
-			),
-			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+			],
+			[new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu')]
 		));
 
 		if ($this->get_category()->is_allowed_to_have_childs())
@@ -110,21 +110,21 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$form->add_fieldset($fieldset_authorizations);
 
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$lang['form.authorizations'], $this->get_category()->has_special_authorizations(),
-			array(
+			[
 				'description' => self::$lang['category.form.authorizations.clue'],
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("special_authorizations").getValue()) {
-						jQuery("#' . __CLASS__ . '_authorizations").show();
+						jQuery("#' . self::class . '_authorizations").show();
 					} else {
-						jQuery("#' . __CLASS__ . '_authorizations").hide();
+						jQuery("#' . self::class . '_authorizations").hide();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$auth_settings = new AuthorizationsSettings(self::get_authorizations_settings());
 		$auth_settings->build_from_auth_array($this->get_category()->has_special_authorizations() ? $this->get_category()->get_authorizations() : self::$categories_manager->get_categories_cache()->get_category($this->get_category()->get_id_parent())->get_authorizations());
-		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => !$this->get_category()->has_special_authorizations())));
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, ['hidden' => !$this->get_category()->has_special_authorizations()]));
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 
@@ -257,13 +257,13 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	{
 		$module = $module_id ? ModulesManager::get_module($module_id) : self::get_module();
 
-		$authorizations = array(
+		$authorizations = [
 			new ActionAuthorization(self::$lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization(self::$lang['form.authorizations.duplication'], Category::DUPLICATION_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization(self::$lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS)
-		);
+		];
 
 		if ($module && !$module->get_configuration()->has_contribution())
 		{

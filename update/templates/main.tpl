@@ -1,4 +1,4 @@
-${resources('update/update')}
+${resources('update/common')}
 <!DOCTYPE html>
 <html lang="{L_XML_LANGUAGE}">
 	<head>
@@ -19,6 +19,7 @@ ${resources('update/update')}
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tabs.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>
@@ -33,7 +34,7 @@ ${resources('update/update')}
 					# IF NOT C_HAS_PREVIOUS_STEP #
 						<h5 class="menu-title">
 							<div class="site-logo"></div>
-							<span>{@language.change}</span>
+							<span>{@update.language.change}</span>
 						</h5>
 						<form class="align-center" action="{U_CHANGE_LANG}" method="post">
 							<label for="change_lang">
@@ -51,7 +52,7 @@ ${resources('update/update')}
 
 							</label>
 							<p id="button_change_lang">
-								<button type="submit" value="true" class="button submit">{@change}</button>
+								<button type="submit" value="true" class="button submit">{@update.change}</button>
 								<input type="hidden" name="token" value="{TOKEN}">
 							</p>
 							<script>
@@ -62,7 +63,7 @@ ${resources('update/update')}
 
 					<h5 class="menu-title">
 						<div class="site-logo"></div>
-						<span>{@steps.list}</span>
+						<span>{@update.steps.list}</span>
 					</h5>
 					<nav class="cssmenu cssmenu-vertical step-menu">
 						<ul>
@@ -95,13 +96,24 @@ ${resources('update/update')}
 				</div>
 			</div>
 			<footer id="footer">
-				<span>${LangLoader::get_message('common.powered.by', 'common-lang')} <a href="https://www.phpboost.com" aria-label="{@phpboost.link}">PHPBoost</a> {@phpboost.rights}</span>
+				<span>${LangLoader::get_message('common.powered.by', 'common-lang')} <a href="https://www.phpboost.com" aria-label="{@update.phpboost.link}">PHPBoost</a> {@update.phpboost.rights}</span>
 			</footer>
 		</div>
 		<script>
 			jQuery('.lang-selector').selectImg({
 				ariaLabel : ${escapejs(LangLoader::get_message('common.click.to.select', 'common-lang'))}
 			});
+            jQuery('*').on('focus', function(e) {
+                $this = jQuery(this);
+                jQuery(window).keyup(function (e) {
+                    var code = (e.keyCode ? e.keyCode : e.which);
+                    if (code == 9) {
+                        $this.addClass('focus-on-tab');
+                    }
+                });
+            }).on('click', function(e) {
+                jQuery(this).removeClass('focus-on-tab');
+            });
 		</script>
 	</body>
 </html>

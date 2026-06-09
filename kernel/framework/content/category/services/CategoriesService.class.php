@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 01 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 11 11
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CategoriesService
@@ -40,12 +40,12 @@ class CategoriesService
 			$module_categories_cache_class_name = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) && is_subclass_of($module_categories_cache_class_name, 'CategoriesCache') ? $module_categories_cache_class_name : '';
 			if ($categories_cache_class)
-				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', array($requested_module_id)) : call_user_func($categories_cache_class . '::load');
+				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', [$requested_module_id]) : call_user_func($categories_cache_class . '::load');
 			else if ($module->get_configuration()->feature_is_enabled('rich_categories'))
 				$categories_cache = DefaultRichCategoriesCache::load($module_id);
 			else if ($module->get_configuration()->feature_is_enabled('categories'))
 				$categories_cache = DefaultCategoriesCache::load($module_id);
-			else if (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, array('admin', 'kernel', 'user')))
+			else if (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, ['admin', 'kernel', 'user']))
 				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . $module_id);
 
 			$categories_items_parameters = new CategoriesItemsParameters();
@@ -84,15 +84,15 @@ class CategoriesService
 
 				$module_configuration = $module->get_configuration();
 
-				return StringVars::replace_vars($lang['category.default.root.category.description'], array(
+				return StringVars::replace_vars($lang['category.default.root.category.description'], [
 					'module_name'             => $module_configuration->get_name(),
-					'created_elements_number' => StringVars::replace_vars((isset($lang['default.created.elements.number']) ? $lang['default.created.elements.number'] : $lang['category.default.created.elements.number']), array('elements_number' => $elements_number)),
+					'created_elements_number' => StringVars::replace_vars((isset($lang['default.created.elements.number']) ? $lang['default.created.elements.number'] : $lang['category.default.created.elements.number']), ['elements_number' => $elements_number]),
 					'configuration_link'      => ModulesUrlBuilder::configuration($module_id)->relative(),
 					'add_category_link'       => CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
 					'add_item_link'           => ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $module_id)->relative(),
 					'items'                   => TextHelper::lcfirst($items_lang['items']),
 					'documentation_link'      => $module_configuration->get_documentation() ? $module_configuration->get_documentation() : 'https://www.phpboost.com'
-				));
+				]);
 			}
 		}
 		return '';

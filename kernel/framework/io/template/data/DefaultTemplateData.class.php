@@ -6,17 +6,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 03 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 19
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultTemplateData implements TemplateData
 {
 	private $strict = false;
-	private $vars = array();
+	private $vars = [];
 
 	/**
 	 * {@inheritdoc}
@@ -41,7 +41,8 @@ class DefaultTemplateData implements TemplateData
 	{
 		$session = AppContext::get_session();
 		$user = AppContext::get_current_user();
-		$this->put_all(array(
+		$this->put_all([
+            'C_IS_LOCALHOST'      => AppContext::get_request()->get_is_localhost(),
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'IS_USER_CONNECTED'   => $user->check_level(User::MEMBER_LEVEL),
 			'IS_ADMIN'            => $user->check_level(User::ADMINISTRATOR_LEVEL),
@@ -57,7 +58,7 @@ class DefaultTemplateData implements TemplateData
 			'PATH_TO_ROOT'     => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'U_SITE'	       => GeneralConfig::load()->get_site_url(),
-		));
+		]);
 
 		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
 		{
@@ -86,7 +87,7 @@ class DefaultTemplateData implements TemplateData
 
 					if ($display)
 					{
-						$this->put_all(array(
+						$this->put_all([
 							'C_HAS_TOP_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled(),
 							'C_HAS_HEADER_MENUS'      => !$columns_disabled->header_is_disabled(),
 							'C_HAS_SUB_HEADER_MENUS'  => !$columns_disabled->sub_header_is_disabled(),
@@ -105,7 +106,7 @@ class DefaultTemplateData implements TemplateData
 
 							'C_HAS_TOP_FOOTER_MENUS' => !$columns_disabled->top_footer_is_disabled(),
 							'C_HAS_FOOTER_MENUS'     => !$columns_disabled->footer_is_disabled(),
-						));
+						]);
 					}
 				}
 			}
@@ -120,9 +121,6 @@ class DefaultTemplateData implements TemplateData
 		$this->vars[$key] = $value;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function put_all(array $vars)
 	{
 		foreach ($vars as $key => $value)
@@ -134,7 +132,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
+	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = [])
 	{
 		$current_block = null;
 		if (TextHelper::strpos($block_name, '.') !== false) // nested block
@@ -178,7 +176,7 @@ class DefaultTemplateData implements TemplateData
 		{
 			throw new TemplateRenderingException('Undefined block \'' . $blockname . '\'');
 		}
-		return array();
+		return [];
 	}
 
 	/**

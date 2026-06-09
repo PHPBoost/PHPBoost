@@ -8,11 +8,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 08 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdministratorAlert extends Event
@@ -171,11 +171,11 @@ class AdministratorAlert extends Event
 	 */
 	public function get_properties()
 	{
-		return array_merge(parent::get_properties(), array(
+		return array_merge(parent::get_properties(), [
 			'priority'         => $this->get_priority(),
 			'priority_name'    => $this->get_priority_name(),
 			'alert_properties' => $this->get_alert_properties()
-		));
+		]);
 	}
 }
 ?>

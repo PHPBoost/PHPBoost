@@ -1,3 +1,4 @@
+<!-- === /templates/__default__/admin/modules/AdminModuleUpdateController.tpl === -->
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
 # INCLUDE CONTENT #

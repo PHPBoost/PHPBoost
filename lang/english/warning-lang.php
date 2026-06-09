@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 01 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.5 - 2006 06 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -112,6 +112,9 @@ $lang['warning.process.error']   = 'An error occurred during the operation';
 
 $lang['warning.confirm.delete']          = 'Do you really want to delete this item?';
 $lang['warning.confirm.delete.elements'] = 'Do you really want to delete these items?';
+
+$lang['warning.confirm.uninstall']          = 'Do you really want to uninstall this item?';
+$lang['warning.confirm.uninstall.elements'] = 'Do you really want to uninstall these items?';
 
 $lang['warning.success.config']          = 'The configuration has been modified';
 $lang['warning.success.position.update'] = 'The position of the items has been updated';

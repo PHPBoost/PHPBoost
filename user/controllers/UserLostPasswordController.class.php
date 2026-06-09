@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2022 12 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 07 25
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserLostPasswordController extends AbstractController
@@ -41,14 +41,14 @@ class UserLostPasswordController extends AbstractController
 
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->lang['user.forgotten.password']);
 
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['user.email'], '',
-			array('required' => true)
+			['required' => true]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -80,12 +80,12 @@ class UserLostPasswordController extends AbstractController
 		PHPBoostAuthenticationMethod::update_auth_infos($user->get_id(), null, null, null, null, $change_password_pass);
 
 		$general_config = GeneralConfig::load();
-		$parameters = array(
+		$parameters = [
 			'pseudo'               => $user->get_display_name(),
 			'host'                 => $general_config->get_complete_site_url(),
 			'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
 			'signature'            => MailServiceConfig::load()->get_mail_signature()
-		);
+		];
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['user.forgotten.password'];
 		$content = StringVars::replace_vars($this->lang['user.forgotten.password.email.content'], $parameters);
 		AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content);
@@ -96,7 +96,7 @@ class UserLostPasswordController extends AbstractController
 	private function get_user()
 	{
 		$email = $this->form->get_value('email');
-		$user_id = UserService::user_exists('WHERE email=:email', array('email' => $email));
+		$user_id = UserService::user_exists('WHERE email=:email', ['email' => $email]);
 
 		if (!$user_id)
 		{

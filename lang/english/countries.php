@@ -3,16 +3,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 06 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 25
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
 #                     English                      #
 ####################################################
 
-$lang = array(
+$lang = [
 	'ad' => 'Andorra',
 	'ae' => 'United Arab Emirates',
 	'af' => 'Afghanistan',
@@ -50,7 +50,7 @@ $lang = array(
 	'bz' => 'Belize',
 	'ca' => 'Canada',
 	'cc' => 'Cocos (Keeling) Islands',
-	'cd' => 'Congo, (The Democratic Republic of the',
+	'cd' => 'Congo, (The Democratic Republic of the)',
 	'cf' => 'Central African Republic',
 	'cg' => 'Congo',
 	'ch' => 'Switzerland',
@@ -83,7 +83,7 @@ $lang = array(
 	'fi' => 'Finland',
 	'fj' => 'Fiji',
 	'fk' => 'Falkland Islands (Malvinas)',
-	'fm' => 'Micronesia, (Federated States of',
+	'fm' => 'Micronesia, (Federated States of)',
 	'fo' => 'Faroe Islands',
 	'fr' => 'France',
 	'fs' => 'Scotland',
@@ -238,7 +238,7 @@ $lang = array(
 	'tt' => 'Trinidad and Tobago',
 	'tv' => 'Tuvalu',
 	'tw' => 'Taiwan',
-	'tz' => 'Tanzania, (United Republic of',
+	'tz' => 'Tanzania, (United Republic of)',
 	'ua' => 'Ukraine',
 	'ug' => 'Uganda',
 	'uk' => 'United Kingdom',
@@ -249,8 +249,8 @@ $lang = array(
 	'va' => 'Vatican City',
 	'vc' => 'Saint Vincent and the Grenadines',
 	've' => 'Venezuela',
-	'vg' => 'Virgin Islands, (British',
-	'vi' => 'Virgin Islands, (U.S.',
+	'vg' => 'Virgin Islands, (British)',
+	'vi' => 'Virgin Islands, (U.S.)',
 	'vn' => 'Vietnam',
 	'vu' => 'Vanuatu',
 	'wf' => 'Wallis and Futuna',
@@ -263,5 +263,5 @@ $lang = array(
 	'zr' => 'Zaire',
 	'zw' => 'Zimbabwe',
 	'other' => 'Others',
-);
+];
 ?>

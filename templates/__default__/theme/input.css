@@ -25,10 +25,20 @@
 	}
 }
 
-.button:hover  { transition: all 0.3s ease-in-out; text-decoration: none; }
+.button:hover  {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+}
 .button:active { transition: all 0.2s linear; }
 
 .button.image img { vertical-align: sub; }
+
+.button-mini {
+    padding: 0.309em;
+    margin: 0;
+    width: auto;
+}
 
 [disabled],
 [readonly] { cursor: not-allowed; }
@@ -120,6 +130,12 @@ option { padding: 0 0.228em; }
 	flex: 1 1 auto;
 	margin: 0;
 	width: 1%;
+}
+
+.inputs-with-sup .label-mini {
+    flex: 0 0 auto;
+	width: auto;
+    padding: 0 0.618em;
 }
 
 .grouped-checkbox { position: relative; }

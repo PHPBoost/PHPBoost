@@ -14,9 +14,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 11 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 09 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ConfigManager
@@ -80,7 +80,7 @@ class ConfigManager
 
 		try
 		{
-			$result = PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, array('value'), 'WHERE name = :name', array('name' => $name));
+			$result = PersistenceContext::get_querier()->select_single_row(DB_TABLE_CONFIGS, ['value'], 'WHERE name = :name', ['name' => $name]);
 		}
 		catch(RowNotFoundException $ex)
 		{
@@ -88,7 +88,12 @@ class ConfigManager
 		}
 
 		$required_value = @unserialize($result['value']);
-		if ($required_value === false)
+		// @unserialize() returns false on malformed data, but returns a
+		// __PHP_Incomplete_Class object when the class definition is missing
+		// (e.g. during an update where module paths have changed). Both cases
+		// must be treated as a cache miss so ConfigManager falls back to
+		// instantiating a fresh default object via new $classname().
+		if ($required_value === false || $required_value instanceof \__PHP_Incomplete_Class)
 		{
 			throw new ConfigNotFoundException($name);
 		}
@@ -136,7 +141,7 @@ class ConfigManager
 		$name = self::compute_entry_name($module_name, $entry_name);
 
 		try {
-			PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, 'WHERE name=:name', array('name' => $name));
+			PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, 'WHERE name=:name', ['name' => $name]);
 		} catch (MySQLQuerierException $e) {
 		}
 
@@ -147,16 +152,16 @@ class ConfigManager
 	{
 		$serialized_data = TextHelper::serialize($data);
 
-		$update = PersistenceContext::get_querier()->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :name', array('value' => $serialized_data, 'name' => $name));
+		$update = PersistenceContext::get_querier()->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :name', ['value' => $serialized_data, 'name' => $name]);
 
 		if ($update->get_affected_rows() == 0)
 		{
 			// If the update requests finds the row but has nothing to update, it affects 0 rows
-			$count = PersistenceContext::get_querier()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', array('name' => $name));
+			$count = PersistenceContext::get_querier()->count(DB_TABLE_CONFIGS, 'WHERE name = :name', ['name' => $name]);
 
 			if ($count == 0)
 			{
-				PersistenceContext::get_querier()->inject('INSERT INTO ' . DB_TABLE_CONFIGS . ' (name, value) VALUES (:name, :value)', array('name' => $name, 'value' => $serialized_data));
+				PersistenceContext::get_querier()->inject('INSERT INTO ' . DB_TABLE_CONFIGS . ' (name, value) VALUES (:name, :value)', ['name' => $name, 'value' => $serialized_data]);
 			}
 		}
 	}

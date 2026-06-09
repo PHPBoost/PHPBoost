@@ -6,9 +6,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 10 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 01 24
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FileUploadService
@@ -41,7 +41,7 @@ class FileUploadService
 		}
 		else
 		{
-			$files = array();
+			$files = [];
 			foreach ($properties['name'] as $id => $element)
 			{
 				if ($properties['error'][$id] == UPLOAD_ERR_OK)

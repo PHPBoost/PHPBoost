@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 04 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 02 25
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableModel
@@ -26,11 +26,11 @@ class HTMLTableModel
 	private $caption = '';
 	private $layout_title = '';
 	private $rows_per_page;
-	private $nb_rows_options = array(10, 25, 100);
+	private $nb_rows_options = [10, 25, 100];
 	private $default_sorting_rule;
-	private $allowed_sort_parameters = array();
-	private $filters = array();
-	private $permanent_filters = array();
+	private $allowed_sort_parameters = [];
+	private $filters = [];
+	private $permanent_filters = [];
 	private $filters_menu_title = '';
 	private $display_footer = true;
 	private $footer_css_class = '';

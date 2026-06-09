@@ -4,7 +4,7 @@
  *
  * Owl Carousel v2.3.4
  * Copyright 2013-2018 David Deutsch
- * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
+ * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/{VERSION}/LICENSE
  *
  * Use id="slideboost-*" to set a slider, where * has to be different if several sliders are on the same page
 */
@@ -50,6 +50,7 @@
 }
 
 .owl-carousel .owl-item {
+    cursor: grab;
     position: relative;
     min-height: 1px;
     float: left;
@@ -156,6 +157,8 @@
 }
 
 .owl-carousel .owl-video-play-icon {
+	font: var(--fa-font-solid);
+    content: '\f008';
     position: absolute;
     height: 80px;
     width: 80px;
@@ -163,9 +166,6 @@
     top: 50%;
     margin-left: -40px;
     margin-top: -40px;
-    content: '\f008';
-    font-family: 'Font Awesome 7 free';
-    font-weight: 900;
     cursor: pointer;
     z-index: 1;
     -webkit-backface-visibility: hidden;
@@ -208,9 +208,14 @@
     justify-content: space-between;
 
     button {
+        position: absolute;
+        bottom: 50%;
         font-size: 1em;
-        padding: 0.228em 0.618em;
+        padding: 0.228em 0.309em;
         border-radius: 50%;
         border: none;
+    }
+    .owl-next {
+        right: 0;
     }
 }

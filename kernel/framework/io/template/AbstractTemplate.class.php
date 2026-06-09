@@ -7,12 +7,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 11 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 06 18
- * @contributor Regis VIARRE <crowkait@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 abstract class AbstractTemplate implements Template
@@ -99,7 +99,7 @@ abstract class AbstractTemplate implements Template
 	/**
 	 * {@inheritdoc}
 	 */
-	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
+	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = [])
 	{
 		$this->data->assign_block_vars($block_name, $array_vars, $subtemplates);
 		return $this;
@@ -149,7 +149,7 @@ abstract class AbstractTemplate implements Template
 		$generated_page = $this->render();
 
 		$js_variables_definition = $included_js = $all_js = '';
-		$array_match_js = array();
+		$array_match_js = [];
 
 		if (!preg_match('`post\.php|edit`', REWRITED_SCRIPT))
 		{
@@ -169,14 +169,14 @@ abstract class AbstractTemplate implements Template
 					$all_js .= $value;
 			}
 
-			$all_js = str_replace(array('<!--', '-->'), '', $all_js);
+			$all_js = str_replace(['<!--', '-->'], '', $all_js);
 		}
 
 		$generated_page = preg_replace($array_match_js, '', $generated_page);
 		$generated_page = str_replace('</body>', '<script>' . $js_variables_definition . '</script>' . $included_js . '<script>' . $all_js . '</script></body>', $generated_page);
 
 		// Minifying html
-		$generated_page = trim(preg_replace(array('`([\t]+|<!-- .*?-->)`s', '`(\r\n)+|(\n)+|\n// .*\n`su'), array('', "\n"), $generated_page));
+		$generated_page = trim(preg_replace(['`([\t]+|<!-- .*?-->)`s', '`(\r\n)+|(\n)+|\n// .*\n`su'], ['', "\n"], $generated_page));
 
 		echo $generated_page;
 	}

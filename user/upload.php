@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 07 07
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 require_once('../kernel/begin.php');
@@ -20,22 +20,21 @@ define('TITLE', $lang['upload.files.management']);
 
 $request = AppContext::get_request();
 
-$popup = $request->get_getvalue('popup', '');
-$editor = $request->get_getvalue('edt', '');
-$parse = $request->get_getvalue('parse', '');
-$no_path = $request->get_getvalue('no_path', '');
+$popup        = $request->get_getvalue('popup', '');
+$editor       = $request->get_getvalue('edt', '');
+$parse        = $request->get_getvalue('parse', '');
+$no_path      = $request->get_getvalue('no_path', '');
 $close_button = $request->get_getvalue('close_button', '');
 $display_close_button = false;
 
 // Personal or shared files
-$request = AppContext::get_request();
 $is_shared_checkbox = ($request->get_postvalue('is_shared_checkbox', 'off') == 'on' ? 1 : 0);
 $item_id = $request->get_int('item_id', 0);
-$status = $request->get_int('status', 0);
+$status  = $request->get_int('status', 0);
 
 if ($item_id)
 {
-    PersistenceContext::get_querier()->update(PREFIX . "upload", array('shared' => $status), 'WHERE id = :id', array('id' => $item_id));
+    PersistenceContext::get_querier()->update(PREFIX . "upload", ['shared' => $status], 'WHERE id = :id', ['id' => $item_id]);
 }
 
 if (!empty($popup)) // Popup
@@ -91,7 +90,7 @@ if (!empty($parent_folder))
         AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=0&' . $popup_noamp, '', '&'));
 
     try {
-        $info_folder = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('id_parent', 'user_id'), 'WHERE id = :id', array('id' => $parent_folder));
+        $info_folder = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, ['id_parent', 'user_id'], 'WHERE id = :id', ['id' => $parent_folder]);
     } catch (RowNotFoundException $e) {
         $error_controller = PHPBoostErrors::unexisting_element();
         DispatchManager::redirect($error_controller);
@@ -148,7 +147,7 @@ elseif (!empty($_FILES['upload_file']['name']) && AppContext::get_request()->has
             { // Insertion in database
                 foreach ($Upload->get_files_parameters() as $parameters)
                 {
-                    $result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, array('shared' => $is_shared_checkbox, 'idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => AppContext::get_current_user()->get_id(), 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()));
+                    $result = PersistenceContext::get_querier()->insert(DB_TABLE_UPLOAD, ['shared' => $is_shared_checkbox, 'idcat' => $folder, 'name' => $parameters['name'], 'path' => $parameters['path'], 'user_id' => AppContext::get_current_user()->get_id(), 'size' => $parameters['size'], 'type' => $parameters['extension'], 'timestamp' => time()]);
                     $id_file = $result->get_last_inserted_id();
                 }
             }
@@ -170,7 +169,7 @@ elseif (!empty($del_folder))
     {
         $check_user_id = 0;
         try {
-            $check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $del_folder));
+            $check_user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $del_folder]);
         } catch (RowNotFoundException $ex) {
 
         }
@@ -217,7 +216,7 @@ elseif (!empty($move_folder) && $to != -1)
 
     $folder_owner = 0;
     try {
-        $folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move_folder));
+        $folder_owner = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $move_folder]);
     } catch (RowNotFoundException $ex) {
 
     }
@@ -225,7 +224,7 @@ elseif (!empty($move_folder) && $to != -1)
     if ($folder_owner == AppContext::get_current_user()->get_id())
     {
         include('upload_functions.php');
-        $sub_cats = array();
+        $sub_cats = [];
         upload_find_subcats($sub_cats, $move_folder, AppContext::get_current_user()->get_id());
         $sub_cats[] = $move_folder;
         // If we don't move the folder to one of its children or to himself
@@ -233,7 +232,7 @@ elseif (!empty($move_folder) && $to != -1)
         {
             if (AppContext::get_current_user()->get_id() || $to == 0)
             {
-                PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $to), 'WHERE id = :id', array('id' => $move_folder));
+                PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD_CAT, ['id_parent' => $to], 'WHERE id = :id', ['id' => $move_folder]);
                 AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
             }
         }
@@ -251,7 +250,7 @@ elseif (!empty($move_file) && $to != -1) // file move
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
     try {
-        $file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('idcat', 'user_id'), 'WHERE id = :id', array('id' => $move_file));
+        $file_infos = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, ['idcat', 'user_id'], 'WHERE id = :id', ['id' => $move_file]);
     } catch (RowNotFoundException $e) {
         $error_controller = PHPBoostErrors::unexisting_element();
         DispatchManager::redirect($error_controller);
@@ -265,7 +264,7 @@ elseif (!empty($move_file) && $to != -1) // file move
         // If destination folder belongs to user
         if (AppContext::get_current_user()->get_id() || $to == 0)
         {
-            PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD, array('idcat' => $to), 'WHERE id = :id', array('id' => $move_file));
+            PersistenceContext::get_querier()->update(DB_TABLE_UPLOAD, ['idcat' => $to], 'WHERE id = :id', ['id' => $move_file]);
             AppContext::get_response()->redirect(HOST . DIR . url('/user/upload.php?f=' . $to . '&' . $popup_noamp, '', '&'));
         }
         else
@@ -285,7 +284,7 @@ elseif (!empty($move_folder) || !empty($move_file))
     $view = new FileTemplate('user/upload_move.tpl');
     $view->add_lang($lang);
 
-    $view->put_all(array(
+    $view->put_all([
         'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
 
         'POPUP'     => $popup,
@@ -293,21 +292,21 @@ elseif (!empty($move_folder) || !empty($move_file))
         'FOLDER_ID' => !empty($folder) ? $folder : '0',
 
         'U_FOLDER' => Uploads::get_url($folder, '', '&amp;' . $popup),
-    ));
+    ]);
 
     if ($get_error == 'folder_contains_folder')
         $view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.folder.contains.folder', 'warning-lang'), MessageHelper::WARNING));
 
     // list of available files
     include_once('upload_functions.php');
-    $cats = array();
+    $cats = [];
 
     $is_folder = !empty($move_folder);
     // Displaying the folder / file to move
     if ($is_folder)
     {
         try {
-            $folder_info = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, array('name', 'id_parent'), 'WHERE id = :id', array('id' => $move_folder));
+            $folder_info = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD_CAT, ['name', 'id_parent'], 'WHERE id = :id', ['id' => $move_folder]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -315,20 +314,20 @@ elseif (!empty($move_folder) || !empty($move_file))
 
         $name = $folder_info['name'];
         $id_cat = $folder_info['id_parent'];
-        $view->assign_block_vars('folder', array(
+        $view->assign_block_vars('folder', [
             'NAME' => $name
-        ));
-        $view->put_all(array(
+        ]);
+        $view->put_all([
             'SELECTED_CAT' => $id_cat,
             'ID_FILE'      => $move_folder,
             'TARGET'       => url('upload.php?movefd=' . $move_folder . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
-        ));
+        ]);
         $cat_explorer = display_cat_explorer($id_cat, $cats, AppContext::get_current_user()->get_id(), 1);
     }
     else
     {
         try {
-            $info_move = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, array('path', 'name', 'type', 'size', 'idcat'), 'WHERE id = :id', array('id' => $move_file));
+            $info_move = PersistenceContext::get_querier()->select_single_row(DB_TABLE_UPLOAD, ['path', 'name', 'type', 'size', 'idcat'], 'WHERE id = :id', ['id' => $move_file]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -348,7 +347,7 @@ elseif (!empty($move_folder) || !empty($move_file))
 
         $cat_explorer = display_cat_explorer($info_move['idcat'], $cats, AppContext::get_current_user()->get_id(), 1);
 
-        $view->assign_block_vars('file', array(
+        $view->assign_block_vars('file', [
 			'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
             'C_REAL_IMG'           => $display_real_img,
 
@@ -356,18 +355,18 @@ elseif (!empty($move_folder) || !empty($move_file))
             'FILETYPE'  => $get_img_mimetype['filetype'] . $size_img,
             'SIZE'      => ($info_move['size'] > 1024) ? NumberHelper::round($info_move['size'] / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($info_move['size'], 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang'),
             'FILE_ICON' => FileUploadConfig::load()->get_display_file_thumbnail() ? ($display_real_img ? $info_move['path'] : $get_img_mimetype['img']) : $get_img_mimetype['img']
-        ));
+        ]);
 
-        $view->put_all(array(
+        $view->put_all([
             'SELECTED_CAT' => $info_move['idcat'],
             'TARGET'       => url('upload.php?movefi=' . $move_file . '&amp;f=0&amp;token=' . AppContext::get_session()->get_token() . $popup)
-        ));
+        ]);
     }
 
-    $view->put_all(array(
+    $view->put_all([
         'FOLDERS' => $cat_explorer,
         'ID_FILE' => $move_file
-    ));
+    ]);
 
     $view->display();
 }
@@ -379,7 +378,7 @@ else
     $view->add_lang($lang);
 
     // errors management
-    $array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach');
+    $array_error = ['e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_unlink_disabled', 'e_max_data_reach'];
     if (in_array($get_error, $array_error))
         $view->put('MESSAGE_HELPER', MessageHelper::display($lang[$get_error], MessageHelper::WARNING));
     if ($get_error == 'incomplete')
@@ -388,7 +387,7 @@ else
     if (isset($lang[$get_l_error]))
         $view->put('MESSAGE_HELPER', MessageHelper::display($lang[$get_l_error], MessageHelper::WARNING));
 
-    $view->put_all(array(
+    $view->put_all([
         'C_POPUP'                => !empty($popup),
         'C_DISPLAY_CLOSE_BUTTON' => $display_close_button,
 
@@ -400,27 +399,27 @@ else
         'MAX_FILE_SIZE'      => ServerConfiguration::get_upload_max_filesize(),
         'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
         'ALLOWED_EXTENSIONS' => implode('", "', $files_upload_config->get_authorized_extensions()),
-    ));
+    ]);
 
-    list($total_folder_size, $total_shared_size, $total_personal_files, $total_shared_files, $total_directories) = array(0, 0, 0, 0, 0);
+    list($total_folder_size, $total_shared_size, $total_personal_files, $total_shared_files, $total_directories) = [0, 0, 0, 0, 0];
     // folder display
     $result = PersistenceContext::get_querier()->select("SELECT id, name, id_parent, user_id
 	FROM " . DB_TABLE_UPLOAD_CAT . "
 	WHERE id_parent = :id_parent AND user_id = :user_id
-	ORDER BY name", array(
+	ORDER BY name", [
         'id_parent' => $folder,
         'user_id'   => AppContext::get_current_user()->get_id()
-    ));
+    ]);
     while ($row = $result->fetch()) {
         $name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
-        $view->assign_block_vars('folder', array(
+        $view->assign_block_vars('folder', [
             'ID'                => $row['id'],
             'NAME'              => $name_cut,
             'RENAME_FOLDER'     => '<span id="fhref' . $row['id'] . '"><a href="javascript:display_rename_folder(\'' . $row['id'] . '\', \'' . addslashes($row['name']) . '\', \'' . addslashes($name_cut) . '\');" aria-label="' . LangLoader::get_message('common.edit', 'common-lang') . '"><i class="far fa-edit"></i></a></span>',
             // 'MOVE'              => '<a href="javascript:upload_display_block(' . $row['id'] . ');" onmouseover="upload_hide_block(' . $row['id'] . ', 1);" onmouseout="upload_hide_block(' . $row['id'] . ', 0);" class="fa fa-share" aria-label="' . LangLoader::get_message('common.move.to', 'common-lang') . '"></a>',
             'U_MOVE'            => url('.php?movefd=' . $row['id'] . '&amp;f=' . $folder . $popup),
-        ));
+        ]);
         $total_directories ++;
     }
     $result->dispose();
@@ -428,7 +427,7 @@ else
     $now = new Date();
 
     // Personal or Shared loop
-    $types = array('personal_files' => 'up.idcat = :idcat AND up.user_id = :user_id', 'shared_files' => 'up.shared = 1');
+    $types = ['personal_files' => 'up.idcat = :idcat AND up.user_id = :user_id', 'shared_files' => 'up.shared = 1'];
     foreach ($types as $loop_id => $where_clause)
     {
         // Display files inside folder
@@ -436,10 +435,10 @@ else
         FROM " . DB_TABLE_UPLOAD . " up
         LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = up.user_id
         WHERE " . $where_clause . "
-        ORDER BY up.name", array(
+        ORDER BY up.name", [
             'idcat' => $folder,
             'user_id' => AppContext::get_current_user()->get_id()
-        ));
+        ]);
         while ($row = $result->fetch()) {
             $name_cut = (TextHelper::strlen(TextHelper::html_entity_decode($row['name'])) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($row['name']), 0, 22)) . '...' : $row['name'];
 
@@ -488,13 +487,13 @@ else
                     $tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
                     $link = '/upload/' . $row['path'];
             }
-            $is_bbcode_editor = ($editor == 'BBCode');
+            $is_bbcode_editor = ($editor == 'bbcode');
             $displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
             $inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
 
             $view->assign_block_vars($loop_id, array_merge(
                 Date::get_array_tpl_vars(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
-                array(
+                [
                 'C_FILE_EXISTS' => $file->exists(),
                 'C_ENABLED_THUMBNAILS' => FileUploadConfig::load()->get_display_file_thumbnail(),
                 'C_IMG' => $get_img_mimetype['img'] == 'far fa-file-image',
@@ -514,7 +513,7 @@ else
                 'LIGHTBOX'       => !empty($size_img) ? ' data-lightbox="1"' : '',
 
                 'U_MOVE' => url('.php?movefi=' . $row['id'] . '&amp;f=' . $folder . $popup)
-            )));
+            ]));
 
             if ($loop_id == 'shared_files')
             {
@@ -534,13 +533,13 @@ else
 
     $total_size = 0;
     try {
-        $total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+        $total_size = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :id', ['id' => AppContext::get_current_user()->get_id()]);
     } catch (RowNotFoundException $ex) {
 
     }
 
     $total_size = !empty($folder) ? Uploads::Member_memory_used(AppContext::get_current_user()->get_id()) : $total_size;
-    $view->put_all(array(
+    $view->put_all([
         'PERCENT'              => !$unlimited_data ? '(' . NumberHelper::round($total_size / $group_limit, 3) * 100 . '%)' : '',
         'SIZE_LIMIT'           => !$unlimited_data ? (($group_limit > 1024) ? NumberHelper::round($group_limit / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang') : NumberHelper::round($group_limit, 0) . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang')) : LangLoader::get_message('common.unlimited', 'common-lang'),
         'MAX_FILES_SIZE'       => !$unlimited_data ? (($group_limit * 1024 > 1024 * 1024) ? NumberHelper::round($group_limit * 1024, 2) : NumberHelper::round($group_limit * 1024, 0)) : -1,
@@ -550,13 +549,13 @@ else
         'TOTAL_FOLDERS'        => $total_directories,
         'TOTAL_PERSONAL_FILES' => $total_personal_files,
         'TOTAL_SHARED_FILES'   => $total_shared_files
-    ));
+    ]);
 
-    $view->put_all(array(
+    $view->put_all([
         'C_PERSONAL_SUMMARY' => $total_directories > 0 || $total_personal_files > 0,
         'C_PERSONAL_FILES'   => $total_personal_files > 0,
         'C_SHARED_FILES'     => $total_shared_files > 0,
-    ));
+    ]);
 
     $view->display();
 }

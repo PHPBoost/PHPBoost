@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 03 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2021 03 27
 */
 
@@ -27,7 +27,7 @@ class AjaxModuleCategoriesListController extends AbstractController
 			}
 		}
 
-		return new JSONResponse(array('options' => $options));
+		return new JSONResponse(['options' => $options]);
 	}
 }
 ?>

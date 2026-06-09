@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 01 31
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 04 05
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserLoginController extends AbstractController
@@ -115,13 +115,13 @@ class UserLoginController extends AbstractController
 
 		foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 		{
-			$this->view->assign_block_vars('external_auth', array(
+			$this->view->assign_block_vars('external_auth', [
 				'U_CONNECT'  => UserUrlBuilder::connect($id)->rel(),
 				'ID'         => $id,
 				'NAME'       => $authentication->get_authentication_name(),
 				'IMAGE_HTML' => $authentication->get_image_renderer_html(),
 				'CSS_CLASS'  => $authentication->get_css_class()
-			));
+			]);
 			$external_authentication++;
 		}
 
@@ -134,7 +134,7 @@ class UserLoginController extends AbstractController
 			$header_logo_path = $customize_interface->get_header_logo_path();
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_DISPLAY_EXTERNAL_AUTHENTICATION' => $external_authentication,
 			'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
 			'C_USER_LOGIN'           => $this->login_type == self::USER_LOGIN && !$this->maintain_config->is_under_maintenance(),
@@ -148,16 +148,16 @@ class UserLoginController extends AbstractController
 			'U_REGISTER'           => UserUrlBuilder::registration()->rel(),
 			'U_FORGOTTEN_PASSWORD' => UserUrlBuilder::forget_password()->rel(),
 			'LOGIN_FORM'           => $this->form->display(),
-		));
+		]);
 
 		if ($this->maintain_config->is_under_maintenance())
 		{
 			$this->init_maintain_delay();
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_MAINTAIN' => true,
 				'L_MAINTAIN' => FormatingHelper::second_parse($this->maintain_config->get_message()),
-			));
+			]);
 		}
 	}
 
@@ -229,11 +229,11 @@ class UserLoginController extends AbstractController
 		$this->form->add_fieldset($this->fieldset);
 
 		$this->fieldset->add_field(new FormFieldTextEditor('login', $this->lang['user.username'], '',
-			array('description' => $this->lang['user.username.tooltip'], 'required' => true)
+			['description' => $this->lang['user.username.tooltip'], 'required' => true]
 		));
 
 		$this->fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['user.password'], '',
-			array('required' => true)
+			['required' => true]
 		));
 
 		$this->fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['user.auto.connect'], true));
@@ -268,8 +268,8 @@ class UserLoginController extends AbstractController
 
 	private function init_maintain_delay()
 	{
-		$array_time = array(0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800');
-		$array_delay = array(0 => $this->lang['common.unspecified'], 1 => '', 2 => '1 ' . $this->lang['date.minute'], 3 => '5 ' . $this->lang['date.minutes'], 4 => '15 ' . $this->lang['date.minutes'], 5 => '30 ' . $this->lang['date.minutes'], 6 => '1 ' . $this->lang['date.hour'], 7 => '2 ' . $this->lang['date.hours'], 8 => '1 ' . $this->lang['date.day'], 9 => '2 ' . $this->lang['date.days'], 10 => '1 ' . $this->lang['date.week']);
+		$array_time = [0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'];
+		$array_delay = [0 => $this->lang['common.unspecified'], 1 => '', 2 => '1 ' . $this->lang['date.minute'], 3 => '5 ' . $this->lang['date.minutes'], 4 => '15 ' . $this->lang['date.minutes'], 5 => '30 ' . $this->lang['date.minutes'], 6 => '1 ' . $this->lang['date.hour'], 7 => '2 ' . $this->lang['date.hours'], 8 => '1 ' . $this->lang['date.day'], 9 => '2 ' . $this->lang['date.days'], 10 => '1 ' . $this->lang['date.week']];
 
 		if (!$this->maintain_config->is_unlimited_maintenance())
 		{
@@ -287,28 +287,28 @@ class UserLoginController extends AbstractController
 			}
 
 			// Calculating date format
-			$array_release = array(Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE), (Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE));
+			$array_release = [Date::to_format($end_timestamp, 'Y', Timezone::SITE_TIMEZONE), (Date::to_format($end_timestamp, 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format($end_timestamp, 'j', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'G', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 'i', Timezone::SITE_TIMEZONE), Date::to_format($end_timestamp, 's', Timezone::SITE_TIMEZONE)];
 
-			$array_now = array(Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE));
+			$array_now = [Date::to_format(time(), 'Y', Timezone::SITE_TIMEZONE), (Date::to_format(time(), 'n', Timezone::SITE_TIMEZONE) - 1), Date::to_format(time(), 'j', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'G', Timezone::SITE_TIMEZONE), Date::to_format(time(), 'i', Timezone::SITE_TIMEZONE), Date::to_format(time(), 's', Timezone::SITE_TIMEZONE)];
 		}
 		else
 		{
 			$key = -1;
-			$array_release = array('0', '0', '0', '0', '0', '0');
-			$array_now = array('0', '0', '0', '0', '0', '0');
+			$array_release = ['0', '0', '0', '0', '0', '0'];
+			$array_now = ['0', '0', '0', '0', '0', '0'];
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MAINTAIN_NOW_FORMAT' => implode(',', $array_now),
 			'MAINTAIN_RELEASE_FORMAT' => implode(',', $array_release)
-		));
+		]);
 
 		if ($this->maintain_config->get_display_duration() && !$this->maintain_config->is_unlimited_maintenance())
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_DISPLAY_DELAY' => true,
 				'DELAY'           => isset($array_delay[$key + 1]) ? $array_delay[$key + 1] : '0'
-			));
+			]);
 		}
 	}
 }

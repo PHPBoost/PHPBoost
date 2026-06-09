@@ -6,15 +6,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2017 03 10
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 04 28
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 {
-	private $options = array();
+	private $options = [];
 
 	/**
 	 * @param string $label string The label
@@ -39,15 +39,15 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 	{
 
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceGroupOption.tpl');
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'LABEL' => $this->get_label()
-		));
+		]);
 
 		foreach ($this->options as $option)
 		{
-			$tpl->assign_block_vars('options', array(), array(
+			$tpl->assign_block_vars('options', [], [
 				'OPTION' => $option->display()
-			));
+			]);
 		}
 
 		return $tpl;

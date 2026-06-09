@@ -3,9 +3,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 08 02
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 02 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '..');
@@ -20,7 +20,7 @@ if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == 
 UpdateEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();
-if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable())
+if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable())
 {
 	die('Cache folder is not writable (/cache)');
 }
@@ -31,7 +31,7 @@ if ($_GET || $_POST)
 
 	if (!empty($arguments_list))
 	{
-		$argv = array('phpboost', 'update');
+		$argv = ['phpboost', 'update'];
 		$update_requested = false;
 		foreach ($arguments_list as $id => $arg)
 		{
@@ -58,13 +58,13 @@ if ($_GET || $_POST)
 	}
 }
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	new UrlControllerMapper('UpdateIntroductionController', '`^(?:/introduction)?/?$`'),
 	new UrlControllerMapper('UpdateServerConfigController', '`^/server/?$`'),
 	new UrlControllerMapper('UpdateDBConfigController', '`^/database/?$`'),
 	new UrlControllerMapper('UpdateVersionExecuteController', '`^/execute/?$`'),
 	new UrlControllerMapper('UpdateFinishController', '`^/finish/?$`')
-);
+];
 DispatchManager::dispatch($url_controller_mappers);
 
 ?>

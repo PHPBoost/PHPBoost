@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 08
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class LinksMenuLink extends LinksMenuElement
@@ -23,11 +23,12 @@ class LinksMenuLink extends LinksMenuElement
 	* @param string $url Destination url
 	* @param string $image Menu's image url relative to the website root or absolute
 	* @param string $icon Menu's icon class
+	* @param bool $target If true, opens the link in a new window
 	* @param int $id The Menu's id in the database
 	*/
-	public function __construct($title, $url, $image = '', $icon = '')
+	public function __construct($title, $url, $target, $image = '', $icon = '')
 	{
-		parent::__construct($title, $url, $image, $icon);
+		parent::__construct($title, $url, $target, $image, $icon);
 	}
 
 	/**
@@ -44,10 +45,10 @@ class LinksMenuLink extends LinksMenuElement
 		}
 
 		parent::_assign($template, $mode);
-		$template->put_all(array(
+		$template->put_all([
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
 			'C_LINK' => true
-		));
+		]);
 
 		return $template->render();
 	}

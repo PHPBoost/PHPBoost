@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 07 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 03 13
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
@@ -40,16 +40,16 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email AND user_id != :user_id', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email AND user_id != :user_id', [
 				'email' => $field->get_value(),
 				'user_id' => $this->user_id
-			));
+			]);
 		}
 		else if ($field->get_value())
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', [
 				'email' => $field->get_value()
-			));
+			]);
 		}
 		return false;
 	}

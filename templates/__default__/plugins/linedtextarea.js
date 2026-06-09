@@ -5,7 +5,7 @@
  * @author      Alan Williamson
  * @link
  * @doc         https://github.com/cotenoni/jquery-linedtextarea
- * @version     PHPBoost 6.1 - last update: 2020 09 18
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.0 - 2017 03 04
  *
  */

@@ -10,10 +10,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 09 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 11 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PHPBoostAuthenticationMethod extends AuthenticationMethod
@@ -43,7 +43,8 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	public function __construct($login, $password)
 	{
 		$this->login = $login;
-		$this->password = KeyGenerator::string_hash($password);
+		// Store plain password for verification with both bcrypt and legacy hashes
+		$this->password = $password;
 		$this->querier = PersistenceContext::get_querier();
 	}
 
@@ -63,19 +64,19 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	 */
 	public function associate($user_id)
 	{
-		$internal_authentication_columns = array(
+		$internal_authentication_columns = [
 			'user_id' => $user_id,
 			'login' => $this->login,
-			'password' => $this->password,
+			'password' => PasswordHasher::hash($this->password),
 			'registration_pass' => $this->registration_pass,
 			'last_connection' => time(),
 			'approved' => (int)$this->approved
-		);
-		$authentication_method_columns = array(
+		];
+		$authentication_method_columns = [
 			'user_id' => $user_id,
 			'method' => self::AUTHENTICATION_METHOD,
 			'identifier' => $user_id
-		);
+		];
 		try {
 			$this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION, $internal_authentication_columns);
 			$this->querier->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
@@ -91,10 +92,10 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	public function dissociate($user_id)
 	{
 		try {
-			$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+			$this->querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', [
 				'user_id' => $user_id,
 				'method' => self::AUTHENTICATION_METHOD
-			));
+			]);
 		} catch (SQLQuerierException $ex) {
 			throw new IllegalArgumentException('User Id ' . $user_id .
 				' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
@@ -152,7 +153,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$match = false;
 		}
 
-		$auth_infos = array();
+		$auth_infos = [];
 		try {
 			$auth_infos = self::get_auth_infos($user_id);
 		} catch (RowNotFoundException $e) {
@@ -166,7 +167,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$remaining_attempts = $this->get_remaining_attemps();
 			if ($remaining_attempts > 0)
 			{
-				$this->error_msg = StringVars::replace_vars(LangLoader::get_message('warning.user.auth.password.flood', 'warning-lang'), array('remaining_tries' => $remaining_attempts));
+				$this->error_msg = StringVars::replace_vars(LangLoader::get_message('warning.user.auth.password.flood', 'warning-lang'), ['remaining_tries' => $remaining_attempts]);
 			}
 			else
 			{
@@ -185,9 +186,9 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	private function find_user_id_by_username()
 	{
-		$columns = array('user_id', 'last_connection', 'connection_attemps');
+		$columns = ['user_id', 'last_connection', 'connection_attemps'];
 		$condition = 'WHERE login=:login AND approved=1';
-		$parameters = array('login' => $this->login);
+		$parameters = ['login' => $this->login];
 		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 		$this->connection_attempts = $row['connection_attemps'];
 		$this->last_connection_date = $row['last_connection'];
@@ -214,42 +215,81 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	private function check_user_password($user_id)
 	{
-		$condition = 'WHERE user_id=:user_id and password=:password';
-		$parameters = array('user_id' => $user_id, 'password' => $this->password);
-		$match = $this->querier->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters, '*');
-		if ($match)
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = ['user_id' => $user_id];
+
+		try
 		{
-			$this->connection_attempts = 0;
+			$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, ['password'], $condition, $parameters);
+			$stored_hash = $row['password'];
+
+			// Verify password against bcrypt or legacy hash
+			$verification = PasswordHasher::verify($this->password, $stored_hash);
+
+			if ($verification['verified'])
+			{
+				// If password needs migration from legacy to bcrypt
+				if ($verification['needs_migration'])
+				{
+					$this->migrate_password_to_bcrypt($user_id);
+				}
+
+				$this->connection_attempts = 0;
+				return true;
+			}
+			else
+			{
+				$this->connection_attempts++;
+				return false;
+			}
 		}
-		else
+		catch (RowNotFoundException $ex)
 		{
 			$this->connection_attempts++;
+			return false;
 		}
-		return $match;
+	}
+
+	private function migrate_password_to_bcrypt($user_id): void
+	{
+		try
+		{
+			$bcrypt_hash = PasswordHasher::hash($this->password);
+			$columns = ['password' => $bcrypt_hash];
+			$condition = 'WHERE user_id=:user_id';
+			$parameters = ['user_id' => $user_id];
+			$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		}
+		catch (Exception $ex)
+		{
+			// Log error but don't break authentication
+			error_log('Error migrating password to bcrypt for user ' . $user_id . ': ' . $ex->getMessage());
+		}
 	}
 
 	private function update_user_info($user_id)
 	{
 		$this->last_connection_date = time();
-		$columns = array(
+		$columns = [
 			'last_connection' => $this->last_connection_date,
 			'connection_attemps' => $this->connection_attempts,
-		);
+		];
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 
 	public static function get_auth_infos($user_id)
 	{
-		$columns = array('login', 'password', 'approved');
+		$columns = ['login', 'password', 'approved'];
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 		return PersistenceContext::get_querier()->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 	}
 
 	public static function update_auth_infos($user_id, $login = null, $approved = null, $password = null, $registration_pass = null, $change_password_pass = null)
 	{
+        $columns = [];
 		if (!empty($login))
 			$columns['login'] = $login;
 
@@ -257,7 +297,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$columns['approved'] = (int)$approved;
 
 		if (!empty($password))
-			$columns['password'] = $password;
+			$columns['password'] = PasswordHasher::hash($password);
 
 		if ($registration_pass !== null)
 			$columns['registration_pass'] = $registration_pass;
@@ -266,7 +306,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$columns['change_password_pass'] = $change_password_pass;
 
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 		PersistenceContext::get_querier()->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
 
 		UserService::regenerate_cache();
@@ -282,7 +322,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	{
 		try {
 			$condition = 'WHERE registration_pass=:registration_pass';
-			$parameters = array('registration_pass' => $registration_pass);
+			$parameters = ['registration_pass' => $registration_pass];
 			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
 		} catch (RowNotFoundException $e) {
 			return false;
@@ -293,7 +333,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	{
 		try {
 			$condition = 'WHERE change_password_pass=:change_password_pass';
-			$parameters = array('change_password_pass' => $change_password_pass);
+			$parameters = ['change_password_pass' => $change_password_pass];
 			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_INTERNAL_AUTHENTICATION, 'user_id', $condition, $parameters);
 		} catch (RowNotFoundException $e) {
 			return false;
@@ -303,15 +343,15 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	private function delete_too_old_failure_attemps()
 	{
 		$condition = 'WHERE last_connection < :reset_delay';
-		$parameters = array('reset_delay' => time() - self::$MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY);
+		$parameters = ['reset_delay' => time() - self::$MAX_AUTHORIZED_ATTEMPTS_RESET_DELAY];
 		$this->querier->delete(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $condition, $parameters);
 	}
 
 	private function find_failure_login_tried_id_by_username()
 	{
-		$columns = array('id', 'last_connection', 'connection_attemps');
+		$columns = ['id', 'last_connection', 'connection_attemps'];
 		$condition = 'WHERE login=:login AND session_id=:session_id';
-		$parameters = array('login' => $this->login, 'session_id' => AppContext::get_session()->get_session_id());
+		$parameters = ['login' => $this->login, 'session_id' => AppContext::get_session()->get_session_id()];
 		$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns, $condition, $parameters);
 		$this->connection_attempts = $row['connection_attemps'];
 		$this->last_connection_date = $row['last_connection'];
@@ -320,23 +360,23 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	private function insert_failure_info()
 	{
-		$columns = array(
+		$columns = [
 			'session_id' => AppContext::get_session()->get_session_id(),
 			'login' => $this->login,
 			'last_connection' => $this->last_connection_date,
 			'connection_attemps' => $this->connection_attempts,
-		);
+		];
 		$this->querier->insert(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns);
 	}
 
 	private function update_failure_info($failure_id)
 	{
-		$columns = array(
+		$columns = [
 			'last_connection' => $this->last_connection_date,
 			'connection_attemps' => $this->connection_attempts
-		);
+		];
 		$condition = 'WHERE id=:id';
-		$parameters = array('id' => $failure_id);
+		$parameters = ['id' => $failure_id];
 		$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION_FAILURES, $columns, $condition, $parameters);
 	}
 }

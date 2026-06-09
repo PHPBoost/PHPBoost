@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 04 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2021 11 30
 */
 
@@ -55,10 +55,10 @@ abstract class DefaultAdminModuleController extends AdminModuleController
 
 		$this->view->add_lang($this->lang);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MODULE_ID'   => self::get_module()->get_id(),
 			'MODULE_NAME' => self::get_module_configuration()->get_name()
-		));
+		]);
 	}
 	
 	protected function init_lang()

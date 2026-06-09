@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 06 21
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 02 06
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractDeleteCategoryController extends ModuleController
@@ -46,7 +46,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 			self::$categories_manager->delete($this->get_category()->get_id());
 			HooksService::execute_hook_action('delete_category', self::$module_id, $this->get_category()->get_properties());
 			$this->clear_cache();
-			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
+			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), ['name' => $this->get_category()->get_name()]));
 		}
 
 		$this->build_form();
@@ -78,7 +78,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 			$categories_cache::invalidate();
 			$this->clear_cache();
 			HooksService::execute_hook_action('delete_category', self::$module_id, $this->get_category()->get_properties());
-			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), array('name' => $this->get_category()->get_name())));
+			AppContext::get_response()->redirect($this->get_categories_management_url(), StringVars::replace_vars($this->get_success_message(), ['name' => $this->get_category()->get_name()]));
 		}
 
 		$tpl->put('FORM', $this->form->display());
@@ -96,7 +96,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 
 	private function build_form()
 	{
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->get_title());
 
 		$fieldset = new FormFieldsetHTML('delete_category', $this->lang['form.parameters']);
@@ -104,14 +104,14 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['category.delete.all.content'], FormFieldCheckbox::UNCHECKED,
-			array(
-				'events' => array('click' => '
+			[
+				'events' => ['click' => '
 					if (HTMLForms.getField("delete_category_and_content").getValue()) {
 						HTMLForms.getField("move_in_other_cat").disable();
 					} else {
 						HTMLForms.getField("move_in_other_cat").enable();
-					}')
-				)
+					}']
+				]
 			)
 		);
 
@@ -141,8 +141,8 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		return PersistenceContext::get_querier()->row_exists(
 		self::$categories_manager->get_categories_items_parameters()->get_table_name_contains_items(),
 		'WHERE '. self::$categories_manager->get_categories_items_parameters()->get_field_name_id_category().'=:id_category',
-		array('id_category' => $category->get_id()
-		));
+		['id_category' => $category->get_id()
+		]);
 	}
 
 	private function get_category()

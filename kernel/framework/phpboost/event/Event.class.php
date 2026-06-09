@@ -10,10 +10,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 11 18
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 21
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Event
@@ -120,7 +120,7 @@ class Event
 	 */
 	public function set_status($new_current_status)
 	{
-		if (in_array($new_current_status, array(self::EVENT_STATUS_UNREAD, self::EVENT_STATUS_BEING_PROCESSED, self::EVENT_STATUS_PROCESSED), TRUE))
+		if (in_array($new_current_status, [self::EVENT_STATUS_UNREAD, self::EVENT_STATUS_BEING_PROCESSED, self::EVENT_STATUS_PROCESSED], TRUE))
 		{
 			$this->current_status = $new_current_status;
 		}
@@ -316,7 +316,7 @@ class Event
 	 */
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id'            => $this->get_id(),
 			'entitled'      => $this->get_entitled(),
 			'fixing_url'    => $this->get_fixing_url(),
@@ -326,7 +326,7 @@ class Event
 			'id_in_module'  => $this->get_id_in_module(),
 			'identifier'    => $this->get_identifier(),
 			'type'          => $this->get_type()
-		);
+		];
 	}
 }
 ?>

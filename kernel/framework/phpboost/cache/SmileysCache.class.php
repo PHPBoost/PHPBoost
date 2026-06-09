@@ -5,32 +5,32 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2015 12 17
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2014 08 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SmileysCache implements CacheData
 {
-	private $smileys = array();
+	private $smileys = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->smileys = array();
+		$this->smileys = [];
 
 		$querier = PersistenceContext::get_querier();
 
-		$columns = array('idsmiley', 'code_smiley', 'url_smiley');
+		$columns = ['idsmiley', 'code_smiley', 'url_smiley'];
 		$result = $querier->select_rows(PREFIX . 'smileys', $columns);
 		while ($row = $result->fetch())
 		{
-			$this->smileys[$row['code_smiley']] = array(
+			$this->smileys[$row['code_smiley']] = [
 				'idsmiley' => $row['idsmiley'],
 				'url_smiley' => $row['url_smiley']
-			);
+			];
 		}
 		$result->dispose();
 	}

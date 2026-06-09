@@ -6,36 +6,36 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 02 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 09 29
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GroupsCache implements CacheData
 {
-	private static $default_groups_value = array();
+	private static $default_groups_value = [];
 
-	private $groups = array();
+	private $groups = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->groups = array();
-		$columns = array('id', 'name', 'img', 'color', 'auth', 'members');
+		$this->groups = [];
+		$columns = ['id', 'name', 'img', 'color', 'auth', 'members'];
 		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_GROUP, $columns, 'ORDER BY id');
 		while ($row = $result->fetch())
 		{
-			$this->groups[$row['id']] = array(
+			$this->groups[$row['id']] = [
 				'name' => stripslashes($row['name']),
 				'img' => $row['img'],
 				'color' => $row['color'],
 				'auth' => TextHelper::unserialize(stripslashes($row['auth'])),
 				'members' => explode('|', $row['members'])
-			);
+			];
 		}
 		$result->dispose();
 	}

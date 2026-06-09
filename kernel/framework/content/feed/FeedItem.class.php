@@ -6,9 +6,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 10 03
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 06 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FeedItem
@@ -50,7 +50,7 @@ class FeedItem
     public function set_enclosure(FeedItemEnclosure $value) { $this->enclosure = $value; }
     /**
      * Sets the feed item auth, useful to check authorizations
-     * @param int[string] $value the item authorizations array
+     * @param int[] $value the item authorizations array
      */
     public function set_auth($auth) { $this->auth = $auth; }
     /**

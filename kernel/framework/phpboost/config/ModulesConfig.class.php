@@ -6,9 +6,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 06 21
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 12
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ModulesConfig extends AbstractConfigData
@@ -20,9 +20,9 @@ class ModulesConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
-			self::$modules_property => array()
-		);
+		return [
+			self::$modules_property => [],
+		];
 	}
 
 	/**
@@ -47,7 +47,7 @@ class ModulesConfig extends AbstractConfigData
 
 	/**
 	 * Sets the modules list
-	 * @param Module[string] $modules_list The modules list
+	 * @param Module[] $modules_list The modules list
 	 */
 	public function set_modules(array $modules)
 	{
@@ -93,7 +93,7 @@ class ModulesConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'modules');
+		return ConfigManager::load(self::class, 'kernel', 'modules');
 	}
 
 	/**

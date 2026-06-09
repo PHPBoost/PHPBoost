@@ -1,6 +1,6 @@
 <ul class="tabs-items">
 	# START action #
-		<li class="tab-item --{action.TARGET}# IF action.C_CSS_CLASS # {action.CLASS}# ENDIF # # IF NOT action.C_IS_ACTIVE_MODULE # hidden# ENDIF #">
+		<li class="tab-item --{action.TARGET}# IF action.C_CSS_CLASS # {action.CLASS}# ENDIF # # IF NOT action.C_IS_ACTIVE_MODULE # hidden# ENDIF ## IF action.CLASS # {action.CLASS}# ENDIF #">
             # IF action.C_PICTURE #
                 # IF action.C_IMG #
                     <img src="{action.U_IMG}" alt="{action.TITLE}" />

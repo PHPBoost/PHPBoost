@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 04 12
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 01 08
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsService
@@ -35,18 +35,18 @@ class ItemsService
 	public static function get_items_lang($module_id, $filename = 'common')
 	{
 		$items_lang = LangLoader::get('item-lang');
-		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : array();
-		$parameters_list = $parameters = array();
+		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : [];
+		$parameters_list = $parameters = [];
 
 		$module_name = ModulesManager::get_module($module_id)->get_configuration()->get_name();
 		$item_name = TextHelper::mb_substr($module_name, '-1') == 's' ? TextHelper::mb_substr(str_replace('s ', ' ', $module_name), 0, -1) : $items_lang['item'];
 		$items_lang['item'] = isset($module_lang['item']) ? $module_lang['item'] : $item_name;
-		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : ((preg_match('/s /', $module_name) || TextHelper::mb_substr($module_name, '-1') == 's') ? $module_name : StringVars::replace_vars($items_lang['items'], array('items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : ''))));
+		$items_lang['items'] = isset($module_lang['items']) ? $module_lang['items'] : ((preg_match('/s /', $module_name) || TextHelper::mb_substr($module_name, '-1') == 's') ? $module_name : StringVars::replace_vars($items_lang['items'], ['items' => $items_lang['item'] . (TextHelper::mb_substr($items_lang['item'], '-1') != 's' ? 's' : '')]));
 
 		// Specific lang variables
-		if (AppContext::get_current_user()->get_locale() == 'french' && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')) && isset($items_lang['the.item.alt2']))
+		if (AppContext::get_current_user()->get_locale() == 'french' && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), ['a', 'e', 'i', 'o', 'u', 'y']) && isset($items_lang['the.item.alt2']))
 			$module_lang['the.item'] = $items_lang['the.item.alt2'];
-		if (AppContext::get_current_user()->get_locale() == 'english' && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')) && isset($items_lang['an.item.alt']))
+		if (AppContext::get_current_user()->get_locale() == 'english' && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), ['a', 'e', 'i', 'o', 'u', 'y']) && isset($items_lang['an.item.alt']))
 			$module_lang['an.item'] = $items_lang['an.item.alt'];
 
 		foreach (array_keys($items_lang) as $element)

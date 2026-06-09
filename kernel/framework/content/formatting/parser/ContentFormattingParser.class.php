@@ -6,24 +6,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 02 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 08 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ContentFormattingParser extends AbstractParser
 {
 	/**
-	 * @var array Authorization of the HTML BBCode tag.
+	 * @var array Authorization of the HTML Bbcode tag.
 	 */
-	protected $html_auth = array();
+	protected $html_auth = [];
 	/**
-	 * @var array List of the BBCode forbidden tags
+	 * @var array List of the Bbcode forbidden tags
 	 */
-	protected $forbidden_tags = array();
+	protected $forbidden_tags = [];
 
 	/**
 	 * Buils a ContentFormattingParser object.
@@ -114,14 +114,14 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * Splits a string according to a regular expression. The matched pattern can be nested and must follow the BBCode syntax,
+	 * Splits a string according to a regular expression. The matched pattern can be nested and must follow the Bbcode syntax,
 	 * i.e matching [tag=args]content of the tag[/tag].
 	 * It returns an array
 	 * For example, il you have this: $my_str = '[tag=1]test1[/tag]test2[tag=2]test3[tag=3]test4[/tag]test5[/tag]?est6';
 	 * You call it like that: ContentFormattingParser::preg_split_safe_recurse($my_str, 'tag', '[0-9]');
-	 * It will return you array('', '1', 'test1', 'test2', '2', array('test3', '3', 'test4', 'test5'), 'test6').
+	 * It will return you ['', '1', 'test1', 'test2', '2', ['test3', '3', 'test4', 'test5'], 'test6'].
 	 * @param $content string Content into which you want to search the pattern
-	 * @param $tag string BBCode tage name
+	 * @param $tag string Bbcode tage name
 	 * @param $attributes string The regular expression (PCRE syntax) corresponding to the arguments which you want to match.
 	 * There mustn't be any matching parenthesis into that regular expression
 	 * @return array the split string
@@ -131,7 +131,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		// Définitions des index de position de début des tags valides
 		$index_tags = self::index_tags($content, $tag, $attributes);
 		$size = count($index_tags);
-		$parsed = array();
+		$parsed = [];
 
 		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
@@ -200,7 +200,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	{
 		$pos = -1;
 		$nb_open_tags = 0;
-		$tag_pos = array();
+		$tag_pos = [];
 
 		while (($pos = strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
@@ -286,13 +286,13 @@ abstract class ContentFormattingParser extends AbstractParser
 		}
 
 		//On efface tout ce qu'on a prélevé du array
-		$this->array_tags[$tag] = array();
+		$this->array_tags[$tag] = [];
 
 		return true;
 	}
 
 	/**
-	 * @desc Parses module special tags if any.
+	 * Parses module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
 	 */
 	protected function parse_module_special_tags()
@@ -303,13 +303,13 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	protected function parse_feed_tag()
 	{
-		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
+		$this->content = str_replace(['[[FEED', '[[/FEED]]'], ['\[\[FEED', '\[\[/FEED\]\]'], $this->content);
 		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`uU', '[[FEED$1]]$2[[/FEED]]', $this->content);
-		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
+		$this->content = str_replace(['\[\[FEED', '\[\[/FEED\]\]'], ['[[FEED', '[[/FEED]]'], $this->content);
 	}
 
 	/**
-	 * @desc Callback which parses the font awasome icons tag
+	 * Callback which parses the font awasome icons tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
@@ -321,7 +321,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		if ( !empty($matches[1]) ) {
 			$options = str_replace('=', '', explode(',', $matches[1]));
 			foreach ($options as $option) {
-				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fat', 'fab', 'fal', 'fad')) ) {
+				if ( array_search(ltrim($option), ['fa', 'fas', 'far', 'fat', 'fab', 'fal', 'fad']) ) {
 					$fa_prefix = ltrim($option);
 				} else {
 					$fa_code = $fa_code . ' ' . ltrim($option);
@@ -335,7 +335,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which parses the html emojis
+	 * Callback which parses the html emojis
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the emo tag are parsed
 	 */
@@ -345,7 +345,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which parses the wikipedia tag
+	 * Callback which parses the wikipedia tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */

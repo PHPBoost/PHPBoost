@@ -3,7 +3,7 @@
  * template = (variableExpression | expression | condition | loop | include | text)*
  * variableExpression = "{", variable, "}"
  * expression = "${", expressionContent, "}"
- * condition = "# IF ", "NOT "?, expression, "#", template, ("# ELSE #, template)?, "# ENDIF #"
+ * condition = "# IF ", "NOT "?, expression, "#", template, ("# ELSEIF ", "NOT "?, expression, "#", template)*, ("# ELSE #", template)?, "# ENDIF #"
  * loop = "# START ", expression, " #", template, "# END (?:name)? #"
  * include = "# INCLUDE ", name, " #"
  * text = .+
@@ -12,7 +12,7 @@
  * parameters = expressionContent | (expressionContent, (",", expressionContent)+)
  * variable = simpleVar | loopVar
  * constant = "'.+'" | [0-9]+ | array
- * array = "array(", arrayContent, ")"
+ * array = "[", arrayContent, "]"
  * arrayContent = arrayElement | (arrayElement, (",", arrayElement)+)
  * arrayElement = expressionContent | ("'\w+'\s*=>\s*", expressionContent)
  * simpleVar = "\w+"
@@ -22,9 +22,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 06 17
- * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TemplateSyntaxParser implements TemplateParser

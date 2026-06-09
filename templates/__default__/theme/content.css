@@ -186,11 +186,10 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 .notation .star-width:before {
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
+	font: var(--fa-font-solid);
+	content:"\f005";
 	left: 0;
 	top:0;
-	content:"\f005";
 	display:block;
 	overflow:hidden;
 }

@@ -49,9 +49,7 @@
     border-radius: 0.309em;
     border-width: 1px;
     border-style: solid;
-    border-color: var(--bdr-main);
-    color: var(--txt-sub);
-    background-color: var(--bgc-sub);
+    border-color: transparent;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -68,16 +66,11 @@
     margin: 0.228em 0 0;
 }
 
-.tab-item.current-tab {
-    background-color: var(--bgc-main);
-    color: var(--txt-main);
-}
-
 .tabs-wrapper {
     order: 2;
     border-width: 1px;
     border-style: solid;
-    border-color: var(--bdr-main);
+    border-color: transparent;
     padding: 1.228em;
     flex: 1 1 auto;
 }
@@ -90,6 +83,11 @@
     opacity: 0;
     visibility: hidden;
     height: 0;
+
+    form{
+        margin: 0;
+        padding: 0;
+    }
 }
 
 .tab-content:not(.current-tab) .current-tab { display: none; }

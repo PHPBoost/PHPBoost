@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 04 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 12 20
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Item
@@ -335,7 +335,7 @@ class Item
 		if (isset($parameters['key']))
 		{
 			if ($parameters['key'] == true)
-				$this->additional_attributes_items_table_options[$id] = array('type' => 'key', 'fields' => $id);
+				$this->additional_attributes_items_table_options[$id] = ['type' => 'key', 'fields' => $id];
 
 			unset($parameters['key']);
 		}
@@ -343,7 +343,7 @@ class Item
 		if (isset($parameters['fulltext']))
 		{
 			if ($parameters['fulltext'] == true)
-				$this->additional_attributes_items_table_options[$id] = array('type' => 'fulltext', 'fields' => $id);
+				$this->additional_attributes_items_table_options[$id] = ['type' => 'fulltext', 'fields' => $id];
 
 			unset($parameters['fulltext']);
 		}
@@ -351,21 +351,21 @@ class Item
 		if (isset($parameters['is_url']))
 		{
 			if ($parameters['is_url'] == true)
-				$this->additional_attributes_list[$id] = array('is_url' => $parameters['is_url'], 'is_array' => false);
+				$this->additional_attributes_list[$id] = ['is_url' => $parameters['is_url'], 'is_array' => false];
 
 			unset($parameters['is_url']);
 		}
 		elseif (isset($parameters['is_array']))
 		{
 			if ($parameters['is_array'] == true)
-				$this->additional_attributes_list[$id] = array('is_array' => $parameters['is_array'], 'is_url' => false);
+				$this->additional_attributes_list[$id] = ['is_array' => $parameters['is_array'], 'is_url' => false];
 
 			unset($parameters['is_array']);
 		}
 		else
-			$this->additional_attributes_list[$id] = array('is_url' => false, 'is_array' => false);
+			$this->additional_attributes_list[$id] = ['is_url' => false, 'is_array' => false];
 
-		foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_options_field_parameters') as $attribute_field)
+		foreach (['attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_options_field_parameters'] as $attribute_field)
 		{
 			if (isset($parameters[$attribute_field]))
 			{
@@ -429,13 +429,13 @@ class Item
 
 	public function get_properties()
 	{
-		$category_properties = self::$module->get_configuration()->has_categories() ? array('id_category' => $this->get_id_category()) : [];
-		$content_properties = $this->content_field_enabled ? array(self::get_content_label() => $this->get_content()) : [];
+		$category_properties = self::$module->get_configuration()->has_categories() ? ['id_category' => $this->get_id_category()] : [];
+		$content_properties = $this->content_field_enabled ? [self::get_content_label() => $this->get_content()] : [];
 
 		return array_merge(
 			$category_properties,
 			$content_properties,
-			array(
+			[
                 'id'                                  => $this->get_id(),
                 self::get_title_label()               => $this->get_title(),
                 'rewrited_' . self::get_title_label() => $this->get_rewrited_title(),
@@ -443,7 +443,7 @@ class Item
                 'creation_date'                       => $this->get_creation_date()->get_timestamp(),
                 'update_date'                         => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : 0,
                 'published'                           => $this->get_publishing_state()
-            ), $this->get_additional_properties()
+            ], $this->get_additional_properties()
         );
 	}
 
@@ -588,20 +588,20 @@ class Item
 		$lang = LangLoader::get_all_langs();
 
 		$fields_list = array_merge(
-			array(
-				self::get_title_label() => array('database_field' => self::get_title_label(), 'label' => $lang['common.title'], 'icon' => 'fa fa-sort-alpha-up'),
-				'author'                => array('database_field' => 'display_name', 'label' => $lang['common.author'], 'icon' => 'far fa-user'),
-				'date'                  => array('database_field' => 'creation_date', 'label' => $lang['common.creation.date'], 'icon' => 'far fa-calendar-alt'),
-				'update_date'           => array('database_field' => 'update_date', 'label' => $lang['common.last.update'], 'icon' => 'far fa-calendar-plus')
-			),
+			[
+				self::get_title_label() => ['database_field' => self::get_title_label(), 'label' => $lang['common.title'], 'icon' => 'fa fa-sort-alpha-up'],
+				'author'                => ['database_field' => 'display_name', 'label' => $lang['common.author'], 'icon' => 'far fa-user'],
+				'date'                  => ['database_field' => 'creation_date', 'label' => $lang['common.creation.date'], 'icon' => 'far fa-calendar-alt'],
+				'update_date'           => ['database_field' => 'update_date', 'label' => $lang['common.last.update'], 'icon' => 'far fa-calendar-plus']
+			],
 			$this->get_kernel_additional_sorting_fields(),
 			$this->get_additional_sorting_fields()
 		);
 
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::$module_id))
-			$fields_list['comments'] = array('database_field' => 'comments_number', 'label' => $lang['common.sort.by.comments.number'], 'icon' => 'far fa-comments');
+			$fields_list['comments'] = ['database_field' => 'comments_number', 'label' => $lang['common.sort.by.comments.number'], 'icon' => 'far fa-comments'];
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::$module_id))
-			$fields_list['notes'] = array('database_field' => 'average_notes', 'label' => $lang['common.sort.by.best.note'], 'icon' => 'far fa-star');
+			$fields_list['notes'] = ['database_field' => 'average_notes', 'label' => $lang['common.sort.by.best.note'], 'icon' => 'far fa-star'];
 
 		return $fields_list;
 	}
@@ -622,7 +622,7 @@ class Item
 
 		foreach ($this->get_sorting_fields_list() as $id => $parameters)
 		{
-			$sort_options[$id] = new FormFieldSelectChoiceOption($parameters['label'], $id, array('data_option_icon' => $parameters['icon']));
+			$sort_options[$id] = new FormFieldSelectChoiceOption($parameters['label'], $id, ['data_option_icon' => $parameters['icon']]);
 		}
 
 		return $sort_options;
@@ -631,17 +631,17 @@ class Item
 	public static function get_sorting_mode_options()
 	{
 		$lang = LangLoader::get_all_langs();
-		return array(
-			new FormFieldSelectChoiceOption($lang['common.sort.asc'], TextHelper::strtolower(self::ASC), array('data_option_icon' => 'fa fa-arrow-up')),
-			new FormFieldSelectChoiceOption($lang['common.sort.desc'], TextHelper::strtolower(self::DESC), array('data_option_icon' => 'fa fa-arrow-down'))
-		);
+		return [
+			new FormFieldSelectChoiceOption($lang['common.sort.asc'], TextHelper::strtolower(self::ASC), ['data_option_icon' => 'fa fa-arrow-up']),
+			new FormFieldSelectChoiceOption($lang['common.sort.desc'], TextHelper::strtolower(self::DESC), ['data_option_icon' => 'fa fa-arrow-down'])
+		];
 	}
 
 	public function get_global_template_vars()
 	{
-		return array(
+		return [
 			'C_DISPLAY_SUB_CATEGORIES' => $this->sub_categories_displayed
-		);
+		];
 	}
 
 	public function get_item_url()
@@ -657,7 +657,7 @@ class Item
 		{
 			$category = $this->get_category();
 
-			$categories_template_vars = array(
+			$categories_template_vars = [
 				'C_HAS_CATEGORY'       => true,
 				'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
 				'CATEGORY_ID'          => $category->get_id(),
@@ -666,47 +666,47 @@ class Item
 				'U_CATEGORY'           => CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
 				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), self::$module_id)->rel()
-			);
+			];
 		}
 
 		if (self::$module->get_configuration()->feature_is_enabled('comments'))
 		{
 			$comments_number = CommentsService::get_comments_number(self::$module_id, $this->get_id());
 
-			$comments_template_vars = array(
+			$comments_template_vars = [
 				'C_SEVERAL_COMMENTS' => $comments_number > 1,
 				'COMMENTS_LABEL'     => CommentsService::get_number_and_lang_comments(self::$module_id, $this->get_id()),
 				'COMMENTS_NUMBER'    => $comments_number,
 				'U_COMMENTS'         => self::$module->get_configuration()->has_categories() ? ItemsUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item_comments($this->get_id(), $this->get_rewrited_title())->rel(),
-			);
+			];
 		}
 
 		if (self::$module->get_configuration()->feature_is_enabled('notation'))
 		{
-			$notation_template_vars = array(
+			$notation_template_vars = [
 				'STATIC_NOTATION' => NotationService::display_static_image($this->get_notation())
-			);
+			];
 		}
 
 		if (self::$module->get_configuration()->feature_is_enabled('newcontent'))
 		{
-			$newcontent_template_vars = array(
+			$newcontent_template_vars = [
 				'C_NEW_CONTENT' => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date(self::$module_id, $this->publishing_start_date != null ? $this->publishing_start_date->get_timestamp() : $this->get_creation_date()->get_timestamp()) && $this->is_published()
-			);
+			];
 		}
 
 		if (self::$module->get_configuration()->feature_is_enabled('keywords'))
 		{
-			$keywords_template_vars = array(
+			$keywords_template_vars = [
 				'C_KEYWORDS' => $this->get_keywords()
-			);
+			];
 		}
 
 		if (self::$module->get_configuration()->feature_is_enabled('sources'))
 		{
-			$sources_template_vars = array(
+			$sources_template_vars = [
 				'C_SOURCES' => $this->get_sources()
-			);
+			];
 		}
 
 		$content            = FormatingHelper::second_parse($this->content);
@@ -724,7 +724,7 @@ class Item
 			$newcontent_template_vars,
 			$keywords_template_vars,
 			$sources_template_vars,
-			array(
+			[
 			// Conditions
 			'C_CONTROLS'            => $this->is_authorized_to_edit() || $this->is_authorized_to_duplicate() || $this->is_authorized_to_delete(),
 			'C_DUPLICATE'           => $this->is_authorized_to_duplicate(),
@@ -753,7 +753,7 @@ class Item
 			'U_EDIT'           => ItemsUrlBuilder::edit($this->id, self::$module->get_id())->rel(),
 			'U_DELETE'         => ItemsUrlBuilder::delete($this->id, self::$module->get_id())->rel(),
 			'U_SYNDICATION'    => SyndicationUrlBuilder::rss(self::$module_id, $this->id_category)->rel()
-			),
+			],
 			$this->get_kernel_additional_template_vars($content),
 			$this->get_additional_template_vars()
 		);
@@ -776,10 +776,10 @@ class Item
 
 	public function get_template_keyword_vars($keyword)
 	{
-		return array(
+		return [
 			'NAME' => $keyword->get_name(),
 			'URL' => ItemsUrlBuilder::display_tag($keyword->get_rewrited_name(), self::$module_id)->rel()
-		);
+		];
 	}
 
 	public function get_template_source_vars($source_name)
@@ -789,11 +789,11 @@ class Item
 
 		if (isset($sources[$source_name]))
 		{
-			$vars = array(
+			$vars = [
 				'C_SEPARATOR' => array_search($source_name, array_keys($sources)) < count($sources) - 1,
 				'NAME'        => $source_name,
 				'URL'         => $sources[$source_name]
-			);
+			];
 		}
 
 		return $vars;
@@ -810,49 +810,49 @@ class Item
 
 		if ($object->content_field_enabled())
 		{
-			$content_field = array($class_name::get_content_label() => array('type' => 'text', 'length' => 16777215));
-			$content_option = array('content' => array('type' => 'fulltext', 'fields' => $class_name::get_content_label()));
+			$content_field = [$class_name::get_content_label() => ['type' => 'text', 'length' => 16777215]];
+			$content_option = ['content' => ['type' => 'fulltext', 'fields' => $class_name::get_content_label()]];
 		}
 		else
 			$content_field = $content_option = [];
 
 		if ($module->get_configuration()->has_categories())
 		{
-			$kernel_additional_fields['id_category'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
-			$kernel_additional_indexes['id_category'] = array('type' => 'key', 'fields' => 'id_category');
+			$kernel_additional_fields['id_category'] = ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0];
+			$kernel_additional_indexes['id_category'] = ['type' => 'key', 'fields' => 'id_category'];
 		}
 
 		if ($module->get_configuration()->feature_is_enabled('deferred_publication'))
 		{
-			$kernel_additional_fields['publishing_start_date'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
-			$kernel_additional_fields['publishing_end_date'] = array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0);
+			$kernel_additional_fields['publishing_start_date'] = ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0];
+			$kernel_additional_fields['publishing_end_date'] = ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0];
 		}
 
 		if ($module->get_configuration()->feature_is_enabled('sources'))
 		{
-			$kernel_additional_fields['sources'] = array('type' => 'text', 'length' => 65000);
+			$kernel_additional_fields['sources'] = ['type' => 'text', 'length' => 65000];
 		}
 
-		$fields = array_merge(array(
-			'id'                                         => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'autoincrement' => true),
-			$class_name::get_title_label()               => array('type' => 'string',  'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_' . $class_name::get_title_label() => array('type' => 'string',  'length' => 255, 'default' => "''")
-		),
+		$fields = array_merge([
+			'id'                                         => ['type' => 'integer', 'length' => 11,  'notnull' => 1, 'autoincrement' => true],
+			$class_name::get_title_label()               => ['type' => 'string',  'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'rewrited_' . $class_name::get_title_label() => ['type' => 'string',  'length' => 255, 'default' => "''"]
+		],
 		$content_field,
-		array(
-			'author_user_id'                             => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
-			'creation_date'                              => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
-			'update_date'                                => array('type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0),
-			'published'                                  => array('type' => 'integer', 'length' => 1,   'notnull' => 1, 'default' => 0)
-		), $kernel_additional_fields, $object->get_additional_attributes_items_table_fields());
+		[
+			'author_user_id'                             => ['type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0],
+			'creation_date'                              => ['type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0],
+			'update_date'                                => ['type' => 'integer', 'length' => 11,  'notnull' => 1, 'default' => 0],
+			'published'                                  => ['type' => 'integer', 'length' => 1,   'notnull' => 1, 'default' => 0]
+		], $kernel_additional_fields, $object->get_additional_attributes_items_table_fields());
 
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array_merge(array(
-					'title'   => array('type' => 'fulltext', 'fields' => $class_name::get_title_label())
-				), $content_option, $kernel_additional_indexes, $object->get_additional_attributes_items_table_options()
+		$options = [
+			'primary' => ['id'],
+			'indexes' => array_merge([
+					'title'   => ['type' => 'fulltext', 'fields' => $class_name::get_title_label()]
+				], $content_option, $kernel_additional_indexes, $object->get_additional_attributes_items_table_options()
 			)
-		);
+		];
 
 		PersistenceContext::get_dbms_utils()->create_table($module->get_configuration()->get_items_table_name(), $fields, $options);
 	}

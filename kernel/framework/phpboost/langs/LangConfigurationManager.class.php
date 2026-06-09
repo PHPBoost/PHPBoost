@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2014 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 01 19
 */
 
@@ -28,7 +28,7 @@ class LangConfigurationManager
 	{
 		if (self::$cache_manager === null)
 		{
-			self::$cache_manager = DataStoreFactory::get_ram_store(__CLASS__);
+			self::$cache_manager = DataStoreFactory::get_ram_store(self::class);
 		}
 		return self::$cache_manager;
 	}

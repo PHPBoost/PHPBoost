@@ -19,12 +19,11 @@
 }
 
 .message-helper:before {
+	font: var(--fa-font-solid);
 	position: absolute;
 	left: 0.228em;
 	top: 0.228em;
 	width: 28px;
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-style: normal;
 	line-height: normal;
 	font-size: 1.5em;

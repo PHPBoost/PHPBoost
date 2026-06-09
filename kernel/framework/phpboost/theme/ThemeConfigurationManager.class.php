@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 02 02
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 04 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ThemeConfigurationManager
@@ -30,7 +30,7 @@ class ThemeConfigurationManager
 	{
 		if (self::$cache_manager === null)
 		{
-			self::$cache_manager = DataStoreFactory::get_ram_store(__CLASS__);
+			self::$cache_manager = DataStoreFactory::get_ram_store(self::class);
 		}
 		return self::$cache_manager;
 	}

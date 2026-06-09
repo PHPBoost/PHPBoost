@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 02 11
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractCategoriesManagementController extends ModuleController
@@ -50,13 +50,13 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 		$number_categories = count($categories);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_NO_CATEGORY'        => $number_categories <= 1, // Root category is not considered as a category
 			'C_SEVERAL_CATEGORIES' => $number_categories > 2, // Root category is not displayed, but taken into account in the calculation
 
 			'FIELDSET_TITLE' => $this->get_title(),
 			'MODULE_ID' 	 => Environment::get_running_module_name(),
-		));
+		]);
 		$this->build_children_view($this->view, $categories, Category::ROOT_CATEGORY);
 	}
 
@@ -81,7 +81,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 				$category_view = new FileTemplate('__default__/framework/content/categories/category.tpl');
 				$category_view->add_lang($this->lang);
-				$category_view->put_all(array(
+				$category_view->put_all([
 					'C_DESCRIPTION'            => !empty($description),
 					'C_COLOR'                  => !empty($color),
 					'C_ALLOWED_TO_HAVE_CHILDS' => $category->is_allowed_to_have_childs(),
@@ -91,16 +91,16 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 					'NAME'                        => $category->get_name(),
 					'DESCRIPTION'                 => $description,
 					'COLOR'                       => $color,
-					'DELETE_CONFIRMATION_MESSAGE' => StringVars::replace_vars($this->get_delete_confirmation_message(), array('name' => $category->get_name())),
+					'DELETE_CONFIRMATION_MESSAGE' => StringVars::replace_vars($this->get_delete_confirmation_message(), ['name' => $category->get_name()]),
 
 					'U_DISPLAY' => $this->get_display_category_url($category)->rel(),
 					'U_EDIT'    => $this->get_edit_category_url($category)->rel(),
 					'U_DELETE'  => $this->get_delete_category_url($category)->rel(),
-				));
+				]);
 
 				$this->build_children_view($category_view, $categories, $id);
 
-				$template->assign_block_vars('children', array('child' => $category_view->render()));
+				$template->assign_block_vars('children', ['child' => $category_view->render()]);
 			}
 		}
 	}
@@ -119,7 +119,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 				self::$categories_manager->update_position($category, Category::ROOT_CATEGORY, ($position + 1));
 
-				$this->update_children_positions($tree->children[0], $category->get_id());
+				$this->update_children_positions(isset($tree->children[0]) ? $tree->children[0] : [], $category->get_id());
 			}
 
 			$categories_cache::invalidate();
@@ -141,7 +141,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 					self::$categories_manager->update_position($category, $id_parent, ($position + 1));
 
-					$this->update_children_positions($tree->children[0], $category->get_id());
+					$this->update_children_positions(isset($tree->children[0]) ? $tree->children[0] : [], $category->get_id());
 				}
 			}
 		}

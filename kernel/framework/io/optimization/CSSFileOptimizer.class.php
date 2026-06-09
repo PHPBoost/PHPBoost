@@ -5,16 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 03 29
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class CSSFileOptimizer
 {
-	protected $files = array();
-	protected $scripts = array();
+	protected $files = [];
+	protected $scripts = [];
 	protected $content = '';
 	protected $regex_search_files_path = '';
 	protected $replace_value_files_path = '';
@@ -65,14 +65,14 @@ class CSSFileOptimizer
 		if ($intensity == self::LOW_OPTIMIZATION)
 		{
 			$cleared_file_content = $this->delete_comments($this->content);
-			$content = str_replace(array("\t", "  "), '', $cleared_file_content);
+			$content = str_replace(["\t", "  "], '', $cleared_file_content);
 		}
 		else
 		{
 			$cleared_file_content = $this->delete_comments($this->content);
-			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
-			$content = str_replace(array("( ", " )", ", "), array("(", ")", ","), $content);
-			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'), array('{', '}', ':', ';'), $content);
+			$content = str_replace(["\r\n", "\n", "\r", "\t", "  "], ' ', $cleared_file_content);
+			$content = str_replace(["( ", " )", ", "], ["(", ")", ","], $content);
+			$content = preg_replace(['`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'], ['{', '}', ':', ';'], $content);
 		}
 
 		$this->content = trim($content);
@@ -134,7 +134,7 @@ class CSSFileOptimizer
 				$content_file = php_strip_whitespace($file);
 				if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
 				{
-					$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
+					$replace_path = StringVars::replace_vars($this->replace_value_files_path, ['path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)]);
 					$content .= preg_replace($this->regex_search_files_path, $replace_path, $content_file);
 				}
 				else

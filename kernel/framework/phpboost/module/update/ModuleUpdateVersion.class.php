@@ -3,26 +3,26 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 04 07
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 02 26
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class ModuleUpdateVersion implements UpdateVersion
 {
 	protected static $module_id;
 	
-	protected $content_tables = array();
+	protected $content_tables = [];
 	
-	protected static $delete_old_files_list = array();
-	protected static $delete_old_folders_list = array();
+	protected static $delete_old_files_list = [];
+	protected static $delete_old_folders_list = [];
 	
-	protected $database_columns_to_add = array();
-	protected $database_columns_to_delete = array();
-	protected $database_columns_to_modify = array();
+	protected $database_columns_to_add = [];
+	protected $database_columns_to_delete = [];
+	protected $database_columns_to_modify = [];
 	
-	protected $database_keys_to_add = array();
-	protected $database_keys_to_delete = array();
+	protected $database_keys_to_add = [];
+	protected $database_keys_to_delete = [];
 	
 	protected $querier;
 	protected $db_utils;
@@ -31,8 +31,8 @@ abstract class ModuleUpdateVersion implements UpdateVersion
 	public function __construct($module_id)
 	{
 		self::$module_id = $module_id;
-		self::$delete_old_files_list = array();
-		self::$delete_old_folders_list = array();
+		self::$delete_old_files_list = [];
+		self::$delete_old_folders_list = [];
 		$this->querier = PersistenceContext::get_querier();
 		$this->db_utils = PersistenceContext::get_dbms_utils();
 		$this->tables_list = $this->db_utils->list_tables(true);

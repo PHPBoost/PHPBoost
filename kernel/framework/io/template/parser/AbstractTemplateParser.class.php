@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 11 15
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 06 18
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 abstract class AbstractTemplateParser implements TemplateParser
@@ -32,8 +32,8 @@ abstract class AbstractTemplateParser implements TemplateParser
 	protected function clean()
 	{
 		$this->content = preg_replace(
-		array('`# START [\w\.]+ #(.*)# END [\w\.]+ #`su', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'),
-		array('', '', '', ''),
+		['`# START [\w\.]+ #(.*)# END [\w\.]+ #`su', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'],
+		['', '', '', ''],
 		$this->content
 		);
 	}
@@ -76,7 +76,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 			}
 		}
 
-		return array('method' => 'get_' . $method, 'varname' => $tiny_varname);
+		return ['method' => 'get_' . $method, 'varname' => $tiny_varname];
 	}
 }
 ?>

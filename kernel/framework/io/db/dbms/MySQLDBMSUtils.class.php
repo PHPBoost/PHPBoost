@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 02 23
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 11 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MySQLDBMSUtils implements DBMSUtils
@@ -37,8 +37,8 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function list_databases()
 	{
-		$databases = array();
-		$results = $this->select('SHOW DATABASES;', array(), SelectQueryResult::FETCH_NUM);
+		$databases = [];
+		$results = $this->select('SHOW DATABASES;', [], SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$databases[] = $result[0];
@@ -48,7 +48,7 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	function create_database($database_name)
 	{
-		$database_name = str_replace(array('/', '\\', '.', ' ', '"', '\''), '_', $database_name);
+		$database_name = str_replace(['/', '\\', '.', ' ', '"', '\''], '_', $database_name);
 		$this->inject('CREATE DATABASE `' . $database_name . '`;');
 		return $database_name;
 	}
@@ -61,9 +61,9 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function list_tables($with_prefix = false)
 	{
-		$tables = array();
+		$tables = [];
 		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
-		$results = $this->select('SHOW TABLES ' . $like_prefix . ';', array(), SelectQueryResult::FETCH_NUM);
+		$results = $this->select('SHOW TABLES ' . $like_prefix . ';', [], SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$tables[] = $result[0];
@@ -73,9 +73,9 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function list_module_tables($module_id)
 	{
-		$tables = array();
+		$tables = [];
 		$module_table = ' LIKE \'' . PREFIX . $module_id .'%\'';
-		$results = $this->select('SHOW TABLES ' . $module_table . ';', array(), SelectQueryResult::FETCH_NUM);
+		$results = $this->select('SHOW TABLES ' . $module_table . ';', [], SelectQueryResult::FETCH_NUM);
 		foreach ($results as $result)
 		{
 			$tables[] = $result[0];
@@ -85,13 +85,13 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function list_and_desc_tables($with_prefix = false)
 	{
-		$tables = array();
+		$tables = [];
 		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
 		$results = $this->select('SHOW TABLE STATUS FROM `' . $this->get_database_name() . '`' .
 			$like_prefix . ';');
 		foreach ($results as $table)
 		{
-			$tables[$table['Name']] = array(
+			$tables[$table['Name']] = [
 				'name' => $table['Name'],
 				'engine' => $table['Engine'],
 				'row_format' => $table['Row_format'],
@@ -103,7 +103,7 @@ class MySQLDBMSUtils implements DBMSUtils
 				'create_time' => $table['Create_time'],
 				'update_time' => $table['Update_time'],
 				'collation' => $table['Collation'],
-			);
+			];
 
 		}
 		return $tables;
@@ -111,30 +111,30 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function desc_table($table)
 	{
-		$fields = array();
+		$fields = [];
 		$results = $this->select('DESC ' . $table . ';');
 		foreach ($results as $result)
 		{
-			$fields[$result['Field']] = array(
+			$fields[$result['Field']] = [
 				'name' => $result['Field'],
 				'type' => $result['Type'],
 				'null' => $result['Null'],
 				'key' => $result['Key'],
 				'default' => $result['Default'],
 				'extra' => $result['Extra'],
-			);
+			];
 		}
 		return $fields;
 	}
 
-	public function create_table($table_name, array $fields, array $options = array())
+	public function create_table($table_name, array $fields, array $options = [])
 	{
 		// Force charset to utf8 if not set
 		if (!isset($options['charset']) || empty($options['charset']))
 			$options['charset'] = 'UTF8';
 
 		// Force collate to utf8_general_ci if not set
-		if ((!isset($options['collate']) || empty($options['collate'])) && strtolower($options['charset']) == 'utf8')
+		if ((!isset($options['collate']) || empty($options['collate'])) && TextHelper::strtolower($options['charset']) == 'utf8')
 			$options['collate'] = 'utf8_general_ci';
 
 		foreach ($this->get_platform()->getCreateTableSql($table_name, $fields, $options) as $query)
@@ -145,7 +145,7 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function copy_table($table_name, $new_table_name)
 	{
-        $this->drop(array($new_table_name));
+        $this->drop([$new_table_name]);
         $this->inject('CREATE TABLE `' . $new_table_name . '` LIKE `' . $table_name . '`;');
         $this->inject('INSERT INTO `' . $new_table_name . '` SELECT * FROM `' . $table_name . '`;');
 	}
@@ -159,7 +159,7 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		if (!is_array($tables))
 		{
-			$tables = array($tables);
+			$tables = [$tables];
 		}
 		foreach ($tables as $table)
 		{
@@ -189,7 +189,7 @@ class MySQLDBMSUtils implements DBMSUtils
 
 	public function add_column($table_name, $column_name, array $column_description)
 	{
-		$changes = array('add' => array($column_name => $column_description));
+		$changes = ['add' => [$column_name => $column_description]];
 		$alter_query = $this->get_platform()->getAlterTableSql($table_name, $changes);
 		$this->inject($alter_query);
 	}
@@ -199,11 +199,11 @@ class MySQLDBMSUtils implements DBMSUtils
 	{
 		$result = $this->select('SELECT column_name  FROM `information_schema`.`COLUMNS` C WHERE TABLE_SCHEMA=:schema
 			AND TABLE_NAME=:table_name AND COLUMN_NAME=:column_name',
-			array(
+			[
 				'schema' => $this->get_database_name(),
 				'table_name' => $table_name,
 				'column_name' => $column_name
-		));
+		]);
 		if ($result->get_rows_count() > 0)
 		{
 			$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
@@ -247,7 +247,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		implode('`, `', $field_names) . '`) VALUES ';
 		foreach ($results as $result)
 		{
-			$fields = array();
+			$fields = [];
 			foreach ($field_names as $field)
 			{
 				$fields[] = $this->export_field($result[$field]);
@@ -296,7 +296,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result['Create Table'] . ';';
 	}
 
-	private function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	private function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
 		$this->querier->disable_query_translator();
 		$result = $this->querier->select($query, $parameters, $fetch_mode);
@@ -304,7 +304,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result;
 	}
 
-	private function inject($query, $parameters = array())
+	private function inject($query, $parameters = [])
 	{
 		$this->querier->disable_query_translator();
 		$result = $this->querier->inject($query, $parameters);

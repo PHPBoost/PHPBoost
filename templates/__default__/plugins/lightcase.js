@@ -5,10 +5,10 @@
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 6.1 - last update: 2020 12 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.1 - 2017 09 17
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * @patch       1 : jQuery 3.1
  * @patch       2 : Take into account show_pics.php?...&ext= for module gallery

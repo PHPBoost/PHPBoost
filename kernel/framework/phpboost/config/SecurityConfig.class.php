@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 10 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.1 - 2015 07 17
 */
 
@@ -71,12 +71,12 @@ class SecurityConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::INTERNAL_PASSWORD_MIN_LENGTH => 6,
 			self::INTERNAL_PASSWORD_STRENGTH => self::PASSWORD_STRENGTH_WEAK,
 			self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD => false,
-			self::FORBIDDEN_MAIL_DOMAINS => array()
-		);
+			self::FORBIDDEN_MAIL_DOMAINS => []
+		];
 	}
 
 	/**
@@ -85,7 +85,7 @@ class SecurityConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'security');
+		return ConfigManager::load(self::class, 'kernel', 'security');
 	}
 
 	/**

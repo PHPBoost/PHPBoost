@@ -7,10 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 01 31
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 29
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class CategoriesManager
@@ -64,7 +64,7 @@ class CategoriesManager
 	{
 		$id_parent = $category->get_id_parent();
 
-		$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+		$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', ['id_parent' => $id_parent]);
 		$max_order = NumberHelper::numeric($max_order);
 
 		if ($this->get_categories_cache()->category_exists($id_parent))
@@ -76,10 +76,10 @@ class CategoriesManager
 			}
 			else
 			{
-				$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $category->get_order()));
+				$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order >= :order', ['id_parent' => $id_parent, 'order' => $category->get_order()]);
 				while ($row = $result->fetch())
 				{
-					$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1), 'WHERE id=:id', array('id' => $row['id'])));
+					$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] + 1), 'WHERE id=:id', ['id' => $row['id']]]);
 				}
 				$result->dispose();
 			}
@@ -109,7 +109,7 @@ class CategoriesManager
 				$this->move_into_another($category, $id_parent);
 			}
 
-			$this->db_querier->update($this->table_name, $category->get_properties(), 'WHERE id=:id', array('id' => $id));
+			$this->db_querier->update($this->table_name, $category->get_properties(), 'WHERE id=:id', ['id' => $id]);
 			$this->regenerate_cache();
 		}
 		else
@@ -134,41 +134,41 @@ class CategoriesManager
 			$children[$id] = $category;
 			if (!array_key_exists($id_parent, $children))
 			{
-				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', ['id_parent' => $id_parent]);
 				$max_order = NumberHelper::numeric($max_order);
 
 				if ($position <= 0 || $position > $max_order)
 				{
-					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
+					$this->db_querier->update($this->table_name, ['id_parent' => $id_parent, 'c_order' => ($max_order + 1)], 'WHERE id=:id', ['id' => $id]);
 
 					//Update items
 					$this->move_items_into_another($category, $id_parent);
 
-					$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+					$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order > :order', ['id_parent' => $category->get_id_parent(), 'order' => $category->get_order()]);
 					while ($row = $result->fetch())
 					{
-						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
+						$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] - 1)], 'WHERE id=:id', ['id' => $row['id']]);
 					}
 					$result->dispose();
 				}
 				else
 				{
-					$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order >= :order', array('id_parent' => $id_parent, 'order' => $position));
+					$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order >= :order', ['id_parent' => $id_parent, 'order' => $position]);
 					while ($row = $result->fetch())
 					{
-						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] + 1)), 'WHERE id=:id', array('id' => $row['id']));
+						$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] + 1)], 'WHERE id=:id', ['id' => $row['id']]);
 					}
 					$result->dispose();
 
-					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
+					$this->db_querier->update($this->table_name, ['id_parent' => $id_parent, 'c_order' => $position], 'WHERE id=:id', ['id' => $id]);
 
 					//Update items
 					$this->move_items_into_another($category, $id_parent);
 
-					$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+					$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order > :order', ['id_parent' => $category->get_id_parent(), 'order' => $category->get_order()]);
 					while ($row = $result->fetch())
 					{
-						$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
+						$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] - 1)], 'WHERE id=:id', ['id' => $row['id']]);
 					}
 					$result->dispose();
 				}
@@ -202,7 +202,7 @@ class CategoriesManager
 	{
 		if ($this->get_categories_cache()->category_exists($category->get_id()) && $this->get_categories_cache()->category_exists($id_parent))
 		{
-			$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), array($this->categories_items_parameters->get_field_name_id_category() => $id_parent), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:old_id_category', array('old_id_category' => $category->get_id()));
+			$this->db_querier->update($this->categories_items_parameters->get_table_name_contains_items(), [$this->categories_items_parameters->get_field_name_id_category() => $id_parent], 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:old_id_category', ['old_id_category' => $category->get_id()]);
 		}
 	}
 
@@ -222,16 +222,16 @@ class CategoriesManager
 			$children[$id] = $category;
 			if (!array_key_exists($id_parent, $children))
 			{
-				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', array('id_parent' => $id_parent));
+				$max_order = $this->db_querier->get_column_value($this->table_name, 'MAX(c_order)', 'WHERE id_parent=:id_parent', ['id_parent' => $id_parent]);
 				$max_order = NumberHelper::numeric($max_order);
 
 				if ($position <= 0 || $position > $max_order)
 				{
-					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => ($max_order + 1)), 'WHERE id=:id', array('id' => $id));
+					$this->db_querier->update($this->table_name, ['id_parent' => $id_parent, 'c_order' => ($max_order + 1)], 'WHERE id=:id', ['id' => $id]);
 				}
 				else
 				{
-					$this->db_querier->update($this->table_name, array('id_parent' => $id_parent, 'c_order' => $position), 'WHERE id=:id', array('id' => $id));
+					$this->db_querier->update($this->table_name, ['id_parent' => $id_parent, 'c_order' => $position], 'WHERE id=:id', ['id' => $id]);
 				}
 
 				$this->regenerate_cache();
@@ -251,19 +251,19 @@ class CategoriesManager
 		}
 
 		$category = $this->get_categories_cache()->get_category($id);
-		$this->db_querier->delete($this->table_name, 'WHERE id=:id', array('id' => $id));
+		$this->db_querier->delete($this->table_name, 'WHERE id=:id', ['id' => $id]);
 
 		//Delete items
 		$module_has_items = ModulesManager::get_module($this->module_id)->get_configuration()->has_items();
 		$items_manager = $module_has_items ? ItemsService::get_items_manager($this->module_id) : '';
-		$result = $this->db_querier->select_rows($this->categories_items_parameters->get_table_name_contains_items(), array('id'), 'WHERE ' . $this->categories_items_parameters->get_field_name_id_category() . '=:id_category', array('id_category' => $id));
+		$result = $this->db_querier->select_rows($this->categories_items_parameters->get_table_name_contains_items(), ['id'], 'WHERE ' . $this->categories_items_parameters->get_field_name_id_category() . '=:id_category', ['id_category' => $id]);
 		while ($row = $result->fetch())
 		{
 			if ($module_has_items)
 				$items_manager->delete_from_id($row['id']);
 			else
 			{
-				$this->db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => $this->module_id, 'id' => $row['id']));
+				$this->db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => $this->module_id, 'id' => $row['id']]);
 
 				CommentsService::delete_comments_topic_module($this->module_id, $row['id']);
 				KeywordsService::get_keywords_manager($this->module_id)->delete_relations($row['id']);
@@ -272,12 +272,12 @@ class CategoriesManager
 		}
 		$result->dispose();
 		
-		$this->db_querier->delete($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', array('id_category' => $id));
+		$this->db_querier->delete($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', ['id_category' => $id]);
 		
-		$result = $this->db_querier->select_rows($this->table_name, array('id', 'c_order'), 'WHERE id_parent=:id_parent AND c_order > :order', array('id_parent' => $category->get_id_parent(), 'order' => $category->get_order()));
+		$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order > :order', ['id_parent' => $category->get_id_parent(), 'order' => $category->get_order()]);
 		while ($row = $result->fetch())
 		{
-			$this->db_querier->update($this->table_name, array('c_order' => ($row['c_order'] - 1)), 'WHERE id=:id', array('id' => $row['id']));
+			$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] - 1)], 'WHERE id=:id', ['id' => $row['id']]);
 		}
 		$result->dispose();
 
@@ -285,7 +285,7 @@ class CategoriesManager
 	}
 
 	/**
-	 * Category[string] the children Categories map (id => category) for category id
+	 * Category[] the children Categories map (id => category) for category id
 	 * @param int $id_category
 	 * @param SearchCategoryChildrensOptions $search_category_children_options
 	 */
@@ -298,14 +298,14 @@ class CategoriesManager
 
 		$categories = $this->categories_cache->get_categories();
 		$root_category = $categories[Category::ROOT_CATEGORY];
-		$children_categories = array();
+		$children_categories = [];
 
 		if ($add_this)
 			$children_categories[$id_category] = $this->categories_cache->get_category($id_category);
 
 		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
 		{
-			return array();
+			return [];
 		}
 
 		if ($id_category == Category::ROOT_CATEGORY && !$search_category_children_options->category_is_excluded($root_category))
@@ -317,13 +317,13 @@ class CategoriesManager
 	}
 
 	/**
-	 * Category[string] the parents Categories map (id => category) for category id
+	 * Category[] the parents Categories map (id => category) for category id
 	 * @param int $id_category
 	 * @param bool $add_this Add category in the map
 	 */
 	public function get_parents($id_category, $add_this = false)
 	{
-		$parents_categories = array();
+		$parents_categories = [];
 
 		if ($id_category != Category::ROOT_CATEGORY)
 		{
@@ -380,7 +380,7 @@ class CategoriesManager
 		return $result;
 	}
 
-	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = array(), array $select_options = array())
+	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = [], array $select_options = [])
 	{
 		return new FormFieldCategoriesSelect($id, $label, $value, $search_category_children_options, $field_options, $this->get_categories_cache(), $select_options);
 	}
@@ -396,7 +396,7 @@ class CategoriesManager
 	public function regenerate_cache()
 	{
 		$class = get_class($this->get_categories_cache());
-		call_user_func_array($class . '::invalidate', array($this->module_id));
+		call_user_func_array($class . '::invalidate', [$this->module_id]);
 	}
 
 	/**
@@ -414,7 +414,7 @@ class CategoriesManager
 	 */
 	public function get_categories_items_parameters() { return $this->categories_items_parameters; }
 
-	private function build_children_map($id_category, $categories, $id_parent, $search_category_children_options, &$children_categories = array(), $node = 1)
+	private function build_children_map($id_category, $categories, $id_parent, $search_category_children_options, &$children_categories = [], $node = 1)
 	{
 		foreach ($categories as $id => $category)
 		{

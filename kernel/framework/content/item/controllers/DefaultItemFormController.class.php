@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 04 24
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 05 16
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultItemFormController extends AbstractItemController
@@ -98,26 +98,26 @@ class DefaultItemFormController extends AbstractItemController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor($this->item_class::get_title_label(), $this->lang['form.' . $this->item_class::get_title_label()], $this->get_item()->get_title(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		if ((self::get_module_configuration()->has_categories() && CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category(), self::$module_id)->moderation()) || (!self::get_module_configuration()->has_categories() && ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation()))
 		{
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_' . $this->item_class::get_title_label(), $this->lang['form.rewrited.title.personalize'], $this->get_item()->rewrited_title_is_personalized(),
-				array(
-					'events' => array('click' =>'
+				[
+					'events' => ['click' =>'
 						if (HTMLForms.getField("personalize_rewrited_' . $this->item_class::get_title_label() . '").getValue()) {
 							HTMLForms.getField("rewrited_' . $this->item_class::get_title_label() . '").enable();
 						} else {
 							HTMLForms.getField("rewrited_' . $this->item_class::get_title_label() . '").disable();
 						}'
-					)
-				)
+					]
+				]
 			));
 
 			$fieldset->add_field(new FormFieldTextEditor('rewrited_' . $this->item_class::get_title_label(), $this->lang['form.rewrited.title'], $this->get_item()->get_rewrited_title(),
-				array('description' => $this->lang['form.rewrited.title.clue'], 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_personalize_rewrited_' . $this->item_class::get_title_label(), false) : !$this->get_item()->rewrited_title_is_personalized())),
-				array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+				['description' => $this->lang['form.rewrited.title.clue'], 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_personalize_rewrited_' . $this->item_class::get_title_label(), false) : !$this->get_item()->rewrited_title_is_personalized())],
+				[new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu')]
 			));
 		}
 
@@ -134,7 +134,7 @@ class DefaultItemFormController extends AbstractItemController
 		if ($this->get_item()->content_field_enabled())
 		{
 			$fieldset->add_field(new FormFieldRichTextEditor($this->item_class::get_content_label(), $this->lang['form.content'], $this->get_item()->get_content(),
-				array('rows' => 15, 'required' => $this->get_item()->content_field_required())
+				['rows' => 15, 'required' => $this->get_item()->content_field_required()]
 			));
 		}
 
@@ -174,32 +174,32 @@ class DefaultItemFormController extends AbstractItemController
 			if ($this->get_item()->content_field_enabled() && $this->get_item()->summary_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
-					array('description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())), 'events' => array('click' => '
+					['description' => StringVars::replace_vars($this->lang['form.summary.clue'], ['number' => $this->config->get_auto_cut_characters_number()]), 'events' => ['click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
 					} else {
 						HTMLForms.getField("summary").disable();
-					}'))
+					}']]
 				));
 
 				$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['form.summary'], $this->get_item()->get_summary(),
-					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
+					['required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_summary_enabled', false) : !$this->get_item()->is_summary_enabled())]
 				));
 			}
 
 			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
-					array('events' => array('click' => '
+					['events' => ['click' => '
 					if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 						HTMLForms.getField("author_custom_name").enable();
 					} else {
 						HTMLForms.getField("author_custom_name").disable();
-					}'))
+					}']]
 				));
 
 				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
-					array('required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
+					['required' => true, 'hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled())]
 				));
 			}
 		}
@@ -213,7 +213,7 @@ class DefaultItemFormController extends AbstractItemController
 
 		if (self::get_module_configuration()->feature_is_enabled('keywords'))
 			$fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->lang['form.keywords'],
-				array('description' => $this->lang['form.keywords.clue'])
+				['description' => $this->lang['form.keywords.clue']]
 			));
 
 		if (self::get_module_configuration()->feature_is_enabled('sources'))
@@ -233,26 +233,26 @@ class DefaultItemFormController extends AbstractItemController
 			$form->add_fieldset($publication_fieldset);
 
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
-				array('required' => true)
+				['required' => true]
 			));
 
 			if (!$this->is_new_item && !$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.creation.date'], FormFieldCheckbox::UNCHECKED,
-					array('hidden' => $this->get_item()->get_status() != Item::NOT_PUBLISHED)
+					['hidden' => $this->get_item()->get_status() != Item::NOT_PUBLISHED]
 				));
 			}
 
 			if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
 			{
 				$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('publishing_state', $this->lang['form.publication'], $this->get_item()->get_publishing_state(),
-					array(
+					[
 						new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], Item::NOT_PUBLISHED),
 						new FormFieldSelectChoiceOption($this->lang['form.publication.now'], Item::PUBLISHED),
 						new FormFieldSelectChoiceOption($this->lang['form.publication.deffered'], Item::DEFERRED_PUBLICATION),
-					),
-					array(
-						'events' => array('change' => '
+					],
+					[
+						'events' => ['change' => '
 							if (HTMLForms.getField("publishing_state").getValue() == 2) {
 								jQuery("#' . self::$module_id . '_form_publishing_start_date_field").show();
 								HTMLForms.getField("end_date_enabled").enable();
@@ -264,31 +264,31 @@ class DefaultItemFormController extends AbstractItemController
 								HTMLForms.getField("end_date_enabled").disable();
 								HTMLForms.getField("publishing_end_date").disable();
 							}'
-						)
-					)
+						]
+					]
 				));
 
 				$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->lang['form.start.date'],
 					($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-					array('hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)))
+					['hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION))]
 				));
 
 				$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->lang['form.enable.end.date'], $this->get_item()->end_date_enabled(),
-					array(
+					[
 						'hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)),
-						'events' => array('click' => '
+						'events' => ['click' => '
 							if (HTMLForms.getField("end_date_enabled").getValue()) {
 								HTMLForms.getField("publishing_end_date").enable();
 							} else {
 								HTMLForms.getField("publishing_end_date").disable();
 							}'
-						)
-					)
+						]
+					]
 				));
 
 				$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->lang['form.end.date'],
 					($this->get_item()->get_publishing_end_date() === null ? new date() : $this->get_item()->get_publishing_end_date()),
-					array('hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_end_date_enabled', false) : !$this->get_item()->end_date_enabled()))
+					['hidden' => ($this->request->is_post_method() ? !$this->request->get_postbool(self::$module_id . '_form_end_date_enabled', false) : !$this->get_item()->end_date_enabled())]
 				));
 
 				$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
@@ -350,7 +350,7 @@ class DefaultItemFormController extends AbstractItemController
 		foreach ($this->get_item()->get_additional_attributes_list() as $id => $attribute)
 		{
 			$has_value = false;
-			foreach (array('attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_options_field_parameters') as $attribute_field)
+			foreach (['attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_options_field_parameters'] as $attribute_field)
 			{
 				if (isset($attribute[$attribute_field]))
 				{
@@ -449,7 +449,7 @@ class DefaultItemFormController extends AbstractItemController
 			$this->get_item()->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), ['item_url' => $this->get_item()->get_item_url()]));
 		}
 		elseif ($this->is_duplication)
 		{
@@ -459,7 +459,7 @@ class DefaultItemFormController extends AbstractItemController
             $id = self::get_items_manager()->add($this->get_item());
             $this->get_item()->set_id($id);
             if (!$this->is_contributor_member())
-                HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+                HooksService::execute_hook_action('add', self::$module_id, array_merge($this->get_item()->get_properties(), ['item_url' => $this->get_item()->get_item_url()]));
         }
 		else
 		{
@@ -467,7 +467,7 @@ class DefaultItemFormController extends AbstractItemController
 			self::get_items_manager()->update($this->get_item());
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->get_item()->get_properties(), ['item_url' => $this->get_item()->get_item_url()]));
 		}
 
 		$this->contribution_actions($this->get_item());
@@ -506,7 +506,7 @@ class DefaultItemFormController extends AbstractItemController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
@@ -516,7 +516,7 @@ class DefaultItemFormController extends AbstractItemController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -557,7 +557,7 @@ class DefaultItemFormController extends AbstractItemController
 			}
 
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), ['item_url' => $this->get_item()->get_item_url()]));
 		}
 		else
 		{
@@ -569,7 +569,7 @@ class DefaultItemFormController extends AbstractItemController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), array('item_url' => $this->get_item()->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $this->get_item()->get_properties(), ['item_url' => $this->get_item()->get_item_url()]));
 			}
 		}
 	}
@@ -585,24 +585,24 @@ class DefaultItemFormController extends AbstractItemController
 			if ($this->is_new_item || $this->is_duplication)
 			{
 				if (self::get_module_configuration()->has_categories())
-					AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], ['title' => $this->get_item()->get_title()]));
 				else
-					AppContext::get_response()->redirect(ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], ['title' => $this->get_item()->get_title()]));
 			}
 			else
 			{
 				if (self::get_module_configuration()->has_categories())
-					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], ['title' => $this->get_item()->get_title()]));
 				else
-					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+					AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], ['title' => $this->get_item()->get_title()]));
 			}
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], array('title' => $this->get_item()->get_title())));
+				AppContext::get_response()->redirect(ItemsUrlBuilder::display_pending(self::$module_id), StringVars::replace_vars($this->lang['items.message.success.add'], ['title' => $this->get_item()->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], array('title' => $this->get_item()->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ItemsUrlBuilder::display_pending(self::$module_id)), StringVars::replace_vars($this->lang['items.message.success.edit'], ['title' => $this->get_item()->get_title()]));
 		}
 	}
 

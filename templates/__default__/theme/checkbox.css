@@ -32,16 +32,15 @@
 
 .mini-checkbox .checkbox [type="checkbox"] + span {
 	position: relative;
-	padding-left: 2em;
+	padding-left: 1.209em;
 	cursor: pointer;
 }
 
 .mini-checkbox .checkbox [type="checkbox"] + span::before,
 .mini-checkbox .checkbox [type="checkbox"] + span::after {
-	position: absolute;
+	font: var(--fa-font-solid);
 	content: '';
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
+	position: absolute;
 }
 
 .mini-checkbox .checkbox [type="checkbox"] + span::before {
@@ -64,8 +63,8 @@
 }
 
 .mini-checkbox .checkbox input[type="checkbox"]:checked + span::after {
-	position: absolute;
 	content: '\f00c';
+	position: absolute;
 	top: 2px;
 	left: 2px;
 	transition: all .3s ease 0s;

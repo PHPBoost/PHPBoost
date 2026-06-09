@@ -1,17 +1,15 @@
 <script>
     //sortable
     jQuery(document).ready(function() {
-        if (jQuery("#input_fields_${escape(ID)}")[0]) {
-            jQuery("#input_fields_${escape(ID)}").sortable({
-                handle: '.sortable-selector',
-                placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-                onDrop: function ($item, container, _super, event) {
-                    $item.removeClass(container.group.options.draggedClass).removeAttr("style");
-                    $("body").removeClass(container.group.options.bodyClass);
-                    change_ids();
-                }
-            });
-        }
+		if (jQuery("#input_fields_${escape(ID)}")[0]) {
+			Sortable.create(document.getElementById('input_fields_${escape(ID)}'), {
+				handle: '.sortable-selector',
+				animation: 150,
+				onEnd: function() {
+					change_ids();
+				}
+			});
+		}
     });
 
     function change_ids()

@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 18
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 11 02
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
@@ -40,7 +40,7 @@ class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
 	protected function clear_cache()
 	{
 		$module_id = Environment::get_running_module_name();
-		$cache_classes = array(ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache');
+		$cache_classes = [ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache'];
 		foreach ($cache_classes as $cache_class)
 		{
 			if (ClassLoader::is_class_registered_and_valid($cache_class) && is_subclass_of($cache_class, 'CacheData'))

@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 12
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 01 22
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class DefaultSeveralItemsController extends AbstractItemController
@@ -20,7 +20,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 	protected $summary_displayed_to_guests;
 
 	protected $sql_condition;
-	protected $sql_parameters = array();
+	protected $sql_parameters = [];
 
 	protected $page_title;
 	protected $customized_page_title;
@@ -50,7 +50,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 		$this->member = AppContext::get_request()->get_getint('user_id', 0) ? UserService::get_user(AppContext::get_request()->get_getint('user_id', 0)) : null;
         $this->sort_field = (in_array($requested_sort_field, array_keys($this->module_item->get_sorting_fields_list())) ? $requested_sort_field : $this->config->get_items_default_sort_field());
-		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), array(Item::ASC, Item::DESC)) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
+		$this->sort_mode = (in_array(TextHelper::strtoupper($requested_sort_mode), [Item::ASC, Item::DESC]) ? $requested_sort_mode : $this->config->get_items_default_sort_mode());
 		$this->page = $this->request->get_getint('page', 1);
 		$this->subcategories_page = $this->request->get_getint('subcategories_page', 1);
 		$this->summary_displayed_to_guests = ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled() ? $this->config->get_summary_displayed_to_guests() : true);
@@ -77,7 +77,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->sql_parameters['id_keyword'] = $this->get_keyword()->get_id();
 
 			$this->page_title = $this->get_keyword()->get_name();
-			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.tag'], array('subject' => $this->get_keyword()->get_name()));
+			$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.tag'], ['subject' => $this->get_keyword()->get_name()]);
 			$this->current_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 			$this->pagination_url = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 			$this->url_without_sorting_parameters = ItemsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), self::$module_id);
@@ -117,7 +117,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			$this->page_title = $this->member ? ($this->is_current_member_displayed() ? $this->lang['my.items'] : $this->get_member()->get_display_name()) : '';
 			if ($this->member)
             {
-                $this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], array('author' => $this->get_member()->get_display_name()));
+                $this->page_description = StringVars::replace_vars($this->lang['items.seo.description.member'], ['author' => $this->get_member()->get_display_name()]);
                 $this->current_url = ItemsUrlBuilder::display_member_items($this->get_member()->get_id(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
             }
             else
@@ -130,10 +130,10 @@ class DefaultSeveralItemsController extends AbstractItemController
 
             $this->view->put('C_MEMBER_ITEMS', true);
             if ($this->member)
-                $this->view->put_all(array(
+                $this->view->put_all([
                     'C_MY_ITEMS'  => $this->is_current_member_displayed(),
                     'MEMBER_NAME' => $this->get_member()->get_display_name()
-                ));
+                ]);
             else {
                 $this->view->put_all([
                     'C_MEMBERS_LIST' => true,
@@ -181,16 +181,16 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->page_title = $this->category->get_id() != Category::ROOT_CATEGORY ? $this->category->get_name() : self::get_module_configuration()->get_name();
 				$this->page_description = method_exists($this->category, 'get_description') ? $this->category->get_description() : '';
 				if (!$this->page_description)
-					$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->category->get_name() : '');
+					$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->category->get_name() : '');
 				$this->current_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, '%d', $this->subcategories_page);
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, true);
 
-				$this->view->put_all(array(
+				$this->view->put_all([
 					'C_ENABLED_CATEGORIES' => !$this->module_item->sub_categories_displayed(),
 					'C_SYNDICATION'        => true,
 					'U_SYNDICATION'        => SyndicationUrlBuilder::rss(self::$module_id, $this->get_category()->get_id())->rel()
-				));
+				]);
 
 				$this->build_categories_listing_view();
 			}
@@ -199,7 +199,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 				$this->sql_condition = 'WHERE (published = ' . Item::PUBLISHED . (self::get_module_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))' : '') . ')';
 
 				$this->page_title = self::get_module_configuration()->get_name();
-				$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
+				$this->page_description = StringVars::replace_vars($this->lang['items.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]);
 				$this->current_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $requested_sort_field, $requested_sort_mode, $this->page);
 				$this->pagination_url = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, $this->sort_field, $this->sort_mode, '%d');
 				$this->url_without_sorting_parameters = ItemsUrlBuilder::display_category(Category::ROOT_CATEGORY, 'root', self::$module_id, true);
@@ -226,7 +226,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		if ($this->keyword === null)
 		{
 			try {
-				$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $this->request->get_getstring('tag', '')));
+				$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', ['rewrited_name' => $this->request->get_getstring('tag', '')]);
 			} catch (RowNotFoundException $e) {
 				$this->display_unexisting_page();
 			}
@@ -305,7 +305,7 @@ class DefaultSeveralItemsController extends AbstractItemController
                 }
             }
 
-            $this->view->put_all(array(
+            $this->view->put_all([
                 'C_ITEMS'         => !empty($items),
                 'C_CONTROLS'      => $controls_displayed,
                 'C_SEVERAL_ITEMS' => count($items) > 1,
@@ -314,7 +314,7 @@ class DefaultSeveralItemsController extends AbstractItemController
                 'PAGINATION'    => $pagination->display(),
                 'CATEGORY_NAME' => $this->keyword !== null ? $this->get_keyword()->get_name() : ($this->category !== null ? $this->get_category()->get_name() : ''),
                 'SORTING_FORM'  => $this->build_sorting_form()
-            ));
+            ]);
         }
 	}
 
@@ -324,10 +324,10 @@ class DefaultSeveralItemsController extends AbstractItemController
 		$form->set_css_class('options');
 
 		$fieldset = new FormFieldsetHorizontal('sorting',
-			array(
+			[
 			'description' => $this->lang['common.sort.by'],
 			'css_class' => 'grouped-inputs'
-			)
+			]
 		);
 		$form->add_fieldset($fieldset);
 
@@ -336,17 +336,17 @@ class DefaultSeveralItemsController extends AbstractItemController
 			unset($fields_list['author']);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_field', '', $this->sort_field, $fields_list,
-			array(
+			[
 				'select_to_list' => true,
-				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/' . $this->sort_mode . '"' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
-			)
+				'events'         => ['change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/' . $this->sort_mode . '"' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';']
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $this->sort_mode, $this->module_item->get_sorting_mode_options(),
-			array(
+			[
 				'select_to_list' => true,
-				'events'         => array('change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue()' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';')
-			)
+				'events'         => ['change' => 'document.location = "' . $this->url_without_sorting_parameters->rel() . '" + HTMLForms.getField("sort_field").getValue() + "/" + HTMLForms.getField("sort_mode").getValue()' . ($this->page > 1 ? ' + "/' . $this->page . '"' : '') . ';']
+			]
 		));
 
 		return $form->display();
@@ -366,17 +366,17 @@ class DefaultSeveralItemsController extends AbstractItemController
 
 				if ($displayed_categories_number > $subcategories_pagination->get_display_from() && $displayed_categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 				{
-					$thumbnail_properties = array();
+					$thumbnail_properties = [];
 					if (method_exists($category, 'get_thumbnail'))
 					{
 						$category_thumbnail = $category->get_thumbnail()->rel();
-						$thumbnail_properties = array(
+						$thumbnail_properties = [
 							'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 							'U_CATEGORY_THUMBNAIL' => $category_thumbnail
-						);
+						];
 					}
 
-					$this->view->assign_block_vars('sub_categories_list', array_merge($thumbnail_properties, array(
+					$this->view->assign_block_vars('sub_categories_list', array_merge($thumbnail_properties, [
 						'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
 
 						'CATEGORY_ID'        => $category->get_id(),
@@ -386,37 +386,37 @@ class DefaultSeveralItemsController extends AbstractItemController
 						'ITEMS_NUMBER'       => $category->get_elements_number(),
 
 						'U_CATEGORY' => ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
-					)));
+					]));
 				}
 			}
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_SUB_CATEGORIES'           => $displayed_categories_number > 0,
 				'C_SUBCATEGORIES_PAGINATION' => $subcategories_pagination->has_several_pages(),
 				'SUBCATEGORIES_PAGINATION'   => $subcategories_pagination->display()
-			));
+			]);
 		}
 
 		$category_description = '';
 		if (method_exists($this->get_category(), 'get_description'))
 		{
 			$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_CATEGORY_DESCRIPTION' => !empty($category_description),
 				'CATEGORY_DESCRIPTION'   => $category_description
-			));
+			]);
 		}
 
 		if (method_exists($this->get_category(), 'get_thumbnail'))
 		{
 			$category_thumbnail = $this->get_category()->get_thumbnail()->rel();
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_CATEGORY_THUMBNAIL' => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($category_thumbnail),
 				'U_CATEGORY_THUMBNAIL' => $category_thumbnail
-			));
+			]);
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY'             => true,
 			'C_ROOT_CATEGORY'        => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && ($displayed_categories_number != 0 || !empty($category_description)),
@@ -427,7 +427,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 			'CATEGORY_SUB_ORDER' => $this->get_category()->get_order(),
 
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), self::$module_id)->rel()
-		));
+		]);
 	}
 
 	protected function get_pagination()

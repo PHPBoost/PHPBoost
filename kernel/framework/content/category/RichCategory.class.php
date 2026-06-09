@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 29
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class RichCategory extends Category
@@ -18,23 +18,23 @@ class RichCategory extends Category
 
 	protected function set_kernel_additional_attributes_list()
 	{
-		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000, 'attribute_field_parameters' => array(
+		$this->add_additional_attribute('description', ['type' => 'text', 'length' => 65000, 'attribute_field_parameters' => [
 			'field_class' => 'FormFieldRichTextEditor',
 			'label'       => LangLoader::get_message('form.description', 'form-lang')
-			)
-		));
-		$this->add_additional_attribute('thumbnail', array(
+			]
+		]);
+		$this->add_additional_attribute('thumbnail', [
 			'type'    => 'string',
 			'length'  => 255,
 			'notnull' => 1,
 			'default' => "''",
-			'attribute_field_parameters' => array(
+			'attribute_field_parameters' => [
 				'field_class'     => 'FormFieldThumbnail',
 				'label'           => LangLoader::get_message('form.thumbnail', 'form-lang'),
 				'default_value'   => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
-			)
-		));
+			]
+		]);
 	}
 
 	public function set_description($description)

@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 12 05
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -104,6 +104,7 @@ $lang['common.upload']       = 'Upload';
 $lang['common.loading']      = 'Loading';
 $lang['common.print']        = 'print';
 $lang['common.printable']    = 'Printable version';
+$lang['common.open.panel']   = 'Open the panel';
 $lang['common.open.panels']  = 'Open all panels';
 $lang['common.close.panels'] = 'Close all panels';
 $lang['common.filter.items'] = 'Filter items';

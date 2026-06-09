@@ -74,7 +74,7 @@
 
     & > ul > li {
         display:inline-block;
-        width: calc(100% /  5 - 3px);
+        width: calc(100% /  6 - 4px);
         text-align: center;
 
         @media (min-width: 769px) and (min-height: 601px) {
@@ -115,7 +115,7 @@
 }
 
 @media (min-width: 769px) {
-    .cssmenu-title { white-space: normal; }
+    .modal-menu-title { white-space: normal; }
 }
 
 /* --- Modal panels contents ---- */
@@ -150,7 +150,7 @@
         padding: 0.456em 0.809em;
     }
 
-    li > a {
+    li > .modal-menu-title {
         border-width: 1px;
         border-style: solid;
         border-color: transparent;
@@ -160,10 +160,15 @@
 
     & > li {
         margin-bottom: 1em;
+        border-style: solid;
+        border-width: 1px;
+        border-color: transparent;
 
-        @media (min-width: 479px) { vertical-align: text-top; }
+        @media (min-width: 479px) {
+            min-width: 250px;
+        }
 
-        & > a {
+        & > .modal-menu-title {
             display: flex;
             padding: 0.618em;
             text-decoration: none;

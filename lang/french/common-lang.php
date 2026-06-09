@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 12 05
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -104,6 +104,7 @@ $lang['common.loading']      = 'Chargement';
 $lang['common.upload']       = 'Uploader';
 $lang['common.print']        = 'Imprimer';
 $lang['common.printable']    = 'Version imprimable';
+$lang['common.open.panel']   = 'Ouvrir le panneau';
 $lang['common.open.panels']  = 'Ouvrir tous les panneaux';
 $lang['common.close.panels'] = 'Fermer tous les panneaux';
 $lang['common.filter.items'] = 'Filtrer les éléments';
@@ -123,7 +124,7 @@ $lang['common.views']            = 'vues';
 $lang['common.view']             = 'vue';
 $lang['common.views.number']     = 'Nombre de vues';
 $lang['common.visits.number']    = 'Nombre de visites';
-$lang['common.downloads.number'] = 'Nombre de téléchargement';
+$lang['common.downloads.number'] = 'Nombre de téléchargements';
 $lang['common.comments.number']  = 'Nombre de commentaires';
 $lang['common.maximum']          = 'Maximum';
 $lang['common.minimum']          = 'Minimum';

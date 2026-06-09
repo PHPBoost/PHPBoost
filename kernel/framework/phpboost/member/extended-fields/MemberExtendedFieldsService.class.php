@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 04 10
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 12 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberExtendedFieldsService
@@ -50,7 +50,7 @@ class MemberExtendedFieldsService
 	 */
 	public static function display_profile_fields($user_id)
 	{
-		$fields = array();
+		$fields = [];
 		$extended_fields_displayed = PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
 		if ($extended_fields_displayed)
 		{
@@ -58,9 +58,9 @@ class MemberExtendedFieldsService
 			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
 			WHERE exc.display = 1
-			ORDER BY exc.position", array(
+			ORDER BY exc.position", [
 				'user_id' => $user_id
-			));
+			]);
 			while ($extended_field = $result->fetch())
 			{
 				if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_PROFILE_AUTHORIZATION))
@@ -89,7 +89,7 @@ class MemberExtendedFieldsService
 	public function get_data($user_id)
 	{
 		$has_error = $error = false;
-		$data = array();
+		$data = [];
 		$extended_fields_displayed = PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
 		if ($extended_fields_displayed)
 		{
@@ -150,9 +150,9 @@ class MemberExtendedFieldsService
 		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
 		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
 		WHERE exc.display = 1
-		ORDER BY exc.position", array(
+		ORDER BY exc.position", [
 			'user_id' => $user_id
-		));
+		]);
 		while ($extended_field = $result->fetch())
 		{
 			if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
@@ -178,9 +178,9 @@ class MemberExtendedFieldsService
 	{
 		$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
 		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id", array(
+		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id", [
 			'user_id' => $user_id
-		));
+		]);
 		while ($extended_field = $result->fetch())
 		{
 			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
@@ -203,7 +203,7 @@ class MemberExtendedFieldsService
 		}
 
 		try {
-			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, $field_name, 'WHERE user_id =:user_id', array('user_id' => $user_id));
+			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, $field_name, 'WHERE user_id =:user_id', ['user_id' => $user_id]);
 		} catch (RowNotFoundException $e) {
 			return '';
 		}

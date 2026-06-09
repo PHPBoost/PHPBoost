@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.0 - 2016 07 11
 */
 
@@ -26,13 +26,13 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	}
 
 	/**
-	 * @desc Return the list of members which commented the contribution.
+	 * Return the list of members which commented the contribution.
 	 * @param array $contribution Contribution which is concerned
 	 */
 	public function get_contribution_users_list(Contribution $contribution)
 	{
 		$current_user = AppContext::get_current_user();
-		$contribution_users_list = array();
+		$contribution_users_list = [];
 
 		if ($contribution->get_poster_id() != $current_user->get_id())
 			$contribution_users_list[] = $contribution->get_poster_id();
@@ -40,14 +40,14 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 		if ($contribution->get_fixer_id() != $current_user->get_id())
 			$contribution_users_list[] = $contribution->get_fixer_id();
 
-		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_COMMENTS, array('user_id'), '
+		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_COMMENTS, ['user_id'], '
 		WHERE id_topic = :id_topic AND user_id NOT IN (:current_user_id, :poster_user_id, :fixer_user_id)
-		GROUP BY user_id', array(
+		GROUP BY user_id', [
 			'id_topic'        => $this->comments_topic->get_topic_identifier(),
 			'current_user_id' => $current_user->get_id(),
 			'poster_user_id'  => $contribution->get_poster_id(),
 			'fixer_user_id'   => $contribution->get_fixer_id(),
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -60,7 +60,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	}
 
 	/**
-	 * @desc Send a PM to a member.
+	 * Send a PM to a member.
 	 * @param int $recipient_id ID of the PM's recipient
 	 * @param array $contribution Contribution which is concerned
 	 * @param string $message Message to include in the PM
@@ -76,17 +76,17 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 			// Get current user
 			$current_user = AppContext::get_current_user();
 
-			$pm_content = StringVars::replace_vars($lang['contribution.pm.content'], array(
+			$pm_content = StringVars::replace_vars($lang['contribution.pm.content'], [
 				'author'           => $current_user->get_display_name(),
 				'title'            => $contribution->get_entitled(),
 				'comment'          => $message,
 				'contribution_url' => UserUrlBuilder::contribution_panel($contribution->get_id())->rel()
-			));
+			]);
 
 			// Send the PM
 			PrivateMsg::start_conversation(
 				$recipient_id,
-				StringVars::replace_vars($lang['contribution.pm.title'], array('title' => $contribution->get_entitled())),
+				StringVars::replace_vars($lang['contribution.pm.title'], ['title' => $contribution->get_entitled()]),
 				$pm_content,
 				-1,
 				PrivateMsg::SYSTEM_PM
@@ -95,7 +95,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	}
 
 	/**
-	 * @desc Send a PM to a list of members.
+	 * Send a PM to a list of members.
 	 * @param array $contribution Contribution which is concerned
 	 * @param string $message Message to include in the PM
 	 */

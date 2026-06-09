@@ -152,3 +152,44 @@ td.alert-priority { border-width: 0 0 1px 0; }
 
 /* --- System report --- */
 .system-report { font-family: monospace; }
+
+/* --- SortableJS drag feedback --- */
+
+/* Element being dragged (clone following the cursor) */
+.dragged {
+	opacity: 0.9;
+}
+
+/* Drop target placeholder shown in the destination list */
+.sortable-ghost {
+	opacity: 0.4;
+	border-style: dashed !important;
+}
+
+/* Element currently held/chosen by the user */
+.sortable-chosen {
+	border-color: currentColor !important;
+}
+
+/* --- Sub-menu accordion (sortable-element) --- */
+
+/*
+ * .submenu-collapsible marks the <hr> and <fieldset class="fieldset-submit">
+ * that are direct children of a sub-menu <li>.  Only these are slid up/down;
+ * the <ul class="sortable-block"> stays in the DOM flow at all times so that
+ * sortable.js can always measure its dimensions and allow nested drag-and-drop.
+ */
+.menu-elements-container .sortable-element > .submenu-collapsible {
+    /* Shown by default; JS hides on collapse */
+}
+
+/*
+ * Folder trigger span — inherits the existing .bgc-full.notice pill style.
+ * Pointer cursor is set inline to avoid specificity fights with the theme.
+ */
+.submenu-folder-trigger {
+    user-select: none;
+    transition: opacity 0.15s;
+}
+
+.submenu-folder-trigger:hover { opacity: 0.75; }

@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 11 15
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class HTMLTableParameters
@@ -22,7 +22,7 @@ class HTMLTableParameters
 	private $current_page_number = 1;
 	private $nb_items_per_page = 0;
 	private $sorting_rule;
-	private $filters = array();
+	private $filters = [];
 
 	/**
 	 * @var HTMLTableModel
@@ -69,36 +69,36 @@ class HTMLTableParameters
 
 	public function get_pagination_url($page_number)
 	{
-		return $this->url_parameters->get_url(array('page' => $page_number));
+		return $this->url_parameters->get_url(['page' => $page_number]);
 	}
 
 	public function get_nb_items_per_page_url($nb_items, $current_item_index)
 	{
 		$page = $this->compute_first_row_new_page($nb_items, $current_item_index);
-		return $this->url_parameters->get_url(array('items' => $nb_items, 'page' => $page));
+		return $this->url_parameters->get_url(['items' => $nb_items, 'page' => $page]);
 	}
 
 	public function get_default_table_url()
 	{
-		$default_options = array();
-		$params_to_remove = array('page', 'sort', 'filters', 'items');
+		$default_options = [];
+		$params_to_remove = ['page', 'sort', 'filters', 'items'];
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
 	public function get_ascending_sort_url($sort_identifier)
 	{
-		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::ASC . $sort_identifier), array('page'));
+		return $this->url_parameters->get_url(['sort' => HTMLTableSortingRule::ASC . $sort_identifier], ['page']);
 	}
 
 	public function get_descending_sort_url($sort_identifier)
 	{
-		return $this->url_parameters->get_url(array('sort' => HTMLTableSortingRule::DESC . $sort_identifier), array('page'));
+		return $this->url_parameters->get_url(['sort' => HTMLTableSortingRule::DESC . $sort_identifier], ['page']);
 	}
 
 	public function get_js_submit_url()
 	{
-		$default_options = array();
-		$params_to_remove = array('page', 'filters', 'sort');
+		$default_options = [];
+		$params_to_remove = ['page', 'filters', 'sort'];
 		return $this->url_parameters->get_url($default_options, $params_to_remove);
 	}
 
@@ -148,7 +148,7 @@ class HTMLTableParameters
 		if (isset($this->parameters['sort']) && is_string($this->parameters['sort']))
 		{
 			$regex = '`(' . HTMLTableSortingRule::ASC . '|' . HTMLTableSortingRule::DESC . ')(\w+)`u';
-			$param = array();
+			$param = [];
 			if (preg_match($regex, $this->parameters['sort'], $param))
 			{
 				$order_way = $param[1];

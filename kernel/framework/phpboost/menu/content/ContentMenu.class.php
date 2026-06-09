@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2018 03 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 11 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
 */
 
 class ContentMenu extends Menu
@@ -52,14 +52,14 @@ class ContentMenu extends Menu
 		if ($is_displayed)
 		{
 			$tpl = new FileTemplate('framework/menus/content.tpl');
-			$tpl->put_all(array(
+			$tpl->put_all([
 				'C_DISPLAY_TITLE' => $this->display_title,
 				'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
 				'ID' => $this->id,
 				'TITLE' => $this->title,
 				'CONTENT' => FormatingHelper::second_parse(TextHelper::htmlspecialchars_decode($this->content)),
 				'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens
-			));
+			]);
 			return $tpl->render();
 		}
 		return '';
@@ -75,7 +75,7 @@ class ContentMenu extends Menu
 	 * @param string $content the content to set
 	 */
 	public function set_content($content) { 
-        $this->content = FormatingHelper::strparse($content, array(), false); 
+        $this->content = FormatingHelper::strparse($content, [], false); 
     }
 
 	## Getters ##

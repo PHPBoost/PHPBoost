@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 12 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 07
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserChangeLostPasswordController extends AbstractController
@@ -53,23 +53,23 @@ class UserChangeLostPasswordController extends AbstractController
 		$user = UserService::get_user($user_id);
 		$internal_auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
 
-		$form = new HTMLForm(__CLASS__);
+		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->lang['user.change.password']);
 
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['user.password.new'], '',
-			array(
+			[
 				'required' => true, 'autocomplete' => false,
-				'description' => StringVars::replace_vars($this->lang['user.password.clue'], array('number' => $security_config->get_internal_password_min_length()))
-			),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
+				'description' => StringVars::replace_vars($this->lang['user.password.clue'], ['number' => $security_config->get_internal_password_min_length()])
+			],
+			[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength()]
 		));
 
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['user.password.confirm'], '',
-			array('required' => true, 'autocomplete' => false),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
+			['required' => true, 'autocomplete' => false],
+			[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength()]
 		));
 
 		$fieldset->add_field($email = new FormFieldHidden('email', $user->get_email()));
@@ -92,9 +92,9 @@ class UserChangeLostPasswordController extends AbstractController
 	{
 		$maintain_config = MaintenanceConfig::load();
 
-		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, KeyGenerator::string_hash($password), null, '');
+		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, $password, null, '');
 
-		$auth_infos = array();
+		$auth_infos = [];
 		try {
 			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
 		} catch (RowNotFoundException $e) {

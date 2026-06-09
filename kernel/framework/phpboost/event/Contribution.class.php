@@ -7,10 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 11 18
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 21
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Contribution extends Event
@@ -35,7 +35,7 @@ class Contribution extends Event
 	/**
 	 * @var array Authorization array containing the people who can treat the contribution.
 	 */
-	private $auth = array();
+	private $auth = [];
 
 	/**
 	 * @var int Identifier of the member who has posted the contribution.
@@ -162,7 +162,7 @@ class Contribution extends Event
 	 */
 	public function set_status($new_current_status)
 	{
-		if (in_array($new_current_status, array(Event::EVENT_STATUS_UNREAD, Event::EVENT_STATUS_BEING_PROCESSED, Event::EVENT_STATUS_PROCESSED), TRUE))
+		if (in_array($new_current_status, [Event::EVENT_STATUS_UNREAD, Event::EVENT_STATUS_BEING_PROCESSED, Event::EVENT_STATUS_PROCESSED], TRUE))
 		{
 			//If it just comes to be processed, we automatically consider it as processed
 			if ($this->current_status != Event::EVENT_STATUS_PROCESSED && $new_current_status == Event::EVENT_STATUS_PROCESSED)
@@ -208,7 +208,7 @@ class Contribution extends Event
 		{
 			$this->poster_id = $poster_id;
 			//Assigning also the associated display_name
-			$this->poster_login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $poster_id));
+			$this->poster_login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', ['id' => $poster_id]);
 		}
 	}
 
@@ -222,7 +222,7 @@ class Contribution extends Event
 		{
 			$this->fixer_id = $fixer_id;
 			//Assigning also the associated login
-			$this->fixer_login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => $fixer_id));
+			$this->fixer_login = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', ['id' => $fixer_id]);
 		}
 	}
 
@@ -386,7 +386,7 @@ class Contribution extends Event
 	 */
 	public function get_properties()
 	{
-		return array_merge(parent::get_properties(), array(
+		return array_merge(parent::get_properties(), [
 			'description'   => $this->get_description(),
 			'module_id'     => $this->get_module(),
 			'fixing_date'   => $this->get_fixing_date(),
@@ -400,7 +400,7 @@ class Contribution extends Event
 			'fixer_level'   => $this->get_fixer_level(),
 			'fixer_groups'  => $this->get_fixer_groups(),
 			'status_name'   => $this->get_status_name()
-		));
+		]);
 	}
 }
 ?>

@@ -7,8 +7,7 @@
 
 /* icons */
 [class*='lightcase-icon-']:before {
-    font-family: 'Font Awesome 7 Free';
-    font-weight: 900;
+	font: var(--fa-font-solid);
     speak: none;
     display: inline-block;
     text-decoration: inherit;

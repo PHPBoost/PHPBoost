@@ -7,12 +7,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 04 30
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 08
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LinksMenu extends LinksMenuElement
@@ -39,7 +39,7 @@ class LinksMenu extends LinksMenuElement
 	* @access protected
 	* @var LinksMenuElement[] Direct menu children list
 	*/
-	public $elements = array();
+	public $elements = [];
 
 	/**
 	* Constructor
@@ -146,7 +146,7 @@ class LinksMenu extends LinksMenuElement
 				if ($element->check_auth())
 				{
 					// We use a new Tpl to avoid overwrite issues
-					$tpl->assign_block_vars('elements', array('DISPLAY' => $element->display(clone $original_tpl, $mode)));
+					$tpl->assign_block_vars('elements', ['DISPLAY' => $element->display(clone $original_tpl, $mode)]);
 					$elements_number++;
 				}
 				if (get_class($element) == self::LINKS_MENU__CLASS)
@@ -157,7 +157,7 @@ class LinksMenu extends LinksMenuElement
 
 			// Menu assignment
 			parent::_assign($tpl, $mode);
-			$tpl->put_all(array(
+			$tpl->put_all([
 				'C_MENU'                      => true,
 				'C_MENU_WITH_SUBMENU'         => $menu_with_submenu,
 				'C_NEXT_MENU'                 => $this->depth > 0,
@@ -174,31 +174,31 @@ class LinksMenu extends LinksMenuElement
 				'PUSHMENU_EXPANDING'        => $this->pushmenu_expanding,
 
 				'DEPTH' => $this->depth
-			));
+			]);
 
 			if ($this->type == self::AUTOMATIC_MENU)
 			{
-				$tpl->put_all(array(
-					'C_MENU_HEADER'     => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER)),
-					'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-					'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
-					'C_MENU_VERTICAL'   => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-					'C_MENU_STATIC'     => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
+				$tpl->put_all([
+					'C_MENU_HEADER'     => in_array($this->get_block(), [Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER]),
+					'C_MENU_CONTAINER'  => in_array($this->get_block(), [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]),
+					'C_MENU_HORIZONTAL' => in_array($this->get_block(), [Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),
+					'C_MENU_VERTICAL'   => in_array($this->get_block(), [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]),
+					'C_MENU_STATIC'     => in_array($this->get_block(), [Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER]),
 					'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
 					'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-				));
+				]);
 			}
 			else
 			{
-				$tpl->put_all(array(
-					'C_MENU_HEADER'     => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER)),
-					'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+				$tpl->put_all([
+					'C_MENU_HEADER'     => in_array($this->get_block(), [Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER]),
+					'C_MENU_CONTAINER'  => in_array($this->get_block(), [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]),
 					'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
 					'C_MENU_VERTICAL'   => $this->type == self::VERTICAL_MENU,
 					'C_MENU_STATIC'     => $this->type == self::STATIC_MENU,
 					'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
 					'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-				));
+				]);
 			}
 
 			return $tpl->render();
@@ -232,7 +232,7 @@ class LinksMenu extends LinksMenuElement
 		foreach ($this->elements as $element)
 		{
 			// We use a new Tpl to avoid overwrite issues
-			$tpl->assign_block_vars('elements', array('DISPLAY' => $element->cache_export(clone $original_tpl)));
+			$tpl->assign_block_vars('elements', ['DISPLAY' => $element->cache_export(clone $original_tpl)]);
 			$elements_number++;
 			if (get_class($element) == self::LINKS_MENU__CLASS)
 			{
@@ -242,7 +242,7 @@ class LinksMenu extends LinksMenuElement
 
 		// Menu assignment
 		parent::_assign($tpl, LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING);
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'C_MENU'                      => true,
 			'C_MENU_WITH_SUBMENU'         => $menu_with_submenu,
 			'C_NEXT_MENU'                 => $this->depth > 0,
@@ -261,29 +261,29 @@ class LinksMenu extends LinksMenuElement
 			'DEPTH'  => $this->depth,
 			'ID'     => '##.#GET_UID#.##',
 			'ID_VAR' => '##.#GET_UID_VAR#.##'
-		));
+		]);
 
 		if ($this->type == self::AUTOMATIC_MENU)
 		{
-			$tpl->put_all(array(
-				'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-				'C_MENU_HORIZONTAL' => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL)),
-				'C_MENU_VERTICAL'   => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
-				'C_MENU_STATIC'     => in_array($this->get_block(), array(Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER)),
+			$tpl->put_all([
+				'C_MENU_CONTAINER'  => in_array($this->get_block(), [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]),
+				'C_MENU_HORIZONTAL' => in_array($this->get_block(), [Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER, Menu::BLOCK_POSITION__TOP_CENTRAL, Menu::BLOCK_POSITION__BOTTOM_CENTRAL]),
+				'C_MENU_VERTICAL'   => in_array($this->get_block(), [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]),
+				'C_MENU_STATIC'     => in_array($this->get_block(), [Menu::BLOCK_POSITION__TOP_FOOTER, Menu::BLOCK_POSITION__FOOTER]),
 				'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
 				'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-			));
+			]);
 		}
 		else
 		{
-			$tpl->put_all(array(
-				'C_MENU_CONTAINER'  => in_array($this->get_block(), array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT)),
+			$tpl->put_all([
+				'C_MENU_CONTAINER'  => in_array($this->get_block(), [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]),
 				'C_MENU_HORIZONTAL' => $this->type == self::HORIZONTAL_MENU,
 				'C_MENU_VERTICAL'   => $this->type == self::VERTICAL_MENU,
 				'C_MENU_STATIC'     => $this->type == self::STATIC_MENU,
 				'C_MENU_LEFT'       => $this->get_block() == Menu::BLOCK_POSITION__LEFT,
 				'C_MENU_RIGHT'      => $this->get_block() == Menu::BLOCK_POSITION__RIGHT
-			));
+			]);
 		}
 
 		if ($this->depth == 0)
@@ -292,8 +292,8 @@ class LinksMenu extends LinksMenuElement
 				var_export($tpl->render(), true) .
 				'.\'' . parent::cache_export_end();
 			$cache_str = str_replace(
-				array('#GET_UID#', '#GET_UID_VAR#', '##'),
-				array('($__uid = AppContext::get_uid())', '$__uid', '\''),
+				['#GET_UID#', '#GET_UID_VAR#', '##'],
+				['($__uid = AppContext::get_uid())', '$__uid', '\''],
 				$cache_str
 			);
 			return $cache_str;
@@ -309,7 +309,7 @@ class LinksMenu extends LinksMenuElement
 	*/
 	public static function get_menu_types_list()
 	{
-		return array(self::AUTOMATIC_MENU, self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU, self::PUSH_MENU);
+		return [self::AUTOMATIC_MENU, self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU, self::PUSH_MENU];
 	}
 
 	/**

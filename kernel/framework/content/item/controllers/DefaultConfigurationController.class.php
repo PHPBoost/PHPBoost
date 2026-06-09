@@ -5,15 +5,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 11 30
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 02 11
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultConfigurationController extends AbstractAdminItemController
 {
-	protected $additional_fields_list = array();
+	protected $additional_fields_list = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -48,34 +48,34 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$item_class_name = self::get_module_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['config.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true, 'class' => 'third-field'),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true, 'class' => 'third-field'],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		if (self::get_module_configuration()->has_rich_items())
 		{
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_field', $this->lang['config.items.default.sort'], $this->config->get_items_default_sort_field(), $this->module_item->get_sorting_field_options(),
-				array('select_to_list' => true, 'class' => 'third-field')
+				['select_to_list' => true, 'class' => 'third-field']
 			));
 
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort_mode', $this->lang['config.items.default.sort.mode'], $this->config->get_items_default_sort_mode(), $item_class_name::get_sorting_mode_options(),
-				array('select_to_list' => true, 'class' => 'third-field')
+				['select_to_list' => true, 'class' => 'third-field']
 			));
 
 			$fieldset->add_field(new FormFieldSpacer('display', ''));
 
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-				array(
-					new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], DefaultRichModuleConfig::GRID_VIEW, array('data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DefaultRichModuleConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-					new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DefaultRichModuleConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
-				),
-				array('select_to_list' => true,
-					'events' => array('change' => '
+				[
+					new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], DefaultRichModuleConfig::GRID_VIEW, ['data_option_icon' => 'far fa-id-card']),
+					new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DefaultRichModuleConfig::LIST_VIEW, ['data_option_icon' => 'fa fa-list']),
+					new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DefaultRichModuleConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
+				],
+				['select_to_list' => true,
+					'events' => ['change' => '
 					if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::GRID_VIEW . '\') {
 						HTMLForms.getField("items_per_row").enable();
 						HTMLForms.getField("full_item_display").disable();
@@ -96,71 +96,71 @@ class DefaultConfigurationController extends AbstractAdminItemController
 						HTMLForms.getField("auto_cut_characters_number").disable();
 						HTMLForms.getField("summary_displayed_to_guests").disable();
 					}'
-				))
+				]]
 			));
 
 			$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['config.items.per.row'], $this->config->get_items_per_row(),
-				array(
+				[
 					'hidden' => $this->config->get_display_type() != DefaultRichModuleConfig::GRID_VIEW,
 					'min' => 1, 'max' => 4,
 					'required' => true
-				),
-				array(new FormFieldConstraintIntegerRange(1, 4))
+				],
+				[new FormFieldConstraintIntegerRange(1, 4)]
 			));
 
 			if ($this->module_item->content_field_enabled() && $this->module_item->summary_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->lang['config.full.item.display'], $this->config->get_full_item_display(),
-					array(
+					[
 						'class' => 'custom-checkbox',
 						'hidden' => $this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW,
-						'events' => array('click' => '
+						'events' => ['click' => '
 							if (HTMLForms.getField("full_item_display").getValue()) {
 								HTMLForms.getField("auto_cut_characters_number").disable();
 							} else {
 								HTMLForms.getField("auto_cut_characters_number").enable();
 							}'
-						)
-					)
+						]
+					]
 				));
 
 				$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['config.auto.cut.characters.number'], $this->config->get_auto_cut_characters_number(),
-					array(
+					[
 						'min' => 20, 'max' => 1000,
 						'description' => $this->lang['config.auto.cut.characters.number.explain'],
 						'required' => true,
-						'hidden' => ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && $this->config->get_full_item_display()) || $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW),
-					array(new FormFieldConstraintIntegerRange(20, 1000))
+						'hidden' => ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && $this->config->get_full_item_display()) || $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW],
+					[new FormFieldConstraintIntegerRange(20, 1000)]
 				));
 
 				$fieldset->add_field(new FormFieldCheckbox('summary_displayed_to_guests', $this->lang['config.items.summary.displayed.to.guests'], $this->config->get_summary_displayed_to_guests(),
-					array(
+					[
 						'class' => 'custom-checkbox',
 						'hidden' => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW
-					)
+					]
 				));
 			}
 
 			$fieldset->add_field(new FormFieldSpacer('options', ''));
 
 			$fieldset->add_field(new FormFieldCheckbox('sort_form_displayed', $this->lang['config.display.sort.form'], $this->config->get_sort_form_displayed(),
-				array('class' => 'custom-checkbox')
+				['class' => 'custom-checkbox']
 			));
 
 			$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['form.display.author'], $this->config->get_author_displayed(),
-				array('class' => 'custom-checkbox')
+				['class' => 'custom-checkbox']
 			));
 
 			$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['form.display.date'], $this->config->get_date_displayed(),
-				array('class' => 'custom-checkbox')
+				['class' => 'custom-checkbox']
 			));
 
 			$fieldset->add_field(new FormFieldCheckbox('update_date_displayed', $this->lang['form.display.update.date'], $this->config->get_update_date_displayed(),
-				array('class' => 'custom-checkbox')
+				['class' => 'custom-checkbox']
 			));
 
 			$fieldset->add_field(new FormFieldCheckbox('views_number_enabled', $this->lang['form.display.views.number'], $this->config->get_views_number_enabled(),
-				array('class' => 'custom-checkbox')
+				['class' => 'custom-checkbox']
 			));
 
 			$this->add_additional_fields($fieldset);
@@ -168,7 +168,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			if ($this->module_item->content_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['config.item.default.content'], $this->config->get_default_content(),
-					array('rows' => 8, 'cols' => 47)
+					['rows' => 8, 'cols' => 47]
 				));
 			}
 
@@ -182,18 +182,18 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				if ($this->module_item->sub_categories_displayed())
 				{
 					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
-						array('min' => 1, 'max' => 50, 'required' => true),
-						array(new FormFieldConstraintIntegerRange(1, 50))
+						['min' => 1, 'max' => 50, 'required' => true],
+						[new FormFieldConstraintIntegerRange(1, 50)]
 					));
 
 					$fieldset_categories->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
-						array('min' => 1, 'max' => 4, 'required' => true),
-						array(new FormFieldConstraintIntegerRange(1, 4))
+						['min' => 1, 'max' => 4, 'required' => true],
+						[new FormFieldConstraintIntegerRange(1, 4)]
 					));
 				}
 
 				$fieldset_categories->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
-					array('rows' => 8, 'cols' => 47)
+					['rows' => 8, 'cols' => 47]
 				));
 			}
 		}
@@ -204,7 +204,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		}
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 
 		$form->add_fieldset($fieldset_authorizations);
@@ -278,7 +278,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 	protected function execute_edit_config_hook()
 	{
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
 	protected function hide_fields() {}
@@ -288,7 +288,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		// Automatically add module dedicated configuration parameters to config form
 		// Lang variable config.parameter.name (for a parameter PARAMETER_NAME in module config file) requested in lang file
 		$configuration_class_name = self::get_module_configuration()->get_configuration_name();
-		if (!in_array($configuration_class_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
+		if (!in_array($configuration_class_name, ['DefaultModuleConfig', 'DefaultRichModuleConfig']))
 		{
 			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
 			$configuration_class = new ReflectionClass($configuration_class_name);
@@ -307,18 +307,18 @@ class DefaultConfigurationController extends AbstractAdminItemController
 						switch ($type) {
 							case 'boolean':
 								$fieldset->add_field(new FormFieldCheckbox($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
-									array('class' => 'custom-checkbox', 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''))
+									['class' => 'custom-checkbox', 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : '')]
 								));
 							break;
 							case 'integer':
 								$fieldset->add_field(new FormFieldNumberEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
-									array('min' => 1, 'max' => 50, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true),
-									array(new FormFieldConstraintIntegerRange(1, 50))
+									['min' => 1, 'max' => 50, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true],
+									[new FormFieldConstraintIntegerRange(1, 50)]
 								));
 							break;
 							case 'string':
 								$fieldset->add_field(new FormFieldTextEditor($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
-									array('maxlength' => 100, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true, 'class' => 'top-field')
+									['maxlength' => 100, 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : ''), 'required' => true, 'class' => 'top-field']
 								));
 							break;
 						}
@@ -339,6 +339,6 @@ class DefaultConfigurationController extends AbstractAdminItemController
 
 	protected function add_additional_fieldsets(&$form) {}
 
-	protected function add_additional_actions_authorization() { return array(); }
+	protected function add_additional_actions_authorization() { return []; }
 }
 ?>

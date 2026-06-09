@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2016 06 01
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintPossibleValuesUnique extends AbstractFormFieldConstraint
@@ -26,7 +26,7 @@ class FormFieldConstraintPossibleValuesUnique extends AbstractFormFieldConstrain
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()))));
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label())]));
 
     if (is_array($value) && !empty($value))
     {
@@ -42,7 +42,7 @@ class FormFieldConstraintPossibleValuesUnique extends AbstractFormFieldConstrain
 	public function get_js_validation(FormField $field)
 	{
 		return 'UniquePossibleValuesFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
-			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label())))) .')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label())])) .')';
 	}
 }
 

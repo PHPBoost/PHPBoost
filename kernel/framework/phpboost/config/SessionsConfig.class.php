@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2015 07 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 07 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SessionsConfig extends AbstractConfigData
@@ -68,12 +68,12 @@ class SessionsConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::COOKIE_NAME => 'session',
 			self::SESSION_DURATION => 3600,
 			self::ACTIVE_SESSION_DURATION => 300,
 			self::AUTOCONNECT_DURATION => 3600 * 24 * 30
-		);
+		];
 	}
 
 	/**
@@ -82,7 +82,7 @@ class SessionsConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(__CLASS__, 'kernel', 'sessions-config');
+		return ConfigManager::load(self::class, 'kernel', 'sessions-config');
 	}
 
 	/**

@@ -6,10 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 10 30
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 25
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsManager
@@ -46,14 +46,14 @@ class CommentsManager
 
 		CommentsTopicDAO::increment_comments_number_topic($id_topic);
 		
-		$properties = array(
+		$properties = [
 			'id'           => $comment_id,
 			'id_in_module' => $id_in_module,
 			'message'      => $message,
 			'user_id'      => self::$user->get_id(),
 			'user_name'    => self::$user->check_level(User::MEMBER_LEVEL) ? self::$user->get_display_name() : $pseudo,
 			'url'          => CommentsUrlBuilder::comment_added($topic_path, $comment_id)->rel()
-		);
+		];
 		HooksService::execute_hook_action('add_comment', $module_id, $properties);
 
 		self::regenerate_cache();
@@ -66,13 +66,13 @@ class CommentsManager
 		self::regenerate_cache();
 		
 		$comment = CommentsCache::load()->get_comment($comment_id);
-		$properties = array(
+		$properties = [
 			'id'        => $comment_id,
 			'message'   => $message,
 			'user_id'   => self::$user->get_id(),
 			'user_name' => self::$user->get_display_name(),
 			'url'       => CommentsUrlBuilder::comment_added($comment['path'], $comment_id)->rel()
-		);
+		];
 		HooksService::execute_hook_action('edit_comment', $comment['module_id'], $properties);
 	}
 
@@ -83,11 +83,11 @@ class CommentsManager
 		CommentsTopicDAO::decrement_comments_number_topic($comment['id_topic']);
 		self::regenerate_cache();
 		
-		$properties = array(
+		$properties = [
 			'id'        => $comment_id,
 			'user_id'   => self::$user->get_id(),
 			'user_name' => self::$user->get_display_name()
-		);
+		];
 		HooksService::execute_hook_action('delete_comment', $comment['module_id'], $properties);
 	}
 

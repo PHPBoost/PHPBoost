@@ -8,7 +8,7 @@
     // To clipboard
     var L_COPIED_TO_CLIPBOARD = ${escapejs(@common.copied.to.clipboard)};
 
-	// BBCode Variables
+	// Bbcode Variables
 	var L_HIDE_MESSAGE    = ${escapejs(@common.hidden.text)};
 	var L_HIDE_HIDEBLOCK  = ${escapejs(@common.hide.text)};
 	var L_COPY_TO_CLIPBOARD = ${escapejs(@common.copy.to.clipboard)};

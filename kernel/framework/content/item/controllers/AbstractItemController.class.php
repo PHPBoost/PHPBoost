@@ -5,16 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 02 18
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2019 12 20
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 abstract class AbstractItemController extends DefaultModuleController
 {
-	protected $enabled_features = array();
+	protected $enabled_features = [];
 	protected $module_item;
 
 	public function __construct($module_id = '')
@@ -28,18 +28,18 @@ abstract class AbstractItemController extends DefaultModuleController
 		if (self::get_module_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'notation';
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MODULE_ID'            => self::get_module()->get_id(),
 			'MODULE_NAME'          => self::get_module_configuration()->get_name(),
 			'ITEMS_PER_ROW'        => $this->config->get_items_per_row(),
 			'C_ENABLED_CATEGORIES' => self::get_module_configuration()->has_categories(),
 			'C_ENABLED_COMMENTS'   => in_array('comments', $this->enabled_features),
 			'C_ENABLED_NOTATION'   => in_array('notation', $this->enabled_features)
-		));
+		]);
 
 		if (self::get_module_configuration()->has_rich_config_parameters())
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_GRID_VIEW'            => $this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW,
 				'C_LIST_VIEW'            => $this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW,
 				'C_TABLE_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW,
@@ -52,14 +52,14 @@ abstract class AbstractItemController extends DefaultModuleController
 				'C_ENABLED_UPDATE_DATE'  => $this->config->get_update_date_displayed(),
 				'C_ENABLED_VIEWS'        => $this->config->get_views_number_enabled(),
 				'CATEGORIES_PER_ROW'     => $this->config->get_categories_per_row()
-			));
+			]);
 		}
 
 		// Automatically add module dedicated configuration parameters to template
 		$configuration_class_name = self::get_module_configuration()->get_configuration_name();
-		if (!in_array($configuration_class_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
+		if (!in_array($configuration_class_name, ['DefaultModuleConfig', 'DefaultRichModuleConfig']))
 		{
-			$configuration_variables = array();
+			$configuration_variables = [];
 			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
 			$configuration_class = new ReflectionClass($configuration_class_name);
 
@@ -120,7 +120,7 @@ abstract class AbstractItemController extends DefaultModuleController
 
 	protected function get_additional_view_parameters()
 	{
-		return array();
+		return [];
 	}
 	
 	protected function init_lang()
@@ -141,26 +141,29 @@ abstract class AbstractItemController extends DefaultModuleController
 		$template_module_folder = PATH_TO_ROOT . '/templates/' . AppContext::get_current_user()->get_theme() . '/modules/' . self::$module_id . '/';
 		$parent_template_module_folder = $current_user_theme ? PATH_TO_ROOT . '/templates/' . $current_user_theme->get_configuration()->get_parent_theme() . '/modules/' . self::$module_id . '/' : '';
 
+		// Get module template path (new /modules structure with fallback to root)
+		$module_template_path = FileTemplateLoader::get_module_template_path(self::$module_id);
+
 		// If the module has a template with the name of the called class we take it
-		if (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . $class_name . '.tpl'))
+		if (file_exists($module_template_path . '/' . $class_name . '.tpl'))
 			return new FileTemplate(self::$module_id . '/' . $class_name . '.tpl');
 		// Otherwise if the module has a template with the name of the called class which begins with Default and Default is replace by module id we take it
-		else if (preg_match('/^Default/', $class_name) && file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl'))
+		else if (preg_match('/^Default/', $class_name) && file_exists($module_template_path . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl'))
 			return new FileTemplate(self::$module_id . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl');
 		// Otherwise if a template url is defined and it ends with tpl extension we go further
 		else if ($this->get_template_url() && preg_match('/\.tpl$/', $this->get_template_url()))
 		{
 			// If the module has a template with the name of the template put in url we take it
-			if (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . basename($this->get_template_url())) || file_exists($template_module_folder . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . basename($this->get_template_url()))))
+			if (file_exists($module_template_path . '/' . basename($this->get_template_url())) || file_exists($template_module_folder . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . basename($this->get_template_url()))))
 				return new FileTemplate(self::$module_id . '/' . basename($this->get_template_url()));
 			// Otherwise if the module has a template with the name of the template put in url which begins with Default and Default is replace by module id we take it
-			else if (preg_match('/^Default/', basename($this->get_template_url())) && (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
+			else if (preg_match('/^Default/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
 				return new FileTemplate(self::$module_id . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url())));
 			// Otherwise if the module has a template with the name of the template put in url which begins with Module and Module is replace by module id we take it
-			else if (preg_match('/^Module/', basename($this->get_template_url())) && (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
+			else if (preg_match('/^Module/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
 				return new FileTemplate(self::$module_id . '/' . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url())));
 			// Otherwise if the module has a template with the name of the template put in url which does not begin with Default or Module but module id is added at the beginning f the template name we take it
-			else if (!preg_match('/^Default/', basename($this->get_template_url())) && !preg_match('/^Module/', basename($this->get_template_url())) && (file_exists(PATH_TO_ROOT . '/' . self::$module_id . '/templates/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || file_exists($template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())))))
+			else if (!preg_match('/^Default/', basename($this->get_template_url())) && !preg_match('/^Module/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || file_exists($template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())))))
 				return new FileTemplate(self::$module_id . '/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url()));
 			// Otherwise we take the default url defined for the default template
 			else

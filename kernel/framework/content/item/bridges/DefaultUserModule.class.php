@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 02 17
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2021 02 17
 */
 
@@ -43,7 +43,7 @@ class DefaultUserModule implements UserExtensionPoint
 
 	public function get_publications_number($user_id)
 	{
-		return ItemsService::get_items_manager($this->module_id)->count('WHERE author_user_id = :user_id', array('user_id' => $user_id));
+		return ItemsService::get_items_manager($this->module_id)->count('WHERE author_user_id = :user_id', ['user_id' => $user_id]);
 	}
 }
 ?>

@@ -1,18 +1,38 @@
 {JS_BOTTOM}
 <script>
+// Fix Prism autoloader path when JS cache is enabled (cache merges scripts, losing relative path context)
+if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) {
+	Prism.plugins.autoloader.languages_path = '{PATH_TO_ROOT}/kernel/lib/js/prism/components/';
+}
+
 // Delete confirmation
 	function update_data_confirmations() {
-		jQuery('[data-confirmation]').each(function() {
-			data_confirmation = jQuery(this).attr('data-confirmation');
-			if (data_confirmation == 'delete-element')
-				var message = ${escapejs(@warning.confirm.delete)};
-			else if (data_confirmation == 'delete-elements')
-				var message = ${escapejs(@warning.confirm.delete.elements)};
-			else
-				var message = data_confirmation;
-			this.onclick = function () { return confirm(message); }
-		});
-	}
+        jQuery('[data-confirmation]').each(function() {
+            var data_confirmation = jQuery(this).attr('data-confirmation');
+            var message;
+
+            switch (data_confirmation) {
+                case 'delete-element':
+                    message = ${escapejs(@warning.confirm.delete)};
+                    break;
+                case 'delete-elements':
+                    message = ${escapejs(@warning.confirm.delete.elements)};
+                    break;
+                case 'uninstall-element':
+                    message = ${escapejs(@warning.confirm.uninstall)};
+                    break;
+                case 'uninstall-elements':
+                    message = ${escapejs(@warning.confirm.uninstall.elements)};
+                    break;
+                default:
+                    message = data_confirmation;
+            }
+
+            this.onclick = function () {
+                return confirm(message);
+            };
+        });
+    }
 
 // lightbox
 	jQuery(document).ready(function() {
@@ -35,7 +55,7 @@
 		});
 	});
 
-// BBCode tables because they have no header
+// Bbcode tables because they have no header
 	jQuery('.formatter-table').each(function(){
 		$this = jQuery(this).find('tbody tr:first-child td');
 		if (!$this.hasClass('formatter-table-head'))
@@ -186,7 +206,7 @@
 			}
 	});
 
-// Sidebar behaviour - needed to fix the BBCode troubles on long texts
+// Sidebar behaviour - needed to fix the Bbcode troubles on long texts
 	// jQuery('#main').theiaStickySidebar();
 	// # IF C_HAS_LEFT_MENUS #jQuery('#menu-left').theiaStickySidebar();# ENDIF #
 	// # IF C_HAS_RIGHT_MENUS #jQuery('#menu-right').theiaStickySidebar();# ENDIF #

@@ -16,11 +16,10 @@
 /* --- Constraint icons --- */
 .field-required:after,
 .picture-status-constraint:after {
+	font: var(--fa-font-solid);
 	display: inline-block;
 	position: absolute;
 	left: 0.309em;
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-size: inherit;
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
@@ -31,9 +30,9 @@
 .constraint-status-right .picture-status-constraint:after { left: 0.309em; }
 
 .field-required:after {
+	content: "\f069";
 	opacity: 0.6;
 	font-size: 0.809rem;
-	content: "\f069";
 	display: table;
 	left: 1em;
 	top: 50%;
@@ -48,9 +47,9 @@
 }
 
 .constraint-status-right .picture-status-constraint:after {
+	content: "\f00c";
 	opacity: 1;
 	font-size: 1.5rem;
-	content: "\f00c";
 }
 
 .constraint-status-right .field-required:after { content: "\f00c"; }

@@ -4,11 +4,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 01 22
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ### Variable types ###
@@ -178,6 +178,7 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 
 	$user_locale = AppContext::get_current_user()->get_locale();
 
+	// Try global modules lang file first
 	$module_lang_file = $path . '/lang/' . $user_locale . '/modules/' . $module_name . '/' . $module_name . '_' . $user_locale . '.php';
 	if (file_exists($module_lang_file))
 	{
@@ -185,14 +186,38 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
 	}
 	else
 	{
-		$file = $path . '/' . $module_name . '/lang/' . $user_locale . '/' . $module_name . '_' . $user_locale . '.php';
-		$result = include_once $file;
+		// Try new modules folder structure
+		$file = $path . '/modules/' . $module_name . '/lang/' . $user_locale . '/' . $module_name . '_' . $user_locale . '.php';
+		if (file_exists($file))
+		{
+			$result = include_once $file;
+		}
+		else
+		{
+			// Fallback to root folder structure for backward compatibility
+			$file = $path . '/' . $module_name . '/lang/' . $user_locale . '/' . $module_name . '_' . $user_locale . '.php';
+			$result = include_once $file;
+		}
 	}
 
 	if (!$result)
 	{
-		$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', $user_locale, false);
-		$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
+		// Try finding in modules folder first
+		$modules_lang_dir = PATH_TO_ROOT . '/modules/' . $module_name . '/lang/';
+		if (is_dir($modules_lang_dir))
+		{
+			$lang = find_require_dir($modules_lang_dir, $user_locale, false);
+		}
+		else
+		{
+			// Fall back to root
+			$lang = find_require_dir(PATH_TO_ROOT . '/' . $module_name . '/lang/', $user_locale, false);
+		}
+		$file2 = PATH_TO_ROOT . '/modules/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
+		if (!file_exists($file2))
+		{
+			$file2 = PATH_TO_ROOT . '/' . $module_name . '/lang/' . $lang . '/' . $module_name . '_' . $lang . '.php';
+		}
 		$result2 = include_once $file2;
 
 		if (!$result2)

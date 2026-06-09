@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2018 11 17
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintFileExtension extends FormFieldConstraintRegex
@@ -19,7 +19,7 @@ class FormFieldConstraintFileExtension extends FormFieldConstraintRegex
 
 		if (empty($error_message))
 		{
-			$error_message = StringVars::replace_vars(LangLoader::get_message('warning.regex.authorized.extensions', 'warning-lang'), array('extensions' => str_replace('|', ', ', $extensions)));
+			$error_message = StringVars::replace_vars(LangLoader::get_message('warning.regex.authorized.extensions', 'warning-lang'), ['extensions' => str_replace('|', ', ', $extensions)]);
 		}
 		$this->set_validation_error_message($error_message);
 

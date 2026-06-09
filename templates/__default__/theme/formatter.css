@@ -133,9 +133,8 @@ pre[style*="display:inline;"] {
 
 .formatter-blockquote > .formatter-content:before,
 .formatter-blockquote > .formatter-content:after {
+	font: var(--fa-font-solid);
 	position: absolute;
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
 	font-size: 1.256em;
 }
 

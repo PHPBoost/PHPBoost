@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 12 08
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 02 20
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserCommentsController extends AbstractController
@@ -17,7 +17,7 @@ class UserCommentsController extends AbstractController
 	private $lang;
 	private $current_user;
 	private $comments_number;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -56,10 +56,10 @@ class UserCommentsController extends AbstractController
 		$this->lang = LangLoader::get_all_langs();
 		$this->current_user = AppContext::get_current_user();
 		$this->view->add_lang($this->lang);
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MODULE_CHOICE_FORM' => $this->build_modules_choice_form()->display(),
 			'COMMENTS'           => $this->build_view($request)
-		));
+		]);
 
 		if ($request->get_string('delete-selected-comments', false))
 		{
@@ -85,10 +85,10 @@ class UserCommentsController extends AbstractController
 		$id_module = $this->module === null ? null : $this->module->get_id();
 		$pagination = $this->get_pagination($page);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
-		));
+		]);
 
 		$result = PersistenceContext::get_querier()->select('SELECT
 			comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
@@ -101,10 +101,10 @@ class UserCommentsController extends AbstractController
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = comments.user_id
 			'. $this->build_where_request() .'
 			ORDER BY comments.timestamp DESC
-			LIMIT :number_items_per_page OFFSET :display_from', array(
+			LIMIT :number_items_per_page OFFSET :display_from', [
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-		));
+		]);
 
 		$user_accounts_config = UserAccountsConfig::load();
 		$comments_authorizations = new CommentsAuthorizations();
@@ -127,7 +127,7 @@ class UserCommentsController extends AbstractController
 
 			$template->assign_block_vars('comments', array_merge(
 				Date::get_array_tpl_vars($timestamp,'date'),
-				array(
+				[
 				'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
 				'C_VISITOR'              => empty($row['display_name']),
 				'C_VIEW_TOPIC'           => true,
@@ -151,21 +151,21 @@ class UserCommentsController extends AbstractController
 				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
 				'GROUP_COLOR' => $group_color,
 				'L_LEVEL'     => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
-			)));
+			]));
 
-			$template->put_all(array(
+			$template->put_all([
 				'MODULE_ID'    => $row['module_id'],
 				'ID_IN_MODULE' => $row['id_in_module'],
 				'L_VIEW_TOPIC' => $this->lang['comment.view.topic']
-			));
+			]);
 		}
 		$result->dispose();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_COMMENTS'              => $this->comments_number > 0,
 			'C_DISPLAY_DELETE_BUTTON' => $this->comments_number && ($comments_authorizations->is_authorized_moderation() || $display_delete_button),
 			'COMMENTS_NUMBER'         => $this->comments_number
-		));
+		]);
 
 		return $template;
 	}
@@ -222,14 +222,14 @@ class UserCommentsController extends AbstractController
 		$fieldset = new FormFieldsetHTML('ModuleChoice', $this->lang['common.filters']);
 		$form->add_fieldset($fieldset);
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('module', $this->lang['common.sort'] . ' : ', $selected, $this->build_select(),
-			array('events' => array('change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->rel() .'" + HTMLForms.getField("module").getValue();'))
+			['events' => ['change' => 'document.location = "'. UserUrlBuilder::comments('', $user_id)->rel() .'" + HTMLForms.getField("module").getValue();']]
 		));
 		return $form;
 	}
 
 	private function build_select()
 	{
-		$modules = array(new FormFieldSelectChoiceOption($this->lang['comment.see.all.comments'], ''));
+		$modules = [new FormFieldSelectChoiceOption($this->lang['comment.see.all.comments'], '')];
 		$comments_config = CommentsConfig::load();
 
 		foreach (ModulesManager::get_activated_feature_modules('comments') as $module)
@@ -255,7 +255,7 @@ class UserCommentsController extends AbstractController
 		else
 			$graphical_environment->set_page_title($this->lang['comment.comments'], '', $page);
 
-		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars($this->lang['user.seo.comments.user'], array('name' => $this->user->get_display_name())) : $this->lang['user.seo.comments']);
+		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars($this->lang['user.seo.comments.user'], ['name' => $this->user->get_display_name()]) : $this->lang['user.seo.comments']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::comments($module_id, $this->user !== null ? $this->user->get_id() : null, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

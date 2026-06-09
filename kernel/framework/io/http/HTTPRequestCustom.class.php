@@ -6,13 +6,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 01 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 17
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTTPRequestCustom
@@ -119,7 +119,7 @@ class HTTPRequestCustom
         return $this->get_var($this->_request, self::string, $varname, $default_value);
     }
 
-    public function get_array($varname, $default_value = array())
+    public function get_array($varname, $default_value = [])
     {
         return $this->get_var($this->_request, self::t_array, $varname, $default_value);
     }
@@ -129,7 +129,7 @@ class HTTPRequestCustom
         return $this->get_var($_COOKIE, self::string, $varname, $default_value);
     }
 
-    public function _get_parameters_array($varname, $default_value = array())
+    public function _get_parameters_array($varname, $default_value = [])
     {
         return $this->get_var($this->_request, self::t_array, $varname, $default_value);
     }
@@ -178,7 +178,7 @@ class HTTPRequestCustom
         return $this->get_var($this->_get, self::string, $varname, $default_value);
     }
 
-    public function get_getarray($varname, $default_value = array())
+    public function get_getarray($varname, $default_value = [])
     {
         return $this->get_var($this->_get, self::t_array, $varname, $default_value);
     }
@@ -208,7 +208,7 @@ class HTTPRequestCustom
         return $this->get_var($this->_post, self::string, $varname, $default_value);
     }
 
-    public function get_postarray($varname, $default_value = array())
+    public function get_postarray($varname, $default_value = [])
     {
         return $this->get_var($this->_post, self::t_array, $varname, $default_value);
     }
@@ -299,12 +299,12 @@ class HTTPRequestCustom
 
     private static function sanitize($value)
     {
-        return str_replace(array("\r\n", "\r"), "\n", $value);
+        return str_replace(["\r\n", "\r"], "\n", $value);
     }
 
     private static function sanitize_html(Array $array)
     {
-        $proper_array = array();
+        $proper_array = [];
 
         foreach ($array as $key => $value)
         {
@@ -353,7 +353,7 @@ class HTTPRequestCustom
 
     public function get_is_localhost()
     {
-        $patterns = array('localhost', 'local.dev', 'local.pbt', '127.0.0.1', '::1');
+        $patterns = ['localhost', 'local.dev', 'local.pbt', '127.0.0.1', '::1'];
 
         foreach ($patterns as $value)
         {
@@ -377,7 +377,13 @@ class HTTPRequestCustom
     // get full site domain url
     public function get_site_domain_name()
     {
-        return self::get_server_name();
+        $server_name = self::get_server_name();
+        $port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
+        if ($port != 80 && $port != 443)
+        {
+            $server_name .= ':' . $port;
+        }
+        return $server_name;
     }
 
     // get site domain name (without host)
@@ -457,9 +463,22 @@ class HTTPRequestCustom
 
     public function get_location_info_by_ip()
     {
-        $ip_data = @json_decode(file_get_contents('http://ip-api.com/json/' . $this->get_ip_address()));
-        if($ip_data && $ip_data->status === 'success' && isset($ip_data->countryCode))
+        $url = 'http://ip-api.com/json/' . $this->get_ip_address();
+
+        // Initialisation de cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // On évite de bloquer le script si l'API est lente
+        $response = curl_exec($ch);
+        if (\PHP_VERSION_ID < 80100)
+            curl_close($ch);
+
+        $ip_data = json_decode($response);
+
+        if ($ip_data && isset($ip_data->status) && $ip_data->status === 'success' && isset($ip_data->countryCode)) {
             return $ip_data->countryCode;
+        }
 
         return '';
     }

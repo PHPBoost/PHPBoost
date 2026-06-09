@@ -1,0 +1,21 @@
+/*
+* Copy this file into your theme to customize the module.
+* https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-modules
+*/
+
+textarea {
+	float: left;
+	height: 4.236em;
+	width: 47%;
+}
+
+textarea.answers {
+	margin-left: 0.309em;
+	width: 37%;
+}
+
+@media (min-width: 769px) {
+	textarea.answers { width: 47%; }
+}
+
+.fa-trash-alt { margin: 1.482em 0 0 0.309em; }

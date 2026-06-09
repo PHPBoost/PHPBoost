@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 07
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2025 03 07
 */
 
@@ -36,7 +36,7 @@ class TabsNavList extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		foreach ($this->actions as $action) {
-			$template->assign_block_vars('action', array(
+			$template->assign_block_vars('action', [
 				'C_IS_ACTIVE_MODULE' => ($action->get_active_module() == '') || (ModulesManager::is_module_installed($action->get_active_module()) & ModulesManager::is_module_activated($action->get_active_module())),
 				'C_PICTURE'          => $action->has_css_class() || $action->has_img(),
 				'C_IMG'              => $action->has_img(),
@@ -45,7 +45,7 @@ class TabsNavList extends AbstractFormField
 				'CSS_CLASS' => $action->get_css_class(),
 				'TARGET'    => $action->get_target(),
 				'U_IMG'     => $action->has_img() ? $action->get_img()->rel() : '',
-			));
+			]);
 		}
 
 		return $template;

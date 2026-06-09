@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 20
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 12 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MemberDateExtendedField extends AbstractMemberExtendedField
@@ -16,7 +16,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(['regex', 'possible_values', 'default_value']);
 		$this->set_name(LangLoader::get_message('user.field.type.date','user-lang'));
 	}
 
@@ -26,7 +26,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 
 		$value = $member_extended_field->get_default_value() ? new Date($member_extended_field->get_default_value()) : null;
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
-			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -36,7 +36,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 
 		$value = $member_extended_field->get_value() ? new Date($member_extended_field->get_value()) : null;
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
-			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -45,7 +45,7 @@ class MemberDateExtendedField extends AbstractMemberExtendedField
 		if ($member_extended_field->get_value())
 		{
 			$date = new Date($member_extended_field->get_value());
-			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $date->format(Date::FORMAT_DAY_MONTH_YEAR));
+			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $date->format(Date::FORMAT_DAY_MONTH_YEAR)];
 		}
 	}
 

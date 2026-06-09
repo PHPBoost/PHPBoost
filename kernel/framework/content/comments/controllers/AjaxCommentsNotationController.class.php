@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 08 30
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AjaxCommentsNotationController extends AbstractCommentsController
@@ -26,24 +26,24 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		{
 			$this->register_note($note_type, $comment_id);
 
-			$object = array(
+			$object = [
 				'success' => true,
 				'message' => $lang['comment.note.success']
-			);
+			];
 		}
 		else if (!$this->is_access_authorizations())
 		{
-			$object = array(
+			$object = [
 				'success' => false,
 				'message' => $lang['comment.note.unauthorized']
-			);
+			];
 		}
 		else
 		{
-			$object = array(
+			$object = [
 				'success' => false,
 				'message' => $lang['comment.note.error']
-			);
+			];
 		}
 
 		return new JSONResponse($object);
@@ -63,9 +63,9 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 			break;
 		}
 
-		$columns = array('note' => $note);
+		$columns = ['note' => $note];
 		$condition = "WHERE id = :id";
-		$parameters = array('id' => $comment_id);
+		$parameters = ['id' => $comment_id];
 		PersistenceContext::get_querier()->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
 
 		$this->regenerate_cache();

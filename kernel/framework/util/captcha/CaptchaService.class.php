@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 09 04
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CaptchaService
@@ -19,7 +19,19 @@ class CaptchaService
 	{
 		if ($this->default_factory === null)
 		{
-			$this->default_factory = $this->create_factory($this->get_default_captcha());
+			$default_captcha = $this->get_default_captcha();
+			$this->default_factory = $this->create_factory($default_captcha);
+			
+			// Fallback to first available captcha if configured one doesn't exist
+			if ($this->default_factory === null)
+			{
+				$available_captchas = $this->get_available_captchas();
+				if (!empty($available_captchas))
+				{
+					$first_available = key($available_captchas);
+					$this->default_factory = $this->create_factory($first_available);
+				}
+			}
 		}
 		return $this->default_factory;
 	}
@@ -69,7 +81,7 @@ class CaptchaService
 
 	public function get_available_captchas()
 	{
-		$available_captchas = array();
+		$available_captchas = [];
 		foreach (CaptchaProvidersService::get_captchas() as $id => $provider)
 		{
 			if ($provider->is_available())

@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 06 01
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 04 18
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Uploads
@@ -28,11 +28,11 @@ class Uploads
 	//Ajout d'un dossier virtuel
 	public static function Add_folder($id_parent, $user_id, $name)
 	{
-		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE name = :name AND id_parent = :id_parent AND user_id = :user_id', array('name' => $name, 'id_parent' => $id_parent, 'user_id' => $user_id));
+		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE name = :name AND id_parent = :id_parent AND user_id = :user_id', ['name' => $name, 'id_parent' => $id_parent, 'user_id' => $user_id]);
 		if (!empty($check_folder) || preg_match('`/|\.|\\\|"|<|>|\||\?`u', stripslashes($name)))
 			return 0;
 
-		$result = self::$db_querier->insert(DB_TABLE_UPLOAD_CAT, array('id_parent' => $id_parent, 'user_id' => $user_id, 'name' => $name));
+		$result = self::$db_querier->insert(DB_TABLE_UPLOAD_CAT, ['id_parent' => $id_parent, 'user_id' => $user_id, 'name' => $name]);
 
 		return $result->get_last_inserted_id();
 	}
@@ -43,9 +43,9 @@ class Uploads
 		//Suppression des fichiers.
 		$result = self::$db_querier->select("SELECT path
 		FROM " . DB_TABLE_UPLOAD . "
-		WHERE user_id = :user_id", array(
+		WHERE user_id = :user_id", [
 			'user_id' => $user_id
-		));
+		]);
 		while($row = $result->fetch())
 		{
 			$file = new File(PATH_TO_ROOT . '/upload/' . $row['path']);
@@ -54,8 +54,8 @@ class Uploads
 		$result->dispose();
 
 		//Suppression des entrées dans la base de données
-		self::$db_querier->delete(DB_TABLE_UPLOAD_CAT, 'WHERE user_id = :user_id', array('user_id' => $user_id));
-		self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		self::$db_querier->delete(DB_TABLE_UPLOAD_CAT, 'WHERE user_id = :user_id', ['user_id' => $user_id]);
+		self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE user_id = :user_id', ['user_id' => $user_id]);
 	}
 
 	//Suppression recursive du dossier et de son contenu.
@@ -64,9 +64,9 @@ class Uploads
 		//Suppression des fichiers.
 		$result = self::$db_querier->select("SELECT path
 		FROM " . DB_TABLE_UPLOAD . "
-		WHERE idcat = :idcat", array(
+		WHERE idcat = :idcat", [
 			'idcat' => $id_folder
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$file = new File(PATH_TO_ROOT . '/upload/' . $row['path']);
@@ -75,15 +75,15 @@ class Uploads
 		$result->dispose();
 
 		//Suppression des entrées dans la base de données
-		self::$db_querier->delete(DB_TABLE_UPLOAD_CAT, 'WHERE id = :id', array('id' => $id_folder));
+		self::$db_querier->delete(DB_TABLE_UPLOAD_CAT, 'WHERE id = :id', ['id' => $id_folder]);
 
-		self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat', array('idcat' => $id_folder));
+		self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat', ['idcat' => $id_folder]);
 
 		$result = self::$db_querier->select("SELECT id
 		FROM " . DB_TABLE_UPLOAD_CAT . "
-		WHERE id_parent = :id", array(
+		WHERE id_parent = :id", [
 			'id' => $id_folder
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			if (!empty($row['id']))
@@ -97,8 +97,8 @@ class Uploads
 	{
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
-			$name = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'path', 'WHERE id = :id', array('id' => $id_file));
-			self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE id = :id', array('id' => $id_file));
+			$name = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'path', 'WHERE id = :id', ['id' => $id_file]);
+			self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE id = :id', ['id' => $id_file]);
 
 			$file = new File(PATH_TO_ROOT . '/upload/' . $name);
 			$file->delete();
@@ -107,12 +107,12 @@ class Uploads
 		}
 		else
 		{
-			$check_id_auth = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'user_id', 'WHERE id = :id', array('id' => $id_file));
+			$check_id_auth = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'user_id', 'WHERE id = :id', ['id' => $id_file]);
 			//Suppression d'un fichier.
 			if ($check_id_auth == $user_id)
 			{
-				$name = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'path', 'WHERE id = :id', array('id' => $id_file));
-				self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE id = :id', array('id' => $id_file));
+				$name = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'path', 'WHERE id = :id', ['id' => $id_file]);
+				self::$db_querier->delete(DB_TABLE_UPLOAD, 'WHERE id = :id', ['id' => $id_file]);
 
 				$file = new File(PATH_TO_ROOT . '/upload/' . $name);
 				$file->delete();
@@ -126,29 +126,29 @@ class Uploads
 	//Renomme un dossier virtuel
 	public static function Rename_folder($id_folder, $name, $previous_name, $user_id, $admin = false)
 	{
-		$info_folder = array(
+		$info_folder = [
 			'id_parent' => '',
 			'user_id' => ''
-		);
+		];
 		try {
-			$info_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+			$info_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", ["id_parent", "user_id"], 'WHERE id=:id', ['id' => $id_folder]);
 		} catch (RowNotFoundException $e) {}
 
 		//Vérification de l'unicité du nom du dossier.
-		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id_parent AND name = :name AND id <> :id AND user_id = :user_id', array('id_parent' => $info_folder['id_parent'], 'name' => $name, 'id' => $id_folder, 'user_id' => $user_id));
+		$check_folder = self::$db_querier->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id_parent AND name = :name AND id <> :id AND user_id = :user_id', ['id_parent' => $info_folder['id_parent'], 'name' => $name, 'id' => $id_folder, 'user_id' => $user_id]);
 		if ($check_folder > 0 || preg_match('`/|\.|\\\|"|<|>|\||\?`u', stripslashes($name)))
 			return '';
 
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
-			self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('name' => $name), 'WHERE id = :id', array('id' => $id_folder));
+			self::$db_querier->update(DB_TABLE_UPLOAD_CAT, ['name' => $name], 'WHERE id = :id', ['id' => $id_folder]);
 			return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_folder['user_id'])
 			{
-				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('name' => $name), 'WHERE id = :id', array('id' => $id_folder));
+				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, ['name' => $name], 'WHERE id = :id', ['id' => $id_folder]);
 				return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
@@ -158,29 +158,29 @@ class Uploads
 	//Renomme un fichier virtuel
 	public static function Rename_file($id_file, $name, $previous_name, $user_id, $admin = false)
 	{
-		$info_cat = array(
+		$info_cat = [
 			'idcat' => '',
 			'user_id' => ''
-		);
+		];
 		try {
-			$info_cat = self::$db_querier->select_single_row(PREFIX . "upload", array("idcat", "user_id"), 'WHERE id=:id', array('id' => $id_file));
+			$info_cat = self::$db_querier->select_single_row(PREFIX . "upload", ["idcat", "user_id"], 'WHERE id=:id', ['id' => $id_file]);
 		} catch (RowNotFoundException $e) {}
 
 		//Vérification de l'unicité du nom du fichier.
-		$check_file = self::$db_querier->count(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat AND name = :name AND id <> :id AND user_id = :user_id', array('idcat' => $info_cat['idcat'], 'name' => $name, 'id' => $id_file, 'user_id' => $user_id));
+		$check_file = self::$db_querier->count(DB_TABLE_UPLOAD, 'WHERE idcat = :idcat AND name = :name AND id <> :id AND user_id = :user_id', ['idcat' => $info_cat['idcat'], 'name' => $name, 'id' => $id_file, 'user_id' => $user_id]);
 		if ($check_file > 0 || preg_match('`/|\\\|"|<|>|\||\?`u', stripslashes($name)))
 			return '/';
 
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
-			self::$db_querier->update(DB_TABLE_UPLOAD, array('name' => $name), 'WHERE id = :id', array('id' => $id_file));
+			self::$db_querier->update(DB_TABLE_UPLOAD, ['name' => $name], 'WHERE id = :id', ['id' => $id_file]);
 			return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 		}
 		else
 		{
 			if ($user_id == $info_cat['user_id'])
 			{
-				self::$db_querier->update(DB_TABLE_UPLOAD, array('name' => $name), 'WHERE id = :id', array('id' => $id_file));
+				self::$db_querier->update(DB_TABLE_UPLOAD, ['name' => $name], 'WHERE id = :id', ['id' => $id_file]);
 				return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($name), 0, 22)) . '...' : $name);
 			}
 		}
@@ -193,28 +193,28 @@ class Uploads
 		if ($admin) //Administration, on ne vérifie pas l'appartenance.
 		{
 			//Changement de propriètaire du fichier.
-			$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
+			$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $to]);
 			if (empty($change_user_id))
 				$change_user_id = -1;
 			if ($to != $move)
-				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $to, 'user_id' => $change_user_id), 'WHERE id = :id', array('id' => $move));
+				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, ['id_parent' => $to, 'user_id' => $change_user_id], 'WHERE id = :id', ['id' => $move]);
 			return '';
 		}
 		else
 		{
 			if ($to == 0) //Déplacement dossier racine du membre.
 			{
-				$get_mbr_folder = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'id', 'WHERE user_id = :user_id', array('user_id' => $user_id));
-				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $get_mbr_folder), 'WHERE id = :id AND user_id = :user_id', array('id' => $move, 'user_id' => $user_id));
+				$get_mbr_folder = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'id', 'WHERE user_id = :user_id', ['user_id' => $user_id]);
+				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, ['id_parent' => $get_mbr_folder], 'WHERE id = :id AND user_id = :user_id', ['id' => $move, 'user_id' => $user_id]);
 				return '';
 			}
 
 			//Vérification de l'appartenance du dossier de destination.
-			$check_user_id_move = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $move));
-			$check_user_id_to = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
+			$check_user_id_move = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $move]);
+			$check_user_id_to = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $to]);
 			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
 			{
-				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, array('id_parent' => $to), 'WHERE id = :id AND user_id = :user_id', array('id' => $move, 'user_id' => $user_id));
+				self::$db_querier->update(DB_TABLE_UPLOAD_CAT, ['id_parent' => $to], 'WHERE id = :id AND user_id = :user_id', ['id' => $move, 'user_id' => $user_id]);
 				return '';
 			}
 			else
@@ -230,31 +230,31 @@ class Uploads
 			//Changement de propriètaire du fichier.
 			$change_user_id = 0;
 			try {
-				$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
+				$change_user_id = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $to]);
 			} catch (RowNotFoundException $e) {}
 
-			$properties = array('idcat' => $to);
+			$properties = ['idcat' => $to];
 			if (!empty($change_user_id))
 				$properties['user_id'] = $change_user_id;
 
-			self::$db_querier->update(DB_TABLE_UPLOAD, $properties, 'WHERE id = :id', array('id' => $move));
+			self::$db_querier->update(DB_TABLE_UPLOAD, $properties, 'WHERE id = :id', ['id' => $move]);
 			return '';
 		}
 		else
 		{
 			if ($to == 0) //Déplacement dossier racine du membre.
 			{
-				$get_mbr_folder = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'id', 'WHERE user_id = :user_id AND id_parent = 0', array('user_id' => $user_id));
-				self::$db_querier->update(DB_TABLE_UPLOAD, array('idcat' => $get_mbr_folder), 'WHERE id = :id AND user_id = :user_id', array('id' => $move, 'user_id' => $user_id));
+				$get_mbr_folder = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'id', 'WHERE user_id = :user_id AND id_parent = 0', ['user_id' => $user_id]);
+				self::$db_querier->update(DB_TABLE_UPLOAD, ['idcat' => $get_mbr_folder], 'WHERE id = :id AND user_id = :user_id', ['id' => $move, 'user_id' => $user_id]);
 				return '';
 			}
 
 			//Vérification de l'appartenance du dossier de destination.
-			$check_user_id_move = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'user_id', 'WHERE id = :id', array('id' => $move));
-			$check_user_id_to = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', array('id' => $to));
+			$check_user_id_move = self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'user_id', 'WHERE id = :id', ['id' => $move]);
+			$check_user_id_to = self::$db_querier->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id = :id', ['id' => $to]);
 			if ($user_id == $check_user_id_move && $user_id == $check_user_id_to)
 			{
-				self::$db_querier->update(DB_TABLE_UPLOAD, array('idcat' => $to), 'WHERE id = :id AND user_id = :user_id', array('id' => $move, 'user_id' => $user_id));
+				self::$db_querier->update(DB_TABLE_UPLOAD, ['idcat' => $to], 'WHERE id = :id AND user_id = :user_id', ['id' => $move, 'user_id' => $user_id]);
 				return '';
 			}
 			else
@@ -280,13 +280,13 @@ class Uploads
 	//Récupération du répertoire courant (administration).
 	public static function get_admin_url($id_folder, $pwd, $member_link = '')
 	{
-		$parent_folder = array(
+		$parent_folder = [
 			'id_parent' => '',
 			'name' => '',
 			'user_id' => ''
-		);
+		];
 		try {
-			$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "name", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+			$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", ["id_parent", "name", "user_id"], 'WHERE id=:id', ['id' => $id_folder]);
 		} catch (RowNotFoundException $e) {}
 
 		if (!empty($parent_folder['id_parent']))
@@ -301,12 +301,12 @@ class Uploads
 	//Récupération du répertoire courant.
 	public static function get_url($id_folder, $pwd, $popup)
 	{
-		$parent_folder = array(
+		$parent_folder = [
 			'id_parent' => '',
 			'name' => ''
-		);
+		];
 		try {
-			$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", array("id_parent", "name", "user_id"), 'WHERE id=:id', array('id' => $id_folder));
+			$parent_folder = self::$db_querier->select_single_row(PREFIX . "upload_cat", ["id_parent", "name", "user_id"], 'WHERE id=:id', ['id' => $id_folder]);
 		} catch (RowNotFoundException $e) {}
 
 		if (!empty($parent_folder['id_parent']))
@@ -321,7 +321,7 @@ class Uploads
 	//Récupération de la taille totale utilisée par un membre.
 	public static function Member_memory_used($user_id)
 	{
-		return self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		return self::$db_querier->get_column_value(DB_TABLE_UPLOAD, 'SUM(size)', 'WHERE user_id = :user_id', ['user_id' => $user_id]);
 	}
 
 	//Conversion mimetype -> image.
@@ -429,7 +429,7 @@ class Uploads
 				$filetype = sprintf(LangLoader::get_message('upload.document.type', 'upload-lang'), TextHelper::strtoupper($type));
 		}
 
-		return array('img' => $img, 'filetype' => $filetype);
+		return ['img' => $img, 'filetype' => $filetype];
 	}
 }
 ?>

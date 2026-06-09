@@ -55,7 +55,7 @@
 	# IF C_NEXT_MENU #
 		<li# IF C_HAS_CHILD # class="has-sub"# ENDIF #>
 			# IF C_URL #
-				<a href="{REL_URL}" class="cssmenu-title offload">
+				<a href="{REL_URL}" class="cssmenu-title offload"# IF C_TARGET # target="_blank" rel="noopener noreferrer"# ENDIF #>
 					# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
 					# IF C_ICON #
 						# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}&nbsp</span>;# ENDIF #
@@ -80,7 +80,7 @@
 # ELSE #
 	<li>
 		# IF C_URL #
-			<a href="{REL_URL}" class="cssmenu-title offload">
+			<a href="{REL_URL}" class="cssmenu-title offload"# IF C_TARGET # target="_blank" rel="noopener noreferrer"# ENDIF #>
 				# IF C_IMG #<img src="{REL_IMG}" alt="{TITLE}" height="{IMG_HEIGHT}" width="{IMG_WIDTH}" /> # ENDIF #
 				# IF C_ICON #
 					# IF C_FA_ICON #<i class="{ICON}"></i> # ELSE #<span class="big">{ICON}</span># ENDIF #

@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 03 10
+ * @version     PHPBoost 6.1 - last update: 2026 06 06
  * @since       PHPBoost 3.0 - 2010 01 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormatingHelper
@@ -22,7 +22,7 @@ class FormatingHelper
 	 * @param bool $addslashes if true, the parsed string will be escaped.
 	 * @return string The parsed string.
 	 */
-	public static function strparse($content, $forbidden_tags = array(), $addslashes = true)
+	public static function strparse($content, $forbidden_tags = [], $addslashes = true)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_parser();
 
@@ -70,6 +70,8 @@ class FormatingHelper
 	public static function second_parse($content)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_second_parser();
+        if ($parser === null)
+            return $content;
 		$parser->set_content($content);
 		$parser->parse();
 

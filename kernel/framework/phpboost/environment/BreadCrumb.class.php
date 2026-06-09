@@ -9,18 +9,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 01 23
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.6 - 2007 02 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class BreadCrumb
 {
 	/**
-	 * @var string[string] List of the links
+	 * @var string[] List of the links
 	 */
-	private $array_links = array();
+	private $array_links = [];
 	/**
 	 * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
 	 */
@@ -36,7 +36,7 @@ class BreadCrumb
 		if (!empty($text))
 		{
 			$url = $target instanceof Url ? $target->rel() : $target;
-			$this->array_links[] = array($text, $url);
+			$this->array_links[] = [$text, $url];
 			return true;
 		}
 		else
@@ -78,12 +78,12 @@ class BreadCrumb
 		$position = 2;
 		foreach ($this->array_links as $key => $array)
 		{
-			$tpl->assign_block_vars('link_bread_crumb', array(
+			$tpl->assign_block_vars('link_bread_crumb', [
 				'C_CURRENT' => $output[0] == $array,
 				'URL'       => $array[1],
 				'TITLE'     => $array[0],
 				'POSITION'  => $position
-			));
+			]);
 			$position++;
 		}
 	}
@@ -93,7 +93,7 @@ class BreadCrumb
 	 */
 	public function clean()
 	{
-		$this->array_links = array();
+		$this->array_links = [];
 	}
 
 	/**

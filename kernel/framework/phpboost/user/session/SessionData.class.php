@@ -6,14 +6,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 19
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 11 04
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Myster <https://www.phpboost.com/user/pm-3023>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Myster <https://www.phpboost.com/user/pm-3023>
 */
 
 class SessionData
@@ -32,8 +32,8 @@ class SessionData
 	protected $location_script;
 	protected $location_title;
 	protected $location_id;
-	protected $cached_data = array();
-	protected $data = array();
+	protected $cached_data = [];
+	protected $data = [];
 
 	protected $cached_data_modified = false;
 	protected $data_modified = false;
@@ -162,7 +162,7 @@ class SessionData
 	{
 		if ($this->cached_data_modified || $this->data_modified)
 		{
-			$columns = array();
+			$columns = [];
 			if ($this->cached_data_modified)
 			{
 				$columns['cached_data'] = TextHelper::serialize($this->cached_data);
@@ -172,7 +172,7 @@ class SessionData
 				$columns['data'] = TextHelper::serialize($this->data);
 			}
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-			$parameters = array('user_id' => $this->user_id, 'session_id' => $this->session_id);
+			$parameters = ['user_id' => $this->user_id, 'session_id' => $this->session_id];
 			PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 			$this->cached_data_modified = false;
 			$this->data_modified = false;
@@ -194,7 +194,7 @@ class SessionData
 	private function delete_in_db()
 	{
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-		$parameters = array('user_id' => $this->user_id, 'session_id' => $this->session_id);
+		$parameters = ['user_id' => $this->user_id, 'session_id' => $this->session_id];
 		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, $condition, $parameters);
 	}
 
@@ -205,7 +205,7 @@ class SessionData
 
 	private function create_in_db()
 	{
-		$columns = array(
+		$columns = [
 			'user_id' => $this->user_id,
 			'session_id' => $this->session_id,
 			'token' => $this->token,
@@ -213,7 +213,7 @@ class SessionData
 			'ip' => $this->ip,
 			'cached_data' => TextHelper::serialize($this->cached_data),
 			'data' => TextHelper::serialize($this->data)
-		);
+		];
 		$row = PersistenceContext::get_querier()->insert(DB_TABLE_SESSIONS, $columns);
 	}
 
@@ -225,23 +225,23 @@ class SessionData
 
 	private function get_serialized_content()
 	{
-		return TextHelper::serialize(array(self::$KEY_USER_ID => $this->user_id, self::$KEY_SESSION_ID => $this->session_id));
+		return TextHelper::serialize([self::$KEY_USER_ID => $this->user_id, self::$KEY_SESSION_ID => $this->session_id]);
 	}
 
 	public function no_session_location()
 	{
 		$data = AppContext::get_session();
 
-		$columns = array('timestamp' => $data->timestamp);
+		$columns = ['timestamp' => $data->timestamp];
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+		$parameters = ['user_id' => $data->user_id, 'session_id' => $data->session_id];
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
 
 	public function location_id_already_exists($location_id)
 	{
 		$condition = 'WHERE location_id=:location_id AND user_id!=:user_id';
-		$parameters = array('location_id' => $location_id, 'user_id' => $this->user_id);
+		$parameters = ['location_id' => $location_id, 'user_id' => $this->user_id];
 		$value = PersistenceContext::get_querier()->count(DB_TABLE_SESSIONS, $condition, $parameters);
 
 		return $value > 0;
@@ -250,7 +250,7 @@ class SessionData
 	public function get_user_on_location_id($location_id)
 	{
 		try {
-			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_SESSIONS, 'user_id', 'WHERE location_id=:location_id', array('location_id' => $location_id));
+			$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_SESSIONS, 'user_id', 'WHERE location_id=:location_id', ['location_id' => $location_id]);
 		} catch (RowNotFoundException $e) {
 			$user_id = User::VISITOR_LEVEL;
 		}
@@ -268,7 +268,7 @@ class SessionData
 	 */
 	public static function gc()
 	{
-		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', array('now' => time() - SessionsConfig::load()->get_session_duration()));
+		PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE timestamp < :now', ['now' => time() - SessionsConfig::load()->get_session_duration()]);
 	}
 
 	/**
@@ -307,7 +307,7 @@ class SessionData
 	public static function add_in_visit_counter()
 	{
 		$ip_address = AppContext::get_request()->get_ip_address();
-		$has_already_visited = PersistenceContext::get_querier()->row_exists(DB_TABLE_VISIT_COUNTER, 'WHERE ip=:ip', array('ip' => $ip_address));
+		$has_already_visited = PersistenceContext::get_querier()->row_exists(DB_TABLE_VISIT_COUNTER, 'WHERE ip=:ip', ['ip' => $ip_address]);
 		$is_robot = Robots::is_robot();
 
 		if (!$has_already_visited && !$is_robot)
@@ -315,8 +315,8 @@ class SessionData
 			$now = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
 			$time = $now->format('Y-m-d', Timezone::SITE_TIMEZONE);
 
-			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", array('time' => $time));
-			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, array('ip' => $ip_address, 'time' => $time, 'total' => 0));
+			PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_VISIT_COUNTER . " SET ip = ip + 1, time=:time, total = total + 1 WHERE id = 1", ['time' => $time]);
+			PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, ['ip' => $ip_address, 'time' => $time, 'total' => 0]);
 		}
 
 		foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job)
@@ -330,9 +330,9 @@ class SessionData
 	{
 		$data = AppContext::get_session();
 
-		$columns = array('timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => TextHelper::cut_string(REWRITED_SCRIPT, 200), 'location_id' => $location_id);
+		$columns = ['timestamp' => $data->timestamp, 'location_title' => $title_page, 'location_script' => TextHelper::cut_string(REWRITED_SCRIPT, 200), 'location_id' => $location_id];
 		$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-		$parameters = array('user_id' => $data->user_id, 'session_id' => $data->session_id);
+		$parameters = ['user_id' => $data->user_id, 'session_id' => $data->session_id];
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 
 		if (is_array($data->cached_data) && array_key_exists('last_connection_date', $data->cached_data))
@@ -366,7 +366,7 @@ class SessionData
 	private static function session_exists($user_id)
 	{
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 		return PersistenceContext::get_querier()->row_exists(DB_TABLE_SESSIONS, $condition, $parameters);
 	}
 
@@ -385,9 +385,9 @@ class SessionData
 
 	private static function get_existing_session($user_id)
 	{
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 		$condition = 'WHERE user_id=:user_id';
-		$columns = array('session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data');
+		$columns = ['session_id', 'token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data'];
 
 		try {
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
@@ -398,18 +398,18 @@ class SessionData
 			ORDER BY timestamp DESC
 			LIMIT 1', $parameters);
 
-			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id AND session_id != :session_id', array('user_id' => $user_id, 'session_id' => $row['session_id']));
+			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id AND session_id != :session_id', ['user_id' => $user_id, 'session_id' => $row['session_id']]);
 		}
 		return self::init_from_row($user_id, $row['session_id'], $row);
 	}
 
 	private static function update_existing_session($user_id)
 	{
-		$columns = array(
+		$columns = [
 			'timestamp' => time() + SessionsConfig::load()->get_session_duration(),
 			'ip' => AppContext::get_request()->get_ip_address()
-		);
-		$parameters = array('user_id' => $user_id);
+		];
+		$parameters = ['user_id' => $user_id];
 		$condition = 'WHERE user_id=:user_id';
 		PersistenceContext::get_querier()->update(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 	}
@@ -435,9 +435,9 @@ class SessionData
 		{
 			$user_id = $values[self::$KEY_USER_ID];
 			$session_id = $values[self::$KEY_SESSION_ID];
-			$columns = array('token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data');
+			$columns = ['token', 'timestamp', 'ip', 'location_script', 'location_title', 'location_id', 'data', 'cached_data'];
 			$condition = 'WHERE user_id=:user_id AND session_id=:session_id';
-			$parameters = array('user_id' => $user_id, 'session_id' => $session_id);
+			$parameters = ['user_id' => $user_id, 'session_id' => $session_id];
 			$row = PersistenceContext::get_querier()->select_single_row(DB_TABLE_SESSIONS, $columns, $condition, $parameters);
 			$data = self::init_from_row($user_id, $session_id, $row);
 			$data->timestamp = time();
@@ -482,13 +482,13 @@ class SessionData
         $data->cached_data = unserialize($fixed_cached_data);
         if ($data->cached_data  ===  false) {
             // Fallback in case of failure
-            $data->cached_data = array();
+            $data->cached_data = [];
         }
 
         $data->data = unserialize($fixed_data);
         if ($data->data  ===  false) {
             // Fallback in case of failure
-            $data->data = array();
+            $data->data = [];
         }
 
         return $data;
@@ -502,9 +502,9 @@ class SessionData
 				member.user_id AS m_user_id, member.display_name, member.level, member.email, member.show_email, member.locale, member.theme, member.timezone, member.editor, member.unread_pm, member.posted_msg, member.registration_date, member.last_connection_date, member.user_groups, member.warning_percentage, member.delay_banned, member.delay_readonly, member_extended_fields.*
 			FROM ' . DB_TABLE_MEMBER . ' member
 			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' member_extended_fields ON member_extended_fields.user_id = member.user_id
-			WHERE member.user_id = :user_id', array(
+			WHERE member.user_id = :user_id', [
 				'user_id' => $data->user_id
-			));
+			]);
 		}
 		catch (RowNotFoundException $ex)
 		{
@@ -515,7 +515,7 @@ class SessionData
 
 	protected function update_user_info($user_id)
 	{
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('last_connection_date' => time()), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['last_connection_date' => time()], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 	}
 
 	/**

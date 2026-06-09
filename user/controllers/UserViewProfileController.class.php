@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 07 10
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 07
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserViewProfileController extends AbstractController
@@ -24,7 +24,7 @@ class UserViewProfileController extends AbstractController
 		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
 
 		try {
-			$this->user_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'member', array('*'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			$this->user_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'member', ['*'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -53,20 +53,20 @@ class UserViewProfileController extends AbstractController
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user_id) as $field)
 		{
-			$this->view->assign_block_vars('extended_fields', array(
+			$this->view->assign_block_vars('extended_fields', [
 				'NAME'          => $field['name'],
 				'REWRITED_NAME' => Url::encode_rewrite($field['name']),
 				'VALUE'         => $field['value'],
 				'C_AVATAR'		=> $field['field_name'] == 'user_avatar'
-			));
+			]);
 			$extended_fields_number++;
 		}
 
 		foreach ($user_additional_informations as $info)
 		{
-			$this->view->assign_block_vars('additional_informations', array(
+			$this->view->assign_block_vars('additional_informations', [
 				'VALUE' => $info
-			));
+			]);
 		}
 
 		$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
@@ -76,7 +76,7 @@ class UserViewProfileController extends AbstractController
 			$contributions_number += $module->get_publications_number($user_id);
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_DISPLAY_EDIT_LINK'          => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL),
 			'C_IS_BANNED'                  => $this->user->is_banned(),
 			'C_GROUPS'                     => $has_groups,
@@ -84,7 +84,7 @@ class UserViewProfileController extends AbstractController
 			'C_DISPLAY_PM_LINK'            => !$this->same_user_view_profile($user_id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_DISPLAY_OTHER_INFORMATIONS' => $extended_fields_number || $user_additional_informations,
 
-			'TITLE_PROFILE'       => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name'])),
+			'TITLE_PROFILE'       => $this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], ['name' => $this->user_infos['display_name']]),
 			'DISPLAY_NAME'        => $this->user_infos['display_name'],
 			'LEVEL'               => UserService::get_level_lang($this->user_infos['level']),
 			'LEVEL_CLASS'         => UserService::get_level_class($this->user_infos['level']),
@@ -96,7 +96,7 @@ class UserViewProfileController extends AbstractController
 			'U_EDIT_PROFILE'      => UserUrlBuilder::edit_profile($user_id)->rel(),
 			'U_USER_PUBLICATIONS' => UserUrlBuilder::publications($user_id)->rel(),
 			'U_DISPLAY_USER_PM'   => UserUrlBuilder::personnal_message($user_id)->rel()
-		));
+		]);
 	}
 
 	private function same_user_view_profile($user_id)
@@ -113,13 +113,13 @@ class UserViewProfileController extends AbstractController
 			if ($group_id > 0 && $groups_cache->group_exists($group_id))
 			{
 				$group = $groups_cache->get_group($group_id);
-				$this->view->assign_block_vars('groups', array(
+				$this->view->assign_block_vars('groups', [
 					'ID'              => $group_id,
 					'C_PICTURE'       => !empty($group['img']),
 					'NAME'            => $group['name'],
 					'U_GROUP_PICTURE' => TPL_PATH_TO_ROOT .'/images/group/' . $group['img'],
 					'U_GROUP'         => UserUrlBuilder::group($group_id)->rel()
-				));
+				]);
 				$has_groups = true;
 			}
 		}
@@ -131,13 +131,13 @@ class UserViewProfileController extends AbstractController
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name']), $this->lang['user.user']));
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.profile'], array('name' => $this->user_infos['display_name'])));
+		$graphical_environment->set_page_title($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], ['name' => $this->user_infos['display_name']], $this->lang['user.user']));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['user.seo.profile'], ['name' => $this->user_infos['display_name']]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::profile($user_id));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();
 		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], array('name' => $this->user_infos['display_name'])), UserUrlBuilder::profile($user_id)->rel());
+		$breadcrumb->add($this->user_infos['user_id'] == AppContext::get_current_user()->get_id() ? $this->lang['user.profile'] : StringVars::replace_vars($this->lang['user.profile.of'], ['name' => $this->user_infos['display_name']]), UserUrlBuilder::profile($user_id)->rel());
 
 		return $response;
 	}

@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 01 30
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 10 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class MenusProvidersService
@@ -17,7 +17,7 @@ class MenusProvidersService
 		if (self::module_containing_extension_point($module_id))
 		{
 			$provider = self::get_provider($module_id);
-			return ($provider !== null ? $provider->get_menus($module_id) : array());
+			return ($provider !== null ? $provider->get_menus($module_id) : []);
 		}
 	}
 

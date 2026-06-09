@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2020 03 12
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultDisplayItemController extends AbstractItemController
@@ -82,10 +82,10 @@ class DefaultDisplayItemController extends AbstractItemController
 
 		if (in_array('idcard', $this->enabled_features))
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_ID_CARD' => $this->get_item()->is_published(),
 				'ID_CARD'   => IdcardService::display_idcard($this->get_item()->get_author_user())
-			));
+			]);
 		}
 
 		if (in_array('notation', $this->enabled_features))
@@ -103,9 +103,9 @@ class DefaultDisplayItemController extends AbstractItemController
 
 		$this->view->put_all(array_merge(
 			$this->get_item()->get_template_vars(),
-			array(
+			[
 				'ADDITIONAL_CONTENT' => $this->get_item()->get_additional_content_template()
-			)
+			]
 		));
 	}
 
@@ -149,7 +149,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function get_additionnal_seo_properties()
 	{
-		return array();
+		return [];
 	}
 
 	protected function get_seo_page_type()

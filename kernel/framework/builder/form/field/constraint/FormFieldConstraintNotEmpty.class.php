@@ -5,11 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 10 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 19
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
@@ -28,7 +28,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()))));
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label())]));
 
 		if ($value instanceof FormFieldEnumOption) {
 			return $value->get_raw_value() !== null && $value->get_raw_value() != '';
@@ -44,7 +44,7 @@ class FormFieldConstraintNotEmpty extends AbstractFormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'notEmptyFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) .
-			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label())))) .')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label())])) .')';
 	}
 }
 

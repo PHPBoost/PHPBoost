@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 08 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.0 - 2024 06 25
 */
 
@@ -33,7 +33,7 @@ class ModulesJsFilesService
      * Get all modules JS files always displayed in the top_js
      * @return array JS files
      */
-    public static function get_top_js_files_always_displayed():array
+    public static function get_top_js_files_always_displayed(): array
     {
         $js_files = [];
         foreach (self::$modules_js_files as $module_id => $module_js_files)
@@ -53,7 +53,7 @@ class ModulesJsFilesService
      * Get all modules JS files always displayed in the bottom_js
      * @return array JS files
      */
-    public static function get_bottom_js_files_always_displayed():array
+    public static function get_bottom_js_files_always_displayed(): array
     {
         $js_files = [];
         foreach (self::$modules_js_files as $module_id => $module_js_files)
@@ -147,9 +147,12 @@ class ModulesJsFilesService
         {
             return '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/js/' . $js_file;
         }
-        if (file_exists(PATH_TO_ROOT . '/'. $module_id . '/templates/js/' . $js_file))
+        // Check new /modules structure with fallback to root
+        $module_template_path = FileTemplateLoader::get_module_template_path($module_id);
+        $module_js_path = $module_template_path . '/js/' . $js_file;
+        if (file_exists(PATH_TO_ROOT . $module_js_path))
         {
-            return '/' . $module_id . '/templates/js/' . $js_file;
+            return $module_js_path;
         }
         if (file_exists(PATH_TO_ROOT . '/templates/__default__/plugins/' . $js_file))
         {
@@ -159,6 +162,6 @@ class ModulesJsFilesService
         {
             return '/kernel/lib/js/' . $js_file;
         }
-        return '/' . $module_id . '/templates/js/' . $js_file;
+        return '/modules/' . $module_id . '/templates/js/' . $js_file;
     }
 }

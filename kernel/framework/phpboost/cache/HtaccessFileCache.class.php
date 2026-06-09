@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 23
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -39,21 +39,23 @@ class HtaccessFileCache implements CacheData
 		if ($this->server_environment_config->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
-
 			$this->force_redirection_if_available();
-
 			$this->add_core_rules();
-
-			$this->add_modules_rules();
-
 			$this->add_user_rules();
-
+			$this->add_modules_rules();
 			$this->add_php_and_http_protections();
-
 			$this->add_file_and_sql_injections_protections();
-
 			$this->add_bandwidth_protection();
 		}
+        else
+        {
+            $site_path = $this->general_config->get_site_path();
+            $this->add_section('Module routing without URL rewriting');
+            $this->add_line('RewriteEngine on');
+            $this->add_line('RewriteBase /');
+            $this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)/?$ ' . $site_path . '/modules/$1/index.php [L,QSA]');
+            $this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_\-.]+\.php)(.*)$ ' . $site_path . '/modules/$1/$2$3 [L,QSA]');
+        }
 
 		$this->set_default_charset();
 
@@ -169,10 +171,32 @@ class HtaccessFileCache implements CacheData
 
 	private function enable_rewrite_rules()
 	{
-		$this->add_section('Rewrite rules');
+        $this->add_section('Prevent Rewrite for font files');
+		$this->add_line('<IfModule mod_headers.c>');
+		$this->add_line('    <FilesMatch "\.(woff|woff2|ttf|otf)$">');
+		$this->add_line('        Header set Content-Type font/woff2');
+		$this->add_line('        Header set Access-Control-Allow-Origin "*"');
+		$this->add_line('        RewriteEngine Off');
+		$this->add_line('    </FilesMatch>');
+		$this->add_line('</IfModule>');
+
+        $this->add_section('Rewrite rules');
 		$this->add_line('RewriteEngine on');
 		$this->add_line('RewriteBase /');
+		$this->add_line('RewriteCond %{REQUEST_FILENAME} !-f');
+		$this->add_line('RewriteCond %{REQUEST_URI} !(.*)/$');
+		$this->add_line('RewriteCond %{REQUEST_URI} !(\.php|/)$ [NC]');
+		$this->add_line('RewriteRule ^(.*)$ ' . $this->general_config->get_site_path() . '/$1/ [L,R=301]');
+
+        $this->add_section('Skip rewriting for existing files');
+		$this->add_line('RewriteCond %{REQUEST_FILENAME} -f');
+		$this->add_line('RewriteRule ^ - [L]');
+        $this->add_section('Skip rewriting for existing directories');
+		$this->add_line('RewriteCond %{REQUEST_FILENAME} -d');
+		$this->add_line('RewriteRule ^ - [L]');
+
 	}
+
 
 	private function add_core_rules()
 	{
@@ -213,6 +237,20 @@ class HtaccessFileCache implements CacheData
 			}
 		}
 
+		// Write UrlUpdater redirect rules (R=301) BEFORE all dispatcher rules.
+		// UrlUpdater's UrlMapping objects must fire before wiki/pages dispatcher rules
+		// otherwise the dispatcher catches old-format URLs before the redirect can apply.
+		if ($eps->provider_exists('UrlUpdater', UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			$this->add_section('UrlUpdater redirect rules (high priority)');
+			$provider = $eps->get_provider('UrlUpdater');
+			foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+			{
+				if (!($mapping instanceof DispatcherUrlMapping))
+					$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+			}
+		}
+
 		$this->add_section('Modules rules');
 
 		foreach ($modules as $module)
@@ -242,7 +280,7 @@ class HtaccessFileCache implements CacheData
 							$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 						}
 					}
-					else
+					else if ($id !== 'UrlUpdater') // UrlUpdater non-dispatcher rules already written above
 						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 				}
 			}
@@ -272,6 +310,12 @@ class HtaccessFileCache implements CacheData
 				}
 			}
 		}
+
+		// Generic fallback rules for direct .php file access (placed last to allow module-specific rules priority)
+		$this->add_section('Generic module file access');
+		$this->add_line('# Handle direct .php file requests for all modules');
+		$this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_\-.]+\.php)(.*)$ ' . $this->general_config->get_site_path() . '/modules/$1/$2$3 [L,QSA]');
+		$this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/index\.php$ ' . $this->general_config->get_site_path() . '/modules/$1/index.php [L,QSA]');
 	}
 
 	private function add_user_rules()
@@ -285,18 +329,45 @@ class HtaccessFileCache implements CacheData
 		$this->add_url_mapping($mappings['user']);
 	}
 
-	private function add_rewrite_rule($match, $path, $options = 'L,QSA')
+	private function add_rewrite_rule($match, $path, $options = 'L,NC,QSA')
 	{
 		$this->add_line('RewriteRule ' . $match . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' [' . $options . ']');
 	}
 
-	private function add_url_mapping(UrlMappingsExtensionPoint $mapping_list)
-	{
-		foreach ($mapping_list->list_mappings() as $mapping)
-		{
-			$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
-		}
-	}
+	private function add_url_mapping($mapping_list, $rules = [])
+    {
+        if ($mapping_list instanceof UrlMappingsExtensionPoint)
+            $mapping_list = $mapping_list->list_mappings();
+
+        foreach ($mapping_list as $mapping)
+        {
+            // ADD THIS: Handle direct .php file requests for each module
+            preg_match('#^([\w_-]+)/#', $mapping->from(), $matches);
+            if (!empty($matches[1]))
+            {
+                $module_name = $matches[1];
+                static $processed_modules = [];
+
+                // Only add once per module to avoid duplicates
+                if (!in_array($module_name, $processed_modules))
+                {
+                    $this->add_line('RewriteRule ^' . $module_name . '/([a-zA-Z0-9_-]+\.php)(.*)$ ' . $this->general_config->get_site_path() . '/modules/' . $module_name . '/$1$2 [L,QSA]');
+                    $processed_modules[] = $module_name;
+                }
+            }
+
+            if (!empty($rules))
+            {
+                foreach ($rules as $rule)
+                {
+                    $this->add_line(str_replace('DIR', $this->general_config->get_site_path(), $rule));
+                }
+                $rules = [];
+            }
+
+            $this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+        }
+    }
 
 	private function add_php_and_http_protections()
 	{

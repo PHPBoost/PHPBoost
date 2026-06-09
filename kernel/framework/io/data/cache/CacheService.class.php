@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 07 06
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 04 11
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class CacheService
@@ -23,10 +23,10 @@ class CacheService
 
 	public function __construct()
 	{
-		self::$cache_folder = new Folder(PATH_TO_ROOT . '/cache');
-		self::$tpl_cache_folder = new Folder(self::$cache_folder->get_path() . '/tpl');
-		self::$css_cache_folder = new Folder(self::$cache_folder->get_path() . '/css');
-		self::$js_cache_folder = new Folder(self::$cache_folder->get_path() . '/js');
+		self::$cache_folder             = new Folder(PATH_TO_ROOT . '/cache');
+		self::$tpl_cache_folder         = new Folder(self::$cache_folder->get_path() . '/tpl');
+		self::$css_cache_folder         = new Folder(self::$cache_folder->get_path() . '/css');
+		self::$js_cache_folder          = new Folder(self::$cache_folder->get_path() . '/js');
 		self::$syndication_cache_folder = new Folder(self::$cache_folder->get_path() . '/syndication');
 	}
 

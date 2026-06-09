@@ -6,13 +6,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2025 11 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 07 06
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class File extends FileSystemElement
@@ -266,7 +266,7 @@ class File extends FileSystemElement
 	 */
 	public static function get_formated_size($file_size)
 	{
-		$units = array(LangLoader::get_message('common.unit.bytes', 'common-lang'), LangLoader::get_message('common.unit.kilobytes', 'common-lang'), LangLoader::get_message('common.unit.megabytes', 'common-lang'), LangLoader::get_message('common.unit.gigabytes', 'common-lang'));
+		$units = [LangLoader::get_message('common.unit.bytes', 'common-lang'), LangLoader::get_message('common.unit.kilobytes', 'common-lang'), LangLoader::get_message('common.unit.megabytes', 'common-lang'), LangLoader::get_message('common.unit.gigabytes', 'common-lang')];
 		$power = $file_size > 0 ? floor(log($file_size, 1024)) : 0;
 		return NumberHelper::round($file_size / pow(1024, $power), 2) . ' ' . $units[$power];
 	}

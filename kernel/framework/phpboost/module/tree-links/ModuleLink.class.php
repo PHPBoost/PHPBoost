@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 12 22
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2013 11 15
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleLink
@@ -16,7 +16,7 @@ class ModuleLink
 	protected $name;
 	protected $url;
 	protected $css_class;
-	protected $sub_link = array();
+	protected $sub_link = [];
 	protected $visibility = true;
 
 	public function __construct($name, $url, $visibility = true, $css_class = '')
@@ -100,7 +100,7 @@ class ModuleLink
 	{
 		$tpl = new FileTemplate('framework/module/module_actions_link.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'C_HAS_SUB_LINK'  => $this->has_sub_link(),
 			'C_IS_ACTIVE'     => $this->is_active(),
 			'C_HAS_CSS_CLASS' => $this->has_css_class(),
@@ -108,15 +108,15 @@ class ModuleLink
 			'CSS_CLASS'       => $this->get_css_class(),
 			'FULLNAME'        => LangLoader::get_message('menu.link.to', 'menu-lang') . $this->get_name(),
 			'U_LINK'          => $this->get_url()->rel(),
-		));
+		]);
 
 		foreach ($this->get_sub_link() as $element)
 		{
 			if ($element->is_visible())
 			{
-				$tpl->assign_block_vars('element', array(), array(
+				$tpl->assign_block_vars('element', [], [
 					'ELEMENT' => $element->export()
-				));
+				]);
 			}
 		}
 

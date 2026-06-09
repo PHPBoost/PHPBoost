@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 02 23
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 11 03
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface DBMSUtils
@@ -32,7 +32,7 @@ interface DBMSUtils
 
 	function desc_table($table);
 
-    function create_table($table_name, array $fields, array $options = array());
+    function create_table($table_name, array $fields, array $options = []);
 
     function copy_table($table_name, $new_table_name);
 

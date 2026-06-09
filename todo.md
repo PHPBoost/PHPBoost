@@ -5,9 +5,9 @@ Please feel free to contribute to this list or contribute your own ideas.
 Ideas with a #number come from PHPBoost.com members [via the bugtracker](https://www.phpboost.com/bugtracker/unsolved/date/desc/)
 
 ## Administration
-- **Done** Ability to upload several smilies at once
+- **Done 6.0** Ability to upload several smilies at once
 - Graphic personalization interface of the site, modification of the site colors
-- **Done** log everything done in the administration
+- **Done 6.0** log everything done in the administration
 
 #### Menus
 - Ability to associate a template with a menu to be able to customize it
@@ -29,12 +29,12 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 
 #### Upload
 1. **WIP** Redesign of upload interface and its operation, addition of Api
-1. **Done** Drag & drop
-1. **Done** Ability to upload several files in a row
+1. **Done 6.0** Drag & drop
+1. **Done 6.0** Ability to upload several files in a row
 1. Upload with Ajax and progress bar
 1. Ability to modify file list before upload
 1. Ability to upload files in any folder
-1. **Done** New form field in Ajax to choose files without going through the popup
+1. **Done 6.0** New form field in Ajax to choose files without going through the popup
 
 ## Files
 - **Done** Cleaning all language variables [Trello private doc](https://trello.com/c/Lrqy2NPq/86-lang)
@@ -57,7 +57,7 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 #### Forum
 - Ability to declare a nickname when posting as a visitor
 - Subject Prefix (#1080)
-- **Done** No-answer topic page (#1225)
+- **Done 6.0** No-answer topic page (#1225)
 - New global rights for groups with moderation on member messages
 - Ability to create semi-automatic messages for moderators
 - Ability of automatic shedding of subjects (configuration)
@@ -73,11 +73,22 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 - Ability to set an uplaod limit depending on groups
 
 #### Search
-- **Done** Keyword centralization system, tag cloud management.
+- **Done 6.0** Keyword centralization system, tag cloud management.
 
 #### Poll
-- **Done** Upgrade to MVC
+- **Done 6.0** Upgrade to MVC
 
 #### Wiki
-- **Done** modify the module to MVC
+- **Done 6.1** Upgrade to MVC
 - System for recording articles by differences, line by line for a reduced footprint during successive editions
+
+#### (new) Notifications
+- send notifications to user on a new or updated content
+    - only if website is activated and if user is logged in
+- the user must have choice
+    - to activate or not
+    - in the list of modules
+
+#### (new) Leaflet
+- clone of GoogleMaps but with leaflet/OpenStreetMap
+- see geoportail for addresses

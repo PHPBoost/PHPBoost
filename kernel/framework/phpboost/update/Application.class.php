@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2019 03 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 2.0 - 2008 08 17
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class Application
@@ -32,13 +32,13 @@ class Application
 	private $update_url = '';
 	private $autoupdate_url = '';
 
-	private $authors = array();
+	private $authors = [];
 
 	private $description = '';
-	private $new_features = array();
-	private $improvements = array();
-	private $bug_corrections = array();
-	private $security_improvements = array();
+	private $new_features = [];
+	private $improvements = [];
+	private $bug_corrections = [];
+	private $security_improvements = [];
 
 	private $warning_level = '';
 	private $warning = '';
@@ -122,23 +122,23 @@ class Application
 		$this->update_url = self::get_attribute($xml_desc, 'url', 'update');
 		$this->autoupdate_url = self::get_attribute($xml_desc, 'url', 'autoupdate');
 
-		$this->authors = array();
+		$this->authors = [];
 		$authors_elts = $xml_desc->xpath('authors/author');
 		foreach ($authors_elts as $author)
 		{
-			$this->authors[] = array(
-				'name' => self::get_attribute($author, 'name'),
+			$this->authors[] = [
+				'name'  => self::get_attribute($author, 'name'),
 				'email' => self::get_attribute($author, 'email')
-			);
+			];
 		}
 
 		$this->description = $xml_desc->xpath('description');
 		$this->description = (string) $this->description[0];
 
-		$this->new_features = array();
-		$this->improvements = array();
-		$this->bug_corrections = array();
-		$this->security_improvements = array();
+		$this->new_features = [];
+		$this->improvements = [];
+		$this->bug_corrections = [];
+		$this->security_improvements = [];
 
 		$novelties = $xml_desc->xpath('whatsnew/new');
 		foreach ($novelties  as $novelty )

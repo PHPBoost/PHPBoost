@@ -3,11 +3,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 15
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.3 - 2005 11 20
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 ####################################################
@@ -209,9 +209,10 @@ $lang['admin.phpinfo']                    = 'PHP info';
 $lang['admin.system.report']              = 'System report';
 $lang['admin.php.version']                = 'PHP version';
 $lang['admin.dbms.version']               = 'DBMS version';
-$lang['admin.gd.library']                 = 'GD Library';
-$lang['admin.curl.library']               = 'Curl Extension';
-$lang['admin.mbstring.library']           = 'Mbstring Extension (UTF-8)';
+$lang['admin.gd.extension']               = 'GD Extension';
+$lang['admin.curl.extension']             = 'Curl Extension';
+$lang['admin.zip.extension']              = 'Zip Extension';
+$lang['admin.mbstring.extension']         = 'Mbstring Extension (UTF-8)';
 $lang['admin.url.rewriting']              = 'URL rewriting';
 $lang['admin.phpboost.config']            = 'PHPBoost configuration';
 $lang['admin.kernel.version']             = 'Kernel version';

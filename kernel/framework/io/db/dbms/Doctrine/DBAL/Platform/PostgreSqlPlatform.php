@@ -7,9 +7,9 @@
  * @link        https://www.doctrine-project.org
  * @author      Roman BORSCHEL <roman@code-factory.org>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     PHPBoost 6.1 - last update: 2016 10 28
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PostgreSqlPlatform extends AbstractPlatform
@@ -498,7 +498,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 			return true;
 		}
 
-		$sql = array();
+		$sql = [];
 
 		if (isset($changes['add']) && is_array($changes['add'])) {
 			foreach ($changes['add'] as $fieldName => $field) {
@@ -580,10 +580,10 @@ class PostgreSqlPlatform extends AbstractPlatform
 	 * @param array $options
 	 * @return unknown
 	 */
-	public function getCreateTableSql($name, array $fields, array $options = array())
+	public function getCreateTableSql($name, array $fields, array $options = [])
 	{
 		/* @PATH BEGIN PHPBoost */
-		$sql = array();
+		$sql = [];
 		if (isset($options['primary']) && count($options['primary']) === 1) {
 			$pk_name = $options['primary'][0];
 			if (isset($fields[$pk_name]) && isset($fields[$pk_name]['autoincrement']) &&

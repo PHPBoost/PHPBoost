@@ -46,7 +46,6 @@ body.push-nav-open {
 
 .pushmenu .nav-content {
     height: 100%;
-    max-height: 100vh;
 }
 
 .pushmenu .nav-wrapper-0 > .nav-content {
@@ -149,7 +148,6 @@ body.push-nav-open {
     overflow: scroll;
     overflow-x: visible;
     overflow-y: auto;
-    max-height: 100vh;
 }
 
 .pushmenu.nav-levels-expand ul .nav-wrapper {
@@ -358,8 +356,8 @@ a.nav-next {
     position: absolute;
     top: 1.456em;
     left: 50%;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     margin-left: -2px;
     transform-origin: center;
     border-width: 2px 0 0 2px;

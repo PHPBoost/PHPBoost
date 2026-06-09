@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2024 06 17
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.5 - 2006 06 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################
@@ -112,6 +112,9 @@ $lang['warning.process.error']   = 'Une erreur s\'est produite lors de l\'opéra
 
 $lang['warning.confirm.delete']          = 'Voulez-vous vraiment supprimer cet élément ?';
 $lang['warning.confirm.delete.elements'] = 'Voulez-vous vraiment supprimer ces éléments ?';
+
+$lang['warning.confirm.uninstall']          = 'Voulez-vous vraiment désinstaller cet élément ?';
+$lang['warning.confirm.uninstall.elements'] = 'Voulez-vous vraiment désinstaller ces éléments ?';
 
 $lang['warning.success.config']          = 'La configuration a été modifiée';
 $lang['warning.success.position.update'] = 'Les éléments ont été repositionnés';

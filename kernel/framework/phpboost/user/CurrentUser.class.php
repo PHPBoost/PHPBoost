@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 26
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2012 03 31
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CurrentUser extends User
@@ -28,7 +28,7 @@ class CurrentUser extends User
 		return new self($session);
 	}
 
-	private $groups_auth = array();
+	private $groups_auth = [];
 
 	public function __construct(SessionData $session)
 	{
@@ -178,7 +178,7 @@ class CurrentUser extends User
 
 	private function array_group_intersect($array_auth_groups)
 	{
-		$array_user_auth_groups = array();
+		$array_user_auth_groups = [];
 		foreach ($array_auth_groups as $idgroup => $auth_group)
 		{
 			if (is_numeric($idgroup)) //Groupe

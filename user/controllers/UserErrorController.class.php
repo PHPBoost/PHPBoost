@@ -3,10 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 07
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserErrorController extends AbstractController
@@ -22,20 +22,20 @@ class UserErrorController extends AbstractController
 	const SITE_RESPONSE = 'SiteDisplayResponse';
 	const ADMIN_RESPONSE = 'AdminDisplayResponse';
 
-	private $error_type;
-	private $title = '';
-	private $message = '';
+	private int $error_type;
+	private string $title = '';
+	private string $message = '';
 	private $time;
-	private $link = self::PREVIOUS_PAGE;
-	private $link_name = '';
+	private string $link = self::PREVIOUS_PAGE;
+	private string $link_name = '';
 	private $response_classname = self::SITE_RESPONSE;
 
 	/**
 	 * @var View
 	 */
-	protected $view;
+	protected View $view;
 
-	public function __construct($title, $message, $error_type = self::QUESTION)
+	public function __construct(string $title, string $message, int $error_type = self::QUESTION)
 	{
 		$this->title = $title;
 		$this->message = $message;

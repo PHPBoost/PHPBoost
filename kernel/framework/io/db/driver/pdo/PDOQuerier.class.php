@@ -5,22 +5,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 11 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 11 01
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class PDOQuerier extends AbstractSQLQuerier
 {
 
-	public function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	public function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
 		$statement = $this->prepare_statement($query);
 		$this->execute($statement, $query, $parameters);
 		return new PDOSelectQueryResult($query, $parameters, $statement, $fetch_mode);
 	}
 
-	public function inject($query, $parameters = array())
+	public function inject($query, $parameters = [])
 	{
 		$statement = $this->prepare_statement($query, $parameters);
 		$this->execute($statement, $query, $parameters);
@@ -39,7 +39,7 @@ class PDOQuerier extends AbstractSQLQuerier
 
 	private function execute(PDOStatement $statement, $query, array $parameters)
 	{
-		$keys_to_remove = array();
+		$keys_to_remove = [];
 		foreach (array_keys($parameters) as $key)
 		{
 			if (!preg_match('`:' . $key . '[^\w]|$`iu', $query))

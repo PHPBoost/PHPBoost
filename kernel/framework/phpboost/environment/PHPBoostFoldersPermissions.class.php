@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 02 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 05 29
 */
 
@@ -15,9 +15,12 @@ abstract class PHPBoostFoldersPermissions
 
 	public static function __static()
 	{
-		self::$folders_path = array('/', '/cache', '/cache/backup', '/cache/syndication',
-			'/cache/tpl', '/cache/css', '/cache/js', '/images/avatars', '/images/customization', '/images/group', '/images/maths', '/images/smileys',
-			'/kernel/db', '/lang', '/templates', '/upload');
+		self::$folders_path = [
+            '/',
+            '/cache', '/cache/addons', '/cache/backup', '/cache/syndication', '/cache/tpl', '/cache/css', '/cache/js',
+            '/images/avatars', '/images/customization', '/images/group', '/images/maths', '/images/smileys',
+			'/kernel/db', '/modules', '/lang', '/templates', '/upload'
+        ];
 	}
 
 	public static function validate()
@@ -36,7 +39,7 @@ abstract class PHPBoostFoldersPermissions
 	public static function get_permissions()
 	{
 		@clearstatcache();
-		$permissions = array();
+		$permissions = [];
 		foreach (self::$folders_path as $folder_path)
 		{
 			$folder = new Folder(PATH_TO_ROOT . $folder_path);

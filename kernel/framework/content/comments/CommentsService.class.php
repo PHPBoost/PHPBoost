@@ -6,11 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 12 16
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 03 31
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsService
@@ -87,10 +87,10 @@ class CommentsService
 				self::verify_authorized_edit_or_delete_comment($authorizations, $edit_comment_id);
 
 				$edit_comment_form = EditCommentBuildForm::create($edit_comment_id, $topic->get_path());
-				self::$view->put_all(array(
+				self::$view->put_all([
 					'C_DISPLAY_FORM' => true,
 					'COMMENT_FORM' => $edit_comment_form->display()
-				));
+				]);
 			}
 			else
 			{
@@ -109,10 +109,10 @@ class CommentsService
 					else
 					{
 						$add_comment_form = AddCommentBuildForm::create($topic);
-						self::$view->put_all(array(
+						self::$view->put_all([
 							'C_DISPLAY_FORM' => true,
 							'COMMENT_FORM' => $add_comment_form->display()
-						));
+						]);
 					}
 				}
 				else
@@ -124,7 +124,7 @@ class CommentsService
 			$comments_number_to_display = $topic->get_comments_number_display();
 			$comments_number = self::$comments_cache->get_count_comments_by_module($module_id, $id_in_module, $topic_identifier);
 
-			self::$view->put_all(array(
+			self::$view->put_all([
 				'C_COMMENTS'                  => $comments_number != 0,
 				'C_DISPLAY_VIEW_ALL_COMMENTS' => $comments_number > $comments_number_to_display,
 				'C_MODERATE'                  => $authorizations->is_authorized_moderation(),
@@ -141,13 +141,13 @@ class CommentsService
 
 				'U_LOCK'   => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), true)->rel(),
 				'U_UNLOCK' => CommentsUrlBuilder::lock_and_unlock($topic->get_path(), false)->rel(),
-			));
+			]);
 		}
 
 		$request = AppContext::get_request();
 		if ($request->get_string('delete-selected-comments', false))
 		{
-			$ids = array();
+			$ids = [];
 
 			$result = PersistenceContext::get_querier()->select("SELECT
 					comments.id
@@ -298,7 +298,7 @@ class CommentsService
 
 				$view->assign_block_vars('comments', array_merge(
 					Date::get_array_tpl_vars($timestamp,'date'),
-					array(
+					[
 					'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['display_name'],
 					'C_MODERATOR'            => self::is_authorized_edit_or_delete_comment($authorizations, $id),
 					'C_VISITOR'              => empty($row['display_name']),
@@ -320,17 +320,17 @@ class CommentsService
 					'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 
 					'L_LEVEL' => UserService::get_level_lang($row['level'] !== null ? $row['level'] : '-1'),
-				)));
+				]));
 			}
 			$result->dispose();
 		}
 
 
-		self::$view->put_all(array(
+		self::$view->put_all([
 			'MODULE_ID'        => $module_id,
 			'ID_IN_MODULE'     => $id_in_module,
 			'TOPIC_IDENTIFIER' => $topic_identifier
-		));
+		]);
 
 		return $view;
 	}

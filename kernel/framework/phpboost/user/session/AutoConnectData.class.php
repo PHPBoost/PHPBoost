@@ -6,9 +6,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 01 15
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 11 05
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AutoConnectData
@@ -46,9 +46,9 @@ class AutoConnectData
 	public static function create_cookie($user_id)
 	{
 		$data = $row = null;
-		$columns = array('autoconnect_key');
+		$columns = ['autoconnect_key'];
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $user_id);
+		$parameters = ['user_id' => $user_id];
 
 		try {
 			$row = self::$querier->select_single_row(DB_TABLE_MEMBER, $columns, $condition, $parameters);
@@ -89,7 +89,7 @@ class AutoConnectData
 	public function is_valid()
 	{
 		$condition = 'WHERE user_id=:user_id AND autoconnect_key=:key AND delay_banned < :now AND warning_percentage < 100';
-		$parameters = array('user_id' => $this->user_id, 'key' => $this->key, 'now' => time());
+		$parameters = ['user_id' => $this->user_id, 'key' => $this->key, 'now' => time()];
 		return self::$querier->row_exists(DB_TABLE_MEMBER, $condition, $parameters);
 	}
 
@@ -102,8 +102,8 @@ class AutoConnectData
 	private function save_in_db()
 	{
 		$condition = 'WHERE user_id=:user_id';
-		$parameters = array('user_id' => $this->user_id);
-		$columns = array('autoconnect_key' => $this->key);
+		$parameters = ['user_id' => $this->user_id];
+		$columns = ['autoconnect_key' => $this->key];
 		self::$querier->update(DB_TABLE_MEMBER, $columns, $condition, $parameters);
 	}
 
@@ -116,7 +116,7 @@ class AutoConnectData
 
 	private function get_serialized_content()
 	{
-		return TextHelper::serialize(array('user_id' => $this->user_id, 'key' => $this->key));
+		return TextHelper::serialize(['user_id' => $this->user_id, 'key' => $this->key]);
 	}
 }
 ?>

@@ -5,10 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2016 11 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 1.5 - 2006 07 23
- * @contributor Regis VIARRE <crowkait@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class Backup
@@ -17,7 +17,7 @@ class Backup
 	/**
 	 * @var array List of the tables used by PHPBoost.
 	 */
-	public $tables = array();
+	public $tables = [];
 	/**
 	 * @var string Backup script
 	 */
@@ -26,7 +26,7 @@ class Backup
 	private $db_querier;
 
 	/**
-	 * @desc Builds a Backup object
+	 * Builds a Backup object
 	 */
 	public function __construct()
 	{
@@ -39,7 +39,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Retrieves the list of the tables present on the database used.
+	 * Retrieves the list of the tables present on the database used.
 	 */
 	public function list_db_tables()
 	{
@@ -51,14 +51,14 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates the query which drops the PHPBoost tables only if they exist to the backup SQL script.
+	 * Concatenates the query which drops the PHPBoost tables only if they exist to the backup SQL script.
 	 * @param array $table_list names of the tables which must be dropped by the query.
 	 * If you want to generate the query which will drop all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
-	public function generate_drop_table_query($table_list = array())
+	public function generate_drop_table_query($table_list = [])
 	{
-		$selected_tables =  array();
+		$selected_tables =  [];
 		$all_tables = count($table_list) == 0;
 		foreach ($this->tables as $id => $properties)
 		{
@@ -69,12 +69,12 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates the tables creation to the SQL backup script.
+	 * Concatenates the tables creation to the SQL backup script.
 	 * @param array $table_list names of the tables which must be created by the backup script.
 	 * If you want to generate the query which will create all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
-	public function generate_create_table_query($table_list = array())
+	public function generate_create_table_query($table_list = [])
 	{
 		$all_tables = count($table_list) == 0 ? true : false;
 
@@ -82,7 +82,7 @@ class Backup
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
 			{
-				$result = $this->db_querier->select('SHOW CREATE TABLE ' . $properties['name'], array(), SelectQueryResult::FETCH_NUM);
+				$result = $this->db_querier->select('SHOW CREATE TABLE ' . $properties['name'], [], SelectQueryResult::FETCH_NUM);
 				while ($row = $result->fetch())
 				{
 					$this->backup_script .=  $row[1] . ';' . "\n\n";
@@ -93,12 +93,12 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates the tables content insertion queries to the SQL backup script.
+	 * Concatenates the tables content insertion queries to the SQL backup script.
 	 * @param $tables names of the tables which must be filled by the backup script.
 	 * If you want to generate the query which will fill all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
-	public function generate_insert_values_query($tables = array())
+	public function generate_insert_values_query($tables = [])
 	{
 		$all_tables = count($tables) == 0 ? true : false;
 
@@ -141,7 +141,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates a string at the end of the current script.
+	 * Concatenates a string at the end of the current script.
 	 * @param string $string String to concatenate.
 	 */
 	public function concatenate_to_query($string)
@@ -150,7 +150,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Returns the current backup script.
+	 * Returns the current backup script.
 	 * @return string the whole script
 	 */
 	public function get_script()
@@ -159,10 +159,10 @@ class Backup
 	}
 
 	/**
-	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
+	* Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
 	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see https://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
 	* @return array Map containing the following structure:
-	* for each table: table_name => array(
+	* for each table: table_name => [
 	* 	'name' => name of the table,
 	* 	'engine' => storage engine of the table,
 	* 	'row_format' => row storage format,
@@ -174,7 +174,7 @@ class Backup
 	* 	'auto_increment' => the next AUTO_INCREMENT value,
 	* 	'create_time' => when the table was created,
 	* 	'update_time' => when the data file was last updated
-	* )
+	* ]
 	*/
 	public function get_tables_properties_list()
 	{
@@ -182,7 +182,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Retrieves the list of the tables used by PHPBoost.
+	 * Retrieves the list of the tables used by PHPBoost.
 	 * @return array The list of the table names.
 	 */
 	public function get_tables_list()
@@ -192,7 +192,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Returns the number of tables used by PHPBoost.
+	 * Returns the number of tables used by PHPBoost.
 	 * @return int number of tables
 	 */
 	public function get_tables_number()
@@ -202,7 +202,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Writes the backup script in a text file.
+	 * Writes the backup script in a text file.
 	 * @param string $file_path Path of the file.
 	 */
 	public function export_file($file_path)
@@ -217,13 +217,13 @@ class Backup
 	 * @param $tables
 	 * @return unknown_type
 	 */
-	public function extract_table_structure($tables = array())
+	public function extract_table_structure($tables = [])
 	{
 		$this->generate_create_table_query($tables);
 
-		$structure = array();
-		$structure['fields'] = array();
-		$structure['index'] = array();
+		$structure = [];
+		$structure['fields'] = [];
+		$structure['index'] = [];
 		$struct = TextHelper::substr(TextHelper::strstr($this->backup_script, '('), 1);
 		$struct = TextHelper::substr($struct, 0, TextHelper::strrpos($struct, ')'));
 		$array_struct = explode(",\n", $struct);
@@ -236,7 +236,7 @@ class Backup
 				$type = trim(TextHelper::substr($field, 0, TextHelper::strpos($field, 'KEY') + 3));
 				preg_match('!\(([a-z_`,]+)\)!iu', $field, $match);
 				$index_fields = isset($match[1]) ? str_replace('`', '', $match[1]) : '';
-				$structure['index'][] = array('name' => $name, 'fields' => $index_fields, 'type' => $type);
+				$structure['index'][] = ['name' => $name, 'fields' => $index_fields, 'type' => $type];
 			}
 			else
 			{
@@ -247,7 +247,7 @@ class Backup
 				preg_match('`default (.+)`iu', $field, $match);
 				$default = isset($match[1]) ? str_replace("'", '', $match[1]) : '';
 				$extra = TextHelper::strpos($field, 'auto_increment') !== false ? 'auto_increment' : '';
-				$structure['fields'][] = array('name' => $name, 'type' => $type, 'attribute' => $attribute, 'null' => $null, 'default' => $default, 'extra' => $extra);
+				$structure['fields'][] = ['name' => $name, 'type' => $type, 'attribute' => $attribute, 'null' => $null, 'default' => $default, 'extra' => $extra];
 			}
 		}
 

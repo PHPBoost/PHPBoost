@@ -18,9 +18,10 @@
 		<div class="sortable-selector" aria-label="{@common.move}"></div>
 		<div class="sortable-title" aria-label="{@menu.sub.menu}">
 			<div class="grouped-inputs inputs-with-sup large-inputs-group">
-				<span class="grouped-element bgc-full notice"><i class="fa fa-folder" aria-hidden="true"></i></span>
+				<span class="grouped-element bgc-full administrator submenu-folder-trigger" onclick="toggleSubMenuAccordion('menu_element_{ID}');return false;" style="cursor:pointer;" title="{@menu.sub.menu}"><i class="fa fa-folder-open" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.name}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{@common.url}</span><input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_target" class="label-sup label-mini grouped-element"><span><i class="far fa-share-from-square"></i></span><input aria-label="{@common.open.new.window}" type="checkbox" class="checkbox-mini" id="menu_element_{ID}_target" name="menu_element_{ID}_target" # IF C_TARGET # checked="checked"# ENDIF #></label>
 				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{@common.image}</span><input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
 				<label for="menu_element_{ID}_icon" class="label-sup grouped-element"><span>{@common.icon}</span> <input type="text" value="{ICON}" id="menu_element_{ID}_icon" name="menu_element_{ID}_icon"></label>
 				<script>
@@ -30,7 +31,6 @@
 				</script>
 				<span class="preview grouped-element"><img src="# IF C_IMG #{REL_IMG}# ENDIF #" id="menu_element_{ID}_image_preview" alt="{TITLE}" /></span>
 			</div>
-
 		</div>
 		<div class="sortable-actions">
 			<a href="#" id="menu_element_{ID}_more_image" onclick="toggleProperties({ID});return false;" aria-label="{@form.authorizations.management}"><i class="fa fa-cog" aria-hidden="true"></i></a>
@@ -46,13 +46,13 @@
 				</div>
 			</div>
 		</fieldset>
-		<hr/>
-		<ul class="sortable-block" id="menu_element_{ID}_list">
+		<hr class="submenu-collapsible"/>
+		<ul class="sortable-block submenu-collapsible" id="menu_element_{ID}_list">
 			# START elements #
 				{elements.DISPLAY}
 			# END elements #
 		</ul>
-		<fieldset class="fieldset-submit">
+		<fieldset class="fieldset-submit submenu-collapsible">
 			<button class="button" type="button" id="menu_element_{ID}_add_sub_element" name="menu_element_{ID}_add_sub_element" onclick="addSubElement('menu_element_{ID}');">{@menu.add.item}</button>
 			<button class="button" type="button" id="menu_element_{ID}_add_sub_menu" name="menu_element_{ID}_add_sub_menu" onclick="addSubMenu('menu_element_{ID}');">{@menu.add.sub.menu}</button>
 		</fieldset>
@@ -67,6 +67,7 @@
 				<span class="grouped-element bgc-full link-color"><i class="fa fa-globe" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.name}</span> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{@common.url}</span> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_target" class="label-sup label-mini grouped-element"><span><i class="far fa-share-from-square"></i></span> <input aria-label="{@common.open.new.window}" type="checkbox" class="checkbox-mini" id="menu_element_{ID}_target" name="menu_element_{ID}_target"# IF C_TARGET # checked="checked"# ENDIF #></label>
 				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{@common.image}</span> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
 				<label for="menu_element_{ID}_icon" class="label-sup grouped-element"><span>{@common.icon}</span> <input type="text" value="{ICON}" id="menu_element_{ID}_icon" name="menu_element_{ID}_icon"></label>
 				<script>

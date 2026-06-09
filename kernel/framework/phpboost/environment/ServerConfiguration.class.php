@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2010 05 30
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ServerConfiguration
@@ -83,7 +83,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if GD library is available.
 	 */
-	public function has_gd_library()
+	public function has_gd_extension()
 	{
 		return @extension_loaded('gd');
 	}
@@ -91,7 +91,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if curl library is available.
 	 */
-	public function has_curl_library()
+	public function has_curl_extension()
 	{
 		return @extension_loaded('curl');
 	}
@@ -99,7 +99,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if MBstring (UTF-8) library is available.
 	 */
-	public function has_mbstring_library()
+	public function has_mbstring_extension()
 	{
 		return @extension_loaded('mbstring');
 	}
@@ -107,7 +107,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if zip library is available.
 	 */
-	public function has_zip_library()
+	public function has_zip_extension()
 	{
 		return @extension_loaded('zip');
 	}

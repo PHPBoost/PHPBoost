@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 06 25
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2009 12 20
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
@@ -24,7 +24,7 @@ class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
 		{
 			$js_message = LangLoader::get_message('warning.integer.min', 'warning-lang');
 		}
-		$this->error_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound));
+		$this->error_message = StringVars::replace_vars($js_message, ['lower_bound' => $lower_bound]);
 		$this->set_validation_error_message($this->error_message);
 		$this->lower_bound = $lower_bound;
 	}

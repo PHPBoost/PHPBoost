@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 07 04
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.1 - 2015 07 12
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
@@ -39,16 +39,16 @@ class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name AND user_id != :user_id', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name AND user_id != :user_id', [
 				'display_name' => $field->get_value(),
 				'user_id' => $this->user_id
-			));
+			]);
 		}
 		else if ($field->get_value())
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', [
 				'display_name' => $field->get_value()
-			));
+			]);
 		}
 		return false;
 	}
