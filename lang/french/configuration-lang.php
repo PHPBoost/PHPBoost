@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 26
  * @since       PHPBoost 3.0 - 2010 04 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -80,6 +80,8 @@ $lang['configuration.nginx.manual.content']         = 'Contenu du fichier nginx.
 $lang['configuration.nginx.manual.content.clue']    = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier nginx.conf qui se trouve à la racine du site, par exemple pour forcer une configuration du serveur web.';
 $lang['configuration.robots.content']               = 'Contenu du fichier robots.txt';
 $lang['configuration.robots.content.clue']          = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier robots.txt qui se trouve à la racine du site, par exemple pour empêcher les robots d\'indexer certaines parties du site.';
+$lang['configuration.llms.content']               = 'Contenu du fichier llms.txt';
+$lang['configuration.llms.content.clue']          = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier llms.txt qui se trouve à la racine du site, par exemple pour aux I.A. d\'indexer plus facilement certains contenus du site.';
 	// Session
 $lang['configuration.sessions']                     = 'Connexion utilisateurs';
 $lang['configuration.cookie.name']                  = 'Nom du cookie des sessions';

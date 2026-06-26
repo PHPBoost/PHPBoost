@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 26
  * @since       PHPBoost 3.0 - 2011 07 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -253,6 +253,18 @@ class AdminAdvancedConfigController extends DefaultAdminController
             ]
         ));
 
+        $llms_file = new File(PATH_TO_ROOT . '/llms.txt');
+        $llms_content = $llms_file->exists() ? $llms_file->read() : '';
+        $llms_content_fieldset = new FormFieldsetHTML('llms_content', $this->lang['configuration.llms.content']);
+        $form->add_fieldset($llms_content_fieldset);
+
+        $llms_content_fieldset->add_field(new FormFieldMultiLineTextEditor('llms_content', $this->lang['configuration.llms.content'], $llms_content,
+            [
+                'rows' => 7,
+                'description' => $this->lang['configuration.llms.content.clue']
+            ]
+        ));
+
         $sessions_config_fieldset = new FormFieldsetHTML('sessions_config', $this->lang['configuration.sessions']);
         $form->add_fieldset($sessions_config_fieldset);
 
@@ -473,6 +485,9 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
         $robots_file = new File(PATH_TO_ROOT . '/robots.txt');
         $robots_file->write($this->form->get_value('robots_content'));
+
+        $llms_file = new File(PATH_TO_ROOT . '/llms.txt');
+        $llms_file->write($this->form->get_value('llms_content'));
 
         if (!$this->form->field_is_disabled('output_gziping_enabled'))
         {

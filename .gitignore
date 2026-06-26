@@ -42,9 +42,11 @@ lang/*
 !lang/english
 
 # Root
+llms.txt
 robots.txt
 sitemap.xml
 *.swp
+*.sh
 *.orig
 *.htaccess
 nginx.conf
