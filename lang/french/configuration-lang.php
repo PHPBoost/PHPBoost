@@ -81,7 +81,7 @@ $lang['configuration.nginx.manual.content.clue']    = 'Vous pouvez dans ce champ
 $lang['configuration.robots.content']               = 'Contenu du fichier robots.txt';
 $lang['configuration.robots.content.clue']          = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier robots.txt qui se trouve à la racine du site, par exemple pour empêcher les robots d\'indexer certaines parties du site.';
 $lang['configuration.llms.content']               = 'Contenu du fichier llms.txt';
-$lang['configuration.llms.content.clue']          = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier llms.txt qui se trouve à la racine du site, par exemple pour aux I.A. d\'indexer plus facilement certains contenus du site.';
+$lang['configuration.llms.content.clue']          = 'Vous pouvez dans ce champ mettre les instructions que vous souhaitez intégrer au fichier llms.txt qui se trouve à la racine du site, par exemple pour permettre aux I.A. d\'indexer plus facilement certains contenus du site.';
 	// Session
 $lang['configuration.sessions']                     = 'Connexion utilisateurs';
 $lang['configuration.cookie.name']                  = 'Nom du cookie des sessions';
