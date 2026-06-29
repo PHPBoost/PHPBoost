@@ -238,7 +238,7 @@ class InstallWebsiteConfigController extends InstallController
         $caps_wrapper_top->set_css_class('tabs-wrapper');
         $this->form->add_fieldset($caps_wrapper_top);
 
-        // ── Tab: Your site ────────────────────────────────────────────────────
+        // Tab: Your site
         $fieldset = new TabsContentFieldset('your_site', $this->lang['install.website.yours']);
             $this->form->add_fieldset($fieldset);
 
@@ -274,7 +274,7 @@ class InstallWebsiteConfigController extends InstallController
                 ['description' => $this->lang['install.website.timezone.clue']]
             ));
 
-        // ── Tab: Security ─────────────────────────────────────────────────────
+        // Tab: Security
         $fieldset = new TabsContentFieldset('security_config', $this->lang['user.security']);
             $this->form->add_fieldset($fieldset);
 
@@ -296,7 +296,7 @@ class InstallWebsiteConfigController extends InstallController
                 ['class' => 'custom-checkbox']
             ));
 
-        // ── Tab: Captcha ──────────────────────────────────────────────────────
+        // Tab: Captcha
         if ($this->distribution_config['default_captcha']) {
             $fieldset = new TabsContentFieldset('captcha_config', $this->lang['install.website.captcha.config']);
             $this->form->add_fieldset($fieldset);
@@ -305,10 +305,10 @@ class InstallWebsiteConfigController extends InstallController
             $default_captcha::display_config_form_fields($fieldset, $this->locale);
         }
 
-        // ── Tab: Modules ──────────────────────────────────────────────────────
+        // Tab: Modules
         $this->build_modules_tab();
 
-        // ── Tab: Themes ───────────────────────────────────────────────────────
+        // Tab: Themes
         $this->build_themes_tab();
 
         // Close tabs wrapper
@@ -341,7 +341,11 @@ class InstallWebsiteConfigController extends InstallController
             'module_' . $mandatory_module,
             $mandatory_label,
             true,
-            ['disabled' => true, 'class' => 'custom-checkbox']
+            [
+                'disabled' => true,
+                'class' => 'custom-checkbox',
+                'description' => 'pages'
+            ]
         ));
         // Hidden field guarantees the value is submitted even when the checkbox is disabled
         $fieldset->add_field(new FormFieldHidden('module_' . $mandatory_module . '_forced', '1'));
@@ -353,24 +357,51 @@ class InstallWebsiteConfigController extends InstallController
                 'module_connect',
                 $connect_label,
                 true,
-                ['class' => 'custom-checkbox']
+                [
+                    'class' => 'custom-checkbox',
+                    'description' => 'connect'
+                ]
             ));
         }
 
         // Other optional remote modules
-        $skip = [$mandatory_module, 'connect'];
+        $skip = [$mandatory_module, 'connect', 'bbcode', 'qaptcha'];
 
-        foreach ($this->remote_modules as $module_id => $module_info) {
-            if (in_array($module_id, $skip, true)) {
-                continue;
+        $grouped_modules = [];
+        foreach ($this->remote_modules as $module)
+        {
+            $locale = LangLoader::get_locale();
+            $genre = $module['genre'][$locale];
+            if (!isset($grouped_modules[$genre]))
+            {
+                $grouped_modules[$genre] = [];
             }
-            $label = $this->get_module_label($module_id, $module_info);
-            $fieldset->add_field(new FormFieldCheckbox(
-                'module_' . $module_id,
-                $label,
-                false,
-                ['class' => 'custom-checkbox']
-            ));
+            $grouped_modules[$genre][] = $module;
+        }
+
+        ksort($grouped_modules);
+
+        foreach ($grouped_modules as $genre => $modules) {
+
+            $fieldset = new FormFieldsetHTML(Url::encode_rewrite($genre), $genre);
+            $this->form->add_fieldset($fieldset);
+
+            foreach ($modules as $module)
+            {
+                if (in_array($module['id'], $skip, true)) {
+                    continue;
+                }
+                $label = $this->get_module_label($module['id'], $module);
+                $fieldset->add_field(new FormFieldCheckbox(
+                    'module_' . $module['id'],
+                    $label,
+                    false,
+                    [
+                        'class' => 'custom-checkbox',
+                        'description' => $module['id']
+                    ]
+                ));
+            }
         }
 
         // If the remote list could not be fetched, show an informational note
@@ -406,7 +437,10 @@ class InstallWebsiteConfigController extends InstallController
                 'theme_' . $theme_id,
                 $label,
                 false,
-                ['class' => 'custom-checkbox']
+                [
+                    'class' => 'custom-checkbox',
+                    'description' => $theme_id
+                ]
             ));
         }
 
@@ -604,7 +638,7 @@ class InstallWebsiteConfigController extends InstallController
         $tpl = new StringTemplate('
             var field = $FF(${escapejs(ID)});
             var value = ${escapejs(VALUE)};
-            if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})){
+            if (field.getValue()!=value && !confirm(${escapejs(MESSAGE)})) {
                 field.setValue(value);
             }
         ');
