@@ -162,6 +162,7 @@ $lang['install.website.path.warning']     = 'Le chemin du site sur le serveur qu
 $lang['install.website.captcha.config']   = 'Configuration du captcha';
 
 $lang['install.website.modules']             = 'Modules';
+$lang['install.website.default.modules']     = 'Modules installés par défaut';
 $lang['install.website.modules.unavailable'] = 'La liste des modules distants est indisponible. Seuls les modules déjà présents sur le serveur seront installés.';
 
 $lang['install.website.themes']             = 'Thèmes';

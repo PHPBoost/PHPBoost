@@ -335,6 +335,8 @@ class InstallWebsiteConfigController extends InstallController
         $fieldset = new TabsContentFieldset('modules_choice', $this->lang['install.website.modules']);
         $this->form->add_fieldset($fieldset);
 
+        $fieldset->add_field(new FormFieldSpacer('default_modules', '<h4>' . $this->lang['install.website.default.modules'] . '</h4>'));
+
         // Mandatory module (pages or bugtracker) — always checked, not removable
         $mandatory_label = $this->get_module_label($mandatory_module, $this->remote_modules[$mandatory_module] ?? []);
         $fieldset->add_field(new FormFieldCheckbox(
@@ -381,10 +383,9 @@ class InstallWebsiteConfigController extends InstallController
 
         ksort($grouped_modules);
 
-        foreach ($grouped_modules as $genre => $modules) {
-
-            $fieldset = new FormFieldsetHTML(Url::encode_rewrite($genre), $genre);
-            $this->form->add_fieldset($fieldset);
+        foreach ($grouped_modules as $genre => $modules)
+        {
+            $fieldset->add_field(new FormFieldSpacer(Url::encode_rewrite($genre), '<h4>' . $genre . '</h4>'));
 
             foreach ($modules as $module)
             {
