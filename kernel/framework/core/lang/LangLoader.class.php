@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 29
  * @since       PHPBoost 3.0 - 2009 09 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -253,6 +253,12 @@ class LangLoader
 
         $current_theme = AppContext::get_current_user()->get_theme();
         $theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale($locale));
+
+        // The theme folder may not exist yet (e.g. during installation before the
+        // theme is downloaded). Return an empty array instead of throwing an IOException.
+        if (!$theme_lang_directory->exists())
+            return [];
+
         $files = $theme_lang_directory->get_files();
         $theme_langloader = [];
         foreach($files as $file)

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 29
  * @since       PHPBoost 3.0 - 2010 05 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -136,7 +136,13 @@ $lang['install.phpboost.already.installed.overwrite.confirm'] = 'Vous devez conf
 
 // Website settings
 $lang['install.website.config.title']       = 'Configuration du site';
-$lang['install.website.config.description'] = '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration, rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>';
+$lang['install.website.config.description'] = '
+    <p>
+        La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. 
+        <br />Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration, rubrique configuration et extension du site. 
+        Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.
+    </p>
+';
 
 $lang['install.website.yours']            = 'Votre site';
 $lang['install.website.host']             = 'Adresse du site';
@@ -154,6 +160,12 @@ $lang['install.website.name.required']    = 'Vous devez entrer le nom de votre s
 $lang['install.website.host.warning']     = 'L\'adresse du site que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir cette adresse ?';
 $lang['install.website.path.warning']     = 'Le chemin du site sur le serveur que vous avez rentrée ne correspond pas à celle détectée par le serveur. Souhaitez vous vraiment choisir ce chemin ?';
 $lang['install.website.captcha.config']   = 'Configuration du captcha';
+
+$lang['install.website.modules']             = 'Modules';
+$lang['install.website.modules.unavailable'] = 'La liste des modules distants est indisponible. Seuls les modules déjà présents sur le serveur seront installés.';
+
+$lang['install.website.themes']             = 'Thèmes';
+$lang['install.website.themes.unavailable'] = 'La liste des thèmes distants est indisponible. Seuls les thèmes déjà présents sur le serveur seront installés.';
 
 // Admin account
 $lang['install.admin.title'] = 'Compte administrateur';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 29
  * @since       PHPBoost 4.0 - 2013 12 05
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,6 +18,7 @@ $lang['common.color']          = 'Color';
 $lang['common.colors']         = 'Colors';
 $lang['common.content']        = 'Content';
 $lang['common.date']           = 'Date';
+$lang['common.default']        = 'Default';
 $lang['common.description']    = 'Description';
 $lang['common.email']          = 'Email';
 $lang['common.filter']         = 'Filter';
@@ -37,6 +38,7 @@ $lang['common.options']        = 'Options';
 $lang['common.other']          = 'Other';
 $lang['common.participants']   = 'Participants';
 $lang['common.root']           = 'Root';
+$lang['common.required']       = 'Required';
 $lang['common.statistics']     = 'Statistics';
 $lang['common.suggestions']    = 'Suggestions';
 $lang['common.template']       = 'Template';

@@ -11,8 +11,8 @@
 
 abstract class InstallController extends AbstractController
 {
-	protected $lang = [];
-	protected $locale = '';
+	protected array $lang = [];
+	protected string $locale = '';
 
 	protected function load_lang(HTTPRequestCustom $request)
 	{

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 06
+ * @version     PHPBoost 6.1 - last update: 2026 06 27
  * @since       PHPBoost 3.0 - 2010 02 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -33,6 +33,10 @@ class InstallationServices
      * @var mixed[] Distribution configuration
      */
     private $distribution_config;
+
+    /** Addons server base URL */
+    const ADDONS_SERVER_URL = 'https://dl.phpboost.com';
+    const ADDONS_SERVER_DIR = '';
 
     public function __construct($locale = '')
     {
@@ -170,12 +174,56 @@ class InstallationServices
         return true;
     }
 
-    public function configure_website($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
+    /**
+     * Configure the website and install modules/themes/langs.
+     *
+     * Strategy:
+     *   - LOCAL modules (at PATH_TO_ROOT root or in /modules/) are ALWAYS installed,
+     *     regardless of $selected_modules. These include bbcode, qaptcha, lobby, and
+     *     any module the user placed manually in /modules/.
+     *   - REMOTE modules (from dl.phpboost.com) are downloaded only if their id appears
+     *     in $selected_modules AND they are not already present on disk.
+     *   - The same logic applies to themes: local themes always installed,
+     *     remote ones only if selected and not already on disk.
+     *
+     * @param string   $server_url
+     * @param string   $server_path
+     * @param string   $site_name
+     * @param string   $site_slogan
+     * @param string   $site_desc
+     * @param string   $site_timezone
+     * @param string[] $selected_modules  Module ids chosen by the user (includes mandatory ones).
+     *                                    Used only to decide which REMOTE modules to download.
+     * @param string[] $selected_themes   Theme ids chosen by the user (includes 'base').
+     *                                    Used only to decide which REMOTE themes to download.
+     */
+    public function configure_website(
+        $server_url,
+        $server_path,
+        $site_name,
+        $site_slogan    = '',
+        $site_desc      = '',
+        $site_timezone  = '',
+        array $selected_modules = [],
+        array $selected_themes  = []
+    )
     {
         $this->get_installation_token();
         $this->generate_website_configuration($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_timezone);
+
+        // 1. Download selected remote modules that are not yet on disk
+        $this->download_remote_modules($selected_modules);
+
+        // 2. Download selected remote themes that are not yet on disk
+        $this->download_remote_themes($selected_themes);
+
+        // 3. Install ALL modules present on disk (local + freshly downloaded)
+        //    The selection only governed what was downloaded — everything present is installed.
         $this->install_modules($this->get_modules_not_installed());
+
+        // 4. Install ALL themes present on disk
         $this->install_themes($this->get_themes_not_installed());
+
         $this->install_langs($this->get_langs_not_installed());
         $this->add_menus();
         $this->add_extended_fields();
@@ -293,9 +341,102 @@ class InstallationServices
         UserAccountsConfig::save();
     }
 
+    // ── Remote downloads ──────────────────────────────────────────────────────
+
+    /**
+     * Downloads selected remote modules that are not already present on disk.
+     * Modules already in /modules/ or at root are left untouched.
+     * After download, ClassLoader is regenerated so the new classes are available.
+     *
+     * @param string[] $selected_modules List of module ids selected by the user.
+     */
+    private function download_remote_modules(array $selected_modules): void
+    {
+        if (empty($selected_modules))
+            return;
+
+        $version  = GeneralConfig::load()->get_phpboost_major_version();
+        $dest_dir = PATH_TO_ROOT . '/modules/';
+        $downloaded = false;
+
+        foreach ($selected_modules as $module_id)
+        {
+            // Skip lobby — it is a root-level module, never downloaded
+            if ($module_id === 'lobby')
+                continue;
+
+            // Already present on disk (local or previously downloaded) → skip
+            $module_folder = new Folder($dest_dir . $module_id);
+            if ($module_folder->exists())
+                continue;
+
+            // Also check at root level (bbcode, qaptcha, lobby…)
+            $root_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
+            if ($root_folder->exists())
+                continue;
+
+            // Attempt remote download
+            $ok = AddonHelper::download_from_website(
+                $module_id,
+                self::ADDONS_SERVER_URL,
+                self::ADDONS_SERVER_DIR,
+                'modules',
+                $dest_dir,
+                $version
+            );
+
+            if ($ok)
+                $downloaded = true;
+        }
+
+        // Regenerate the class list so newly extracted classes are autoloaded
+        if ($downloaded)
+            ClassLoader::generate_classlist(true);
+    }
+
+    /**
+     * Downloads selected remote themes that are not already present on disk.
+     * The 'base' theme is always bundled in the archive and never downloaded.
+     *
+     * @param string[] $selected_themes List of theme ids selected by the user.
+     */
+    private function download_remote_themes(array $selected_themes): void
+    {
+        if (empty($selected_themes))
+            return;
+
+        $version  = GeneralConfig::load()->get_phpboost_major_version();
+        $dest_dir = PATH_TO_ROOT . '/templates/';
+
+        foreach ($selected_themes as $theme_id)
+        {
+            // Already present on disk → skip (covers 'base' when bundled in the archive)
+            $theme_folder = new Folder($dest_dir . $theme_id);
+            if ($theme_folder->exists())
+                continue;
+
+            AddonHelper::download_from_website(
+                $theme_id,
+                self::ADDONS_SERVER_URL,
+                self::ADDONS_SERVER_DIR,
+                'themes',
+                $dest_dir,
+                $version
+            );
+        }
+    }
+
+    // ── Local discovery ───────────────────────────────────────────────────────
+
+    /**
+     * Returns all modules present on disk that are not yet installed in the DB.
+     * Scans both /modules/ and the PHPBoost root (for bbcode, qaptcha, lobby, etc.).
+     */
     private function get_modules_not_installed(): array
     {
         $modules_not_installed = [];
+
+        // /modules/ folder
         $modules_folder = new Folder(PATH_TO_ROOT . '/modules');
         foreach ($modules_folder->get_folders() as $folder)
         {
@@ -312,8 +453,10 @@ class InstallationServices
                 }
             }
         }
-        $defaultmodules_folder = new Folder(PATH_TO_ROOT);
-        foreach ($defaultmodules_folder->get_folders() as $folder)
+
+        // Root-level modules (bbcode, qaptcha, lobby, …)
+        $root_folder = new Folder(PATH_TO_ROOT);
+        foreach ($root_folder->get_folders() as $folder)
         {
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
@@ -337,12 +480,16 @@ class InstallationServices
     private static function callback_sort_modules_by_name(Module $module1, Module $module2)
     {
         if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
-		{
-			return 1;
-		}
-		return -1;
+        {
+            return 1;
+        }
+        return -1;
     }
 
+    /**
+     * Installs all modules passed in the array.
+     * lobby is always installed last regardless of its position in the array.
+     */
     private function install_modules(array $modules_to_install)
     {
         foreach ($modules_to_install as $module_id => $module)
@@ -352,6 +499,7 @@ class InstallationServices
             ModulesManager::install_module($module_id, true, false);
         }
 
+        // lobby always last
         ModulesManager::install_module('lobby', true, false);
 
         if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
@@ -500,7 +648,7 @@ class InstallationServices
         $extended_field->set_is_freeze(true);
         ExtendedFieldsService::add($extended_field);
 
-        // Mail notofication when receiving PM
+        // Mail notification when receiving PM
         $extended_field = new ExtendedField();
         $extended_field->set_name($lang['user.extended.field.pm.to.mail']);
         $extended_field->set_field_name('user_pmtomail');

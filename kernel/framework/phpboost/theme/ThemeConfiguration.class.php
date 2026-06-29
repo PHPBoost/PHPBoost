@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 29
  * @since       PHPBoost 3.0 - 2011 04 10
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -153,9 +153,27 @@ class ThemeConfiguration
 	{
 		$config = @parse_ini_file($config_ini_file);
 
+		// config.ini may not exist if the theme has not been downloaded yet
+		// (e.g. during installation before the theme is fetched from the server).
+		// Return safe empty defaults instead of crashing.
 		if ($config === false)
 		{
-			throw new IOException('Load ini file "'. $config_ini_file .'" failed');
+			$this->addon_type        = '';
+			$this->author_name       = '';
+			$this->author_mail       = '';
+			$this->author_link       = '';
+			$this->creation_date     = '';
+			$this->last_update       = '';
+			$this->compatibility     = '';
+			$this->version           = '';
+			$this->html_version      = '';
+			$this->css_version       = '';
+			$this->main_color        = '';
+			$this->width             = '';
+			$this->parent_theme      = '__default__';
+			$this->pictures          = [];
+			$this->columns_disabled  = new ColumnsDisabled();
+			return;
 		}
 
 		$this->check_parse_ini_file($config, $config_ini_file);
@@ -182,6 +200,13 @@ class ThemeConfiguration
 
 	private function load_description($desc_ini_file)
 	{
+		if (empty($desc_ini_file))
+		{
+			$this->name = '';
+			$this->description = '';
+			$this->main_color = '';
+			return;
+		}
 		$desc = @parse_ini_file($desc_ini_file);
 		$this->check_parse_ini_file($desc, $desc_ini_file);
 		$this->name = isset($desc['name']) ? $desc['name'] : '';

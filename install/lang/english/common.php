@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 29
  * @since       PHPBoost 3.0 - 2010 05 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -154,6 +154,12 @@ $lang['install.website.name.required']    = 'You must enter your website\'s name
 $lang['install.website.host.warning']     = 'The website address you entered doesn\'t match your server address. Are you sure you want to keep to proceed?';
 $lang['install.website.path.warning']     = 'The website path you entered doesn\'t correspond to path powered by the server, are you sure you want to keep the path you entered?';
 $lang['install.website.captcha.config']   = 'Captcha configuration';
+
+$lang['install.website.modules']             = 'Modules';
+$lang['install.website.modules.unavailable'] = 'The list of remote modules is unavailable. Only the modules already on the server will be installed.';
+
+$lang['install.website.themes']             = 'Themes';
+$lang['install.website.themes.unavailable'] = 'The list of remote themes is unavailable. Only the themes already on the server will be installed.';
 
 // Admin account
 $lang['install.admin.title'] = 'Admin Account';

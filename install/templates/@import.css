@@ -17,6 +17,7 @@
 @import url('../../templates/__default__/theme/message_helper.css') screen;
 @import url('../../templates/__default__/theme/tooltip.css') screen;
 @import url('../../templates/__default__/theme/tabs.css') screen;
+@import url('../../templates/__default__/theme/modal.css') screen;
 
 @import url('../../templates/__default__/dashboard/dashboard_shape.css') screen;
 @import url('../../templates/__default__/dashboard/dashboard_menus.css') screen;
