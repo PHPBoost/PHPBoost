@@ -125,3 +125,17 @@ section header {
         span { display: block; }
     }
 }
+
+.addon-checkbox {
+    display: flex;
+    flex-direction: row;
+
+    label {
+        order: 2;
+        width: 90%;
+    }
+    .form-field {
+        order: 1;
+        width: 10%;
+    }
+}

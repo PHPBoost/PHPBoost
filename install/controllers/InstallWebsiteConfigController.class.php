@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 29
+ * @version     PHPBoost 6.1 - last update: 2026 07 01
  * @since       PHPBoost 3.0 - 2010 10 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -345,7 +345,7 @@ class InstallWebsiteConfigController extends InstallController
             true,
             [
                 'disabled' => true,
-                'class' => 'custom-checkbox',
+                'class' => 'addon-checkbox',
                 'description' => 'pages'
             ]
         ));
@@ -353,21 +353,14 @@ class InstallWebsiteConfigController extends InstallController
         $fieldset->add_field(new FormFieldHidden('module_' . $mandatory_module . '_forced', '1'));
 
         // Optional: connect module (checked by default) — not for pdk
-        if ($distribution !== 'pdk') {
-            $connect_label = $this->get_module_label('connect', $this->remote_modules['connect'] ?? []);
-            $fieldset->add_field(new FormFieldCheckbox(
-                'module_connect',
-                $connect_label,
-                true,
-                [
-                    'class' => 'custom-checkbox',
-                    'description' => 'connect'
-                ]
-            ));
+        if ($distribution == 'pdk') {
+            $checked = ['connect', 'GoogleMaps', 'sandbox', 'sitemap', 'SocialNetwoks', 'stats', 'UrlUpdater'];
+        } else {
+            $checked = ['connect', 'GoogleMaps', 'sitemap', 'SocialNetwoks', 'stats', 'UrlUpdater'];
         }
 
         // Other optional remote modules
-        $skip = [$mandatory_module, 'connect', 'bbcode', 'qaptcha'];
+        $skip = [$mandatory_module, 'bbcode', 'qaptcha'];
 
         $grouped_modules = [];
         foreach ($this->remote_modules as $module)
@@ -396,9 +389,9 @@ class InstallWebsiteConfigController extends InstallController
                 $fieldset->add_field(new FormFieldCheckbox(
                     'module_' . $module['id'],
                     $label,
-                    false,
+                    in_array($module['id'], $checked, true) ? true : false,
                     [
-                        'class' => 'custom-checkbox',
+                        'class' => 'addon-checkbox',
                         'description' => $module['id']
                     ]
                 ));
@@ -424,7 +417,7 @@ class InstallWebsiteConfigController extends InstallController
             'theme_base',
             'Base' . $base_note,
             true,
-            ['disabled' => true, 'class' => 'custom-checkbox']
+            ['disabled' => true, 'class' => 'addon-checkbox']
         ));
         $fieldset->add_field(new FormFieldHidden('theme_base_forced', '1'));
 
@@ -439,7 +432,7 @@ class InstallWebsiteConfigController extends InstallController
                 $label,
                 false,
                 [
-                    'class' => 'custom-checkbox',
+                    'class' => 'addon-checkbox',
                     'description' => $theme_id
                 ]
             ));
@@ -505,7 +498,7 @@ class InstallWebsiteConfigController extends InstallController
         $version = $this->get_phpboost_version();
         $url = self::ADDONS_SERVER_URL . '/' . $version . '/';
 
-        // Vérifier si l'URL est valide ET si le serveur répond
+        // Check if the URL is valid AND server responds
         if (filter_var($url, FILTER_VALIDATE_URL)) {
             $headers = @get_headers($url);
             if ($headers && strpos($headers[0], '200') !== false) {
