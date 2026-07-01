@@ -354,9 +354,9 @@ class InstallWebsiteConfigController extends InstallController
 
         // Optional: connect module (checked by default) — not for pdk
         if ($distribution == 'pdk') {
-            $checked = ['connect', 'GoogleMaps', 'sandbox', 'sitemap', 'SocialNetwoks', 'stats', 'UrlUpdater'];
+            $checked = ['connect', 'GoogleMaps', 'sandbox', 'sitemap'];
         } else {
-            $checked = ['connect', 'GoogleMaps', 'sitemap', 'SocialNetwoks', 'stats', 'UrlUpdater'];
+            $checked = ['connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetwoks', 'UrlUpdater'];
         }
 
         // Other optional remote modules
