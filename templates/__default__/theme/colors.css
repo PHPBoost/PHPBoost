@@ -756,11 +756,10 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc-full,
 .bgc-full a	{ color: var(--txt-alt) !important; }
 
-
 .bgc-full.light,
-.current-tab.light 	       { color: rgba(var(--darken), 1);  background-color: rgba(var(--lighten), 1);  border-color: rgba(var(--lighten), 1); }
+.current-tab.light 	       { color: rgba(var(--darken), 1) !important;  background-color: rgba(var(--lighten), 1);  border-color: rgba(var(--lighten), 1); }
 .bgc-full.dark,
-.current-tab.dark 	       { color: rgba(var(--lighten), 1);  background-color: rgba(var(--darken), 1);    border-color: rgba(var(--darken), 1); }
+.current-tab.dark 	       { color: rgba(var(--lighten), 1) !important;  background-color: rgba(var(--darken), 1);    border-color: rgba(var(--darken), 1); }
 .bgc-full.notice,
 .current-tab.notice        { background-color: var(--notice-tone); 	      border-color: var(--notice-tone); }
 .bgc-full.question,
