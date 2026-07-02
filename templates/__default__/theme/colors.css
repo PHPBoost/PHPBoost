@@ -720,6 +720,8 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .floating-element,
 .message-helper { background-color: var(--bgc-main); }
 
+.light 	       { color: rgba(var(--lighten), 1);   border-color: rgba(var(--lighten), 1); }
+.dark 	       { color: rgba(var(--darken), 1);    border-color: rgba(var(--darken), 1); }
 .notice 	   { color: var(--notice-tone); 	   border-color: var(--notice-tone); }
 .question 	   { color: var(--question-tone); 	   border-color: var(--question-tone); }
 .success 	   { color: var(--success-tone); 	   border-color: var(--success-tone); }
@@ -734,6 +736,8 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .link-color    { color: var(--main-tone); 		   border-color: var(--main-tone); }
 .star  		   { color: var(--star-tone); 		   border-color: var(--star-tone); }
 
+.bgc.light 	       { background-color: rgba(var(--lighten), 0.2); }
+.bgc.dark 	       { background-color: rgba(var(--darken), 0.2); }
 .bgc.notice        { background-color: rgba(var(--notice-tone-rgb), 0.2); }
 .bgc.question      { background-color: rgba(var(--question-tone-rgb), 0.2); }
 .bgc.success       { background-color: rgba(var(--success-tone-rgb), 0.2); }
@@ -752,6 +756,11 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc-full,
 .bgc-full a	{ color: var(--txt-alt) !important; }
 
+
+.bgc-full.light,
+.current-tab.light 	       { color: rgba(var(--darken), 1);  background-color: rgba(var(--lighten), 1);  border-color: rgba(var(--lighten), 1); }
+.bgc-full.dark,
+.current-tab.dark 	       { color: rgba(var(--lighten), 1);  background-color: rgba(var(--darken), 1);    border-color: rgba(var(--darken), 1); }
 .bgc-full.notice,
 .current-tab.notice        { background-color: var(--notice-tone); 	      border-color: var(--notice-tone); }
 .bgc-full.question,
