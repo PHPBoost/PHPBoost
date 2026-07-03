@@ -151,9 +151,9 @@
 			# END themes_installed #
 		</div>
 		<footer>
-			<fieldset class="fieldset-submit">
+			<fieldset class="fieldset-submit authorizations-button">
 				<legend>{@addon.authorizations.save}</legend>
-				<button type="submit" class="button submit" name="update_themes_configuration" value="true">{@addon.authorizations.save}</button>
+				<button type="submit" class="button bgc-full moderator" name="update_themes_configuration" value="true">{@addon.authorizations.save}</button>
 				<input type="hidden" name="token" value="{TOKEN}">
 				<input type="hidden" name="update" value="true">
 			</fieldset>
