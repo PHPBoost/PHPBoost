@@ -113,6 +113,7 @@ class AdminThemeDeleteController extends DefaultAdminController
 			{
 				$theme = ThemesManager::get_theme($id);
                 $has_parent = $theme->get_configuration()->get_parent_theme() != '__default__';
+                $theme_childs_list = ThemesManager::get_theme_childs_list($id);
 
                 if ($has_parent)
                 {
@@ -124,9 +125,31 @@ class AdminThemeDeleteController extends DefaultAdminController
                         HooksService::execute_hook_typed_action('uninstall', 'theme', $id, array_merge(['title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties()]));
                     }
                 }
+                elseif ($theme_childs_list)
+                {
+                    foreach ($theme_childs_list as $child)
+                    {
+                        $child_theme = ThemesManager::get_theme($child);
+                        ThemesManager::uninstall($child, $drop_files);
+                        if ($drop_files) {
+                            HooksService::execute_hook_action('delete', $child, array_merge(['title' => $child_theme->get_configuration()->get_name(), $child_theme->get_configuration()->get_properties()]));
+                        }
+                        else {
+                            HooksService::execute_hook_typed_action('uninstall', 'theme', $child_theme, array_merge(['title' => $child_theme->get_configuration()->get_name(), $child_theme->get_configuration()->get_properties()]));
+                        }
+                    }
+                    ThemesManager::uninstall($id, $drop_files);
+                    if ($drop_files) {
+                        HooksService::execute_hook_action('delete', $id, array_merge(['title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties()]));
+                    }
+                    else {
+                        HooksService::execute_hook_typed_action('uninstall', 'theme', $theme, array_merge(['title' => $theme->get_configuration()->get_name(), $child_theme->get_configuration()->get_properties()]));
+                    }
+                }
                 else {
                     $no_children[] = $id;
                 }
+
             }
 
             foreach ($no_children as $id)
