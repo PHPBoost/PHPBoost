@@ -177,7 +177,7 @@
 							<input type="checkbox" id="gh-check-all" />
 							<span aria-label="{@addon.modules.select.all}">&nbsp;</span>
 						</label>
-						<button type="submit" form="gh-install-form" id="gh-install-selected" class="button submit select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
+						<button type="submit" form="gh-install-form" id="gh-install-selected" class="button submit select-all-button">{@addon.multiple.install}</button>
 					</div>
 				# ENDIF #
             </article>
@@ -339,7 +339,7 @@
                                 <input type="checkbox" id="ws-check-all" />
                                 <span aria-label="{@addon.modules.select.all}">&nbsp;</span>
                             </label>
-                            <button type="submit" form="ws-install-form" id="ws-install-selected" class="button submit select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
+                            <button type="submit" form="ws-install-form" id="ws-install-selected" class="button submit select-all-button">{@addon.multiple.install}</button>
                         </div>
                     # ENDIF #
                 </article>
@@ -515,8 +515,11 @@
 					inp.type = 'hidden'; inp.name = 'addon_ids[]'; inp.value = cb.value;
 					ghForm.appendChild(inp);
 				});
+                showLoader();
 			}
-			showLoader();
+            else {
+                showLoader();
+            }
 		});
 	}
 	var wsForm = document.getElementById('ws-install-form');
@@ -532,8 +535,11 @@
 					inp.type = 'hidden'; inp.name = 'addon_ids[]'; inp.value = cb.value;
 					wsForm.appendChild(inp);
 				});
+                showLoader();
 			}
-			showLoader();
+            else {
+                showLoader();
+            }
 		});
 	}
 }());

@@ -140,7 +140,7 @@
                                 <input type="checkbox" id="gh-check-all" />
                                 <span aria-label="{@addon.themes.select.all}">&nbsp;</span>
                             </label>
-                            <button type="submit" form="gh-install-form" id="gh-install-selected" class="button select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
+                            <button type="submit" form="gh-install-form" id="gh-install-selected" class="button select-all-button">{@addon.multiple.install}</button>
                         </div>
                     # ENDIF #
                 </article>
@@ -257,7 +257,7 @@
                                 <input type="checkbox" id="ws-check-all" />
                                 <span aria-label="{@addon.themes.select.all}">&nbsp;</span>
                             </label>
-                            <button type="submit" form="ws-install-form" id="ws-install-selected" class="button select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
+                            <button type="submit" form="ws-install-form" id="ws-install-selected" class="button select-all-button">{@addon.multiple.install}</button>
                         </div>
                     # ENDIF #
                 </article>
@@ -470,14 +470,20 @@
 			if (btn && btn.id === 'gh-install-selected') {
 				var cont = document.getElementById('github-addons-container');
 				var checked = cont ? cont.querySelectorAll('.add-checkbox:checked') : [];
-				if (checked.length === 0) { e.preventDefault(); return; }
+				if (checked.length === 0) {
+                    e.preventDefault();
+                    return;
+                }
 				checked.forEach(function(cb) {
 					var inp = document.createElement('input');
 					inp.type = 'hidden'; inp.name = 'addon_ids[]'; inp.value = cb.value;
 					ghForm.appendChild(inp);
 				});
+                showLoader();
 			}
-			showLoader();
+            else {
+                showLoader();
+            }
 		});
 	}
 	var wsForm = document.getElementById('ws-install-form');
@@ -493,8 +499,11 @@
 					inp.type = 'hidden'; inp.name = 'addon_ids[]'; inp.value = cb.value;
 					wsForm.appendChild(inp);
 				});
+                showLoader();
 			}
-			showLoader();
+            else {
+                showLoader();
+            }
 		});
 	}
 }());
