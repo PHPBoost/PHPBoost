@@ -81,7 +81,7 @@
 				<input type="checkbox" class="check-all" id="upgrade-all-checkbox" name="upgrade-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" />
 				<span aria-label="{@addon.modules.select.all}">&nbsp;</span>
 			</label>
-			<button type="submit" name="upgrade-selected-modules" value="true" class="button submit select-all-button">{@addon.multiple.upgrade}</button>
+			<button type="submit" name="upgrade-selected-modules" value="true" class="button select-all-button">{@addon.multiple.upgrade}</button>
 		</div>
 	# ENDIF #
 </form>

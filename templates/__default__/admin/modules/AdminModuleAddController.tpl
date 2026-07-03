@@ -1,4 +1,4 @@
-<!-- === /templates/__default__/admin/modules/AdminModuleAddController.tpl === -->
+<!-- === AdminModuleAddController.tpl === -->
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
 <header>
@@ -63,101 +63,109 @@
 				<input type="hidden" name="gh_dir"        value="{GITHUB_ACTIVE_DIR}" />
 			<article id="github-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
 				# IF C_GITHUB_MODULES #
-					<div class="col-v-3">
-						# START github_genres #
-							<div>
-								<header><h3>{github_genres.GENRE_NAME}</h3></header>
-								<div class="cell-list mini-checkbox">
-									<ul>
-										# START github_genres.github_modules #
-											<li class="li-stretch addon# IF NOT github_genres.github_modules.C_COMPATIBLE # not-compatible error# ENDIF ## IF github_genres.github_modules.C_IS_INSTALLED # installed# ENDIF #">
-												<div id="gh-module-{github_genres.github_modules.MODULE_NUMBER}" class="addon-name align-left">
-													# IF C_SEVERAL_GITHUB_MODULES #
-														# IF github_genres.github_modules.C_COMPATIBLE #
-															# IF NOT github_genres.github_modules.C_IS_INSTALLED #
-																<label class="checkbox" for="gh-multiple-checkbox-{github_genres.github_modules.MODULE_NUMBER}">
-																	<input type="checkbox" class="multiple-checkbox add-checkbox" id="gh-multiple-checkbox-{github_genres.github_modules.MODULE_NUMBER}" name="add-checkbox-{github_genres.github_modules.MODULE_NUMBER}" value="{github_genres.github_modules.MODULE_ID}"/>
-																	<span>&nbsp;</span>
-																</label>
-															# ENDIF #
-														# ENDIF #
-													# ENDIF #
-													{github_genres.github_modules.MODULE_NAME}
-												</div>
-												<div class="addon-infos">
-													<span class="# IF github_genres.github_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{github_genres.github_modules.COMPATIBILITY}</span>
-													<button onclick="return false;" class="button button-mini default modal-button --infos-gh-module-{github_genres.github_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
-													<div id="infos-gh-module-{github_genres.github_modules.MODULE_NUMBER}" class="modal modal-half">
-														<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-														<div class="modal-content">
-															<span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
-															<div class="cell-list">
-																<ul>
-																	<li class="li-stretch">
-																		<h2>
-																			# IF github_genres.github_modules.C_THUMBNAIL #
-																				<img src="{github_genres.github_modules.THUMBNAIL_URL}" alt="{github_genres.github_modules.MODULE_NAME}" class="addon-thumbnail" />
-																			# ELSEIF github_genres.github_modules.C_FA_ICON #
-																				<i class="fa {github_genres.github_modules.FA_ICON}" aria-hidden="true"></i>
-																			# ELSEIF github_genres.github_modules.C_HEXA_ICON #
-																				<span class="hexa-icon bigger">{github_genres.github_modules.HEXA_ICON}</span>
-																			# ELSE #
-																				<i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-																			# ENDIF #
-																			{github_genres.github_modules.MODULE_NAME}
-																		</h2>
-																	</li>
-																	<li class="li-stretch">
-																		<span class="text-strong">{@common.author} :</span>
-																		<span>
-																			{github_genres.github_modules.AUTHOR}
-																			# IF github_genres.github_modules.C_AUTHOR_EMAIL # <a href="mailto:{github_genres.github_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
-																			# IF github_genres.github_modules.C_AUTHOR_WEBSITE # <a href="{github_genres.github_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #
-																		</span>
-																	</li>
-																	<li class="li-stretch">
-																		<span class="text-strong">{@common.version}</span>
-																		{github_genres.github_modules.VERSION}
-																	</li>
-																	<li class="li-stretch">
-																		<span class="text-strong">{@common.creation.date} :</span>
-																		{github_genres.github_modules.CREATION_DATE}
-																	</li>
-																	<li class="li-stretch">
-																		<span class="text-strong">{@common.last.update} :</span>
-																		{github_genres.github_modules.LAST_UPDATE}
-																	</li>
-																	<li>
-																		<span class="text-strong">{@common.description} :</span>
-																		{github_genres.github_modules.DESCRIPTION}
-																	</li>
-																	<li class="li-stretch">
-																		<span class="text-strong">{@addon.modules.php.version} :</span>
-																		{github_genres.github_modules.PHP_VERSION}
-																	</li>
-																	# IF NOT github_genres.github_modules.C_COMPATIBLE_ADDON #
-																		<li class="bgc-full error">{@addon.modules.not.module}</li>
-																	# ENDIF #
-																</ul>
-															</div>
-														</div>
-													</div>
-													# IF github_genres.github_modules.C_IS_INSTALLED #
-														<button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
-													# ELSEIF github_genres.github_modules.C_COMPATIBLE #
-														<button type="submit" form="gh-install-form" class="button button-mini bgc-full logo-color" name="addon_ids[]" value="{github_genres.github_modules.MODULE_ID}" aria-label="{@addon.install}" onclick="showLoader()"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
-													# ELSE #
-														<button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
-													# ENDIF #
-													<button type="button" class="button button-mini default offload" aria-label="{@addon.github.view.repo}" onclick="window.open('{github_genres.github_modules.U_REPO}', '_blank', 'noopener');"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>
-												</div>
-											</li>
-										# END github_genres.github_modules #
-										</ul>
-									</div>
-								</div>
-						# END github_genres #
-					</div>
+                    # IF C_ALL_GH_INSTALLED #
+                        <div class="message-helper bgc notice">{@addon.modules.all.installed}</div>
+                    # ELSE #
+                        <div class="col-v-3">
+                            # START github_genres #
+                                # IF github_genres.C_DISPLAY_GH_GENRE #
+                                    <div>
+                                        <header><h3>{github_genres.GENRE_NAME}</h3></header>
+                                        <div class="cell-list mini-checkbox">
+                                            <ul>
+                                                # START github_genres.github_modules #
+                                                    # IF NOT github_genres.github_modules.C_IS_INSTALLED #
+                                                        <li class="li-stretch addon# IF NOT github_genres.github_modules.C_COMPATIBLE # not-compatible error# ENDIF ## IF github_genres.github_modules.C_IS_INSTALLED # installed# ENDIF #">
+                                                            <div id="gh-module-{github_genres.github_modules.MODULE_NUMBER}" class="addon-name align-left">
+                                                                # IF C_SEVERAL_GITHUB_MODULES #
+                                                                    # IF github_genres.github_modules.C_COMPATIBLE #
+                                                                        # IF NOT github_genres.github_modules.C_IS_INSTALLED #
+                                                                            <label class="checkbox" for="gh-multiple-checkbox-{github_genres.github_modules.MODULE_NUMBER}">
+                                                                                <input type="checkbox" class="multiple-checkbox add-checkbox" id="gh-multiple-checkbox-{github_genres.github_modules.MODULE_NUMBER}" name="add-checkbox-{github_genres.github_modules.MODULE_NUMBER}" value="{github_genres.github_modules.MODULE_ID}"/>
+                                                                                <span>&nbsp;</span>
+                                                                            </label>
+                                                                        # ENDIF #
+                                                                    # ENDIF #
+                                                                # ENDIF #
+                                                                {github_genres.github_modules.MODULE_NAME}
+                                                            </div>
+                                                            <div class="addon-infos">
+                                                                <span class="# IF github_genres.github_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{github_genres.github_modules.COMPATIBILITY}</span>
+                                                                <button onclick="return false;" class="button button-mini default modal-button --infos-gh-module-{github_genres.github_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
+                                                                <div id="infos-gh-module-{github_genres.github_modules.MODULE_NUMBER}" class="modal modal-half">
+                                                                    <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                                                                    <div class="modal-content">
+                                                                        <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                                                        <div class="cell-list">
+                                                                            <ul>
+                                                                                <li class="li-stretch">
+                                                                                    <h2>
+                                                                                        # IF github_genres.github_modules.C_THUMBNAIL #
+                                                                                            <img src="{github_genres.github_modules.THUMBNAIL_URL}" alt="{github_genres.github_modules.MODULE_NAME}" class="addon-thumbnail" />
+                                                                                        # ELSEIF github_genres.github_modules.C_FA_ICON #
+                                                                                            <i class="fa {github_genres.github_modules.FA_ICON}" aria-hidden="true"></i>
+                                                                                        # ELSEIF github_genres.github_modules.C_HEXA_ICON #
+                                                                                            <span class="hexa-icon bigger">{github_genres.github_modules.HEXA_ICON}</span>
+                                                                                        # ELSE #
+                                                                                            <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
+                                                                                        # ENDIF #
+                                                                                        {github_genres.github_modules.MODULE_NAME}
+                                                                                    </h2>
+                                                                                </li>
+                                                                                <li class="li-stretch">
+                                                                                    <span class="text-strong">{@common.author} :</span>
+                                                                                    <span>
+                                                                                        {github_genres.github_modules.AUTHOR}
+                                                                                        # IF github_genres.github_modules.C_AUTHOR_EMAIL # <a href="mailto:{github_genres.github_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
+                                                                                        # IF github_genres.github_modules.C_AUTHOR_WEBSITE # <a href="{github_genres.github_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #
+                                                                                    </span>
+                                                                                </li>
+                                                                                <li class="li-stretch">
+                                                                                    <span class="text-strong">{@common.version}</span>
+                                                                                    {github_genres.github_modules.VERSION}
+                                                                                </li>
+                                                                                <li class="li-stretch">
+                                                                                    <span class="text-strong">{@common.creation.date} :</span>
+                                                                                    {github_genres.github_modules.CREATION_DATE}
+                                                                                </li>
+                                                                                <li class="li-stretch">
+                                                                                    <span class="text-strong">{@common.last.update} :</span>
+                                                                                    {github_genres.github_modules.LAST_UPDATE}
+                                                                                </li>
+                                                                                <li>
+                                                                                    <span class="text-strong">{@common.description} :</span>
+                                                                                    {github_genres.github_modules.DESCRIPTION}
+                                                                                </li>
+                                                                                <li class="li-stretch">
+                                                                                    <span class="text-strong">{@addon.modules.php.version} :</span>
+                                                                                    {github_genres.github_modules.PHP_VERSION}
+                                                                                </li>
+                                                                                # IF NOT github_genres.github_modules.C_COMPATIBLE_ADDON #
+                                                                                    <li class="bgc-full error">{@addon.modules.not.module}</li>
+                                                                                # ENDIF #
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                # IF github_genres.github_modules.C_IS_INSTALLED #
+                                                                    <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+                                                                # ELSEIF github_genres.github_modules.C_COMPATIBLE #
+                                                                    <button type="submit" form="gh-install-form" class="button button-mini bgc-full logo-color" name="addon_ids[]" value="{github_genres.github_modules.MODULE_ID}" aria-label="{@addon.install}" onclick="showLoader()"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
+                                                                # ELSE #
+                                                                    <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                                # ENDIF #
+                                                                <button type="button" class="button button-mini default offload" aria-label="{@addon.github.view.repo}" onclick="window.open('{github_genres.github_modules.U_REPO}', '_blank', 'noopener');"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>
+                                                            </div>
+                                                        </li>
+                                                    # ENDIF #
+                                                # END github_genres.github_modules #
+                                            </ul>
+                                        </div>
+                                    </div>
+                                # ENDIF #
+                            # END github_genres #
+                        </div>
+                    # ENDIF #
 				# ELSE #
 					<div class="content">
 						<div class="message-helper bgc notice message-helper-small">{@common.no.item.now}</div>
@@ -218,100 +226,108 @@
 				<input type="hidden" name="ws_dir"        value="{WEBSITE_ACTIVE_DIR}" />
                 <article id="website-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
                     # IF C_WEBSITE_MODULES #
-                        <div class="col-v-3">
-                            # START website_genres #
-                                <div>
-                                    <header><h3>{website_genres.GENRE_NAME}</h3></header>
-                                    <div class="cell-list mini-checkbox">
-                                        <ul>
-                                            # START website_genres.website_modules #
-                                                <li class="li-stretch addon# IF NOT website_genres.website_modules.C_COMPATIBLE # not-compatible error# ENDIF ## IF website_genres.website_modules.C_IS_INSTALLED # installed# ENDIF #">
-                                                    <div id="ws-module-{website_genres.website_modules.MODULE_NUMBER}" class="addon-name align-left">
-                                                        # IF C_SEVERAL_WEBSITE_MODULES #
-                                                            # IF website_genres.website_modules.C_COMPATIBLE #
-                                                                # IF NOT website_genres.website_modules.C_IS_INSTALLED #
-                                                                    <label class="checkbox" for="ws-multiple-checkbox-{website_genres.website_modules.MODULE_NUMBER}">
-                                                                        <input type="checkbox" class="multiple-checkbox add-checkbox" id="ws-multiple-checkbox-{website_genres.website_modules.MODULE_NUMBER}" name="add-checkbox-{website_genres.website_modules.MODULE_NUMBER}" value="{website_genres.website_modules.MODULE_ID}"/>
-                                                                        <span>&nbsp;</span>
-                                                                    </label>
-                                                                # ENDIF #
-                                                            # ENDIF #
-                                                        # ENDIF #
-                                                        {website_genres.website_modules.MODULE_NAME}
-                                                    </div>
-                                                    <div class="addon-infos">
-                                                        <span class="# IF website_genres.website_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{website_genres.website_modules.COMPATIBILITY}</span>
-                                                        <button onclick="return false;" class="button button-mini default modal-button --infos-ws-module-{website_genres.website_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
-                                                        <div id="infos-ws-module-{website_genres.website_modules.MODULE_NUMBER}" class="modal modal-half">
-                                                            <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-                                                            <div class="modal-content">
-                                                                <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
-                                                                <div class="cell-list">
-                                                                    <ul>
-                                                                        <li class="li-stretch">
-                                                                            <h2>
-                                                                                # IF website_genres.website_modules.C_THUMBNAIL #
-                                                                                    <img src="{website_genres.website_modules.THUMBNAIL_URL}" alt="{website_genres.website_modules.MODULE_NAME}" class="addon-thumbnail" />
-                                                                                # ELSEIF website_genres.website_modules.C_FA_ICON #
-                                                                                    <i class="fa {website_genres.website_modules.FA_ICON}" aria-hidden="true"></i>
-                                                                                # ELSEIF website_genres.website_modules.C_HEXA_ICON #
-                                                                                    <span class="hexa-icon bigger">{website_genres.website_modules.HEXA_ICON}</span>
-                                                                                # ELSE #
-                                                                                    <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-                                                                                # ENDIF #
-                                                                                {website_genres.website_modules.MODULE_NAME}
-                                                                            </h2>
-                                                                        </li>
-                                                                        <li class="li-stretch">
-                                                                            <span class="text-strong">{@common.author} :</span>
-                                                                            <span>
-                                                                                {website_genres.website_modules.AUTHOR}
-                                                                                # IF website_genres.website_modules.C_AUTHOR_EMAIL # <a href="mailto:{website_genres.website_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
-                                                                                # IF website_genres.website_modules.C_AUTHOR_WEBSITE # <a href="{website_genres.website_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #
-                                                                            </span>
-                                                                        </li>
-                                                                        <li class="li-stretch">
-                                                                            <span class="text-strong">{@common.version}</span>
-                                                                            {website_genres.website_modules.VERSION}
-                                                                        </li>
-                                                                        <li class="li-stretch">
-                                                                            <span class="text-strong">{@common.creation.date} :</span>
-                                                                            {website_genres.website_modules.CREATION_DATE}
-                                                                        </li>
-                                                                        <li class="li-stretch">
-                                                                            <span class="text-strong">{@common.last.update} :</span>
-                                                                            {website_genres.website_modules.LAST_UPDATE}
-                                                                        </li>
-                                                                        <li>
-                                                                            <span class="text-strong">{@common.description} :</span>
-                                                                            {website_genres.website_modules.DESCRIPTION}
-                                                                        </li>
-                                                                        <li class="li-stretch">
-                                                                            <span class="text-strong">{@addon.modules.php.version} :</span>
-                                                                            {website_genres.website_modules.PHP_VERSION}
-                                                                        </li>
-                                                                        # IF NOT website_genres.website_modules.C_COMPATIBLE_ADDON #
-                                                                            <li class="bgc-full error">{@addon.modules.not.module}</li>
+                        # IF C_ALL_GH_INSTALLED #
+                            <div class="message-helper bgc notice">{@addon.modules.all.installed}</div>
+                        # ELSE #
+                            <div class="col-v-3">
+                                # START website_genres #
+                                    # IF website_genres.C_DISPLAY_WS_GENRE #
+                                        <div>
+                                            <header><h3>{website_genres.GENRE_NAME}</h3></header>
+                                            <div class="cell-list mini-checkbox">
+                                                <ul>
+                                                    # START website_genres.website_modules #
+                                                        # IF NOT website_genres.website_modules.C_IS_INSTALLED #
+                                                            <li class="li-stretch addon# IF NOT website_genres.website_modules.C_COMPATIBLE # not-compatible error# ENDIF ## IF website_genres.website_modules.C_IS_INSTALLED # installed# ENDIF #">
+                                                                <div id="ws-module-{website_genres.website_modules.MODULE_NUMBER}" class="addon-name align-left">
+                                                                    # IF C_SEVERAL_WEBSITE_MODULES #
+                                                                        # IF website_genres.website_modules.C_COMPATIBLE #
+                                                                            # IF NOT website_genres.website_modules.C_IS_INSTALLED #
+                                                                                <label class="checkbox" for="ws-multiple-checkbox-{website_genres.website_modules.MODULE_NUMBER}">
+                                                                                    <input type="checkbox" class="multiple-checkbox add-checkbox" id="ws-multiple-checkbox-{website_genres.website_modules.MODULE_NUMBER}" name="add-checkbox-{website_genres.website_modules.MODULE_NUMBER}" value="{website_genres.website_modules.MODULE_ID}"/>
+                                                                                    <span>&nbsp;</span>
+                                                                                </label>
+                                                                            # ENDIF #
                                                                         # ENDIF #
-                                                                    </ul>
+                                                                    # ENDIF #
+                                                                    {website_genres.website_modules.MODULE_NAME}
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        # IF website_genres.website_modules.C_IS_INSTALLED #
-                                                            <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
-                                                        # ELSEIF website_genres.website_modules.C_COMPATIBLE #
-                                                            <button type="submit" form="ws-install-form" class="button button-mini bgc-full logo-color" name="addon_ids[]" value="{website_genres.website_modules.MODULE_ID}" aria-label="{@addon.install}" onclick="showLoader()"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
-                                                        # ELSE #
-                                                            <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                                <div class="addon-infos">
+                                                                    <span class="# IF website_genres.website_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{website_genres.website_modules.COMPATIBILITY}</span>
+                                                                    <button onclick="return false;" class="button button-mini default modal-button --infos-ws-module-{website_genres.website_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
+                                                                    <div id="infos-ws-module-{website_genres.website_modules.MODULE_NUMBER}" class="modal modal-half">
+                                                                        <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                                                                        <div class="modal-content">
+                                                                            <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                                                            <div class="cell-list">
+                                                                                <ul>
+                                                                                    <li class="li-stretch">
+                                                                                        <h2>
+                                                                                            # IF website_genres.website_modules.C_THUMBNAIL #
+                                                                                                <img src="{website_genres.website_modules.THUMBNAIL_URL}" alt="{website_genres.website_modules.MODULE_NAME}" class="addon-thumbnail" />
+                                                                                            # ELSEIF website_genres.website_modules.C_FA_ICON #
+                                                                                                <i class="fa {website_genres.website_modules.FA_ICON}" aria-hidden="true"></i>
+                                                                                            # ELSEIF website_genres.website_modules.C_HEXA_ICON #
+                                                                                                <span class="hexa-icon bigger">{website_genres.website_modules.HEXA_ICON}</span>
+                                                                                            # ELSE #
+                                                                                                <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
+                                                                                            # ENDIF #
+                                                                                            {website_genres.website_modules.MODULE_NAME}
+                                                                                        </h2>
+                                                                                    </li>
+                                                                                    <li class="li-stretch">
+                                                                                        <span class="text-strong">{@common.author} :</span>
+                                                                                        <span>
+                                                                                            {website_genres.website_modules.AUTHOR}
+                                                                                            # IF website_genres.website_modules.C_AUTHOR_EMAIL # <a href="mailto:{website_genres.website_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
+                                                                                            # IF website_genres.website_modules.C_AUTHOR_WEBSITE # <a href="{website_genres.website_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #
+                                                                                        </span>
+                                                                                    </li>
+                                                                                    <li class="li-stretch">
+                                                                                        <span class="text-strong">{@common.version}</span>
+                                                                                        {website_genres.website_modules.VERSION}
+                                                                                    </li>
+                                                                                    <li class="li-stretch">
+                                                                                        <span class="text-strong">{@common.creation.date} :</span>
+                                                                                        {website_genres.website_modules.CREATION_DATE}
+                                                                                    </li>
+                                                                                    <li class="li-stretch">
+                                                                                        <span class="text-strong">{@common.last.update} :</span>
+                                                                                        {website_genres.website_modules.LAST_UPDATE}
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <span class="text-strong">{@common.description} :</span>
+                                                                                        {website_genres.website_modules.DESCRIPTION}
+                                                                                    </li>
+                                                                                    <li class="li-stretch">
+                                                                                        <span class="text-strong">{@addon.modules.php.version} :</span>
+                                                                                        {website_genres.website_modules.PHP_VERSION}
+                                                                                    </li>
+                                                                                    # IF NOT website_genres.website_modules.C_COMPATIBLE_ADDON #
+                                                                                        <li class="bgc-full error">{@addon.modules.not.module}</li>
+                                                                                    # ENDIF #
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    # IF website_genres.website_modules.C_IS_INSTALLED #
+                                                                        <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+                                                                    # ELSEIF website_genres.website_modules.C_COMPATIBLE #
+                                                                        <button type="submit" form="ws-install-form" class="button button-mini bgc-full logo-color" name="addon_ids[]" value="{website_genres.website_modules.MODULE_ID}" aria-label="{@addon.install}" onclick="showLoader()"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
+                                                                    # ELSE #
+                                                                        <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                                    # ENDIF #
+                                                                </div>
+                                                            </li>
                                                         # ENDIF #
-                                                    </div>
-                                                </li>
-                                            # END website_genres.website_modules #
-                                        </ul>
-                                    </div>
-                                </div>
-                            # END website_genres #
-                        </div>
+                                                    # END website_genres.website_modules #
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    # ENDIF #
+                                # END website_genres #
+                            </div>
+                        # ENDIF #
                     # ELSE #
                         <div class="content">
                             <div class="message-helper bgc notice message-helper-small">{@common.no.item.now}</div>
@@ -412,7 +428,7 @@
 															</div>
 														</div>
 														# IF genres.server_modules.C_COMPATIBLE #
-															<button type="submit" class="button button-mini bgc-full logo-color" name="add-{genres.server_modules.MODULE_ID}" value="true" aria-label="{@addon.install}"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+															<button type="submit" class="button button-mini bgc-full logo-color" name="add-{genres.server_modules.MODULE_ID}" value="true" aria-label="{@addon.install}"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
 														# ELSE #
 															<button type="submit" class="button button-mini bgc-full error" name="add-{genres.server_modules.MODULE_ID}" onclick="return false;" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
 														# ENDIF #

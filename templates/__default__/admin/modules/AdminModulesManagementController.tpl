@@ -1,4 +1,4 @@
-<!-- === /templates/__default__/admin/modules/AdminModulesManagementController.tpl === -->
+<!-- === dminModulesManagementController.tpl === -->
 # INCLUDE MESSAGE_HELPER #
 # START errors #
 	# INCLUDE errors.MESSAGE_HELPER #
@@ -109,9 +109,7 @@
                                 # ENDIF #
                             # ENDIF #
                             # IF installed_modules.C_DELETE #
-                                # IF C_IS_LOCALHOST #
-                                    <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
-                                # ENDIF #
+                                # IF C_IS_LOCALHOST #<button type="submit" class="button button-mini bgc-full warning" name="uninstall-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button># ENDIF #
                                 <button type="submit" class="button button-mini bgc-full error" name="delete-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true" data-confirmation="delete-element"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
                             # ENDIF #
                         </div>

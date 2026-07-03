@@ -239,6 +239,12 @@ class AdminModuleAddController extends DefaultAdminController
             'U_AJAX_INSTALL'      => AdminModulesUrlBuilder::ajax_install()->rel(),
         ]);
 
+        $installed_addon_ids = [];
+        foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as $addon)
+        {
+            $installed_addon_ids[] = $addon->get_id();
+        };
+
         // Populate github repos selector
         $addons_config = AddonsConfig::load();
         $github_repos  = $addons_config->get_modules_repo();
@@ -364,12 +370,20 @@ class AdminModuleAddController extends DefaultAdminController
 
                     $gh_module_number = 1;
                     $gh_total = array_sum(array_map('count', $gh_grouped));
+                    $gh_addon_ids = [];
 
                     foreach ($gh_grouped as $genre => $gh_modules)
                     {
                         usort($gh_modules, function ($a, $b) { return strcasecmp($a['name'], $b['name']); });
 
+                        $displayed_modules = array_filter($gh_modules, function($m) use ($installed_addon_ids) {
+                            return !in_array($m['addon_id'], $installed_addon_ids);
+                        });
+
+                        $has_modules_to_display = !empty($displayed_modules);
+
                         $this->view->assign_block_vars('github_genres', [
+                            'C_DISPLAY_GH_GENRE' => $has_modules_to_display,
                             'GENRE_NAME' => $genre
                         ]);
 
@@ -404,15 +418,16 @@ class AdminModuleAddController extends DefaultAdminController
                                 'THUMBNAIL_URL'  => $m['thumbnail'] ?? '',
                                 'U_REPO'         => $m['repo_url'],
                             ]);
-
+                            $gh_addon_ids[] = $m['addon_id'];
                             $gh_module_number++;
                         }
                     }
 
                     $this->view->put_all([
+                        'C_ALL_GH_INSTALLED'       => count(array_diff($gh_addon_ids, $installed_addon_ids)) == 0,
                         'C_GITHUB_MODULES'         => $gh_total > 0,
                         'C_SEVERAL_GITHUB_MODULES' => $gh_total > 1,
-                        'GITHUB_MODULES_NUMBER'     => $gh_total,
+                        'GITHUB_MODULES_NUMBER'    => $gh_total,
                     ]);
                 }
                 else
@@ -483,12 +498,20 @@ class AdminModuleAddController extends DefaultAdminController
 
                 $ws_module_number = 1;
                 $ws_total = array_sum(array_map('count', $ws_grouped));
+                $ws_addon_ids = [];
 
                 foreach ($ws_grouped as $genre => $ws_modules)
                 {
                     usort($ws_modules, function ($a, $b) { return strcasecmp($a['name'], $b['name']); });
 
+                    $displayed_modules = array_filter($ws_modules, function($m) use ($installed_addon_ids) {
+                        return !in_array($m['addon_id'], $installed_addon_ids);
+                    });
+
+                    $has_modules_to_display = !empty($displayed_modules);
+
                     $this->view->assign_block_vars('website_genres', [
+                        'C_DISPLAY_WS_GENRE' => $has_modules_to_display,
                         'GENRE_NAME' => $genre
                     ]);
 
@@ -522,15 +545,16 @@ class AdminModuleAddController extends DefaultAdminController
                             'HEXA_ICON'      => $m['hexa_icon'],
                             'THUMBNAIL_URL'  => $m['thumbnail'],
                         ]);
-
+                        $ws_addon_ids[] = $m['addon_id'];
                         $ws_module_number++;
                     }
                 }
 
                 $this->view->put_all([
+                    'C_ALL_WS_INSTALLED'        => count(array_diff($ws_addon_ids, $installed_addon_ids)) == 0,
                     'C_WEBSITE_MODULES'         => $ws_total > 0,
                     'C_SEVERAL_WEBSITE_MODULES' => $ws_total > 1,
-                    'WEBSITE_MODULES_NUMBER'     => $ws_total,
+                    'WEBSITE_MODULES_NUMBER'    => $ws_total,
                 ]);
             }
         }

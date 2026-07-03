@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 07 02
  * @since       PHPBoost 3.0 - 2011 09 20
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -73,27 +73,6 @@ class AdminModuleDeleteController extends DefaultAdminController
 		else
 			return ModulesManager::is_module_installed($this->module_id);
 	}
-
-	// private function build_form()
-	// {
-	// 	$form = new HTMLForm(self::class);
-
-	// 	$fieldset = new FormFieldsetHTML('delete_module', $this->multiple ? $this->lang['addon.modules.delete.multiple'] : $this->lang['addon.modules.delete']);
-	// 	$form->add_fieldset($fieldset);
-
-	// 	$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.modules.drop.multiple'] : $this->lang['addon.modules.drop'], '0',
-	// 		[
-	// 			new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
-	// 			new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
-	// 		],
-	// 		['class' => 'inline-radio custom-radio']
-	// 	));
-
-	// 	$this->submit_button = new FormButtonDefaultSubmit();
-	// 	$form->add_button($this->submit_button);
-
-	// 	$this->form = $form;
-	// }
 
 	private function delete_module($drop_files)
 	{
