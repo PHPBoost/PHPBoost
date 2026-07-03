@@ -1,31 +1,680 @@
-/*!
- * Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- * Copyright 2026 Fonticons, Inc.
- */
-:root, :host {
-  --fa-family-classic: 'Font Awesome 7 Free';
-  --fa-font-regular: normal 400 1em/1 var(--fa-family-classic);
-  /* deprecated: this older custom property will be removed next major release */
-  --fa-style-family-classic: var(--fa-family-classic);
+.fa-address-book {
+  --fa: "\f2b9";
 }
 
-@font-face {
-  font-family: "Font Awesome 7 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("../webfonts/fa-regular-400.woff2");
-}
-.far {
-  --fa-family: var(--fa-family-classic);
-  --fa-style: 400;
+.fa-address-card {
+  --fa: "\f2bb";
 }
 
-.fa-classic {
-  --fa-family: var(--fa-family-classic);
+.fa-alarm-clock {
+  --fa: "\f34e";
 }
 
-.fa-regular {
-  --fa-style: 400;
+.fa-bell {
+  --fa: "\f0f3";
 }
+
+.fa-bell-slash {
+  --fa: "\f1f6";
+}
+
+.fa-bookmark {
+  --fa: "\f02e";
+}
+
+.fa-building {
+  --fa: "\f1ad";
+}
+
+.fa-calendar {
+  --fa: "\f133";
+}
+
+.fa-calendar-check {
+  --fa: "\f274";
+}
+
+.fa-calendar-days {
+  --fa: "\f073";
+}
+
+.fa-calendar-minus {
+  --fa: "\f272";
+}
+
+.fa-calendar-plus {
+  --fa: "\f271";
+}
+
+.fa-calendar-xmark {
+  --fa: "\f273";
+}
+
+.fa-camera {
+  --fa: "\f030";
+}
+
+.fa-chart-bar {
+  --fa: "\f080";
+}
+
+.fa-chess-bishop {
+  --fa: "\f43a";
+}
+
+.fa-chess-king {
+  --fa: "\f43f";
+}
+
+.fa-chess-knight {
+  --fa: "\f441";
+}
+
+.fa-chess-pawn {
+  --fa: "\f443";
+}
+
+.fa-chess-queen {
+  --fa: "\f445";
+}
+
+.fa-chess-rook {
+  --fa: "\f447";
+}
+
+.fa-circle {
+  --fa: "\f111";
+}
+
+.fa-circle-check {
+  --fa: "\f058";
+}
+
+.fa-circle-dot {
+  --fa: "\f192";
+}
+
+.fa-circle-down {
+  --fa: "\f358";
+}
+
+.fa-circle-left {
+  --fa: "\f359";
+}
+
+.fa-circle-pause {
+  --fa: "\f28b";
+}
+
+.fa-circle-play {
+  --fa: "\f144";
+}
+
+.fa-circle-question {
+  --fa: "\f059";
+}
+
+.fa-circle-right {
+  --fa: "\f35a";
+}
+
+.fa-circle-stop {
+  --fa: "\f28d";
+}
+
+.fa-circle-up {
+  --fa: "\f35b";
+}
+
+.fa-circle-user {
+  --fa: "\f2bd";
+}
+
+.fa-circle-xmark {
+  --fa: "\f057";
+}
+
+.fa-clipboard {
+  --fa: "\f328";
+}
+
+.fa-clock {
+  --fa: "\f017";
+}
+
+.fa-clone {
+  --fa: "\f24d";
+}
+
+.fa-closed-captioning {
+  --fa: "\f20a";
+}
+
+.fa-cloud {
+  --fa: "\f0c2";
+}
+
+.fa-comment {
+  --fa: "\f075";
+}
+
+.fa-comment-dots {
+  --fa: "\f4ad";
+}
+
+.fa-comments {
+  --fa: "\f086";
+}
+
+.fa-compass {
+  --fa: "\f14e";
+}
+
+.fa-copy {
+  --fa: "\f0c5";
+}
+
+.fa-copyright {
+  --fa: "\f1f9";
+}
+
+.fa-credit-card {
+  --fa: "\f09d";
+}
+
+.fa-envelope {
+  --fa: "\f0e0";
+}
+
+.fa-envelope-open {
+  --fa: "\f2b6";
+}
+
+.fa-eye {
+  --fa: "\f06e";
+}
+
+.fa-eye-slash {
+  --fa: "\f070";
+}
+
+.fa-face-angry {
+  --fa: "\f556";
+}
+
+.fa-face-dizzy {
+  --fa: "\f567";
+}
+
+.fa-face-flushed {
+  --fa: "\f579";
+}
+
+.fa-face-frown {
+  --fa: "\f119";
+}
+
+.fa-face-frown-open {
+  --fa: "\f57a";
+}
+
+.fa-face-grimace {
+  --fa: "\f57f";
+}
+
+.fa-face-grin {
+  --fa: "\f580";
+}
+
+.fa-face-grin-beam {
+  --fa: "\f582";
+}
+
+.fa-face-grin-beam-sweat {
+  --fa: "\f583";
+}
+
+.fa-face-grin-hearts {
+  --fa: "\f584";
+}
+
+.fa-face-grin-squint {
+  --fa: "\f585";
+}
+
+.fa-face-grin-squint-tears {
+  --fa: "\f586";
+}
+
+.fa-face-grin-stars {
+  --fa: "\f587";
+}
+
+.fa-face-grin-tears {
+  --fa: "\f588";
+}
+
+.fa-face-grin-tongue {
+  --fa: "\f589";
+}
+
+.fa-face-grin-tongue-squint {
+  --fa: "\f58a";
+}
+
+.fa-face-grin-tongue-wink {
+  --fa: "\f58b";
+}
+
+.fa-face-grin-wide {
+  --fa: "\f581";
+}
+
+.fa-face-grin-wink {
+  --fa: "\f58c";
+}
+
+.fa-face-kiss {
+  --fa: "\f596";
+}
+
+.fa-face-kiss-beam {
+  --fa: "\f597";
+}
+
+.fa-face-kiss-wink-heart {
+  --fa: "\f598";
+}
+
+.fa-face-laugh {
+  --fa: "\f599";
+}
+
+.fa-face-laugh-beam {
+  --fa: "\f59a";
+}
+
+.fa-face-laugh-squint {
+  --fa: "\f59b";
+}
+
+.fa-face-laugh-wink {
+  --fa: "\f59c";
+}
+
+.fa-face-meh {
+  --fa: "\f11a";
+}
+
+.fa-face-meh-blank {
+  --fa: "\f5a4";
+}
+
+.fa-face-rolling-eyes {
+  --fa: "\f5a5";
+}
+
+.fa-face-sad-cry {
+  --fa: "\f5b3";
+}
+
+.fa-face-sad-tear {
+  --fa: "\f5b4";
+}
+
+.fa-face-smile {
+  --fa: "\f118";
+}
+
+.fa-face-smile-beam {
+  --fa: "\f5b8";
+}
+
+.fa-face-smile-wink {
+  --fa: "\f4da";
+}
+
+.fa-face-surprise {
+  --fa: "\f5c2";
+}
+
+.fa-face-tired {
+  --fa: "\f5c8";
+}
+
+.fa-file {
+  --fa: "\f15b";
+}
+
+.fa-file-audio {
+  --fa: "\f1c7";
+}
+
+.fa-file-code {
+  --fa: "\f1c9";
+}
+
+.fa-file-excel {
+  --fa: "\f1c3";
+}
+
+.fa-file-image {
+  --fa: "\f1c5";
+}
+
+.fa-file-lines {
+  --fa: "\f15c";
+}
+
+.fa-file-pdf {
+  --fa: "\f1c1";
+}
+
+.fa-file-powerpoint {
+  --fa: "\f1c4";
+}
+
+.fa-file-video {
+  --fa: "\f1c8";
+}
+
+.fa-file-word {
+  --fa: "\f1c2";
+}
+
+.fa-file-zipper {
+  --fa: "\f1c6";
+}
+
+.fa-flag {
+  --fa: "\f024";
+}
+
+.fa-floppy-disk {
+  --fa: "\f0c7";
+}
+
+.fa-folder {
+  --fa: "\f07b";
+}
+
+.fa-folder-closed {
+  --fa: "\e185";
+}
+
+.fa-folder-open {
+  --fa: "\f07c";
+}
+
+.fa-font-awesome {
+  --fa: "\f2b4";
+}
+
+.fa-font-awesome {
+  --fa: "\f2b4";
+}
+
+.fa-futbol {
+  --fa: "\f1e3";
+}
+
+.fa-gem {
+  --fa: "\f3a5";
+}
+
+.fa-hand {
+  --fa: "\f256";
+}
+
+.fa-hand-back-fist {
+  --fa: "\f255";
+}
+
+.fa-hand-lizard {
+  --fa: "\f258";
+}
+
+.fa-hand-peace {
+  --fa: "\f25b";
+}
+
+.fa-hand-point-down {
+  --fa: "\f0a7";
+}
+
+.fa-hand-point-left {
+  --fa: "\f0a5";
+}
+
+.fa-hand-point-right {
+  --fa: "\f0a4";
+}
+
+.fa-hand-point-up {
+  --fa: "\f0a6";
+}
+
+.fa-hand-pointer {
+  --fa: "\f25a";
+}
+
+.fa-hand-scissors {
+  --fa: "\f257";
+}
+
+.fa-hand-spock {
+  --fa: "\f259";
+}
+
+.fa-handshake {
+  --fa: "\f2b5";
+}
+
+.fa-hard-drive {
+  --fa: "\f0a0";
+}
+
+.fa-headphones {
+  --fa: "\f025";
+}
+
+.fa-heart {
+  --fa: "\f004";
+}
+
+.fa-hospital {
+  --fa: "\f0f8";
+}
+
+.fa-hourglass {
+  --fa: "\f254";
+}
+
+.fa-hourglass-half {
+  --fa: "\f252";
+}
+
+.fa-house {
+  --fa: "\f015";
+}
+
+.fa-id-badge {
+  --fa: "\f2c1";
+}
+
+.fa-id-card {
+  --fa: "\f2c2";
+}
+
+.fa-image {
+  --fa: "\f03e";
+}
+
+.fa-images {
+  --fa: "\f302";
+}
+
+.fa-keyboard {
+  --fa: "\f11c";
+}
+
+.fa-lemon {
+  --fa: "\f094";
+}
+
+.fa-life-ring {
+  --fa: "\f1cd";
+}
+
+.fa-lightbulb {
+  --fa: "\f0eb";
+}
+
+.fa-map {
+  --fa: "\f279";
+}
+
+.fa-message {
+  --fa: "\f27a";
+}
+
+.fa-money-bill-1 {
+  --fa: "\f3d1";
+}
+
+.fa-moon {
+  --fa: "\f186";
+}
+
+.fa-newspaper {
+  --fa: "\f1ea";
+}
+
+.fa-note-sticky {
+  --fa: "\f249";
+}
+
+.fa-object-group {
+  --fa: "\f247";
+}
+
+.fa-object-ungroup {
+  --fa: "\f248";
+}
+
+.fa-paper-plane {
+  --fa: "\f1d8";
+}
+
+.fa-paste {
+  --fa: "\f0ea";
+}
+
+.fa-pen-to-square {
+  --fa: "\f044";
+}
+
+.fa-rectangle-list {
+  --fa: "\f022";
+}
+
+.fa-rectangle-xmark {
+  --fa: "\f410";
+}
+
+.fa-registered {
+  --fa: "\f25d";
+}
+
+.fa-share-from-square {
+  --fa: "\f14d";
+}
+
+.fa-snowflake {
+  --fa: "\f2dc";
+}
+
+.fa-square {
+  --fa: "\f0c8";
+}
+
+.fa-square-caret-down {
+  --fa: "\f150";
+}
+
+.fa-square-caret-left {
+  --fa: "\f191";
+}
+
+.fa-square-caret-right {
+  --fa: "\f152";
+}
+
+.fa-square-caret-up {
+  --fa: "\f151";
+}
+
+.fa-square-check {
+  --fa: "\f14a";
+}
+
+.fa-square-full {
+  --fa: "\f45c";
+}
+
+.fa-square-minus {
+  --fa: "\f146";
+}
+
+.fa-square-plus {
+  --fa: "\f0fe";
+}
+
+.fa-star {
+  --fa: "\f005";
+}
+
+.fa-star-half {
+  --fa: "\f089";
+}
+
+.fa-star-half-stroke {
+  --fa: "\f5c0";
+}
+
+.fa-sun {
+  --fa: "\f185";
+}
+
+.fa-thumbs-down {
+  --fa: "\f165";
+}
+
+.fa-thumbs-up {
+  --fa: "\f164";
+}
+
+.fa-trash-can {
+  --fa: "\f2ed";
+}
+
+.fa-truck {
+  --fa: "\f0d1";
+}
+
+.fa-user {
+  --fa: "\f007";
+}
+
+.fa-window-maximize {
+  --fa: "\f2d0";
+}
+
+.fa-window-minimize {
+  --fa: "\f2d1";
+}
+
+.fa-window-restore {
+  --fa: "\f2d2";
+}
+
