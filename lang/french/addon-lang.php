@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 01
+ * @version     PHPBoost 6.1 - last update: 2026 07 02
  * @since       PHPBoost 3.0 - 2012 04 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -72,6 +72,7 @@ $lang['addon.modules.select.all']      = 'Sélectionner tous les modules';
 $lang['addon.modules.no.icon']         = 'Aucune icône';
     // add
 $lang['addon.modules.add']             = 'Ajouter un module';
+$lang['addon.modules.all.installed']   = 'Tous les modules officiels sont installés';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.modules.warning.install'] = 'Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.';
@@ -129,10 +130,12 @@ $lang['addon.themes.directory']       = 'dans le dossier <span class ="text-stro
 $lang['addon.themes']                 = 'Thèmes';
 $lang['addon.themes.management']      = 'Gestion des thèmes';
 $lang['addon.themes.add']             = 'Ajouter un thème';
+$lang['addon.themes.all.installed']   = 'Tous les thèmes officiels sont installés';
 $lang['addon.themes.delete']          = 'Suppression d\'un thème';
 $lang['addon.themes.delete.multiple'] = 'Suppression des thèmes sélectionnés';
 $lang['addon.themes.installed']       = 'Thèmes installés';
 $lang['addon.themes.available']       = 'Thèmes disponibles';
+$lang['addon.themes.set.default']     = 'Définir le thème par défaut';
 $lang['addon.themes.default']         = 'Thème par défaut';
 $lang['addon.themes.default.clue']    = 'Le thème par défaut ne peut pas être désinstallé, désactivé ou réservé';
 $lang['addon.themes.default.auth']    = 'Le thème par défaut est visible par tout le monde';
@@ -146,6 +149,10 @@ $lang['addon.themes.width']             = 'Largeur';
 $lang['addon.themes.parent.theme']      = 'Thème parent';
 $lang['addon.themes.bot.informed']      = 'Non précisé';
 $lang['addon.themes.view.real.preview'] = 'Voir en taille réelle';
+$lang['addon.theme.uninstall']         = '<strong>Désinstaller</strong><br />Le thème est désinstallé mais les fichiers sont conservés';
+$lang['addon.theme.delete']            = '<strong>Supprimer</strong><br />Le thème et ses fichiers seront désinstallé et supprimés';
+$lang['addon.theme.warning.uninstall'] = 'Le module <strong>:module</strong> a été désinstallé avec succès';
+$lang['addon.theme.warning.delete']    = 'Le module <strong>:module</strong> a été supprimé avec succès';
     // Warnings
 $lang['addon.themes.warning.delete']             = 'Un thème doit être activé, désactivé ou supprimé uniquement depuis cette page.<br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.themes.warning.install']            = 'Les thèmes ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.';

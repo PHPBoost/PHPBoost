@@ -90,6 +90,12 @@ table thead th {
 textarea,
 select { background-color: var(--bgc-main); }
 
+.select-all-button {
+    color: var(--txt-alt) !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
 /* --- Checkbox --- */
 .mini-checkbox .checkbox [type="checkbox"] {
     & + span::before {

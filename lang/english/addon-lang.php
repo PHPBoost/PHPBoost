@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 07 02
  * @since       PHPBoost 3.0 - 2012 04 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -72,6 +72,7 @@ $lang['addon.modules.select.all']      = 'Select all modules';
 $lang['addon.modules.no.icon']         = 'No icon';
     // add
 $lang['addon.modules.add']             = 'Add a module';
+$lang['addon.modules.all.installed']   = 'All offcial modules are installed';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.';
 $lang['addon.modules.warning.install'] = 'The installed modules are automatically enabled. Do not forget to disable them if necessary.';
@@ -130,9 +131,11 @@ $lang['addon.themes']                 = 'Themes';
 $lang['addon.themes.management']      = 'Themes management';
 $lang['addon.themes.add']             = 'Add theme';
 $lang['addon.themes.delete']          = 'Delete a theme';
+$lang['addon.themes.all.installed']   = 'All offcial themes are installed';
 $lang['addon.themes.delete.multiple'] = 'Delete selected themes';
 $lang['addon.themes.installed']       = 'Installed themes';
 $lang['addon.themes.available']       = 'Available themes';
+$lang['addon.themes.set.default']     = 'Set the theme by default';
 $lang['addon.themes.default']         = 'Theme by default';
 $lang['addon.themes.default.clue']    = 'The default theme can not be uninstalled, disabled or reserved';
 $lang['addon.themes.default.auth']    = 'The default theme is usable for everyone';

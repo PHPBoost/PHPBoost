@@ -189,7 +189,7 @@
     &:hover { text-decoration: none; }
 }
 
-.multiple-select-menu-container button.select-all-button {
+.select-all-button {
 	display: inline-block;
 	margin: 0;
 	padding: 0.456em 1em 0.456em 0.618em;
