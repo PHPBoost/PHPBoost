@@ -1,4 +1,4 @@
-<!-- === /templates/__default__/admin/themes/AdminThemeAddController.tpl === -->
+<!-- === AdminThemeAddController.tpl === -->
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
 <header>
@@ -65,65 +65,68 @@
 				<input type="hidden" name="gh_dir"        value="{GITHUB_ACTIVE_DIR}" />
                 <article id="github-addons-container" class="addons-container not-installed-elements-container">
                     # IF C_GITHUB_ADDONS #
+                        # IF C_ALL_GH_INSTALLED #<div class="message-helper bgc notice">{@addon.themes.all.installed}</div># ENDIF #
                         <div class="cell-flex cell-columns-3 cell-tile">
                             # START github_addons #
-                                <article class="cell addon# IF NOT github_addons.C_COMPATIBLE # not-compatible error# ENDIF ## IF github_addons.C_IS_INSTALLED # installed# ENDIF #">
-                                    <header id="gh-addon-{github_addons.ADDON_NUMBER}" class="cell-header mini-checkbox">
-                                        # IF C_SEVERAL_GITHUB_ADDONS #
-                                            # IF github_addons.C_COMPATIBLE #
-                                                # IF NOT github_addons.C_IS_INSTALLED #
-                                                    <label class="checkbox" for="gh-cb-{github_addons.ADDON_NUMBER}">
-                                                        <input type="checkbox" class="multiple-checkbox add-checkbox" id="gh-cb-{github_addons.ADDON_NUMBER}" name="add-checkbox-{github_addons.ADDON_NUMBER}" value="{github_addons.ADDON_ID}"/>
-                                                        <span>&nbsp;</span>
-                                                    </label>
+                                # IF NOT github_addons.C_IS_INSTALLED #
+                                    <article class="cell addon# IF NOT github_addons.C_COMPATIBLE # not-compatible error# ENDIF ## IF github_addons.C_IS_INSTALLED # installed# ENDIF #">
+                                        <header id="gh-addon-{github_addons.ADDON_NUMBER}" class="cell-header mini-checkbox">
+                                            # IF C_SEVERAL_GITHUB_ADDONS #
+                                                # IF github_addons.C_COMPATIBLE #
+                                                    # IF NOT github_addons.C_IS_INSTALLED #
+                                                        <label class="checkbox" for="gh-cb-{github_addons.ADDON_NUMBER}">
+                                                            <input type="checkbox" class="multiple-checkbox add-checkbox" id="gh-cb-{github_addons.ADDON_NUMBER}" name="add-checkbox-{github_addons.ADDON_NUMBER}" value="{github_addons.ADDON_ID}"/>
+                                                            <span>&nbsp;</span>
+                                                        </label>
+                                                    # ENDIF #
                                                 # ENDIF #
                                             # ENDIF #
-                                        # ENDIF #
-                                        <h4 class="cell-name">{github_addons.ADDON_NAME}</h4>
-                                        <div class="flex-between actions-container">
-                                            <span class="# IF github_addons.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{github_addons.COMPATIBILITY}</span>
-                                            <span class="modal-button --infos-gh-addon-{github_addons.ADDON_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></span>
-                                            <div id="infos-gh-addon-{github_addons.ADDON_NUMBER}" class="modal modal-half">
-                                                <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-                                                <div class="modal-content">
-                                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
-                                                    <div class="cell-list">
-                                                        <ul>
-                                                            <li class="li-stretch">
-                                                                <h2>
-                                                                    {github_addons.ADDON_NAME}
-                                                                </h2>
-                                                            </li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.author} :</span> {github_addons.AUTHOR}# IF github_addons.C_AUTHOR_EMAIL # <a href="mailto:{github_addons.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF ## IF github_addons.C_AUTHOR_WEBSITE # <a href="{github_addons.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #</li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.version} :</span> {github_addons.VERSION}</li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.creation.date} :</span> {github_addons.CREATION_DATE}</li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.last.update} :</span> {github_addons.LAST_UPDATE}</li>
-                                                            <li><span class="text-strong">{@common.description} :</span> {github_addons.DESCRIPTION}</li>
-                                                            # IF NOT github_addons.C_COMPATIBLE_ADDON #
-                                                                <li class="bgc-full error">{@addon.themes.not.themes}</li>
-                                                            # ENDIF #
-                                                        </ul>
+                                            <h4 class="cell-name">{github_addons.ADDON_NAME}</h4>
+                                            <div class="flex-between actions-container">
+                                                <span class="# IF github_addons.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{github_addons.COMPATIBILITY}</span>
+                                                <span class="modal-button --infos-gh-addon-{github_addons.ADDON_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></span>
+                                                <div id="infos-gh-addon-{github_addons.ADDON_NUMBER}" class="modal modal-half">
+                                                    <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                                                    <div class="modal-content">
+                                                        <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                                        <div class="cell-list">
+                                                            <ul>
+                                                                <li class="li-stretch">
+                                                                    <h2>
+                                                                        {github_addons.ADDON_NAME}
+                                                                    </h2>
+                                                                </li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.author} :</span> {github_addons.AUTHOR}# IF github_addons.C_AUTHOR_EMAIL # <a href="mailto:{github_addons.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF ## IF github_addons.C_AUTHOR_WEBSITE # <a href="{github_addons.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #</li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.version} :</span> {github_addons.VERSION}</li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.creation.date} :</span> {github_addons.CREATION_DATE}</li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.last.update} :</span> {github_addons.LAST_UPDATE}</li>
+                                                                <li><span class="text-strong">{@common.description} :</span> {github_addons.DESCRIPTION}</li>
+                                                                # IF NOT github_addons.C_COMPATIBLE_ADDON #
+                                                                    <li class="bgc-full error">{@addon.themes.not.themes}</li>
+                                                                # ENDIF #
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                # IF github_addons.C_IS_INSTALLED #
+                                                    <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+                                                # ELSEIF github_addons.C_COMPATIBLE #
+                                                    <button type="submit" form="gh-install-form" class="button button-mini bgc-full logo-color btn-gh-install" name="addon_ids[]" value="{github_addons.ADDON_ID}" aria-label="{@addon.install}" onclick="showLoader()"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
+                                                # ELSE #
+                                                    <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                # ENDIF #
+                                                <button type="button" class="button button-mini default offload" aria-label="{@addon.github.view.repo}" onclick="window.open('{github_addons.U_REPO}', '_blank', 'noopener');"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>
                                             </div>
-                                            # IF github_addons.C_IS_INSTALLED #
-                                                <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
-                                            # ELSEIF github_addons.C_COMPATIBLE #
-                                                <button type="button" class="button button-mini bgc-full logo-color btn-gh-install" data-id="{github_addons.ADDON_ID}" aria-label="{@addon.install}"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+                                        </header>
+                                        <div class="cell-thumbnail cell-landscape">
+                                            # IF github_addons.C_THUMBNAIL #
+                                                <img src="{github_addons.THUMBNAIL_URL}" alt="{github_addons.ADDON_NAME}" class="addon-thumbnail" />
                                             # ELSE #
-                                                <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                <i class="far fa-fw fa-images" aria-hidden="true"></i>
                                             # ENDIF #
-                                            <button type="button" class="button button-mini default offload" aria-label="{@addon.github.view.repo}" onclick="window.open('{github_addons.U_REPO}', '_blank', 'noopener');"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>
                                         </div>
-                                    </header>
-                                    <div class="cell-thumbnail cell-landscape">
-                                        # IF github_addons.C_THUMBNAIL #
-                                            <img src="{github_addons.THUMBNAIL_URL}" alt="{github_addons.ADDON_NAME}" class="addon-thumbnail" />
-                                        # ELSE #
-                                            <i class="far fa-fw fa-images" aria-hidden="true"></i>
-                                        # ENDIF #
-                                    </div>
-                                </article>
+                                    </article>
+                                # ENDIF #
                             # END github_addons #
                         </div>
                     # ELSE #
@@ -137,7 +140,7 @@
                                 <input type="checkbox" id="gh-check-all" />
                                 <span aria-label="{@addon.themes.select.all}">&nbsp;</span>
                             </label>
-                            <button type="submit" form="gh-install-form" id="gh-install-selected" class="button submit select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
+                            <button type="submit" form="gh-install-form" id="gh-install-selected" class="button select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
                         </div>
                     # ENDIF #
                 </article>
@@ -187,57 +190,60 @@
 				<input type="hidden" name="ws_dir"        value="{WEBSITE_ACTIVE_DIR}" />
                 <article id="website-addons-container" class="addons-container not-installed-elements-container">
                     # IF C_WEBSITE_ADDONS #
+                        # IF C_ALL_WS_INSTALLED #<div class="message-helper bgc notice">{@addon.themes.all.installed}</div># ENDIF #
                         <div class="cell-flex cell-columns-3 cell-tile">
                             # START website_addons #
-                                <article class="cell addon# IF NOT website_addons.C_COMPATIBLE # not-compatible error# ENDIF ## IF website_addons.C_IS_INSTALLED # installed# ENDIF #">
-                                    <header id="ws-addon-{website_addons.ADDON_NUMBER}" class="cell-header mini-checkbox">
-                                        # IF C_SEVERAL_WEBSITE_ADDONS #
-                                            # IF website_addons.C_COMPATIBLE #
-                                                # IF NOT website_addons.C_IS_INSTALLED #
-                                                    <label class="checkbox" for="ws-cb-{website_addons.ADDON_NUMBER}">
-                                                        <input type="checkbox" class="multiple-checkbox add-checkbox" id="ws-cb-{website_addons.ADDON_NUMBER}" name="add-checkbox-{website_addons.ADDON_NUMBER}" value="{website_addons.ADDON_ID}"/>
-                                                        <span>&nbsp;</span>
-                                                    </label>
+                                # IF NOT website_addons.C_IS_INSTALLED #
+                                    <article class="cell addon# IF NOT website_addons.C_COMPATIBLE # not-compatible error# ENDIF ## IF website_addons.C_IS_INSTALLED # installed# ENDIF #">
+                                        <header id="ws-addon-{website_addons.ADDON_NUMBER}" class="cell-header mini-checkbox">
+                                            # IF C_SEVERAL_WEBSITE_ADDONS #
+                                                # IF website_addons.C_COMPATIBLE #
+                                                    # IF NOT website_addons.C_IS_INSTALLED #
+                                                        <label class="checkbox" for="ws-cb-{website_addons.ADDON_NUMBER}">
+                                                            <input type="checkbox" class="multiple-checkbox add-checkbox" id="ws-cb-{website_addons.ADDON_NUMBER}" name="add-checkbox-{website_addons.ADDON_NUMBER}" value="{website_addons.ADDON_ID}"/>
+                                                            <span>&nbsp;</span>
+                                                        </label>
+                                                    # ENDIF #
                                                 # ENDIF #
                                             # ENDIF #
-                                        # ENDIF #
-                                        <h4 class="cell-name">{website_addons.ADDON_NAME}</h4>
-                                        <div class="flex-between actions-container">
-                                            <span class="# IF website_addons.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{website_addons.COMPATIBILITY}</span>
-                                            <span class="modal-button --infos-ws-addon-{website_addons.ADDON_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></span>
-                                            <div id="infos-ws-addon-{website_addons.ADDON_NUMBER}" class="modal modal-half">
-                                                <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-                                                <div class="modal-content">
-                                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
-                                                    <div class="cell-list">
-                                                        <ul>
-                                                            <li class="li-stretch"><h2>{website_addons.ADDON_NAME}</h2></li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.author} :</span> {website_addons.AUTHOR}# IF website_addons.C_AUTHOR_EMAIL # <a href="mailto:{website_addons.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF ## IF website_addons.C_AUTHOR_WEBSITE # <a href="{website_addons.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #</li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.version} :</span> {website_addons.VERSION}</li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.creation.date} :</span> {website_addons.CREATION_DATE}</li>
-                                                            <li class="li-stretch"><span class="text-strong">{@common.last.update} :</span> {website_addons.LAST_UPDATE}</li>
-                                                            <li><span class="text-strong">{@common.description} :</span> {website_addons.DESCRIPTION}</li>
-                                                        </ul>
+                                            <h4 class="cell-name">{website_addons.ADDON_NAME}</h4>
+                                            <div class="flex-between actions-container">
+                                                <span class="# IF website_addons.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{website_addons.COMPATIBILITY}</span>
+                                                <span class="modal-button --infos-ws-addon-{website_addons.ADDON_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></span>
+                                                <div id="infos-ws-addon-{website_addons.ADDON_NUMBER}" class="modal modal-half">
+                                                    <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                                                    <div class="modal-content">
+                                                        <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                                        <div class="cell-list">
+                                                            <ul>
+                                                                <li class="li-stretch"><h2>{website_addons.ADDON_NAME}</h2></li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.author} :</span> {website_addons.AUTHOR}# IF website_addons.C_AUTHOR_EMAIL # <a href="mailto:{website_addons.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF ## IF website_addons.C_AUTHOR_WEBSITE # <a href="{website_addons.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #</li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.version} :</span> {website_addons.VERSION}</li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.creation.date} :</span> {website_addons.CREATION_DATE}</li>
+                                                                <li class="li-stretch"><span class="text-strong">{@common.last.update} :</span> {website_addons.LAST_UPDATE}</li>
+                                                                <li><span class="text-strong">{@common.description} :</span> {website_addons.DESCRIPTION}</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                # IF website_addons.C_IS_INSTALLED #
+                                                    <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+                                                # ELSEIF website_addons.C_COMPATIBLE #
+                                                    <button type="submit" form="ws-install-form" class="button button-mini bgc-full logo-color btn-ws-install" name="addon_ids[]" name="addon_ids[]" value="{website_addons.ADDON_ID}" aria-label="{@addon.install}" onclick="showLoader()"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
+                                                # ELSE #
+                                                    <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                # ENDIF #
                                             </div>
-                                            # IF website_addons.C_IS_INSTALLED #
-                                                <button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
-                                            # ELSEIF website_addons.C_COMPATIBLE #
-                                                <button type="button" class="button button-mini bgc-full logo-color btn-ws-install" data-id="{website_addons.ADDON_ID}" aria-label="{@addon.install}"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+                                        </header>
+                                        <div class="cell-thumbnail cell-landscape">
+                                            # IF website_addons.C_THUMBNAIL #
+                                                <img src="{website_addons.THUMBNAIL_URL}" alt="{website_addons.ADDON_NAME}" class="addon-thumbnail" />
                                             # ELSE #
-                                                <button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                <i class="far fa-fw fa-images" aria-hidden="true"></i>
                                             # ENDIF #
                                         </div>
-                                    </header>
-                                    <div class="cell-thumbnail cell-landscape">
-                                        # IF website_addons.C_THUMBNAIL #
-                                            <img src="{website_addons.THUMBNAIL_URL}" alt="{website_addons.ADDON_NAME}" class="addon-thumbnail" />
-                                        # ELSE #
-                                            <i class="far fa-fw fa-images" aria-hidden="true"></i>
-                                        # ENDIF #
-                                    </div>
-                                </article>
+                                    </article>
+                                # ENDIF #
                             # END website_addons #
                         </div>
                     # ELSE #
@@ -251,7 +257,7 @@
                                 <input type="checkbox" id="ws-check-all" />
                                 <span aria-label="{@addon.themes.select.all}">&nbsp;</span>
                             </label>
-                            <button type="submit" form="ws-install-form" id="ws-install-selected" class="button submit select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
+                            <button type="submit" form="ws-install-form" id="ws-install-selected" class="button select-all-button" onclick="showLoader()">{@addon.multiple.install}</button>
                         </div>
                     # ENDIF #
                 </article>
@@ -367,7 +373,7 @@
                                                 </div>
                                             # ENDIF #
                                             # IF themes_not_installed.C_COMPATIBLE #
-                                                <button type="submit" class="button button-mini bgc-full logo-color" name="add-{themes_not_installed.ADDON_ID}" value="true"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+                                                <button type="submit" class="button button-mini bgc-full logo-color" name="add-{themes_not_installed.ADDON_ID}" value="true"><i class="fa fa-fw fa-plus" aria-hidden="true"></i></button>
                                             # ELSE #
                                                 <button onclick="return false;" class="button button-mini default" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban error" aria-hidden="true"></i></button>
                                             # ENDIF #
@@ -399,7 +405,7 @@
                             <input type="checkbox" class="check-all" id="add-all-checkbox" name="add-all-checkbox" onclick="multiple_checkbox_check(this.checked, {THEMES_NUMBER}, null, false);" />
                             <span aria-label="{@addon.themes.select.all}">&nbsp;</span>
                         </label>
-                        <button type="submit" name="add-selected-themes" value="true" class="button submit select-all-button">{@addon.multiple.install}</button>
+                        <button type="submit" name="add-selected-themes" value="true" class="button select-all-button">{@addon.multiple.install}</button>
                     </div>
                 # ENDIF #
             </form>

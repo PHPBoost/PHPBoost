@@ -149,6 +149,12 @@ class AdminThemeAddController extends DefaultAdminController
             'THEMES_NUMBER'              => $not_installed_themes_number
         ]);
 
+        $installed_addon_ids = [];
+        foreach (ThemesManager::get_installed_themes_map_sorted_by_localized_name() as $addon)
+        {
+            $installed_addon_ids[] = $addon->get_id();
+        };
+
 
         // ── Defaults & active source (GitHub) ──
         $addons_config = AddonsConfig::load();
@@ -267,6 +273,7 @@ class AdminThemeAddController extends DefaultAdminController
                     ksort($gh_grouped);
                     $gh_number = 1;
                     $gh_total  = array_sum(array_map('count', $gh_grouped));
+                    $gh_addon_ids = [];
 
                     foreach ($gh_grouped as $m)
                     {
@@ -296,10 +303,12 @@ class AdminThemeAddController extends DefaultAdminController
                             'THUMBNAIL_URL'  => 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/' . $m['addon_id'] . '/' . $m['thumbnail'][0],
                             'U_REPO'         => $m['repo_url'],
                         ]);
+                        $gh_addon_ids[] = $m['addon_id'];
                         $gh_number++;
                     }
 
                     $this->view->put_all([
+                        'C_ALL_GH_INSTALLED'      => count(array_diff($gh_addon_ids, $installed_addon_ids)) == 0,
                         'C_GITHUB_ADDONS'         => $gh_total > 0,
                         'C_SEVERAL_GITHUB_ADDONS' => $gh_total > 1,
                         'GITHUB_ADDONS_NUMBER'    => $gh_total,
@@ -354,6 +363,7 @@ class AdminThemeAddController extends DefaultAdminController
                 ksort($ws_grouped);
                 $ws_number = 1;
                 $ws_total  = array_sum(array_map('count', $ws_grouped));
+                $ws_addon_ids = [];
 
                 foreach ($ws_grouped as $m)
                 {
@@ -378,13 +388,15 @@ class AdminThemeAddController extends DefaultAdminController
                         'LAST_UPDATE'    => $m['last_update'],
                         'THUMBNAIL_URL'  => $base_url . '/' . $m['addon_id'] . '/' . $m['thumbnail'][0],
                     ]);
+                    $ws_addon_ids[] = $m['addon_id'];
                     $ws_number++;
                 }
 
                 $this->view->put_all([
+                    'C_ALL_WS_INSTALLED'       => count(array_diff($ws_addon_ids, $installed_addon_ids)) == 0,
                     'C_WEBSITE_ADDONS'         => $ws_total > 0,
                     'C_SEVERAL_WEBSITE_ADDONS' => $ws_total > 1,
-                    'WEBSITE_ADDONS_NUMBER'     => $ws_total,
+                    'WEBSITE_ADDONS_NUMBER'    => $ws_total,
                 ]);
             }
         }

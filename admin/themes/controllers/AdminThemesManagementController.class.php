@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 07 02
  * @since       PHPBoost 3.0 - 2011 04 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -29,8 +29,7 @@ class AdminThemesManagementController extends DefaultAdminController
 	{
 		$phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
 		$installed_themes = ThemesManager::get_installed_themes_map_sorted_by_localized_name();
-		$selected_theme_number = 0;
-		$theme_number = 1;
+		$default_theme_number = $theme_number = 1;
 
         foreach($installed_themes as $theme)
 		{
@@ -44,6 +43,7 @@ class AdminThemesManagementController extends DefaultAdminController
 			$pictures = $configuration->get_pictures();
 
 			$this->view->assign_block_vars('themes_installed', [
+                'C_SELECTABLE'         => $configuration->get_addon_type() == 'theme' && $theme->get_id() !== ThemesManager::get_default_theme() && $theme->get_id() !== 'base',
 				'C_AUTHOR_EMAIL'       => !empty($author_email),
 				'C_AUTHOR_WEBSITE'     => !empty($author_website),
 				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'theme' && $configuration->get_compatibility() == $phpboost_version && ($theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true),
@@ -56,8 +56,8 @@ class AdminThemesManagementController extends DefaultAdminController
                 'C_DELETE'             => !$undeletable,
 
 				'THEME_NUMBER'   => $theme_number,
-				'MODULE_ID'      => $theme->get_id(),
-				'MODULE_NAME'    => $configuration->get_name(),
+				'THEME_ID'       => $theme->get_id(),
+				'THEME_NAME'     => $configuration->get_name(),
 				'CREATION_DATE'  => $configuration->get_creation_date(),
 				'LAST_UPDATE'    => $configuration->get_last_update(),
 				'VERSION'        => $configuration->get_version(),
@@ -132,7 +132,35 @@ class AdminThemesManagementController extends DefaultAdminController
 				$id = $number_ids ? $theme_ids[0] : '';
 
 			if ($number_ids)
-				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($id));
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($id, 1));
+		}
+        else if ($request->get_string('uninstall-selected-themes', false))
+		{
+			$theme_ids = [];
+			$theme_number = 1;
+
+            foreach ($installed_themes as $theme)
+			{
+				if ($request->get_value('delete-checkbox-' . $theme_number, 'off') == 'on')
+				{
+					$theme_ids[] = $theme->get_id();
+				}
+				$theme_number++;
+			}
+
+			$number_ids = count($theme_ids);
+			if ($number_ids > 1)
+			{
+				$temporary_file = PATH_TO_ROOT . '/cache/themes_to_delete.txt';
+				$file = new File($temporary_file);
+				$file->write(implode(',', $theme_ids));
+				$id = 'delete_multiple';
+			}
+			else
+				$id = $number_ids ? $theme_ids[0] : '';
+
+			if ($number_ids)
+				AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($id, 0));
 		}
 		elseif ($request->get_string('activate-selected-themes', false) || $request->get_string('deactivate-selected-themes', false))
 		{
@@ -167,9 +195,13 @@ class AdminThemesManagementController extends DefaultAdminController
 
 					AppContext::get_response()->redirect(AdminThemeUrlBuilder::list_installed_theme(), $this->lang['warning.process.success']);
 				}
-				else if ($request->get_string('delete-' . $theme->get_id(), ''))
+				else if ($request->get_string('uninstall-' . $theme->get_id(), ''))
 				{
-					AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id()));
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id(), 0));
+				}
+                else if ($request->get_string('delete-' . $theme->get_id(), ''))
+				{
+					AppContext::get_response()->redirect(AdminThemeUrlBuilder::delete_theme($theme->get_id(), 1));
 				}
 				else if ($request->get_string('enable-' . $theme->get_id(), ''))
 				{
