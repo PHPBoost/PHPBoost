@@ -170,12 +170,21 @@
 }
 
 /* --- Multiple selector --- */
+.authorizations-button,
 .multiple-select-button,
 .multiple-select-menu-container {
 	position: fixed;
 	display: block;
 	bottom: 4.236em;
 	right: 2.618em;
+}
+
+.authorizations-button {
+	bottom: 0.618em;
+    margin: 0;
+}
+.authorizations-button .button {
+    margin: 0;
 }
 
 .multiple-select-button {
