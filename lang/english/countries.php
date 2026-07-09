@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 24
+ * @version     PHPBoost 6.1 - last update: 2026 07 09
  * @since       PHPBoost 3.0 - 2011 09 25
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -85,6 +85,7 @@ $lang = [
 	'fj' => 'Fiji',
 	'fk' => 'Falkland Islands (Malvinas)',
 	'fm' => 'Micronesia, (Federated States of)',
+	'fn' => 'Northern Ireland',
 	'fo' => 'Faroe Islands',
 	'fr' => 'France',
 	'fs' => 'Scotland',
