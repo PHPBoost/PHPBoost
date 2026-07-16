@@ -365,11 +365,6 @@ td.calendar-weekend { background-color: rgba(var(--main-tone-rgb), 0.1); }
 
 .calendar-table a:hover { background-color: rgba(var(--main-tone-rgb), 0.1); }
 
-.calendar-container > a {
-    background-color: var(--bgc-sub);
-    color: var(--txt-sub);
-}
-
 /* --- Font Awesome icons --------------------------------------------------- */
 .user-locked .fa-user-lock:before   { color: var(--error-tone); }
 .user-unlocked .fa-user-lock:before { color: var(--success-tone); }
