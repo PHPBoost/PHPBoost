@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 07 21
  * @since       PHPBoost 6.0 - 2020 01 02
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleExtensionPointProvider extends ExtensionPointProvider
@@ -49,6 +50,24 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
                 $module_css_files->adding_always_displayed_file($this->get_id() . '_mini.css');
 
             return $module_css_files;
+        }
+        return false;
+    }
+
+    public function js_files()
+    {
+        $js_file = new File(ModulesManager::get_module_path($this->get_id()) . '/templates/js/' . $this->get_id() . '.js');
+        $js_mini_file = new File(ModulesManager::get_module_path($this->get_id()) . '/templates/js/' . $this->get_id() . '.mini.js');
+        if ($js_file->exists() || $js_mini_file->exists())
+        {
+            $module_js_files = new ModuleJsFiles();
+
+            if ($js_file->exists())
+                $module_js_files->adding_running_module_displayed_file($this->get_id() . '.js');
+            if ($js_mini_file->exists())
+                $module_js_files->adding_always_displayed_file($this->get_id() . '.mini.js');
+
+            return $module_js_files;
         }
         return false;
     }
