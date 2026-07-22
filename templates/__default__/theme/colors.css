@@ -215,6 +215,9 @@ input:-webkit-autofill:focus { transition: background-color 0s 600000s, color 0s
 [type=search],
 [type=password],
 [type=file],
+[type="date"],
+[type="datetime-local"],
+[type="time"],
 textarea,
 select {
 	background-color: var(--bgc-sub);
@@ -231,6 +234,9 @@ select {
 [type=search]:focus,
 [type=password]:focus,
 [type=file]:focus,
+[type="date"],
+[type="datetime-local"],
+[type="time"],
 textarea:focus,
 select:focus { background-color: var(--bgc-main); }
 
