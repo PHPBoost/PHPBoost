@@ -5,15 +5,20 @@
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 07 23
  * @since       PHPBoost 5.1 - 2017 09 17
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
  *
  * @patch       1 : jQuery 3.1
  * @patch       2 : Take into account show_pics.php?...&ext= for module gallery
  * @patch       3 : Font Awesome 6 for icon then leave the lightcase font
  * @patch       title => aria-label
+ * 
+ * @patch       1 : jQuery 4.0 - july 2026
+ * @patch       2 : Changed the call from `_self.on('error')` to `_self.error()` because jQuery 4.x is more restrictive than 3.x.
+
 */
 
 ;(function ($) {
@@ -559,7 +564,7 @@
 					if ($(_self.objectData.url)) {
 						_self._showContent($object);
 					} else {
-						_self.on('error');
+						_self.error();
 					}
 					break;
 				case 'ajax':
@@ -586,7 +591,7 @@
 								}
 							},
 							error: function (jqXHR, textStatus, errorThrown) {
-								_self.on('error');
+								_self.error();
 							}
 						})
 					);
@@ -598,7 +603,7 @@
 					if (typeof($object.get(0).canPlayType) === 'function' || _self.objects.case.find('video').length === 0) {
 						_self._showContent($object);
 					} else {
-						_self.on('error');
+						_self.error();
 					}
 					break;
 				default:
@@ -607,10 +612,10 @@
 							_self._showContent($object);
 						});
 						$object.on('error', function () {
-							_self.on('error');
+							_self.error();
 						});
 					} else {
-						_self.on('error');
+						_self.error();
 					}
 					break;
 			}
