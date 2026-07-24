@@ -14,10 +14,13 @@
 	var L_COPY_TO_CLIPBOARD = ${escapejs(@common.copy.to.clipboard)};
 
     // Media
-	var L_PREV  = ${escapejs(@common.previous)};
-	var L_NEXT  = ${escapejs(@common.next)};
-    var L_PLAY  = ${escapejs(@common.play)};
-    var L_PAUSE = ${escapejs(@common.pause)};
+	var L_CLOSE    = ${escapejs(@common.close)};
+	var L_PREV     = ${escapejs(@common.previous)};
+	var L_NEXT     = ${escapejs(@common.next)};
+    var L_PLAY     = ${escapejs(@common.play)};
+    var L_PAUSE    = ${escapejs(@common.pause)};
+    var L_DOWNLOAD = ${escapejs(@common.download)};
+    var W_SOURCE   = ${escapejs(@warning.unexisting.file)};
 
     // Password
     var HIDE_PASSWORD = ${escapejs(@user.password.hide)};
