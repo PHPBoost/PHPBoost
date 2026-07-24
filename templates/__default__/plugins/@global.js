@@ -10,6 +10,18 @@
 		return i >= 0 ? i : false;
 	}
 
+    function encode_rewrite(str)
+    {
+        return str
+            .normalize('NFD')                    // Break down the accents (é → e + ́)
+            .replace(/[\u0300-\u036f]/g, '')     // Removes diacritics (accents)
+            .replace(/[^a-zA-Z0-9\s-]/g, '')     // Keeps letters, numbers, spaces, and hyphens
+            .trim()                              // Removes spaces at the beginning/end
+            .replace(/\s+/g, '-')                // Replaces spaces with dashes
+            .replace(/-+/g, '-')                 // Avoid multiple dashes
+            .toLowerCase();                      // Lowercase
+    }
+
 	/**
      * Adds an icon and functionality to hide/show Bbcode blocks once the DOM is fully loaded.
      * @param {function} callback - The function to execute once the DOM is fully loaded.

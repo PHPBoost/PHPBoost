@@ -1042,7 +1042,7 @@
                 event.preventDefault();
                 var link = document.createElement('a');
                 link.href = _self.objectData.url;
-                link.download = _self.objectData.title || 'download';
+                link.download = encode_rewrite(_self.objectData.title) || 'download';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
