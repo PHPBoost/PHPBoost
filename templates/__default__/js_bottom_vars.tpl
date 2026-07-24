@@ -95,32 +95,34 @@ if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) {
 	jQuery('.multiple-select-to-list').multipleSelectImg();
 
 // sizes of .cell-thumbnail
-	jQuery('.cell-thumbnail.cell-landscape').each(function() {
-		var widthRef = jQuery(this).innerWidth();
-		jQuery(this).outerHeight(widthRef * 9 / 16);
-	});
-	jQuery('.cell-thumbnail.cell-square').each(function() {
-		var widthRef = jQuery(this).innerWidth();
-		jQuery(this).outerHeight(widthRef);
-	});
-	jQuery('.cell-thumbnail.cell-portrait').each(function() {
-		var widthRef = jQuery(this).innerWidth();
-		jQuery(this).outerHeight(widthRef * 16 / 9);
-	});
-	jQuery(window).on('resize', function(){
-		jQuery('.cell-thumbnail.cell-landscape').each(function() {
-			var widthRef = jQuery(this).innerWidth();
-			jQuery(this).outerHeight(widthRef * 9 / 16);
-		});
-		jQuery('.cell-thumbnail.cell-square').each(function() {
-			var widthRef = jQuery(this).innerWidth();
-			jQuery(this).outerHeight(widthRef);
-		});
-		jQuery('.cell-thumbnail.cell-portrait').each(function() {
-			var widthRef = jQuery(this).innerWidth();
-			jQuery(this).outerHeight(widthRef * 16 / 9);
-		});
-	});
+	jQuery(document).ready(function() {
+        jQuery('.cell-thumbnail.cell-landscape').each(function() {
+            var widthRef = jQuery(this).innerWidth();
+            jQuery(this).outerHeight(widthRef * 9 / 16);
+        });
+        jQuery('.cell-thumbnail.cell-square').each(function() {
+            var widthRef = jQuery(this).innerWidth();
+            jQuery(this).outerHeight(widthRef);
+        });
+        jQuery('.cell-thumbnail.cell-portrait').each(function() {
+            var widthRef = jQuery(this).innerWidth();
+            jQuery(this).outerHeight(widthRef * 16 / 9);
+        });
+        jQuery(window).on('resize', function(){
+            jQuery('.cell-thumbnail.cell-landscape').each(function() {
+                var widthRef = jQuery(this).innerWidth();
+                jQuery(this).outerHeight(widthRef * 9 / 16);
+            });
+            jQuery('.cell-thumbnail.cell-square').each(function() {
+                var widthRef = jQuery(this).innerWidth();
+                jQuery(this).outerHeight(widthRef);
+            });
+            jQuery('.cell-thumbnail.cell-portrait').each(function() {
+                var widthRef = jQuery(this).innerWidth();
+                jQuery(this).outerHeight(widthRef * 16 / 9);
+            });
+        });
+    });
 
 // Add a colored square to the element and color its borders if it has
 	colorSurround('[data-color-surround]');
