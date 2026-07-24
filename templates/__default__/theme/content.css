@@ -394,3 +394,34 @@ a.wikipedia-link:after {
         top: 0.309em;
     }
 }
+
+/* --- download progress bar --- */
+/* global bar */
+.upload-progress-global-container {
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.upload-progress-global {
+    height: 18px;
+    width: 0%;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: width 0.2s;
+}
+
+/* file bar */
+.file-progress {
+    height: 4px;
+    margin-top: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.file-progress-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.1s;
+}

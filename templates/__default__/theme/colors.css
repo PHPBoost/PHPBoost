@@ -641,6 +641,15 @@ a[class*='lightcase-icon-']:hover {
 
 .wizard-container .wizard-header a:hover { color: var(--main-tone); }
 
+/* -- content ---------------------------------------------------------------- */
+
+.upload-progress-global-container,
+.file-progress { background-color: var(--bgc-sub); }
+
+.upload-progress-global { background-color: var(--success-tone); color: var(--txt-alt); }
+
+.file-progress-bar { background-color: var(--visitor-tone); }
+
 /* -- global ---------------------------------------------------------------- */
 /* --- cell --- */
 .cell-bordered .cell {
@@ -688,6 +697,7 @@ a:hover {
 	border-color: var(--bdr-main);
 	box-shadow: 0 3px 6px var(--bdr-main);
 }
+
 
 hr { background-color: var(--bdr-main); }
 
