@@ -5,7 +5,7 @@
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 6.1 - last update: 2026 07 23
+ * @version     PHPBoost 6.1 - last update: 2026 07 24
  * @since       PHPBoost 5.1 - 2017 09 17
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,7 +18,6 @@
  * 
  * @patch       1 : jQuery 4.0 - july 2026
  * @patch       2 : Changed the call from `_self.on('error')` to `_self.error()` because jQuery 4.x is more restrictive than 3.x.
-
 */
 
 ;(function ($) {
@@ -142,13 +141,14 @@
 					return '<p class="' + _self.settings.classPrefix + 'error">' + _self.settings.labels['errorMessage'] + '</p>';
 				},
 				labels: {
-					'errorMessage': 'Source could not be found...',
+					'errorMessage': W_SOURCE,
 					'sequenceInfo.of': ' of ',
-					'close': 'Close',
-					'navigator.prev': 'Prev',
-					'navigator.next': 'Next',
-					'navigator.play': 'Play',
-					'navigator.pause': 'Pause'
+					'close': L_CLOSE,
+                    'download': L_DOWNLOAD,
+					'navigator.prev': L_PREV,
+					'navigator.next': L_NEXT,
+					'navigator.play': L_PLAY,
+					'navigator.pause': L_PAUSE
 				},
 				markup: function () {
 					_self.objects.body.append(
@@ -158,7 +158,7 @@
 					);
 					_self.objects.case.after(
 						_self.objects.close = $('<a href="#" class="far ' + _self.settings.classPrefix + 'icon-close"><span>' + _self.settings.labels['close'] + '</span></a>'),
-						_self.objects.nav = $('<div id="' + _self.settings.idPrefix + 'nav"></div>')
+                        _self.objects.nav = $('<div id="' + _self.settings.idPrefix + 'nav"></div>')
 					);
 					_self.objects.nav.append(
 						_self.objects.prev = $('<a href="#" class="fa ' + _self.settings.classPrefix + 'icon-prev"><span>' + _self.settings.labels['navigator.prev'] + '</span></a>').hide(),
@@ -176,6 +176,7 @@
 					_self.objects.info.append(
 						_self.objects.sequenceInfo = $('<div id="' + _self.settings.idPrefix + 'sequenceInfo"></div>'),
 						_self.objects.title = $('<h4 id="' + _self.settings.idPrefix + 'title"></h4>'),
+						_self.objects.download = $('<a href="#" class="fa ' + _self.settings.classPrefix + 'icon-download"><span>' + _self.settings.labels['download'] + '</span></a>'),
 						_self.objects.caption = $('<p id="' + _self.settings.idPrefix + 'caption"></p>')
 					);
 				},
@@ -591,7 +592,7 @@
 								}
 							},
 							error: function (jqXHR, textStatus, errorThrown) {
-								_self.error();
+                                _self.error();
 							}
 						})
 					);
@@ -612,7 +613,7 @@
 							_self._showContent($object);
 						});
 						$object.on('error', function () {
-							_self.error();
+                            _self.error();
 						});
 					} else {
 						_self.error();
@@ -1032,6 +1033,20 @@
 			_self._unbindEvents();
 
 			_self.objects.nav.children().not(_self.objects.close).hide();
+
+            if (_self.objectData.type === 'image' || _self.objectData.type === 'video') {
+                _self.objects.download.show();
+            }
+
+            _self.objects.download.click(function (event) {
+                event.preventDefault();
+                var link = document.createElement('a');
+                link.href = _self.objectData.url;
+                link.download = _self.objectData.title || 'download';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
 
 			// If slideshow is enabled, show play/pause and start timeout.
 			if (_self.isSlideshowEnabled()) {
@@ -1812,6 +1827,8 @@
 
 			// Unbind close event
 			_self.objects.close.unbind('click');
+			// Unbind download event
+			_self.objects.download.unbind('click');
 		},
 
 		/**
