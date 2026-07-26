@@ -20,7 +20,7 @@
                     data: {
                         token: '{TOKEN}',
                         path_to_root: '{PHP_PATH_TO_ROOT}',
-                        editor: 'Bbcode',
+                        editor: 'bbcode',
                         page_path: '{PAGE_PATH}',
                         contents: contents,
                         ftags: '{FORBIDDEN_TAGS}'
@@ -1224,7 +1224,7 @@
                     </li>
                     # IF C_UPLOAD_MANAGEMENT #
                         <li id="files-upload" class="bbcode-elements">
-                            <a class="bbcode-button{AUTH_UPLOAD} close-bbcode-sub" href="#" aria-label="{@bbcode.upload}" # IF NOT C_DISABLED_UPLOAD #onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=Bbcode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"# ENDIF #>
+                            <a class="bbcode-button{AUTH_UPLOAD} close-bbcode-sub" href="#" aria-label="{@bbcode.upload}" # IF NOT C_DISABLED_UPLOAD #onclick="window.open('{PATH_TO_ROOT}/user/upload.php?popup=1&amp;fd={FIELD}&amp;edt=bbcode', '', 'height=550,width=769,resizable=yes,scrollbars=yes');return false;"# ENDIF #>
                                 <i class="fa fa-fw fa-cloud-upload-alt" aria-hidden="true"></i>
                             </a>
                         </li>
@@ -1377,7 +1377,7 @@
                                                     <option value="xml">Xml</option>
                                                 </optgroup>
                                                 <optgroup label="{@bbcode.phpboost.languages}">
-                                                    <option value="bbcode">Bbcode</option>
+                                                    <option value="bbcode">BBCode</option>
                                                     <option value="tpl">Template</option>
                                                 </optgroup>
                                                 <optgroup label="{@bbcode.web}">
