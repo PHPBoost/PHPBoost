@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 07 27
  * @since       PHPBoost 3.0 - 2010 01 24
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -316,18 +316,37 @@ class TextHelper
         // GeneralConfig, etc.) are stored as serialized class instances and must be
         // reconstructed with their class definitions intact. Using allowed_classes => false
         // would turn every object into __PHP_Incomplete_Class, breaking config loading.
-        $result = @unserialize(trim($string));
+        $result = self::safe_unserialize(trim($string));
 
-        if ($result === false && $string !== 'b:0;') {
+        if ($result === null && $string !== 'b:0;') {
             $cleaned = trim($string);
-            $result = @unserialize($cleaned);
+            $result = self::safe_unserialize($cleaned);
 
-            if ($result === false) {
+            if ($result === null) {
                 return $string;
             }
         }
 
         return $result;
+    }
+
+    private static function safe_unserialize($string)
+    {
+        $error = null;
+        $result = null;
+
+        set_error_handler(static function ($severity, $message) use (&$error): bool {
+            $error = $message;
+            return true;
+        });
+
+        try {
+            $result = unserialize($string);
+        } finally {
+            restore_error_handler();
+        }
+
+        return $error !== null ? null : $result;
     }
 
 	private static function is_base64($string)
