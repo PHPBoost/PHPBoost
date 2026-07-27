@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 06
+ * @version     PHPBoost 6.1 - last update: 2026 07 27
  * @since       PHPBoost 3.0 - 2010 01 21
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -25,12 +25,16 @@ class FormatingHelper
 	public static function strparse($content, $forbidden_tags = [], $addslashes = true)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_parser();
+		if ($parser === null)
+		{
+			return $addslashes ? addslashes($content) : $content;
+		}
 
 		//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
 		$parser->set_content($content);
 
 		//Si il y a des balises interdites, on lui signale
-		if (!empty($forbidden_tags))
+		if (!empty($forbidden_tags) && method_exists($parser, 'set_forbidden_tags'))
 		{
 			$parser->set_forbidden_tags($forbidden_tags);
 		}
@@ -55,6 +59,10 @@ class FormatingHelper
 	public static function unparse($content)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_unparser();
+		if ($parser === null)
+		{
+			return $content;
+		}
 		$parser->set_content(TextHelper::stripslashes($content));
 		$parser->parse();
 
