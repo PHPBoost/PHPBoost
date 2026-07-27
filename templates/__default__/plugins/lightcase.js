@@ -5,7 +5,7 @@
  * @author      Cornel Boppart <cornel@bopp-art.com>
  * @link        https://github.com/cbopp-art/lightcase/
  * @doc         https://cornel.bopp-art.com/lightcase/
- * @version     PHPBoost 6.1 - last update: 2026 07 24
+ * @version     PHPBoost 6.1 - last update: 2026 07 27
  * @since       PHPBoost 5.1 - 2017 09 17
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,6 +18,7 @@
  * 
  * @patch       1 : jQuery 4.0 - july 2026
  * @patch       2 : Changed the call from `_self.on('error')` to `_self.error()` because jQuery 4.x is more restrictive than 3.x.
+ * @patch       3 : adding download button
 */
 
 ;(function ($) {
@@ -1038,11 +1039,26 @@
                 _self.objects.download.show();
             }
 
+            var rawName = '';
+
+            switch (true) {
+                case _self.objectData.title !== undefined && _self.objectData.title !== '':
+                    rawName = _self.objectData.title;
+                    break;
+                case _self.objectData.caption !== undefined && _self.objectData.caption !== '':
+                    rawName = _self.objectData.caption.replace(/\.[^/.]+$/, '');
+                    break;
+                default:
+                    rawName = _self.objectData.url;
+                    break;
+            }
+
             _self.objects.download.click(function (event) {
                 event.preventDefault();
+                var name = encode_rewrite(rawName);
                 var link = document.createElement('a');
                 link.href = _self.objectData.url;
-                link.download = encode_rewrite(_self.objectData.title) || 'download';
+                link.download = name || 'download';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
