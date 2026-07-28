@@ -754,11 +754,11 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc.success       { background-color: rgba(var(--success-tone-rgb), 0.2); }
 .bgc.warning       { background-color: rgba(var(--warning-tone-rgb), 0.2); }
 .bgc.error         { background-color: rgba(var(--error-tone-rgb), 0.2); }
-.bgc.visitor       { background-color: rgba(var(--visitor-rgb-t), 0.2); }
+.bgc.visitor       { background-color: rgba(var(--visitor-tone-rgb), 0.2); }
 .bgc.custom-author { background-color: rgba(var(--author-tone-rgb), 0.2); }
 .bgc.member        { background-color: rgba(var(--member-tone-rgb), 0.2); }
 .bgc.moderator     { background-color: rgba(var(--moderator-tone-rgb), 0.2); }
-.bgc.administrator { background-color: rgba(var(--administrator-rgb-t), 0.2); }
+.bgc.administrator { background-color: rgba(var(--administrator-tone-rgb), 0.2); }
 .bgc.logo-color    { background-color: rgba(var(--logo-tone-rgb), 0.2); }
 .bgc.link-color    { background-color: rgba(var(--main-tone-rgb), 0.2); }
 .bgc.star 		   { background-color: rgba(var(--star-tone-rgb), 0.2); }
