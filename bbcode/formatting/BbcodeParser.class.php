@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 06 29
  * @since       PHPBoost 2.0 - 2008 07 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -127,6 +127,7 @@ class BbcodeParser extends ContentFormattingParser
 	protected function parse_smilies()
 	{
 		$smileys_cache = SmileysCache::load()->get_smileys();
+        $smiley_code = $smiley_img_url = [];
 		if (!empty($smileys_cache))
 		{
 			//Création du tableau de remplacement.
@@ -293,11 +294,16 @@ class BbcodeParser extends ContentFormattingParser
 		}
 
 		//Image tag
-		if (!in_array('img', $this->forbidden_tags))
-		{
-			$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]((?:[./]+|(?:https?|ftps?)://(?:[a-z0-9-]+\.)*[a-z0-9-]+(?:\.[a-z]{2,4})?(?::[0-9]{1,5})?/?)[^,\n\r\t\f]+\.(jpg|jpeg|bmp|webp|gif|png|tiff|svg))\[/img\]`iuU', [$this, 'parse_img'], $this->content);
-			$this->content = preg_replace_callback('`\[img(?: alt="([^"]+)")?(?: style="([^"]+)")?(?: class="([^"]+)")?\]data:(.+)\[/img\]`iuU', [$this, 'parse_img'], $this->content);
-		}
+        if (!in_array('img', $this->forbidden_tags))
+        {
+            // Regex flexible accepting HTTP(S), FTP(S), absolute (/...), and relative (./..., ../...) URLs
+            $pattern_url = '`\[img(?: alt="([^"]*)")?(?: style="([^"]*)")?(?: class="([^"]*)")?\]((?:https?://|ftps?://|/|\./|\.\./|[a-z0-9_-]+/)[^,\n\r\t\f<>"\[\]]+)\[/img\]`iuU';
+            $this->content = preg_replace_callback($pattern_url, [$this, 'parse_img'], $this->content);
+
+            // Support for inline base64 images
+            $pattern_data = '`\[img(?: alt="([^"]*)")?(?: style="([^"]*)")?(?: class="([^"]*)")?\](image/(?:jpg|jpeg|bmp|webp|gif|png|tiff|svg);base[^\s<>"\[\]]+)\[/img\]`iuU';
+            $this->content = preg_replace_callback($pattern_data, [$this, 'parse_img'], $this->content);
+        }
 
 		//FA tag
 		if (!in_array('fa', $this->forbidden_tags))
@@ -508,20 +514,48 @@ class BbcodeParser extends ContentFormattingParser
 		return '<h' . $level . ' class="formatter-title">' . $matches[2] . '</h' . $level . '>';
 	}
 
+    protected function parse_img(array $matches): string
+    {
+        $raw_url = trim($matches[4]);
 
-	protected function parse_img($matches)
-	{
-		$img_pathinfo = pathinfo($matches[4]);
-		$file_array = explode('.', $img_pathinfo['filename']);
-		$img_name = $file_array[0];
-		$alt = !empty($matches[1]) ? $matches[1] : $img_name;
-		$style = !empty($matches[2]) ? ' style="' . $matches[2] . '"' : '';
-		$class = !empty($matches[3]) ? ' class="' . $matches[3] . '"' : '';
-		if (preg_match('`^image/(jpg|jpeg|bmp|webp|gif|png|tiff|svg);base`su', $matches[4]))
-			$matches[4] = 'data:' . $matches[4];
+        // Prevent dangerous non-HTTP/file protocols (e.g., javascript:, vbscript:)
+        if (preg_match('`^(?:javascript|vbscript):`i', $raw_url)) {
+            return '';
+        }
 
-		return '<img src="' . $matches[4] . '" alt="' . $alt . '"' . $class . $style .' />';
-	}
+        // Base64 Data URI handling
+        if (preg_match('`^image/(jpg|jpeg|bmp|webp|gif|png|tiff|svg);base`su', $raw_url))
+        {
+            $src_url = 'data:' . $raw_url;
+            $img_name = 'image'; // Default fallback name for alt tag when using base64
+        } else {
+            // Robust Extension & Query String Validation
+            // Extract real path ignoring query strings (?key=val) or fragments (#hash)
+            $path = parse_url($raw_url, PHP_URL_PATH);
+            $extension = TextHelper::strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
+            $allowed_extensions = ['jpg', 'jpeg', 'bmp', 'webp', 'gif', 'png', 'tiff', 'svg'];
+            if (!in_array($extension, $allowed_extensions, true)) {
+                return ''; // Reject execution vectors like script.php?file=photo.png
+            }
+
+            $src_url = $raw_url;
+
+            // Preserve original logic: calculate $img_name from pathinfo
+            $img_pathinfo = pathinfo($path);
+            $file_array = explode('.', $img_pathinfo['filename'] ?? '');
+            $img_name = $file_array[0] !== '' ? $file_array[0] : 'image';
+        }
+
+        // Secure HTML Sanitization for output attributes (XSS Prevention)
+        $alt_value = !empty($matches[1]) ? $matches[1] : $img_name;
+        $alt   = ' alt="' . TextHelper::htmlspecialchars($alt_value, ENT_QUOTES, 'UTF-8') . '"';
+        $style = !empty($matches[2]) ? ' style="' . TextHelper::htmlspecialchars($matches[2], ENT_QUOTES, 'UTF-8') . '"' : '';
+        $class = !empty($matches[3]) ? ' class="' . TextHelper::htmlspecialchars($matches[3], ENT_QUOTES, 'UTF-8') . '"' : '';
+        $src   = TextHelper::htmlspecialchars($src_url, ENT_QUOTES, 'UTF-8');
+
+        return '<img src="' . $src . '"' . $alt . $class . $style . ' />';
+    }
 
     protected function parse_modal($matches)
     {
