@@ -62,7 +62,7 @@
 
 .bbcode-sub > span {
 	color: var(--main-light);
-	background-color: rgba(var(--main-rgb-t), 0.2);
+	background-color: rgba(var(--main-tone-rgb), 0.2);
 }
 
 /* --- content of elements --- */
