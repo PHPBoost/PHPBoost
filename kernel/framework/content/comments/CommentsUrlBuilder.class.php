@@ -33,7 +33,7 @@ class CommentsUrlBuilder
 	 */
 	public static function delete($comment_path, $id, $return_path = '')
 	{
-		return self::build_url($comment_path, 'delete_comment=' . $id . ($return_path ? '&return_path=' . $return_path : '#comments-section'));
+		return self::build_url($comment_path, 'delete_comment=' . $id . '&token=' . AppContext::get_session()->get_token() . ($return_path ? '&return_path=' . $return_path : '#comments-section'));
 	}
 
 	/**
@@ -43,7 +43,7 @@ class CommentsUrlBuilder
 	 */
 	public static function lock_and_unlock($comment_path, $lock)
 	{
-		return self::build_url($comment_path, 'lock=' . (int)$lock . '#comments-section');
+		return self::build_url($comment_path, 'lock=' . (int)$lock . '&token=' . AppContext::get_session()->get_token() . '#comments-section');
 	}
 
 	/**
