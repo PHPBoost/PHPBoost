@@ -33,7 +33,7 @@ class CommentsService
 
 	/**
 	 * This function display the comments
-	 * @param class CommentsTopic $topic
+	 * @param CommentsTopic $topic
 	 * @return Template is a template object
 	 */
 	public static function display(CommentsTopic $topic)
@@ -58,7 +58,8 @@ class CommentsService
 				$lock = AppContext::get_request()->get_getbool('lock');
 				if ($authorizations->is_authorized_moderation())
 				{
-					if ($lock)
+					AppContext::get_session()->csrf_get_protect();
+                    if ($lock)
 					{
 						if (!CommentsTopicDAO::topic_exists($module_id, $id_in_module, $topic_identifier))
 						{
@@ -77,7 +78,8 @@ class CommentsService
 
 			if (!empty($delete_comment_id))
 			{
-				self::verify_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
+				AppContext::get_session()->csrf_get_protect();
+                self::verify_authorized_edit_or_delete_comment($authorizations, $delete_comment_id);
 
 				CommentsManager::delete_comment($delete_comment_id);
 				AppContext::get_response()->redirect($return_path ? $return_path : $topic->get_path());
