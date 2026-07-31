@@ -12,9 +12,13 @@
 
     function encode_rewrite(str)
     {
+        str = str
+        .replace(/&#0*39;|&#x0*27;|&apos;/gi, "'")   // apostrophes
+        .replace(/&quot;|&#0*34;|&#x0*22;/gi, '"');  // guillemets doubles
         return str
             .normalize('NFD')                    // Break down the accents (é → e + ́)
             .replace(/[\u0300-\u036f]/g, '')     // Removes diacritics (accents)
+            .replace(/['"‘’“”´`]+/g, '-')        // Replaces quotes with dashes
             .replace(/[^a-zA-Z0-9\s-]/g, '')     // Keeps letters, numbers, spaces, and hyphens
             .trim()                              // Removes spaces at the beginning/end
             .replace(/\s+/g, '-')                // Replaces spaces with dashes
