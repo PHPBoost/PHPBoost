@@ -46,39 +46,44 @@
 }
 
 /* --- Main content --- */
+.sub-section,
 .cat-description,
 .content {
-	margin-bottom: 0.618em;
-	padding: 0.456em;
+	margin-top: var(--cell-gap);
 }
 
-@media (min-width: 769px) {
-	.cat-description,
-	.content {
-		padding: 0.809em;
-		margin-bottom: 1.618em;
-	}
+.cat-description,
+.content {
+	padding: 0.456em;
+    @media (min-width: 769px) {
+        padding: 0.809em;
+        margin-top: 1.618em;
+    }
 }
 
 .several-items #comment-form .section-header { display: none; }
 
 aside:not(#menu-left):not(#menu-right) {
 	padding: 0.809em;
-	margin-bottom: 1.618em;
-}
+    margin-bottom: 1.618em;
 
-aside:not(#menu-left):not(#menu-right)::before,
-aside:not(#menu-left):not(#menu-right)::after {
-    content: '';
-    display: block;
-    clear: both;
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
 }
 
 .content img,
-.cell-content img { vertical-align: bottom; }
+.cell-content img {
+    vertical-align: bottom;
+}
 
 /* --- Id Card --- */
-.id-card { margin: 1.618em 0 0; }
+.id-card {
+    margin: 1.618em 0 0;
+}
 
 /* --- Sibling links --- */
 .related-links {
@@ -94,17 +99,27 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 .suggested-item:hover,
-.related-item:hover { text-decoration: none; }
+.related-item:hover {
+    text-decoration: none;
+}
 
-.related-item img { max-height: 80px; }
+.related-item img {
+    max-height: 80px;
+}
 
 .related-item.previous-item img,
-.related-item.previous-item i { padding: 0 0.618em 0 0; }
+.related-item.previous-item i {
+    padding: 0 0.618em 0 0;
+}
 .related-item.next-item img,
-.related-item.next-item i 	  { padding: 0 0 0 0.618em; }
+.related-item.next-item i 	  {
+    padding: 0 0 0 0.618em;
+}
 
 @media (min-width: 769px) {
-	.related-item { max-width: 45%; }
+	.related-item  {
+        max-width: 45%;
+    }
     .related-links {
         flex-direction: row;
         align-items: center;
@@ -167,7 +182,9 @@ aside:not(#menu-left):not(#menu-right)::after {
 
 /* --- Notation --- */
 .notation,
-.static-notation { display: inline-block; }
+.static-notation {
+    display: inline-block;
+}
 
 .notation .star,
 .static-notation .star {
@@ -176,7 +193,9 @@ aside:not(#menu-left):not(#menu-right)::after {
 	text-decoration: none;
 }
 
-.static-notation .star { cursor: default; }
+.static-notation .star {
+    cursor: default;
+}
 
 .notation .star-width {
 	position: absolute;
@@ -213,7 +232,9 @@ aside:not(#menu-left):not(#menu-right)::after {
 	font-size: 0.809em;
 }
 
-.options .form-element {padding: 0;}
+.options .form-element {
+    padding: 0;
+}
 
 @media (min-width: 769px) {
 	.options {
@@ -224,7 +245,9 @@ aside:not(#menu-left):not(#menu-right)::after {
 
 .options .horizontal-fieldset,
 .options .horizontal-fieldset-element,
-.options .horizontal-fieldset .form-element { margin: 0; }
+.options .horizontal-fieldset .form-element {
+    margin: 0;
+}
 
 /* --- Color picker --- */
 .color-picker {
@@ -246,18 +269,30 @@ aside:not(#menu-left):not(#menu-right)::after {
 }
 
 /* --- Maintain --- */
-#maintain { margin: 0.618em 0; }
+#maintain {
+    margin: 0.618em 0;
+}
 
-.delay { margin: 1.309em 0; }
+.delay {
+    margin: 1.309em 0;
+}
 
-#message-maintain { z-index: 20; }
+#message-maintain {
+    z-index: 20;
+}
 
-#release { margin-top: 1.309em; }
+#release {
+    margin-top: 1.309em;
+}
 
 /* --- Friends content (e.g web) --- */
-.content-friends { border-width: 7px 1px 1px 1px; }
+.content-friends {
+    border-width: 7px 1px 1px 1px;
+}
 
-.content-privileged-friends { border-width: 7px 1px 1px 1px; }
+.content-privileged-friends {
+    border-width: 7px 1px 1px 1px;
+}
 
 /* --- Wikipedia link --- */
 a.wikipedia-link {
@@ -281,7 +316,9 @@ a.wikipedia-link:after {
 }
 
 /* --- Publication status --- */
-.publication-status { font-weight: bold; }
+.publication-status {
+    font-weight: bold;
+}
 
 /* --- Categories color on sortable --- */
 .category-color {
@@ -304,7 +341,9 @@ a.wikipedia-link:after {
 }
 
 /* --- Path to page --- */
-.page-path > br { display: none; }
+.page-path > br {
+    display: none;
+}
 
 .page-path {
     display: inline-block;
@@ -376,12 +415,18 @@ a.wikipedia-link:after {
         margin: 0;
     }
 
-    ul ul { padding-left: 1.618em; }
+    ul ul {
+        padding-left: 1.618em;
+    }
 
-    ul + br { display: none; }
+    ul + br {
+        display: none;
+    }
 }
 
-.formatter-columns > br { display: none; }
+.formatter-columns > br {
+    display: none;
+}
 
 /* --- Password revealer --- */
 .password-container {
