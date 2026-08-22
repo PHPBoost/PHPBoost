@@ -3,13 +3,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 10 03
+ * @version     PHPBoost 6.0 - last update: 2026 08 22
  * @since       PHPBoost 1.2 - 2005 08 14
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 require_once('../kernel/begin.php');
 require_once('../forum/forum_begin.php');
+
+/** @var ForumConfig $config */
 $Bread_crumb->add($config->get_forum_name(), 'index.php');
 require_once('../kernel/header_no_display.php');
 
@@ -108,7 +110,7 @@ elseif (!empty($idt_get))
 
 	//On va chercher les infos sur le topic
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -143,7 +145,7 @@ elseif (!empty($idt_get))
 
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation())
 		{
-			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = '" . $idt_get . "'");
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', ['display_msg' => 1 - $topic['display_msg']], 'WHERE id = :id', ['id' => $idt_get]);
 
 			AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get, '-' . $idt_get . $rewrited_title . '.php', '&'));
 		}
@@ -232,12 +234,14 @@ elseif (!empty($idt_get))
 }
 elseif (!empty($track) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Ajout du sujet aux sujets suivis.
 {
+    AppContext::get_session()->csrf_get_protect();
 	$Forumfct->Track_topic($track); //Ajout du sujet aux sujets suivis.
 
 	AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $track, '-' . $track . '.php', '&') . '#go-bottom');
 }
 elseif (!empty($untrack) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Retrait du sujet, aux sujets suivis.
 {
+    AppContext::get_session()->csrf_get_protect();
 	$tracking_type = (int)retrieve(GET, 'trt', 0);
 	$Forumfct->Untrack_topic($untrack, $tracking_type); //Retrait du sujet aux sujets suivis.
 
@@ -277,6 +281,7 @@ elseif (!empty($untrack_mail) && AppContext::get_current_user()->check_level(Use
 }
 elseif ($read) //Marquer comme lu.
 {
+    AppContext::get_session()->csrf_get_protect();
 	if (!AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Réservé aux membres.
 		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 

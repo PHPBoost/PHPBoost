@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2023 02 23
+ * @version     PHPBoost 6.0 - last update: 2026 08 22
  * @since       PHPBoost 6.0 - 2021 10 22
 */
 
@@ -290,28 +290,27 @@ class HistoryHook extends Hook
 				$manager_class = ClassLoader::is_class_registered_and_valid($item_manager_class) ? $item_manager_class : (ClassLoader::is_class_registered_and_valid($item_service_class) ? $item_service_class : '');
 			
 			if ($manager_class && $id_in_module && (!$title || !$url))
-			{
-				if ($action != 'delete' && method_exists($manager_class, 'get_item'))
-				{
-					if (ClassLoader::is_class_registered_and_valid($item_class) && is_subclass_of($item_class, 'Item'))
-					{
-						$manager = new $manager_class($module_id);
-						
-						try {
-							$item = $manager->get_item($id_in_module);
-						} catch (RowNotFoundException $e) {
-							$item = '';
-						}
-					}
-					else
-						$item = $manager_class::get_item($id_in_module);
-					
-					if ($item && !$title && method_exists($item_class, 'get_title'))
-						$title = $item->get_title();
-					if ($item && !$url && method_exists($item_class, 'get_item_url'))
-						$url = $item->get_item_url();
-				}
-			}
+            {
+                if ($action != 'delete' && method_exists($manager_class, 'get_item'))
+                {
+                    try {
+                        if (ClassLoader::is_class_registered_and_valid($item_class) && is_subclass_of($item_class, 'Item'))
+                        {
+                            $manager = new $manager_class($module_id);
+                            $item = $manager->get_item($id_in_module);
+                        }
+                        else
+                            $item = $manager_class::get_item($id_in_module);
+                    } catch (RowNotFoundException $e) {
+                        $item = '';
+                    }
+
+                    if ($item && !$title && method_exists($item_class, 'get_title'))
+                        $title = $item->get_title();
+                    if ($item && !$url && method_exists($item_class, 'get_item_url'))
+                        $url = $item->get_item_url();
+                }
+            }
 			
 			$parameters = array(
 				'module_id'     => $module_id,
