@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 16
+ * @version     PHPBoost 6.0 - last update: 2026 08 23
  * @since       PHPBoost 1.6 - 2006 10 29
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -42,7 +42,7 @@ $tools_view->put_all(array(
 	'U_EDIT' => Url::to_rel('/wiki/' . url('post.php?id=' . $id_article . ($page_type == 'cat' ? '&type=cat' : ''))),
 
 	'C_DELETE' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_DELETE)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_DELETE)),
-	'U_DELETE' => $page_type == 'article' ? Url::to_rel('/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token())) : Url::to_rel('/wiki/' . url('property.php?del=' . $id_article)),
+	'U_DELETE' => $page_type == 'article' ? Url::to_rel('/wiki/' . url('action.php?del_article=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token())) : Url::to_rel('/wiki/' . url('property.php?del=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token())),
 
 	'C_RENAME' => (!$general_auth || AppContext::get_current_user()->check_auth($config->get_authorizations(), WIKI_RENAME)) && ($general_auth || AppContext::get_current_user()->check_auth($article_auth , WIKI_RENAME)),
 	'U_RENAME' => isset($article_infos['id']) ? Url::to_rel('/wiki/' . url('property.php?rename=' . $article_infos['id'])) : '',
@@ -64,7 +64,7 @@ $tools_view->put_all(array(
 	'U_PRINT' => isset($article_infos['id']) ? Url::to_rel('/wiki/' . url('print.php?id=' . $article_infos['id'])) : '',
 
 	'L_TRACK' => (isset($article_infos['id_favorite']) && $article_infos['id_favorite'] > 0) ? $lang['wiki.untrack'] : $lang['wiki.track'],
-	'U_TRACK' => (isset($article_infos['id_favorite']) && $article_infos['id_favorite'] > 0) ? Url::to_rel('/wiki/' . url('favorites.php?del=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token())) : Url::to_rel('/wiki/' . url('favorites.php?add=' . $id_article)),
+	'U_TRACK' => (isset($article_infos['id_favorite']) && $article_infos['id_favorite'] > 0) ? Url::to_rel('/wiki/' . url('favorites.php?del=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token())) : Url::to_rel('/wiki/' . url('favorites.php?add=' . $id_article . '&amp;token=' . AppContext::get_session()->get_token())),
 ));
 
 // Comments

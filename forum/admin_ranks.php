@@ -22,6 +22,7 @@ $session = AppContext::get_session();
 
 $get_id = $request->get_getint('id', 0);
 $del = $request->get_getint('del', 0);
+$token  = $request->get_getstring('token', '');
 
 $valid = $request->get_postbool('valid', false);
 
@@ -58,7 +59,7 @@ if ($valid)
     }
     else
     {
-        $view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.invalid.csrf.token', 'warning-lang'), MessageHelper::ERROR, 4));
+        $view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.csrf.invalid.token', 'warning-lang'), MessageHelper::ERROR, 4));
     }
 }
 elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
@@ -77,7 +78,7 @@ elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
     }
     else
     {
-        $view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.invalid.csrf.token', 'warning-lang'), MessageHelper::ERROR, 4));
+        $view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.csrf.invalid.token', 'warning-lang'), MessageHelper::ERROR, 4));
     }
 }
 
@@ -120,7 +121,7 @@ foreach($ranks_cache as $msg => $row)
 
 		'U_RANK_THUMBNAIL' => $rank_folder . '/' . $row['icon'],
 		'JS_PATH_RANKS'    => $rank_folder . '/',
-		'U_DELETE'         => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
+		'U_DELETE'         => 'admin_ranks.php?del=1&amp;id=' . $row['id'] . '&amp;token=' . $csrf_token,
 	));
 }
 
