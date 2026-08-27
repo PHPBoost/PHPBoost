@@ -13,7 +13,7 @@
 class MySQLDBConnection implements DBConnection
 {
 	/**
-	 * @var MysqlResource
+	 * @var mysqli|null
 	 */
 	private $link = null;
 
