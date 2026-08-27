@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 08 27
  * @since       PHPBoost 3.0 - 2009 10 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -30,13 +30,21 @@ class MySQLDBConnection implements DBConnection
 		}
 		mysqli_report(MYSQLI_REPORT_OFF);
 
-		$mysqli_link = mysqli_connect(
-			$db_connection_data['host'],
-			$db_connection_data['login'],
-			$db_connection_data['password'],
-			"",
-			$db_connection_data['port']
-		);
+		$previous_error_reporting = error_reporting(0);
+		try
+		{
+			$mysqli_link = mysqli_connect(
+				$db_connection_data['host'],
+				$db_connection_data['login'],
+				$db_connection_data['password'],
+				"",
+				$db_connection_data['port']
+			);
+		}
+		finally
+		{
+			error_reporting($previous_error_reporting);
+		}
 
 		if ($mysqli_link)
 		{
