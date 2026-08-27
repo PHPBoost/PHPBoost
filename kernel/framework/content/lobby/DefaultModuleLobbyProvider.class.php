@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 08 27
  * @since       PHPBoost 6.1 - 2026 03 21
 */
 
@@ -224,10 +224,10 @@ abstract class DefaultModuleLobbyProvider implements LobbyProvider
 		$module_path = ModulesManager::get_module_path($phpboost_id);
 		if (file_exists($module_path . '/templates/' . $tpl_filename))
 			return new FileTemplate($phpboost_id . '/' . $tpl_filename);
-		elseif (file_exists(PATH_TO_ROOT . '/lobby/templates/pagecontent/' . $tpl_filename))
-			return new FileTemplate('/lobby/templates/pagecontent/' . $tpl_filename);
+		elseif (file_exists(PATH_TO_ROOT . '/modules/lobby/templates/pagecontent/' . $tpl_filename))
+			return new FileTemplate('/modules/lobby/templates/pagecontent/' . $tpl_filename);
 		else
-            return new FileTemplate('/lobby/templates/pagecontent/ItemsLobbyProvider.tpl');
+            return new FileTemplate('/modules/lobby/templates/pagecontent/ItemsLobbyProvider.tpl');
 	}
 }
 ?>
