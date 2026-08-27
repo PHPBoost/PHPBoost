@@ -31,12 +31,12 @@
 
 .row-current .cssmenu-title {
 	border-color: var(--warning-tone);
-    background-color: rgba(var(--main-rgb-t), 0.5);
+    background-color: rgba(var(--main-tone-rgb), 0.5);
 }
 
 .row-success .cssmenu-title {
 	border-color: var(--success-tone);
-	background-color: rgba(var(--main-rgb-t), 0.5);
+	background-color: rgba(var(--main-tone-rgb), 0.5);
 }
 
 .help-menu .cssmenu-title {
