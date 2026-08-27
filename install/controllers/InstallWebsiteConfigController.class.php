@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 07 01
+ * @version     PHPBoost 6.1 - last update: 2026 08 27
  * @since       PHPBoost 3.0 - 2010 10 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -356,7 +356,7 @@ class InstallWebsiteConfigController extends InstallController
         if ($distribution == 'pdk') {
             $checked = ['connect', 'GoogleMaps', 'sandbox', 'sitemap'];
         } else {
-            $checked = ['connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetwoks', 'UrlUpdater'];
+            $checked = ['connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetworks', 'UrlUpdater'];
         }
 
         // Other optional remote modules
