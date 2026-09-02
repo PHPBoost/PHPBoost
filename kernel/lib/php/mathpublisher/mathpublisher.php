@@ -50,6 +50,27 @@ define('PHP_MATH_PUBLISHER_FONT_DIR', realpath(PATH_TO_ROOT . '/kernel/lib/php/m
 define('PHP_MATH_PUBLISHER_CACHE_DIR', realpath(PATH_TO_ROOT . '/images/maths'));
 // or PHP_MATH_PUBLISHER_CACHE_DIR=dirname(__FILE__)."/phpmathpublisher/img";
 
+function mathpublisher_font($font, $texte)
+{
+    static $fonts = [];
+    $key = $font . "\0" . $texte;
+    if (!isset($fonts[$key])) {
+        set_error_handler(static function () {
+        });
+        try {
+            $fonts[$key] = ImageTTFBBox(1, 0, $font, $texte) !== false;
+        } finally {
+            restore_error_handler();
+        }
+    }
+
+    if ($fonts[$key]) {
+        return $font;
+    }
+
+    return PHP_MATH_PUBLISHER_FONT_DIR . "/cmr10.ttf";
+}
+
 //******************************************************************
 global $symboles;
 $symboles = [
@@ -438,6 +459,7 @@ function affiche_symbol($texte, $haut)
             $font        = PHP_MATH_PUBLISHER_FONT_DIR . "/" . $fontesmath[$texte] . ".ttf";
             $t           = 16;
             $texte       = $symboles[$texte];
+            $font        = mathpublisher_font($font, $texte);
             $tmp_dim     = ImageTTFBBox($t, 0, $font, $texte);
             $tmp_largeur = abs($tmp_dim[2] - $tmp_dim[0]) + 2;
             $tmp_hauteur = abs($tmp_dim[3] - $tmp_dim[5]) + 2;
@@ -485,6 +507,7 @@ function affiche_symbol($texte, $haut)
             $font        = PHP_MATH_PUBLISHER_FONT_DIR . "/" . $fontesmath[$texte] . ".ttf";
             $t           = $haut;
             $texte       = $symboles[$texte];
+            $font        = mathpublisher_font($font, $texte);
             $tmp_dim     = ImageTTFBBox($t, 0, $font, $texte);
             $tmp_largeur = abs($tmp_dim[2] - $tmp_dim[0]);
             $tmp_hauteur = abs($tmp_dim[3] - $tmp_dim[5]) * 4;
@@ -544,6 +567,7 @@ function affiche_symbol($texte, $haut)
                 $texte = $symboles[$texte];
             }
 
+            $font = mathpublisher_font($font, $texte);
             do {
                 $tmp_dim = ImageTTFBBox($t, 0, $font, $texte);
                 $t += 1;
@@ -612,6 +636,7 @@ function affiche_symbol($texte, $haut)
                 $texte = $symboles[$texte];
             }
 
+            $font = mathpublisher_font($font, $texte);
             do {
                 $tmp_dim = ImageTTFBBox($t, 0, $font, $texte);
                 $t += 1;
@@ -683,6 +708,7 @@ function affiche_texte($texte, $taille)
     $taille = max($taille, 6);
     $texte  = stripslashes($texte);
     $font   = PHP_MATH_PUBLISHER_FONT_DIR . "/cmr10.ttf";
+    $font   = mathpublisher_font($font, $texte);
     $htexte = 'dg' . $texte;
     $hdim   = ImageTTFBBox($taille, 0, $font, $htexte);
     $wdim   = ImageTTFBBox($taille, 0, $font, $texte);
@@ -720,6 +746,7 @@ function affiche_math($texte, $taille)
         $texte = $symboles[$texte];
     }
 
+    $font  = mathpublisher_font($font, $texte);
     $htexte = 'dg' . $texte;
     $hdim   = ImageTTFBBox($taille, 0, $font, $htexte);
     $wdim   = ImageTTFBBox($taille, 0, $font, $texte);
