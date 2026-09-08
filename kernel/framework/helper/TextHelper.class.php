@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 07 27
+ * @version     PHPBoost 6.1 - last update: 2026 09 08
  * @since       PHPBoost 3.0 - 2010 01 24
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -291,6 +291,9 @@ class TextHelper
 
 	public static function unserialize($string)
 	{
+		if ($string === null)
+			return null;
+
 		return unserialize(self::is_base64($string) ? base64_decode($string) : $string);
 	}
 
@@ -351,6 +354,9 @@ class TextHelper
 
 	private static function is_base64($string)
 	{
+		if (!is_string($string))
+			return false;
+
 		$decoded = base64_decode($string, true);
 		return preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string) && false !== $decoded && base64_encode($decoded) == $string;
 	}
