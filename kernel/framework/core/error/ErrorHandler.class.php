@@ -5,12 +5,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2018 01 31
+ * @version     PHPBoost 6.0 - last update: 2026 09 09
  * @since       PHPBoost 3.0 - 2009 09 30
  * @contributor Loic ROUCHON <horn@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ErrorHandler
@@ -75,7 +76,7 @@ class ErrorHandler
 	 */
 	private function needs_to_be_processed($errno)
 	{
-		return error_reporting() != 0 && ($errno & ERROR_REPORTING);
+		return ($errno & error_reporting()) !== 0 && ($errno & ERROR_REPORTING);
 	}
 
 	private function process()
