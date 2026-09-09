@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 09 09
  * @since       PHPBoost 3.0 - 2009 09 30
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -71,12 +71,12 @@ class ErrorHandler
 	}
 
 	/**
-	 * @return boolean true if the error is not thrown by a functionprefixed with an @ and if the
+	 * @return boolean true if the error is not thrown by a function prefixed with an @ and if the
 	 * errno is in the ERROR_REPORTING level
 	 */
 	private function needs_to_be_processed($errno)
 	{
-		return error_reporting() != 0 && ($errno & ERROR_REPORTING);
+		return ($errno & error_reporting()) !== 0 && ($errno & ERROR_REPORTING);
 	}
 
 	private function process()
