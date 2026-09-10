@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 09 09
  * @since       PHPBoost 2.0 - 2008 11 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -122,6 +122,27 @@ abstract class Menu
 	{
 		$this->title = TextHelper::strprotect($title, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE);
 		$this->filters[] = new MenuStringFilter('/');
+	}
+
+	public function __unserialize(array $data)
+	{
+		foreach ($data as $serialized_property => $value)
+		{
+			$property = str_starts_with($serialized_property, "\0") ? substr($serialized_property, strrpos($serialized_property, "\0") + 1) : $serialized_property;
+			$property = str_starts_with($property, '*') ? substr($property, 1) : $property;
+
+			if ($property === 'template')
+			{
+				$this->template = $value;
+				continue;
+			}
+
+			if (property_exists($this, $property))
+			{
+				$reflection_property = new ReflectionProperty($this, $property);
+				$reflection_property->setValue($this, $value);
+			}
+		}
 	}
 
 	/**
