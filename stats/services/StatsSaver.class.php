@@ -239,7 +239,10 @@ class StatsSaver
         {
             $file_content = $file->read();
             if ($file_content)
-                $stats_array = TextHelper::deserialize($file_content);
+            {
+                $decoded_stats = TextHelper::deserialize($file_content);
+                $stats_array = is_array($decoded_stats) ? $decoded_stats : array();
+            }
         }
         return $stats_array;
     }
@@ -283,7 +286,11 @@ class StatsSaver
         $file = new File(PATH_TO_ROOT . '/stats/cache/robots.txt');
         if (!$file->exists() || $file->is_writable())
         {
-            $stats_array = self::retrieve_stats('robots');
+            $handle = fopen($file->get_path(), 'c+b');
+            flock($handle, LOCK_EX);
+            $content = stream_get_contents($handle);
+            $decoded = $content ? TextHelper::deserialize($content) : null;
+            $stats_array = is_array($decoded) ? $decoded : array();
 
             // Build possible names for the same robot
             $list = array(
@@ -305,59 +312,67 @@ class StatsSaver
                 $list[] = TextHelper::ucfirst(TextHelper::strtolower($bot_name));
             }
 
-            $delete_cache_file = false;
-
             // Merge old keys into $current_robot
             foreach ($list as $name)
             {
-                if (!isset($stats_array[$name])) {
+                if (!isset($stats_array[$name]))
+                {
                     continue;
                 }
 
                 // Normalize source value (may be scalar or array)
-                if (is_array($stats_array[$name])) {
-                    $source_visits = isset($stats_array[$name]['visits_number'])
-                        ? (int)$stats_array[$name]['visits_number']
-                        : 0;
-                } else {
-                    $source_visits = (int)$stats_array[$name];
+                if (is_array($stats_array[$name]))
+                {
+                    $source_visits = isset($stats_array[$name]['visits_number']) ? (int) $stats_array[$name]['visits_number'] : 0;
+                } else
+                {
+                    $source_visits = (int) $stats_array[$name];
                 }
 
                 // Normalize target
-                if (!isset($stats_array[$current_robot])) {
+                if (!isset($stats_array[$current_robot]))
+                {
                     $stats_array[$current_robot] = $source_visits;
-                } else {
-                    if (is_array($stats_array[$current_robot])) {
-                        if (!isset($stats_array[$current_robot]['visits_number'])) {
+                } else
+                {
+                    if (is_array($stats_array[$current_robot]))
+                    {
+                        if (!isset($stats_array[$current_robot]['visits_number']))
+                        {
                             $stats_array[$current_robot]['visits_number'] = 0;
                         }
                         $stats_array[$current_robot]['visits_number'] += $source_visits;
-                    } else {
+                    } else
+                    {
                         $stats_array[$current_robot] += $source_visits;
                     }
                 }
 
                 unset($stats_array[$name]);
-                $delete_cache_file = true;
             }
 
             // Normalize current robot entry to array form and increment
-            if (isset($stats_array[$current_robot])) {
-                if (is_array($stats_array[$current_robot])) {
-                    if (!isset($stats_array[$current_robot]['visits_number'])) {
+            if (isset($stats_array[$current_robot]))
+            {
+                if (is_array($stats_array[$current_robot]))
+                {
+                    if (!isset($stats_array[$current_robot]['visits_number']))
+                    {
                         $stats_array[$current_robot]['visits_number'] = 0;
                     }
                     $stats_array[$current_robot]['visits_number']++;
                     $stats_array[$current_robot]['last_seen'] = time();
-                } else {
+                } else
+                {
                     // Was a scalar counter; convert to array
-                    $visits_number = (int)$stats_array[$current_robot] + 1;
+                    $visits_number = (int) $stats_array[$current_robot] + 1;
                     $stats_array[$current_robot] = array(
                         'visits_number' => $visits_number,
                         'last_seen'     => time()
                     );
                 }
-            } else {
+            } else
+            {
                 // First time we see this robot
                 $stats_array[$current_robot] = array(
                     'visits_number' => 1,
@@ -365,12 +380,11 @@ class StatsSaver
                 );
             }
 
-            if ($delete_cache_file)
-            {
-                $file->delete();
-            }
-
-            $file->write(TextHelper::serialize($stats_array));
+            ftruncate($handle, 0);
+            rewind($handle);
+            fwrite($handle, TextHelper::serialize($stats_array));
+            flock($handle, LOCK_UN);
+            fclose($handle);
         }
     }
 
