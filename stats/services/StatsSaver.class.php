@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2024 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2026 01 24
+ * @version     PHPBoost 6.0 - last update: 2026 09 11
  * @since       PHPBoost 2.0 - 2008 08 23
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -250,15 +250,29 @@ class StatsSaver
     private static function write_stats($stat_name, $stats_item)
     {
         $file = new File(PATH_TO_ROOT . '/stats/cache/' . $stat_name . '.txt');
-        if (!$file->exists() || $file->is_writable())
-        {
+        if (!$file->exists() || $file->is_writable()) {
             $stats_array = self::retrieve_stats($stat_name);
+            $handle = fopen($file->get_path(), 'c+b');
+            flock($handle, LOCK_EX);
+            $content = stream_get_contents($handle);
+            $decoded = $content ? TextHelper::deserialize($content) : null;
+            $stats_array = is_array($decoded) ? $decoded : array();
+
             if (isset($stats_array[TextHelper::strtolower($stats_item)]))
+            {
                 $stats_array[TextHelper::strtolower($stats_item)]++;
+            }
             else
+            {
                 $stats_array[TextHelper::strtolower($stats_item)] = 1;
+            }
 
             $file->write(TextHelper::serialize($stats_array));
+            ftruncate($handle, 0);
+            rewind($handle);
+            fwrite($handle, TextHelper::serialize($stats_array));
+            flock($handle, LOCK_UN);
+            fclose($handle);
         }
     }
 
