@@ -250,8 +250,8 @@ class StatsSaver
     private static function write_stats($stat_name, $stats_item)
     {
         $file = new File(PATH_TO_ROOT . '/stats/cache/' . $stat_name . '.txt');
-        if (!$file->exists() || $file->is_writable()) {
-            $stats_array = self::retrieve_stats($stat_name);
+        if (!$file->exists() || $file->is_writable())
+        {
             $handle = fopen($file->get_path(), 'c+b');
             flock($handle, LOCK_EX);
             $content = stream_get_contents($handle);
@@ -267,7 +267,6 @@ class StatsSaver
                 $stats_array[TextHelper::strtolower($stats_item)] = 1;
             }
 
-            $file->write(TextHelper::serialize($stats_array));
             ftruncate($handle, 0);
             rewind($handle);
             fwrite($handle, TextHelper::serialize($stats_array));
