@@ -112,7 +112,7 @@ class HTMLForm implements HTMLElement
 
     /**
      * Adds fieldset in the form
-     * @param FormFieldset The fieldset to add
+     * @param FormFieldset $fieldset the fieldset to add
      */
     public function add_fieldset(FormFieldset $fieldset)
     {

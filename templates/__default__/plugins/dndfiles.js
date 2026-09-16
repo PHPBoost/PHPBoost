@@ -139,7 +139,7 @@
                             '<i class="far ' + icon + '"></i> ';
 
                         var progressHtml = param.progressBarItem ? 
-                            '<div class="file-progress"><div class="file-progress-bar" style="width:0%"></div></div>' : '';
+                            '<div class="file-progress d-block"><div class="file-progress-bar" style="width:0%"></div></div>' : '';
 
                         var $li = $('<li class="' + warningClass + '" data-index="' + i + '">' +
                             preview + fileName + ' <sup>' + formatBytes(fileSize) + '</sup>' +
