@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 09 20
  * @since       PHPBoost 3.0 - 2009 09 28
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -314,6 +314,12 @@ class Environment
 
         $general_config  = GeneralConfig::load();
         $other_home_page = trim($general_config->get_other_home_page(), '/');
+
+        if (preg_match('`^/?modules/([a-z0-9_-]+)/index\.php(?:\?.*)?$`i', $path, $matches)) {
+            self::$running_module_name = $matches[1];
+            self::$home_page_running = false;
+            return;
+        }
 
         if ((!empty($path) && $path != 'index.php') || (!empty($other_home_page) && $path == $other_home_page)) {
             $module_name               = explode('/', $path);

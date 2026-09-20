@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 09 20
  * @since       PHPBoost 6.0 - 2020 02 07
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -19,7 +19,15 @@ class ModuleDispatchManager extends DispatchManager
      */
     public static function dispatch($url_controller_mappers = [], $module_id = '')
     {
-        $module_configuration = ModulesManager::get_module(!empty($module_id) ? $module_id : Environment::get_running_module_name())->get_configuration();
+        $module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
+        $module    = ModulesManager::get_module($module_id);
+
+        if ($module === null) {
+            DispatchManager::redirect(PHPBoostErrors::module_not_installed());
+            return;
+        }
+
+        $module_configuration = $module->get_configuration();
 
         if ($module_configuration->has_categories())
         {
