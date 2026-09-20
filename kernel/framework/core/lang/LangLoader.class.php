@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 29
+ * @version     PHPBoost 6.1 - last update: 2026 09 20
  * @since       PHPBoost 3.0 - 2009 09 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -288,6 +288,9 @@ class LangLoader
         {
             $module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale($locale));
         }
+        if (!$module_lang_directory->exists())
+            return [];
+
         $files = $module_lang_directory->get_files();
         $module_langloader = [];
         foreach($files as $file)
