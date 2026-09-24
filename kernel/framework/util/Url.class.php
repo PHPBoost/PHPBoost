@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 09
+ * @version     PHPBoost 6.1 - last update: 2026 09 24
  * @since       PHPBoost 2.0 - 2009 01 14
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -104,6 +104,14 @@ class Url
             }
             $this->url = self::compress($this->url) . $anchor;
         }
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->url = $data['url'] ?? $data["\0" . self::class . "\0url"] ?? '';
+        $this->is_relative = $data['is_relative'] ?? $data["\0" . self::class . "\0is_relative"] ?? false;
+        $this->path_to_root = $data['path_to_root'] ?? $data["\0" . self::class . "\0path_to_root"] ?? '';
+        $this->server_url = $data['server_url'] ?? $data["\0" . self::class . "\0server_url"] ?? '';
     }
 
     /**
