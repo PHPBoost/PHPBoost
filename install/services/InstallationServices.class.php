@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 16
+ * @version     PHPBoost 6.1 - last update: 2026 09 24
  * @since       PHPBoost 3.0 - 2010 02 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -617,6 +617,13 @@ class InstallationServices
     private function add_menus()
     {
         MenuService::enable_all(true);
+
+        foreach (MenuService::get_menu_list() as $menu)
+        {
+            if ($menu->get_title() === 'PHPBoost') {
+                return;
+            }
+        }
 
         $modules_menu = MenuService::website_modules();
         MenuService::move($modules_menu, Menu::BLOCK_POSITION__TOP_HEADER, false);
