@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 09 25
  * @since       PHPBoost 3.0 - 2009 10 17
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      janus57 <janus57@janus57.fr>
@@ -330,7 +330,6 @@ class HTTPRequestCustom
         return $array;
     }
 
-
     public function get_is_ajax_request()
     {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && TextHelper::strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
@@ -366,7 +365,7 @@ class HTTPRequestCustom
 
     public function get_site_url()
     {
-        return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_server_name();
+        return 'http' . ($this->get_is_https() ? 's' : '') . '://' . self::get_site_domain_name();
     }
 
     public function get_current_url()
