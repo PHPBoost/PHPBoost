@@ -750,6 +750,19 @@ function affiche_math($texte, $taille)
     $htexte = 'dg' . $texte;
     $hdim   = ImageTTFBBox($taille, 0, $font, $htexte);
     $wdim   = ImageTTFBBox($taille, 0, $font, $texte);
+    if ($hdim === false || $wdim === false) {
+        $font   = PHP_MATH_PUBLISHER_FONT_DIR . '/cmr10.ttf';
+        $texte  = '?';
+        $htexte = 'dg?';
+        $hdim   = ImageTTFBBox($taille, 0, $font, $htexte);
+        $wdim   = ImageTTFBBox($taille, 0, $font, $texte);
+        if ($hdim === false || $wdim === false) {
+            $img = ImageCreate(1, 1);
+            $blanc = ImageColorAllocate($img, 255, 255, 255);
+            imagecolortransparent($img, $blanc);
+            return $img;
+        }
+    }
     $dx     = max($wdim[2], $wdim[4]) - min($wdim[0], $wdim[6]) + ceil($taille / 8);
     $dy     = max($hdim[1], $hdim[3]) - min($hdim[5], $hdim[7]) + ceil($taille / 8);
     $img    = ImageCreate(max($dx, 1), max($dy, 1));
@@ -1150,11 +1163,11 @@ class expression_math extends expression
             $largeur += imagesx($img[$i]);
         }
         $this->base_verticale = $dessus;
-        $result = ImageCreate(max($largeur, 1), max($hauteur, 1));
+        $result = ImageCreate((int) max($largeur, 1), (int) max($hauteur, 1));
         $noir   = ImageColorAllocate($result, 0, 0, 0);
         $blanc  = ImageColorAllocate($result, 255, 255, 255);
         $blanc  = imagecolortransparent($result, $blanc);
-        ImageFilledRectangle($result, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
+        ImageFilledRectangle($result, 0, 0, (int) ($largeur - 1), (int) ($hauteur - 1), $blanc);
         $pos = 0;
         for ($i = 0; $i < count($img); $i++) {
             if (isset($img[$i])) {
