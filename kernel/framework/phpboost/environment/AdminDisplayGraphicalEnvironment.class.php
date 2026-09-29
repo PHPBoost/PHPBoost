@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 09 29
  * @since       PHPBoost 3.0 - 2009 10 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -32,6 +32,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 	{
 		$view = new FileTemplate('admin/body.tpl');
 		$view->add_lang(self::$lang);
+        $config = GraphicalEnvironmentConfig::load();
 
 		$header_logo_path = '';
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
@@ -50,7 +51,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'U_HEADER_LOGO' 	=> Url::to_rel($header_logo_path),
 		]);
 
-		if (GraphicalEnvironmentConfig::load()->is_page_bench_enabled()) {
+		if ($config->is_page_bench_enabled()) {
 			$view->put_all([
 				'C_DISPLAY_BENCH' => true,
 				'BENCH'			  => AppContext::get_bench()->to_string(), //Fin du benchmark
@@ -59,7 +60,22 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			]);
 		}
 
-		if (GraphicalEnvironmentConfig::load()->get_display_theme_author() && $theme) {
+		if ($config->get_display_copyright())
+		{
+            $now = new Date();
+            $year = date('Y', $now->get_timestamp());
+            $install = GeneralConfig::load()->get_site_install_date();
+            $install_year = date('Y', $install->get_timestamp());
+			$view->put_all([
+				'C_DISPLAY_COPYRIGHT' => true,
+                'COPYRIGHT'           => $year == $install_year ? $install_year : $year . '-' . $install_year,
+                'COPYRIGHT_NAME'      => $config->get_copyright_name() ? $config->get_copyright_name() : GeneralConfig::load()->get_site_name(),
+                'C_COPYRIGHT_LINK'    => $config->get_copyright_name() && $config->get_copyright_url(),
+                'U_COPYRIGHT'         => $config->get_copyright_url()
+			]);
+		}
+
+		if ($config->get_display_theme_author() && $theme) {
 			$theme_configuration = $theme->get_configuration();
 			$view->put_all([
 				'C_DISPLAY_AUTHOR_THEME' => true,

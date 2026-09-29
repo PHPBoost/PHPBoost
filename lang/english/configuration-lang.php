@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 26
+ * @version     PHPBoost 6.1 - last update: 2026 09 29
  * @since       PHPBoost 3.0 - 2010 04 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -38,6 +38,11 @@ $lang['configuration.page.bench']                = 'Benchmark';
 $lang['configuration.page.bench.clue']           = 'Displays page\'s render time and SQL requests';
 $lang['configuration.display.theme.author']      = 'Website\'s theme info';
 $lang['configuration.display.theme.author.clue'] = 'Displays theme info in footer';
+$lang['configuration.display.copyright']         = 'Copyright';
+$lang['configuration.display.copyright.clue']    = 'Display the copyright in footer : &copy;' . GeneralConfig::load()->get_site_name();
+$lang['configuration.copyright.name']            = 'Customize the copyright';
+$lang['configuration.copyright.name.clue']       = 'Leave empty to display the site name';
+$lang['configuration.copyright.url']             = 'Link to the copyright';
 
 // Advanced config
 $lang['configuration.advanced']           = 'Advanced configuration';

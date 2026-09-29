@@ -23,6 +23,8 @@ class AdminGeneralConfigController extends DefaultAdminController
         {
             $this->save();
             $this->form->get_field_by_id('other_start_page')->set_hidden($this->general_config->get_module_home_page() != 'other');
+            $this->form->get_field_by_id('copyright_name')->set_hidden(!$this->graphical_environment_config->get_display_copyright());
+            $this->form->get_field_by_id('copyright_url')->set_hidden(!$this->graphical_environment_config->get_display_copyright());
             $this->form->get_field_by_id('picture_theme')->set_value('<a href="'. $this->get_picture_theme() .'" data-lightbox="theme" data-rel="lightcase:collection" id="preview_theme">
                 <img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['configuration.theme.picture'] . '" class="admin-theme-img" /><br />
                 ('. $this->lang['configuration.theme.preview'] .')
@@ -127,6 +129,34 @@ class AdminGeneralConfigController extends DefaultAdminController
             ]
         ));
 
+        $fieldset->add_field(new FormFieldCheckbox('display_copyright', $this->lang['configuration.display.copyright'], $this->graphical_environment_config->get_display_copyright(),
+            [
+                'class' => 'third-field custom-checkbox',
+                'description' => $this->lang['configuration.display.copyright.clue'],
+                'events' => ['change' => '
+                    if (HTMLForms.getField("display_copyright").getValue()) {
+                        HTMLForms.getField("copyright_name").enable();
+                        HTMLForms.getField("copyright_url").enable();
+                    } else {
+                        HTMLForms.getField("copyright_name").disable();
+                        HTMLForms.getField("copyright_url").disable();
+                    }'
+                ]
+            ]
+        ));
+
+        $fieldset->add_field(new FormFieldTextEditor('copyright_name', $this->lang['configuration.copyright.name'], $this->graphical_environment_config->get_copyright_name(),
+            [
+                'description' => $this->lang['configuration.copyright.name.clue'],
+                'hidden' => !$this->graphical_environment_config->get_display_copyright()
+            ]
+        ));
+
+        $fieldset->add_field(new FormFieldUrlEditor('copyright_url', $this->lang['configuration.copyright.url'], $this->graphical_environment_config->get_copyright_url(),
+            ['hidden' => !$this->graphical_environment_config->get_display_copyright()]
+        ));
+
+
         $this->submit_button = new FormButtonDefaultSubmit();
         $form->add_button($this->submit_button);
         $form->add_button(new FormButtonReset());
@@ -152,6 +182,15 @@ class AdminGeneralConfigController extends DefaultAdminController
         $this->graphical_environment_config->set_visit_counter_enabled($this->form->get_value('visit_counter'));
         $this->graphical_environment_config->set_page_bench_enabled($this->form->get_value('page_bench'));
         $this->graphical_environment_config->set_display_theme_author($this->form->get_value('display_theme_author'));
+        $this->graphical_environment_config->set_display_copyright($this->form->get_value('display_copyright'));
+        if ($this->form->get_value('display_copyright')) {
+            $this->graphical_environment_config->set_copyright_name($this->form->get_value('copyright_name'));
+            $this->graphical_environment_config->set_copyright_url($this->form->get_value('copyright_url'));
+        }
+        else {
+            $this->graphical_environment_config->set_copyright_name('');
+            $this->graphical_environment_config->set_copyright_url('');
+        }
         GraphicalEnvironmentConfig::save();
 
         $this->user_accounts_config->set_default_lang($this->form->get_value('default_language')->get_raw_value());
