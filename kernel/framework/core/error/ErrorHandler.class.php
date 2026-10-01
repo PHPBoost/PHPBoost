@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 09
+ * @version     PHPBoost 6.1 - last update: 2026 10 01
  * @since       PHPBoost 3.0 - 2009 09 30
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -199,6 +199,7 @@ class ErrorHandler
 		$error_log_file = PATH_TO_ROOT . '/cache/error.log';
 		self::clear_error_log_file($error_log_file);
 		self::add_error_in_log_file($error_log_file, $error_msg, $error_stacktrace, $errno);
+        AdminLoggedErrorsService::send_alert();
 	}
 
 	private static function clear_error_log_file($log_file)

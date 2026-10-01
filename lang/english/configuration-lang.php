@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 29
+ * @version     PHPBoost 6.1 - last update: 2026 10 01
  * @since       PHPBoost 3.0 - 2010 04 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -145,5 +145,21 @@ $lang['configuration.email.smtp.secure.protocol']          = 'Secured protocol';
 $lang['configuration.email.smtp.secure.protocol.none']     = 'None';
 $lang['configuration.email.smtp.secure.protocol.tls']      = 'TLS';
 $lang['configuration.email.smtp.secure.protocol.ssl']      = 'SSL';
+
+// Logged errors
+$lang['configuration.errors.alerts']      = 'Send an alert by email';
+$lang['configuration.errors.alerts.clue'] = 'As soon as an error is detected.';
+$lang['configuration.errors.level']       = 'Types of alerts';
+$lang['configuration.errors.level.clue']  = 'Multiple choice';
+$lang['configuration.errors.delay']       = 'Minimum delay between 2 emails';
+$lang['configuration.errors.delay.clue']  = 'In minutes';
+$lang['configuration.errors.emails']      = 'Recipients';
+$lang['configuration.errors.emails.clue'] = '
+    List of email addresses (separated by commas).
+    <br />Leave blank to send to administrators.
+';
+
+$lang['configuration.email.subject'] = 'New PHPBoost logged error';
+$lang['configuration.email.content'] = 'An error occurred on the website: ' . GeneralConfig::load()->get_site_name();
 
 ?>
