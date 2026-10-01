@@ -40,6 +40,34 @@
 
                         <form method="post" class="fieldset-content">
                             <div class="responsive-table">
+                                <div class="flex-between">
+                                    <div class="html-table-elements-number">
+                                        <span>{ELEMENTS_NUMBER_LABEL}</span>
+                                    </div>
+                                    <div>
+                                        # IF C_PAGINATION_ACTIVATED #
+                                            # IF C_OPTIONS_ROWS_NUMBER #
+                                                <div class="flex-between">
+                                                    <div class="table-rows-options">
+                                                        <select name="items-per-page" onchange="window.location=this.value">
+                                                            # START option_items_number #
+                                                                <option value="{option_items_number.U_OPTION}"
+                                                                    # IF option_items_number.C_SELECTED # selected="selected"# END IF #>
+                                                                    {option_items_number.VALUE}
+                                                                </option>
+                                                            # END option_items_number #
+                                                        </select>
+                                                    </div>
+                                            # END IF #
+                                            <div class="table-pagination">
+                                                # INCLUDE PAGINATION #
+                                            </div>
+                                            # IF C_OPTIONS_ROWS_NUMBER #
+                                                </div>
+                                            # ENDIF #
+                                        # ENDIF #
+                                    </div>
+                                </div>
                                 <table
                                     # IF C_ID # id="{ID}"# ENDIF #
                                     class="table"
