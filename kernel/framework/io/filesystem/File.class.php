@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 01
  * @since       PHPBoost 2.0 - 2008 07 06
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -175,6 +175,11 @@ class File extends FileSystemElement
 		$this->close();
 		if (file_exists($this->get_path()) && !@unlink($this->get_path()))
 		{
+			clearstatcache(true, $this->get_path());
+			if (!file_exists($this->get_path()))
+			{
+				return;
+			}
 			// Empty the file if it couldn't delete it
 			$this->erase();
 			throw new IOException('The file ' . $this->get_path()  . ' couldn\'t been deleted');
@@ -362,6 +367,7 @@ class File extends FileSystemElement
             curl_close($ch);
 		if ($data) 
 		{
+			$response_headers = [];
 			$line = strtok($data, "\r\n");
 			$status_code = trim($line);
 			while (($line = strtok("\r\n")) !== false) 
@@ -369,14 +375,14 @@ class File extends FileSystemElement
 				if(false !== ($matches = explode(':', $line, 2))) 
 				{
                     $response_headers["{$matches[0]}"] = trim($matches[1]);
-				}  
+				}
 			}
 			if (preg_match("/HTTP\/\d[.\d]* (\d\d\d)/", $status_code, $matches)) 
 			{
 				$status = (int) $matches[1];
 				if ($status === 200)
 				{
-					return (int)$response_headers['content-length'] ?? -1;
+					return (int)($response_headers['content-length'] ?? -1);
 				}
 
 			}
