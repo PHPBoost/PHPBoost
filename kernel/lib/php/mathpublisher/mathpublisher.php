@@ -1393,9 +1393,9 @@ class expression_math extends expression
         $blanc         = ImageColorAllocate($imggauche, 255, 255, 255);
         $blanc         = imagecolortransparent($imggauche, $blanc);
         ImageFilledRectangle($imggauche, 0, 0, $largeurgauche - 1, $hauteurgauche - 1, $blanc);
-        ImageCopy($imggauche, $imgsymbole, ($largeurgauche - $largeursymbole) / 2, $hauteur2, 0, 0, $largeursymbole, $hauteursymbole);
-        ImageCopy($imggauche, $img2, ($largeurgauche - $largeur2) / 2, 0, 0, 0, $largeur2, $hauteur2);
-        ImageCopy($imggauche, $img1, ($largeurgauche - $largeur1) / 2, $hauteur2 + $hauteursymbole, 0, 0, $largeur1, $hauteur1);
+        ImageCopy($imggauche, $imgsymbole, (int) round(($largeurgauche - $largeursymbole) / 2), $hauteur2, 0, 0, $largeursymbole, $hauteursymbole);
+        ImageCopy($imggauche, $img2, (int) round(($largeurgauche - $largeur2) / 2), 0, 0, 0, $largeur2, $hauteur2);
+        ImageCopy($imggauche, $img1, (int) round(($largeurgauche - $largeur1) / 2), $hauteur2 + $hauteursymbole, 0, 0, $largeur1, $hauteur1);
         $imgfin               = alignement2($imggauche, $basesymbole + $hauteur2, $imgexp, $baseexp);
         $this->image          = $imgfin;
         $this->base_verticale = max($basesymbole + $hauteur2, $baseexp + $hauteur2);
