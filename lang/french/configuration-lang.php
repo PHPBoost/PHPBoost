@@ -149,9 +149,9 @@ $lang['configuration.email.smtp.secure.protocol.tls']      = 'TLS';
 $lang['configuration.email.smtp.secure.protocol.ssl']      = 'SSL';
 
 // Logged errors
-$lang['configuration.errors.alerts']      = 'Envoyer une alerte par email';
+$lang['configuration.errors.alerts']      = 'Envoi d\'alerte d\'erreur par email';
 $lang['configuration.errors.alerts.clue'] = 'Dès qu\'une erreur est détectée.';
-$lang['configuration.errors.level']       = 'Types d\'alerte';
+$lang['configuration.errors.level']       = 'Types d\'erreurs';
 $lang['configuration.errors.level.clue']  = 'Choix multiple';
 $lang['configuration.errors.delay']       = 'Delai minimum entre 2 emails';
 $lang['configuration.errors.delay.clue']  = 'En minutes';

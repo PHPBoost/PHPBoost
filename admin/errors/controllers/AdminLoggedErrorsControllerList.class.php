@@ -13,8 +13,8 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 {
 	const NUMBER_ITEMS_PER_PAGE = 15;
 
-    private $alert_form;
-    private $alert_button;
+    private HTMLForm $alert_form;
+    private FormButtonDefaultSubmit $alert_button;
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -22,18 +22,18 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 		$this->build_alert_form();
 		$this->build_table();
 
-        $this->view->put_all([
-            'ALERT_FORM' => $this->alert_form->display(),
-        ]);
-
         if ($this->alert_button->has_been_submited() && $this->alert_form->validate())
         {
-            $this->alert_form->get_field_by_id('alert_level')->set_hidden(!$this->config->get_send_alerts());
-            $this->alert_form->get_field_by_id('email_list')->set_hidden(!$this->config->get_send_alerts());
-            $this->alert_form->get_field_by_id('delay')->set_hidden(!$this->config->get_send_alerts());
+            $this->alert_form->get_field_by_id('alert_level')->set_hidden($this->config->get_send_alerts());
+            $this->alert_form->get_field_by_id('email_list')->set_hidden($this->config->get_send_alerts());
+            $this->alert_form->get_field_by_id('delay')->set_hidden($this->config->get_send_alerts());
             $this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
             $this->save();
         }
+
+        $this->view->put_all([
+            'ALERT_FORM' => $this->alert_form->display(),
+        ]);
 
 		return new AdminErrorsDisplayResponse($this->view, $this->lang['admin.logged.errors']);
 	}
@@ -194,6 +194,7 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
         }
 
         $this->config->save();
+        HooksService::execute_hook_action('edit_config', 'kernel', ['title' => $this->lang['configuration.errors.alerts'], 'url' => AdminErrorsUrlBuilder::logged_errors()->rel()]);
     }
 }
 ?>
