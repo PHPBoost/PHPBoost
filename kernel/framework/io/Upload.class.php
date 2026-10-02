@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 02
  * @since       PHPBoost 1.6 - 2007 01 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -52,7 +52,7 @@ class Upload
      */
     public function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
     {
-        $file = $_FILES[$filepostname];
+        $file = isset($_FILES[$filepostname]) ? $_FILES[$filepostname] : [];
         if (isset($file['name']) && isset($file['name'][0]) && !empty($file['name'][0]))
         {
             $this->isMultiple = is_array($file['name']);
