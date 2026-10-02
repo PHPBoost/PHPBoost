@@ -67,7 +67,6 @@ class AdminLoggedErrorsService
 
         if ($config->get_send_alerts() && $flag)
         {
-            Debug::dump('Nouvelle erreur PHPBoost');
             $sender  = MailServiceConfig::load()->get_default_mail_sender();
             $subject = LangLoader::get_message('configuration.email.subject', 'configuration-lang');
             $content = LangLoader::get_message('configuration.email.content', 'configuration-lang');
