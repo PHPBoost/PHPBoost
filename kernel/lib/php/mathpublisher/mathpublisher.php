@@ -424,6 +424,7 @@ function tableau_expression($expression)
 function affiche_symbol($texte, $haut)
 {
     global $symboles, $fontesmath;
+    $haut = (int) round($haut);
     $texte = trim(stripslashes($texte));
     switch ($texte) {
         case '':
@@ -795,6 +796,8 @@ function parenthese($hauteur, $style)
  */
 function alignement2($image1, $base1, $image2, $base2)
 {
+    $base1    = (int) round($base1);
+    $base2    = (int) round($base2);
     $largeur1 = imagesx($image1);
     $hauteur1 = imagesy($image1);
     $largeur2 = imagesx($image2);
@@ -808,8 +811,10 @@ function alignement2($image1, $base1, $image2, $base2)
     $blanc    = ImageColorAllocate($result, 255, 255, 255);
     $blanc    = imagecolortransparent($result, $blanc);
     ImageFilledRectangle($result, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
-    ImageCopy($result, $image1, 0, $dessus - $base1, 0, 0, $largeur1, $hauteur1);
-    ImageCopy($result, $image2, $largeur1, $dessus - $base2, 0, 0, $largeur2, $hauteur2);
+    $position_y1 = (int) ($dessus - $base1);
+    $position_y2 = (int) ($dessus - $base2);
+    ImageCopy($result, $image1, 0, $position_y1, 0, 0, $largeur1, $hauteur1);
+    ImageCopy($result, $image2, $largeur1, $position_y2, 0, 0, $largeur2, $hauteur2);
     // ImageRectangle($result,0,0,$largeur-1,$hauteur-1,$noir);
     return $result;
 }
@@ -825,6 +830,9 @@ function alignement2($image1, $base1, $image2, $base2)
  */
 function alignement3($image1, $base1, $image2, $base2, $image3, $base3)
 {
+    $base1    = (int) round($base1);
+    $base2    = (int) round($base2);
+    $base3    = (int) round($base3);
     $largeur1 = imagesx($image1);
     $hauteur1 = imagesy($image1);
     $largeur2 = imagesx($image2);
@@ -879,7 +887,7 @@ class expression_texte extends expression
     public function dessine($taille)
     {
         $this->image          = affiche_math($this->texte, $taille);
-        $this->base_verticale = imagesy($this->image) / 2;
+        $this->base_verticale = (int) round(imagesy($this->image) / 2);
     }
 }
 //*****************************************************************
@@ -1144,6 +1152,8 @@ class expression_math extends expression
                 $dessous  = max(imagesy($img[$i]) - $base[$i], $dessous);
             }
         }
+        $dessus  = (int) round($dessus);
+        $dessous = (int) round($dessous);
         $hauteur = $dessus + $dessous;
         $paro    = parenthese(max($dessus, $dessous) * 2, "(");
         $parf    = parenthese(max($dessus, $dessous) * 2, ")");
@@ -1156,7 +1166,8 @@ class expression_math extends expression
                 }
 
                 $dessus   = max(imagesy($img[$i]) / 2, $dessus);
-                $base[$i] = imagesy($img[$i]) / 2;
+                $base[$i] = (int) round(imagesy($img[$i]) / 2);
+                $dessus   = (int) round($dessus);
                 $dessous  = max(imagesy($img[$i]) - $base[$i], $dessous);
                 $hauteur  = max(imagesy($img[$i]), $hauteur);
             }
@@ -1225,7 +1236,7 @@ class expression_math extends expression
         $largeur  = $largeur1 + $largeur2;
         if ($hauteur1 >= $hauteur2) {
             $hauteur              = ceil($hauteur2 / 2 + $hauteur1);
-            $this->base_verticale = $hauteur2 / 2 + $base1;
+            $this->base_verticale = (int) round($hauteur2 / 2 + $base1);
             $result               = ImageCreate(max($largeur, 1), max($hauteur, 1));
             $noir                 = ImageColorAllocate($result, 0, 0, 0);
             $blanc                = ImageColorAllocate($result, 255, 255, 255);
@@ -1235,7 +1246,7 @@ class expression_math extends expression
             ImageCopy($result, $img2, $largeur1, 0, 0, 0, $largeur2, $hauteur2);
         } else {
             $hauteur              = ceil($hauteur1 / 2 + $hauteur2);
-            $this->base_verticale = $hauteur2 - $base1 + $hauteur1 / 2;
+            $this->base_verticale = (int) round($hauteur2 - $base1 + $hauteur1 / 2);
             $result               = ImageCreate(max($largeur, 1), max($hauteur, 1));
             $noir                 = ImageColorAllocate($result, 0, 0, 0);
             $blanc                = ImageColorAllocate($result, 255, 255, 255);
@@ -1301,7 +1312,7 @@ class expression_math extends expression
         $imgrac     = affiche_symbol("_racine", $hauteurexp + 2);
         $largeurrac = imagesx($imgrac);
         $hauteurrac = imagesy($imgrac);
-        $baserac    = $hauteurrac / 2;
+        $baserac    = (int) round($hauteurrac / 2);
 
         $largeur = $largeurrac + $largeurexp;
         $hauteur = max($hauteurexp, $hauteurrac);
@@ -1338,7 +1349,7 @@ class expression_math extends expression
         $imgrac     = affiche_symbol("_racine", $hauteurexp + 2);
         $largeurrac = imagesx($imgrac);
         $hauteurrac = imagesy($imgrac);
-        $baserac    = $hauteurrac / 2;
+        $baserac    = (int) round($hauteurrac / 2);
 
         $largeur = $largeurrac + $largeurexp;
         $hauteur = max($hauteurexp, $hauteurrac);
@@ -1384,7 +1395,7 @@ class expression_math extends expression
         $imgsymbole     = affiche_symbol($caractere, $baseexp * 1.8); //max($baseexp,$hauteurexp-$baseexp)*2);
         $largeursymbole = imagesx($imgsymbole);
         $hauteursymbole = imagesy($imgsymbole);
-        $basesymbole    = $hauteursymbole / 2;
+        $basesymbole    = (int) round($hauteursymbole / 2);
 
         $hauteurgauche = $hauteursymbole + $hauteur1 + $hauteur2;
         $largeurgauche = max($largeursymbole, $largeur1, $largeur2);
@@ -1529,7 +1540,7 @@ class expression_math extends expression
         }
         // ImageRectangle($imgfin,0,0,$largeurfin-1,$hauteurfin-1,$noir);
         $this->image          = $imgfin;
-        $this->base_verticale = imagesy($imgfin) / 2;
+        $this->base_verticale = (int) round(imagesy($imgfin) / 2);
     }
 
     /**
@@ -1612,7 +1623,7 @@ class expression_math extends expression
             $h += $hauteur_ligne[$ligne] + $padding;
         }
         $this->image          = $imgfin;
-        $this->base_verticale = imagesy($imgfin) / 2;
+        $this->base_verticale = (int) round(imagesy($imgfin) / 2);
     }
 
     /**
@@ -1737,7 +1748,7 @@ class expression_math extends expression
         $imglim     = affiche_math("_lim", $taille);
         $largeurlim = imagesx($imglim);
         $hauteurlim = imagesy($imglim);
-        $baselim    = $hauteurlim / 2;
+        $baselim    = (int) round($hauteurlim / 2);
 
         $this->noeuds[1]->dessine($taille * 0.8);
         $imginf     = $this->noeuds[1]->image;
@@ -1758,8 +1769,8 @@ class expression_math extends expression
         $blanc   = ImageColorAllocate($imgfin, 255, 255, 255);
         $blanc   = imagecolortransparent($imgfin, $blanc);
         ImageFilledRectangle($imgfin, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
-        ImageCopy($imgfin, $imglim, ($largeur - $largeurlim) / 2, 0, 0, 0, $largeurlim, $hauteurlim);
-        ImageCopy($imgfin, $imginf, ($largeur - $largeurinf) / 2, $hauteurlim, 0, 0, $largeurinf, $hauteurinf);
+        ImageCopy($imgfin, $imglim, (int) round(($largeur - $largeurlim) / 2), 0, 0, 0, $largeurlim, $hauteurlim);
+        ImageCopy($imgfin, $imginf, (int) round(($largeur - $largeurinf) / 2), $hauteurlim, 0, 0, $largeurinf, $hauteurinf);
 
         $this->image          = alignement2($imgfin, $baselim, $imgexp, $baseexp);
         $this->base_verticale = max($baselim, $baseexp);
@@ -1780,14 +1791,14 @@ class expression_math extends expression
             $imggauche = parenthese($hauteurexp, $this->noeuds[1]->texte);
         }
 
-        $basegauche = imagesy($imggauche) / 2;
+        $basegauche = (int) round(imagesy($imggauche) / 2);
         if ("&$" == $this->noeuds[3]->texte && isset($this->noeuds[3]->noeuds[0])) {
             $imgdroit = parenthese($hauteurexp, $this->noeuds[3]->noeuds[0]->texte);
         } else {
             $imgdroit = parenthese($hauteurexp, $this->noeuds[3]->texte);
         }
 
-        $basedroit            = imagesy($imgdroit) / 2;
+        $basedroit            = (int) round(imagesy($imgdroit) / 2);
         $this->image          = alignement3($imggauche, $basegauche, $imgexp, $baseexp, $imgdroit, $basedroit);
         $this->base_verticale = max($basegauche, $baseexp, $basedroit);
     }
