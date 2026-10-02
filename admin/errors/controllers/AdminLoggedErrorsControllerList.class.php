@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 01
+ * @version     PHPBoost 6.1 - last update: 2026 10 02
  * @since       PHPBoost 4.0 - 2014 01 05
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -142,7 +142,13 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
             ]
         ));
 
-        $fieldset->add_field( new FormFieldMultipleCheckbox('alert_level', $this->lang['configuration.errors.level'], TextHelper::deserialize($this->config->get_alert_level()),
+        $selected_alert_levels = TextHelper::deserialize($this->config->get_alert_level());
+        if (!is_array($selected_alert_levels))
+        {
+            $selected_alert_levels = [];
+        }
+
+        $fieldset->add_field( new FormFieldMultipleCheckbox('alert_level', $this->lang['configuration.errors.level'], $selected_alert_levels,
             [
                 new FormFieldMultipleCheckboxOption('question', $this->lang['warning.unknown']),
                 new FormFieldMultipleCheckboxOption('notice', $this->lang['warning.notice']),

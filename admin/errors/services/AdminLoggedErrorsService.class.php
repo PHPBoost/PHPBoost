@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 01
+ * @version     PHPBoost 6.1 - last update: 2026 10 02
  * @since       PHPBoost 6.1 - 2026 10 01
 */
 
@@ -34,10 +34,10 @@ class AdminLoggedErrorsService
         }
 
         // Get all alert levels from the config
-        $levels = [];
-        foreach (TextHelper::deserialize($config->get_alert_level()) as $options)
+        $levels = TextHelper::deserialize($config->get_alert_level());
+        if (!is_array($levels))
         {
-            $levels[] = $options->get_id();
+            $levels = [];
         }
 
         // Check if an error class belong to levels
