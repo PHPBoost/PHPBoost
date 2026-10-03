@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 03
  * @since       PHPBoost 3.0 - 2009 10 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Kevin MASSY <reidlos@phpboost.com>
@@ -214,7 +214,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 		return $kernel_message;
 	}
 
-	public function display_kernel_message(View $template)
+	public function display_kernel_message(Template $template)
 	{
 		$this->display_install_or_update_folders_kernel_message($template);
 
@@ -236,12 +236,43 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 			$folder->delete();
 	}
 
-	private function display_install_or_update_folders_kernel_message(View $template)
+	private function get_module_update_folders()
+	{
+		$update_folders = [];
+		$modules_folder = new Folder(PATH_TO_ROOT . '/modules');
+
+		if ($modules_folder->exists())
+		{
+			foreach ($modules_folder->get_folders() as $module_folder)
+			{
+				$update_folders = array_merge($update_folders, $module_folder->get_folders('`^update$`'));
+			}
+		}
+
+		return $update_folders;
+	}
+
+	private function is_update_folder_deleted()
+	{
+		return $this->is_folder_deleted('update') && empty($this->get_module_update_folders());
+	}
+
+	private function delete_update_folders()
+	{
+		$this->delete_folder('update');
+
+		foreach ($this->get_module_update_folders() as $folder)
+		{
+			$folder->delete();
+		}
+	}
+
+	private function display_install_or_update_folders_kernel_message(Template $template)
 	{
 		if (AppContext::get_current_user()->is_admin() && !AppContext::get_request()->get_is_localhost())
 		{
 			$display_message_install = !$this->is_folder_deleted('install');
-			$display_message_update  = !$this->is_folder_deleted('update');
+			$display_message_update  = !$this->is_update_folder_deleted();
 
 			if ($display_message_install || $display_message_update)
 			{
@@ -253,7 +284,7 @@ abstract class AbstractDisplayGraphicalEnvironment extends AbstractGraphicalEnvi
 				if ($submit_button->has_been_submited() && $form->validate())
 				{
 					$this->delete_folder('install');
-					$this->delete_folder('update');
+					$this->delete_update_folders();
 					$display_message_install = $display_message_update = false;
 				}
 			}
