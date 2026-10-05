@@ -58,7 +58,7 @@
                                                             # END option_items_number #
                                                         </select>
                                                     </div>
-                                            # END IF #
+                                            # ENDIF #
                                             <div class="table-pagination">
                                                 # INCLUDE PAGINATION #
                                             </div>
