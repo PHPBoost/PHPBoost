@@ -18,7 +18,7 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 
 	public function execute(HTTPRequestCustom $request)
 	{
-        $this->config = AdminLoggedErrorsConfig::load();
+        $this->config = ErrorsConfig::load();
 		$this->build_alert_form();
 		$this->build_table();
 

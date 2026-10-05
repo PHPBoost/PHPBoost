@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2029 09 30
 */
 
-class AdminLoggedErrorsConfig extends AbstractConfigData
+class ErrorsConfig extends AbstractConfigData
 {
     const SEND_ALERTS = 'send_alerts';
     const ALERT_LEVEL = 'alert_level';
@@ -66,7 +66,7 @@ class AdminLoggedErrorsConfig extends AbstractConfigData
 
 	/**
 	 * Returns the configuration.
-	 * @return AdminLoggedErrorsConfig
+	 * @return ErrorsConfig
 	 */
 	public static function load()
 	{

@@ -12,7 +12,7 @@ class AdminLoggedErrorsService
     /** This class is triggered as soon as an error is recorded  */
 	public static function send_alert()
 	{
-        $config = AdminLoggedErrorsConfig::load();
+        $config = ErrorsConfig::load();
         // get error.log location
         $file_path = PATH_TO_ROOT . '/cache/error.log';
         // If error.log doesn't exist, we stop
