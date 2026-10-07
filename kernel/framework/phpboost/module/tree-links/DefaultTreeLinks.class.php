@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 07
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,7 +18,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	private $module_id;
 
 	/**
-	 * @var mixed[] authorizations checker
+	 * @var CategoriesAuthorizationsService|ItemsAuthorizationsService authorizations checker
 	 */
 	private $authorizations;
 
@@ -32,7 +32,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	}
 
 	/**
-	 * @return string Return the authorizations checker
+	 * @return CategoriesAuthorizationsService|ItemsAuthorizationsService Return the authorizations checker
 	 */
 	public function get_authorizations()
 	{

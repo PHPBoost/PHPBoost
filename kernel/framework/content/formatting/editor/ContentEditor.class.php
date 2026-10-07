@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 07
  * @since       PHPBoost 3.0 - 2008 07 05
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ContentEditor
@@ -67,5 +68,11 @@ abstract class ContentEditor
     {
         return $this->template;
     }
+
+    /**
+     * Display the editor interface.
+     * @return string
+     */
+    abstract public function display();
 }
 ?>

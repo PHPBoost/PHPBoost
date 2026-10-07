@@ -8,9 +8,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 06
  * @since       PHPBoost 3.0 - 2011 01 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FileSystemDataStore implements DataStore
@@ -36,7 +37,7 @@ class FileSystemDataStore implements DataStore
 		{
 			return $this->get_data($id);
 		}
-		throw new RAMCacheException($id);
+		throw new DataStoreException($id);
 	}
 
 	private function get_data($name)
@@ -50,7 +51,7 @@ class FileSystemDataStore implements DataStore
 		if ($data instanceof \__PHP_Incomplete_Class)
 		{
 			$file->delete();
-			throw new RAMCacheException($name);
+			throw new DataStoreException($name);
 		}
 		return $data;
 	}

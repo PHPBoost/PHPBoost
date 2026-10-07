@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 07
  * @since       PHPBoost 1.5 - 2006 07 23
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Backup
@@ -213,9 +214,8 @@ class Backup
 	}
 
 	/**
-	 * @desc
-	 * @param $tables
-	 * @return unknown_type
+	 * @param string[] $tables Tables whose structure is extracted.
+	 * @return array{fields: array<array{name: string, type: string, attribute: string, null: bool, default: string, extra: string}>, index: array<array{name: string, fields: string, type: string}>}
 	 */
 	public function extract_table_structure($tables = [])
 	{
