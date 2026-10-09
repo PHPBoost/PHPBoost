@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 02
+ * @version     PHPBoost 6.1 - last update: 2026 10 09
  * @since       PHPBoost 4.0 - 2014 01 05
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -24,11 +24,11 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 
         if ($this->alert_button->has_been_submited() && $this->alert_form->validate())
         {
-            $this->alert_form->get_field_by_id('alert_level')->set_hidden($this->config->get_send_alerts());
-            $this->alert_form->get_field_by_id('email_list')->set_hidden($this->config->get_send_alerts());
-            $this->alert_form->get_field_by_id('delay')->set_hidden($this->config->get_send_alerts());
-            $this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
             $this->save();
+            $this->alert_form->get_field_by_id('alert_level')->set_hidden(!$this->config->get_send_alerts());
+            $this->alert_form->get_field_by_id('email_list')->set_hidden(!$this->config->get_send_alerts());
+            $this->alert_form->get_field_by_id('delay')->set_hidden(!$this->config->get_send_alerts());
+            $this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.success.config'], MessageHelper::SUCCESS, 5));
         }
 
         $this->view->put_all([

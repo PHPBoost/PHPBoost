@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 02
+ * @version     PHPBoost 6.1 - last update: 2026 10 09
  * @since       PHPBoost 6.1 - 2026 10 01
 */
 
@@ -22,7 +22,6 @@ class AdminLoggedErrorsService
         // Get the config delay and the time/date of now
         $delay = $config->get_delay() * 60;
         $now = new Date();
-
         // Get all error classes between now and the delay
         $errclasses = [];
         foreach (self::get_errors_list() as $errors)
@@ -40,11 +39,18 @@ class AdminLoggedErrorsService
             $levels = [];
         }
 
+        // Set level list to be an array
+        $level_list = [];
+        foreach ($levels as $level)
+        {
+            $level_list[] = $level->get_id();
+        }
+
         // Check if an error class belong to levels
         $flag = false;
         foreach ($errclasses as $errclass)
         {
-            if (in_array($errclass, $levels)) {
+            if (in_array($errclass, $level_list)) {
                 $flag = true;
                 break;
             }
