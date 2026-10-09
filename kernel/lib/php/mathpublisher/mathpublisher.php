@@ -9,6 +9,7 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  ***************************************************************************/
 
 ######## PATCH ########
@@ -56,6 +57,7 @@ function mathpublisher_font($font, $texte)
     $key = $font . "\0" . $texte;
     if (!isset($fonts[$key])) {
         set_error_handler(static function () {
+            return true;
         });
         try {
             $fonts[$key] = ImageTTFBBox(1, 0, $font, $texte) !== false;
@@ -69,6 +71,18 @@ function mathpublisher_font($font, $texte)
     }
 
     return PHP_MATH_PUBLISHER_FONT_DIR . "/cmr10.ttf";
+}
+
+function mathpublisher_text_bbox($taille, $angle, $font, $texte)
+{
+    set_error_handler(static function () {
+        return true;
+    });
+    try {
+        return ImageTTFBBox($taille, $angle, $font, $texte);
+    } finally {
+        restore_error_handler();
+    }
 }
 
 //******************************************************************
@@ -749,14 +763,14 @@ function affiche_math($texte, $taille)
 
     $font  = mathpublisher_font($font, $texte);
     $htexte = 'dg' . $texte;
-    $hdim   = ImageTTFBBox($taille, 0, $font, $htexte);
-    $wdim   = ImageTTFBBox($taille, 0, $font, $texte);
+    $hdim   = mathpublisher_text_bbox($taille, 0, $font, $htexte);
+    $wdim   = mathpublisher_text_bbox($taille, 0, $font, $texte);
     if ($hdim === false || $wdim === false) {
         $font   = PHP_MATH_PUBLISHER_FONT_DIR . '/cmr10.ttf';
         $texte  = '?';
         $htexte = 'dg?';
-        $hdim   = ImageTTFBBox($taille, 0, $font, $htexte);
-        $wdim   = ImageTTFBBox($taille, 0, $font, $texte);
+        $hdim   = mathpublisher_text_bbox($taille, 0, $font, $htexte);
+        $wdim   = mathpublisher_text_bbox($taille, 0, $font, $texte);
         if ($hdim === false || $wdim === false) {
             $img = ImageCreate(1, 1);
             $blanc = ImageColorAllocate($img, 255, 255, 255);
