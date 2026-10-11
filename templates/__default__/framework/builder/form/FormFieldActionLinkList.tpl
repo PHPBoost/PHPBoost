@@ -8,7 +8,7 @@
 						# IF action.C_IMG #
 							<img src="{action.U_IMG}" alt="{action.TITLE}" />
 						# ELSE #
-							# IF action.C_FA_ICON #<i class="fa {action.FA_ICON}" aria-hidden="true"></i># ENDIF #
+							# IF action.C_FA_ICON #<i class="{action.FA_ICON}" aria-hidden="true"></i># ENDIF #
 						# ENDIF #
 					# ENDIF #
 					<span>{action.TITLE}</span>
