@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 11
  * @since       PHPBoost 6.0 - 2020 05 10
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsModuleExtensionPointProvider extends ModuleExtensionPointProvider
@@ -22,7 +23,7 @@ class ItemsModuleExtensionPointProvider extends ModuleExtensionPointProvider
 		if ($class = $this->get_class('FeedProvider'))
 			return $class;
 		else
-			return $this->module && $this->module->get_configuration()->has_categories() ? new DefaultCategoriesFeedProvider($this->get_id()) : false;
+			return $this->module && $this->module->get_configuration()->has_categories() && $this->module->get_configuration()->has_items() ? new DefaultCategoriesFeedProvider($this->get_id()) : false;
 	}
 
 	public function home_page()
