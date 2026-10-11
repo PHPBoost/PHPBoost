@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 09
+ * @version     PHPBoost 6.1 - last update: 2026 10 11
  * @since       PHPBoost 6.1 - 2026 10 01
 */
 
@@ -68,7 +68,7 @@ class AdminLoggedErrorsService
         }
         else
         {
-            $recipients[] = MailServiceConfig::load()->get_administrators_mails();
+            $recipients = MailServiceConfig::load()->get_administrators_mails();
         }
 
         if ($config->get_send_alerts() && $flag)
@@ -125,7 +125,7 @@ class AdminLoggedErrorsService
 		return array_reverse($array_errinfo); // Sorting in reverse order because recording in the log file
 	}
 
-    public function send_mail(array $recipients, string $sender, string $subject, string $content)
+    public static function send_mail(array $recipients, string $sender, string $subject, string $content)
 	{
 		foreach ($recipients as $recipient)
 		{
