@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 11
  * @since       PHPBoost 3.0 - 2009 10 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
@@ -30,7 +31,8 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 				}
 
 				$maintain_url = UserUrlBuilder::maintain();
-				if (!Url::is_current_url($maintain_url->relative()))
+				$is_password_recovery_page = Url::is_current_url(UserUrlBuilder::forget_password()->relative()) || Url::is_current_url(UserUrlBuilder::change_password('')->relative());
+				if (!Url::is_current_url($maintain_url->relative()) && !$is_password_recovery_page)
 				{
 					AppContext::get_response()->redirect($maintain_url);
 				}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 11
  * @since       PHPBoost 3.0 - 2012 04 05
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -238,6 +238,8 @@ class UserLoginController extends AbstractController
 
 		$this->fieldset->add_field(new FormFieldCheckbox('autoconnect', $this->lang['user.auto.connect'], true));
 
+		$this->fieldset->add_field(new FormFieldActionLink('forgotten_password', $this->lang['user.forgotten.password'] , UserUrlBuilder::forget_password(), '', '', '', 'fa fa-key'));
+
 		$this->submit_button = new FormButtonSubmit($this->lang['user.sign.in'], 'authenticate');
 		$this->form->add_button($this->submit_button);
 	}
@@ -266,7 +268,7 @@ class UserLoginController extends AbstractController
 			return new Url($this->request->get_value('redirect', '/'));
 	}
 
-	private function init_maintain_delay()
+    private function init_maintain_delay()
 	{
 		$array_time = [0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'];
 		$array_delay = [0 => $this->lang['common.unspecified'], 1 => '', 2 => '1 ' . $this->lang['date.minute'], 3 => '5 ' . $this->lang['date.minutes'], 4 => '15 ' . $this->lang['date.minutes'], 5 => '30 ' . $this->lang['date.minutes'], 6 => '1 ' . $this->lang['date.hour'], 7 => '2 ' . $this->lang['date.hours'], 8 => '1 ' . $this->lang['date.day'], 9 => '2 ' . $this->lang['date.days'], 10 => '1 ' . $this->lang['date.week']];

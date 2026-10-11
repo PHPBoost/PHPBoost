@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 11
  * @since       PHPBoost 3.0 - 2011 07 25
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -12,6 +12,7 @@
 
 class UserLostPasswordController extends AbstractController
 {
+	private $maintain_config;
 	private $lang;
 	private $view;
 	private $form;
@@ -37,6 +38,7 @@ class UserLostPasswordController extends AbstractController
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->lang = LangLoader::get_all_langs();
+		$this->maintain_config = MaintenanceConfig::load();
 	}
 
 	private function build_form()
@@ -59,16 +61,26 @@ class UserLostPasswordController extends AbstractController
 
 	private function build_response(View $view)
 	{
-		$response = new SiteDisplayResponse($view);
-		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['user.forgotten.password'], $this->lang['user.user']);
-		$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.forgotten.password']);
-		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::forget_password());
+        if ($this->maintain_config->is_under_maintenance())
+		{
+			$response = new SiteDisplayFrameResponse($view);
+            $graphical_environment = $response->get_graphical_environment();
+            $graphical_environment->set_page_title($this->lang['user.forgotten.password'], $this->lang['user.user']);
+            $graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.forgotten.password']);
+            $graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::forget_password());
+		}
+        else
+        {
+            $response = new SiteDisplayResponse($view);
+            $graphical_environment = $response->get_graphical_environment();
+            $graphical_environment->set_page_title($this->lang['user.forgotten.password'], $this->lang['user.user']);
+            $graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.forgotten.password']);
+            $graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::forget_password());
 
-		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['user.forgotten.password'], UserUrlBuilder::forget_password()->rel());
-
+            $breadcrumb = $graphical_environment->get_breadcrumb();
+            $breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+            $breadcrumb->add($this->lang['user.forgotten.password'], UserUrlBuilder::forget_password()->rel());
+        }
 		return $response;
 	}
 
@@ -88,7 +100,12 @@ class UserLostPasswordController extends AbstractController
 		];
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['user.forgotten.password'];
 		$content = StringVars::replace_vars($this->lang['user.forgotten.password.email.content'], $parameters);
-		AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content);
+
+        $mail = new Mail();
+        $mail->set_sender($user->get_email());
+        $mail->set_subject($subject);
+        $mail->set_content($content);
+		AppContext::get_mail_service()->try_to_send($mail);
 
 		$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotten.password.success'], MessageHelper::SUCCESS));
 	}
@@ -100,7 +117,7 @@ class UserLostPasswordController extends AbstractController
 
 		if (!$user_id)
 		{
-			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['user.forgotten.password.error'], MessageHelper::NOTICE);
+			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['user.forgotten.password.error'], UserErrorController::NOTICE);
 			DispatchManager::redirect($controller);
 		}
 		else
