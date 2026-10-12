@@ -3,8 +3,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 12
  * @since       PHPBoost 3.0 - 2011 07 16
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DisplayAtomSyndicationController extends AbstractController
@@ -36,7 +37,12 @@ class DisplayAtomSyndicationController extends AbstractController
 			if ($eps->provider_exists($module_id, FeedProvider::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($module_id);
-				$feeds = $provider->feeds();
+				$feeds = $provider->get_extension_point(FeedProvider::EXTENSION_POINT);
+				if (!($feeds instanceof FeedProvider))
+				{
+					AppContext::get_response()->set_header('content-type', 'text/html');
+					DispatchManager::redirect(PHPBoostErrors::unexisting_element());
+				}
 				$data = $feeds->get_feed_data_struct($module_category_id, $feed_name);
 
 				if ($data === null)
