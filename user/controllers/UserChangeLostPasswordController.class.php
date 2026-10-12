@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 12
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,6 +11,7 @@
 
 class UserChangeLostPasswordController extends AbstractController
 {
+	private $maintain_config;
 	private $lang;
 	private $view;
 	private $form;
@@ -45,6 +46,7 @@ class UserChangeLostPasswordController extends AbstractController
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
 		$this->lang = LangLoader::get_all_langs();
+		$this->maintain_config = MaintenanceConfig::load();
 	}
 
 	private function build_form($user_id)
@@ -55,6 +57,7 @@ class UserChangeLostPasswordController extends AbstractController
 
 		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->lang['user.change.password']);
+        $form->set_css_class('content-wrapper');
 
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
@@ -90,8 +93,6 @@ class UserChangeLostPasswordController extends AbstractController
 
 	private function change_password($user_id, $password)
 	{
-		$maintain_config = MaintenanceConfig::load();
-
 		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, $password, null, '');
 
 		$auth_infos = [];
@@ -107,7 +108,7 @@ class UserChangeLostPasswordController extends AbstractController
 
 			$current_user = CurrentUser::from_session();
 
-			if ($user_id && $maintain_config->is_under_maintenance() && !$current_user->check_auth($maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
+			if ($user_id && $this->maintain_config->is_under_maintenance() && !$current_user->check_auth($this->maintain_config->get_auth(), MaintenanceConfig::ACCESS_WHEN_MAINTAIN_ENABLED_AUTHORIZATIONS))
 			{
 				$session = AppContext::get_session();
 				Session::delete($session);
@@ -139,13 +140,22 @@ class UserChangeLostPasswordController extends AbstractController
 
 	private function build_response(View $view, $key)
 	{
-		$response = new SiteDisplayResponse($view);
-		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title($this->lang['user.change.password'], $this->lang['user.user']);
+        if ($this->maintain_config->is_under_maintenance())
+		{
+			$response = new SiteDisplayFrameResponse($view);
+            $graphical_environment = $response->get_graphical_environment();
+            $graphical_environment->set_page_title($this->lang['user.change.password'], $this->lang['user.user']);
+		}
+        else
+        {
+            $response = new SiteDisplayResponse($view);
+            $graphical_environment = $response->get_graphical_environment();
+            $graphical_environment->set_page_title($this->lang['user.change.password'], $this->lang['user.user']);
 
-		$breadcrumb = $graphical_environment->get_breadcrumb();
-		$breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
-		$breadcrumb->add($this->lang['user.change.password'], UserUrlBuilder::change_password($key)->rel());
+            $breadcrumb = $graphical_environment->get_breadcrumb();
+            $breadcrumb->add($this->lang['user.user'], UserUrlBuilder::home()->rel());
+            $breadcrumb->add($this->lang['user.change.password'], UserUrlBuilder::change_password($key)->rel());
+        }
 
 		return $response;
 	}

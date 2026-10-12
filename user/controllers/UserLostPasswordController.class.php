@@ -45,6 +45,7 @@ class UserLostPasswordController extends AbstractController
 	{
 		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->lang['user.forgotten.password']);
+        $form->set_css_class('content-wrapper');
 
 		$fieldset = new FormFieldsetHTML('fieldset', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
