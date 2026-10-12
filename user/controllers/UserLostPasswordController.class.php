@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 11
+ * @version     PHPBoost 6.1 - last update: 2026 10 12
  * @since       PHPBoost 3.0 - 2011 07 25
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -89,8 +89,6 @@ class UserLostPasswordController extends AbstractController
 		$change_password_pass = KeyGenerator::generate_key(15);
 		$user = $this->get_user();
 
-		PHPBoostAuthenticationMethod::update_auth_infos($user->get_id(), null, null, null, null, $change_password_pass);
-
 		$general_config = GeneralConfig::load();
 		$parameters = [
 			'pseudo'               => $user->get_display_name(),
@@ -101,13 +99,15 @@ class UserLostPasswordController extends AbstractController
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['user.forgotten.password'];
 		$content = StringVars::replace_vars($this->lang['user.forgotten.password.email.content'], $parameters);
 
-        $mail = new Mail();
-        $mail->set_sender($user->get_email());
-        $mail->set_subject($subject);
-        $mail->set_content($content);
-		AppContext::get_mail_service()->try_to_send($mail);
-
-		$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotten.password.success'], MessageHelper::SUCCESS));
+		if (AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content))
+		{
+			PHPBoostAuthenticationMethod::update_auth_infos($user->get_id(), null, null, null, null, $change_password_pass);
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotten.password.success'], MessageHelper::SUCCESS));
+		}
+		else
+		{
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['user.forgotten.password.mail.error'], MessageHelper::ERROR));
+		}
 	}
 
 	private function get_user()

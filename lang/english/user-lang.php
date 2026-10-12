@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 12
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -42,6 +42,7 @@ $lang['user.my.profile']         = 'My profile';
 $lang['user.change.password']            = 'Change password';
 $lang['user.forgotten.password.select']  = 'Select the field you want to informat (email or login)';
 $lang['user.forgotten.password.success'] = 'An email has been sent with a link to change your password';
+$lang['user.forgotten.password.mail.error'] = 'The email could not be sent. Please try again later.';
 $lang['user.forgotten.password.error']   = 'Information provided are not correct, please correct it and try again';
 $lang['user.forgotten.password.email.content'] = 'Dear(e) :pseudo,
 

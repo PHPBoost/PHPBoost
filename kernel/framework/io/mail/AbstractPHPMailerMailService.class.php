@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 12
  * @since       PHPBoost 3.0 - 2010 03 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/PHPMailer.php';
@@ -18,7 +19,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 	private static $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,}';
 
 	/**
-	 * @var PHPMailer
+	 * @var \PHPMailer\PHPMailer\PHPMailer
 	 */
 	private $mailer;
 
@@ -29,7 +30,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 		$this->set_send_settings($this->mailer);
 		try
 		{
-		$this->mailer->Send();
+            $this->mailer->Send();
 		}
 		catch(Exception $ex)
 		{
