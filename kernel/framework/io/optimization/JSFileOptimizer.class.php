@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 01
+ * @version     PHPBoost 6.1 - last update: 2026 10 15
  * @since       PHPBoost 6.0 - 2024 07 06
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -106,20 +106,16 @@ class JSFileOptimizer
     }
 
     /**
-     * Exports optimized content to a file.
+     * Exports optimized content to a file.* 
+     * @return bool true if the file has been written
      */
-    public function export_to_file($location)
+    public function export_to_file(string $location): bool
     {
         if (!empty($this->files) || !empty($this->ignored_scripts))
         {
-            $file = new File($location);
-            $file->open(File::WRITE);
-            $file->lock();
-            $file->write($this->export());
-            $file->unlock();
-            $file->close();
-            $file->change_chmod(0666);
+            return File::replace_content($location, $this->export());
         }
+        return true;
     }
 
     /**

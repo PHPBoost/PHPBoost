@@ -86,19 +86,15 @@ class CSSFileOptimizer
 
 	/**
 	 * Exports optimized content to a file.
+     * @return bool true if the file has been written
 	 */
-	public function export_to_file($location)
+	public function export_to_file(string $location): bool
 	{
 		if (!empty($this->files) || !empty($this->scripts))
 		{
-			$file = new File($location);
-			$file->open(File::WRITE);
-			$file->lock();
-			$file->write($this->content);
-			$file->unlock();
-			$file->close();
-			$file->change_chmod(0666);
+			return File::replace_content($location, $this->content);
 		}
+        return true;
 	}
 
 	/**

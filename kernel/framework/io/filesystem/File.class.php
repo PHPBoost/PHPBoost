@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 01
+ * @version     PHPBoost 6.1 - last update: 2026 10 15
  * @since       PHPBoost 2.0 - 2008 07 06
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -152,6 +152,35 @@ class File extends FileSystemElement
 			$this->close();
 		}
 	}
+
+    /**
+     * Replaces the whole content of a file without deleting it first.
+    * Writes into a temporary file then renames it (atomic, readers never see an empty file).
+    * If the rename is not allowed, overwrites the existing file in place.
+    * @param string $path The path of the file
+    * @param string $data The new content
+    * @return bool true if the content has been written
+    */
+    public static function replace_content(string $path, string $data): bool
+    {
+        $temporary_path = $path . '.' . uniqid('', true) . '.tmp';
+        if (@file_put_contents($temporary_path, $data, LOCK_EX) !== false && @rename($temporary_path, $path))
+        {
+            @chmod($path, 0666);
+            return true;
+        }
+        if (file_exists($temporary_path))
+        {
+            @unlink($temporary_path);
+        }
+
+        if (@file_put_contents($path, $data, LOCK_EX) !== false)
+        {
+            @chmod($path, 0666);
+            return true;
+        }
+        return false;
+    }
 
 	/**
 	 * Closes a file and frees the allocated memory relative to the file.
