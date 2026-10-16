@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 16
  * @since       PHPBoost 6.0 - 2020 01 16
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      xela <xela@phpboost.com>
@@ -30,7 +30,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 	private function build_table()
 	{
-		$display_categories = self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
+		$display_categories = self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->has_categories();
 
 		$columns = array_merge([
 			new HTMLTableColumn($this->lang['common.title'], 'title'),
@@ -166,7 +166,7 @@ class DefaultItemsManagementController extends AbstractItemController
 
 	protected function check_authorizations()
 	{
-		return self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations()->moderation() : ItemsAuthorizationsService::check_authorizations()->moderation();
+		return self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->moderation() : ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation();
 	}
 
 	protected function get_additional_html_table_columns()
