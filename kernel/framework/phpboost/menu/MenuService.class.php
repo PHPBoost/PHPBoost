@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 06
+ * @version     PHPBoost 6.1 - last update: 2026 10 19
  * @since       PHPBoost 2.0 - 2008 11 13
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -434,7 +434,7 @@ class MenuService
 		$feeds_menus = self::get_menu_list(FeedMenu::FEED_MENU__CLASS);
 		foreach($feeds_menus as $feed_menu)
 		{
-			if ($module_id == $feed_menu->get_module_id())
+			if ($feed_menu instanceof FeedMenu && $module_id == $feed_menu->get_module_id())
 			{
 				self::delete($feed_menu);
 			}
@@ -644,10 +644,10 @@ class MenuService
 	/**
 	 * @access private
 	 * Build a Menu object from a database result
-	 * @param string[key] $db_result the map from the database with the Menu id and serialized object
+	 * @param array $db_result the map from the database with the Menu id and serialized object
 	 * @return Menu the menu object from the serialized one
 	 */
-	public static function initialize($db_result)
+	public static function initialize(array $db_result): Menu
 	{
 		if (empty($db_result['class']) || !ClassLoader::is_class_registered_and_valid($db_result['class']))
 		{
