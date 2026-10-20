@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 19
  * @since       PHPBoost 6.0 - 2020 03 12
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -164,11 +164,15 @@ class DefaultDisplayItemController extends AbstractItemController
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_item()->get_title(), (self::get_module_configuration()->has_categories() && $this->get_item()->get_category()->get_id() != Category::ROOT_CATEGORY ? $this->get_item()->get_category()->get_name() . ' - ' : '') . self::get_module_configuration()->get_name());
 		$graphical_environment->get_seo_meta_data()->set_canonical_url($this->current_url);
-		if (self::get_module_configuration()->has_rich_items() && $this->module_item->content_field_enabled())
-			$graphical_environment->get_seo_meta_data()->set_description($this->get_item()->get_real_summary());
+		$item = $this->get_item();
+		if (self::get_module_configuration()->has_rich_items() && $item instanceof RichItem)
+		{
+			if ($this->module_item->content_field_enabled())
+				$graphical_environment->get_seo_meta_data()->set_description($item->get_real_summary());
 
-		if (self::get_module_configuration()->has_rich_items() && $this->get_item()->has_thumbnail())
-			$graphical_environment->get_seo_meta_data()->set_picture_url($this->get_item()->get_thumbnail());
+			if ($item->has_thumbnail())
+				$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_thumbnail());
+		}
 
 		if ($seo_page_type = $this->get_seo_page_type())
 			$graphical_environment->get_seo_meta_data()->set_page_type($seo_page_type);
