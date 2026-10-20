@@ -9,7 +9,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallWelcome extends InstallCarrier
+class InstallWelcome extends InstallController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -21,12 +21,12 @@ class InstallWelcome extends InstallCarrier
 
 	/**
 	 * @param Template $view
-	 * @return InstallDisplayResponse
+	 * @return InstallCarrier
 	 */
 	private function create_response(Template $view)
 	{
 		$step_title = $this->lang['install.welcome.title'];
-		$response = new InstallDisplayResponse(0, $step_title, $this->lang, $view);
+		$response = new InstallCarrier(0, $step_title, $this->lang, $view);
 		return $response;
 	}
 

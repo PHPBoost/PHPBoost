@@ -8,7 +8,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallFinish extends InstallCarrier
+class InstallFinish extends InstallController
 {
 	public function execute(HTTPRequestCustom $request): Response
 	{
@@ -17,10 +17,10 @@ class InstallFinish extends InstallCarrier
 		return $this->create_response($view);
 	}
 
-	private function create_response(View $view): InstallDisplayResponse
+	private function create_response(View $view): InstallCarrier
 	{
 		$step_title = $this->lang['install.finish.title'];
-		$response = new InstallDisplayResponse(6, $step_title, $this->lang, $view);
+		$response = new InstallCarrier(6, $step_title, $this->lang, $view);
 		return $response;
 	}
 }

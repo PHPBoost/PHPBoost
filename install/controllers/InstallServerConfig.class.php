@@ -10,7 +10,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallServerConfigCtrl extends InstallCarrier
+class InstallServerConfigCtrl extends InstallController
 {
 
 	private Template $view;
@@ -101,10 +101,10 @@ class InstallServerConfigCtrl extends InstallCarrier
 		$this->view->put('folder', $folders);
 	}
 
-	private function create_response(): InstallDisplayResponse
+	private function create_response(): InstallCarrier
 	{
 		$step_title = $this->lang['install.server.title'];
-		$response = new InstallDisplayResponse(2, $step_title, $this->lang, $this->view);
+		$response = new InstallCarrier(2, $step_title, $this->lang, $this->view);
 		return $response;
 	}
 }

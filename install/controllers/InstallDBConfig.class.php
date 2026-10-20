@@ -11,7 +11,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallDBConfig extends InstallCarrier
+class InstallDBConfig extends InstallController
 {
 
 	private Template $view;
@@ -195,7 +195,7 @@ class InstallDBConfig extends InstallCarrier
 		}
 	}
 
-	private function create_response(): InstallDisplayResponse
+	private function create_response(): InstallCarrier
 	{
 		$this->view = new FileTemplate('install/InstallDBConfig.tpl');
 		$this->view->put('DATABASE_FORM', $this->form->display());
@@ -206,7 +206,7 @@ class InstallDBConfig extends InstallCarrier
 			$this->view->put('ERROR', $this->error);
 		}
 		$step_title = $this->lang['install.db.config.title'];
-		$response = new InstallDisplayResponse(3, $step_title, $this->lang, $this->view);
+		$response = new InstallCarrier(3, $step_title, $this->lang, $this->view);
 		return $response;
 	}
 }

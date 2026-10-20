@@ -10,7 +10,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallCreateAdmin extends InstallCarrier
+class InstallCreateAdmin extends InstallController
 {
 	private Template $view;
 	private HTMLForm $form;
@@ -120,12 +120,12 @@ class InstallCreateAdmin extends InstallCarrier
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	private function create_response(): InstallDisplayResponse
+	private function create_response(): InstallCarrier
 	{
 		$this->view = new FileTemplate('install/InstallCreateAdmin.tpl');
 		$this->view->put('ADMIN_FORM', $this->form->display());
 		$step_title = $this->lang['install.admin.title'];
-		$response = new InstallDisplayResponse(5, $step_title, $this->lang, $this->view);
+		$response = new InstallCarrier(5, $step_title, $this->lang, $this->view);
 		return $response;
 	}
 }

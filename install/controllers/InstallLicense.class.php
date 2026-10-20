@@ -9,7 +9,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallLicense extends InstallCarrier
+class InstallLicense extends InstallController
 {
 
 	private HTMLForm $form;
@@ -64,7 +64,7 @@ class InstallLicense extends InstallCarrier
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	private function create_response(): InstallDisplayResponse
+	private function create_response(): InstallCarrier
 	{
 		$view = new FileTemplate('install/InstallLicense.tpl');
 
@@ -75,7 +75,7 @@ class InstallLicense extends InstallCarrier
             'LICENSE_CONTENT' => $license_content
         ]);
 		$step_title = $this->lang['install.license.title'];
-		$response = new InstallDisplayResponse(1, $step_title, $this->lang, $view);
+		$response = new InstallCarrier(1, $step_title, $this->lang, $view);
 		return $response;
 	}
 }

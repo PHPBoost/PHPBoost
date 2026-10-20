@@ -4,46 +4,124 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 10 20
- * @since       PHPBoost 3.0 - 2010 09 12
+ * @since       PHPBoost 3.0 - 2009 12 13
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-abstract class InstallCarrier extends AbstractController
+class InstallCarrier extends AbstractResponse
 {
-	protected array $lang = [];
-	protected string $locale = '';
+    private array $lang;
+    private int $current_step = 0;
+    private int $steps_number;
+    private Template $full_view;
 
-	protected function load_lang(HTTPRequestCustom $request): void
-	{
-		$this->redirect_to_https_if_needed($request);
-		$locale = TextHelper::htmlspecialchars($request->get_string('lang', ''));
-		$this->locale = in_array($locale, InstallationServices::get_available_langs()) ? $locale : InstallationServices::get_default_lang();
-		LangLoader::set_locale($this->locale);
-		InstallUrlBuilder::set_locale($this->locale);
-		$this->lang = LangLoader::get_all_langs('install', $this->locale);
-	}
+    public function __construct(int $step_number, string $step_title, array $lang, Template $view, string $additional_stylesheet = '')
+    {
+        $this->init_response($step_number, $lang, $view);
+        $env = new InstallDisplayGraphicalEnvironment();
+        $this->add_language_bar();
+        $this->init_steps();
+        $this->update_progress_bar();
 
-	protected function redirect_to_https_if_needed(HTTPRequestCustom $request): void
-	{
-		if (!$request->get_is_https() && @extension_loaded('curl'))
+        $this->full_view->put_all([
+            'C_HAS_PREVIOUS_STEP'     => false,
+            'C_HAS_NEXT_STEP'         => false,
+            'C_ADDITIONAL_STYLESHEET' => !empty($additional_stylesheet),
+
+            'STEP_TITLE'                => $step_title,
+            'ADDITIONAL_STYLESHEET_URL' => $additional_stylesheet,
+            'PROGRESSION'               => floor(100 * $this->current_step / ($this->steps_number -1)),
+            'PHPBOOST_VERSION'          => GeneralConfig::load()->get_phpboost_major_version(),
+
+            'U_RESTART' => InstallUrlBuilder::welcome()->rel(),
+        ]);
+
+        parent::__construct($env, $this->full_view);
+    }
+
+    public function init_response(int $step_number, array $lang, Template $view): void
+    {
+        $this->current_step = $step_number;
+        $this->lang = $lang;
+        $this->full_view = new FileTemplate('install/InstallCarrier.tpl');
+        $this->full_view->put('INSTALL_STEP', $view);
+        $this->full_view->add_lang($this->lang);
+        $view->add_lang($this->lang);
+    }
+
+    private function add_language_bar(): void
+    {
+        $lang = TextHelper::htmlspecialchars(AppContext::get_request()->get_string('lang', ''));
+        $lang = in_array($lang, InstallationServices::get_available_langs()) ? $lang : InstallationServices::get_default_lang();
+
+        $lang_dir = new Folder(PATH_TO_ROOT . '/lang');
+        $langs = [];
+        foreach ($lang_dir->get_folders('`^[a-z_-]+$`iu') as $folder)
         {
-			$status = 0;
-			$curl = curl_init(str_replace('http://', 'https://', $request->get_site_url()));
-			curl_setopt($curl, CURLOPT_NOBODY, true);
-			$result = curl_exec($curl);
-
-			if ($result !== false) {
-				$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-			}
-
-			if ($status >= 200 && $status < 400)
+            $info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $folder->get_name());
+            if (!empty($info_lang['name']))
             {
-				header('HTTP/1.1 301 Moved Permanently');
-				header('Location: ' . str_replace('http://', 'https://', $request->get_current_url()));
-				exit;
-			}
-		}
-	}
+                $langs[] = [
+                    'LANG'				=> $folder->get_name(),
+                    'LANG_NAME'			=> $info_lang['name'],
+                    'LANG_IDENTIFIER'	=> $info_lang['identifier'],
+                    'SELECTED'			=> $folder->get_name() == $lang ? 'selected="selected"' : ''
+                ];
+            }
+        }
+        $this->full_view->put('lang', $langs);
+    }
+
+    private function init_steps(): void
+    {
+        $steps = [
+            ['name' => $this->lang['install.step.introduction'], 'img' => 'home'],
+            ['name' => $this->lang['install.step.license'], 'img' => 'file'],
+        ];
+
+        if (!InstallationServices::check_server()) {
+            $steps[] = ['name' => $this->lang['install.step.server'], 'img' => 'cog'];
+        } elseif ($this->current_step > 1) {
+            $this->current_step--;
+        }
+
+        $steps[] = ['name' => $this->lang['install.step.database'], 'img' => 'server'];
+        $steps[] = ['name' => $this->lang['install.step.website'], 'img' => 'cogs'];
+        $steps[] = ['name' => $this->lang['install.step.admin'], 'img' => 'users'];
+        $steps[] = ['name' => $this->lang['install.step.end'], 'img' => 'check'];
+
+        $this->steps_number = count($steps);
+
+        for ($i = 0; $i < $this->steps_number; $i++)
+        {
+            if ($i < $this->current_step) {
+                $row_class = 'row-success';
+            } elseif ($i == $this->current_step && $i == ($this->steps_number - 1)) {
+                $row_class = 'row-current row-final';
+            } elseif ($i == $this->current_step) {
+                $row_class = 'row-current';
+            } elseif ($i == ($this->steps_number - 1)) {
+                $row_class = 'row-next row-final';
+            } else {
+                $row_class = 'row-next';
+            }
+            $this->full_view->assign_block_vars('step', [
+                'CSS_CLASS' => $row_class,
+                'IMG' => $steps[$i]['img'],
+                'NAME' => $steps[$i]['name']
+            ]);
+        }
+    }
+
+    private function update_progress_bar(): void
+    {
+        for ($i = 1; $i <= floor(($this->current_step / $this->steps_number) * 24); $i++)
+        {
+            $this->full_view->assign_block_vars('progress_bar', []);
+        }
+    }
 }
 ?>

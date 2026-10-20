@@ -12,7 +12,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class InstallWebsiteConfig extends InstallCarrier
+class InstallWebsiteConfig extends InstallController
 {
     private Template $view;
     private HTMLForm $form;
@@ -644,14 +644,14 @@ class InstallWebsiteConfig extends InstallCarrier
         return $tpl->render();
     }
 
-    private function create_response(): InstallDisplayResponse
+    private function create_response(): InstallCarrier
     {
         $this->view = new FileTemplate('install/InstallWebsiteConfig.tpl');
         $this->view->put('WEBSITE_FORM', $this->form->display());
         $step_title            = $this->lang['install.website.config.title'];
         $default_captcha       = $this->distribution_config['default_captcha'];
         $additional_stylesheet = $default_captcha ? $default_captcha::get_css_stylesheet() : '';
-        $response              = new InstallDisplayResponse(4, $step_title, $this->lang, $this->view, $additional_stylesheet);
+        $response              = new InstallCarrier(4, $step_title, $this->lang, $this->view, $additional_stylesheet);
         return $response;
     }
 }
