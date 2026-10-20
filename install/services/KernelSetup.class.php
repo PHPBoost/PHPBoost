@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 05 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,40 +11,34 @@
 
 class KernelSetup
 {
-	/**
-	 * @var DBMSUtils
-	 */
-	private static $db_utils;
-	/**
-	 * @var DBQuerier
-	 */
-	private static $db_querier;
-	private static $comments_table;
-	private static $comments_topic_table;
-	private static $note_table;
-	private static $average_notes_table;
-	private static $visit_counter_table;
-	private static $configs_table;
-	private static $events_table;
-	private static $errors_404_table;
-	private static $group_table;
-	private static $keywords_table;
-	private static $keywords_relations_table;
-	private static $member_table;
-	private static $member_extended_fields_table;
-	private static $member_extended_fields_list;
-	private static $menus_table;
-	private static $pm_msg_table;
-	private static $pm_topic_table;
-	private static $sessions_table;
-	private static $internal_authentication_table;
-	private static $internal_authentication_failures_table;
-	private static $authentication_method_table;
-	private static $smileys_table;
-	private static $upload_table;
-	private static $upload_cat_table;
+	private static DBMSUtils $db_utils;
+	private static DBQuerier $db_querier;
+	private static mixed $comments_table;
+	private static mixed $comments_topic_table;
+	private static mixed $note_table;
+	private static mixed $average_notes_table;
+	private static mixed $visit_counter_table;
+	private static mixed $configs_table;
+	private static mixed $events_table;
+	private static mixed $errors_404_table;
+	private static mixed $group_table;
+	private static mixed $keywords_table;
+	private static mixed $keywords_relations_table;
+	private static mixed $member_table;
+	private static mixed $member_extended_fields_table;
+	private static mixed $member_extended_fields_list;
+	private static mixed $menus_table;
+	private static mixed $pm_msg_table;
+	private static mixed $pm_topic_table;
+	private static mixed $sessions_table;
+	private static mixed $internal_authentication_table;
+	private static mixed $internal_authentication_failures_table;
+	private static mixed $authentication_method_table;
+	private static mixed $smileys_table;
+	private static mixed $upload_table;
+	private static mixed $upload_cat_table;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 		self::$db_querier = PersistenceContext::get_querier();
@@ -75,14 +69,14 @@ class KernelSetup
 		self::$upload_cat_table = PREFIX . 'upload_cat';
 	}
 
-	public function install()
+	public function install(): void
 	{
 		$this->drop_tables();
 		$this->create_tables();
 		$this->insert_data();
 	}
 
-	private function drop_tables()
+	private function drop_tables(): void
 	{
 		self::$db_utils->drop([
 			self::$comments_table,
@@ -112,7 +106,7 @@ class KernelSetup
 		]);
 	}
 
-	private function create_tables()
+	private function create_tables(): void
 	{
 		$this->create_note_table();
 		$this->create_comments_table();
@@ -140,7 +134,7 @@ class KernelSetup
 		$this->create_upload_cat_table();
 	}
 
-	private function create_comments_table()
+	private function create_comments_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -159,7 +153,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$comments_table, $fields, $options);
 	}
 
-	private function create_comments_topic_table()
+	private function create_comments_topic_table(): void
 	{
 		$fields = [
 			'id_topic' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -176,7 +170,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$comments_topic_table, $fields, $options);
 	}
 
-	private function create_note_table()
+	private function create_note_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -191,7 +185,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$note_table, $fields, $options);
 	}
 
-	private function create_average_notes_table()
+	private function create_average_notes_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -206,7 +200,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$average_notes_table, $fields, $options);
 	}
 
-	private function create_visit_counter_table()
+	private function create_visit_counter_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -223,7 +217,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$visit_counter_table, $fields, $options);
 	}
 
-	private function create_configs_table()
+	private function create_configs_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -239,7 +233,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$configs_table, $fields, $options);
 	}
 
-	private function create_events_table()
+	private function create_events_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -271,7 +265,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$events_table, $fields, $options);
 	}
 
-	private function create_errors_404_table()
+	private function create_errors_404_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 10, 'autoincrement' => true, 'notnull' => 1],
@@ -290,7 +284,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$errors_404_table, $fields, $options);
 	}
 
-	private function create_group_table()
+	private function create_group_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -306,7 +300,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$group_table, $fields, $options);
 	}
 
-	private function create_keywords_table()
+	private function create_keywords_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -323,7 +317,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$keywords_table, $fields, $options);
 	}
 
-	private function create_keywords_relations_table()
+	private function create_keywords_relations_table(): void
 	{
 		$fields = [
 			'id_in_module' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
@@ -333,7 +327,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$keywords_relations_table, $fields);
 	}
 
-	private function create_member_table()
+	private function create_member_table(): void
 	{
 		$fields = [
 			'user_id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -366,7 +360,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$member_table, $fields, $options);
 	}
 
-	private function create_member_extended_fields_table()
+	private function create_member_extended_fields_table(): void
 	{
 		$fields = [
 			'user_id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -378,11 +372,11 @@ class KernelSetup
 		self::$db_utils->create_table(self::$member_extended_fields_table, $fields, $options);
 	}
 
-	private function create_member_extended_fields_list_table()
+	private function create_member_extended_fields_list_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
-			'position' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'default' => 0],
+			'position' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
 			'name' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
 			'field_name' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
 			'description' => ['type' => 'text', 'length' => 65000],
@@ -403,7 +397,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$member_extended_fields_list, $fields, $options);
 	}
 
-	private function create_menus_table()
+	private function create_menus_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -425,7 +419,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$menus_table, $fields, $options);
 	}
 
-	private function create_pm_msg_table()
+	private function create_pm_msg_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -445,7 +439,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$pm_msg_table, $fields, $options);
 	}
 
-	private function create_pm_topic_table()
+	private function create_pm_topic_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -469,7 +463,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$pm_topic_table, $fields, $options);
 	}
 
-	private function create_sessions_table()
+	private function create_sessions_table(): void
 	{
 		$fields = [
 			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
@@ -493,7 +487,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$sessions_table, $fields, $options);
 	}
 
-	private function create_internal_authentication_table()
+	private function create_internal_authentication_table(): void
 	{
 		$fields = [
 			'user_id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -513,7 +507,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$internal_authentication_table, $fields, $options);
 	}
 
-	private function create_internal_authentication_failures_table()
+	private function create_internal_authentication_failures_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -529,7 +523,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$internal_authentication_failures_table, $fields, $options);
 	}
 
-	private function create_authentication_method_table()
+	private function create_authentication_method_table(): void
 	{
 		$fields = [
 			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1],
@@ -547,7 +541,7 @@ class KernelSetup
 	}
 
 
-	private function create_smileys_table()
+	private function create_smileys_table(): void
 	{
 		$fields = [
 			'idsmiley' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -560,7 +554,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$smileys_table, $fields, $options);
 	}
 
-	private function create_upload_table()
+	private function create_upload_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -579,7 +573,7 @@ class KernelSetup
 		self::$db_utils->create_table(self::$upload_table, $fields, $options);
 	}
 
-	private function create_upload_cat_table()
+	private function create_upload_cat_table(): void
 	{
 		$fields = [
 			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
@@ -593,13 +587,13 @@ class KernelSetup
 		self::$db_utils->create_table(self::$upload_cat_table, $fields, $options);
 	}
 
-	private function insert_data()
+	private function insert_data(): void
 	{
 		$this->insert_visit_counter_data();
 		$this->insert_smileys_data();
 	}
 
-	private function insert_visit_counter_data()
+	private function insert_visit_counter_data(): void
 	{
 		$now = new Date();
 
@@ -611,7 +605,7 @@ class KernelSetup
 		]);
 	}
 
-	private function insert_smileys_data()
+	private function insert_smileys_data(): void
 	{
 		self::$db_querier->insert(self::$smileys_table, [
 			'idsmiley' => 1,

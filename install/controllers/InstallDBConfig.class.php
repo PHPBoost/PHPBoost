@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 10 04
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -11,37 +11,19 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallDBConfigController extends InstallController
+class InstallDBConfig extends InstallCarrier
 {
-	/**
-	 * @var Template
-	 */
-	private $view;
 
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $check_button;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-	/**
-	 * @var FormFieldsetHTML
-	 */
-	private $overwrite_fieldset;
-	/**
-	 * @var FormFieldCheckbox
-	 */
-	private $overwrite_field;
-	private $success = null;
-	private $error = null;
+	private Template $view;
+	private HTMLForm $form;
+	private FormButtonSubmit $check_button;
+	private FormButtonSubmit $submit_button;
+	private FormFieldsetHTML $overwrite_fieldset;
+	private FormFieldCheckbox $overwrite_field;
+	private ?string $success = null;
+	private ?string $error = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): Response
 	{
 		parent::load_lang($request);
 		$this->build_form();
@@ -54,24 +36,23 @@ class InstallDBConfigController extends InstallController
 			$schema = $this->form->get_value('schema');
 			$tables_prefix = $this->form->get_value('tablesPrefix');
 
-			if ($this->submit_button->has_been_submited())
+			if ($this->submit_button->has_been_submited()) {
 				$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
-			else
+            }
+			else {
 				$this->handle_test($host, $port, $login, $password, $schema, $tables_prefix);
+            }
 		}
 		return $this->create_response();
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
-        if (InstallationServices::check_server())
-            {
-                $back_url = InstallUrlBuilder::license();
-            }
-            else
-            {
-                $back_url = InstallUrlBuilder::server_configuration();
-            }
+        if (InstallationServices::check_server()) {
+            $back_url = InstallUrlBuilder::license();
+        } else {
+            $back_url = InstallUrlBuilder::server_configuration();
+        }
 
 		$this->form = new HTMLForm('databaseForm', '', false);
 
@@ -81,7 +62,6 @@ class InstallDBConfigController extends InstallController
 		$fieldset->add_field(new FormFieldTextEditor('host', $this->lang['install.dbms.host'], 'localhost',
 			[
                 'class' => 'half-field',
-
                 'description' => $this->lang['install.dbms.host.clue'],
                 'required' => $this->lang['install.db.required.host']
             ]
@@ -90,7 +70,6 @@ class InstallDBConfigController extends InstallController
 		$fieldset->add_field(new FormFieldTextEditor('port', $this->lang['install.dbms.port'], '3306',
 			[
                 'class' => 'half-field',
-
                 'description' => $this->lang['install.dbms.port.clue'],
                 'required' => $this->lang['install.db.required.port']
             ],
@@ -100,7 +79,6 @@ class InstallDBConfigController extends InstallController
 		$fieldset->add_field(new FormFieldTextEditor('login', $this->lang['install.dbms.login'], 'root',
 			[
                 'class' => 'half-field',
-
                 'description' => $this->lang['install.dbms.login.clue'],
                 'required' => $this->lang['install.db.required.login']
             ]
@@ -158,7 +136,7 @@ class InstallDBConfigController extends InstallController
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	private function handle_test($host, $port, $login, $password, $schema, $tables_prefix)
+	private function handle_test(string $host, string $port, string $login, string $password, string $schema, string $tables_prefix): void
 	{
 		$service = new InstallationServices();
 		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
@@ -180,7 +158,7 @@ class InstallDBConfigController extends InstallController
 		}
 	}
 
-	private function handle_form($host, $port, $login, $password, $schema, $tables_prefix)
+	private function handle_form(string $host, string $port, string $login, string $password, string $schema, string $tables_prefix): void
 	{
 		$service = new InstallationServices();
 		$status = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
@@ -202,7 +180,7 @@ class InstallDBConfigController extends InstallController
 		}
 	}
 
-	private function create_tables(InstallationServices $service, $host, $port, $login, $password, $schema, $tables_prefix)
+	private function create_tables(InstallationServices $service, string $host, string $port, string $login, string $password, string $schema, string $tables_prefix): void
 	{
 		if (!$service->is_already_installed() || (!$this->overwrite_field->is_disabled() && $this->overwrite_field->is_checked()))
 		{
@@ -217,19 +195,14 @@ class InstallDBConfigController extends InstallController
 		}
 	}
 
-	/**
-	 * @return InstallDisplayResponse
-	 */
-	private function create_response()
+	private function create_response(): InstallDisplayResponse
 	{
-		$this->view = new FileTemplate('install/database.tpl');
+		$this->view = new FileTemplate('install/InstallDBConfig.tpl');
 		$this->view->put('DATABASE_FORM', $this->form->display());
-		if (!empty($this->success))
-		{
+		if (!empty($this->success)) {
 			$this->view->put('SUCCESS', $this->success);
 		}
-		if (!empty($this->error))
-		{
+		if (!empty($this->error)) {
 			$this->view->put('ERROR', $this->error);
 		}
 		$step_title = $this->lang['install.db.config.title'];

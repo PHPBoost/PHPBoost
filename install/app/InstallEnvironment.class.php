@@ -3,23 +3,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 2.0 - 2009 09 28
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once PATH_TO_ROOT . '/kernel/framework/core/environment/Environment.class.php';
 
 class InstallEnvironment extends Environment
 {
-	public static function load_imports()
+	public static function load_imports(): void
 	{
 		Environment::load_imports();
 	}
 
-	public static function init()
+	public static function init(): void
 	{
 		Environment::fit_to_php_configuration();
 		Environment::init_http_services();
@@ -30,12 +31,12 @@ class InstallEnvironment extends Environment
 		self::init_admin_role();
 	}
 
-	public static function init_output_bufferization()
+	public static function init_output_bufferization(): void
 	{
 		ob_start();
 	}
 
-	public static function load_dynamic_constants()
+	public static function load_dynamic_constants(): void
 	{
 		define('HOST', Appcontext::get_request()->get_site_url());
 		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
@@ -44,19 +45,19 @@ class InstallEnvironment extends Environment
 		define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 	}
 
-	private static function set_locale()
+	private static function set_locale(): void
 	{
 		$locale = AppContext::get_request()->get_getstring('locale', 'french');
 		LangLoader::set_locale($locale);
 	}
 
-	private static function init_admin_role()
+	private static function init_admin_role(): void
 	{
 		AppContext::set_session(new AdminSessionData());
 		AppContext::set_current_user(new AdminUser());
 	}
 
-	public static function destroy()
+	public static function destroy(): void
 	{
 		ob_end_flush();
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 08 27
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 02 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -82,7 +82,7 @@ class CLIInstallCommand implements CLICommand
         }
     }
 
-    private function check_parameters()
+    private function check_parameters(): void
     {
         CLIOutput::writeln('check parameters');
         $this->db_host          = $this->arg_reader->get('--db-host', $this->db_host);
@@ -105,7 +105,7 @@ class CLIInstallCommand implements CLICommand
         $this->user_email    = $this->arg_reader->get('--u-email', $this->user_email);
     }
 
-    private function show_parameters()
+    private function show_parameters(): void
     {
         $this->show_parameter_section('database');
         $this->show_parameter('--db-host', $this->db_host);
@@ -130,23 +130,23 @@ class CLIInstallCommand implements CLICommand
         $this->show_parameter('--u-email', $this->user_email);
     }
 
-    private function show_parameter($name, $value)
+    private function show_parameter(string $name, mixed $value): void
     {
         CLIOutput::writeln("\t" . $name . ' ' . $value);
     }
 
-    private function show_parameter_section($name)
+    private function show_parameter_section(string $name): void
     {
         CLIOutput::writeln(TextHelper::strtoupper($name));
     }
 
-    private function check_env()
+    private function check_env(): bool
     {
         CLIOutput::writeln('environment check...');
         return $this->check_php_version() && $this->check_folders_permissions();
     }
 
-    private function install()
+    private function install(): bool
     {
         CLIOutput::writeln('installation');
         $this->installation = new InstallationServices($this->website_locale);
@@ -155,10 +155,11 @@ class CLIInstallCommand implements CLICommand
             return false;
         }
         CLIOutput::writeln("\t" . 'modules...');
-        if (!$this->installation->configure_website($this->website_server, $this->website_path, $this->website_name, $this->website_slogan,
-            $this->website_description, $this->website_timezone,
-            ['pages', 'connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetworks', 'UrlUpdater'],
-            ['base'])) {
+        if (!$this->installation->configure_website(
+                $this->website_server, $this->website_path, $this->website_name, $this->website_slogan, $this->website_description, $this->website_timezone,
+                ['pages', 'connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetworks', 'UrlUpdater'],
+                ['base']
+            )) {
             return false;
         }
         CLIOutput::writeln("\t" . 'admin creation...');
@@ -170,23 +171,25 @@ class CLIInstallCommand implements CLICommand
         return true;
     }
 
-    private function check_php_version()
+    private function check_php_version(): bool
     {
         CLIOutput::writeln("\t" . 'php version');
-        if (!$this->server_configuration->is_php_compatible()) {
+        if (!$this->server_configuration->is_php_compatible())
+        {
             CLIOutput::writeln('PHP version (' . ServerConfiguration::get_phpversion() . ') is not compatible with PHPBoost.');
             CLIOutput::writeln('PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed!');
             return false;
-
         }
         return true;
     }
 
-    private function check_folders_permissions()
+    private function check_folders_permissions(): bool
     {
         CLIOutput::writeln("\t" . 'folder permissions...');
-        if (!PHPBoostFoldersPermissions::validate()) {
-            foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder) {
+        if (!PHPBoostFoldersPermissions::validate())
+        {
+            foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
+            {
                 if (!$folder->is_writable()) {
                     CLIOutput::writeln('Folder ' . $folder_name . ' is not writable. Please change its rights');
                 }
@@ -196,16 +199,14 @@ class CLIInstallCommand implements CLICommand
         return true;
     }
 
-    private function create_phpboost_tables()
+    private function create_phpboost_tables(): bool
     {
         AppContext::get_cache_service()->clear_cache();
         try {
-            $this->installation->create_phpboost_tables(DBFactory::MYSQL, $this->db_host, $this->db_port,
-                $this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix);
+            $this->installation->create_phpboost_tables(DBFactory::MYSQL, $this->db_host, $this->db_port, $this->db_schema, $this->db_user, $this->db_password, $this->db_tables_prefix);
             return true;
         } catch (UnexistingDatabaseException $exception) {
-            CLIOutput::writeln('Database ' . $this->db_schema .
-                ' does not exist and attempt to create it failed. Create it and relaunch the installation');
+            CLIOutput::writeln('Database ' . $this->db_schema . ' does not exist and attempt to create it failed. Create it and relaunch the installation');
         } catch (DBConnectionException $exception) {
             CLIOutput::writeln('Connection to database failed, check your connection parameters');
         } catch (IOException $exception) {

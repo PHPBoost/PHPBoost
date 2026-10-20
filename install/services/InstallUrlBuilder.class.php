@@ -3,9 +3,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2009 12 13
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class InstallUrlBuilder
@@ -14,75 +15,50 @@ class InstallUrlBuilder
 
     private static $locale = '';
 
-    public static function set_locale($locale)
+    public static function set_locale(string $locale): void
     {
         self::$locale = $locale;
     }
 
-    /**
-     * @return Url
-     */
-    public static function welcome()
+    public static function welcome(): Url
     {
         return self::url('/welcome');
     }
 
-    /**
-     * @return Url
-     */
-    public static function license()
+    public static function license(): Url
     {
         return self::url('/license');
     }
 
-    /**
-     * @return Url
-     */
-    public static function server_configuration()
+    public static function server_configuration(): Url
     {
         return self::url('/server');
     }
 
-    /**
-     * @return Url
-     */
-    public static function database()
+    public static function database(): Url
     {
         return self::url('/database');
     }
 
-    /**
-     * @return Url
-     */
-    public static function website()
+    public static function website(): Url
     {
         return self::url('/website');
     }
 
-    /**
-     * @return Url
-     */
-    public static function admin()
+    public static function admin(): Url
     {
         return self::url('/admin');
     }
 
-    /**
-     * @return Url
-     */
-    public static function finish()
+    public static function finish(): Url
     {
         return self::url('/finish');
     }
 
-    /**
-     * @param string the url path from the dispatcher root
-     * @return Url
-     */
-    private static function url($path)
+    /** @param string $path the url path from the dispatcher root */
+    private static function url(string $path): Url
     {
-        if (self::$locale  != InstallationServices::get_default_lang())
-        {
+        if (self::$locale  != InstallationServices::get_default_lang()) {
             $path .= '?lang=' . self::$locale;
         }
 		return DispatchManager::get_url(self::$dispatcher, $path, true);

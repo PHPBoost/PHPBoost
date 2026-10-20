@@ -3,38 +3,27 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 10 04
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallCreateAdminController extends InstallController
+class InstallCreateAdmin extends InstallCarrier
 {
-	/**
-	 * @var Template
-	 */
-	private $view;
+	private Template $view;
+	private HTMLForm $form;
+	private FormButtonSubmit $submit_button;
 
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
-
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): Response
 	{
 		parent::load_lang($request);
 		$this->build_form();
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
-		{
+        {
 			$login = $this->form->get_value('email');
-			if ($this->form->get_value('custom_login', false))
-			{
+			if ($this->form->get_value('custom_login', false)) {
 				$login = $this->form->get_value('login');
 			}
 
@@ -55,7 +44,7 @@ class InstallCreateAdminController extends InstallController
 		return $this->create_response();
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$security_config = SecurityConfig::load();
 		$this->form = new HTMLForm('adminForm', '', false);
@@ -67,7 +56,7 @@ class InstallCreateAdminController extends InstallController
 			[
                 'maxlength' => 100, 'required' => true,
                 'events' => ['blur' => '
-                    if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == ""){
+                    if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
                         HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
                     }'
                 ]
@@ -131,12 +120,9 @@ class InstallCreateAdminController extends InstallController
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	/**
-	 * @return InstallDisplayResponse
-	 */
-	private function create_response()
+	private function create_response(): InstallDisplayResponse
 	{
-		$this->view = new FileTemplate('install/admin.tpl');
+		$this->view = new FileTemplate('install/InstallCreateAdmin.tpl');
 		$this->view->put('ADMIN_FORM', $this->form->display());
 		$step_title = $this->lang['install.admin.title'];
 		$response = new InstallDisplayResponse(5, $step_title, $this->lang, $this->view);

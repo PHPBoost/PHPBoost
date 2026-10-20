@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2009 12 13
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -13,20 +13,12 @@
 
 class InstallDisplayResponse extends AbstractResponse
 {
-    private $lang;
+    private array $lang;
+    private int $current_step = 0;
+    private int $steps_number;
+    private Template $full_view;
 
-    private $distribution_lang;
-
-    private $current_step = 0;
-
-    private $steps_number;
-
-    /**
-     * @var Template
-     */
-    private $full_view;
-
-    public function __construct($step_number, $step_title, $lang, Template $view, $additional_stylesheet = '')
+    public function __construct(int $step_number, string $step_title, array $lang, Template $view, string $additional_stylesheet = '')
     {
         $this->init_response($step_number, $lang, $view);
         $env = new InstallDisplayGraphicalEnvironment();
@@ -50,17 +42,17 @@ class InstallDisplayResponse extends AbstractResponse
         parent::__construct($env, $this->full_view);
     }
 
-    public function init_response($step_number, $lang, Template $view)
+    public function init_response(int $step_number, array $lang, Template $view): void
     {
         $this->current_step = $step_number;
         $this->lang = $lang;
-        $this->full_view = new FileTemplate('install/main.tpl');
+        $this->full_view = new FileTemplate('install/InstallCarrier.tpl');
         $this->full_view->put('INSTALL_STEP', $view);
         $this->full_view->add_lang($this->lang);
         $view->add_lang($this->lang);
     }
 
-    private function add_language_bar()
+    private function add_language_bar(): void
     {
         $lang = TextHelper::htmlspecialchars(AppContext::get_request()->get_string('lang', ''));
         $lang = in_array($lang, InstallationServices::get_available_langs()) ? $lang : InstallationServices::get_default_lang();
@@ -83,17 +75,18 @@ class InstallDisplayResponse extends AbstractResponse
         $this->full_view->put('lang', $langs);
     }
 
-    private function init_steps()
+    private function init_steps(): void
     {
         $steps = [
             ['name' => $this->lang['install.step.introduction'], 'img' => 'home'],
             ['name' => $this->lang['install.step.license'], 'img' => 'file'],
         ];
 
-        if (!InstallationServices::check_server())
+        if (!InstallationServices::check_server()) {
             $steps[] = ['name' => $this->lang['install.step.server'], 'img' => 'cog'];
-        else if ($this->current_step > 1)
+        } elseif ($this->current_step > 1) {
             $this->current_step--;
+        }
 
         $steps[] = ['name' => $this->lang['install.step.database'], 'img' => 'server'];
         $steps[] = ['name' => $this->lang['install.step.website'], 'img' => 'cogs'];
@@ -104,17 +97,17 @@ class InstallDisplayResponse extends AbstractResponse
 
         for ($i = 0; $i < $this->steps_number; $i++)
         {
-            if ($i < $this->current_step)
+            if ($i < $this->current_step) {
                 $row_class = 'row-success';
-            elseif ($i == $this->current_step && $i == ($this->steps_number - 1))
+            } elseif ($i == $this->current_step && $i == ($this->steps_number - 1)) {
                 $row_class = 'row-current row-final';
-            elseif ($i == $this->current_step)
+            } elseif ($i == $this->current_step) {
                 $row_class = 'row-current';
-            elseif ($i == ($this->steps_number - 1))
+            } elseif ($i == ($this->steps_number - 1)) {
                 $row_class = 'row-next row-final';
-            else
+            } else {
                 $row_class = 'row-next';
-
+            }
             $this->full_view->assign_block_vars('step', [
                 'CSS_CLASS' => $row_class,
                 'IMG' => $steps[$i]['img'],
@@ -123,7 +116,7 @@ class InstallDisplayResponse extends AbstractResponse
         }
     }
 
-    private function update_progress_bar()
+    private function update_progress_bar(): void
     {
         for ($i = 1; $i <= floor(($this->current_step / $this->steps_number) * 24); $i++)
         {

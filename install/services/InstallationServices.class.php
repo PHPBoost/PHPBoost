@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 24
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 02 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -51,7 +51,7 @@ class InstallationServices
         $this->messages = LangLoader::get_all_langs('install');
     }
 
-    public static function get_available_langs()
+    public static function get_available_langs(): array
     {
         $langs_folder = new Folder(PATH_TO_ROOT . '/lang');
         $langs_list = $langs_folder->get_folders();
@@ -65,14 +65,15 @@ class InstallationServices
         return $available_langs;
     }
 
-    private function set_default_locale($locale)
+    private function set_default_locale(string $locale): void
     {
         $langs = $this->get_available_langs();
-        if (!empty($locale) && in_array($locale, $langs))
+        if (!empty($locale) && in_array($locale, $langs)) {
             $this->distribution_config['default_lang'] = $locale;
+        }
     }
 
-    public static function get_default_lang()
+    public static function get_default_lang(): string
     {
         $browser_lang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? TextHelper::strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)) : '';
         $browser_lang = !$browser_lang && isset($_SERVER['HTTP_X_COUNTRY_CODE']) ? TextHelper::strtolower($_SERVER['HTTP_X_COUNTRY_CODE']) : $browser_lang;
@@ -89,42 +90,34 @@ class InstallationServices
                     $distribution_config['default_lang'] = $lang;
             }
         }
-        else if (!in_array($distribution_config['default_lang'], $langs))
+        else if (!in_array($distribution_config['default_lang'], $langs)) {
             $distribution_config['default_lang'] = $langs[0];
+        }
         return $distribution_config['default_lang'];
     }
 
-    public function is_already_installed()
+    public function is_already_installed(): bool
     {
         $tables_list = PersistenceContext::get_dbms_utils()->list_tables();
         return in_array(PREFIX . 'member', $tables_list) || in_array(PREFIX . 'configs', $tables_list);
     }
 
-    public function check_db_connection($host, $port, $login, $password, &$database, $tables_prefix)
+    public function check_db_connection(string $host, string $port, string $login, string $password, string &$database, string $tables_prefix): int
     {
-        try
-        {
+        try {
             $this->try_db_connection($host, $port, $login, $password, $database, $tables_prefix);
-        }
-        catch (UnexistingDatabaseException $ex)
-        {
+        } catch (UnexistingDatabaseException $ex) {
             if (!$this->create_database($database))
             {
                 DBFactory::reset_db_connection();
                 return self::UNABLE_TO_CREATE_DATABASE;
-            }
-            else
-            {
+            } else {
                 return $this->check_db_connection($host, $port, $login, $password, $database, $tables_prefix);
             }
-        }
-        catch (DBConnectionException $ex)
-        {
+        } catch (DBConnectionException $ex) {
             DBFactory::reset_db_connection();
             return self::CONNECTION_ERROR;
-        }
-        catch (Exception $ex)
-        {
+        } catch (Exception $ex) {
             $exception_handler = new ExceptionHandler();
             $exception_handler->handle($ex);
             DBFactory::reset_db_connection();
@@ -133,7 +126,7 @@ class InstallationServices
         return self::CONNECTION_SUCCESSFUL;
     }
 
-    private function try_db_connection($host, $port, $login, $password, $database, $tables_prefix)
+    private function try_db_connection(string $host, string $port, string $login, string $password, string $database, string $tables_prefix): void
     {
         self::define_prefix($tables_prefix);
         $db_connection_data = [
@@ -152,7 +145,7 @@ class InstallationServices
         $db_connection->connect($db_connection_data);
     }
 
-    private function create_database($database)
+    private function create_database(string $database): bool
     {
         try {
             $database = str_replace(['/', '\\', '.', ' ', '"', '\''], '_', $database);
@@ -165,7 +158,7 @@ class InstallationServices
         }
     }
 
-    public function create_phpboost_tables($dbms, $host, $port, $database, $login, $password, $tables_prefix)
+    public function create_phpboost_tables(int $dbms, string $host, string $port, string $database, string $login, string $password, string $tables_prefix): bool
     {
         $db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix);
         $this->create_tables();
@@ -187,27 +180,21 @@ class InstallationServices
      *   - The same logic applies to themes: local themes always installed,
      *     remote ones only if selected and not already on disk.
      *
-     * @param string   $server_url
-     * @param string   $server_path
-     * @param string   $site_name
-     * @param string   $site_slogan
-     * @param string   $site_desc
-     * @param string   $site_timezone
-     * @param string[] $selected_modules  Module ids chosen by the user (includes mandatory ones).
-     *                                    Used only to decide which REMOTE modules to download.
-     * @param string[] $selected_themes   Theme ids chosen by the user (includes 'base').
-     *                                    Used only to decide which REMOTE themes to download.
+     * @param array  $selected_modules  Module ids chosen by the user (includes mandatory ones).
+     *               Used only to decide which REMOTE modules to download.
+     * @param array  $selected_themes   Theme ids chosen by the user (includes 'base').
+     *               Used only to decide which REMOTE themes to download.
      */
     public function configure_website(
-        $server_url,
-        $server_path,
-        $site_name,
-        $site_slogan    = '',
-        $site_desc      = '',
-        $site_timezone  = '',
+        string $server_url,
+        string $server_path,
+        string $site_name,
+        string $site_slogan    = '',
+        string $site_desc      = '',
+        string $site_timezone  = '',
         array $selected_modules = [],
         array $selected_themes  = []
-    )
+    ): bool
     {
         $this->get_installation_token();
         $this->generate_website_configuration($server_url, $server_path, $site_name, $site_slogan, $site_desc, $site_timezone);
@@ -231,7 +218,7 @@ class InstallationServices
         return true;
     }
 
-    public function create_admin($display_name, $login, $password, $email, $create_session = true, $auto_connect = true)
+    public function create_admin(string $display_name, string $login, string $password, string $email, bool $create_session = true, bool $auto_connect = true): bool
     {
         $this->get_installation_token();
         $this->create_first_admin($display_name, $login, $password, $email, $create_session, $auto_connect);
@@ -239,12 +226,12 @@ class InstallationServices
         return true;
     }
 
-    private function load_distribution_configuration()
+    private function load_distribution_configuration(): void
     {
         $this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
     }
 
-    public static function check_server()
+    public static function check_server(): bool
     {
         $server_configuration = new ServerConfiguration();
         return
@@ -256,7 +243,7 @@ class InstallationServices
             && $server_configuration->has_mbstring_extension();
     }
 
-    private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
+    private function generate_website_configuration(string $server_url, string $server_path, string $site_name, string $site_slogan = '', string $site_desc = '', string $site_timezone = ''): void
     {
         $locale = LangLoader::get_locale();
         $user = new AdminUser();
@@ -271,7 +258,7 @@ class InstallationServices
         $this->init_user_accounts_config($locale);
     }
 
-    private function save_general_config($server_url, $server_path, $site_name, $site_slogan, $site_description, $site_timezone)
+    private function save_general_config(string $server_url, string $server_path, string $site_name, string $site_slogan, string $site_description, string $site_timezone): void
     {
         $general_config = GeneralConfig::load();
         $general_config->set_site_url($server_url);
@@ -285,56 +272,47 @@ class InstallationServices
         GeneralConfig::save();
     }
 
-    public function save_server_environnement_config()
+    public function save_server_environnement_config(): void
     {
         $server_configuration = new ServerConfiguration();
         $server_environment_config = ServerEnvironmentConfig::load();
 
-        try
-        {
-            if ($server_configuration->has_url_rewriting())
-            {
+        try {
+            if ($server_configuration->has_url_rewriting()) {
                 $server_environment_config->set_url_rewriting_enabled(true);
             }
-        }
-        catch (UnsupportedOperationException $ex)
-        {
+        } catch (UnsupportedOperationException $ex) {
             $server_environment_config->set_url_rewriting_enabled(false);
         }
 
-        if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
-        {
+        if (function_exists('ob_gzhandler') && @extension_loaded('zlib')) {
             $server_environment_config->set_output_gziping_enabled(true);
         }
 
-        if (DataStoreFactory::is_apc_available())
-        {
+        if (DataStoreFactory::is_apc_available()) {
             DataStoreFactory::set_apc_enabled(true);
         }
 
         ServerEnvironmentConfig::save();
     }
 
-    private function init_graphical_config()
+    private function init_graphical_config(): void
     {
         $graphical_environment_config = GraphicalEnvironmentConfig::load();
         $graphical_environment_config->set_page_bench_enabled($this->distribution_config['bench']);
         GraphicalEnvironmentConfig::save();
     }
 
-    private function init_debug_mode()
+    private function init_debug_mode(): void
     {
-        if ($this->distribution_config['debug'])
-        {
+        if ($this->distribution_config['debug']) {
             Debug::enabled_debug_mode();
-        }
-        else
-        {
+        } else {
             Debug::disable_debug_mode();
         }
     }
 
-    private function init_user_accounts_config($locale)
+    private function init_user_accounts_config(string $locale): void
     {
         $user_accounts_config = UserAccountsConfig::load();
         $user_accounts_config->set_default_lang($locale);
@@ -349,12 +327,13 @@ class InstallationServices
      * Modules already in /modules/ or at root are left untouched.
      * After download, ClassLoader is regenerated so the new classes are available.
      *
-     * @param string[] $selected_modules List of module ids selected by the user.
+     * @param array $selected_modules List of module ids selected by the user.
      */
     private function download_remote_modules(array $selected_modules): void
     {
-        if (empty($selected_modules))
+        if (empty($selected_modules)) {
             return;
+        }
 
         $version  = GeneralConfig::load()->get_phpboost_major_version();
         $dest_dir = PATH_TO_ROOT . '/modules/';
@@ -363,18 +342,21 @@ class InstallationServices
         foreach ($selected_modules as $module_id)
         {
             // Skip lobby — it is a root-level module, never downloaded
-            if ($module_id === 'lobby')
+            if ($module_id === 'lobby') {
                 continue;
+            }
 
             // Already present on disk (local or previously downloaded) → skip
             $module_folder = new Folder($dest_dir . $module_id);
-            if ($module_folder->exists())
+            if ($module_folder->exists()) {
                 continue;
+            }
 
             // Also check at root level (bbcode, qaptcha, lobby…)
             $root_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
-            if ($root_folder->exists())
+            if ($root_folder->exists()) {
                 continue;
+            }
 
             // Attempt remote download
             $ok = AddonHelper::download_from_website(
@@ -386,25 +368,28 @@ class InstallationServices
                 $version
             );
 
-            if ($ok)
+            if ($ok) {
                 $downloaded = true;
+            }
         }
 
         // Regenerate the class list so newly extracted classes are autoloaded
-        if ($downloaded)
+        if ($downloaded) {
             ClassLoader::generate_classlist(true);
+        }
     }
 
     /**
      * Downloads selected remote themes that are not already present on disk.
      * The 'base' theme is always bundled in the archive and never downloaded.
      *
-     * @param string[] $selected_themes List of theme ids selected by the user.
+     * @param array $selected_themes List of theme ids selected by the user.
      */
     private function download_remote_themes(array $selected_themes): void
     {
-        if (empty($selected_themes))
+        if (empty($selected_themes)) {
             return;
+        }
 
         $version  = GeneralConfig::load()->get_phpboost_major_version();
         $dest_dir = PATH_TO_ROOT . '/templates/';
@@ -413,8 +398,9 @@ class InstallationServices
         {
             // Already present on disk → skip (covers 'base' when bundled in the archive)
             $theme_folder = new Folder($dest_dir . $theme_id);
-            if ($theme_folder->exists())
+            if ($theme_folder->exists()) {
                 continue;
+            }
 
             AddonHelper::download_from_website(
                 $theme_id,
@@ -444,12 +430,9 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
             {
-                try
-                {
+                try {
                     $modules_not_installed[$folder_name] = new Module($folder_name);
-                }
-                catch (IOException $ex)
-                {
+                } catch (IOException $ex) {
                     continue;
                 }
             }
@@ -462,12 +445,9 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
             {
-                try
-                {
+                try {
                     $modules_not_installed[$folder_name] = new Module($folder_name);
-                }
-                catch (IOException $ex)
-                {
+                } catch (IOException $ex) {
                     continue;
                 }
             }
@@ -478,10 +458,9 @@ class InstallationServices
         return $modules_not_installed;
     }
 
-    private static function callback_sort_modules_by_name(Module $module1, Module $module2)
+    private static function callback_sort_modules_by_name(Module $module1, Module $module2): int
     {
-        if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
-        {
+        if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name())) {
             return 1;
         }
         return -1;
@@ -491,12 +470,13 @@ class InstallationServices
      * Installs all modules passed in the array.
      * lobby is always installed last regardless of its position in the array.
      */
-    private function install_modules(array $modules_to_install)
+    private function install_modules(array $modules_to_install): void
     {
         foreach ($modules_to_install as $module_id => $module)
         {
-            if ($module_id === 'lobby')
+            if ($module_id === 'lobby') {
                 continue;
+            }
             ModulesManager::install_module($module_id, true, false);
         }
 
@@ -510,7 +490,7 @@ class InstallationServices
         }
     }
 
-    private function get_themes_not_installed()
+    private function get_themes_not_installed(): array
     {
         $themes_not_installed = [];
         $folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
@@ -519,12 +499,9 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder_name != '__default__' && $folder->get_files('/config\.ini/') && !ThemesManager::get_theme_existed($folder_name))
             {
-                try
-                {
+                try {
                     $themes_not_installed[$folder_name] = new Theme($folder_name);
-                }
-                catch (IOException $ex)
-                {
+                } catch (IOException $ex) {
                     continue;
                 }
             }
@@ -535,16 +512,15 @@ class InstallationServices
         return $themes_not_installed;
     }
 
-    private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2)
+    private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2): int
     {
-        if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name()))
-        {
+        if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name())) {
             return 1;
         }
         return -1;
     }
 
-    private function install_themes(array $themes_to_install)
+    private function install_themes(array $themes_to_install) :void
     {
         foreach ($themes_to_install as $theme)
         {
@@ -552,7 +528,7 @@ class InstallationServices
         }
     }
 
-    private function get_langs_not_installed()
+    private function get_langs_not_installed(): array
     {
         $langs_not_installed = [];
         $folder_containing_phpboost_langs = new Folder(PATH_TO_ROOT .'/lang/');
@@ -561,12 +537,9 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !LangsManager::get_lang_existed($folder_name))
             {
-                try
-                {
+                try {
                     $langs_not_installed[$folder_name] = new Lang($folder_name);
-                }
-                catch (IOException $ex)
-                {
+                } catch (IOException $ex) {
                     continue;
                 }
             }
@@ -577,16 +550,15 @@ class InstallationServices
         return $langs_not_installed;
     }
 
-    private static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2)
+    private static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2): int
     {
-        if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name()))
-        {
+        if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name())) {
             return 1;
         }
         return -1;
     }
 
-    private function install_langs(array $langs_to_install)
+    private function install_langs(array $langs_to_install): void
     {
         foreach ($langs_to_install as $lang)
         {
@@ -594,7 +566,7 @@ class InstallationServices
         }
     }
 
-    private function configure_default_editor()
+    private function configure_default_editor(): void
     {
         if (isset($this->distribution_config['default_editor']))
         {
@@ -604,7 +576,7 @@ class InstallationServices
         }
     }
 
-    private function configure_default_captcha()
+    private function configure_default_captcha(): void
     {
         if (isset($this->distribution_config['default_captcha']))
         {
@@ -614,7 +586,7 @@ class InstallationServices
         }
     }
 
-    private function add_menus()
+    private function add_menus(): void
     {
         MenuService::enable_all(true);
 
@@ -630,7 +602,7 @@ class InstallationServices
         MenuService::set_position($modules_menu, -$modules_menu->get_block_position());
     }
 
-    private function add_extended_fields()
+    private function add_extended_fields(): void
     {
         $lang = LangLoader::get('user-lang');
 
@@ -702,12 +674,12 @@ class InstallationServices
         ExtendedFieldsService::add($extended_field);
     }
 
-    public function regenerate_cache()
+    public function regenerate_cache(): void
     {
         AppContext::get_cache_service()->clear_cache();
     }
 
-    private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
+    private function initialize_db_connection(int $dbms, string $host, string $port, string $database, string $login, string $password, string $tables_prefix): array
     {
         self::define_prefix($tables_prefix);
         $db_connection_data = [
@@ -724,7 +696,7 @@ class InstallationServices
         return $db_connection_data;
     }
 
-    private function connect_to_database($dbms, array $db_connection_data, $database)
+    private function connect_to_database(int $dbms, array $db_connection_data, string $database): void
     {
         DBFactory::init_factory($dbms);
         $connection = DBFactory::new_db_connection();
@@ -743,13 +715,13 @@ class InstallationServices
         }
     }
 
-    private function create_tables()
+    private function create_tables(): void
     {
         $kernel = new KernelSetup();
         $kernel->install();
     }
 
-    private function write_connection_config_file(array $db_connection_data, $tables_prefix)
+    private function write_connection_config_file(array $db_connection_data, string $tables_prefix): void
     {
         $db_config_content = '<?php' . "\n" .
             '$db_connection_data = ' . var_export($db_connection_data, true) . ";\n\n" .
@@ -763,19 +735,18 @@ class InstallationServices
         $db_config_file->close();
     }
 
-    private function create_first_admin($display_name, $login, $password, $email, $create_session, $auto_connect)
+    private function create_first_admin(string $display_name, string $login, string $password, string $email, bool $create_session, bool $auto_connect): void
     {
         $user_id = $this->create_first_admin_account($display_name, $login, $password, $email, LangLoader::get_locale(), $this->distribution_config['default_theme'], GeneralConfig::load()->get_site_timezone());
         $this->configure_mail_sender_system($email);
         $this->configure_accounts_policy();
         $this->send_installation_mail($display_name, $password, $email);
-        if ($create_session)
-        {
+        if ($create_session) {
             $this->connect_admin($user_id, $auto_connect);
         }
     }
 
-    private function create_first_admin_account($display_name, $login, $password, $email, $locale, $theme, $timezone)
+    private function create_first_admin_account(string $display_name, string $login, string $password, string $email, string $locale, string $theme, string $timezone): int|false
     {
         $user = new User();
         $user->set_display_name($display_name);
@@ -787,7 +758,7 @@ class InstallationServices
         return UserService::create($user, $auth_method);
     }
 
-    private function configure_mail_sender_system($administrator_email)
+    private function configure_mail_sender_system(string $administrator_email): void
     {
         $mail_config = MailServiceConfig::load();
         $mail_config->set_administrators_mails([$administrator_email]);
@@ -795,14 +766,14 @@ class InstallationServices
         MailServiceConfig::save();
     }
 
-    private function configure_accounts_policy()
+    private function configure_accounts_policy(): void
     {
         $user_account_config = UserAccountsConfig::load();
         $user_account_config->set_registration_enabled($this->distribution_config['allow_members_registration']);
         UserAccountsConfig::save();
     }
 
-    private function send_installation_mail($login, $password, $email)
+    private function send_installation_mail(string $login, string $password, string $email): void
     {
         $general_config = GeneralConfig::load();
         AppContext::get_mail_service()->send_from_properties(
@@ -818,41 +789,37 @@ class InstallationServices
         );
     }
 
-    private function connect_admin($user_id, $auto_connect)
+    private function connect_admin(int|false $user_id, bool $auto_connect): void
     {
         $session = Session::create($user_id, $auto_connect);
         AppContext::set_session($session);
     }
 
-    private function generate_installation_token()
+    private function generate_installation_token(): void
     {
         $this->token->write(self::$token_file_content);
     }
 
-    private function get_installation_token()
+    private function get_installation_token(): void
     {
         $is_token_valid = false;
-        try
-        {
+        try {
             $is_token_valid = $this->token->exists() && $this->token->read() == self::$token_file_content;
-        }
-        catch (IOException $ioe)
-        {
+        } catch (IOException $ioe) {
             $is_token_valid = false;
         }
 
-        if (!$is_token_valid)
-        {
+        if (!$is_token_valid) {
             throw new InstallTokenNotFoundException($this->token->get_path_from_root());
         }
     }
 
-    private static function define_prefix($tables_prefix)
+    private static function define_prefix(string $tables_prefix): void
     {
         defined('PREFIX') or define('PREFIX', $tables_prefix);
     }
 
-    private function delete_installation_token()
+    private function delete_installation_token(): void
     {
         $this->token->delete();
     }

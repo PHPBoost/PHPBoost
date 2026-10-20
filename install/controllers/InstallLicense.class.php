@@ -3,24 +3,19 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 09 12
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class InstallLicenseController extends InstallController
+class InstallLicense extends InstallCarrier
 {
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit;
 
-	public function execute(HTTPRequestCustom $request)
+	private HTMLForm $form;
+	private FormButtonSubmit $submit;
+
+	public function execute(HTTPRequestCustom $request): Response
 	{
 		parent::load_lang($request);
 		$this->build_form();
@@ -31,7 +26,7 @@ class InstallLicenseController extends InstallController
 		return $this->create_response();
 	}
 
-	private function handle_form()
+	private function handle_form(): void
 	{
 		if ($this->form->validate())
 		{
@@ -39,7 +34,7 @@ class InstallLicenseController extends InstallController
 		}
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
         if (InstallationServices::check_server())
         {
@@ -69,16 +64,11 @@ class InstallLicenseController extends InstallController
 		$this->form->add_fieldset($action_fieldset);
 	}
 
-	/**
-	 * @param Template $view
-	 * @return InstallDisplayResponse
-	 */
-	private function create_response()
+	private function create_response(): InstallDisplayResponse
 	{
-		$view = new FileTemplate('install/license.tpl');
+		$view = new FileTemplate('install/InstallLicense.tpl');
 
 		$license_content = file_get_contents('gpl-license.txt');
-		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
 
 		$view->put_all([
             'LICENSE_FORM' => $this->form->display(),

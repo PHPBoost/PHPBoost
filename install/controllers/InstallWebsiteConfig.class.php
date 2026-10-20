@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 08 27
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 10 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -12,15 +12,12 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class InstallWebsiteConfigController extends InstallController
+class InstallWebsiteConfig extends InstallCarrier
 {
     private Template $view;
-
     private HTMLForm $form;
     private FormButtonSubmit $submit_button;
-
     private SecurityConfig $security_config;
-    private ServerConfiguration $server_configuration;
 
     private array $distribution_config;
 
@@ -33,7 +30,7 @@ class InstallWebsiteConfigController extends InstallController
     /** Base URL of the addons server */
     const ADDONS_SERVER_URL = 'https://dl.phpboost.com';
 
-    public function execute(HTTPRequestCustom $request)
+    public function execute(HTTPRequestCustom $request): Response
     {
         parent::load_lang($request);
         $this->init();
@@ -45,10 +42,9 @@ class InstallWebsiteConfigController extends InstallController
         return $this->create_response();
     }
 
-    private function init()
+    private function init(): void
     {
         $this->security_config      = SecurityConfig::load();
-        $this->server_configuration = new ServerConfiguration();
         $this->distribution_config  = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
     }
 
@@ -64,7 +60,8 @@ class InstallWebsiteConfigController extends InstallController
         $home_page = $this->distribution_config['module_home_page'] ?? 'pages';
 
         $pdk_path = PATH_TO_ROOT . '/install/distribution/distribution_pdk.ini';
-        if (file_exists($pdk_path)) {
+        if (file_exists($pdk_path))
+        {
             $pdk_config = parse_ini_file($pdk_path);
             if (($pdk_config['module_home_page'] ?? '') === $home_page && $home_page === 'bugtracker') {
                 return 'pdk';
@@ -158,9 +155,10 @@ class InstallWebsiteConfigController extends InstallController
      * Lightweight HTTP GET using cURL, with file_get_contents as fallback.
      * Returns the response body, or false on error.
      */
-    private function http_get(string $url)
+    private function http_get(string $url): string|false
     {
-        if (function_exists('curl_init')) {
+        if (function_exists('curl_init'))
+        {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL,            $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -174,8 +172,9 @@ class InstallWebsiteConfigController extends InstallController
             curl_setopt($ch, CURLOPT_HTTPHEADER,     ['Accept: application/json']);
             $body = curl_exec($ch);
             $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            if (\PHP_VERSION_ID < 80100)
+            if (\PHP_VERSION_ID < 80100) {
                 curl_close($ch);
+            }
             if ($body !== false && $http >= 200 && $http < 300) {
                 return $body;
             }
@@ -183,7 +182,8 @@ class InstallWebsiteConfigController extends InstallController
         }
 
         // Fallback: file_get_contents (requires allow_url_fopen)
-        if (ini_get('allow_url_fopen')) {
+        if (ini_get('allow_url_fopen'))
+        {
             $ctx = stream_context_create(['http' => [
                 'timeout'          => 15,
                 'ignore_errors'    => false,
@@ -210,7 +210,7 @@ class InstallWebsiteConfigController extends InstallController
 
     // ── Form building ─────────────────────────────────────────────────────────
 
-    private function build_form()
+    private function build_form(): void
     {
         $this->form = new HTMLForm('website_form', '', false);
 
@@ -297,7 +297,8 @@ class InstallWebsiteConfigController extends InstallController
             ));
 
         // Tab: Captcha
-        if ($this->distribution_config['default_captcha']) {
+        if ($this->distribution_config['default_captcha'])
+        {
             $fieldset = new TabsContentFieldset('captcha_config', $this->lang['install.website.captcha.config']);
             $this->form->add_fieldset($fieldset);
 
@@ -367,8 +368,7 @@ class InstallWebsiteConfigController extends InstallController
         {
             $locale = LangLoader::get_locale();
             $genre = $module['genre'][$locale];
-            if (!isset($grouped_modules[$genre]))
-            {
+            if (!isset($grouped_modules[$genre])){
                 $grouped_modules[$genre] = [];
             }
             $grouped_modules[$genre][] = $module;
@@ -399,7 +399,8 @@ class InstallWebsiteConfigController extends InstallController
         }
 
         // If the remote list could not be fetched, show an informational note
-        if (empty($this->remote_modules)) {
+        if (empty($this->remote_modules))
+        {
             $fieldset->add_field(new FormFieldHTML('modules_unavailable',
                 '<p class="message-helper bgc notice">' . $this->lang['install.website.modules.unavailable'] . '</p>'
             ));
@@ -438,7 +439,8 @@ class InstallWebsiteConfigController extends InstallController
             ));
         }
 
-        if (empty($this->remote_themes)) {
+        if (empty($this->remote_themes))
+        {
             $fieldset->add_field(new FormFieldHTML('themes_unavailable',
                 '<p class="message-helper bgc notice">' . $this->lang['install.website.themes.unavailable'] . '</p>'
             ));
@@ -460,8 +462,7 @@ class InstallWebsiteConfigController extends InstallController
         $desc   = AddonHelper::resolve_locale_field($info, 'description', $locale, '');
 
         $label = '<span>' . TextHelper::ucfirst($name);
-        if ($addon_id === 'pages')
-        {
+        if ($addon_id === 'pages') {
             $label .= ' <em>(' . $this->lang['common.required'] . ')</em>';
         }
         $label .= '</span>';
@@ -499,12 +500,12 @@ class InstallWebsiteConfigController extends InstallController
         $url = self::ADDONS_SERVER_URL . '/' . $version . '/';
 
         // Check if the URL is valid AND server responds
-        if (filter_var($url, FILTER_VALIDATE_URL)) {
+        if (filter_var($url, FILTER_VALIDATE_URL))
+        {
             $headers = @get_headers($url);
             if ($headers && strpos($headers[0], '200') !== false) {
                 $url = self::ADDONS_SERVER_URL . '/' . $version;
-            }
-            else {
+            } else {
                 $url = self::ADDONS_SERVER_URL . '/dev';
             }
         }
@@ -512,8 +513,7 @@ class InstallWebsiteConfigController extends InstallController
         $thumbnail = new File($url . '/themes/' . $addon_id . '/' . $thumbnail_path);
 
         $label = '<span>' . TextHelper::ucfirst($name);
-        if ($addon_id === 'pages')
-        {
+        if ($addon_id === 'pages') {
             $label .= ' <em>(' . $this->lang['common.required'] . ')</em>';
         }
         $label .= '</span>';
@@ -536,14 +536,15 @@ class InstallWebsiteConfigController extends InstallController
     }
 
     /** Form handling  */
-    private function handle_form(HTTPRequestCustom $request)
+    private function handle_form(HTTPRequestCustom $request): string|false
     {
         $mandatory_module  = $this->get_mandatory_module();
         $distribution      = $this->get_distribution_type();
         $selected_modules  = [$mandatory_module]; // always included
 
         // connect: optional, checked by default, only for normale & full
-        if ($distribution !== 'pdk') {
+        if ($distribution !== 'pdk')
+        {
             if ($this->form->has_field('module_connect') && $this->form->get_value('module_connect')) {
                 $selected_modules[] = 'connect';
             }
@@ -596,7 +597,8 @@ class InstallWebsiteConfigController extends InstallController
 
         SecurityConfig::save();
 
-        if ($request->get_is_https()) {
+        if ($request->get_is_https())
+        {
             $server_environment_config = ServerEnvironmentConfig::load();
             $server_environment_config->enable_redirection_https();
             ServerEnvironmentConfig::save();
@@ -612,12 +614,12 @@ class InstallWebsiteConfigController extends InstallController
 
     // ── Utilities ─────────────────────────────────────────────────────────────
 
-    private function current_server_host()
+    private function current_server_host(): string
     {
         return Appcontext::get_request()->get_site_url();
     }
 
-    private function current_server_path()
+    private function current_server_path(): string
     {
         $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
         if (!$server_path) {
@@ -627,7 +629,7 @@ class InstallWebsiteConfigController extends InstallController
         return $server_path = ($server_path == '/') ? '' : $server_path;
     }
 
-    private function warning_if_not_equals(FormField $field, $message)
+    private function warning_if_not_equals(FormField $field, string $message): string
     {
         $tpl = new StringTemplate('
             var field = $FF(${escapejs(ID)});
@@ -642,12 +644,9 @@ class InstallWebsiteConfigController extends InstallController
         return $tpl->render();
     }
 
-    /**
-     * @return InstallDisplayResponse
-     */
-    private function create_response()
+    private function create_response(): InstallDisplayResponse
     {
-        $this->view = new FileTemplate('install/website.tpl');
+        $this->view = new FileTemplate('install/InstallWebsiteConfig.tpl');
         $this->view->put('WEBSITE_FORM', $this->form->display());
         $step_title            = $this->lang['install.website.config.title'];
         $default_captcha       = $this->distribution_config['default_captcha'];

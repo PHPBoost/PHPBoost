@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2009 12 13
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -11,19 +11,17 @@
 */
 
 define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/install/environment/InstallEnvironment.class.php';
+require_once PATH_TO_ROOT . '/install/app/InstallEnvironment.class.php';
 InstallEnvironment::load_imports();
 
-if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1)
-{
+if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1) {
 	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed but your current PHP version is ' . phpversion() . '</p>');
 }
 
 InstallEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();
-if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable())
-{
+if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable()) {
 	die(LangLoader::get_message('install.chmod.cache.not.writable', 'common', 'install'));
 }
 
@@ -39,16 +37,14 @@ if ($_GET || $_POST)
 		{
 			if (!empty($arg) && in_array($id, ['--db-host', '--db-port', '--db-user', '--db-pwd', '--db-schema', '--db-table-prefix', '--ws-server', '--ws-path', '--ws-name', '--ws-slogan', '--ws-desc', '--ws-locale', '--ws-timezone', '--u-login', '--u-pwd', '--u-email']))
 			{
-				switch ($id)
-				{
+				switch ($id) {
 					case '--db-pwd' :
-							$has_db_pwd = true;
-							break;
-
+                        $has_db_pwd = true;
+                        break;
 					case '--ws-locale' :
-							$has_ws_locale = $arg ? true : false;
-							$arg = $has_ws_locale ? ($arg == 'french' ? $arg : 'english') : '';
-							break;
+                        $has_ws_locale = $arg ? true : false;
+                        $arg = $has_ws_locale ? ($arg == 'french' ? $arg : 'english') : '';
+                        break;
 				}
 
 				$argv[] = $id;
@@ -76,12 +72,9 @@ if ($_GET || $_POST)
 		{
 			$launcher = new CLILauncher($argv);
 			$result = $launcher->launch();
-			if ($result)
-			{
+			if ($result) {
 				exit(0);
-			}
-			else
-			{
+			} else {
 				exit(1);
 			}
 		}
@@ -89,13 +82,13 @@ if ($_GET || $_POST)
 }
 
 $url_controller_mappers = [
-	new UrlControllerMapper('InstallWelcomeController', '`^(?:/welcome)?/?$`'),
-	new UrlControllerMapper('InstallLicenseController', '`^/license/?$`'),
-	new UrlControllerMapper('InstallServerConfigController', '`^/server/?$`'),
-	new UrlControllerMapper('InstallDBConfigController', '`^/database/?$`'),
-	new UrlControllerMapper('InstallWebsiteConfigController', '`^/website/?$`'),
-	new UrlControllerMapper('InstallCreateAdminController', '`^/admin/?$`'),
-	new UrlControllerMapper('InstallFinishController', '`^/finish/?$`')
+	new UrlControllerMapper('InstallWelcome', '`^(?:/welcome)?/?$`'),
+	new UrlControllerMapper('InstallLicense', '`^/license/?$`'),
+	new UrlControllerMapper('InstallServerConfig', '`^/server/?$`'),
+	new UrlControllerMapper('InstallDBConfig', '`^/database/?$`'),
+	new UrlControllerMapper('InstallWebsiteConfig', '`^/website/?$`'),
+	new UrlControllerMapper('InstallCreateAdmin', '`^/admin/?$`'),
+	new UrlControllerMapper('InstallFinish', '`^/finish/?$`')
 ];
 DispatchManager::dispatch($url_controller_mappers);
 
