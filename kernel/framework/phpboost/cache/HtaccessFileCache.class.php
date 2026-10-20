@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -112,7 +112,7 @@ class HtaccessFileCache implements CacheData
 	private function add_hide_directory_listings()
 	{
 		$this->add_section('Hide directory listings');
-		$this->add_line('Options -Indexes');
+		$this->add_line('Options -Indexes -MultiViews');
 		$this->add_section('Prevent viewing of .htaccess file');
 		if (AppContext::get_request()->get_domain_name() == 'free.fr')
 		{
