@@ -10,26 +10,25 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class UpdateIntroductionController extends UpdateController
+class UpdateWelcome extends UpdateController
 {
     public function execute(HTTPRequestCustom $request)
     {
         parent::load_lang($request);
-        $view = new FileTemplate('update/introduction.tpl');
+        $view = new FileTemplate('update/UpdateWelcome.tpl');
         $this->add_navigation($view);
         return $this->create_response($view);
     }
 
-    private function create_response(Template $view): UpdateDisplayResponse
+    private function create_response(Template $view): UpdateCarrier
     {
-        $step_title = $this->lang['update.step.introduction.title'];
-        $response   = new UpdateDisplayResponse(1, $step_title, $view);
+        $step_title = $this->lang['update.step.welcome.title'];
+        $response   = new UpdateCarrier(1, $step_title, $view);
         return $response;
     }
 
     private function add_navigation(Template $view)
     {
-        $server_configuration = new ServerConfiguration();
         if (UpdateServices::check_server()) {
             if (UpdateServices::database_config_file_checked())
             {
@@ -50,7 +49,7 @@ class UpdateIntroductionController extends UpdateController
         $form = new HTMLForm('preambleForm', $redirect_url, false);
 
         $action_fieldset = new FormFieldsetSubmit('actions');
-        $next            = new FormButtonSubmitCssImg($this->lang['update.step.next'], 'fa fa-arrow-right', 'introduction');
+        $next            = new FormButtonSubmitCssImg($this->lang['update.step.next'], 'fa fa-arrow-right', 'welcome');
         $action_fieldset->add_element($next);
         $form->add_fieldset($action_fieldset);
         $view->put_all([

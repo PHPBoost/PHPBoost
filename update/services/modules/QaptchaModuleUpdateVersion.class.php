@@ -47,7 +47,7 @@ class QaptchaModuleUpdateVersion extends ModuleUpdateVersion
 		];
 	}
 
-	public function execute()
+	public function execute(): void
 	{
 		parent::execute();
 		// Module registration (QuestionCaptcha → qaptcha) is handled by
@@ -61,7 +61,7 @@ class QaptchaModuleUpdateVersion extends ModuleUpdateVersion
 	 * QaptchaConfig::load() uses the same DB config key ('question-captcha') as QuestionCaptchaConfig,
 	 * so the questions/answers configured by the admin are preserved automatically.
 	 */
-	private function migrate_content_management_config()
+	private function migrate_content_management_config(): void
 	{
 		try {
 			$content_management_config = ContentManagementConfig::load();

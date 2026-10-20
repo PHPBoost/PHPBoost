@@ -1,5 +1,5 @@
 @import url('../../templates/__default__/theme/default.css') screen;
-@import url('../../templates/__default__/theme/font-awesome/css/all.css');
+@import url('../../kernel/lib/css/font-awesome/css/all.css');
 @import url('../../templates/__default__/theme/font-awesome-animation.css');
 
 @import url('../../templates/__default__/theme/@variables.css') screen;

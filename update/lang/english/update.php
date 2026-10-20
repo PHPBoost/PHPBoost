@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 08 05
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -16,37 +16,39 @@
 
 $lang = [
     //Variables générales
-    'update.title' => 'PHPBoost Update',
-    'steps.list' => 'Steps list',
-    'step.list.introduction' => 'Preamble',
-    'step.list.license' => 'License',
-    'step.list.server' => 'Server Configuration',
-    'step.list.database' => 'Database settings',
-    'step.list.website' => 'General settings',
-    'step.list.execute' => 'Update',
-    'step.list.end' => 'End of update',
+    'update.title'             => 'PHPBoost Update',
+    'steps.list'               => 'Steps list',
+    'step.list.welcome'        => 'Preamble',
+    'step.list.license'        => 'License',
+    'step.list.server'         => 'Server Configuration',
+    'step.list.database'       => 'Database settings',
+    'step.list.website'        => 'General settings',
+    'step.list.execute'        => 'Update',
+    'step.list.end'            => 'End of update',
     'installation.progression' => 'Update progression',
-    'language.change' => 'Change language',
-    'change' => 'Change',
-    'step.previous' => 'Previous step',
-    'step.next' => 'Next step',
-    'yes' => 'Yes',
-    'no' => 'No',
-    'unknown' => 'Unknown',
-    'generatedBy' => 'Powered by %s',
-    'poweredBy' => 'Powered by',
-    'phpboost.link' => 'Link to PHPBoost CMS official website',
-    'phpboost.rights' => '',
-    'phpboost.slogan' => 'Create your website easily and for free!',
-    'phpboost.logo' => 'PHPBoost logo',
+    'language.change'          => 'Change language',
+    'change'                   => 'Change',
+    'step.previous'            => 'Previous step',
+    'step.next'                => 'Next step',
+    'yes'                      => 'Yes',
+    'no'                       => 'No',
+    'unknown'                  => 'Unknown',
+    'generatedBy'              => 'Powered by %s',
+    'poweredBy'                => 'Powered by',
+    'phpboost.link'            => 'Link to PHPBoost CMS official website',
+    'phpboost.rights'          => '',
+    'phpboost.slogan'          => 'Create your website easily and for free!',
+    'phpboost.logo'            => 'PHPBoost logo',
 
 //Introduction
-    'step.introduction.title'   => 'Update of PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version(),
-    'step.introduction.message' => 'Welcome to update wizard',
-    'step.introduction.clue' => '<p>Thank you to have trusted PHPBoost to build your website.</p>
-<p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>',
-    'step.introduction.maintenance_notice' => '<div class="message-helper bgc notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>',
-    'step.introduction.team_signature' => '<p>Best regards, the PHPBoost team.</p>',
+    'step.welcome.title'   => 'Update of PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version(),
+    'step.welcome.message' => 'Welcome to update wizard',
+    'step.welcome.clue' => '
+        <p>Thank you to have trusted PHPBoost to build your website.</p>
+        <p>To install PHPBoost you need to have some informations about your hosting which would be provided by your hoster. The installation is absolutely automatic, il should take only a few minutes. Click on the right arrow to start the installation process.</p>
+    ',
+    'step.welcome.maintenance_notice' => '<div class="message-helper bgc notice">Your site will automatically be placed in maintenance. Consider disabling maintenance when you have verified that everything works properly.</div>',
+    'step.welcome.team_signature' => '<p>Best regards, the PHPBoost team.</p>',
 
 //Configuration du serveur
     'step.server.title' => 'Looking up server configuration...',

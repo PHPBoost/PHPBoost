@@ -3,29 +3,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 02 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class UpdateDisplayResponse extends AbstractResponse
+class UpdateCarrier extends AbstractResponse
 {
 	const UPDATE_DEFAULT_LANGUAGE = 'french';
 
-	private $lang;
+	private array $lang;
+	private int $current_step = 0;
+	private mixed $steps_number;
+	private Template $full_view;
 
-	private $current_step = 0;
-
-	private $steps_number;
-
-	/**
-	 * @var Template
-	 */
-	private $full_view;
-
-	public function __construct($step_number, $step_title, Template $view)
+	public function __construct(mixed $step_number, mixed $step_title, Template $view)
 	{
 		$this->load_language_resources();
 		$this->init_response($view);
@@ -35,7 +29,7 @@ class UpdateDisplayResponse extends AbstractResponse
 		$this->update_progress_bar();
 
 		$this->full_view->put_all([
-			'RESTART' => UpdateUrlBuilder::introduction()->rel(),
+			'RESTART' => UpdateUrlBuilder::welcome()->rel(),
 			'STEP_TITLE' => $step_title,
 			'C_HAS_PREVIOUS_STEP' => false,
 			'C_HAS_NEXT_STEP' => false,
@@ -46,20 +40,20 @@ class UpdateDisplayResponse extends AbstractResponse
 		parent::__construct($env, $this->full_view);
 	}
 
-	public function init_response(Template $view)
+	public function init_response(Template $view): void
 	{
-		$this->full_view = new FileTemplate('update/main.tpl');
+		$this->full_view = new FileTemplate('update/UpdateCarrier.tpl');
 		$this->full_view->put('UpdateStep', $view);
 		$this->full_view->add_lang($this->lang);
 		$view->add_lang($this->lang);
 	}
 
-	public function load_language_resources()
+	public function load_language_resources(): void
 	{
 		$this->lang = LangLoader::get_all_langs('update');
 	}
 
-	private function add_language_bar()
+	private function add_language_bar(): void
 	{
 		$lang = AppContext::get_request()->get_string('lang', self::UPDATE_DEFAULT_LANGUAGE);
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
@@ -80,12 +74,12 @@ class UpdateDisplayResponse extends AbstractResponse
 		$this->full_view->put('lang', $langs);
 	}
 
-	private function init_steps($step_number)
+	private function init_steps(mixed $step_number): void
 	{
 		$this->current_step = $step_number;
 
 		$steps = [
-			['name' => $this->lang['update.step.list.introduction'], 'img' => 'home'],
+			['name' => $this->lang['update.step.list.welcome'], 'img' => 'home'],
         ];
 
 		if (!UpdateServices::check_server())
@@ -128,7 +122,7 @@ class UpdateDisplayResponse extends AbstractResponse
 		}
 	}
 
-	private function update_progress_bar()
+	private function update_progress_bar(): void
 	{
 		for ($i = 1; $i <= floor(($this->current_step / $this->steps_number) * 24); $i++)
 		{

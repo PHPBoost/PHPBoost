@@ -10,24 +10,22 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class UpdateVersionExecuteController extends UpdateController
+class UpdateLauncher extends UpdateController
 {
     private FormButtonSubmit $submit;
-
     private GeneralConfig $general_config;
     private UserAccountsConfig $user_accounts_config;
-
     private bool $default_module_changed = false;
     private bool $default_theme_changed  = false;
     private bool $default_lang_changed   = false;
 
-    public function execute(HTTPRequestCustom $request)
+    public function execute(HTTPRequestCustom $request): mixed
     {
         parent::load_lang($request);
 
         $this->init();
 
-        $view = new FileTemplate('update/execute.tpl');
+        $view = new FileTemplate('update/UpdateLauncher.tpl');
         $this->display_incompatible_elements_messages($view);
         $this->add_navigation($view);
         if ($this->submit->has_been_submited()) {
@@ -36,13 +34,13 @@ class UpdateVersionExecuteController extends UpdateController
         return $this->create_response($view);
     }
 
-    private function init()
+    private function init(): void
     {
         $this->general_config       = GeneralConfig::load();
         $this->user_accounts_config = UserAccountsConfig::load();
     }
 
-    private function display_incompatible_elements_messages(Template $view)
+    private function display_incompatible_elements_messages(Template $view): void
     {
         $incompatible_modules = $this->get_incompatible_modules_list();
 
@@ -100,7 +98,7 @@ class UpdateVersionExecuteController extends UpdateController
         }
     }
 
-    private function get_incompatible_modules_list()
+    private function get_incompatible_modules_list(): mixed
     {
         $list = [];
 
@@ -119,7 +117,7 @@ class UpdateVersionExecuteController extends UpdateController
         return $list;
     }
 
-    private function get_incompatible_themes_list()
+    private function get_incompatible_themes_list(): mixed
     {
         $list = [];
 
@@ -138,7 +136,7 @@ class UpdateVersionExecuteController extends UpdateController
         return $list;
     }
 
-    private function get_incompatible_langs_list()
+    private function get_incompatible_langs_list(): mixed
     {
         $list = [];
 
@@ -157,31 +155,27 @@ class UpdateVersionExecuteController extends UpdateController
         return $list;
     }
 
-    private function handle_form()
+    private function handle_form(): void
     {
         $service = new UpdateServices();
         $service->execute();
         AppContext::get_response()->redirect(UpdateUrlBuilder::finish());
     }
 
-    /**
-     * @param Template $view
-     * @return UpdateDisplayResponse
-     */
-    private function create_response(Template $view)
+    private function create_response(Template $view): UpdateCarrier
     {
         $step_title = $this->lang['update.step.execute.title'];
-        $response   = new UpdateDisplayResponse(4, $step_title, $view);
+        $response   = new UpdateCarrier(4, $step_title, $view);
         return $response;
     }
 
-    private function add_navigation(Template $view)
+    private function add_navigation(Template $view): void
     {
         if (UpdateServices::database_config_file_checked())
         {
             if (UpdateServices::check_server())
             {
-                $back_url = UpdateUrlBuilder::introduction();
+                $back_url = UpdateUrlBuilder::welcome();
             }
             else
             {

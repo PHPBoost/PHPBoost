@@ -9,18 +9,17 @@
 
 class UpdateUrlBuilder
 {
-    private static $dispatcher = '/update/index.php';
+    private static string $dispatcher = '/update/index.php';
+    private static string $locale = UpdateController::DEFAULT_LOCALE;
 
-    private static $locale = UpdateController::DEFAULT_LOCALE;
-
-    public static function set_locale($locale)
+    public static function set_locale(string $locale)
     {
         self::$locale = $locale;
     }
 
-    public static function introduction(): Url
+    public static function welcome(): Url
     {
-        return self::url('/introduction');
+        return self::url('/welcome');
     }
 
     public static function server_configuration(): Url
@@ -36,11 +35,6 @@ class UpdateUrlBuilder
     public static function update(): Url
     {
         return self::url('/execute');
-    }
-
-    public static function config(): Url
-    {
-        return self::url('/config');
     }
 
     public static function finish(): Url

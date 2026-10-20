@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 05 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -18,7 +18,7 @@ $lang = [
     //Variables générales
     'update.title'             => 'Mise à jour de PHPBoost',
     'steps.list'               => 'Liste des étapes',
-    'step.list.introduction'   => 'Préambule',
+    'step.list.welcome'        => 'Préambule',
     'step.list.license'        => 'Licence',
     'step.list.server'         => 'Configuration du serveur',
     'step.list.database'       => 'Configuration base de données',
@@ -41,14 +41,14 @@ $lang = [
     'phpboost.logo'            => 'Logo PHPBoost',
 
 //Introduction
-    'step.introduction.title'   => 'Mise à jour de PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version(),
-    'step.introduction.message' => 'Bienvenue dans l\'assistant de mise à jour',
-    'step.introduction.clue'    => '
+    'step.welcome.title'   => 'Mise à jour de PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version(),
+    'step.welcome.message' => 'Bienvenue dans l\'assistant de mise à jour',
+    'step.welcome.clue'    => '
         <p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
         <p>Pour mettre à jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. La mise à jour est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus de mise à jour.</p>
     ',
-    'step.introduction.maintenance_notice' => '<div class="message-helper bgc notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>',
-    'step.introduction.team_signature'     => '<p>Cordialement, l\'équipe PHPBoost</p>',
+    'step.welcome.maintenance_notice' => '<div class="message-helper bgc notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>',
+    'step.welcome.team_signature'     => '<p>Cordialement, l\'équipe PHPBoost</p>',
 
 //Configuration du serveur
     'step.server.title'        => 'Vérification de la configuration du serveur',

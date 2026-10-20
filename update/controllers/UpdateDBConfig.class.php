@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 03 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -11,17 +11,14 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class UpdateDBConfigController extends UpdateController
+class UpdateDBConfig extends UpdateController
 {
     private Template $view;
     private HTMLForm $form;
-    /** @var FormButtonSubmit*/
-    private $submit_button;
-    private FormFieldsetHTML $overwrite_fieldset;
-    private FormFieldCheckbox $overwrite_field;
-    private $error = null;
+    private FormButtonSubmit $submit_button;
+    private mixed $error = null;
 
-    public function execute(HTTPRequestCustom $request)
+    public function execute(HTTPRequestCustom $request): mixed
     {
         parent::load_lang($request);
         $this->build_form();
@@ -37,7 +34,7 @@ class UpdateDBConfigController extends UpdateController
         return $this->create_response();
     }
 
-    private function build_form()
+    private function build_form(): void
     {
         $this->form = new HTMLForm('databaseForm', '', false);
 
@@ -99,7 +96,7 @@ class UpdateDBConfigController extends UpdateController
         $this->form->add_fieldset($action_fieldset);
     }
 
-    private function handle_form(string $host, string $port, string $login, string $password, string $schema, string $tables_prefix)
+    private function handle_form(string $host, string $port, string $login, string $password, string $schema, string $tables_prefix): void
     {
         $service = new UpdateServices();
         $status  = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
@@ -120,26 +117,29 @@ class UpdateDBConfigController extends UpdateController
         }
     }
 
-    private function create_connection(UpdateServices $service, string $host, string $port, string $login, string $password, string $schema, string $tables_prefix)
+    private function create_connection(UpdateServices $service, string $host, string $port, string $login, string $password, string $schema, string $tables_prefix): void
     {
-        if ($service->is_already_installed($tables_prefix)) {
+        if ($service->is_already_installed($tables_prefix))
+        {
             PersistenceContext::close_db_connection();
             $service->create_connection(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
             AppContext::get_response()->redirect(UpdateUrlBuilder::update());
-        } else {
+        }
+        else
+        {
             $this->error = $this->lang['phpboost.not.installed.clue'];
         }
     }
 
-    private function create_response(): UpdateDisplayResponse
+    private function create_response(): UpdateCarrier
     {
-        $this->view = new FileTemplate('update/database.tpl');
+        $this->view = new FileTemplate('update/UpdateDBConfig.tpl');
         $this->view->put('DATABASE_FORM', $this->form->display());
         if (!empty($this->error)) {
             $this->view->put('ERROR', $this->error);
         }
         $step_title = $this->lang['update.step.database.config'];
-        $response   = new UpdateDisplayResponse(3, $step_title, $this->view);
+        $response   = new UpdateCarrier(3, $step_title, $this->view);
         return $response;
     }
 }

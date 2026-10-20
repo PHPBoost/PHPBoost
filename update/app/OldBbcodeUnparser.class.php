@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 5.1 - 2017 03 09
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,7 +26,7 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 	 * Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
 	 */
-	public function parse()
+	public function parse(): mixed
 	{
 		// Isolation of source code and HTML code that will not be protected
 		$this->unparse_html(self::PICK_UP);
@@ -57,13 +57,15 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 
 		$this->unparse_code(self::REIMPLANT);
 		$this->unparse_html(self::REIMPLANT);
+
+        return $this->content;
 	}
 
 	/**
 	 * Unparse the smiley's code of the content of the parser.
 	 * Replace the HTML code by the smiley code (for instance :) or :|)
 	 */
-	protected function unparse_smilies()
+	protected function unparse_smilies(): void
 	{
 		// Smilies
 		$smiley_img_url = $smiley_code = [];
@@ -80,7 +82,7 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 	 * Unparsed the simple tags of the content of the parser.
 	 * The simple tags are the ones which are processable in a few lines
 	 */
-	protected function unparse_simple_tags()
+	protected function unparse_simple_tags(): void
 	{
 		$array_preg = [
 			'`<span style="text-decoration: ?underline;?">(.*)</span>`isuU',
@@ -180,16 +182,16 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 
 		// Nested tags
 		// Quotes
-		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote]$2[/quote]', $this->content);
-		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote=$1]$2[/quote]', $this->content);
+		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote]$2[/quote]');
+		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote=$1]$2[/quote]');
 
 		// Hidden bloc
-		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]');
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]');
 
 		// Block
-		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]');
+		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]');
 
 		// Container
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
@@ -214,13 +216,13 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link offload">(.*)</a>`suU', [$this, 'unparse_wikipedia_tag'], $this->content);
 
 		// Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]');
 
 		// Feed
 		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
 
-	private function unparse_img($matches)
+	private function unparse_img(mixed $matches): string
 	{
 		$img_pathinfo = pathinfo($matches[1]);
 		$file_array = explode('.', $img_pathinfo['filename']);
@@ -235,7 +237,7 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 	/**
 	 * Unparses the table tag
 	 */
-	protected function unparse_table()
+	protected function unparse_table(): void
 	{
 		// looping to iterate through all the nests
 		while (TextHelper::strpos($this->content, '<table class="table formatter-table"') !== false)
@@ -259,7 +261,7 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 	/**
 	 * Unparses the list tag
 	 */
-	protected function unparse_list()
+	protected function unparse_list(): void
 	{
 		// looping as long as there is nesting
 		while (TextHelper::strpos($this->content, '<ul class="formatter-ul">') !== false)
@@ -281,7 +283,7 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
-	protected function unparse_fieldset($matches)
+	protected function unparse_fieldset(mixed $matches): string
 	{
 		$style = '';
 		$legend = '';
@@ -311,7 +313,7 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
-	protected function unparse_box($matches)
+	protected function unparse_box(mixed $matches): string
 	{
 		$id = '';
 		$class = '';

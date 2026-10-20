@@ -18,9 +18,10 @@ class CookiebarConfigUpdateVersion extends ConfigUpdateVersion
     protected function build_new_config(): bool
     {
         $old_config = $this->get_old_config();
+        $config = CookieBarConfig::load();
+
         if ($old_config)
         {
-            $config = CookieBarConfig::load();
             $unparser = new OldBbcodeUnparser();
             $parser = new BbcodeParser();
             $old_content = $old_config->get_property('cookiebar_content');

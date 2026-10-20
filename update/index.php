@@ -3,13 +3,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 02 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '..');
-require_once PATH_TO_ROOT . '/update/environment/UpdateEnvironment.class.php';
+require_once PATH_TO_ROOT . '/update/app/UpdateEnvironment.class.php';
 UpdateEnvironment::load_imports();
 
 if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1)
@@ -59,11 +60,11 @@ if ($_GET || $_POST)
 }
 
 $url_controller_mappers = [
-	new UrlControllerMapper('UpdateIntroductionController', '`^(?:/introduction)?/?$`'),
-	new UrlControllerMapper('UpdateServerConfigController', '`^/server/?$`'),
-	new UrlControllerMapper('UpdateDBConfigController', '`^/database/?$`'),
-	new UrlControllerMapper('UpdateVersionExecuteController', '`^/execute/?$`'),
-	new UrlControllerMapper('UpdateFinishController', '`^/finish/?$`')
+	new UrlControllerMapper('UpdateWelcome', '`^(?:/welcome)?/?$`'),
+	new UrlControllerMapper('UpdateServerConfig', '`^/server/?$`'),
+	new UrlControllerMapper('UpdateDBConfig', '`^/database/?$`'),
+	new UrlControllerMapper('UpdateLauncher', '`^/execute/?$`'),
+	new UrlControllerMapper('UpdateFinish', '`^/finish/?$`')
 ];
 DispatchManager::dispatch($url_controller_mappers);
 

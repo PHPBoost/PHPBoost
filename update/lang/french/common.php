@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 05 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,17 +15,17 @@
 ####################################################
 
     //Variables générales
-$lang['update.title']                  = 'Mise à jour de PHPBoost';
-$lang['update.steps.list']             = 'Liste des étapes';
-$lang['update.step.list.introduction'] = 'Préambule';
-$lang['update.step.list.license']      = 'Licence';
-$lang['update.step.list.server']       = 'Configuration du serveur';
-$lang['update.step.list.database']     = 'Configuration base de données';
-$lang['update.step.list.website']      = 'Configuration du site';
-$lang['update.step.list.execute']      = 'Mise à jour';
-$lang['update.step.list.end']          = 'Fin de la mise à jour';
-$lang['update.language.change']        = 'Changer de langue';
-$lang['update.change']                 = 'Changer';
+$lang['update.title']              = 'Mise à jour de PHPBoost';
+$lang['update.steps.list']         = 'Liste des étapes';
+$lang['update.step.list.welcome']  = 'Préambule';
+$lang['update.step.list.license']  = 'Licence';
+$lang['update.step.list.server']   = 'Configuration du serveur';
+$lang['update.step.list.database'] = 'Configuration base de données';
+$lang['update.step.list.website']  = 'Configuration du site';
+$lang['update.step.list.execute']  = 'Mise à jour';
+$lang['update.step.list.end']      = 'Fin de la mise à jour';
+$lang['update.language.change']    = 'Changer de langue';
+$lang['update.change']             = 'Changer';
 
 $lang['update.step.previous'] = 'Étape précédente';
 $lang['update.step.next']     = 'Étape suivante';
@@ -35,15 +35,15 @@ $lang['update.phpboost.rights'] = '';
 $lang['update.phpboost.logo']   = 'Logo PHPBoost';
 
 //Introduction
-$lang['update.step.introduction.title']   = 'Mise à jour de PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version();
-$lang['update.step.introduction.message'] = 'Bienvenue dans l\'assistant de mise à jour';
-$lang['update.step.introduction.clue']    = '
+$lang['update.step.welcome.title']   = 'Mise à jour de PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version();
+$lang['update.step.welcome.message'] = 'Bienvenue dans l\'assistant de mise à jour';
+$lang['update.step.welcome.clue']    = '
         <p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
         <p>Pour mettre à jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. La mise à jour est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus de mise à jour.</p>
 ';
 
-$lang['update.step.introduction.maintenance_notice'] = '<div class="message-helper bgc notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>';
-$lang['update.step.introduction.team_signature']     = '<p>Cordialement, l\'équipe PHPBoost</p>';
+$lang['update.step.welcome.maintenance_notice'] = '<div class="message-helper bgc notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>';
+$lang['update.step.welcome.team_signature']     = '<p>Cordialement, l\'équipe PHPBoost</p>';
 
 //Configuration du serveur
 $lang['update.step.server.title']       = 'Vérification de la configuration du serveur';

@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2010 10 04
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class UpdateFinishController extends UpdateController
+class UpdateFinish extends UpdateController
 {
     public function execute(HTTPRequestCustom $request): mixed
     {
@@ -23,14 +23,14 @@ class UpdateFinishController extends UpdateController
             try { NginxFileCache::regenerate(); } catch (Exception $e) {}
         }
 
-        $view = new FileTemplate('update/finish.tpl');
+        $view = new FileTemplate('update/UpdateFinish.tpl');
         return $this->create_response($view);
     }
 
-    private function create_response(View $view): UpdateDisplayResponse
+    private function create_response(View $view): UpdateCarrier
     {
         $step_title = $this->lang['update.step.list.end'];
-        $response   = new UpdateDisplayResponse(5, $step_title, $view);
+        $response   = new UpdateCarrier(5, $step_title, $view);
         return $response;
     }
 }

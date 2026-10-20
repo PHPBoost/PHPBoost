@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 02 29
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
@@ -14,7 +14,7 @@ abstract class UpdateController extends AbstractController
 
     protected array $lang = [];
 
-    protected function load_lang(HTTPRequestCustom $request)
+    protected function load_lang(HTTPRequestCustom $request): void
     {
         $this->redirect_to_https_if_needed($request);
         $locale = TextHelper::htmlspecialchars($request->get_string('lang', UpdateController::DEFAULT_LOCALE));
@@ -23,7 +23,7 @@ abstract class UpdateController extends AbstractController
         $this->lang = LangLoader::get_all_langs('update');
     }
 
-    protected function redirect_to_https_if_needed(HTTPRequestCustom $request)
+    protected function redirect_to_https_if_needed(HTTPRequestCustom $request): void
     {
         if (!$request->get_is_https() && @extension_loaded('curl'))
         {

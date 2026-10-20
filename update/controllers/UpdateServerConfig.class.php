@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 3.0 - 2012 03 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-class UpdateServerConfigController extends UpdateController
+class UpdateServerConfig extends UpdateController
 {
     private Template $view;
     private HTMLForm $form;
@@ -33,13 +33,13 @@ class UpdateServerConfigController extends UpdateController
         return $this->create_response();
     }
 
-    private function build_form()
+    private function build_form(): void
     {
         $this->form = new HTMLForm('continueForm', '', false);
 
         $action_fieldset = new FormFieldsetSubmit('actions');
 
-        $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.step.previous'], UpdateUrlBuilder::introduction(), 'fa fa-arrow-left'));
+        $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.step.previous'], UpdateUrlBuilder::welcome(), 'fa fa-arrow-left'));
 
         $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.folders.chmod.refresh'], UpdateUrlBuilder::server_configuration()->rel(), 'fa fa-sync'));
 
@@ -48,7 +48,7 @@ class UpdateServerConfigController extends UpdateController
         $this->form->add_fieldset($action_fieldset);
     }
 
-    private function handle_form()
+    private function handle_form(): void
     {
         if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_extension()) {
             if (UpdateServices::database_config_file_checked()) {
@@ -60,9 +60,9 @@ class UpdateServerConfigController extends UpdateController
         }
     }
 
-    private function build_view()
+    private function build_view(): void
     {
-        $this->view = new FileTemplate('update/server.tpl');
+        $this->view = new FileTemplate('update/UpdateServerConfig.tpl');
         $this->view->put_all([
             'MIN_PHP_VERSION'        => ServerConfiguration::MIN_PHP_VERSION,
             'PHP_VERSION_OK'         => $this->server_conf->is_php_compatible(),
@@ -87,7 +87,7 @@ class UpdateServerConfigController extends UpdateController
         $this->view->put('CONTINUE_FORM', $this->form->display());
     }
 
-    private function check_folders_permissions()
+    private function check_folders_permissions(): void
     {
         $folders = [];
         foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder) {
@@ -100,10 +100,10 @@ class UpdateServerConfigController extends UpdateController
         $this->view->put('folder', $folders);
     }
 
-    private function create_response(): UpdateDisplayResponse
+    private function create_response(): UpdateCarrier
     {
         $step_title = $this->lang['update.step.server.title'];
-        $response   = new UpdateDisplayResponse(2, $step_title, $this->view);
+        $response   = new UpdateCarrier(2, $step_title, $this->view);
         return $response;
     }
 }

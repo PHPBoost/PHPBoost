@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 20
  * @since       PHPBoost 5.0 - 2016 07 31
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
@@ -12,7 +12,6 @@ class CLIUpdateCommand implements CLICommand
 {
     private UpdateServices $update;
     private ServerConfiguration $server_configuration;
-    private CLIArgumentsReader $arg_reader;
 
     public function __construct()
     {
@@ -32,38 +31,41 @@ class CLIUpdateCommand implements CLICommand
 
     public function execute(array $args): void
     {
-        $this->arg_reader = new CLIArgumentsReader($args);
         if (!($this->check_env() && $this->update())) {
             CLIOutput::writeln('update failed');
         }
     }
 
-    private function check_env()
+    private function check_env(): bool
     {
         CLIOutput::writeln('environment check...');
         return $this->chech_php_version() && $this->check_folders_permissions();
     }
 
-    private function update()
+    private function update(): bool
     {
         CLIOutput::writeln('update');
         $this->update = new UpdateServices();
-        if ($this->update->database_config_file_checked()) {
+        if ($this->update->database_config_file_checked())
+        {
             $this->update->generate_update_token();
             CLIOutput::writeln("\t" . 'executing update...');
             $this->update->execute();
             CLIOutput::writeln('update successfull');
             return true;
-        } else {
+        }
+        else
+        {
             CLIOutput::writeln("\t" . 'phpboost is not installed, please install it before trying to update');
             return false;
         }
     }
 
-    private function chech_php_version()
+    private function chech_php_version(): bool
     {
         CLIOutput::writeln("\t" . 'php version');
-        if (!$this->server_configuration->is_php_compatible()) {
+        if (!$this->server_configuration->is_php_compatible())
+        {
             CLIOutput::writeln('PHP version (' . ServerConfiguration::get_phpversion() . ') is not compatible with PHPBoost.');
             CLIOutput::writeln('PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed!');
             return false;
@@ -71,7 +73,7 @@ class CLIUpdateCommand implements CLICommand
         return true;
     }
 
-    private function check_folders_permissions()
+    private function check_folders_permissions(): bool
     {
         CLIOutput::writeln("\t" . 'folder permissions...');
         if (!PHPBoostFoldersPermissions::validate()) {

@@ -4,12 +4,12 @@
 	</div>
 
     <header>
-        <h2>{@update.step.introduction.message}</h2>
+        <h2>{@update.step.welcome.message}</h2>
     </header>
 
-	{@H|update.step.introduction.clue}
-	# IF C_PUT_UNDER_MAINTENANCE #{@H|update.step.introduction.maintenance_notice}# ENDIF #
-	{@H|update.step.introduction.team_signature}
+	{@H|update.step.welcome.clue}
+	# IF C_PUT_UNDER_MAINTENANCE #{@H|update.step.welcome.maintenance_notice}# ENDIF #
+	{@H|update.step.welcome.team_signature}
 </div>
 
 <footer>
