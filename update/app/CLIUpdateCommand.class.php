@@ -31,7 +31,8 @@ class CLIUpdateCommand implements CLICommand
 
     public function execute(array $args): void
     {
-        if (!($this->check_env() && $this->update())) {
+        if (!($this->check_env() && $this->update()))
+        {
             CLIOutput::writeln('update failed');
         }
     }
@@ -76,9 +77,11 @@ class CLIUpdateCommand implements CLICommand
     private function check_folders_permissions(): bool
     {
         CLIOutput::writeln("\t" . 'folder permissions...');
-        if (!PHPBoostFoldersPermissions::validate()) {
+        if (!PHPBoostFoldersPermissions::validate())
+        {
             foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder) {
-                if (!$folder->is_writable()) {
+                if (!$folder->is_writable())
+                {
                     CLIOutput::writeln('Folder ' . $folder_name . ' is not writable. Please change its rights');
                 }
             }

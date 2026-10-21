@@ -28,7 +28,8 @@ class UpdateLauncher extends UpdateController
         $view = new FileTemplate('update/UpdateLauncher.tpl');
         $this->display_incompatible_elements_messages($view);
         $this->add_navigation($view);
-        if ($this->submit->has_been_submited()) {
+        if ($this->submit->has_been_submited())
+        {
             $this->handle_form();
         }
         return $this->create_response($view);

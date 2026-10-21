@@ -37,7 +37,9 @@ abstract class UpdateController extends AbstractController
                 $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             }
             if (\PHP_VERSION_ID  < 80100)
+            {
                 curl_close($curl);
+            }
 
             if ($status >= 200 && $status < 400)
             {

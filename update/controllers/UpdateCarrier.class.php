@@ -102,15 +102,25 @@ class UpdateCarrier extends AbstractResponse
 		foreach ($steps as $step)
 		{
 			if ($i < $this->current_step)
+            {
 				$row_class = 'row-success';
+            }
 			elseif ($i == $this->current_step && $i == $this->steps_number)
+            {
 				$row_class = 'row-current row-final';
+            }
 			elseif ($i == $this->current_step)
+            {
 				$row_class = 'row-current';
+            }
 			elseif ($i == $this->steps_number)
+            {
 				$row_class = 'row-next row-final';
+            }
 			else
+            {
 				$row_class = 'row-next';
+            }
 
 			$this->full_view->assign_block_vars('step', [
 				'CSS_CLASS' => $row_class,

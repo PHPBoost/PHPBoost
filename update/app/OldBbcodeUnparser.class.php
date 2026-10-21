@@ -75,7 +75,9 @@ class OldBbcodeUnparser extends ContentFormattingUnparser
 			$smiley_code[] = $code;
 		}
 		if (!empty($smiley_img_url))
+        {
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
+        }
 	}
 
 	/**

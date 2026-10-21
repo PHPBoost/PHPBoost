@@ -22,7 +22,8 @@ class UpdateDBConfig extends UpdateController
     {
         parent::load_lang($request);
         $this->build_form();
-        if ($this->submit_button->has_been_submited() && $this->form->validate()) {
+        if ($this->submit_button->has_been_submited() && $this->form->validate())
+        {
             $host          = $this->form->get_value('host');
             $port          = $this->form->get_value('port');
             $login         = $this->form->get_value('login');
@@ -100,7 +101,8 @@ class UpdateDBConfig extends UpdateController
     {
         $service = new UpdateServices();
         $status  = $service->check_db_connection($host, $port, $login, $password, $schema, $tables_prefix);
-        switch ($status) {
+        switch ($status)
+        {
             case UpdateServices::CONNECTION_SUCCESSFUL:
                 $this->create_connection($service, $host, $port, $login, $password, $schema, $tables_prefix);
                 break;
@@ -135,7 +137,8 @@ class UpdateDBConfig extends UpdateController
     {
         $this->view = new FileTemplate('update/UpdateDBConfig.tpl');
         $this->view->put('DATABASE_FORM', $this->form->display());
-        if (!empty($this->error)) {
+        if (!empty($this->error))
+        {
             $this->view->put('ERROR', $this->error);
         }
         $step_title = $this->lang['update.step.database.config'];

@@ -36,14 +36,16 @@ class UpdateServices
     {
         $this->token           = new File(PATH_TO_ROOT . '/cache/.update_token');
         $this->update_log_file = new File(PATH_TO_ROOT . '/cache/update.log');
-        if ($delete_update_log_file) {
+        if ($delete_update_log_file)
+        {
             $this->update_log_file->delete();
         }
 
         self::$db_utils   = PersistenceContext::get_dbms_utils();
         self::$db_querier = PersistenceContext::get_querier();
 
-        if (!empty($locale)) {
+        if (!empty($locale))
+        {
             LangLoader::set_locale($locale);
         }
     }
@@ -59,20 +61,26 @@ class UpdateServices
         try
         {
             $this->try_db_connection($host, $port, $login, $password, $database, $tables_prefix);
-        } catch (UnexistingDatabaseException $ex) {
+        }
+        catch (UnexistingDatabaseException $ex)
+        {
             DBFactory::reset_db_connection();
             return self::UNEXISTING_DATABASE;
-        } catch (DBConnectionException $ex) {
+        }
+        catch (DBConnectionException $ex)
+        {
             DBFactory::reset_db_connection();
             return self::CONNECTION_ERROR;
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             DBFactory::reset_db_connection();
             return self::UNKNOWN_ERROR;
         }
         return self::CONNECTION_SUCCESSFUL;
     }
 
-    private function try_db_connection($host, $port, $login, $password, $database, $tables_prefix)
+    private function try_db_connection(mixed $host, mixed $port, mixed $login, mixed $password, mixed $database, mixed $tables_prefix): void
     {
         self::define_prefix($tables_prefix);
         $db_connection_data = [
@@ -90,7 +98,7 @@ class UpdateServices
         $db_connection->connect($db_connection_data);
     }
 
-    private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
+    private function initialize_db_connection(mixed $dbms, mixed $host, mixed $port, mixed $database, mixed $login, mixed $password, mixed $tables_prefix): mixed
     {
         self::define_prefix($tables_prefix);
         $db_connection_data = [
@@ -107,7 +115,7 @@ class UpdateServices
         return $db_connection_data;
     }
 
-    private function connect_to_database($dbms, array $db_connection_data, $database)
+    private function connect_to_database(mixed $dbms, array $db_connection_data, mixed $database): void
     {
         DBFactory::init_factory($dbms);
         $connection = DBFactory::new_db_connection();
@@ -115,7 +123,9 @@ class UpdateServices
         try
         {
             $connection->connect($db_connection_data);
-        } catch (UnexistingDatabaseException $exception) {
+        }
+        catch (UnexistingDatabaseException $exception)
+        {
             self::$db_utils->create_database($database);
             PersistenceContext::close_db_connection();
             $connection = DBFactory::new_db_connection();
@@ -124,16 +134,15 @@ class UpdateServices
         }
     }
 
-    public function create_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
+    public function create_connection(mixed $dbms, mixed $host, mixed $port, mixed $database, mixed $login, mixed $password, mixed $tables_prefix): bool
     {
-        $db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login,
-            $password, $tables_prefix);
+        $db_connection_data = $this->initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix);
         $this->write_connection_config_file($db_connection_data, $tables_prefix);
         $this->generate_update_token();
         return true;
     }
 
-    public static function check_server()
+    public static function check_server(): bool
     {
         $server_configuration = new ServerConfiguration();
         return
@@ -145,7 +154,7 @@ class UpdateServices
             && $server_configuration->has_mbstring_extension();
     }
 
-    private function write_connection_config_file(array $db_connection_data, $tables_prefix)
+    private function write_connection_config_file(array $db_connection_data, mixed $tables_prefix): void
     {
         $db_config_content = '<?php' . "\n" .
         '$db_connection_data = ' . var_export($db_connection_data, true) . ";\n\n" .
@@ -159,7 +168,7 @@ class UpdateServices
         $db_config_file->close();
     }
 
-    public function execute()
+    public function execute(): void
     {
         $this->add_information_to_file('Start of the update from PHPBoost ', GeneralConfig::load()->get_phpboost_major_version() . "\n");
 
@@ -189,7 +198,9 @@ class UpdateServices
 
         // Uninstalling the UrlUpdater module to avoid cache conflicts during update
         if (ModulesManager::is_module_installed('UrlUpdater'))
+        {
             ModulesManager::uninstall_module('UrlUpdater');
+        }
 
         // Maintenance of the site if it is not already
         $this->put_site_under_maintenance();
@@ -227,22 +238,30 @@ class UpdateServices
         // Reinstalling the UrlUpdater module for rewriting the url of updated modules
         $folder = new Folder(PATH_TO_ROOT . '/modules/UrlUpdater');
         if ($folder->exists())
+        {
             ModulesManager::install_module('UrlUpdater');
+        }
         else
+        {
             $this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
+        }
 
         // Installing the SocialNetworks module
         $folder = new Folder(PATH_TO_ROOT . '/modules/SocialNetworks');
-        if ($folder->exists() && !ModulesManager::is_module_installed('SocialNetworks')) {
+        if ($folder->exists() && !ModulesManager::is_module_installed('SocialNetworks'))
+        {
             ModulesManager::install_module('SocialNetworks');
         }
 
         // Install the default modules
         // Installing the renamed bbcode module
         if (ModulesManager::is_module_installed('Bbcode'))
+        {
             ModulesManager::uninstall_module('Bbcode', true);
+        }
         $folder = new Folder(PATH_TO_ROOT . '/bbcode');
-        if ($folder->exists() && !ModulesManager::is_module_installed('bbcode')) {
+        if ($folder->exists() && !ModulesManager::is_module_installed('bbcode'))
+        {
             ModulesManager::install_module('bbcode');
             $config_editor = ContentFormattingConfig::load();
             $config_editor->set_default_editor('bbcode');
@@ -251,13 +270,19 @@ class UpdateServices
 
         // TODO save old config of HomeLanding to set it in lobby config
         if(!ModulesManager::is_module_installed('HomeLanding'))
+        {
             ModulesManager::uninstall_module('HomeLanding', true);
+        }
         $folder = new Folder(PATH_TO_ROOT . '/lobby');
         if ($folder->exists())
+        {
             ModulesManager::install_module('lobby');
+        }
 
         if (!ModulesManager::is_module_installed('pages'))
+        {
             ModulesManager::install_module('pages');
+        }
 
         // Verification of the site installation date and correction if necessary
         $this->check_installation_date();
@@ -269,7 +294,7 @@ class UpdateServices
         $this->add_information_to_file("\n" . 'End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
     }
 
-    public function put_site_under_maintenance()
+    public function put_site_under_maintenance(): void
     {
         // MaintenanceConfig and its dependencies must be explicitly required before
         // any call to unserialize(). The autoloader cannot reliably resolve them during
@@ -281,14 +306,17 @@ class UpdateServices
         require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/MaintenanceConfig.class.php';
         $maintenance_config = MaintenanceConfig::load();
 
-        if (!$maintenance_config->is_under_maintenance()) {
+        if (!$maintenance_config->is_under_maintenance())
+        {
             try
             {
                 $object = new MaintenanceConfigUpdateVersion();
                 $object->execute();
                 $success = true;
                 $message = '';
-            } catch (Exception $e) {
+            }
+            catch (Exception $e)
+            {
                 $success = false;
                 $message = $e->getMessage();
             }
@@ -296,17 +324,19 @@ class UpdateServices
         }
     }
 
-    private function update_kernel_tables()
+    private function update_kernel_tables(): void
     {
         $columns = self::$db_utils->desc_table(PREFIX . 'sessions');
 
-        if (!isset($columns['location_id'])) {
+        if (!isset($columns['location_id']))
+        {
             self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', ['type' => 'string', 'length' => 64, 'default' => "''"]);
         }
 
         $columns = self::$db_utils->desc_table(PREFIX . 'member_extended_fields');
 
-        if (!isset($columns['user_biography'])) {
+        if (!isset($columns['user_biography']))
+        {
             $lang = LangLoader::get('user-lang');
 
             $extended_field = new ExtendedField();
@@ -320,7 +350,8 @@ class UpdateServices
             ExtendedFieldsService::add($extended_field);
         }
 
-        if (!isset($columns['user_website'])) {
+        if (!isset($columns['user_website']))
+        {
             $lang = LangLoader::get('user-lang');
 
             $extended_field = new ExtendedField();
@@ -336,27 +367,26 @@ class UpdateServices
         }
 
         $columns = self::$db_utils->desc_table(PREFIX . 'upload');
-
-        if (!isset($columns['shared'])) {
+        if (!isset($columns['shared']))
+        {
             self::$db_utils->add_column(PREFIX . 'upload', 'shared', ['type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0]);
         }
 
         $columns = self::$db_utils->desc_table(PREFIX . 'comments');
-
-        if (!isset($columns['visitor_email'])) {
-            self::$db_utils->add_column(PREFIX . 'comments', 'visitor_email', ['type' => 'string', 'length' => 255, 'notnull' => 1,
-                'default'                                                                 => "''"]);
+        if (!isset($columns['visitor_email']))
+        {
+            self::$db_utils->add_column(PREFIX . 'comments', 'visitor_email', ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"]);
         }
 
         $columns = self::$db_utils->desc_table(PREFIX . 'comments_topic');
-
-        if (!isset($columns['comments_number'])) {
+        if (!isset($columns['comments_number']))
+        {
             self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'comments_topic CHANGE number_comments comments_number INT(11) NOT NULL DEFAULT 0');
         }
 
         $columns = self::$db_utils->desc_table(PREFIX . 'average_notes');
-
-        if (!isset($columns['notes_number'])) {
+        if (!isset($columns['notes_number']))
+        {
             self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'average_notes CHANGE number_notes notes_number VARCHAR(255) NOT NULL DEFAULT 0');
         }
 
@@ -366,30 +396,35 @@ class UpdateServices
 
         $columns = self::$db_utils->desc_table(PREFIX . 'member');
 
-        if (isset($columns['groups'])) {
+        if (isset($columns['groups']))
+        {
             self::$db_querier->inject('ALTER TABLE ' . PREFIX . 'member CHANGE `groups` user_groups TEXT');
         }
 
     }
 
-    private function update_kernel_version()
+    private function update_kernel_version(): void
     {
         $general_config = GeneralConfig::load();
         $general_config->set_phpboost_major_version(self::NEW_KERNEL_VERSION);
         GeneralConfig::save();
     }
 
-    private function update_kernel_configurations()
+    private function update_kernel_configurations(): void
     {
         // Update kernel configs
-        foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config') as $class) {
+        foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/kernel/config/', self::$configuration_pattern, 'config') as $class)
+        {
             $object = null;
-            try {
+            try
+            {
                 $object = new $class['name']();
                 $object->execute();
                 $success = true;
                 $message = '';
-            } catch (Exception $e) {
+            }
+            catch (Exception $e)
+            {
                 $success = false;
                 $message = $e->getMessage();
             }
@@ -397,34 +432,41 @@ class UpdateServices
         }
     }
 
-    private function update_modules_configurations()
+    private function update_modules_configurations(): void
     {
         // Update modules configs - each module's update class is located in its own /update/ subfolder
         $modules_folder = new Folder(PATH_TO_ROOT . '/modules');
-        foreach ($modules_folder->get_folders() as $folder) {
-            if ($folder->get_files('/config\.ini/')) {
+        foreach ($modules_folder->get_folders() as $folder)
+        {
+            if ($folder->get_files('/config\.ini/'))
+            {
                 $has_config_update_class    = false;
                 $module_config_update_class = null;
                 $module_id                  = $folder->get_name();
                 $module                     = ModulesManager::get_module($module_id);
 
-                if ($folder->get_folders('/update/')) {
-                    foreach ($this->get_class(PATH_TO_ROOT . '/modules/' . $module_id . '/update/', self::$configuration_pattern, 'config') as $class) {
+                if ($folder->get_folders('/update/'))
+                {
+                    foreach ($this->get_class(PATH_TO_ROOT . '/modules/' . $module_id . '/update/', self::$configuration_pattern, 'config') as $class)
+                    {
                         $module_config_update_class = new $class['name']();
-                        if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_config_update_class,
-                            'ConfigUpdateVersion')) {
+                        if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_config_update_class, 'ConfigUpdateVersion'))
+                        {
                             $has_config_update_class = true;
                         }
                     }
                 }
 
-                if (ModulesManager::is_module_installed($module_id) && $module->get_configuration()->get_compatibility() ==
-                    self::NEW_KERNEL_VERSION && $has_config_update_class && $module_config_update_class) {
-                    try {
+                if (ModulesManager::is_module_installed($module_id) && $module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION && $has_config_update_class && $module_config_update_class)
+                {
+                    try
+                    {
                         $module_config_update_class->execute();
                         $success = true;
                         $message = '';
-                    } catch (Exception $e) {
+                    }
+                    catch (Exception $e)
+                    {
                         $success = false;
                         $message = $e->getMessage();
                     }
@@ -435,7 +477,7 @@ class UpdateServices
         }
     }
 
-    private function update_modules()
+    private function update_modules(): void
     {
         $modules_config = ModulesConfig::load();
         $home_page      = GeneralConfig::load()->get_module_home_page();
@@ -446,13 +488,15 @@ class UpdateServices
         // QuestionCaptcha was at /QuestionCaptcha/ (root) in pbt; qaptcha is at /qaptcha/ (root) in pbtnext.
         // QaptchaModuleUpdateVersion::execute() handles DB migration, old file deletion and config update.
         // TODO -- Move QuestionCaptcha config to qaptcha config 
-        if (ModulesManager::is_module_installed('QuestionCaptcha')) {
+        if (ModulesManager::is_module_installed('QuestionCaptcha'))
+        {
             // Uninstall the old module so it no longer appears in ModulesConfig
             ModulesManager::uninstall_module('QuestionCaptcha', true, false);
         }
         // Install qaptcha if it is not already installed (replaces QuestionCaptcha)
         $qaptcha_folder = new Folder(PATH_TO_ROOT . '/qaptcha');
-        if ($qaptcha_folder->exists() && !ModulesManager::is_module_installed('qaptcha')) {
+        if ($qaptcha_folder->exists() && !ModulesManager::is_module_installed('qaptcha'))
+        {
             ModulesManager::install_module('qaptcha');
         }
 
@@ -460,13 +504,15 @@ class UpdateServices
         // HomeLanding was at /HomeLanding/ (root) in pbt; lobby is at /lobby/ (root) in pbtnext.
         // QaptchaModuleUpdateVersion::execute() handles DB migration, old file deletion and config update.
         // TODO -- Move HomeLanding config to lobby config 
-        if (ModulesManager::is_module_installed('HomeLanding')) {
+        if (ModulesManager::is_module_installed('HomeLanding'))
+        {
             // Uninstall the old module so it no longer appears in ModulesConfig
             ModulesManager::uninstall_module('HomeLanding', true, false);
         }
         // Install lobby if it is not already installed (replaces HomeLanding)
         $lobby_folder = new Folder(PATH_TO_ROOT . '/lobby');
-        if ($lobby_folder->exists() && !ModulesManager::is_module_installed('lobby')) {
+        if ($lobby_folder->exists() && !ModulesManager::is_module_installed('lobby'))
+        {
             ModulesManager::install_module('lobby');
         }
 
@@ -475,10 +521,12 @@ class UpdateServices
         // These are typically third-party or discontinued modules. Without this step
         // they remain in ModulesConfig and cause fatal errors in admin when the kernel
         // tries to read their missing config.ini / lang folders.
-        foreach (ModulesManager::get_installed_modules_map() as $module_id => $module) {
+        foreach (ModulesManager::get_installed_modules_map() as $module_id => $module)
+        {
             $in_modules = is_dir(PATH_TO_ROOT . '/modules/' . $module_id);
             $in_root    = is_dir(PATH_TO_ROOT . '/' . $module_id);
-            if (!$in_modules && !$in_root) {
+            if (!$in_modules && !$in_root)
+            {
                 ModulesManager::uninstall_module($module_id, false, false);
                 $this->add_information_to_file('module ' . $module_id, 'has been uninstalled because its folder no longer exists');
             }
@@ -488,83 +536,110 @@ class UpdateServices
         // and /modules/ directory modules (all others moved there in pbtnext).
         $scan_paths = [PATH_TO_ROOT, PATH_TO_ROOT . '/modules'];
 
-        foreach ($scan_paths as $scan_path) {
-        $modules_folder = new Folder($scan_path);
-        foreach ($modules_folder->get_folders() as $folder) {
-            if ($folder->get_files('/config\.ini/')) {
-                $has_update_class    = false;
-                $module_update_class = null;
-                $module_id           = $folder->get_name();
+        foreach ($scan_paths as $scan_path)
+        {
+            $modules_folder = new Folder($scan_path);
+            foreach ($modules_folder->get_folders() as $folder)
+            {
+                if ($folder->get_files('/config\.ini/'))
+                {
+                    $has_update_class    = false;
+                    $module_update_class = null;
+                    $module_id           = $folder->get_name();
 
-                // Skip non-module folders at root (kernel, admin, update, lang, etc.)
-                $ini_data = parse_ini_file($folder->get_path() . '/config.ini');
-                if (!isset($ini_data['addon_type']) || $ini_data['addon_type'] !== 'module') {
-                    continue;
-                }
-
-                $module      = ModulesManager::get_module($module_id);
-                $module_path = $folder->get_path();
-
-                if ($folder->get_folders('/update/')) {
-                    foreach ($this->get_class($module_path . '/update/', self::$module_pattern, 'module') as $class) {
-                        $module_update_class = new $class['name']();
-                        if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_update_class,
-                            'ModuleUpdateVersion')) {
-                            $has_update_class = true;
-                        }
+                    // Skip non-module folders at root (kernel, admin, update, lang, etc.)
+                    $ini_data = parse_ini_file($folder->get_path() . '/config.ini');
+                    if (!isset($ini_data['addon_type']) || $ini_data['addon_type'] !== 'module')
+                    {
+                        continue;
                     }
-                }
 
-                if (!ModulesManager::is_module_installed($module_id)) {
-                    if ($has_update_class && $module_update_class) {
-                        $module_update_class::delete_old_files();
-                        $module_update_class::delete_old_folders();
-                    }
-                } else {
-                    if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION) {
-                        if ($has_update_class && $module_update_class) {
-                            try {
-                                $module_update_class->execute();
-                                $success = true;
-                                $message = '';
-                            } catch (Exception $e) {
-                                $success = false;
-                                $message = $e->getMessage();
+                    $module      = ModulesManager::get_module($module_id);
+                    $module_path = $folder->get_path();
+
+                    if ($folder->get_folders('/update/'))
+                    {
+                        foreach ($this->get_class($module_path . '/update/', self::$module_pattern, 'module') as $class)
+                        {
+                            $module_update_class = new $class['name']();
+                            if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_update_class, 'ModuleUpdateVersion'))
+                            {
+                                $has_update_class = true;
                             }
-                            $class_type = $class['type'] ?? 'unknown';
-                            $this->add_error_to_file($class_type . ' ' . $module_update_class->get_module_id(), $success, $message);
-                        } else {
-                            ModulesManager::upgrade_module($module_id, false);
                         }
-                        $module->set_installed_version($module->get_configuration()->get_version());
-                    } else {
-                        if ($has_update_class && $module_update_class) {
+                    }
+
+                    if (!ModulesManager::is_module_installed($module_id))
+                    {
+                        if ($has_update_class && $module_update_class)
+                        {
                             $module_update_class::delete_old_files();
                             $module_update_class::delete_old_folders();
                         }
+                    }
+                    else
+                    {
+                        if ($module->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
+                        {
+                            if ($has_update_class && $module_update_class)
+                            {
+                                try
+                                {
+                                    $module_update_class->execute();
+                                    $success = true;
+                                    $message = '';
+                                }
+                                catch (Exception $e)
+                                {
+                                    $success = false;
+                                    $message = $e->getMessage();
+                                }
+                                $class_type = $class['type'] ?? 'unknown';
+                                $this->add_error_to_file($class_type . ' ' . $module_update_class->get_module_id(), $success, $message);
+                            }
+                            else
+                            {
+                                ModulesManager::upgrade_module($module_id, false);
+                            }
+                            $module->set_installed_version($module->get_configuration()->get_version());
+                        }
+                        else
+                        {
+                            if ($has_update_class && $module_update_class)
+                            {
+                                $module_update_class::delete_old_files();
+                                $module_update_class::delete_old_folders();
+                            }
 
-                        ModulesManager::update_module($module_id, false, false);
-                        $this->add_information_to_file('module ' . $module_id, 'has been disabled because : incompatible with new version');
+                            ModulesManager::update_module($module_id, false, false);
+                            $this->add_information_to_file('module ' . $module_id, 'has been disabled because : incompatible with new version');
 
-                        if ($home_page == $module_id) {
-                            $default_module_changed = true;
+                            if ($home_page == $module_id)
+                            {
+                                $default_module_changed = true;
+                            }
+
                         }
 
+                        $modules_config->update($module);
                     }
-
-                    $modules_config->update($module);
                 }
             }
-        }
         } // end foreach $scan_paths
         ModulesConfig::save();
 
-        if ($default_module_changed) {
-            if (ModulesManager::is_module_installed('news')) {
+        if ($default_module_changed)
+        {
+            if (ModulesManager::is_module_installed('news'))
+            {
                 $new_default = 'news';
-            } elseif (ModulesManager::is_module_installed('articles')) {
+            }
+            elseif (ModulesManager::is_module_installed('articles'))
+            {
                 $new_default = 'articles';
-            } else {
+            }
+            else
+            {
                 $new_default = 'forum';
             }
 
@@ -578,17 +653,22 @@ class UpdateServices
         }
     }
 
-    private function update_themes()
+    private function update_themes(): void
     {
         $user_accounts_config  = UserAccountsConfig::load();
         $active_themes_number  = 0;
         $default_theme_changed = false;
         $themes_to_delete      = [];
-        foreach (ThemesManager::get_installed_themes_map() as $theme) {
-            if ($theme->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION) {
+        foreach (ThemesManager::get_installed_themes_map() as $theme)
+        {
+            if ($theme->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
+            {
                 $active_themes_number++;
-            } else {
-                if ($user_accounts_config->get_default_theme() == $theme->get_id()) {
+            }
+            else
+            {
+                if ($user_accounts_config->get_default_theme() == $theme->get_id())
+                {
                     $default_theme_changed = true;
                 }
 
@@ -596,12 +676,16 @@ class UpdateServices
             }
         }
 
-        if (empty($active_themes_number) || $default_theme_changed) {
+        if (empty($active_themes_number) || $default_theme_changed)
+        {
             $folder = new Folder(PATH_TO_ROOT . '/templates/base');
-            if ($folder->exists()) {
+            if ($folder->exists())
+            {
                 ThemesManager::install('base');
                 ThemesManager::change_visibility('base', true);
-            } else {
+            }
+            else
+            {
                 $this->add_information_to_file('theme base', 'has not been installed because it was not on the FTP');
             }
 
@@ -611,23 +695,29 @@ class UpdateServices
             $this->add_information_to_file('theme base', 'has been installed and set to default because no other theme was compatible');
         }
 
-        foreach ($themes_to_delete as $id) {
+        foreach ($themes_to_delete as $id)
+        {
             ThemesManager::uninstall($id);
             $this->add_information_to_file('theme ' . $id, 'has been uninstalled because : incompatible with new version');
         }
     }
 
-    private function update_langs()
+    private function update_langs(): void
     {
         $user_accounts_config = UserAccountsConfig::load();
         $active_langs_number  = 0;
         $default_lang_changed = false;
         $langs_to_delete      = [];
-        foreach (LangsManager::get_installed_langs_map() as $lang) {
-            if ($lang->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION) {
+        foreach (LangsManager::get_installed_langs_map() as $lang)
+        {
+            if ($lang->get_configuration()->get_compatibility() == self::NEW_KERNEL_VERSION)
+            {
                 $active_langs_number++;
-            } else {
-                if ($user_accounts_config->get_default_lang() == $lang->get_id()) {
+            }
+            else
+            {
+                if ($user_accounts_config->get_default_lang() == $lang->get_id())
+                {
                     $default_lang_changed = true;
                 }
 
@@ -635,12 +725,16 @@ class UpdateServices
             }
         }
 
-        if (empty($active_langs_number) || $default_lang_changed) {
+        if (empty($active_langs_number) || $default_lang_changed)
+        {
             $folder = new Folder(PATH_TO_ROOT . '/lang/' . LangLoader::get_locale());
-            if ($folder->exists()) {
+            if ($folder->exists())
+            {
                 LangsManager::install(LangLoader::get_locale());
                 LangsManager::change_visibility(LangLoader::get_locale(), true);
-            } else {
+            }
+            else
+            {
                 $this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has not been installed because it was not on the FTP');
             }
 
@@ -650,13 +744,14 @@ class UpdateServices
             $this->add_information_to_file('lang ' . LangLoader::get_locale(), 'has been installed and set to default because no other lang was compatible');
         }
 
-        foreach ($langs_to_delete as $id) {
+        foreach ($langs_to_delete as $id)
+        {
             LangsManager::uninstall($id);
             $this->add_information_to_file('lang ' . $id, 'has been uninstalled because : incompatible with new version');
         }
     }
 
-    public function update_content()
+    public function update_content(): void
     {
         // Update comments messages if needed
         self::update_table_content(PREFIX . 'comments', 'message');
@@ -674,7 +769,8 @@ class UpdateServices
         $parser->set_content($unparser->get_content());
         $parser->parse();
 
-        if ($parser->get_content() != $user_accounts_config->get_welcome_message()) {
+        if ($parser->get_content() != $user_accounts_config->get_welcome_message())
+        {
             $user_accounts_config->set_welcome_message($parser->get_content());
             UserAccountsConfig::save();
         }
@@ -684,17 +780,19 @@ class UpdateServices
         $parser->set_content($unparser->get_content());
         $parser->parse();
 
-        if ($parser->get_content() != $user_accounts_config->get_registration_agreement()) {
+        if ($parser->get_content() != $user_accounts_config->get_registration_agreement())
+        {
             $user_accounts_config->set_registration_agreement($parser->get_content());
             UserAccountsConfig::save();
         }
     }
 
-    public static function update_table_content($table, $contents = 'content', $id = 'id')
+    public static function update_table_content(string $table, string $contents = 'content', string $id = 'id'): void
     {
         $columns = self::$db_utils->desc_table($table);
 
-        if (isset($columns[$contents])) {
+        if (isset($columns[$contents]))
+        {
             $unparser = new OldBbcodeUnparser();
             $parser   = new BbcodeParser();
 
@@ -720,20 +818,23 @@ class UpdateServices
             $selected_rows   = $result->get_rows_count();
             $updated_content = 0;
 
-            while ($row = $result->fetch()) {
+            while ($row = $result->fetch())
+            {
                 $unparser->set_content($row[$contents]);
                 $unparser->parse();
                 $parser->set_content($unparser->get_content());
                 $parser->parse();
 
-                if ($parser->get_content() != $row[$contents]) {
+                if ($parser->get_content() != $row[$contents])
+                {
                     self::$db_querier->update($table, [$contents => $parser->get_content()], 'WHERE ' . $id . '=:id', ['id' => $row[$id]]);
                     $updated_content++;
                 }
             }
             $result->dispose();
 
-            if ($updated_content) {
+            if ($updated_content)
+            {
                 $object = new self('', false);
                 $object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' content' . ($updated_content > 1 ? 's' :
                     '') . ' updated');
@@ -741,7 +842,7 @@ class UpdateServices
         }
     }
 
-    public static function update_content_menus()
+    public static function update_content_menus(): void
     {
         $table    = PREFIX . 'menus';
         $contents = 'object';
@@ -749,7 +850,8 @@ class UpdateServices
         $id       = 'id';
         $columns  = self::$db_utils->desc_table($table);
 
-        if (isset($columns[$contents])) {
+        if (isset($columns[$contents]))
+        {
             $unparser = new OldBbcodeUnparser();
             $parser   = new BbcodeParser();
 
@@ -776,13 +878,15 @@ class UpdateServices
             $selected_rows   = $result->get_rows_count();
             $updated_content = 0;
 
-            while ($row = $result->fetch()) {
+            while ($row = $result->fetch())
+            {
                 $unparser->set_content($row[$contents]);
                 $unparser->parse();
                 $parser->set_content($unparser->get_content());
                 $parser->parse();
 
-                if ($parser->get_content() != $row[$contents]) {
+                if ($parser->get_content() != $row[$contents])
+                {
                     self::$db_querier->update($table, [$contents => $parser->get_content()], 'WHERE ' . $id . '=:id', ['id' => $row[$id]]);
                     $updated_content++;
                 }
@@ -796,35 +900,40 @@ class UpdateServices
             }
             $result->dispose();
 
-            if ($updated_content) {
+            if ($updated_content)
+            {
                 $object = new self('', false);
                 $object->add_information_to_file('table ' . $table, ': ' . $updated_content . ' content' . ($updated_content > 1 ? 's' : '') . ' updated');
             }
         }
     }
 
-    private function check_installation_date()
+    private function check_installation_date():void
     {
         $general_config = GeneralConfig::load();
         $first_member_registration_date = '';
-        try {
+        try
+        {
             $first_member_registration_date = PersistenceContext::get_querier()->get_column_value(PREFIX . 'member m',
                 'registration_date', 'JOIN (SELECT min(user_id) AS minid FROM ' . PREFIX . 'member) b ON m.user_id IN (b.minid)');
-        } catch (RowNotFoundException $e) {}
+        }
+        catch (RowNotFoundException $e) {}
 
-        if ($first_member_registration_date && $first_member_registration_date < $general_config->
-            get_site_install_date()->get_timestamp()) {
+        if ($first_member_registration_date && $first_member_registration_date < $general_config->get_site_install_date()->get_timestamp())
+        {
             $general_config->set_site_install_date(new Date($first_member_registration_date, Timezone::SERVER_TIMEZONE));
             GeneralConfig::save();
         }
     }
 
-    private function get_class($directory, $pattern, $type)
+    private function get_class(mixed $directory, string $pattern, string $type): mixed
     {
         $classes = [];
         $folder  = new Folder($directory);
-        if ($folder->exists()) {
-            foreach ($folder->get_files($pattern) as $file) {
+        if ($folder->exists())
+        {
+            foreach ($folder->get_files($pattern) as $file)
+            {
                 $classes[] = [
                     'name' => $file->get_name_without_extension(),
                     'type' => $type,
@@ -835,72 +944,82 @@ class UpdateServices
         return $classes;
     }
 
-    private function generate_cache()
+    private function generate_cache(): void
     {
         AppContext::get_cache_service()->clear_cache();
         AppContext::init_extension_provider_service();
 
-        if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
+        if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+        {
             // Wrap in try/catch: UrlUpdater url_mappings may query category tables
             // (e.g. pages_cats, wiki_cats) that do not yet exist after the update,
             // causing "Table doesn't exist" errors. The .htaccess will be regenerated
             // correctly on the first site request once all tables are in place.
-            try {
+            try
+            {
                 HtaccessFileCache::regenerate();
-            } catch (Exception $e) {
+            }
+            catch (Exception $e)
+            {
                 $this->add_information_to_file('HtaccessFileCache::regenerate()', 'skipped: ' . $e->getMessage());
             }
-            try {
+            try
+            {
                 NginxFileCache::regenerate();
-            } catch (Exception $e) {
+            }
+            catch (Exception $e)
+            {
                 $this->add_information_to_file('NginxFileCache::regenerate()', 'skipped: ' . $e->getMessage());
             }
         }
     }
 
-    private function add_error_to_file($step_name, $success, $message)
+    private function add_error_to_file(mixed $step_name, mixed $success, string $message): void
     {
         $success_message = $success ? 'Ok !' : 'Error :';
         $this->update_log_file->append($step_name . ' ' . $success_message . ' ' . $message . "\r\n");
     }
 
-    public function add_information_to_file($step_name, $message)
+    public function add_information_to_file(mixed $step_name, string $message): void
     {
         $this->update_log_file->append($step_name . ' ' . $message . "\r\n");
     }
 
-    private function clear_autoload()
+    private function clear_autoload(): void
     {
         ClassLoader::clear_cache();
         ClassLoader::init_autoload();
     }
 
-    public function generate_update_token()
+    public function generate_update_token(): void
     {
         $this->token->write(self::$token_file_content);
     }
 
-    private function get_update_token()
+    private function get_update_token(): void
     {
         $is_token_valid = false;
         try
         {
             $is_token_valid = $this->token->exists() && $this->token->read() == self::$token_file_content;
-        } catch (IOException $ioe) {}
+        }
+        catch (IOException $ioe) {}
 
-        if (!$is_token_valid) {
+        if (!$is_token_valid)
+        {
             throw new UpdateTokenNotFoundException($this->token->get_path_from_root());
         }
     }
 
-    private function delete_update_token()
+    private function delete_update_token(): void
     {
         $this->token->delete();
     }
 
-    public static function database_config_file_checked()
+    public static function database_config_file_checked(): mixed
     {
-        if (file_exists(PATH_TO_ROOT . '/kernel/db/config.php')) {
+        if (file_exists(PATH_TO_ROOT . '/kernel/db/config.php'))
+        {
             @include_once PATH_TO_ROOT . '/kernel/db/config.php';
 
             return defined('PREFIX');
@@ -908,7 +1027,7 @@ class UpdateServices
         return false;
     }
 
-    private function delete_old_files()
+    private function delete_old_files(): void
     {
         $this->delete_old_files_modules();
         $this->delete_old_files_admin();
@@ -928,26 +1047,30 @@ class UpdateServices
         // $folder->delete();
     }
 
-    private function delete_old_files_modules()
+    private function delete_old_files_modules(): void
     {
         // List all directories in the root folder (old pbt structure had modules at root level)
         $directories = glob(PATH_TO_ROOT . '/*', GLOB_ONLYDIR);
 
-        foreach ($directories as $dir) {
+        foreach ($directories as $dir)
+        {
             $iniFile  = $dir . '/config.ini';
             $dir_name = basename($dir);
 
             // Check if the config.ini file exists in this folder
-            if (file_exists($iniFile)) {
+            if (file_exists($iniFile))
+            {
                 // Parse the .ini file in a secure way
                 $config = parse_ini_file($iniFile);
 
                 // Specifically for the "gallery" module, copy the "pics" folder to the new location if it exists
-                if ($dir_name === 'gallery') {
+                if ($dir_name === 'gallery')
+                {
                     $sourcePics = PATH_TO_ROOT . '/gallery/pics';
                     $destPics   = PATH_TO_ROOT . '/modules/gallery/pics';
 
-                    if (is_dir($sourcePics)) {
+                    if (is_dir($sourcePics))
+                    {
                         $this->copyDirectory($sourcePics, $destPics);
                     }
                 }
@@ -958,7 +1081,8 @@ class UpdateServices
                 {
                     // Remove the old root-level module folder
                     $folder = new Folder($dir);
-                    if ($folder->exists()) {
+                    if ($folder->exists())
+                    {
                         $folder->delete();
                     }
                 }
@@ -966,18 +1090,24 @@ class UpdateServices
         }
     }
 
-    private function copyDirectory($source, $destination)
+    private function copyDirectory(mixed $source, mixed $destination): void
     {
-        if (!is_dir($destination)) {
+        if (!is_dir($destination))
+        {
             mkdir($destination, 0755, true);
         }
 
         $dir = opendir($source);
-        while (($file = readdir($dir)) !== false) {
-            if ($file != '.' && $file != '..') {
-                if (is_dir($source . '/' . $file)) {
+        while (($file = readdir($dir)) !== false)
+        {
+            if ($file != '.' && $file != '..')
+            {
+                if (is_dir($source . '/' . $file))
+                {
                     $this->copyDirectory($source . '/' . $file, $destination . '/' . $file);
-                } else {
+                }
+                else
+                {
                     copy($source . '/' . $file, $destination . '/' . $file);
                 }
             }
@@ -985,10 +1115,11 @@ class UpdateServices
         closedir($dir);
     }
 
-    private function delete_old_files_admin()
+    private function delete_old_files_admin(): void
     {
         $folder = new Folder(PATH_TO_ROOT . '/admin/controllers');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
@@ -1017,52 +1148,62 @@ class UpdateServices
     private function delete_old_files_kernel()
     {
         $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/content/newcontent');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/geshi');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/pcl');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/facebook');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/google');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/html5shiv');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/lightcase');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/phpboost');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/css');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/flash');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
@@ -1127,7 +1268,7 @@ class UpdateServices
         $file->delete();
     }
 
-    private function delete_old_files_lang()
+    private function delete_old_files_lang(): void
     {
         $file = new File(PATH_TO_ROOT . '/lang/english/admin-common.php');
         $file->delete();
@@ -1250,27 +1391,32 @@ class UpdateServices
         $file->delete();
     }
 
-    private function delete_old_files_templates()
+    private function delete_old_files_templates(): void
     {
         $folder = new Folder(PATH_TO_ROOT . '/templates/default');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/templates/base/images');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/templates/__default__/plugins');
-        if ($folder->exists()) {
-            foreach ($folder->get_files('.min.') as $file) {
+        if ($folder->exists())
+        {
+            foreach ($folder->get_files('.min.') as $file)
+            {
                 $file->delete();
             }
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/templates/__default__/plugins/form');
-        if ($folder->exists()) {
+        if ($folder->exists())
+        {
             $folder->delete();
         }
 
@@ -1323,7 +1469,7 @@ class UpdateServices
         $file->delete();
     }
 
-    private function delete_old_files_user()
+    private function delete_old_files_user(): void
     {
         $file = new File(PATH_TO_ROOT . '/user/controllers/UserMessagesController.class.php');
         $file->delete();
@@ -1332,7 +1478,7 @@ class UpdateServices
         $file->delete();
     }
 
-    private static function define_prefix($tables_prefix)
+    private static function define_prefix(mixed $tables_prefix): void
     {
         defined('PREFIX') or define('PREFIX', $tables_prefix);
     }

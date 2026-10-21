@@ -63,13 +63,16 @@ class QaptchaModuleUpdateVersion extends ModuleUpdateVersion
 	 */
 	private function migrate_content_management_config(): void
 	{
-		try {
+		try
+        {
 			$content_management_config = ContentManagementConfig::load();
-			if ($content_management_config->get_used_captcha_module() === 'QuestionCaptcha') {
+			if ($content_management_config->get_used_captcha_module() === 'QuestionCaptcha')
+            {
 				$content_management_config->set_used_captcha_module('Qaptcha');
 				ContentManagementConfig::save();
 			}
-		} catch (Exception $e) {}
+		}
+        catch (Exception $e) {}
 	}
 }
 ?>

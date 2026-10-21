@@ -26,7 +26,8 @@ class UpdateServerConfig extends UpdateController
     {
         parent::load_lang($request);
         $this->build_form();
-        if ($this->submit->has_been_submited()) {
+        if ($this->submit->has_been_submited())
+        {
             $this->handle_form();
         }
         $this->build_view();
@@ -50,8 +51,10 @@ class UpdateServerConfig extends UpdateController
 
     private function handle_form(): void
     {
-        if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_extension()) {
-            if (UpdateServices::database_config_file_checked()) {
+        if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_extension())
+        {
+            if (UpdateServices::database_config_file_checked())
+            {
                 $service = new UpdateServices();
                 $service->generate_update_token();
                 AppContext::get_response()->redirect(UpdateUrlBuilder::update());
@@ -71,16 +74,21 @@ class UpdateServerConfig extends UpdateController
             'HAS_ZIP_EXTENSION'      => $this->server_conf->has_zip_extension(),
             'HAS_MBSTRING_EXTENSION' => $this->server_conf->has_mbstring_extension(),
         ]);
-        if (!$this->server_conf->has_mbstring_extension()) {
+        if (!$this->server_conf->has_mbstring_extension())
+        {
             $this->view->put('C_MBSTRING_ERROR', true);
         }
-        if (!PHPBoostFoldersPermissions::validate()) {
+        if (!PHPBoostFoldersPermissions::validate())
+        {
             $this->view->put('C_FOLDERS_ERROR', true);
         }
-        try {
+        try
+        {
             $this->view->put('URL_REWRITING_KNOWN', true);
             $this->view->put('URL_REWRITING_AVAILABLE', $this->server_conf->has_url_rewriting());
-        } catch (UnsupportedOperationException $ex) {
+        }
+        catch (UnsupportedOperationException $ex)
+        {
             $this->view->put('URL_REWRITING_KNOWN', false);
         }
         $this->check_folders_permissions();
@@ -90,7 +98,8 @@ class UpdateServerConfig extends UpdateController
     private function check_folders_permissions(): void
     {
         $folders = [];
-        foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder) {
+        foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
+        {
             $folders[] = [
                 'NAME'        => $folder_name,
                 'EXISTS'      => $folder->exists(),

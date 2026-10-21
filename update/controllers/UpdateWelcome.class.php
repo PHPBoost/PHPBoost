@@ -29,7 +29,8 @@ class UpdateWelcome extends UpdateController
 
     private function add_navigation(Template $view)
     {
-        if (UpdateServices::check_server()) {
+        if (UpdateServices::check_server())
+        {
             if (UpdateServices::database_config_file_checked())
             {
                 $service = new UpdateServices();

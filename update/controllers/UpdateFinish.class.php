@@ -18,9 +18,18 @@ class UpdateFinish extends UpdateController
         // Retry .htaccess and nginx cache regeneration here, now that all module
         // tables exist. The first attempt in generate_cache() may have been skipped
         // due to missing category tables (UrlUpdater queries them during url_mappings()).
-        if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
-            try { HtaccessFileCache::regenerate(); } catch (Exception $e) {}
-            try { NginxFileCache::regenerate(); } catch (Exception $e) {}
+        if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+        {
+            try
+            {
+                HtaccessFileCache::regenerate();
+            }
+            catch (Exception $e) {}
+            try
+            {
+                NginxFileCache::regenerate();
+            }
+            catch (Exception $e) {}
         }
 
         $view = new FileTemplate('update/UpdateFinish.tpl');
