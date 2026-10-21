@@ -36,7 +36,8 @@ class InstallWebsiteConfig extends InstallController
         $this->init();
         $this->fetch_remote_addons();
         $this->build_form();
-        if ($this->submit_button->has_been_submited() && $this->form->validate()) {
+        if ($this->submit_button->has_been_submited() && $this->form->validate())
+        {
             $this->handle_form($request);
         }
         return $this->create_response();
@@ -63,12 +64,14 @@ class InstallWebsiteConfig extends InstallController
         if (file_exists($pdk_path))
         {
             $pdk_config = parse_ini_file($pdk_path);
-            if (($pdk_config['module_home_page'] ?? '') === $home_page && $home_page === 'bugtracker') {
+            if (($pdk_config['module_home_page'] ?? '') === $home_page && $home_page === 'bugtracker')
+            {
                 return 'pdk';
             }
         }
 
-        if ($home_page !== 'pages') {
+        if ($home_page !== 'pages')
+        {
             return 'full';
         }
 
@@ -98,9 +101,12 @@ class InstallWebsiteConfig extends InstallController
      */
     private function get_phpboost_version(): string
     {
-        try {
+        try
+        {
             return GeneralConfig::load()->get_phpboost_major_version();
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             // Last resort: read from the KernelSetup default
             return '6.1';
         }
@@ -126,23 +132,27 @@ class InstallWebsiteConfig extends InstallController
 
         foreach ($candidates as $url) {
             $raw = $this->http_get($url);
-            if ($raw === false || $raw === '') {
+            if ($raw === false || $raw === '')
+            {
                 continue;
             }
 
             $data = json_decode($raw, true);
-            if (!is_array($data) || empty($data)) {
+            if (!is_array($data) || empty($data))
+            {
                 continue;
             }
 
             // Build an associative array keyed by addon_id
             $result = [];
             foreach ($data as $item) {
-                if (!is_array($item)) {
+                if (!is_array($item))
+                {
                     continue;
                 }
                 $id = $item['id'] ?? '';
-                if ($id !== '') {
+                if ($id !== '')
+                {
                     $result[$id] = $item;
                 }
             }
@@ -172,10 +182,12 @@ class InstallWebsiteConfig extends InstallController
             curl_setopt($ch, CURLOPT_HTTPHEADER,     ['Accept: application/json']);
             $body = curl_exec($ch);
             $http = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            if (\PHP_VERSION_ID < 80100) {
+            if (\PHP_VERSION_ID < 80100)
+            {
                 curl_close($ch);
             }
-            if ($body !== false && $http >= 200 && $http < 300) {
+            if ($body !== false && $http >= 200 && $http < 300)
+            {
                 return $body;
             }
             return false;
@@ -354,9 +366,12 @@ class InstallWebsiteConfig extends InstallController
         $fieldset->add_field(new FormFieldHidden('module_' . $mandatory_module . '_forced', '1'));
 
         // Optional: connect module (checked by default) — not for pdk
-        if ($distribution == 'pdk') {
+        if ($distribution == 'pdk')
+        {
             $checked = ['connect', 'GoogleMaps', 'sandbox', 'sitemap'];
-        } else {
+        }
+        else
+        {
             $checked = ['connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetworks', 'UrlUpdater'];
         }
 
@@ -368,7 +383,8 @@ class InstallWebsiteConfig extends InstallController
         {
             $locale = LangLoader::get_locale();
             $genre = $module['genre'][$locale];
-            if (!isset($grouped_modules[$genre])){
+            if (!isset($grouped_modules[$genre]))
+            {
                 $grouped_modules[$genre] = [];
             }
             $grouped_modules[$genre][] = $module;
@@ -382,7 +398,8 @@ class InstallWebsiteConfig extends InstallController
 
             foreach ($modules as $module)
             {
-                if (in_array($module['id'], $skip, true)) {
+                if (in_array($module['id'], $skip, true))
+                {
                     continue;
                 }
                 $label = $this->get_module_label($module['id'], $module);
@@ -414,24 +431,20 @@ class InstallWebsiteConfig extends InstallController
 
         // Mandatory theme: base — always present in archive, always selected
         $base_note = ' <em>(' . $this->lang['common.default'] . ')</em>';
-        $fieldset->add_field(new FormFieldCheckbox(
-            'theme_base',
-            'Base' . $base_note,
-            true,
+        $fieldset->add_field(new FormFieldCheckbox('theme_base', 'Base' . $base_note, true,
             ['disabled' => true, 'class' => 'addon-checkbox']
         ));
+
         $fieldset->add_field(new FormFieldHidden('theme_base_forced', '1'));
 
         // Other optional remote themes
         foreach ($this->remote_themes as $theme_id => $theme_info) {
-            if ($theme_id === 'base') {
+            if ($theme_id === 'base')
+            {
                 continue;
             }
             $label = $this->get_theme_label($theme_id, $theme_info);
-            $fieldset->add_field(new FormFieldCheckbox(
-                'theme_' . $theme_id,
-                $label,
-                false,
+            $fieldset->add_field(new FormFieldCheckbox('theme_' . $theme_id, $label, false,
                 [
                     'class' => 'addon-checkbox',
                     'description' => $theme_id
@@ -441,9 +454,7 @@ class InstallWebsiteConfig extends InstallController
 
         if (empty($this->remote_themes))
         {
-            $fieldset->add_field(new FormFieldHTML('themes_unavailable',
-                '<p class="message-helper bgc notice">' . $this->lang['install.website.themes.unavailable'] . '</p>'
-            ));
+            $fieldset->add_field(new FormFieldHTML('themes_unavailable', '<p class="message-helper bgc notice">' . $this->lang['install.website.themes.unavailable'] . '</p>'));
         }
     }
 
@@ -453,7 +464,8 @@ class InstallWebsiteConfig extends InstallController
      */
     private function get_module_label(string $addon_id, array $info = []): string
     {
-        if (empty($info)) {
+        if (empty($info))
+        {
             return TextHelper::ucfirst($addon_id);
         }
 
@@ -462,7 +474,8 @@ class InstallWebsiteConfig extends InstallController
         $desc   = AddonHelper::resolve_locale_field($info, 'description', $locale, '');
 
         $label = '<span>' . TextHelper::ucfirst($name);
-        if ($addon_id === 'pages') {
+        if ($addon_id === 'pages')
+        {
             $label .= ' <em>(' . $this->lang['common.required'] . ')</em>';
         }
         $label .= '</span>';
@@ -489,7 +502,8 @@ class InstallWebsiteConfig extends InstallController
      */
     private function get_theme_label(string $addon_id, array $info = []): string
     {
-        if (empty($info)) {
+        if (empty($info))
+        {
             return TextHelper::ucfirst($addon_id);
         }
 
@@ -503,9 +517,12 @@ class InstallWebsiteConfig extends InstallController
         if (filter_var($url, FILTER_VALIDATE_URL))
         {
             $headers = @get_headers($url);
-            if ($headers && strpos($headers[0], '200') !== false) {
+            if ($headers && strpos($headers[0], '200') !== false)
+            {
                 $url = self::ADDONS_SERVER_URL . '/' . $version;
-            } else {
+            }
+            else
+            {
                 $url = self::ADDONS_SERVER_URL . '/dev';
             }
         }
@@ -513,7 +530,8 @@ class InstallWebsiteConfig extends InstallController
         $thumbnail = new File($url . '/themes/' . $addon_id . '/' . $thumbnail_path);
 
         $label = '<span>' . TextHelper::ucfirst($name);
-        if ($addon_id === 'pages') {
+        if ($addon_id === 'pages')
+        {
             $label .= ' <em>(' . $this->lang['common.required'] . ')</em>';
         }
         $label .= '</span>';
@@ -545,7 +563,8 @@ class InstallWebsiteConfig extends InstallController
         // connect: optional, checked by default, only for normale & full
         if ($distribution !== 'pdk')
         {
-            if ($this->form->has_field('module_connect') && $this->form->get_value('module_connect')) {
+            if ($this->form->has_field('module_connect') && $this->form->get_value('module_connect'))
+            {
                 $selected_modules[] = 'connect';
             }
         }
@@ -553,23 +572,28 @@ class InstallWebsiteConfig extends InstallController
         // Other optional remote modules
         $skip = [$mandatory_module, 'connect'];
         foreach ($this->remote_modules as $module_id => $module_info) {
-            if (in_array($module_id, $skip, true)) {
+            if (in_array($module_id, $skip, true))
+            {
                 continue;
             }
             $field_id = 'module_' . $module_id;
-            if ($this->form->has_field($field_id) && $this->form->get_value($field_id)) {
+            if ($this->form->has_field($field_id) && $this->form->get_value($field_id))
+            {
                 $selected_modules[] = $module_id;
             }
         }
 
         // Selected themes
         $selected_themes = ['base'];
-        foreach ($this->remote_themes as $theme_id => $theme_info) {
-            if ($theme_id === 'base') {
+        foreach ($this->remote_themes as $theme_id => $theme_info)
+        {
+            if ($theme_id === 'base')
+            {
                 continue;
             }
             $field_id = 'theme_' . $theme_id;
-            if ($this->form->has_field($field_id) && $this->form->get_value($field_id)) {
+            if ($this->form->has_field($field_id) && $this->form->get_value($field_id))
+            {
                 $selected_themes[] = $theme_id;
             }
         }
@@ -589,9 +613,12 @@ class InstallWebsiteConfig extends InstallController
         $this->security_config->set_internal_password_min_length($this->form->get_value('internal_password_min_length'));
         $this->security_config->set_internal_password_strength($this->form->get_value('internal_password_strength')->get_raw_value());
 
-        if ($this->form->get_value('login_and_email_forbidden_in_password')) {
+        if ($this->form->get_value('login_and_email_forbidden_in_password'))
+        {
             $this->security_config->forbid_login_and_email_in_password();
-        } else {
+        }
+        else
+        {
             $this->security_config->allow_login_and_email_in_password();
         }
 
@@ -605,7 +632,8 @@ class InstallWebsiteConfig extends InstallController
         }
 
         $default_captcha = $this->distribution_config['default_captcha'];
-        if ($default_captcha) {
+        if ($default_captcha)
+        {
             $default_captcha::save_config($this->form);
         }
 
@@ -622,7 +650,8 @@ class InstallWebsiteConfig extends InstallController
     private function current_server_path(): string
     {
         $server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
-        if (!$server_path) {
+        if (!$server_path)
+        {
             $server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
         }
         $server_path        = trim(preg_replace('`/install$`u', '', dirname($server_path)));
@@ -638,9 +667,11 @@ class InstallWebsiteConfig extends InstallController
                 field.setValue(value);
             }
         ');
-        $tpl->put('ID', $field->get_id());
-        $tpl->put('VALUE', $field->get_value());
-        $tpl->put('MESSAGE', $message);
+        $tpl->put_all([
+            'ID'     => $field->get_id(),
+            'VALUE'  => $field->get_value(),
+            'MESSAGE'=> $message
+        ]);
         return $tpl->render();
     }
 

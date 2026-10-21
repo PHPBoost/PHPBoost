@@ -23,7 +23,8 @@ class InstallCreateAdmin extends InstallController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
         {
 			$login = $this->form->get_value('email');
-			if ($this->form->get_value('custom_login', false)) {
+			if ($this->form->get_value('custom_login', false))
+            {
 				$login = $this->form->get_value('login');
 			}
 

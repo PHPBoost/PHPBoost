@@ -58,7 +58,8 @@ class InstallUrlBuilder
     /** @param string $path the url path from the dispatcher root */
     private static function url(string $path): Url
     {
-        if (self::$locale  != InstallationServices::get_default_lang()) {
+        if (self::$locale  != InstallationServices::get_default_lang())
+        {
             $path .= '?lang=' . self::$locale;
         }
 		return DispatchManager::get_url(self::$dispatcher, $path, true);

@@ -77,7 +77,8 @@ class CLIInstallCommand implements CLICommand
         $this->arg_reader = new CLIArgumentsReader($args);
         $this->check_parameters();
         $this->show_parameters();
-        if (!($this->check_env() && $this->install())) {
+        if (!($this->check_env() && $this->install()))
+        {
             CLIOutput::writeln('installation failed');
         }
     }
@@ -151,7 +152,8 @@ class CLIInstallCommand implements CLICommand
         CLIOutput::writeln('installation');
         $this->installation = new InstallationServices($this->website_locale);
         CLIOutput::writeln("\t" . 'kernel...');
-        if (!$this->create_phpboost_tables()) {
+        if (!$this->create_phpboost_tables())
+        {
             return false;
         }
         CLIOutput::writeln("\t" . 'modules...');
@@ -159,11 +161,13 @@ class CLIInstallCommand implements CLICommand
                 $this->website_server, $this->website_path, $this->website_name, $this->website_slogan, $this->website_description, $this->website_timezone,
                 ['pages', 'connect', 'GoogleMaps', 'search', 'sitemap', 'SocialNetworks', 'UrlUpdater'],
                 ['base']
-            )) {
+            ))
+        {
             return false;
         }
         CLIOutput::writeln("\t" . 'admin creation...');
-        if (!$this->installation->create_admin($this->user_login, $this->user_login, $this->user_password, $this->user_email, false, false)) {
+        if (!$this->installation->create_admin($this->user_login, $this->user_login, $this->user_password, $this->user_email, false, false))
+        {
             return false;
         }
         $this->installation->save_server_environnement_config();
@@ -190,7 +194,8 @@ class CLIInstallCommand implements CLICommand
         {
             foreach (PHPBoostFoldersPermissions::get_permissions() as $folder_name => $folder)
             {
-                if (!$folder->is_writable()) {
+                if (!$folder->is_writable())
+                {
                     CLIOutput::writeln('Folder ' . $folder_name . ' is not writable. Please change its rights');
                 }
             }

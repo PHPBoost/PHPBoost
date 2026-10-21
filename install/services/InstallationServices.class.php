@@ -17,28 +17,16 @@ class InstallationServices
     const UNABLE_TO_CREATE_DATABASE = 2;
     const UNKNOWN_ERROR = 3;
 
-    private static $token_file_content = '1';
-
-    /**
-     * @var File
-     */
-    private $token;
-
-    /**
-     * @var string[]
-     */
-    private $messages;
-
-    /**
-     * @var mixed[] Distribution configuration
-     */
-    private $distribution_config;
+    private static string $token_file_content = '1';
+    private File $token;
+    private array $messages;
+    private array $distribution_config;
 
     /** Addons server base URL */
     const ADDONS_SERVER_URL = 'https://dl.phpboost.com';
     const ADDONS_SERVER_DIR = '';
 
-    public function __construct($locale = '')
+    public function __construct(string $locale = '')
     {
         $this->token = new File(PATH_TO_ROOT . '/cache/.install_token');
         $this->load_distribution_configuration();
@@ -68,7 +56,8 @@ class InstallationServices
     private function set_default_locale(string $locale): void
     {
         $langs = $this->get_available_langs();
-        if (!empty($locale) && in_array($locale, $langs)) {
+        if (!empty($locale) && in_array($locale, $langs))
+        {
             $this->distribution_config['default_lang'] = $locale;
         }
     }
@@ -90,7 +79,8 @@ class InstallationServices
                     $distribution_config['default_lang'] = $lang;
             }
         }
-        else if (!in_array($distribution_config['default_lang'], $langs)) {
+        else if (!in_array($distribution_config['default_lang'], $langs))
+        {
             $distribution_config['default_lang'] = $langs[0];
         }
         return $distribution_config['default_lang'];
@@ -104,20 +94,29 @@ class InstallationServices
 
     public function check_db_connection(string $host, string $port, string $login, string $password, string &$database, string $tables_prefix): int
     {
-        try {
+        try
+        {
             $this->try_db_connection($host, $port, $login, $password, $database, $tables_prefix);
-        } catch (UnexistingDatabaseException $ex) {
+        }
+        catch (UnexistingDatabaseException $ex)
+        {
             if (!$this->create_database($database))
             {
                 DBFactory::reset_db_connection();
                 return self::UNABLE_TO_CREATE_DATABASE;
-            } else {
+            }
+            else
+            {
                 return $this->check_db_connection($host, $port, $login, $password, $database, $tables_prefix);
             }
-        } catch (DBConnectionException $ex) {
+        }
+        catch (DBConnectionException $ex)
+        {
             DBFactory::reset_db_connection();
             return self::CONNECTION_ERROR;
-        } catch (Exception $ex) {
+        }
+        catch (Exception $ex)
+        {
             $exception_handler = new ExceptionHandler();
             $exception_handler->handle($ex);
             DBFactory::reset_db_connection();
@@ -147,13 +146,16 @@ class InstallationServices
 
     private function create_database(string $database): bool
     {
-        try {
+        try
+        {
             $database = str_replace(['/', '\\', '.', ' ', '"', '\''], '_', $database);
             $database = PersistenceContext::get_dbms_utils()->create_database($database);
             $databases_list = PersistenceContext::get_dbms_utils()->list_databases();
             PersistenceContext::close_db_connection();
             return in_array($database, $databases_list);
-        } catch (SQLQuerierException $e) {
+        }
+        catch (SQLQuerierException $e)
+        {
             return false;
         }
     }
@@ -277,19 +279,25 @@ class InstallationServices
         $server_configuration = new ServerConfiguration();
         $server_environment_config = ServerEnvironmentConfig::load();
 
-        try {
-            if ($server_configuration->has_url_rewriting()) {
+        try
+        {
+            if ($server_configuration->has_url_rewriting())
+            {
                 $server_environment_config->set_url_rewriting_enabled(true);
             }
-        } catch (UnsupportedOperationException $ex) {
+        }
+        catch (UnsupportedOperationException $ex)
+        {
             $server_environment_config->set_url_rewriting_enabled(false);
         }
 
-        if (function_exists('ob_gzhandler') && @extension_loaded('zlib')) {
+        if (function_exists('ob_gzhandler') && @extension_loaded('zlib'))
+        {
             $server_environment_config->set_output_gziping_enabled(true);
         }
 
-        if (DataStoreFactory::is_apc_available()) {
+        if (DataStoreFactory::is_apc_available())
+        {
             DataStoreFactory::set_apc_enabled(true);
         }
 
@@ -305,9 +313,12 @@ class InstallationServices
 
     private function init_debug_mode(): void
     {
-        if ($this->distribution_config['debug']) {
+        if ($this->distribution_config['debug'])
+        {
             Debug::enabled_debug_mode();
-        } else {
+        }
+        else
+        {
             Debug::disable_debug_mode();
         }
     }
@@ -331,7 +342,8 @@ class InstallationServices
      */
     private function download_remote_modules(array $selected_modules): void
     {
-        if (empty($selected_modules)) {
+        if (empty($selected_modules))
+        {
             return;
         }
 
@@ -342,19 +354,22 @@ class InstallationServices
         foreach ($selected_modules as $module_id)
         {
             // Skip lobby — it is a root-level module, never downloaded
-            if ($module_id === 'lobby') {
+            if ($module_id === 'lobby')
+            {
                 continue;
             }
 
             // Already present on disk (local or previously downloaded) → skip
             $module_folder = new Folder($dest_dir . $module_id);
-            if ($module_folder->exists()) {
+            if ($module_folder->exists())
+            {
                 continue;
             }
 
             // Also check at root level (bbcode, qaptcha, lobby…)
             $root_folder = new Folder(PATH_TO_ROOT . '/' . $module_id);
-            if ($root_folder->exists()) {
+            if ($root_folder->exists())
+            {
                 continue;
             }
 
@@ -368,13 +383,15 @@ class InstallationServices
                 $version
             );
 
-            if ($ok) {
+            if ($ok)
+            {
                 $downloaded = true;
             }
         }
 
         // Regenerate the class list so newly extracted classes are autoloaded
-        if ($downloaded) {
+        if ($downloaded)
+        {
             ClassLoader::generate_classlist(true);
         }
     }
@@ -387,7 +404,8 @@ class InstallationServices
      */
     private function download_remote_themes(array $selected_themes): void
     {
-        if (empty($selected_themes)) {
+        if (empty($selected_themes))
+        {
             return;
         }
 
@@ -398,7 +416,8 @@ class InstallationServices
         {
             // Already present on disk → skip (covers 'base' when bundled in the archive)
             $theme_folder = new Folder($dest_dir . $theme_id);
-            if ($theme_folder->exists()) {
+            if ($theme_folder->exists())
+            {
                 continue;
             }
 
@@ -430,9 +449,12 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
             {
-                try {
+                try
+                {
                     $modules_not_installed[$folder_name] = new Module($folder_name);
-                } catch (IOException $ex) {
+                }
+                catch (IOException $ex)
+                {
                     continue;
                 }
             }
@@ -445,9 +467,12 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
             {
-                try {
+                try
+                {
                     $modules_not_installed[$folder_name] = new Module($folder_name);
-                } catch (IOException $ex) {
+                }
+                catch (IOException $ex)
+                {
                     continue;
                 }
             }
@@ -460,7 +485,8 @@ class InstallationServices
 
     private static function callback_sort_modules_by_name(Module $module1, Module $module2): int
     {
-        if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name())) {
+        if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
+        {
             return 1;
         }
         return -1;
@@ -474,7 +500,8 @@ class InstallationServices
     {
         foreach ($modules_to_install as $module_id => $module)
         {
-            if ($module_id === 'lobby') {
+            if ($module_id === 'lobby')
+            {
                 continue;
             }
             ModulesManager::install_module($module_id, true, false);
@@ -499,9 +526,12 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder_name != '__default__' && $folder->get_files('/config\.ini/') && !ThemesManager::get_theme_existed($folder_name))
             {
-                try {
+                try
+                {
                     $themes_not_installed[$folder_name] = new Theme($folder_name);
-                } catch (IOException $ex) {
+                }
+                catch (IOException $ex)
+                {
                     continue;
                 }
             }
@@ -514,7 +544,8 @@ class InstallationServices
 
     private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2): int
     {
-        if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name())) {
+        if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name()))
+        {
             return 1;
         }
         return -1;
@@ -537,9 +568,12 @@ class InstallationServices
             $folder_name = $folder->get_name();
             if ($folder->get_files('/config\.ini/') && !LangsManager::get_lang_existed($folder_name))
             {
-                try {
+                try
+                {
                     $langs_not_installed[$folder_name] = new Lang($folder_name);
-                } catch (IOException $ex) {
+                }
+                catch (IOException $ex)
+                {
                     continue;
                 }
             }
@@ -552,7 +586,8 @@ class InstallationServices
 
     private static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2): int
     {
-        if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name())) {
+        if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name()))
+        {
             return 1;
         }
         return -1;
@@ -592,7 +627,8 @@ class InstallationServices
 
         foreach (MenuService::get_menu_list() as $menu)
         {
-            if ($menu->get_title() === 'PHPBoost') {
+            if ($menu->get_title() === 'PHPBoost')
+            {
                 return;
             }
         }
@@ -683,14 +719,14 @@ class InstallationServices
     {
         self::define_prefix($tables_prefix);
         $db_connection_data = [
-            'dbms' => $dbms,
-            'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
+            'dbms'           => $dbms,
+            'dsn'            => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
             'driver_options' => [],
-            'host' => $host,
-            'port' => $port,
-            'login' => $login,
-            'password' => $password,
-            'database' => $database,
+            'host'           => $host,
+            'port'           => $port,
+            'login'          => $login,
+            'password'       => $password,
+            'database'       => $database,
         ];
         $this->connect_to_database($dbms, $db_connection_data, $database);
         return $db_connection_data;
@@ -741,7 +777,8 @@ class InstallationServices
         $this->configure_mail_sender_system($email);
         $this->configure_accounts_policy();
         $this->send_installation_mail($display_name, $password, $email);
-        if ($create_session) {
+        if ($create_session)
+        {
             $this->connect_admin($user_id, $auto_connect);
         }
     }
@@ -803,13 +840,17 @@ class InstallationServices
     private function get_installation_token(): void
     {
         $is_token_valid = false;
-        try {
+        try
+        {
             $is_token_valid = $this->token->exists() && $this->token->read() == self::$token_file_content;
-        } catch (IOException $ioe) {
+        }
+        catch (IOException $ioe)
+        {
             $is_token_valid = false;
         }
 
-        if (!$is_token_valid) {
+        if (!$is_token_valid)
+        {
             throw new InstallTokenNotFoundException($this->token->get_path_from_root());
         }
     }

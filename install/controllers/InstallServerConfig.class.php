@@ -68,18 +68,23 @@ class InstallServerConfigCtrl extends InstallController
 			'HAS_MBSTRING_EXTENSION' => $this->server_conf->has_mbstring_extension()
 		]);
 
-        if (!$this->server_conf->has_mbstring_extension()) {
+        if (!$this->server_conf->has_mbstring_extension())
+        {
 			$this->view->put('C_MBSTRING_ERROR', true);
 		}
 
-        if (!PHPBoostFoldersPermissions::validate()) {
+        if (!PHPBoostFoldersPermissions::validate())
+        {
 			$this->view->put('C_FOLDERS_ERROR', true);
 		}
 
-        try {
+        try
+        {
 			$this->view->put('URL_REWRITING_KNOWN', true);
 			$this->view->put('URL_REWRITING_AVAILABLE', $this->server_conf->has_url_rewriting());
-		} catch (UnsupportedOperationException $ex) {
+		}
+        catch (UnsupportedOperationException $ex)
+        {
 			$this->view->put('URL_REWRITING_KNOWN', false);
 		}
 

@@ -33,7 +33,8 @@ abstract class InstallController extends AbstractController
 			curl_setopt($curl, CURLOPT_NOBODY, true);
 			$result = curl_exec($curl);
 
-			if ($result !== false) {
+			if ($result !== false)
+            {
 				$status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			}
 

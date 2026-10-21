@@ -82,9 +82,12 @@ class InstallCarrier extends AbstractResponse
             ['name' => $this->lang['install.step.license'], 'img' => 'file'],
         ];
 
-        if (!InstallationServices::check_server()) {
+        if (!InstallationServices::check_server())
+        {
             $steps[] = ['name' => $this->lang['install.step.server'], 'img' => 'cog'];
-        } elseif ($this->current_step > 1) {
+        }
+        elseif ($this->current_step > 1)
+        {
             $this->current_step--;
         }
 
@@ -97,15 +100,24 @@ class InstallCarrier extends AbstractResponse
 
         for ($i = 0; $i < $this->steps_number; $i++)
         {
-            if ($i < $this->current_step) {
+            if ($i < $this->current_step)
+            {
                 $row_class = 'row-success';
-            } elseif ($i == $this->current_step && $i == ($this->steps_number - 1)) {
+            }
+            elseif ($i == $this->current_step && $i == ($this->steps_number - 1))
+            {
                 $row_class = 'row-current row-final';
-            } elseif ($i == $this->current_step) {
+            }
+            elseif ($i == $this->current_step)
+            {
                 $row_class = 'row-current';
-            } elseif ($i == ($this->steps_number - 1)) {
+            }
+            elseif ($i == ($this->steps_number - 1))
+            {
                 $row_class = 'row-next row-final';
-            } else {
+            }
+            else
+            {
                 $row_class = 'row-next';
             }
             $this->full_view->assign_block_vars('step', [

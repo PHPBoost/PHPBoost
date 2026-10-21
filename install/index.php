@@ -14,14 +14,16 @@ define('PATH_TO_ROOT', '..');
 require_once PATH_TO_ROOT . '/install/app/InstallEnvironment.class.php';
 InstallEnvironment::load_imports();
 
-if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1) {
+if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == -1)
+{
 	die('<h1>Impossible to install PHPBoost</h1><p>At least PHP ' . ServerConfiguration::MIN_PHP_VERSION . ' is needed but your current PHP version is ' . phpversion() . '</p>');
 }
 
 InstallEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();
-if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable()) {
+if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable())
+{
 	die(LangLoader::get_message('install.chmod.cache.not.writable', 'common', 'install'));
 }
 
@@ -37,7 +39,8 @@ if ($_GET || $_POST)
 		{
 			if (!empty($arg) && in_array($id, ['--db-host', '--db-port', '--db-user', '--db-pwd', '--db-schema', '--db-table-prefix', '--ws-server', '--ws-path', '--ws-name', '--ws-slogan', '--ws-desc', '--ws-locale', '--ws-timezone', '--u-login', '--u-pwd', '--u-email']))
 			{
-				switch ($id) {
+				switch ($id)
+                {
 					case '--db-pwd' :
                         $has_db_pwd = true;
                         break;
@@ -72,9 +75,12 @@ if ($_GET || $_POST)
 		{
 			$launcher = new CLILauncher($argv);
 			$result = $launcher->launch();
-			if ($result) {
+			if ($result)
+            {
 				exit(0);
-			} else {
+			}
+            else
+            {
 				exit(1);
 			}
 		}

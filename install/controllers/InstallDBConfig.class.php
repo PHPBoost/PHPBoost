@@ -36,10 +36,12 @@ class InstallDBConfig extends InstallController
 			$schema = $this->form->get_value('schema');
 			$tables_prefix = $this->form->get_value('tablesPrefix');
 
-			if ($this->submit_button->has_been_submited()) {
+			if ($this->submit_button->has_been_submited())
+            {
 				$this->handle_form($host, $port, $login, $password, $schema, $tables_prefix);
             }
-			else {
+			else
+            {
 				$this->handle_test($host, $port, $login, $password, $schema, $tables_prefix);
             }
 		}
@@ -48,9 +50,12 @@ class InstallDBConfig extends InstallController
 
 	private function build_form(): void
 	{
-        if (InstallationServices::check_server()) {
+        if (InstallationServices::check_server())
+        {
             $back_url = InstallUrlBuilder::license();
-        } else {
+        }
+        else
+        {
             $back_url = InstallUrlBuilder::server_configuration();
         }
 
@@ -199,10 +204,12 @@ class InstallDBConfig extends InstallController
 	{
 		$this->view = new FileTemplate('install/InstallDBConfig.tpl');
 		$this->view->put('DATABASE_FORM', $this->form->display());
-		if (!empty($this->success)) {
+		if (!empty($this->success))
+        {
 			$this->view->put('SUCCESS', $this->success);
 		}
-		if (!empty($this->error)) {
+		if (!empty($this->error))
+        {
 			$this->view->put('ERROR', $this->error);
 		}
 		$step_title = $this->lang['install.db.config.title'];

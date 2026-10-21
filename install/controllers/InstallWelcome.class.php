@@ -11,7 +11,7 @@
 
 class InstallWelcome extends InstallController
 {
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): Response
 	{
 		parent::load_lang($request);
 		$view = new FileTemplate('install/InstallWelcome.tpl');
@@ -19,18 +19,14 @@ class InstallWelcome extends InstallController
 		return $this->create_response($view);
 	}
 
-	/**
-	 * @param Template $view
-	 * @return InstallCarrier
-	 */
-	private function create_response(Template $view)
+	private function create_response(Template $view): InstallCarrier
 	{
 		$step_title = $this->lang['install.welcome.title'];
 		$response = new InstallCarrier(0, $step_title, $this->lang, $view);
 		return $response;
 	}
 
-	private function add_navigation(Template $view)
+	private function add_navigation(Template $view): void
 	{
 		$form = new HTMLForm('preambleForm', InstallUrlBuilder::license()->rel(), false);
 
