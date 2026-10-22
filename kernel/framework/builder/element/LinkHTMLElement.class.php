@@ -5,19 +5,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 4.1 - 2015 01 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LinkHTMLElement extends AbstractHTMLElement
 {
-	private $url;
-	private $content;
-	private $attributes = [];
-	private $use_icon;
+	private mixed $url = null;
+	private mixed $content = null;
+	private array $attributes = [];
+	private mixed $use_icon = null;
 
-	public function __construct($url, $content, $attributes = [], $css_class = '', $use_icon = false)
+	public function __construct(string|Url $url, string $content, array $attributes = [], string $css_class = '', bool $use_icon = false)
 	{
 		if ($url instanceof Url)
 		{
@@ -31,7 +32,7 @@ class LinkHTMLElement extends AbstractHTMLElement
 		$this->use_icon = ($css_class ? $use_icon : false);
 	}
 
-	public function display()
+	public function display(): mixed
 	{
 		$tpl = new FileTemplate('framework/builder/element/LinkHTMLElement.tpl');
 

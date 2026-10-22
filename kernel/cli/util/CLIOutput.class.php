@@ -10,7 +10,7 @@
 
 class CLIOutput
 {
-    private static $err_output;
+    private static File $err_output;
 
     public static function init(): void
     {

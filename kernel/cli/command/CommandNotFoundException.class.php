@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 3.0 - 2010 02 07
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommandNotFoundException extends Exception
 {
-	public function __construct($command)
+	public function __construct(string $command)
 	{
 		parent::__construct('command ' . $command . ' does not exists in current commands list');
 	}

@@ -19,9 +19,7 @@ class CLIEnvironment extends Environment
         {
             parent::load_imports();
         }
-        catch (Exception $ex)
-        {
-        }
+        catch (Exception $ex) {}
     }
 
     public static function setup_server_env(): void

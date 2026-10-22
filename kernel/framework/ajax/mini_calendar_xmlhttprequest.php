@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 1.6 - 2007 01 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -20,15 +20,15 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $request = AppContext::get_request();
 
-$date = $request->get_getvalue('date', '');
-$field = $request->get_getvalue('field', '');
-$input_field = $request->get_getvalue('input_field', '');
-$input_date = $request->get_getvalue('input_date', '');
+$date            = $request->get_getvalue('date', '');
+$field           = $request->get_getvalue('field', '');
+$input_field     = $request->get_getvalue('input_field', '');
+$input_date      = $request->get_getvalue('input_date', '');
 $calendar_number = $request->get_getvalue('calendar_number', '');
 
 //Vide par défaut => Type date.
 $calendar_type = !empty($date) ? 'timestamp' : 'date';
-$field = !empty($field) ? trim($field) : 'calendar';
+$field         = !empty($field) ? trim($field) : 'calendar';
 
 $view = new FileTemplate('framework/util/mini_calendar_response.tpl');
 $lang = LangLoader::get_all_langs();
@@ -37,16 +37,16 @@ $view->add_lang($lang);;
 //Type date.
 if ($calendar_type == 'date')
 {
-	$now = new Date();
-	$year = $request->get_getint('y', $now->get_year());
-	$month = $request->get_getint('m', $now->get_month());
-	$day = $request->get_getint('d', $now->get_day());
+	$now        = new Date();
+	$year       = $request->get_getint('y', $now->get_year());
+	$month      = $request->get_getint('m', $now->get_month());
+	$day        = $request->get_getint('d', $now->get_day());
 	$input_date = !empty($input_date) ? trim($input_date) : $day . '/' . $month . '/' . $year;
 
-	$selected = explode('/', $input_date);
-	$selected_day = NumberHelper::numeric($selected[0]);
+	$selected       = explode('/', $input_date);
+	$selected_day   = NumberHelper::numeric($selected[0]);
 	$selected_month = NumberHelper::numeric($selected[1]);
-	$selected_year = NumberHelper::numeric($selected[2]);
+	$selected_year  = NumberHelper::numeric($selected[2]);
 
 	if (!checkdate($month, $day, $year))
 	{

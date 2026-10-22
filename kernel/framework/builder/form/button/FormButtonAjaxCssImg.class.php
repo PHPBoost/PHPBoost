@@ -14,7 +14,7 @@
 
 class FormButtonAjaxCssImg extends AbstractFormButton
 {
-    public function __construct($label, AjaxRequest $request, array $fields, $css_class_image = '', $condition = null)
+    public function __construct(string $label, AjaxRequest $request, array $fields, string $css_class_image = '', mixed $condition = null)
     {
 		$full_label = '';
 		if (!empty($css_class_image))
@@ -28,7 +28,7 @@ class FormButtonAjaxCssImg extends AbstractFormButton
         parent::__construct('button', $full_label, '', $this->build_ajax_request($request, $fields, $condition), 'image');
     }
 
-    private function build_ajax_request(AjaxRequest $request, array $fields, $condition)
+    private function build_ajax_request(AjaxRequest $request, array $fields, mixed $condition): mixed
     {
 		if (is_array($fields))
 		{

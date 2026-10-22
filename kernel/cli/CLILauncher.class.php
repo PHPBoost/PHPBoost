@@ -14,9 +14,6 @@ class CLILauncher
     private string $command = '';
     private array $commands = [];
 
-    /**
-     * @var CLICommands
-     */
     private CLICommands $cli_commands;
 
     public function __construct(array $args = [])

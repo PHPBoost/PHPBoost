@@ -5,22 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 3.0 - 2010 04 10
  * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormBuilderDisabledFieldException extends FormBuilderException
 {
-	private $value;
+	private mixed $value = null;
 
-	public function __construct($field, $value)
+	public function __construct(string $field, mixed $value)
 	{
 		parent::__construct('You cannot retrieve the value of the field ' . $field . ' which is disabled.');
 		$this->value = $value;
 	}
 
-	public function get_value()
+	public function get_value(): mixed
 	{
 		return $this->value;
 	}

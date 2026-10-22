@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 4.1 - 2014 05 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@
 
 class FormButtonLinkCssImg extends AbstractFormButton
 {
-	public function __construct($label, $link, $css_class_image = '', $text_button = '')
+	public function __construct(string $label, string $link, string $css_class_image = '', string $text_button = '')
 	{
 		$full_label = '';
 		if (!empty($css_class_image))

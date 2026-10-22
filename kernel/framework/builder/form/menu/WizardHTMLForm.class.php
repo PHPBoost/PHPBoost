@@ -11,15 +11,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 5.2 - 2019 07 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class WizardHTMLForm extends HTMLForm
 {
-	protected $captcha_fieldset_css_class = 'captcha-element wizard-step';
+	protected string $captcha_fieldset_css_class = 'captcha-element wizard-step';
 
-	protected $submit_button_class = 'WizardFormFieldsetSubmit';
+	protected string $submit_button_class = 'WizardFormFieldsetSubmit';
 }
 ?>

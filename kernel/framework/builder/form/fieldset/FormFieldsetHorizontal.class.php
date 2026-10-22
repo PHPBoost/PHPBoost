@@ -5,24 +5,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 3.0 - 2010 02 17
  * @author      mipel <mipel@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldsetHorizontal extends AbstractFormFieldset
 {
 
-	public function __construct($id, $options = [])
+	public function __construct(string $id, array $options = [])
 	{
 		parent::__construct($id, $options);
 	}
 
-	/**
-	 * @return Template
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -31,7 +29,7 @@ class FormFieldsetHorizontal extends AbstractFormFieldset
 		return $template;
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/fieldsetelements/FormFieldsetHorizontal.tpl');
 	}

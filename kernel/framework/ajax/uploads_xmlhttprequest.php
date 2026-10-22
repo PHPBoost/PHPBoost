@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 1.6 - 2007 01 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -19,15 +19,15 @@ include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 //Initialisation  de la class de gestion des fichiers.
 
-$user = AppContext::get_current_user();
+$user    = AppContext::get_current_user();
 $request = AppContext::get_request();
 
-$new_folder = $request->get_getint('new_folder', 0);
+$new_folder    = $request->get_getint('new_folder', 0);
 $rename_folder = $request->get_getint('rename_folder', 0);
-$rename_file = $request->get_getint('rename_file', 0);
+$rename_file   = $request->get_getint('rename_file', 0);
 
-$user_id = $request->get_postint('user_id', $user->get_id());
-$name = TextHelper::strprotect($request->get_postvalue('name', ''));
+$user_id       = $request->get_postint('user_id', $user->get_id());
+$name          = TextHelper::strprotect($request->get_postvalue('name', ''));
 $previous_name = TextHelper::strprotect($request->get_postvalue('previous_name', ''));
 
 if (!empty($new_folder)) //Ajout d'un dossier dans la gestion des fichiers.

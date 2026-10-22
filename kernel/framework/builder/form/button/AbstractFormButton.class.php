@@ -5,22 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 3.0 - 2010 02 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractFormButton implements FormButton
 {
-	private $form_id = '';
-	private $name = '';
-	private $label = '';
-	private $type = '';
-	private $onclick_action = '';
-	private $css_class;
-	private $data_confirmation;
+	private string $form_id = '';
+	private string $name = '';
+	private string $label = '';
+	private string $type = '';
+	private string $onclick_action = '';
+	private mixed $css_class = null;
+	private mixed $data_confirmation = null;
 
-	public function __construct($type, $label, $name, $onclick_action = '', $css_class = '', $data_confirmation = '', $form_id = '')
+	public function __construct(string $type, string $label, string $name, string $onclick_action = '', string $css_class = '', string $data_confirmation = '', string $form_id = '')
 	{
 		$this->type = $type;
 		$this->label = $label;
@@ -31,10 +32,7 @@ abstract class AbstractFormButton implements FormButton
 		$this->form_id = $form_id;
 	}
 
-/**
- * {@inheritdoc}
- */
-	public function display()
+	public function display(): mixed
 	{
 		$template = $this->get_template();
 		$template->put_all([
@@ -49,57 +47,57 @@ abstract class AbstractFormButton implements FormButton
 		return $template;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function get_html_name()
+	public function get_html_name(): mixed
 	{
 		return ($this->form_id ? $this->form_id . '_' : '') . $this->name;
 	}
 
-	public function set_name($name)
+	public function set_name(string $name): void
 	{
 		$this->name = $name;
 	}
 
-	public function get_label()
+	public function get_label(): string
 	{
 		return $this->label;
 	}
 
-	public function set_label($label)
+	public function set_label(string $label): void
 	{
 		$this->label = $label;
 	}
 
-	protected function get_template()
+	protected function get_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/button/DefaultFormButton.tpl');
 	}
 
-	public function set_css_class($css_class)
+	public function set_css_class(string $css_class): void
 	{
 		$this->css_class = $css_class;
 	}
 
-	public function get_css_class()
+	public function get_css_class(): mixed
 	{
 		return $this->css_class;
 	}
 
-	public function set_data_confirmation($data_confirmation)
+	public function set_data_confirmation(mixed $data_confirmation): void
 	{
 		$this->data_confirmation = $data_confirmation;
 	}
 
-	public function get_data_confirmation()
+	public function get_data_confirmation(): mixed
 	{
 		return $this->data_confirmation;
 	}
 
-	public function set_form_id($form_id)
+	public function set_form_id(string $form_id): void
 	{
 		$this->form_id = $form_id;
 	}

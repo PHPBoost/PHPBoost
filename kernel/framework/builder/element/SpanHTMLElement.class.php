@@ -5,24 +5,25 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 4.1 - 2015 01 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SpanHTMLElement extends AbstractHTMLElement
 {
-	private $content;
-	private $attributes = [];
+	private mixed $content = null;
+	private array $attributes = [];
 
-	public function __construct($content, $attributes = [], $css_class = '')
+	public function __construct(string $content, array $attributes = [], string $css_class = '')
 	{
 		$this->content = $content;
 		$this->attributes = $attributes;
 		$this->css_class = $css_class;
 	}
 
-	public function display()
+	public function display(): mixed
 	{
 		$tpl = new FileTemplate('framework/builder/element/SpanHTMLElement.tpl');
 

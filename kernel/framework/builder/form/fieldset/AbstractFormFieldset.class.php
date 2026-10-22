@@ -5,38 +5,32 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 3.0 - 2010 02 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractFormFieldset implements FormFieldset
 {
-	private $validation_error_messages = [];
-	private $form_id = '';
-	protected $fields = [];
-	protected $elements = [];
-	protected $description = '';
-	protected $id = '';
-	/**
-	 * @var boolean
-	 */
-	protected $disabled = false;
-	private $css_class = false;
+	private array $validation_error_messages = [];
+	private string $form_id = '';
+	protected array $fields = [];
+	protected array $elements = [];
+	protected string $description = '';
+	protected string $id = '';
+	protected bool $disabled = false;
+	private string $css_class = '';
+	private ?Template $template = null;
 
-	/**
-	 * @var Template
-	 */
-	private $template = null;
-
-	public function __construct($id, $options = [])
+	public function __construct(string $id, array $options = [])
 	{
 		$this->id = $id;
 		$this->compute_options($options);
 	}
 
-	protected function compute_options(array &$options)
+	protected function compute_options(array &$options): void
 	{
 		foreach($options as $attribute => $value)
 		{
@@ -67,26 +61,23 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 	}
 
-	public function get_id()
+	public function get_id(): string
 	{
 		return $this->id;
 	}
 
-	public function set_description($description)
+	public function set_description(string $description): void
 	{
 		$this->description = $description;
 	}
 
-	public function get_html_id()
+	public function get_html_id(): string
 	{
 		return $this->form_id . '_' . $this->id;
 	}
 
-	/**
-	 * Store fields in the fieldset.
-	 * @param FormField $field
-	 */
-	public function add_field(FormField $field)
+	/** Store fields in the fieldset. */
+	public function add_field(FormField $field): void
 	{
 		$this->add_element($field);
 		if (isset($this->fields[$field->get_id()]))
@@ -105,15 +96,12 @@ abstract class AbstractFormFieldset implements FormFieldset
 		$field->set_fieldset_id($this->get_id());
 	}
 
-	public function add_element(FormElement $element)
+	public function add_element(FormElement $element): void
 	{
 		$this->elements[] = $element;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_form_id($form_id)
+	public function set_form_id(string $form_id): void
 	{
 		$this->form_id = $form_id;
 		foreach ($this->fields as $field)
@@ -122,7 +110,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 	}
 
-	public function validate()
+	public function validate(): mixed
 	{
 		$validation_result = true;
 		foreach ($this->fields as $field)
@@ -136,7 +124,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		return $validation_result;
 	}
 
-	public function get_onsubmit_validations()
+	public function get_onsubmit_validations(): mixed
 	{
 		$validations = [];
 		foreach ($this->fields as $field)
@@ -146,7 +134,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		return $validations;
 	}
 
-	public function get_validation_error_messages()
+	public function get_validation_error_messages(): array
 	{
 		return $this->validation_error_messages;
 	}
@@ -154,25 +142,22 @@ abstract class AbstractFormFieldset implements FormFieldset
 	/**
 	 * @return bool
 	 */
-	public function has_field($field_id)
+	public function has_field(string $field_id): bool
 	{
 		return isset($this->fields[$field_id]);
 	}
 
-	/**
-	 * @return FormField
-	 */
-	public function get_field($field_id): FormField
+	public function get_field(string $field_id): FormField
 	{
 		return $this->fields[$field_id];
 	}
 
-	public function get_fields()
+	public function get_fields(): array
 	{
 		return $this->fields;
 	}
 
-	public function disable()
+	public function disable(): void
 	{
 		$this->disabled = true;
 		foreach ($this->fields as $field)
@@ -181,7 +166,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 	}
 
-	public function enable()
+	public function enable(): void
 	{
 		$this->disabled = false;
 		foreach ($this->fields as $field)
@@ -190,12 +175,12 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 	}
 
-	public function is_disabled()
+	public function is_disabled(): bool
 	{
 		return $this->disabled;
 	}
 
-	protected function assign_template_fields(Template $template)
+	protected function assign_template_fields(Template $template): void
 	{
 		$js_tpl = new FileTemplate('framework/builder/form/AddFieldsetJS.tpl');
 
@@ -226,10 +211,7 @@ abstract class AbstractFormFieldset implements FormFieldset
 		}
 	}
 
-	/**
-	 * @return Template
-	 */
-	protected function get_template_to_use()
+	protected function get_template_to_use(): Template
 	{
 		if ($this->template !== null)
 		{
@@ -238,22 +220,19 @@ abstract class AbstractFormFieldset implements FormFieldset
 		return $this->get_default_template();
 	}
 
-	/**
-	 * @return Template
-	 */
-	abstract protected function get_default_template();
+	abstract protected function get_default_template(): Template;
 
 	/**
 	 * Sets the template to use to display the form. If this method is not called,
 	 * a default template will be used (<code>/template/default/framework/builder/form/Form.tpl</code>).
 	 * @param Template $template The template to use
 	 */
-	public function set_template(Template $template)
+	public function set_template(Template $template): void
 	{
 		$this->template = $template;
 	}
 
-	public function set_css_class($css_class)
+	public function set_css_class(string $css_class): void
 	{
 		$this->css_class = $css_class;
 	}

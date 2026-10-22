@@ -378,9 +378,9 @@ class Environment
 
     /**
      * Retrieves the site start page.
-     * @return The absolute start page URL.
+     * @return string The absolute start page URL.
      */
-    public static function get_home_page()
+    public static function get_home_page(): string
     {
         $general_config = GeneralConfig::load();
         if ($general_config->get_module_home_page()) {

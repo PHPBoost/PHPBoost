@@ -13,17 +13,11 @@
 
 class FormConstraintFieldsDifferenceInferior implements FormConstraint
 {
-	private $js_message;
-	/**
-	 * @var FormField
-	 */
-	private $first_field;
-	/**
-	 * @var FormField
-	 */
-	private $second_field;
+	private mixed $js_message = null;
+	private ?FormField $first_field = null;
+	private ?FormField $second_field = null;
 
-	public function __construct(FormField $first_field, FormField $second_field, $js_message = '')
+	public function __construct(FormField $first_field, FormField $second_field, string $js_message = '')
 	{
 		if (!empty($js_message))
 		{
@@ -40,7 +34,7 @@ class FormConstraintFieldsDifferenceInferior implements FormConstraint
 		$this->second_field->add_form_constraint($this);
 	}
 
-	public function validate()
+	public function validate(): bool
 	{
 		$first_value = $this->first_field->get_value();
 		$second_value = $this->second_field->get_value();
@@ -64,18 +58,18 @@ class FormConstraintFieldsDifferenceInferior implements FormConstraint
 		return false;
 	}
 
-	public function get_js_validation()
+	public function get_js_validation(): string
 	{
 		return "";
 	}
 
-	public function get_validation_error_message()
+	public function get_validation_error_message(): mixed
 	{
 		return StringVars::replace_vars($this->js_message,
 			['field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()]);
 	}
 
-	public function get_related_fields()
+	public function get_related_fields(): array
 	{
 		return [$this->first_field, $this->second_field];
 	}

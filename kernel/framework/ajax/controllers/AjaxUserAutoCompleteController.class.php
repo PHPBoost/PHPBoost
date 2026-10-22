@@ -5,18 +5,19 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 4.1 - 2012 11 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AjaxUserAutoCompleteController extends AbstractController
 {
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): JSONResponse
 	{
 		$suggestions = [];
 
-		try {
+		try
+        {
 			$result = PersistenceContext::get_querier()->select("SELECT display_name, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . str_replace('*', '%', $request->get_value('value', '')) . "%'");
 
 			while($row = $result->fetch())
@@ -28,8 +29,8 @@ class AjaxUserAutoCompleteController extends AbstractController
 				$suggestions[] = $profile_link->display();
 			}
 			$result->dispose();
-		} catch (Exception $e) {
 		}
+        catch (Exception $e) {}
 
 		return new JSONResponse(['suggestions' => $suggestions]);
 	}

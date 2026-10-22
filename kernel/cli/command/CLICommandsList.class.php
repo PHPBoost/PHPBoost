@@ -42,7 +42,6 @@ class CLICommandsList implements CLICommands
 
     /**
      * @param string $command the command name
-     * @return CLICommand
      */
     private function get_command(string $command): CLICommand
     {

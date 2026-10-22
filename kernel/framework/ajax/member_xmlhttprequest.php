@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 21
  * @since       PHPBoost 1.6 - 2007 01 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -18,17 +18,17 @@ AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour
 include_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 $db_querier = PersistenceContext::get_querier();
-$request = AppContext::get_request();
+$request    = AppContext::get_request();
 
-$member = $request->get_getint('member', 0);
-$insert_member = $request->get_getint('insert_member', 0);
+$member          = $request->get_getint('member', 0);
+$insert_member   = $request->get_getint('insert_member', 0);
 $add_member_auth = $request->get_getint('add_member_auth', 0);
-$admin_member = $request->get_getint('admin_member', 0);
-$warning_member = $request->get_getint('warning_member', 0);
-$punish_member = $request->get_getint('punish_member', 0);
-$warning_user = $request->get_getint('warning_user', 0);
-$punish_user = $request->get_getint('punish_user', 0);
-$ban_user = $request->get_getint('ban_user', 0);
+$admin_member    = $request->get_getint('admin_member', 0);
+$warning_member  = $request->get_getint('warning_member', 0);
+$punish_member   = $request->get_getint('punish_member', 0);
+$warning_user    = $request->get_getint('warning_user', 0);
+$punish_user     = $request->get_getint('punish_user', 0);
+$ban_user        = $request->get_getint('ban_user', 0);
 
 $login = TextHelper::strprotect(mb_convert_encoding($request->get_postvalue('login', ''), 'ISO-8859-1', 'UTF-8'));
 $login = str_replace('*', '%', $login);
