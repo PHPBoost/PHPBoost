@@ -39,7 +39,7 @@ class FormFieldHTML extends AbstractFormField
 
 	protected function get_default_template(): FileTemplate
 	{
-		return new ('framework/builder/form/FormFieldHTML.tpl');
+		return new FileTemplate('framework/builder/form/FormFieldHTML.tpl');
 	}
 }
 ?>
