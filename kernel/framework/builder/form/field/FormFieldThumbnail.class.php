@@ -5,26 +5,26 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 6.0 - 2020 02 27
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldThumbnail extends AbstractFormField
 {
-	protected $default_picture = '';
+	protected string $default_picture = '';
 
 	const NONE  = 'none';
 	const DEFAULT_VALUE = 'default';
 	const CUSTOM = 'custom';
 
-	public function __construct($id, $label = '', $value = self::NONE, $default_picture = '', array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label = '', string $value = self::NONE, $default_picture = '', array $field_options = [], array $constraints = [])
 	{
 		$this->default_picture = self::get_default_thumbnail_url($default_picture);
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
-	function display()
+	function display(): Template
 	{
 		$template = $this->get_template_to_use();
 		$lang = LangLoader::get_all_langs();
@@ -57,7 +57,7 @@ class FormFieldThumbnail extends AbstractFormField
 		return $template;
 	}
 
-	public static function get_default_thumbnail_url($thumbnail_url)
+	public static function get_default_thumbnail_url(mixed $thumbnail_url): mixed
 	{
 		$file_name = basename($thumbnail_url);
 		$module_id = Environment::get_running_module_name();
@@ -85,10 +85,7 @@ class FormFieldThumbnail extends AbstractFormField
 			return $thumbnail_url;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$value = '';
 		$request = AppContext::get_request();
@@ -110,7 +107,7 @@ class FormFieldThumbnail extends AbstractFormField
 		$this->set_value($value);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}

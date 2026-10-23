@@ -25,7 +25,7 @@ class FormButtonReset implements FormButton
         }
 	}
 
-	public function display(): mixed
+	public function display(): Template
 	{
 		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
 

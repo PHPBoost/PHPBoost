@@ -5,16 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 6.0 - 2016 06 01
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintPossibleValuesMin extends AbstractFormFieldConstraint
 {
-	private $error_message;
+	private string $error_message = '';
 
-	public function __construct($error_message = '')
+	public function __construct(string $error_message = '')
 	{
 		if (empty($error_message))
 		{
@@ -23,18 +23,20 @@ class FormFieldConstraintPossibleValuesMin extends AbstractFormFieldConstraint
 		$this->error_message = $error_message;
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
+		/** @var FormFieldPossibleValues $field */
 		$value = $field->get_value();
-                $field->get_min_input() == 1 ? $this->error_message = rtrim($this->error_message, 's') : '';
+        $field->get_min_input() == 1 ? $this->error_message = rtrim($this->error_message, 's') : '';
 		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label()), 'min_input' => $field->get_min_input()]));
 
 		return is_array($value) && !empty($value) && count($value) >= $field->get_min_input();
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
-                $field->get_min_input() == 1 ? $this->error_message = rtrim($this->error_message, 's') : '';
+		/** @var FormFieldPossibleValues $field */
+        $field->get_min_input() == 1 ? $this->error_message = rtrim($this->error_message, 's') : '';
 		return 'MinPossibleValuesFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
 			', ' . $field->get_min_input() . ', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label()), 'min_input' => $field->get_min_input()])) .')';
 	}

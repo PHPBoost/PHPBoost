@@ -32,7 +32,7 @@ abstract class AbstractFormButton implements FormButton
 		$this->form_id = $form_id;
 	}
 
-	public function display(): mixed
+	public function display(): Template
 	{
 		$template = $this->get_template();
 		$template->put_all([

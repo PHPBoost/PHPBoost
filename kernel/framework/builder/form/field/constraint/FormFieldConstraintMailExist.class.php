@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2011 03 13
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,10 +13,10 @@
 
 class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
 {
-	private $user_id = 0;
-	private $error_message;
+	private int $user_id = 0;
+	private string $error_message = '';
 
-	public function __construct($user_id = 0, $error_message = '')
+	public function __construct(int $user_id = 0, string $error_message = '')
 	{
 		if (!empty($user_id))
 		{
@@ -31,12 +31,12 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
 		$this->error_message = TextHelper::to_js_string($error_message);
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		return !$this->email_exists($field);
 	}
 
-	public function email_exists(FormField $field)
+	public function email_exists(FormField $field): mixed
 	{
 		if (!empty($this->user_id))
 		{
@@ -54,7 +54,7 @@ class FormFieldConstraintMailExist extends AbstractFormFieldConstraint
 		return false;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return 'MailExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ', ' . $this->user_id . ')';
 	}

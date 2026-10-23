@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 2.0 - 2009 04 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -20,12 +20,12 @@
 
 class FormFieldFilePicker extends AbstractFormField
 {
-	private $multiple = false;
-	private $max_file_size = 0;
-	private $max_files_size = 0;
-	private $authorized_extensions = '';
+	private bool $multiple = false;
+	private int $max_file_size = 0;
+	private int $max_files_size = 0;
+	private string $authorized_extensions = '';
 
-	public function __construct($id, $label, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, array $field_options = [], array $constraints = [])
 	{
 		$constraints[] = new FormFieldConstraintFileMaxSize(isset($field_options['max_file_size']) ? $field_options['max_file_size'] : $this->get_max_file_size());
 		if (isset($field_options['authorized_extensions']))
@@ -34,10 +34,7 @@ class FormFieldFilePicker extends AbstractFormField
 		$this->set_css_form_field_class('form-field-file');
 	}
 
-	/**
-	 * @return Template The html code for the file input.
-	 */
-	function display()
+	function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -66,17 +63,17 @@ class FormFieldFilePicker extends AbstractFormField
 		return $template;
 	}
 
-	protected function get_file_field_template()
+	protected function get_file_field_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/fieldelements/FormFieldFilePicker.tpl');
 	}
 
-	protected function get_max_file_size()
+	protected function get_max_file_size(): int
 	{
 		return ($this->max_file_size > 0) ?  $this->max_file_size : ServerConfiguration::get_upload_max_filesize();
 	}
 
-	protected function get_max_files_size()
+	protected function get_max_files_size(): int
 	{
 		if ($this->is_multiple() && $this->max_files_size > 0)
 			return $this->max_files_size;
@@ -93,22 +90,22 @@ class FormFieldFilePicker extends AbstractFormField
 		}
 	}
 
-	protected function get_authorized_extensions()
+	protected function get_authorized_extensions(): mixed
 	{
 		return $this->authorized_extensions ? str_replace('|', '", "', $this->authorized_extensions) : implode('", "',FileUploadConfig::load()->get_authorized_extensions());
 	}
 
-	public function is_multiple()
+	public function is_multiple(): bool
 	{
 		return $this->multiple;
 	}
 
-	protected function set_multiple($multiple)
+	protected function set_multiple(bool $multiple): void
 	{
 		$this->multiple = $multiple;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -136,10 +133,7 @@ class FormFieldFilePicker extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function validate()
+	public function validate(): bool
 	{
 		try
 		{
@@ -152,15 +146,12 @@ class FormFieldFilePicker extends AbstractFormField
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$this->set_value(AppContext::get_request()->get_file($this->get_html_id()));
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}

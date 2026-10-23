@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 4.1 - 2015 08 05
  * @author      mipel <mipel@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,15 +14,15 @@
 class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 {
 	// Must be at least 6 characters
-	private static $weak_strength_regex = '/^(?=.{6,}).*$/u';
+	private static string $weak_strength_regex = '/^(?=.{6,}).*$/u';
 	// Must containt at least upper case letters and lower case letters or lower case letters and digits
-	private static $medium_strength_regex = '/^(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/u';
+	private static string $medium_strength_regex = '/^(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$/u';
 	// Must containt at least upper case letters, lower case letters and digits
-	private static $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).*$/u';
+	private static string $strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).*$/u';
 	// Must containt at least upper case letters, lower case letters, digits and special characters
-	private static $very_strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/u';
+	private static string $very_strong_strength_regex = '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\*]).*$/u';
 
-	public function __construct($error_message = '')
+	public function __construct(string $error_message = '')
 	{
 		switch (SecurityConfig::load()->get_internal_password_strength())
 		{
@@ -55,17 +55,17 @@ class FormFieldConstraintPasswordStrength extends FormFieldConstraintRegex
 		);
 	}
 
-	public function get_password_medium_strength_regex()
+	public function get_password_medium_strength_regex(): mixed
 	{
 		return self::$medium_strength_regex;
 	}
 
-	public function get_password_strong_strength_regex()
+	public function get_password_strong_strength_regex(): mixed
 	{
 		return self::$strong_strength_regex;
 	}
 
-	public function get_password_very_strong_strength_regex()
+	public function get_password_very_strong_strength_regex(): mixed
 	{
 		return self::$very_strong_strength_regex;
 	}

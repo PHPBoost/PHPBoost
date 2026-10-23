@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 03 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,15 +14,12 @@
 
 class FormFieldAuthorizationsSetter extends AbstractFormField
 {
-	public function __construct($id, AuthorizationsSettings $value, array $field_options = [])
+	public function __construct(string $id, AuthorizationsSettings $value, array $field_options = [])
 	{
 		parent::__construct($id, '', $value, $field_options);
 	}
 
-	/**
-	 * @return string The html code for the free field.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -43,12 +40,12 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		return $template;
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormFieldAuthorizationsSetter.tpl');
 	}
 
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 		foreach ($this->get_value()->get_actions() as $action)
@@ -75,7 +72,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		}
 	}
 
-	private static function get_action_auth(ActionAuthorization $action, array $values)
+	private static function get_action_auth(ActionAuthorization $action, array $values): mixed
 	{
 		$auth_array = [];
 		foreach ($values as $role_htlm_id)
@@ -86,7 +83,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		return $auth_array;
 	}
 
-	private static function clean_groups_auths(array $auths)
+	private static function clean_groups_auths(array $auths): mixed
 	{
 		$g_auths = [];
 		foreach ($auths as $role => $auth)
@@ -99,7 +96,7 @@ class FormFieldAuthorizationsSetter extends AbstractFormField
 		return $g_auths;
 	}
 
-	private static function clean_members_auths(array $auths)
+	private static function clean_members_auths(array $auths): mixed
 	{
 		$m_auths = [];
 		foreach ($auths as $member_id => $auth)

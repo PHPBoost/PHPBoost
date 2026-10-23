@@ -13,7 +13,7 @@
 
 class FormFieldConstraintMailAddress extends FormFieldConstraintRegex
 {
-	public function __construct($error_message = '')
+	public function __construct(string $error_message = '')
 	{
 		if (empty($error_message))
 		{

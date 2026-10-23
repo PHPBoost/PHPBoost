@@ -14,13 +14,13 @@
 
 interface FormFieldConstraint
 {
-	function validate(FormField $field);
+	function validate(FormField $field): mixed;
 
-	function get_js_validation(FormField $field);
+	function get_js_validation(FormField $field): mixed;
 
-	function get_validation_error_message();
+	function get_validation_error_message(): mixed;
 
-	function set_validation_error_message(string $error_message);
+	function set_validation_error_message(mixed $error_message): void;
 }
 
 ?>

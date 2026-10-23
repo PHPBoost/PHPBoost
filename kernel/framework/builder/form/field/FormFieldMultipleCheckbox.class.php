@@ -6,15 +6,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2010 11 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldMultipleCheckbox extends AbstractFormField
 {
-	private $available_options;
+	private array $available_options = [];
 
 	/**
 	 * Constructs a FormFieldCheckbox.
@@ -25,7 +26,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, array $selected_options, array $available_options, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, null, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-multiple-checkbox');
@@ -33,7 +34,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		$this->set_selected_options($selected_options);
 	}
 
-	private function set_selected_options(array $selected_options)
+	private function set_selected_options(array $selected_options): void
 	{
 		$value = [];
 		foreach ($selected_options as $option)
@@ -54,7 +55,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		$this->set_value($value);
 	}
 
-	private function get_option($identifier)
+	private function get_option(string $identifier): mixed
 	{
 		foreach ($this->available_options as $option)
 		{
@@ -66,10 +67,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		return null;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -84,10 +82,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		return $template;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 		$value = [];
@@ -105,12 +100,8 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		$this->set_value($value);
 	}
 
-	/**
-	 * @return Template
-	 */
-	private function generate_html_code()
+	private function generate_html_code(): Template
 	{
-
 		$rows = [];
 		foreach ($this->available_options as $option)
 		{
@@ -127,22 +118,22 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		return $tpl;
 	}
 
-	private function get_option_id(FormFieldMultipleCheckboxOption $option)
+	private function get_option_id(FormFieldMultipleCheckboxOption $option): string
 	{
 		return $this->get_html_id() . '_' . $option->get_id();
 	}
 
-	private function is_selected(FormFieldMultipleCheckboxOption $option)
+	private function is_selected(FormFieldMultipleCheckboxOption $option): bool
 	{
 		return in_array($option, $this->get_value());
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
 
-	protected function get_js_specialization_code()
+	protected function get_js_specialization_code(): string
 	{
 		return 'field.getValue = function()
 		{
@@ -155,7 +146,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 		});' : '');
 	}
 
-	public function get_available_options()
+	public function get_available_options(): array
 	{
 		return $this->available_options;
 	}

@@ -5,23 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2011 03 13
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
 {
-	private $content_management_config;
-	private $last_posted_timestamp;
-	private $anti_flood_duration;
+	private mixed $content_management_config = null;
+	private string $last_posted_timestamp = '';
+	private string $anti_flood_duration = '';
 
 	/**
 	 * @param string $last_posted_timestamp Timestamp
 	 * @param string $anti_flood_duration seconde
 	 * @param string $error_message
 	 */
-	public function __construct($last_posted_timestamp, $anti_flood_duration = '', $error_message = '')
+	public function __construct(string $last_posted_timestamp, string $anti_flood_duration = '', string $error_message = '')
 	{
 		$this->content_management_config = ContentManagementConfig::load();
 
@@ -41,7 +41,7 @@ class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
 		$this->set_validation_error_message($error_message);
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		if ($this->content_management_config->is_anti_flood_enabled())
 		{
@@ -50,12 +50,12 @@ class FormFieldConstraintAntiFlood extends AbstractFormFieldConstraint
 		return true;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return '';
 	}
 
-	public function flooding($field)
+	public function flooding(FormField $field): bool
 	{
 		if ($this->last_posted_timestamp >= (time() - $this->anti_flood_duration))
 		{

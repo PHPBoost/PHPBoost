@@ -5,30 +5,28 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 01 10
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface FormFieldEnumOption
 {
-	/**
-	 * @return Template
-	 */
-	function display();
+	function display(): Template;
 
-	function get_label();
+	function get_label(): string;
 
-	function set_label($label);
+	function set_label(string $label);
 
-	function get_raw_value();
+	function get_raw_value(): string;
 
-	function set_raw_value($raw_value);
+	function set_raw_value(string $raw_value);
 
-	function get_field();
+	function get_field(): FormField;
 
-	function set_field(FormField $field);
+	function set_field(FormField $field): void;
 
-	function get_option($raw_option);
+	function get_option(mixed $raw_option): mixed;
 }
 
 ?>

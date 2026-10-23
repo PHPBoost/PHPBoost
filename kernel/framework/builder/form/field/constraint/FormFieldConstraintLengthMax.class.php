@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2009 12 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,10 +14,10 @@
 
 class FormFieldConstraintLengthMax extends AbstractFormFieldConstraint
 {
-	private $error_message;
-	private $upper_bound;
+	private string $error_message = '';
+	private int $upper_bound = 0;
 
-	public function __construct($upper_bound, $js_message = '')
+	public function __construct(int $upper_bound, string $js_message = '')
 	{
 		if (empty($js_message))
 		{
@@ -28,7 +28,7 @@ class FormFieldConstraintLengthMax extends AbstractFormFieldConstraint
 		$this->upper_bound = $upper_bound;
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		$value = TextHelper::strlen($field->get_value());
 		$is_required = $field->is_required();
@@ -39,7 +39,7 @@ class FormFieldConstraintLengthMax extends AbstractFormFieldConstraint
 		return true;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return 'lengthMaxFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) . ', ' . $this->upper_bound . ', ' . TextHelper::to_js_string($this->error_message) . ')';
 	}

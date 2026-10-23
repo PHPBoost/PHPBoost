@@ -6,38 +6,33 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 4.1 - 2015 06 01
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldRangeEditor extends FormFieldNumberEditor
 {
-	protected $type = 'range';
-	/**
-	 * @var boolean
-	 */
-	private $vertical = false;
+	protected string $type = 'range';
+	private bool $vertical = false;
 
 	/**
 	 * Constructs a FormFieldRange.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
-	 * @param string $value Default value
+	 * @param mixed $value Default value
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, mixed $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-range');
 	}
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -58,7 +53,6 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly(),
-			'C_DISABLED' => $this->is_disabled(),
 			'C_PATTERN' => $this->has_pattern(),
 			'PATTERN' => $this->pattern,
 			'C_VERTICAL' => $this->is_vertical()
@@ -73,7 +67,7 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 		return $template;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach ($field_options as $attribute => $value)
 		{
@@ -89,20 +83,12 @@ class FormFieldRangeEditor extends FormFieldNumberEditor
 		parent::compute_options($field_options);
 	}
 
-	/**
-	 * Tells whether the slider is vertical
-	 * @return true if it is, false otherwise
-	 */
-	public function is_vertical()
+	public function is_vertical(): bool
 	{
 		return $this->vertical;
 	}
 
-	/**
-	 * Changes the fact that the field is vertical or not.
-	 * @param bool $vertical true if it's vertical, false otherwise
-	 */
-	public function set_vertical($vertical)
+	public function set_vertical(bool $vertical): void
 	{
 		$this->vertical = $vertical;
 	}

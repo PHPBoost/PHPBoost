@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 4.1 - 2015 05 20
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -15,11 +15,11 @@
 
 class FormFieldNumberEditor extends AbstractFormField
 {
-	protected $type = 'number';
-	protected $min = null;
-	protected $max = null;
-	protected $step = 0;
-	protected $pattern = '[0-9]*';
+	protected string $type = 'number';
+	protected int $min = 0;
+	protected int $max = 0;
+	protected int $step = 0;
+	protected string $pattern = '[0-9]*';
 
 	/**
 	 * Constructs a FormFieldNumberEditor.
@@ -31,20 +31,17 @@ class FormFieldNumberEditor extends AbstractFormField
 	 * </ul>
 	 * @param string $id Field identifier
 	 * @param string $label Field label
-	 * @param string $value Default value
+	 * @param mixed $value Default value
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, mixed $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-number');
 	}
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -65,7 +62,6 @@ class FormFieldNumberEditor extends AbstractFormField
 			'CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_READONLY' => $this->is_readonly(),
-			'C_DISABLED' => $this->is_disabled(),
 			'C_PATTERN' => $this->has_pattern(),
 			'PATTERN' => $this->pattern,
 			'C_PLACEHOLDER' => $this->has_placeholder(),
@@ -81,7 +77,7 @@ class FormFieldNumberEditor extends AbstractFormField
 		return $template;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach ($field_options as $attribute => $value)
 		{
@@ -105,7 +101,7 @@ class FormFieldNumberEditor extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}

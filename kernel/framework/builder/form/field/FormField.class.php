@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 07
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 2.0 - 2009 04 28
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,124 +15,69 @@
 
 interface FormField extends FormElement
 {
-	/**
-	 * Returns the id.
-	 * @return string
-	 */
-	function get_id();
+	function get_id(): string;
 
-	/**
-	 * Returns the label
-	 * @return string
-	 */
-	function get_label();
+	function get_label(): string;
 
-	/**
-	 * Sets the id
-	 * @param string $id The id.
-	 */
-	function set_id($id);
+	function set_id(string $id): void;
 
-	/**
-	 * Sets the id prefix
-	 * @param string $prefix The new id prefix.
-	 */
-	function set_form_id($prefix);
+	function set_form_id(string $prefix): void;
 
-	/**
-	 * Sets the if of the fieldset which contains the field
-	 * @param $fieldset_id id of the fieldset
-	 */
-	function set_fieldset_id($fieldset_id);
+	function set_fieldset_id(string $fieldset_id): void;
 
-	/**
-	 * @return mixed
-	 */
-	function get_value();
+	function get_value(): mixed;
 
-	/**
-	 * Sets the value
-	 * @param string $value The value
-	 */
-	function set_value($value);
+	function set_value(string $value);
 
-	/**
-	 * Tries to retrieve the value in the HTTP request's parameters.
-	 */
-	function retrieve_value();
+	function retrieve_value(): void;
 
-	/**
-	 * Returns the effective HTML id.
-	 * @return string
-	 */
-	function get_html_id();
+	function get_html_id(): string;
 
-	/**
-	 * Tells whether the field is disabled
-	 * @return bool
-	 */
-	function is_disabled();
+	function is_disabled(): bool;
 
-	/**
-	 * Disabled the field
-	 */
-	function disable();
+	function is_required(): bool;
 
-	/**
-	 * Enables the field
-	 */
-	function enable();
+	function disable(): void;
 
-    /**
-     * Tells whether the field is hidden
-     * @return bool
-     */
-    function is_hidden();
+	function enable(): void;
 
-    /**
-     * Sets whether the field is hidden.
-     * @param bool $hidden
-     */
-    public function set_hidden($hidden);
+    function is_hidden(): bool;
+
+    public function set_hidden(bool $hidden): void;
 
 	/**
 	 * Validates the field by cheching if all the constraints are satisfied.
 	 * @return bool true if the form is valid
 	 */
-	function validate();
+	function validate(): mixed;
 
-	/**
-	 * Returns validation error message.
-	 */
-	function get_validation_error_message();
+	function get_validation_error_message(): string;
 
 	/**
 	 * Set the validation error message.
 	 * @param string $error_message The message to set
 	 */
-	function set_validation_error_message($error_message);
+	function set_validation_error_message(string $error_message): void;
 
 	/**
 	 * Adds a constraint to the field constraints.
-	 * @param FormFieldConstraint $constraint The constraint to add
 	 */
-	function add_constraint(FormFieldConstraint $constraint);
+	function add_constraint(FormFieldConstraint $constraint): void;
 
 	/**
 	 * Add javascript code on the onblur field parameter that makes validation
 	 */
-	function add_form_constraint(FormConstraint $constraint);
+	function add_form_constraint(FormConstraint $constraint): void;
 
 	/**
 	 * Return true if the field has one or more constraints, false otherwise.
-	 * @return boolean
 	 */
-	function has_constraints();
+	function has_constraints(): bool;
 
 	/**
 	 * Returns the javascript onsubmit code.
 	 * @return string The javascript code that makes the validation when the form is submitted
 	 */
-	function get_js_validations();
+	function get_js_validations(): array|string;
 }
 ?>

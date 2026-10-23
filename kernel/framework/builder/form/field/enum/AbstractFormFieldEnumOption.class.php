@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 01 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,21 +13,16 @@
 
 abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 {
-	private $label = '';
+	private string $label = '';
+	private string $raw_value = '';
+	private bool $active = false;
+	private bool $disable = false;
+	private string $data_option_img = '';
+	private string $data_option_icon = '';
+	private string $data_option_class = '';
+	private FormField $field;
 
-	private $raw_value = '';
-	private $active;
-	private $disable = false;
-	private $data_option_img = '';
-	private $data_option_icon = '';
-	private $data_option_class = '';
-
-	/**
-	 * @var FormField
-	 */
-	private $field;
-
-	public function __construct($label, $raw_value, $field_choice_options = [])
+	public function __construct(string $label, string $raw_value, array $field_choice_options = [])
 	{
 		$this->set_label($label);
 		$this->set_raw_value($raw_value);
@@ -37,7 +32,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_label()
+	public function get_label(): string
 	{
 		return $this->label;
 	}
@@ -45,7 +40,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set_label($label)
+	public function set_label(string $label): void
 	{
 		$this->label = $label;
 	}
@@ -53,7 +48,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_raw_value()
+	public function get_raw_value(): string
 	{
 		return $this->raw_value;
 	}
@@ -61,30 +56,27 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set_raw_value($value)
+	public function set_raw_value(string $value): void
 	{
 		$this->raw_value = $value;
 	}
 
-	/**
-	 * @return FormField
-	 */
-	public function get_field()
+	public function get_field(): FormField
 	{
 		return $this->field;
 	}
 
-	public function set_field(FormField $field)
+	public function set_field(FormField $field): void
 	{
 		$this->field = $field;
 	}
 
-	public function set_active($value = true)
+	public function set_active(bool $value = true): void
 	{
 		$this->active = $value;
 	}
 
-	public function is_active()
+	public function is_active(): mixed
 	{
 		if (isset($this->active))
 		{
@@ -96,60 +88,63 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		}
 	}
 
-	public function set_disable($value = false)
+	public function set_disable(bool $value = false): void
 	{
 		$this->disable = $value;
 	}
 
-	protected function is_disable()
+	protected function is_disable(): bool
 	{
 		return $this->disable;
 	}
 
-	public function set_data_option_img($value)
+	public function set_data_option_img(string $value): void
 	{
 		$this->data_option_img = $value;
 	}
 
-	protected function get_data_option_img()
+	protected function get_data_option_img(): string
 	{
 		return $this->data_option_img;
 	}
 
-	public function set_data_option_icon($value)
+	public function set_data_option_icon(string $value): void
 	{
 		$this->data_option_icon = $value;
 	}
 
-	protected function get_data_option_icon()
+	protected function get_data_option_icon(): string
 	{
 		return $this->data_option_icon;
 	}
 
-	public function set_data_option_class($value)
+	public function set_data_option_class(string $value) :void
 	{
 		$this->data_option_class = $value;
 	}
 
-	protected function get_data_option_class()
+	protected function get_data_option_class(): string
 	{
 		return $this->data_option_class;
 	}
 
-	protected function get_field_id()
+	protected function get_field_id(): string
 	{
 		return $this->get_field()->get_html_id();
 	}
 
-	protected function get_option_id()
+	protected function get_option_id(): mixed
 	{
-		return $this->get_field()->get_html_id() . $this->get_field()->get_option_id($this->raw_value);
+		$field = $this->get_field();
+		if (!($field instanceof AbstractFormFieldChoice))
+		{
+			throw new FormBuilderException('The option field must be an instance of AbstractFormFieldChoice');
+		}
+
+		return $field->get_html_id() . $field->get_option_id($this->raw_value);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_option($raw_value)
+	public function get_option(mixed $raw_value): mixed
 	{
 		if ($this->get_raw_value() == $raw_value)
 		{
@@ -161,7 +156,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		}
 	}
 
-	protected function compute_options(array &$field_choice_options)
+	protected function compute_options(array &$field_choice_options): void
 	{
 		foreach($field_choice_options as $attribute => $value)
 		{

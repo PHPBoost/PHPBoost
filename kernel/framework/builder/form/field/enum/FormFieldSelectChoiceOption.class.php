@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2009 04 28
  * @author      mipel <mipel@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -17,23 +17,18 @@
 class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 {
 	/**
-	 * @param $label string The label
-	 * @param $raw_value string The raw value
 	 * @param array $field_choice_options Map associating the parameters values to the parameters names.
 	 */
-	public function __construct($label, $raw_value, $field_choice_options = [])
+	public function __construct(string $label, mixed $raw_value, array $field_choice_options = [])
 	{
 		parent::__construct($label, $raw_value, $field_choice_options);
 	}
 
-	/**
-	 * @return string The html code for the select.
-	 */
-	public function display()
+	public function display(): FileTemplate
 	{
-
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceOption.tpl');
-		$tpl->put_all([
+
+        $tpl->put_all([
 			'VALUE' => $this->get_raw_value(),
 			'C_SELECTED' => $this->is_active(),
 			'C_DISABLE' => $this->is_disable(),

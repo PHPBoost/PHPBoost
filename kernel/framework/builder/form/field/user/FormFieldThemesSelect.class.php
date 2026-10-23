@@ -5,15 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2012 02 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>Not all paths return a value.
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
 {
-	private $check_authorizations = true;
+	private bool $check_authorizations = true;
 
     /**
      * Constructs a FormFieldThemesSelect.
@@ -23,12 +24,12 @@ class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
-    public function __construct($id, $label, $value = 0, $field_options = [], array $constraints = [])
+    public function __construct(string $id, string $label, int $value = 0, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
 
-    private function generate_options()
+    private function generate_options(): mixed
 	{
 		$options = [];
 		foreach (ThemesManager::get_activated_themes_map_sorted_by_localized_name() as $theme)
@@ -48,7 +49,7 @@ class FormFieldThemesSelect extends FormFieldSimpleSelectChoice
 		return $options;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
     {
         foreach ($field_options as $attribute => $value)
         {

@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 01 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -17,95 +17,29 @@
 
 abstract class AbstractFormField implements FormField
 {
-	/**
-	 * @var string
-	 */
-	protected $id = '';
-	/**
-	 * @var string
-	 */
-	private $form_id = '';
-	/**
-	 * @var string
-	 */
-	private $fieldset_id = '';
-	/**
-	 * @var string
-	 */
-	protected $label = '';
-	/**
-	 * @var string
-	 */
-	protected $description = '';
-	/**
-	 * @var string
-	 */
-	protected $value = null;
-	/**
-	 * @var boolean
-	 */
-	protected $disabled = false;
-	/**
-	 * @var boolean
-	 */
-	protected $select_to_list = false;
-	/**
-	 * @var boolean
-	 */
-	protected $multiple_select_to_list = false;
-	/**
-	 * @var boolean
-	 */
-	protected $hidden = false;
-	/**
-	 * @var boolean
-	 */
-	protected $readonly = false;
-	/**
-	 * @var string
-	 */
-	protected $css_class = '';
-	/**
-	 * @var string
-	 */
-	protected $css_field_class = '';
-	/**
-	 * @var string
-	 */
-	protected $css_form_field_class = '';
-	/**
-	 * @var string
-	 */
-	protected $required = false;
-	/**
-	 * @var string
-	 */
-	protected $pattern = '';
-	/**
-	 * @var string
-	 */
-	protected $placeholder = '';
-	/**
-	 * @var string
-	 */
-	protected $validation_error_message = '';
-	/**
-	 * @var FormFieldConstraint[]
-	 */
-	protected $constraints = [];
-	/**
-	 * @var FormConstraint[]
-	 */
-	protected $form_constraints = [];
-	/**
-	 * @var Template
-	 */
-	protected $template = null;
 
-	/**
-	 * @var array
-	 */
-	protected $events = [];
+	protected string $id = '';
+	private string $form_id = '';
+	private string $fieldset_id = '';
+	protected string $label = '';
+	protected string $description = '';
+	protected mixed $value = null;
+	protected bool $disabled = false;
+	protected bool $select_to_list = false;
+	protected bool $multiple_select_to_list = false;
+	protected bool $hidden = false;
+	protected bool $readonly = false;
+	protected string $css_class = '';
+	protected string $css_field_class = '';
+	protected string $css_form_field_class = '';
+	protected bool $required = false;
+	protected string $pattern = '';
+	protected string $placeholder = '';
+	protected string $validation_error_message = '';
+	protected array $constraints = [];
+	protected array $form_constraints = [];
+	protected ?Template $template = null;
+	protected array $events = [];
 
 	/**
 	 * Constructs and set parameters to the field.
@@ -122,7 +56,7 @@ abstract class AbstractFormField implements FormField
 	 * @param array $field_options Map associating the parameters values to the parameters names.
 	 * @param FormFieldConstraint[] $constraints List of the constraints which must be checked when the form is been validated
 	 */
-	protected function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	protected function __construct(string $id, string $label, mixed $value, array $field_options = [], array $constraints = [])
 	{
 		$this->set_id($id);
 		$this->set_label($label);
@@ -139,117 +73,72 @@ abstract class AbstractFormField implements FormField
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_id()
+	public function get_id(): string
 	{
 		return $this->id;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_id($id)
+	public function set_id(string $id): void
 	{
 		$this->id = $id;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_form_id()
+	public function get_form_id(): string
 	{
 		return $this->form_id;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_form_id($form_id)
+	public function set_form_id(string $form_id): void
 	{
 		$this->form_id = $form_id;
 	}
 
-	public function set_fieldset_id($fieldset_id)
+	public function set_fieldset_id(string $fieldset_id): void
 	{
 		$this->fieldset_id = $fieldset_id;
 	}
 
-	/**
-	 * Returns the label
-	 * @return string The label
-	 */
-	public function get_label()
+	public function get_label(): string
 	{
 		return $this->label;
 	}
 
-	/**
-	 * Sets the label
-	 * @param string $label The label
-	 */
-	public function set_label($label)
+	public function set_label(string $label): void
 	{
 		$this->label = $label;
 	}
 
-	/**
-	 * Returns the description
-	 * @return string the description
-	 */
-	public function get_description()
+	public function get_description(): string
 	{
 		return $this->description;
 	}
 
-	/**
-	 * Sets the description
-	 * @param string $description The description
-	 */
-	public function set_description($description)
+	public function set_description(string $description): void
 	{
 		$this->description = $description;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_value()
+	public function get_value(): mixed
 	{
 		return $this->value;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_value($value)
+	public function set_value(mixed $value): void
 	{
 		$this->value = $value;
 	}
 
-	/**
-	 * Tells whether the field is required
-	 * @return true if it is, false otherwise
-	 */
-	public function is_required()
+	public function is_required(): bool
 	{
 		return $this->required;
 	}
 
-	/**
-	 * Changes the fact that the field is required or not.
-	 * @param bool $required true if it's required, false otherwise
-	 */
-	public function set_required($required)
+	public function set_required(bool $required): void
 	{
 		$this->required = $required;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function validate()
+	public function validate(): mixed
 	{
 		if ($this->is_disabled())
 		{
@@ -283,20 +172,17 @@ abstract class AbstractFormField implements FormField
 		return true;
 	}
 
-	public function get_validation_error_message()
+	public function get_validation_error_message(): string
 	{
 		return $this->validation_error_message;
 	}
 
-	public function set_validation_error_message($error_message)
+	public function set_validation_error_message(string $error_message): void
 	{
 		$this->validation_error_message = $error_message;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))
@@ -305,36 +191,27 @@ abstract class AbstractFormField implements FormField
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_html_id()
+	public function get_html_id(): string
 	{
 		return $this->form_id . '_' . $this->get_id();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function add_constraint(FormFieldConstraint $constraint)
+	public function add_constraint(FormFieldConstraint $constraint): void
 	{
 		$this->constraints[] = $constraint;
 	}
 
-	public function add_form_constraint(FormConstraint $constraint)
+	public function add_form_constraint(FormConstraint $constraint): void
 	{
 		$this->form_constraints[] = $constraint;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function has_constraints()
+	public function has_constraints(): bool
 	{
 		return (count($this->constraints) > 0 || count($this->form_constraints) > 0);
 	}
 
-	public function get_js_validations() : array
+	public function get_js_validations(): array
 	{
 		$validations = [];
 		foreach ($this->constraints as $constraint)
@@ -356,18 +233,18 @@ abstract class AbstractFormField implements FormField
 		return $validations;
 	}
 
-	public function get_onblur_validation()
+	public function get_onblur_validation(): string
 	{
 		return 'formFieldConstraintsOnblurValidation(this, Array(' .
 		implode(",", $this->get_js_validations()) . '));';
 	}
 
-	public function add_event($event, $handler)
+	public function add_event(mixed $event, mixed $handler): void
 	{
 		$this->events[$event] = $handler;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -426,7 +303,7 @@ abstract class AbstractFormField implements FormField
 					if (is_string($value))
 					{
 						$this->set_required(true);
-						$this->add_constraint(new FormFieldConstraintNotEmpty($value, $value));
+						$this->add_constraint(new FormFieldConstraintNotEmpty($value));
 					}
 					elseif (is_bool($value) && $value === true)
 					{
@@ -441,7 +318,7 @@ abstract class AbstractFormField implements FormField
 		}
 	}
 
-	protected function assign_common_template_variables(Template $template)
+	protected function assign_common_template_variables(Template $template): void
 	{
 		$has_js_validations = false;
 		$js_tpl = new FileTemplate('framework/builder/form/AddFieldJS.tpl');
@@ -516,7 +393,7 @@ abstract class AbstractFormField implements FormField
 		]);
 	}
 
-	private function get_related_fields()
+	private function get_related_fields(): array
 	{
 		$related_fields = [];
 		foreach ($this->form_constraints as $constraint)
@@ -532,153 +409,144 @@ abstract class AbstractFormField implements FormField
 		return $related_fields;
 	}
 
-	protected function get_css_class()
+	protected function get_css_class(): string
 	{
 		return $this->css_class;
 	}
 
-	protected function set_css_class($css_class)
+	protected function set_css_class(string $css_class): void
 	{
 		$this->css_class = $css_class;
 	}
 
-	protected function get_css_field_class()
+	protected function get_css_field_class(): string
 	{
 		return $this->css_field_class;
 	}
 
 
-	protected function set_css_field_class($css_field_class)
+	protected function set_css_field_class(string $css_field_class): void
 	{
 		$this->css_field_class = $css_field_class;
 	}
 
-	protected function get_css_form_field_class()
+	protected function get_css_form_field_class(): string
 	{
 		return $this->css_form_field_class;
 	}
 
 
-	protected function set_css_form_field_class($css_form_field_class)
+	protected function set_css_form_field_class(string $css_form_field_class): void
 	{
 		$this->css_form_field_class = $css_form_field_class;
 	}
 
-	public function is_disabled()
+	public function is_disabled(): bool
 	{
 		return $this->disabled;
 	}
 
-	public function disable()
+	public function disable(): void
 	{
 		$this->set_disabled(true);
 	}
 
-	public function enable()
+	public function enable(): void
 	{
 		$this->set_disabled(false);
 	}
 
-	protected function set_disabled($disabled)
+	protected function set_disabled(bool $disabled): void
 	{
 		$this->disabled = $disabled;
 	}
 
-	public function is_select_to_list()
+	public function is_select_to_list(): bool
 	{
 		return $this->select_to_list;
 	}
 
-	public function transformed_select()
+	public function transformed_select(): void
 	{
 		$this->set_select_to_list(true);
 	}
 
-	public function not_transformed_select()
+	public function not_transformed_select(): void
 	{
 		$this->set_select_to_list(false);
 	}
 
-	protected function set_select_to_list($select_to_list)
+	protected function set_select_to_list(bool $select_to_list): void
 	{
 		$this->select_to_list = $select_to_list;
 	}
 
-	public function is_multiple_select_to_list()
+	public function is_multiple_select_to_list(): bool
 	{
 		return $this->multiple_select_to_list;
 	}
 
-	public function transformed_multiple_select()
+	public function transformed_multiple_select(): void
 	{
 		$this->set_multiple_select_to_list(true);
 	}
 
-	public function not_transformed_multiple_select()
+	public function not_transformed_multiple_select(): void
 	{
 		$this->set_multiple_select_to_list(false);
 	}
 
-	protected function set_multiple_select_to_list($multiple_select_to_list)
+	protected function set_multiple_select_to_list(bool $multiple_select_to_list): void
 	{
 		$this->multiple_select_to_list = $multiple_select_to_list;
 	}
 
-	public function is_readonly()
+	public function is_readonly(): bool
 	{
 		return $this->readonly;
 	}
 
-	public function set_readonly($readonly)
+	public function set_readonly(bool $readonly): void
 	{
 		$this->readonly = $readonly;
 	}
 
-	public function is_hidden()
+	public function is_hidden(): bool
 	{
 		return $this->hidden;
 	}
 
-	/**
-	 * set_hidden
-	 *
-	 * @param  mixed $hidden
-	 * @return void
-	 */
-	public function set_hidden($hidden)
+	public function set_hidden(mixed $hidden): void
 	{
 		$this->hidden = $hidden;
 	}
 
-	public function has_pattern()
+	public function has_pattern(): string
 	{
 		return $this->pattern;
 	}
 
-	public function set_pattern($pattern)
+	public function set_pattern(string $pattern): void
 	{
 		$this->pattern = $pattern;
 	}
 
-	public function has_placeholder()
+	public function has_placeholder(): string
 	{
 		return $this->placeholder;
 	}
 
-	public function set_placeholder($placeholder)
+	public function set_placeholder(string $placeholder): void
 	{
 		$this->placeholder = $placeholder;
 	}
 
-	public function set_template(Template $template)
+	public function set_template(Template $template): void
 	{
 		$this->template = $template;
 	}
 
-	/**
-	 * @return Template
-	 */
-	protected function get_template_to_use()
+	protected function get_template_to_use(): Template
 	{
 		if ($this->template !== null)
 		{
@@ -690,10 +558,7 @@ abstract class AbstractFormField implements FormField
 		}
 	}
 
-	/**
-	 * @return Template
-	 */
-	abstract protected function get_default_template();
+	abstract protected function get_default_template(): Template;
 
 	protected function get_js_specialization_code()
 	{

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 4.0 - 2013 02 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,14 +13,14 @@
 
 class FormFieldSelectSources extends AbstractFormField
 {
-	private $max_input = 20;
+	private int $max_input = 20;
 
-	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
-	function display()
+	function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -70,7 +70,7 @@ class FormFieldSelectSources extends AbstractFormField
 		return $template;
 	}
 
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 
@@ -91,7 +91,7 @@ class FormFieldSelectSources extends AbstractFormField
 		$this->set_value($values);
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -107,7 +107,7 @@ class FormFieldSelectSources extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2009 12 20
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,10 +15,10 @@
 
 class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
 {
-	private $error_message;
-	private $lower_bound;
+	private string $error_message = '';
+	private int $lower_bound = 0;
 
-	public function __construct($lower_bound, $js_message = '')
+	public function __construct(int $lower_bound, string $js_message = '')
 	{
 		if (empty($js_message))
 		{
@@ -29,7 +29,7 @@ class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
 		$this->lower_bound = $lower_bound;
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		$is_required = $field->is_required();
 		$value = $field->get_value();
@@ -45,7 +45,7 @@ class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
 		return true;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return 'integerMinFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) . ',
 		' . (int)$this->lower_bound . ', ' . TextHelper::to_js_string($this->error_message) . ')';

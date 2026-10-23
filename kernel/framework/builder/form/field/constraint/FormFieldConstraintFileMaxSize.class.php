@@ -5,17 +5,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 6.0 - 2019 04 04
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintFileMaxSize extends AbstractFormFieldConstraint
 {
-	private $max_size;
-	private $error_message;
+	private int $max_size = 0;
+	private string $error_message = '';
 
-	public function __construct($max_size, $error_message = '')
+	public function __construct(int $max_size, string $error_message = '')
 	{
 		$this->error_message = $error_message;
 		if (!$this->error_message)
@@ -27,7 +27,7 @@ class FormFieldConstraintFileMaxSize extends AbstractFormFieldConstraint
 		$this->max_size = $max_size;
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		$post_file = isset($_FILES[$field->get_id()]) ? $_FILES[$field->get_id()] : '';
 		$value = is_array($post_file) ? $post_file['size'] : 0;
@@ -43,7 +43,7 @@ class FormFieldConstraintFileMaxSize extends AbstractFormFieldConstraint
 		return true;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return 'maxSizeFilePickerFormFieldValidator(' . TextHelper::to_js_string($field->get_id()) . ',
 		' . (int)$this->max_size . ', ' . TextHelper::to_js_string($this->error_message) . ')';

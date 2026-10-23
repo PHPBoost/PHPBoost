@@ -7,26 +7,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 01 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldAjaxCompleter extends FormFieldTextEditor
 {
-	private $method = 'post';
-	private $file;
-	private $name_parameter = 'value';
-
-	protected $display_html_in_suggestions = false;
-
+	private string $method = 'post';
+	private mixed $file = null;
+	private string $name_parameter = 'value';
+	protected bool $display_html_in_suggestions = false;
 	// Fill input on click on suggestions
-	protected $preserve_input = 'false';
-
+	protected string $preserve_input = 'false';
 	// Show results if no suggestion
-	protected $no_suggestion_notice = 'false';
+	protected string $no_suggestion_notice = 'false';
 
 	/**
 	 * Constructs a FormFieldAjaxCompleter.
@@ -40,19 +38,16 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 	 * </ul>
 	 * @param string $id Field identifier
 	 * @param string $label Field label
-	 * @param string $value Default value
+	 * @param mixed $value Default value
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, mixed $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -89,7 +84,7 @@ class FormFieldAjaxCompleter extends FormFieldTextEditor
 		return $template;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach ($field_options as $attribute => $value)
 		{

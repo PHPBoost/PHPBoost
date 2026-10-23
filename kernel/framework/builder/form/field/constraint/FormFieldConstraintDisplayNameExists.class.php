@@ -5,17 +5,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 4.1 - 2015 07 12
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
 {
-	private $user_id = 0;
-	private $error_message;
+	private int $user_id = 0;
+	private string $error_message = '';
 
-	public function __construct($user_id = 0, $error_message = '')
+	public function __construct(int $user_id = 0, string $error_message = '')
 	{
 		if (!empty($user_id))
 		{
@@ -30,12 +30,12 @@ class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
 		$this->error_message = TextHelper::to_js_string($error_message);
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		return !$this->display_name_exists($field);
 	}
 
-	public function display_name_exists(FormField $field)
+	public function display_name_exists(FormField $field): mixed
 	{
 		if (!empty($this->user_id))
 		{
@@ -53,7 +53,7 @@ class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
 		return false;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return 'DisplayNameExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ', ' . $this->user_id . ')';
 	}

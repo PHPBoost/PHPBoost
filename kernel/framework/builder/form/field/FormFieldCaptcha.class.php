@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 01 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,15 +15,9 @@
 
 class FormFieldCaptcha extends AbstractFormField
 {
-	/**
-	 * @var Captcha
-	 */
-	private $captcha = '';
+	private ?Captcha $captcha;
 
-	/**
-	 * @param Captcha $captcha The captcha to use. If not given, a default captcha will be used.
-	 */
-	public function __construct($id = 'captcha')
+	public function __construct(string $id = 'captcha')
 	{
 		$this->captcha = AppContext::get_captcha_service()->get_default_factory();
 
@@ -31,10 +25,7 @@ class FormFieldCaptcha extends AbstractFormField
 		parent::__construct($id, LangLoader::get_message('form.captcha', 'form-lang'), false, $field_options);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$this->captcha->set_html_id($this->get_html_id());
 		if ($this->is_enabled())
@@ -47,10 +38,7 @@ class FormFieldCaptcha extends AbstractFormField
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$this->captcha->set_html_id($this->get_html_id());
 		$this->captcha->set_form_id($this->get_form_id());
@@ -68,10 +56,7 @@ class FormFieldCaptcha extends AbstractFormField
 		return $template;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function validate()
+	public function validate(): bool
 	{
 		$this->retrieve_value();
 		$result = $this->get_value();
@@ -82,12 +67,12 @@ class FormFieldCaptcha extends AbstractFormField
 		return $result;
 	}
 
-	private function is_enabled()
+	private function is_enabled(): bool
 	{
 		return !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $this->captcha->is_available();
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormFieldCaptcha.tpl');
 	}

@@ -4,27 +4,23 @@
  * @subpackage  Form\field
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
- * @since       PHPBoost 4.0 - 2013 09 15
- * @author      Arnaud GENET <elenwii@phpboost.com>
- * @author      mipel <mipel@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @author      xela <xela@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
+ * @since       PHPBoost 6.1 - 2026 06 09
 */
 
 class FormFieldAddonsRepositories extends AbstractFormField
 {
-	private $max_input = 1000;
-	private $addon_type = 'modules';
+	private int $max_input = 1000;
+	private string $addon_type = 'modules';
 
-	public function __construct($id, $label = '', array $value = [], array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label = '', array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 
 	}
 
-	public function display()
+	public function display(): Template
     {
         $template = $this->get_template_to_use();
         $view = new FileTemplate('framework/builder/form/fieldelements/FormFieldAddonsRepositories.tpl');
@@ -81,7 +77,7 @@ class FormFieldAddonsRepositories extends AbstractFormField
         return $template;
     }
 
-    private function get_default_entries()
+    private function get_default_entries(): mixed
     {
         switch ($this->addon_type)
         {
@@ -96,7 +92,7 @@ class FormFieldAddonsRepositories extends AbstractFormField
         }
     }
 
-    private function is_default_entry($entry, $default_entries)
+    private function is_default_entry(mixed $entry, mixed $default_entries): bool
     {
         foreach ($default_entries as $default_entry) {
             if ($entry['owner'] === $default_entry['owner'] &&
@@ -108,7 +104,7 @@ class FormFieldAddonsRepositories extends AbstractFormField
         return false;
     }
 
-    public function retrieve_value()
+    public function retrieve_value(): void
     {
         $request = AppContext::get_request();
         $values = [];
@@ -145,7 +141,7 @@ class FormFieldAddonsRepositories extends AbstractFormField
         $this->set_value($retrievedValues);
     }
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -166,7 +162,7 @@ class FormFieldAddonsRepositories extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}

@@ -4,23 +4,21 @@
  * @subpackage  Form\field
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
- * @since       PHPBoost 4.0 - 2013 02 27
- * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
+ * @since       PHPBoost 6.1 - 2026 06 09
 */
 
 class FormFieldAddonsServers extends AbstractFormField
 {
-	private $max_input = 20;
+	private int $max_input = 20;
 
-	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
-	function display()
+	function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -72,12 +70,12 @@ class FormFieldAddonsServers extends AbstractFormField
 		return $template;
 	}
 
-    private function get_default_entries()
+    private function get_default_entries(): mixed
     {
         return AddonsConfig::DEFAULT_ADDONS_SERVER;
     }
 
-    private function is_default_entry($entry, $default_entries)
+    private function is_default_entry(mixed $entry, mixed $default_entries): bool
     {
         foreach ($default_entries as $default_entry) {
             if ($entry['website'] === $default_entry['website'] &&
@@ -89,7 +87,7 @@ class FormFieldAddonsServers extends AbstractFormField
         return false;
     }
 
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 
@@ -116,7 +114,7 @@ class FormFieldAddonsServers extends AbstractFormField
 		$this->set_value($values);
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -132,7 +130,7 @@ class FormFieldAddonsServers extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}

@@ -12,9 +12,9 @@
 
 class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
 {
-	private $error_message;
+	private string $error_message;
 
-	public function __construct($error_message = '')
+	public function __construct(string $error_message = '')
 	{
 		if (empty($error_message))
 		{
@@ -24,12 +24,12 @@ class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
 		$this->error_message = TextHelper::to_js_string($error_message);
 	}
 
-	public function validate(FormField $field)
+	public function validate(FormField $field): bool
 	{
 		return $field->get_value() ? $this->user_exists($field) : true;
 	}
 
-	public function user_exists(FormField $field)
+	public function user_exists(FormField $field): mixed
 	{
 		if ($field->get_value())
 		{
@@ -40,7 +40,7 @@ class FormFieldConstraintUserExist extends AbstractFormFieldConstraint
 		return false;
 	}
 
-	public function get_js_validation(FormField $field)
+	public function get_js_validation(FormField $field): string
 	{
 		return 'UserExistValidator(' . TextHelper::to_js_string($field->get_id()) .', '. $this->error_message . ')';
 	}

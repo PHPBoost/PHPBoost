@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2009 04 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldCheckbox extends AbstractFormField
@@ -25,16 +26,13 @@ class FormFieldCheckbox extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value = self::UNCHECKED, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, bool $value = self::UNCHECKED, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-checkbox');
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -48,19 +46,12 @@ class FormFieldCheckbox extends AbstractFormField
 		return $template;
 	}
 
-	/**
-	 * Tells whether the checkbox is checked
-	 * @return bool
-	 */
-	public function is_checked()
+	public function is_checked(): bool
 	{
 		return $this->get_value() == self::CHECKED;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()) && $request->get_value($this->get_html_id()) == 'on')
@@ -69,7 +60,7 @@ class FormFieldCheckbox extends AbstractFormField
 			$this->set_value(0);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormFieldCheckbox.tpl');
 	}

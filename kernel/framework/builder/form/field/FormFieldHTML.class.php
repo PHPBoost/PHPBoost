@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 04 10
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -19,15 +19,12 @@
 
 class FormFieldHTML extends AbstractFormField
 {
-	public function __construct($id, $value, array $properties = [])
+	public function __construct(string $id, mixed $value, array $properties = [])
 	{
 		parent::__construct($id, '', $value, $properties);
 	}
 
-	/**
-	 * @return string The html code for the free field.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -40,9 +37,9 @@ class FormFieldHTML extends AbstractFormField
 		return $template;
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
-		return new FileTemplate('framework/builder/form/FormFieldHTML.tpl');
+		return new ('framework/builder/form/FormFieldHTML.tpl');
 	}
 }
 ?>

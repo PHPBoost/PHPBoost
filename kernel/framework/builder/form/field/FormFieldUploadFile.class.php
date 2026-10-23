@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 4.0 - 2013 12 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,16 +15,16 @@
 
 class FormFieldUploadFile extends AbstractFormField
 {
-	protected $authorized_extensions = '';
+	protected string $authorized_extensions = '';
 	/**
 	 * Constructs a FormFieldUploadFile.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
-	 * @param string $value Default value
+	 * @param mixed $value Default value
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, mixed $value, array $field_options = [], array $constraints = [])
 	{
 		$constraints[] = new FormFieldConstraintUrlExists(LangLoader::get_message('warning.unexisting.file', 'warning-lang'));
 		if (isset($field_options['authorized_extensions']))
@@ -32,10 +32,7 @@ class FormFieldUploadFile extends AbstractFormField
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -52,7 +49,7 @@ class FormFieldUploadFile extends AbstractFormField
 		return $template;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -68,7 +65,7 @@ class FormFieldUploadFile extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormFieldUploadFile.tpl');
 	}

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 2.0 - 2009 04 28
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -15,21 +15,18 @@
 
 class FormFieldMailEditor extends FormFieldTextEditor
 {
-	protected $type = 'email';
-	/**
-	 * @var boolean
-	 */
-	private $multiple = false;
+	protected string $type = 'email';
+	private bool $multiple = false;
 
 	/**
 	 * Constructs a FormFieldMailEditor.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
-	 * @param string $value Default value
+	 * @param mixed $value Default value
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, mixed $value, array $field_options = [], array $constraints = [])
 	{
 		if (isset($field_options['multiple']))
 		{
@@ -45,10 +42,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 		$this->set_css_form_field_class('form-field-email');
 	}
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -79,7 +73,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 		return $template;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach ($field_options as $attribute => $value)
 		{
@@ -95,20 +89,12 @@ class FormFieldMailEditor extends FormFieldTextEditor
 		parent::compute_options($field_options);
 	}
 
-	/**
-	 * Tells whether the field is multiple
-	 * @return true if it is, false otherwise
-	 */
-	public function is_multiple()
+	public function is_multiple(): bool
 	{
 		return $this->multiple;
 	}
 
-	/**
-	 * Changes the fact that the field is multiple or not.
-	 * @param bool $multiple true if it's multiple, false otherwise
-	 */
-	public function set_multiple($multiple)
+	public function set_multiple(bool $multiple): void
 	{
 		$this->multiple = $multiple;
 	}

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2010 01 24
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,21 +15,15 @@
 
 class FormFieldDateTime extends FormFieldDate
 {
-	/**
-	 * @var boolean
-	 */
-	private $five_minutes_step = false;
+	private bool $five_minutes_step = false;
 
-	public function __construct($id, $label, ?Date $value = null, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, ?Date $value = null, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-datetime');
 	}
 
-	/**
-	 * @return string The html code for the input.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = parent::display();
 
@@ -51,7 +45,7 @@ class FormFieldDateTime extends FormFieldDate
 	/**
 	 * {@inheritdoc}
 	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		parent::retrieve_value();
 
@@ -67,7 +61,7 @@ class FormFieldDateTime extends FormFieldDate
 		$this->set_value($date);
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach ($field_options as $attribute => $value)
 		{

@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 2.0 - 2009 04 28
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -19,20 +19,18 @@
 
 class FormFieldMultipleSelectChoice extends AbstractFormField
 {
-	private $selected_options;
-	private $options = [];
-	private $size = 4;
+	private array $selected_options = [];
+	private array $options = [];
+	private int $size = 4;
 
 	/**
 	 * Constructs a FormFieldMultipleSelectChoice.
 	 * @param string $id Field id
 	 * @param string $label Field label
-	 * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
-	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
 	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, array $selected_options, array $available_options, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $selected_options, $field_options, $constraints);
 
@@ -46,7 +44,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		$this->set_selected_options($selected_options);
 	}
 
-	public function set_selected_options(array $selected_options)
+	public function set_selected_options(array $selected_options): void
 	{
 		$value = [];
 
@@ -68,7 +66,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		$this->selected_options = $value;
 	}
 
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 
@@ -92,10 +90,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		}
 	}
 
-	/**
-	 * @return string The html code for the select.
-	 */
-	public function display()
+	public function display(): Template
 	{
 		$template = $this->get_template_to_use();
 
@@ -108,7 +103,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		return $template;
 	}
 
-	private function get_html_code()
+	private function get_html_code(): Template
 	{
 		$lang = LangLoader::get_all_langs();
 		$view = new FileTemplate('framework/builder/form/FormFieldMultipleSelectChoice.tpl');
@@ -159,7 +154,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		return $view;
 	}
 
-	protected function compute_options(array &$field_options)
+	protected function compute_options(array &$field_options): void
 	{
 		foreach($field_options as $attribute => $value)
 		{
@@ -175,28 +170,28 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		parent::compute_options($field_options);
 	}
 
-	private function is_selected($option)
+	private function is_selected(mixed $option): bool
 	{
 		return in_array($option, $this->selected_options);
 	}
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/builder/form/FormField.tpl');
 	}
 
-	private function add_option(FormFieldEnumOption $option)
+	private function add_option(FormFieldEnumOption $option): void
 	{
 		$option->set_field($this);
 		$this->options[] = $option;
 	}
 
-	private function get_options()
+	private function get_options(): mixed
 	{
 		return $this->options;
 	}
 
-	private function get_option($identifier)
+	private function get_option(string $identifier): mixed
 	{
 		foreach ($this->options as $option)
 		{
@@ -208,7 +203,7 @@ class FormFieldMultipleSelectChoice extends AbstractFormField
 		return null;
 	}
 
-	protected function get_js_specialization_code()
+	protected function get_js_specialization_code(): string
 	{
 		return 'field.getValue = function()
 		{

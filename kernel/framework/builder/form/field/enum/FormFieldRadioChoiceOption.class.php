@@ -6,26 +6,26 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 3.0 - 2009 05 01
  * @author      mipel <mipel@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 {
-	public function __construct($label, $raw_value, $field_choice_options = [])
+	public function __construct(string $label, mixed $raw_value, array $field_choice_options = [])
 	{
 		parent::__construct($label, $raw_value, $field_choice_options);
 	}
 
 	/**
-	 * @return string The html code for the radio input.
+	 * @return FileTemplate The html code for the radio input.
 	 */
-	public function display()
+	public function display(): FileTemplate
 	{
-
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldRadioChoiceOption.tpl');
 
 		$tpl->put_all([

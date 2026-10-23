@@ -7,29 +7,27 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 2.0 - 2009 04 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractFormFieldChoice extends AbstractFormField
 {
-	/**
-	 * @var FormFieldEnumOption[]
-	 */
-	private $options = [];
+	private array $options = [];
 
 	/**
 	 * Constructs a FormFieldChoice.
 	 * @param string $id Field id
 	 * @param string $label Field label
-	 * @param FormFieldEnumOption Default value
+	 * @param FormFieldEnumOption $value Default value
 	 * @param FormFieldEnumOption[] $options Enumeration of the possible values
 	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, $value, array $options, array $field_options = [], array $constraints = [])
+	public function __construct(string $id, string $label, mixed $value, array $options, array $field_options = [], array $constraints = [])
 	{
 		foreach ($options as $option)
 		{
@@ -39,19 +37,12 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		$this->set_value($value);
 	}
 
-	/**
-	 * @return FormFieldEnumOption[]
-	 */
-	protected function get_options()
+	protected function get_options(): array
 	{
 		return $this->options;
 	}
 
-	/**
-	 * Adds an option for the field.
-	 * @param FormFieldEnumOption option The new option.
-	 */
-	protected function add_option(FormFieldEnumOption $option)
+	protected function add_option(FormFieldEnumOption $option): void
 	{
 		$option->set_field($this);
 		$this->options[] = $option;
@@ -59,9 +50,9 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 
 	/**
 	 * Sets the options of the field.
-	 * @param Array options The list of options.
+	 * @param array $options The list of options.
 	 */
-	public function set_options(Array $options)
+	public function set_options(array $options): void
 	{
 		$this->clear_options();
 		foreach ($options as $option)
@@ -73,15 +64,12 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		}
 	}
 
-	protected function clear_options()
+	protected function clear_options(): void
 	{
 		$this->options = [];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function retrieve_value()
+	public function retrieve_value(): void
 	{
 		$request = AppContext::get_request();
 		if ($request->has_parameter($this->get_html_id()))
@@ -95,7 +83,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		}
 	}
 
-	protected function get_option($raw_option)
+	protected function get_option(mixed $raw_option): mixed
 	{
 		foreach ($this->options as $option)
 		{
@@ -107,7 +95,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 		return null;
 	}
 
-	public function get_option_id($raw_option)
+	public function get_option_id(mixed $raw_option): mixed
 	{
 		foreach ($this->options as $id => $option)
 		{
@@ -122,7 +110,7 @@ abstract class AbstractFormFieldChoice extends AbstractFormField
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set_value($value)
+	public function set_value(mixed $value): void
 	{
 		if (is_object($value))
 		{

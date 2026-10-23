@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 22
  * @since       PHPBoost 4.1 - 2015 06 12
  * @author      mipel <mipel@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,9 +13,9 @@
 
 class FormFieldConstraintPictureFile extends FormFieldConstraintRegex
 {
-	private static $regex = '/\.(png|webp|gif|jpg|jpeg|tiff|ico|svg)$/iu';
+	private static string $regex = '/\.(bmp|ico|gif|jpg|jpeg|png|svg|tiff|webp)$/iu';
 
-	public function __construct($error_message = '')
+	public function __construct(string $error_message = '')
 	{
 		if (empty($error_message))
 		{
