@@ -6,42 +6,40 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2009 12 21
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableRow extends AbstractHTMLElement
 {
-	private $cells;
-	private $delete_input_displayed = true;
+	private mixed $cells = null;
+	private bool $delete_input_displayed = true;
 
-	public function __construct(array $cells, $css_class = '', $id = '')
+	public function __construct(array $cells, string $css_class = '', string $id = '')
 	{
 		$this->cells = $cells;
 		$this->css_class = $css_class;
 		$this->id = $id;
 	}
 
-	/**
-	 * @return HTMLTableRowCell[]
-	 */
-	public function get_cells()
+	public function get_cells(): mixed
 	{
 		return $this->cells;
 	}
 
-	public function hide_delete_input()
+	public function hide_delete_input(): void
 	{
 		$this->delete_input_displayed = false;
 	}
 
-	public function display_delete_input()
+	public function display_delete_input(): void
 	{
 		$this->delete_input_displayed = true;
 	}
 
-	public function is_delete_input_displayed()
+	public function is_delete_input_displayed(): bool
 	{
 		return $this->delete_input_displayed;
 	}

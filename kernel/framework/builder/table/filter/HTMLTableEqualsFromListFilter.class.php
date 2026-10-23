@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2010 02 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,10 +13,10 @@
 
 abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 {
-	private $allowed_values;
-	private $options;
+	private array $allowed_values = [];
+	private array $options = [];
 
-	public function __construct($name, $label, array $allowed_values, $alt_all_label = false)
+	public function __construct(string $name, string $label, array $allowed_values, mixed $alt_all_label = false)
 	{
 		$this->allowed_values = array_keys($allowed_values);
 		$default_value = new FormFieldSelectChoiceOption(LangLoader::get_message('common.all' . ($alt_all_label ? '.alt' : ''), 'common-lang'), 'all');
@@ -29,7 +29,7 @@ abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 		parent::__construct($name, $select);
 	}
 
-	public function is_value_allowed($value)
+	public function is_value_allowed(mixed $value): bool
 	{
 		if (in_array($value, $this->allowed_values))
 		{
@@ -39,10 +39,7 @@ abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 		return false;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function set_value($value)
+	protected function set_value(mixed $value): void
 	{
 		foreach ($this->options as $option)
 		{

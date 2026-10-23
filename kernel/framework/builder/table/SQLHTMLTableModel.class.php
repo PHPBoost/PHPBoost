@@ -5,29 +5,30 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 4.1 - 2015 01 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SQLHTMLTableModel extends HTMLTableModel
 {
-	protected $table;
-	protected $parameters;
-	protected $sql_join;
+	protected mixed $table = null;
+	protected mixed $parameters = null;
+	protected mixed $sql_join = null;
 
-	public function __construct($table, $id, array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
+	public function __construct(string $table, string $id, array $columns, HTMLTableSortingRule $default_sorting_rule, mixed $rows_per_page = self::DEFAULT_PAGINATION)
 	{
 		$this->table = $table;
 		parent::__construct($id, $columns, $default_sorting_rule, $rows_per_page);
 	}
 
-	public function get_number_of_matching_rows()
+	public function get_number_of_matching_rows(): mixed
 	{
 		return PersistenceContext::get_querier()->count($this->table, $this->sql_join . $this->get_filtered_clause($this->html_table->parameters->get_filters()) . $this->get_permanent_filtered_clause($this->get_permanent_filters()), $this->parameters);
 	}
 
-	public function get_sql_results($sql_join = '', $select = ['*'])
+	public function get_sql_results(string $sql_join = '', array $select = ['*']): mixed 
 	{
 		$limit = $this->html_table->get_nb_rows_per_page();
 		$offset = ($this->html_table->parameters->get_page_number() - 1) * $limit;
@@ -46,7 +47,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return PersistenceContext::get_querier()->select($query, $this->parameters);
 	}
 
-	public function get_sql_from()
+	public function get_sql_from(): string
 	{
 		if ($this->sql_join)
 		{
@@ -55,7 +56,7 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return 'FROM ' . $this->table;
 	}
 
-	private function get_filtered_clause(array $filters)
+	private function get_filtered_clause(array $filters): mixed
 	{
 		$this->parameters = [];
 		$clause = ' WHERE 1';
@@ -74,15 +75,16 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return $clause;
 	}
 
-	private function get_permanent_filtered_clause(array $permanent_filters)
+	private function get_permanent_filtered_clause(array $permanent_filters): string
 	{
 		if (!empty($permanent_filters))
 		{
 			return ' AND ' . implode(' AND ', $permanent_filters);
 		}
+        return '';
 	}
 
-	private function get_order_clause(HTMLTableSortingRule $rule)
+	private function get_order_clause(HTMLTableSortingRule $rule): mixed
 	{
 		$order_clause = ' ORDER BY ';
 		$order_clause .= $this->get_sort_parameter_column($rule) . ' ';
@@ -97,12 +99,13 @@ class SQLHTMLTableModel extends HTMLTableModel
 		return $order_clause;
 	}
 
-	private function get_sort_parameter_column(HTMLTableSortingRule $rule)
+	private function get_sort_parameter_column(HTMLTableSortingRule $rule): mixed
 	{
 		if ($this->is_sort_parameter_allowed($rule->get_sort_parameter()) || $rule->is_default_sorting())
 		{
 			return $rule->get_sort_parameter();
 		}
+        return null;
 	}
 }
 ?>

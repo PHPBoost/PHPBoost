@@ -5,21 +5,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2010 03 02
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilter implements SQLFragmentBuilder
 {
 	const NOT_BOUNDED = null;
 
-	private static $param_id_index = 0;
+	private static int $param_id_index = 0;
 
-	private $db_field;
-	private $lower_bound;
-	private $upper_bound;
+	private mixed $db_field = null;
+	private mixed $lower_bound = null;
+	private mixed $upper_bound = null;
 
-	public function __construct($db_field, $name, $label, $lower_bound = self::NOT_BOUNDED, $upper_bound = self::NOT_BOUNDED)
+	public function __construct(mixed $db_field, string $name, string $label, mixed $lower_bound = self::NOT_BOUNDED, mixed $upper_bound = self::NOT_BOUNDED)
 	{
 		$this->db_field = $db_field;
 		$this->lower_bound = $lower_bound;
@@ -28,10 +29,7 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 		parent::__construct($name, $field);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_sql()
+	public function get_sql(): SQLFragment
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' ' . $this->get_sql_comparator_symbol() . ' :' . $parameter_name;
@@ -39,10 +37,7 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 		return new SQLFragment($query, $parameters);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_value_allowed($value)
+	public function is_value_allowed(mixed $value): bool
 	{
 		if (is_numeric($value))
 		{
@@ -57,14 +52,14 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 		return false;
 	}
 
-    protected function get_sql_value_parameter_prefix()
+    protected function get_sql_value_parameter_prefix(): string
     {
         return self::class . '_' . self::$param_id_index++;
     }
 
-    abstract protected function get_sql_comparator_symbol();
+    abstract protected function get_sql_comparator_symbol(): mixed;
 
-	protected function get_number($value)
+	protected function get_number(mixed $value): mixed
 	{
 		if (is_int($value))
 		{
@@ -76,7 +71,7 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 		}
 	}
 
-	protected function check_interval($number)
+	protected function check_interval(int $number): bool
 	{
         if ($this->lower_bound != self::NOT_BOUNDED && $number < $this->lower_bound)
         {

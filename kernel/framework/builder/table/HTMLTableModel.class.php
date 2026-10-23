@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2010 02 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -17,30 +17,23 @@ class HTMLTableModel
 	const NO_PAGINATION = 0;
 	const DEFAULT_PAGINATION = 25;
 
-	/**
-	 * @var HTMLTable
-	 */
-	public $html_table;
+	public HTMLTable $html_table;
 
-	private $id;
-	private $caption = '';
-	private $layout_title = '';
-	private $rows_per_page;
-	private $nb_rows_options = [10, 25, 100];
-	private $default_sorting_rule;
-	private $allowed_sort_parameters = [];
-	private $filters = [];
-	private $permanent_filters = [];
-	private $filters_menu_title = '';
-	private $display_footer = true;
-	private $footer_css_class = '';
+	private mixed $id;
+	private string $caption = '';
+	private string $layout_title = '';
+	private mixed $rows_per_page;
+	private array $nb_rows_options = [10, 25, 100];
+	private mixed $default_sorting_rule;
+	private array $allowed_sort_parameters = [];
+	private array $filters = [];
+	private array $permanent_filters = [];
+	private string $filters_menu_title = '';
+	private bool $display_footer = true;
+	private string $footer_css_class = '';
+	private array $columns= [];
 
-	/**
-	 * @var HTMLTableColumn[]
-	 */
-	private $columns;
-
-	public function __construct($id, array $columns, HTMLTableSortingRule $default_sorting_rule, $rows_per_page = self::DEFAULT_PAGINATION)
+	public function __construct(mixed $id, array $columns, HTMLTableSortingRule $default_sorting_rule, mixed $rows_per_page = self::DEFAULT_PAGINATION)
 	{
 		foreach ($columns as $column)
 		{
@@ -55,222 +48,166 @@ class HTMLTableModel
 		$this->id = $id;
 	}
 
-	public function set_html_table(HTMLTable $html_table)
+	public function set_html_table(HTMLTable $html_table): void
 	{
 		$this->html_table = $html_table;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function has_id()
+	public function has_id(): bool
 	{
 		return !empty($this->id);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_id()
+	public function get_id(): mixed
 	{
 		return $this->id;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function has_caption()
+	public function has_caption(): bool
 	{
 		return !empty($this->caption);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_caption()
+	public function get_caption(): string
 	{
 		return $this->caption;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function has_layout_title()
+	public function has_layout_title(): bool
 	{
 		return !empty($this->layout_title);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_layout_title()
+	public function get_layout_title(): string
 	{
 		return $this->layout_title;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_footer_displayed()
+	public function is_footer_displayed(): bool
 	{
 		return $this->display_footer;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_pagination_activated()
+	public function is_pagination_activated(): mixed
 	{
 		return $this->rows_per_page > self::NO_PAGINATION;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_nb_rows_per_page()
+	public function get_nb_rows_per_page(): mixed
 	{
 		return $this->rows_per_page;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function has_nb_rows_options()
+	public function has_nb_rows_options(): bool
 	{
 		return !empty($this->nb_rows_options);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_nb_rows_options()
+	public function get_nb_rows_options(): array
 	{
 		return $this->nb_rows_options;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_columns()
+	public function get_columns(): mixed
 	{
 		return $this->columns;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function default_sort_rule()
+	public function default_sort_rule(): mixed
 	{
 		return $this->default_sorting_rule;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_sort_parameter_allowed($parameter)
+	public function is_sort_parameter_allowed(mixed $parameter): bool
 	{
 		return in_array($parameter, $this->allowed_sort_parameters);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_filter_allowed($id, $value)
+	public function is_filter_allowed(string $id, mixed $value): mixed
 	{
 		if (array_key_exists($id, $this->filters))
 		{
 			return $this->filters[$id]->is_value_allowed($value);
 		}
+        return false;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_filter($id)
+	public function get_filter(string $id): mixed
 	{
 		return $this->filters[$id];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_filters()
+	public function get_filters(): array
 	{
 		return $this->filters;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_permanent_filter($id)
+	public function get_permanent_filter(string $id): mixed
 	{
 		return $this->permanent_filters[$id];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_permanent_filters()
+	public function get_permanent_filters(): array
 	{
 		return $this->permanent_filters;
 	}
 
-	public function has_filters_menu_title()
+	public function has_filters_menu_title(): bool
 	{
 		return !empty($this->filters_menu_title);
 	}
 
-	public function get_filters_menu_title()
+	public function get_filters_menu_title(): string
 	{
 		return $this->filters_menu_title;
 	}
 
-	public function set_filters_menu_title($filters_menu_title)
+	public function set_filters_menu_title(mixed $filters_menu_title): void
 	{
 		$this->filters_menu_title = $filters_menu_title;
 	}
 
-	public function set_id($id)
+	public function set_id(string $id): void
 	{
 		$this->id = $id;
 	}
 
-	public function set_caption($caption)
+	public function set_caption(mixed $caption): void
 	{
 		$this->caption = $caption;
 	}
 
-	public function set_layout_title($layout_title)
+	public function set_layout_title(mixed $layout_title): void
 	{
 		$this->layout_title = $layout_title;
 	}
 
-	public function hide_footer()
+	public function hide_footer(): void
 	{
 		$this->display_footer = false;
 	}
 
-	public function has_footer_css_class()
+	public function has_footer_css_class(): bool
 	{
 		return !empty($this->footer_css_class);
 	}
 
-	public function get_footer_css_class()
+	public function get_footer_css_class(): string
 	{
 		return $this->footer_css_class;
 	}
 
-	public function set_footer_css_class($class)
+	public function set_footer_css_class(string $class): void
 	{
 		$this->footer_css_class = $class;
 	}
 
-	public function add_footer_css_class($class)
+	public function add_footer_css_class(string $class): void
 	{
 		$this->footer_css_class .= ' ' . $class;
 	}
 
-	public function set_nb_rows_options(array $nb_rows_options)
+	public function set_nb_rows_options(array $nb_rows_options): void
 	{
 		if ($this->is_pagination_activated())
 		{
@@ -284,17 +221,17 @@ class HTMLTableModel
 		}
 	}
 
-	public function add_filter(HTMLTableFilter $filter)
+	public function add_filter(HTMLTableFilter $filter): void
 	{
 		$this->filters[$filter->get_id()] = $filter;
 	}
 
-	public function add_permanent_filter($filter)
+	public function add_permanent_filter(mixed $filter): void
 	{
 		$this->permanent_filters[] = $filter;
 	}
 
-	private function add_column(HTMLTableColumn $column)
+	private function add_column(HTMLTableColumn $column): void
 	{
 		$this->columns[] = $column;
 		if ($column->is_sortable())
@@ -303,7 +240,7 @@ class HTMLTableModel
 		}
 	}
 
-	public function delete_last_column()
+	public function delete_last_column(): void
 	{
 		array_pop($this->columns);
 	}

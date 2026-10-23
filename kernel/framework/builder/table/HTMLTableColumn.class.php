@@ -6,17 +6,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2009 12 21
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableColumn extends HTMLTableRowCell
 {
-	private $sortable_parameter = '';
-	private $name_sr_only = false;
+	private string $sortable_parameter = '';
+	private bool $name_sr_only = false;
 
-	public function __construct($name, $sortable_parameter = '', $options = [])
+	public function __construct(string $name, string $sortable_parameter = '', array $options = [])
 	{
 		$this->sortable_parameter = $sortable_parameter;
 		$css_class = isset($options['css_class']) ? $options['css_class'] : '';
@@ -25,17 +26,17 @@ class HTMLTableColumn extends HTMLTableRowCell
 		parent::__construct($name, $css_class, $id);
 	}
 
-	public function is_sortable()
+	public function is_sortable(): bool
 	{
 		return !empty($this->sortable_parameter);
 	}
 
-	public function get_sortable_parameter()
+	public function get_sortable_parameter(): string
 	{
 		return $this->sortable_parameter;
 	}
 
-	public function is_name_sr_only()
+	public function is_name_sr_only(): bool
 	{
 		return $this->name_sr_only;
 	}

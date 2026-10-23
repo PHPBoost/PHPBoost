@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 22
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2010 01 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,7 +14,7 @@
 abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 {
 	private string $label = '';
-	private string $raw_value = '';
+	private string|int $raw_value = '';
 	private bool $active = false;
 	private bool $disable = false;
 	private string $data_option_img = '';

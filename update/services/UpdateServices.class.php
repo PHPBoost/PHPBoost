@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 07
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2012 02 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -1148,6 +1148,12 @@ class UpdateServices
     private function delete_old_files_kernel()
     {
         $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/content/newcontent');
+        if ($folder->exists())
+        {
+            $folder->delete();
+        }
+
+        $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/builder/form/field/phpboost');
         if ($folder->exists())
         {
             $folder->delete();

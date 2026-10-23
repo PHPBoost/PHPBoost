@@ -5,16 +5,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 6.0 - 2021 04 16
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableContainsTextSQLFilter extends HTMLTableEscapedLikeTextSQLFilter
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	protected function get_value()
+	protected function get_value(): string
 	{
 		return '%' . parent::get_value() . '%';
 	}

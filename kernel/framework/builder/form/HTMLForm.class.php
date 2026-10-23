@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 21
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2009 04 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -45,7 +45,7 @@ class HTMLForm implements HTMLElement
      * @param mixed $target The url where the form sends data
      * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
      */
-    public function __construct(string $html_id, mixed $target, bool $enable_captcha_protection = true)
+    public function __construct(string $html_id, mixed $target = null, bool $enable_captcha_protection = true)
     {
         $this->enable_captcha_protection = $enable_captcha_protection;
         $this->set_html_id($html_id);

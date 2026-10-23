@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2009 12 26
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,40 +15,20 @@
 
 class HTMLTable extends AbstractHTMLElement
 {
-    protected $arg_id = 1;
-    protected $nb_rows = 0;
-    protected $page_number = 1;
-    protected $multiple_delete_displayed = true;
-    protected $lang;
-
-    /**
-     * @var HTMLTableParameters
-     */
-    public $parameters;
-
-    /**
-     * @var Template
-     */
-    protected $view;
-
-    /**
-     * @var HTMLTableModel
-     */
-    protected $model;
-
-    /**
-     * @var HTMLTableColumn[]
-     */
-    protected $columns = [];
-
-    /**
-     * @var HTMLTableRow[]
-     */
-    protected $rows = [];
+    protected int $arg_id = 1;
+    protected int $nb_rows = 0;
+    protected int $page_number = 1;
+    protected bool $multiple_delete_displayed = true;
+    protected mixed $lang = null;
+    public HTMLTableParameters $parameters;
+    protected Template $view;
+    protected HTMLTableModel $model;
+    protected array $columns = [];
+    protected array $rows = [];
 
     protected $filters_fieldset_class = 'FormFieldsetHorizontal';
 
-    public function __construct(HTMLTableModel $model, $lang = [], $css_class = '', $tpl_path = '')
+    public function __construct(HTMLTableModel $model, array $lang = [], string $css_class = '', string $tpl_path = '')
     {
         if ($tpl_path === '')
         {
@@ -65,10 +45,7 @@ class HTMLTable extends AbstractHTMLElement
         $this->parameters = new HTMLTableParameters($this->model);
     }
 
-    /**
-     * @return Template
-     */
-    public function display()
+    public function display(): Template
     {
         $this->generate_filters_form();
         $this->generate_table_structure();
@@ -78,7 +55,7 @@ class HTMLTable extends AbstractHTMLElement
         return $this->view;
     }
 
-    private function extract_parameters()
+    private function extract_parameters(): void
     {
         $nb_rows_per_page = $this->get_nb_rows_per_page();
         if ($nb_rows_per_page !== HTMLTableModel::NO_PAGINATION)
@@ -96,24 +73,24 @@ class HTMLTable extends AbstractHTMLElement
      * @param $nb_rows
      * @param HTMLTableRow[] $rows
      */
-    public function set_rows($nb_rows, array $rows)
+    public function set_rows(mixed $nb_rows, array $rows): void
     {
         $this->nb_rows = $nb_rows;
         $this->extract_parameters();
         $this->rows = $rows;
     }
 
-    public function set_filters_fieldset_class_HTML()
+    public function set_filters_fieldset_class_HTML(): void
     {
         $this->filters_fieldset_class = 'FormFieldsetHTML';
     }
 
-    public function set_filters_fieldset_class_vertical()
+    public function set_filters_fieldset_class_vertical(): void
     {
         $this->filters_fieldset_class = 'FormFieldsetVertical';
     }
 
-    private function generate_filters_form()
+    private function generate_filters_form(): string
     {
         $filters = $this->model->get_filters();
         $has_filters = !empty($filters);
@@ -145,9 +122,10 @@ class HTMLTable extends AbstractHTMLElement
                 'FILTERS'              => $form->display()
             ]);
         }
+        return '';
     }
 
-    private function generate_table_structure()
+    private function generate_table_structure(): void
     {
         $has_nb_rows_options = $this->model->has_nb_rows_options();
 
@@ -194,7 +172,7 @@ class HTMLTable extends AbstractHTMLElement
         }
     }
 
-    private function generate_headers()
+    private function generate_headers(): void
     {
         $sorting_rules = $this->parameters->get_sorting_rule();
         $sorted = $sorting_rules->get_order_way() . $sorting_rules->get_sort_parameter();
@@ -217,7 +195,7 @@ class HTMLTable extends AbstractHTMLElement
         }
     }
 
-    private function generate_rows_stats()
+    private function generate_rows_stats(): void
     {
         $this->generate_stats();
 
@@ -227,12 +205,12 @@ class HTMLTable extends AbstractHTMLElement
         }
     }
 
-    private function is_pagination_activated()
+    private function is_pagination_activated(): bool
     {
         return $this->model->is_pagination_activated() && $this->get_nb_pages() > 1;
     }
 
-    private function generate_rows()
+    private function generate_rows(): void
     {
         $row_number = 0;
         $last_displayed_row = ($this->get_first_row_index() + $this->get_nb_rows_per_page());
@@ -259,7 +237,7 @@ class HTMLTable extends AbstractHTMLElement
         }
     }
 
-    protected final function generate_row(HTMLTableRow $row, $element_number)
+    protected final function generate_row(HTMLTableRow $row, mixed $element_number): void
     {
         $row_values = [];
         $this->add_css_vars($row, $row_values);
@@ -277,7 +255,7 @@ class HTMLTable extends AbstractHTMLElement
         }
     }
 
-    private function generate_cell(HTMLTableRowCell $cell)
+    private function generate_cell(HTMLTableRowCell $cell): void
     {
         $cell_values = [
             'C_COLSPAN' => $cell->is_multi_column(),
@@ -289,7 +267,7 @@ class HTMLTable extends AbstractHTMLElement
         $this->view->assign_block_vars('row.cell', $cell_values);
     }
 
-    private function add_css_vars(HTMLElement $element, array &$tpl_vars)
+    private function add_css_vars(AbstractHTMLElement $element, array &$tpl_vars): void
     {
         $tpl_vars['C_CSS_CLASSES'] = $element->has_css_class();
         $tpl_vars['CSS_CLASSES'] = $element->get_css_class();
@@ -297,13 +275,13 @@ class HTMLTable extends AbstractHTMLElement
         $tpl_vars['CSS_STYLE'] = $element->get_css_style();
     }
 
-    private function add_id_vars(HTMLElement $element, array &$tpl_vars)
+    private function add_id_vars(AbstractHTMLElement $element, array &$tpl_vars)
     {
         $tpl_vars['C_ID'] = $element->has_id();
         $tpl_vars['ID'] = $element->get_id();
     }
 
-    private function generate_stats()
+    private function generate_stats(): void
     {
         $end = $this->get_first_row_index() + $this->get_nb_rows_per_page();
         $elements = StringVars::replace_vars(LangLoader::get_message('common.item.rate', 'common-lang'), [
@@ -317,7 +295,7 @@ class HTMLTable extends AbstractHTMLElement
         ]);
     }
 
-    private function generate_pagination()
+    private function generate_pagination(): void
     {
         $nb_pages = $this->get_nb_pages();
         $pagination = new Pagination($nb_pages, $this->page_number);
@@ -325,17 +303,17 @@ class HTMLTable extends AbstractHTMLElement
         $this->view->put('PAGINATION', $pagination->export());
     }
 
-    private function get_nb_pages()
+    private function get_nb_pages(): mixed
     {
         return ceil($this->nb_rows / $this->get_nb_rows_per_page());
     }
 
-    public function get_page_number()
+    public function get_page_number(): int
     {
         return $this->page_number;
     }
 
-    public function get_nb_rows_per_page()
+    public function get_nb_rows_per_page(): mixed
     {
         $nb_rows_per_page = $this->parameters->get_nb_items_per_page();
         if ($nb_rows_per_page < 1)
@@ -345,27 +323,27 @@ class HTMLTable extends AbstractHTMLElement
         return $nb_rows_per_page;
     }
 
-    public function get_first_row_index()
+    public function get_first_row_index(): mixed
     {
         return ($this->page_number - 1) * $this->get_nb_rows_per_page();
     }
 
-    public function hide_multiple_delete()
+    public function hide_multiple_delete(): void
     {
         $this->multiple_delete_displayed = false;
     }
 
-    public function display_multiple_delete()
+    public function display_multiple_delete(): void
     {
         $this->multiple_delete_displayed = true;
     }
 
-    public function is_table_in_module()
+    public function is_table_in_module(): bool
     {
         return !in_array(Environment::get_running_module_name(), ['admin', 'kernel', 'user']);
     }
 
-    public function is_url_rewriting_enabled()
+    public function is_url_rewriting_enabled(): string
     {
         return strpos(REWRITED_SCRIPT, '?url=');
     }
