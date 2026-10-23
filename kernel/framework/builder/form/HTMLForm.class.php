@@ -28,7 +28,7 @@ class HTMLForm implements HTMLElement
     private array|FormFieldset $fieldsets = [];
     private array|FormButton $buttons = [];
     private string $html_id = '';
-    private mixed $target = null;
+    private string $target = '';
     private string $method = self::HTTP_METHOD_POST;
     private string $css_class = '';
     private string $layout_title = '';
@@ -42,10 +42,10 @@ class HTMLForm implements HTMLElement
     /**
      * Constructs a HTMLForm object
      * @param string $html_id The HTML name of the form
-     * @param mixed $target The url where the form sends data
+     * @param string|Url $target The url where the form sends data
      * @param bool $enable_captcha_protection True if the CAPTCHA is enabled
      */
-    public function __construct(string $html_id, mixed $target = null, bool $enable_captcha_protection = true)
+    public function __construct(string $html_id, string|Url $target = '', bool $enable_captcha_protection = true)
     {
         $this->enable_captcha_protection = $enable_captcha_protection;
         $this->set_html_id($html_id);
@@ -338,7 +338,7 @@ class HTMLForm implements HTMLElement
      * Sets the form's target
      * @param string $target The URL at which the form will be submited
      */
-    public function set_target(string $target): void
+    public function set_target(string|Url $target): void
     {
         if ($target instanceof Url)
         {

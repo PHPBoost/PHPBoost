@@ -15,7 +15,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 {
 	private string $label = '';
 	private string|int $raw_value = '';
-	private bool $active = false;
+	private ?bool $active = false;
 	private bool $disable = false;
 	private string $data_option_img = '';
 	private string $data_option_icon = '';

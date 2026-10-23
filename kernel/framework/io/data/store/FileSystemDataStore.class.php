@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 06
+ * @version     PHPBoost 6.1 - last update: 2026 10 23
  * @since       PHPBoost 3.0 - 2011 01 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -44,7 +44,15 @@ class FileSystemDataStore implements DataStore
 	{
 		$file = $this->get_file($name);
 		$content = $file->read();
-		$data = TextHelper::unserialize($content);
+		try
+		{
+			$data = TextHelper::unserialize($content);
+		}
+		catch (TypeError $ex)
+		{
+			$file->delete();
+			throw new DataStoreException($name);
+		}
 		// If the class definition was missing at unserialize time (e.g. during
 		// an update where module paths changed), TextHelper::unserialize returns
 		// a __PHP_Incomplete_Class. Treat it as a cache miss.
