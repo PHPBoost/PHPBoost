@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 24
  * @since       PHPBoost 3.0 - 2010 01 22
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -63,7 +63,7 @@ define('USE_DEFAULT_IF_EMPTY', 1);
  * @param int $flags You can change the behaviour of this method: USE_DEFAULT_IF_EMPTY will allow you to retrieve the default value even if the parameter exists but its value is empty (to know if the var is empty, we use the empty() PHP function).
  * @return mixed The value of the variable you wanted to retrieve. Its type is either the same as the default value or the type you forced.
  */
-function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $flags = 0)
+function retrieve(int $var_type, string $var_name, mixed $default_value, ?string $force_type = NULL, int $flags = 0): mixed
 {
 	$var = null;
 	$request = AppContext::get_request();
@@ -152,7 +152,7 @@ function retrieve($var_type, $var_name, $default_value, $force_type = NULL, $fla
  * @param string $ampersand In a redirection you mustn't put the & HTML entity (&amp;). In this case set that parameter to &.
  * @return string The URL to use.
  */
-function url($url, $mod_rewrite = '', $ampersand = '&amp;')
+function url(string $url, string $mod_rewrite = '', string $ampersand = '&amp;'): string
 {
 	if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() && !empty($mod_rewrite)) //Activation du mod rewrite => cookies activés.
 	{
@@ -169,10 +169,10 @@ function url($url, $mod_rewrite = '', $ampersand = '&amp;')
  * Loads a module lang file. It will load alone the file corresponding to the user lang, but if it doesn't exist, another lang will be choosen.
  * An error will be displayed on the page and the script execution will be stopped if no lang file is found for this module.
  * @param string $module_name The identifier of the module for which you want to load the lang file.
- * @param string Path of the folder in which is the file. This path mustn't finish by the / character.
+ * @param string $path Path of the folder in which is the file. This path mustn't finish by the / character.
  * @depre
  */
-function load_module_lang($module_name, $path = PATH_TO_ROOT)
+function load_module_lang(string $module_name, string $path = PATH_TO_ROOT): void
 {
 	global $LANG;
 
@@ -238,9 +238,9 @@ function load_module_lang($module_name, $path = PATH_TO_ROOT)
  * @param string $dir_path Path of the file (relative from this page).
  * @param string $require_dir The name of the folder in which the configuration file should be. This folder must be in the bases file ($dir_path). If this directory doesn't exist, another will be read.
  * @param string $ini_name The name of the configuration file you want to know.
- * @return array The configuration values contained in the file $dir_path/$require_dir/$ini_name.
+ * @return array|false The configuration values contained in the file $dir_path/$require_dir/$ini_name.
  */
-function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
+function load_ini_file(string $dir_path, string $require_dir, string $ini_name = 'config.ini'): array|false
 {
 	$dir = find_require_dir($dir_path, $require_dir, false);
 	$file = $dir_path . $dir . '/' . $ini_name;
@@ -263,10 +263,10 @@ function load_ini_file($dir_path, $require_dir, $ini_name = 'config.ini')
  * This function returns the path of an existing file (if the required lang exists, it will be it, otherwise it will be one of the existing files).
  * @param string $dir_path Path of the folder in which you want to search
  * @param string $require_dir Default folder
- * @param string $fatal_error true if you want to throw a fatal error if no file could be found, false otherwise.
- * @return string The path of the folder you search.
+ * @param bool $fatal_error true if you want to throw a fatal error if no file could be found, false otherwise.
+ * @return string|null The path of the folder you search, or null if none is found and fatal errors are disabled.
  */
-function find_require_dir($dir_path, $require_dir, $fatal_error = true)
+function find_require_dir(string $dir_path, string $require_dir, bool $fatal_error = true): ?string
 {
 	//Si le dossier n'existe pas on prend le suivant exisant.
 	if (!@file_exists($dir_path . $require_dir))
@@ -293,9 +293,13 @@ function find_require_dir($dir_path, $require_dir, $fatal_error = true)
 	{
 		$error_message = sprintf('Unable to load required directory \'%s\'!', $dir_path . $require_dir);
 
-        $controller = new UserErrorController(LangLoader::get_message('warning.error', 'warning-lang'),
-            $error_message, UserErrorController::FATAL);
+        $controller = new UserErrorController(
+            LangLoader::get_message('warning.error', 'warning-lang'),
+            $error_message, UserErrorController::FATAL
+        );
         DispatchManager::redirect($controller);
 	}
+
+	return null;
 }
 ?>

@@ -116,12 +116,16 @@ class AddonHelper
     public static function resolve_locale_field(array $entry, string $field, string $locale, string $default): string
     {
         if (!isset($entry[$field]))
+        {
             return $default;
+        }
 
         $value = $entry[$field];
 
         if (is_string($value))
+        {
             return $value;
+        }
 
         if (is_array($value))
         {
@@ -194,19 +198,25 @@ class AddonHelper
     {
         list($base_url) = AddonRemoteHelper::fetch_website_index($server_url, $server_dir, $version, $addon_type);
         if (empty($base_url))
+        {
             return false;
+        }
 
         $zip_content = AddonRemoteHelper::curl_get(
             $base_url . '/' . rawurlencode($addon_id) . '/' . rawurlencode($addon_id) . '.zip',
             [], 60
         );
         if ($zip_content === false)
+        {
             return false;
+        }
 
         $dest = rtrim($dest_dir, '/') . '/' . $addon_id . '/';
         $ok   = AddonRemoteHelper::extract_zip_prefix_to($zip_content, $addon_id . '/', $dest);
         if (!$ok)
+        {
             $ok = AddonRemoteHelper::extract_zip_prefix_to($zip_content, '', $dest);
+        }
 
         return $ok;
     }
@@ -235,13 +245,19 @@ class AddonHelper
         $lang    = LangLoader::get_all_langs();
 
         if (!is_writable($dest_dir) && !@chmod($dest_dir, 0755))
+        {
             return ['success' => false, 'msg' => $lang['warning.process.error']];
+        }
 
         if ($is_installed_fn($addon_id))
+        {
             return ['success' => false, 'msg' => $lang[$already_installed_key]];
+        }
 
         if (!self::download_from_github($owner, $repo, $subdir, $addon_id, $dest_dir, $version, $token))
+        {
             return ['success' => false, 'msg' => $lang['addon.warning.download.error']];
+        }
 
         return $install_fn($addon_id);
     }
@@ -264,13 +280,19 @@ class AddonHelper
         $lang    = LangLoader::get_all_langs();
 
         if (!is_writable($dest_dir) && !@chmod($dest_dir, 0755))
+        {
             return ['success' => false, 'msg' => $lang['warning.process.error']];
+        }
 
         if ($is_installed_fn($addon_id))
+        {
             return ['success' => false, 'msg' => $lang[$already_installed_key]];
+        }
 
         if (!self::download_from_website($addon_id, $server_url, $server_dir, $addon_type, $dest_dir, $version))
+        {
             return ['success' => false, 'msg' => $lang['addon.warning.download.error']];
+        }
 
         return $install_fn($addon_id);
     }
@@ -299,13 +321,19 @@ class AddonHelper
         $lang    = LangLoader::get_all_langs();
 
         if (!$is_installed_fn($addon_id))
+        {
             return ['success' => false, 'msg' => $lang[$not_installed_key]];
+        }
 
         if (!is_writable($dest_dir) && !@chmod($dest_dir, 0755))
+        {
             return ['success' => false, 'msg' => $lang['warning.process.error']];
+        }
 
         if (!self::download_from_github($owner, $repo, $subdir, $addon_id, $dest_dir, $version, $token))
+        {
             return ['success' => false, 'msg' => $lang['addon.warning.download.error']];
+        }
 
         return $upgrade_fn($addon_id);
     }
@@ -328,13 +356,19 @@ class AddonHelper
         $lang    = LangLoader::get_all_langs();
 
         if (!$is_installed_fn($addon_id))
+        {
             return ['success' => false, 'msg' => $lang[$not_installed_key]];
+        }
 
         if (!is_writable($dest_dir) && !@chmod($dest_dir, 0755))
+        {
             return ['success' => false, 'msg' => $lang['warning.process.error']];
+        }
 
         if (!self::download_from_website($addon_id, $server_url, $server_dir, $addon_type, $dest_dir, $version))
+        {
             return ['success' => false, 'msg' => $lang['addon.warning.download.error']];
+        }
 
         return $upgrade_fn($addon_id);
     }
@@ -367,12 +401,18 @@ class AddonHelper
             $addon_id       = $entry['id'] ?? '';
             $remote_version = $entry['version'] ?? '';
             if (empty($addon_id) || empty($remote_version))
+            {
                 continue;
+            }
             if (!$is_installed($addon_id))
+            {
                 continue;
+            }
             $local_version = $get_version($addon_id);
             if (version_compare($remote_version, $local_version, '>'))
+            {
                 $updatable[] = $addon_id;
+            }
         }
         return $updatable;
     }

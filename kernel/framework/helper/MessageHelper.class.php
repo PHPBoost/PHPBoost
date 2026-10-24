@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 24
  * @since       PHPBoost 3.0 - 2011 01 07
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MessageHelper
@@ -23,7 +24,7 @@ class MessageHelper
 	const ADMIN_ONLY     = 'admin_only';
 	const GROUP          = 'group_only';
 
-	public static function display($content, $type, $timeout = 0, $display_small = false)
+	public static function display(string $content, string $type, int $timeout = 0, bool $display_small = false): FileTemplate
 	{
 		$tpl = new FileTemplate('framework/helper/message.tpl');
 		$group_only = false;

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 07
+ * @version     PHPBoost 6.1 - last update: 2026 10 24
  * @since       PHPBoost 1.5 - 2006 07 23
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -14,26 +14,20 @@
 
 class Backup
 {
-	//TODO attributs à mettre en private après remplacement des accès direct dans les fichiers concernés.
-	/**
-	 * @var array List of the tables used by PHPBoost.
-	 */
-	public $tables = [];
-	/**
-	 * @var string Backup script
-	 */
-	public $backup_script = '';
-
-	private $db_querier;
+	// TODO attributes to be made private after replacing direct access in the files concerned.
+	public array $tables = [];
+	public string $backup_script = '';
+	private mixed $db_querier;
 
 	/**
 	 * Builds a Backup object
 	 */
 	public function __construct()
 	{
-		$this->list_db_tables(); //Liste toutes les tables de PHPBoost.
-		//On modifie le temps d'exécution maximal si le serveur le permet
-		//parce que les opérations sont longues
+        // List all tables of the app.
+		$this->list_db_tables(); 
+		// We modify the execution time if the server allows it
+		// because the operations are long
 		Environment::try_to_increase_max_execution_time();
 
 		$this->db_querier = PersistenceContext::get_querier();
@@ -42,7 +36,7 @@ class Backup
 	/**
 	 * Retrieves the list of the tables present on the database used.
 	 */
-	public function list_db_tables()
+	public function list_db_tables(): array
 	{
 		if (empty($this->tables))
 		{
@@ -57,14 +51,16 @@ class Backup
 	 * If you want to generate the query which will drop all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
-	public function generate_drop_table_query($table_list = [])
+	public function generate_drop_table_query(array $table_list = []): void
 	{
 		$selected_tables =  [];
 		$all_tables = count($table_list) == 0;
 		foreach ($this->tables as $id => $properties)
 		{
 			if (in_array($properties['name'], $table_list) || $all_tables)
+            {
 				$selected_tables[] = $properties['name'];
+            }
 		}
 		$this->backup_script .= 'DROP TABLE IF EXISTS ' . implode(', ', $selected_tables) . ';' . "\n";
 	}
@@ -75,7 +71,7 @@ class Backup
 	 * If you want to generate the query which will create all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
-	public function generate_create_table_query($table_list = [])
+	public function generate_create_table_query(array $table_list = []): void
 	{
 		$all_tables = count($table_list) == 0 ? true : false;
 
@@ -99,7 +95,7 @@ class Backup
 	 * If you want to generate the query which will fill all the tables, don't use this parameter
 	 * of let an empty array.
 	 */
-	public function generate_insert_values_query($tables = [])
+	public function generate_insert_values_query(array $tables = []): void
 	{
 		$all_tables = count($tables) == 0 ? true : false;
 
@@ -127,10 +123,14 @@ class Backup
 							$this->backup_script .= ") VALUES ";
 						}
 						elseif ($i > 1)
+                        {
 							$this->backup_script .= ", ";
+                        }
 						$this->backup_script .= "(";
 						foreach ($row as $key => $value)
+                        {
 							$row[$key] = '\'' . str_replace(chr(13), '\r', str_replace(chr(10), '\n', str_replace('\\', '\\\\', str_replace("'", "''", $value)))) . '\'';
+                        }
 						$this->backup_script .= implode(', ', $row) . ")";
 						$i++;
 					}
@@ -145,7 +145,7 @@ class Backup
 	 * Concatenates a string at the end of the current script.
 	 * @param string $string String to concatenate.
 	 */
-	public function concatenate_to_query($string)
+	public function concatenate_to_query(string $string): void
 	{
 		$this->backup_script .= $string;
 	}
@@ -154,7 +154,7 @@ class Backup
 	 * Returns the current backup script.
 	 * @return string the whole script
 	 */
-	public function get_script()
+	public function get_script(): string
 	{
 		return $this->backup_script;
 	}
@@ -177,7 +177,7 @@ class Backup
 	* 	'update_time' => when the data file was last updated
 	* ]
 	*/
-	public function get_tables_properties_list()
+	public function get_tables_properties_list(): array
 	{
 		return $this->list_db_tables();
 	}
@@ -186,7 +186,7 @@ class Backup
 	 * Retrieves the list of the tables used by PHPBoost.
 	 * @return array The list of the table names.
 	 */
-	public function get_tables_list()
+	public function get_tables_list(): array
 	{
 		$this->list_db_tables();
 		return array_keys($this->tables);
@@ -196,7 +196,7 @@ class Backup
 	 * Returns the number of tables used by PHPBoost.
 	 * @return int number of tables
 	 */
-	public function get_tables_number()
+	public function get_tables_number(): int
 	{
 		$this->list_db_tables();
 		return count($this->tables);
@@ -206,7 +206,7 @@ class Backup
 	 * Writes the backup script in a text file.
 	 * @param string $file_path Path of the file.
 	 */
-	public function export_file($file_path)
+	public function export_file(string $file_path): void
 	{
 		$file = new File($file_path);
 		$file->write($this->backup_script);
@@ -217,7 +217,7 @@ class Backup
 	 * @param string[] $tables Tables whose structure is extracted.
 	 * @return array{fields: array<array{name: string, type: string, attribute: string, null: bool, default: string, extra: string}>, index: array<array{name: string, fields: string, type: string}>}
 	 */
-	public function extract_table_structure($tables = [])
+	public function extract_table_structure(array $tables = []): array
 	{
 		$this->generate_create_table_query($tables);
 

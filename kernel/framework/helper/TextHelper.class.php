@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 08
+ * @version     PHPBoost 6.1 - last update: 2026 10 24
  * @since       PHPBoost 3.0 - 2010 01 24
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,7 @@ class TextHelper
 	 * @param int $addslashes If you want to escape the quotes in the string, use ADDSLASHES_FORCE, if you don't want, use the ADDSLASHES_NONE constant.
 	 * @return string The protected string.
 	 */
-	public static function strprotect($var, $html_protect = self::HTML_PROTECT, $addslashes = self::ADDSLASHES_FORCE)
+	public static function strprotect(mixed $var, bool $html_protect = self::HTML_PROTECT, int $addslashes = self::ADDSLASHES_FORCE): string
 	{
 		$var = trim((string)$var);
 
@@ -68,7 +68,7 @@ class TextHelper
 	 * @param bool $cut True if you accept that a word would be broken apart, false if you want to cut only on a blank character.
 	 * @return string The wrapped HTML string.
 	 */
-	public static function wordwrap_html($str, $length, $cut_char = '<br />', $cut = true)
+	public static function wordwrap_html(?string $str, int $length, string $cut_char = '<br />', bool $cut = true): string
 	{
 		$str = self::utf8_wordwrap(self::html_entity_decode($str), $length, $cut_char, $cut);
 		return str_replace('&lt;br /&gt;', '<br />', self::htmlspecialchars($str, ENT_NOQUOTES));
@@ -84,7 +84,7 @@ class TextHelper
 	 * @param int $end If length is given and is positive, the string returned will contain at most length  characters beginning from start  (depending on the length of string ).
 	 * @return string The sub string.
 	 */
-	public static function substr_html($str, $start, $end = '')
+	public static function substr_html(?string $str, int $start, int|string $end = ''): string
 	{
 		if ($end == '')
 			return self::htmlspecialchars(self::substr(self::html_entity_decode($str), $start), ENT_NOQUOTES);
@@ -98,7 +98,7 @@ class TextHelper
 	 * @param int $length The desired length
 	 * @return string The substring
 	 */
-	public static function cut_string($string, $length)
+	public static function cut_string(?string $string, int $length): string
 	{
 		if (strlen($string) <= $length)
 			return $string;
@@ -110,10 +110,10 @@ class TextHelper
 	/**
 	 * Exports a variable to be used in a javascript script.
 	 * @param string $string A PHP string to convert to a JS one
-	 * @param string $add_quotes If true, returned string will be bounded by single quotes
+	 * @param bool $add_quotes If true, returned string will be bounded by single quotes
 	 * @return string The js equivalent string
 	 */
-	public static function to_js_string($string, $add_quotes = true)
+	public static function to_js_string(?string $string, bool $add_quotes = true): string
 	{
 		$bounds = $add_quotes ? '\'' : '';
 		return $bounds . ($string ? str_replace(["\r\n", "\r", "\n", '"', '\\\\\''], ['\n', '\n', '\n', '&quot;', '\\\''], addcslashes($string, '\'')) : '') . $bounds;
@@ -122,192 +122,244 @@ class TextHelper
 	/**
 	 * Exports a variable to be used in a json javascript script.
 	 * @param string $string A PHP string to convert to a json one
-	 * @param string $add_quotes If true, returned string will be bounded by double quotes
+	 * @param bool $add_quotes If true, returned string will be bounded by double quotes
 	 * @return string The json equivalent string
 	 */
-	public static function to_json_string($string, $add_quotes = true)
+	public static function to_json_string(?string $string, bool $add_quotes = true): string
 	{
 		$bounds = $add_quotes ? '"' : '';
 		return $bounds . ($string ? str_replace(["\r\n", "\r", "\n",], ['\n', '\n', '\n',], addcslashes($string, '"')) : '') . $bounds;
 	}
 
-	public static function htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
+	public static function htmlspecialchars(?string $string, ?int $flags = null, string $encoding = 'UTF-8', bool $double_encode = true): string
 	{
 		if ($flags === null)
+        {
 			$flags = ENT_COMPAT;
+        }
 
 		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
 		if ($string === null)
+        {
             $string = '';
+        }
 
 		return str_replace('&amp;', '&', htmlspecialchars($string, $flags, $encoding, $double_encode));
 	}
 
-	public static function htmlspecialchars_decode($string, $flags = null)
+	public static function htmlspecialchars_decode(?string $string, ?int $flags = null): string
 	{
 		if ($flags === null)
+        {
 			$flags = ENT_COMPAT;
+        }
 
 		return htmlspecialchars_decode($string, $flags);
 	}
 
-	public static function html_entity_decode($string, $flags = null, $encoding = 'UTF-8')
+	public static function html_entity_decode(?string $string, ?int $flags = null, string $encoding = 'UTF-8'): string
 	{
 		if ($flags === null)
+        {
 			$flags = ENT_COMPAT;
+        }
 
 		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
 		if ($string === null)
+        {
             $string = '';
+        }
 
 		return html_entity_decode($string, $flags, $encoding);
 	}
 
-	public static function strtolower($string)
+	public static function strtolower(?string $string): string
 	{
 		return mb_strtolower($string);
 	}
 
-	public static function strtoupper($string)
+	public static function strtoupper(?string $string): string
 	{
 		return mb_strtoupper($string);
 	}
 
-	public static function lcfirst($string)
+	public static function lcfirst(?string $string): string
 	{
 		$fc = mb_strtolower(mb_substr($string, 0, 1));
 		return $fc . mb_substr($string, 1);
 	}
 
-	public static function ucfirst($string)
+	public static function ucfirst(?string $string): string
 	{
 		$fc = mb_strtoupper(mb_substr($string, 0, 1));
 		return $fc . mb_substr($string, 1);
 	}
 
-	public static function strlen($string)
+	public static function strlen(?string $string): string
 	{
 		return strlen($string);
 	}
 
-	public static function strpos($string, $substring, $offset = '')
+	public static function strpos(?string $string, string $substring, int|string $offset = ''): int|false
 	{
 		if (!empty($substring))
 		{
 			if (is_int($offset))
+            {
 				return mb_strpos($string, $substring, $offset);
+            }
 			else
+            {
 				return mb_strpos($string, $substring);
+            }
 		}
 		return false;
 	}
 
-	public static function stripos($string, $substring, $offset = '')
+	public static function stripos(?string $string, string $substring, int|string $offset = ''): int|false
 	{
 		if (!empty($substring))
 		{
 			if (is_int($offset))
+            {
 				return mb_stripos($string, $substring, $offset);
+            }
 			else
+            {
 				return mb_stripos($string, $substring);
+            }
 		}
 		return false;
 	}
 
-	public static function substr($string, $start, $length = '')
+	public static function substr(?string $string, int $start, int|string $length = ''): string
 	{
 		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
 		if ($string === null)
+        {
             $string = '';
+        }
 
 		if (is_int($length))
+        {
 			return substr($string, $start, $length);
+        }
 		else
+        {
 			return substr($string, $start);
+        }
 	}
 
-	public static function mb_substr($string, $start, $length = '')
+	public static function mb_substr(?string $string, int $start, int|string $length = ''): string
 	{
 		if (is_int($length))
+        {
 			return mb_substr($string, $start, $length);
+        }
 		else
+        {
 			return mb_substr($string, $start);
+        }
 	}
 
-	public static function strrchr($string, $needle)
+	public static function strrchr(?string $string, string $needle): string|false
 	{
 		return mb_strrchr($string, $needle);
 	}
 
-	public static function strripos($string, $needle, $offset = '')
+	public static function strripos(?string $string, string $needle, int|string $offset = ''): int|false
 	{
 		if (is_int($offset))
+        {
 			return mb_strripos($string, $needle, $offset);
+        }
 		else
+        {
 			return mb_strripos($string, $needle);
+        }
 	}
 
-	public static function strrpos($string, $needle, $offset = '')
+	public static function strrpos(?string $string, string $needle, int|string $offset = ''): int|false
 	{
 		if (is_int($offset))
+        {
 			return mb_strrpos($string, $needle, $offset);
+        }
 		else
+        {
 			return mb_strrpos($string, $needle);
+        }
 	}
 
-	public static function strstr($string, $needle, $before_needle = '')
+	public static function strstr(?string $string, string $needle, int|string $before_needle = ''): string|false
 	{
 		if (is_int($before_needle))
+        {
 			return mb_strstr($string, $needle, $before_needle);
+        }
 		else
+        {
 			return mb_strstr($string, $needle);
+        }
 	}
 
-	public static function substr_count($string, $needle, $encoding = '')
+	public static function substr_count(?string $string, string $needle, string $encoding = ''): int
 	{
 		if ($encoding != '')
+        {
 			return mb_substr_count($string, $needle, $encoding);
+        }
 		else
+        {
 			return mb_substr_count($string, $needle);
+        }
 	}
 
-	public static function convert_case($string, $mode, $encoding = '')
+	public static function convert_case(?string $string, int $mode, string $encoding = ''): string
 	{
 		if ($encoding != '')
+        {
 			return mb_convert_case($string, $mode, $encoding);
+        }
 		else
+        {
 			return mb_convert_case($string, $mode);
+        }
 	}
 
-	public static function serialize($string)
+	public static function serialize(mixed $string): string
 	{
 		return serialize($string);
 	}
 
-	public static function serialize_base64($string)
+	public static function serialize_base64(mixed $string): string
 	{
 		return base64_encode(self::serialize($string));
 	}
 
-	public static function unserialize($string)
+	public static function unserialize(?string $string): mixed
 	{
 		if ($string === null)
+        {
 			return null;
+        }
 
 		return unserialize(self::is_base64($string) ? base64_decode($string) : $string);
 	}
 
-    public static function mb_unserialize($string)
+    public static function mb_unserialize(mixed $string): mixed
     {
         // We first check if the string is serialized
-        if (!self::is_serialized($string)) {
+        if (!self::is_serialized($string))
+        {
             return $string;
         }
 
         // Fixed string lengths for multi-byte characters
         $string = preg_replace_callback(
             '/s:(\d+):"((?:[^"]|(?<=\\\\)")*)";/s',  // Better regex to handle escaped quotes
-            function (array $matches) {
+            function (array $matches)
+            {
                 $value = $matches[2] ?? '';
                 $value = (string) $value;
                 return 's:' . mb_strlen($value, '8bit') . ':"' . $value . '";';
@@ -321,11 +373,13 @@ class TextHelper
         // would turn every object into __PHP_Incomplete_Class, breaking config loading.
         $result = self::safe_unserialize(trim($string));
 
-        if ($result === null && $string !== 'b:0;') {
+        if ($result === null && $string !== 'b:0;')
+        {
             $cleaned = trim($string);
             $result = self::safe_unserialize($cleaned);
 
-            if ($result === null) {
+            if ($result === null)
+            {
                 return $string;
             }
         }
@@ -333,7 +387,7 @@ class TextHelper
         return $result;
     }
 
-    private static function safe_unserialize($string)
+    private static function safe_unserialize(string $string): mixed
     {
         $error = null;
         $result = null;
@@ -343,19 +397,24 @@ class TextHelper
             return true;
         });
 
-        try {
+        try
+        {
             $result = unserialize($string);
-        } finally {
+        }
+        finally
+        {
             restore_error_handler();
         }
 
         return $error !== null ? null : $result;
     }
 
-	private static function is_base64($string)
+	private static function is_base64(mixed $string): bool
 	{
 		if (!is_string($string))
+        {
 			return false;
+        }
 
 		$decoded = base64_decode($string, true);
 		return preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $string) && false !== $decoded && base64_encode($decoded) == $string;
@@ -364,20 +423,28 @@ class TextHelper
 	/**
 	 * @author      Wordpress
 	*/
-	public static function is_serialized( $string, $strict = true )
+	public static function is_serialized(mixed $string, bool $strict = true ): bool
 	{
 		if (!is_string($string))
+        {
 			return false;
+        }
 
 		$string = trim($string);
 		if ('N;' === $string)
+        {
 			return true;
+        }
 
 		if (strlen($string) < 4 )
+        {
 			return false;
+        }
 
 		if (':' !== $string[1])
+        {
 			return false;
+        }
 
 		if ($strict)
 		{
@@ -391,23 +458,35 @@ class TextHelper
 			$brace     = strpos($string, '}');
 
 			if (false === $semicolon && false === $brace)
+            {
 				return false;
+            }
 
 			if (false !== $semicolon && $semicolon < 3)
+            {
 				return false;
+            }
 
 			if (false !== $brace && $brace < 4)
+            {
 				return false;
+            }
 		}
 		$token = $string[0];
-		switch ($token) {
+		switch ($token)
+        {
 			case 's':
-				if ($strict) {
+				if ($strict)
+                {
 					if ('"' !== substr($string, -2, 1))
+                    {
 						return false;
+                    }
 				}
 				elseif (false === strpos($string, '"'))
+                {
 					return false;
+                }
 			case 'a':
 			case 'O':
 				return (bool)preg_match("/^{$token}:[0-9]+:/s", $string);
@@ -420,7 +499,7 @@ class TextHelper
 		return false;
 	}
 
-	public static function deserialize($string)
+	public static function deserialize(mixed $string): mixed
 	{
 		return self::is_serialized($string) ? self::mb_unserialize($string) : $string;
 	}
@@ -432,18 +511,26 @@ class TextHelper
 	 * @param bool $has_html_links true if the content is in HTML
 	 * @return bool true if there are no too much links, false otherwise.
 	 */
-	public static function check_nbr_links($contents, $max_nbr, $has_html_links = false)
+	public static function check_nbr_links(?string $contents, int $max_nbr, bool $has_html_links = false): bool
 	{
 		if ($max_nbr == -1)
+        {
 			return true;
+        }
 
 		if ($has_html_links)
+        {
 			$nbr_link = preg_match_all('`<a href="(?:ftp|https?)://`u', $contents, $array);
+        }
 		else
+        {
 			$nbr_link = preg_match_all('`(?:ftp|https?)://`u', $contents, $array);
+        }
 
 		if ($nbr_link !== false && $nbr_link > $max_nbr)
+        {
 			return false;
+        }
 
 		return true;
 	}
@@ -454,10 +541,10 @@ class TextHelper
 	 * @param string $string the input string
 	 * @param int $width the column width
 	 * @param string $break the line is broken using the optional break parameter
-	 * @param string $cut not used for the moment
+	 * @param bool $cut not used for the moment
 	 * @return string the given string wrapped at the specified column
 	 */
-	public static function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
+	public static function utf8_wordwrap(?string $string, int $width = 75, string $break = "\n", bool $cut = true): string
 	{
 		$lines = [];
 		while (!empty($string))
@@ -485,7 +572,7 @@ class TextHelper
 	 * @param string $string the input string
 	 * @return string the given string without tags
 	 */
-	public static function strip_content_tags($string)
+	public static function strip_content_tags(?string $string): string
 	{
 		$string = preg_replace("/<div.*?formatter-.*?(?:<\/div>){1,}/", "", $string);
 		$string = preg_replace("/<h.*?formatter-.*?(?:<\/h>){1,}/", "", $string);
@@ -499,7 +586,7 @@ class TextHelper
 	 * @param string $string the input string
 	 * @return string the given string without extra line break
 	 */
-	public static function strip_content_extra_line_break($string)
+	public static function strip_content_extra_line_break(?string $string): string
 	{
 		$string = preg_replace("/\n<br\W*?\/?>/", "", $string);
 		$string = preg_replace("/^<br\W*?\/?>/", "", $string);
@@ -514,7 +601,7 @@ class TextHelper
 	/**
 	 * Split a string by a string
 	 */
-	public static function explode($separator, $string, $limit = PHP_INT_MAX)
+	public static function explode(string $separator, ?string $string, int $limit = PHP_INT_MAX): array
 	{
 		return explode($separator, $string ?? '', $limit);
 	}
@@ -522,7 +609,7 @@ class TextHelper
 	/**
 	 * Perform a regular expression search and replace
 	 */
-	public static function preg_match($pattern, $subject, &$matches = null, $flags = 0, $offset = 0)
+	public static function preg_match(string $pattern, ?string $subject, ?array &$matches = null, int $flags = 0, int $offset = 0): int|false
 	{
 		return preg_match($pattern, $subject ?? '', $matches, $flags, $offset);
 	}
@@ -530,7 +617,7 @@ class TextHelper
 	/**
 	 * Perform a regular expression search and replace
 	 */
-	public static function preg_replace($pattern, $replacement, $subject, $limit = -1, &$count = null)
+	public static function preg_replace(array|string $pattern, array|string $replacement, ?string $subject, int $limit = -1, ?int &$count = null): ?string
 	{
 		return preg_replace($pattern, $replacement, $subject ?? '', $limit, $count);
 	}
@@ -538,7 +625,7 @@ class TextHelper
 	/**
 	 * Replace all occurrences of the search string with the replacement string
 	 */
-	public static function str_replace($search, $replace, $subject, &$count = null)
+	public static function str_replace(array|string $search, array|string $replace, ?string $subject, ?int &$count = null): string
 	{
 		return str_replace($search, $replace, $subject ?? '', $count);
 	}
@@ -546,7 +633,7 @@ class TextHelper
 	/**
 	 * Un-quotes a quoted string
 	 */
-	public static function stripslashes($string)
+	public static function stripslashes(?string $string): string
 	{
 		return stripslashes($string ?? '');
 	}

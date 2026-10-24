@@ -28,10 +28,12 @@ class AddonRemoteHelper
     // Base cURL layer
     // -------------------------------------------------------------------------
 
-    public static function curl_get($url, $extra_headers = [], $timeout = 15)
+    public static function curl_get(string $url, array $extra_headers = [], int $timeout = 15): string|false
     {
         if (!function_exists('curl_init'))
+        {
             return false;
+        }
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,            $url);
@@ -51,10 +53,14 @@ class AddonRemoteHelper
         $err  = curl_error($ch);
 
         if (\PHP_VERSION_ID < 80100)
+        {
             curl_close($ch);
+        }
 
         if ($body === false || !empty($err) || $http < 200 || $http >= 300)
+        {
             return false;
+        }
 
         return $body;
     }
@@ -70,15 +76,19 @@ class AddonRemoteHelper
         curl_exec($ch);
         $http_code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if (\PHP_VERSION_ID < 80100)
+        {
             curl_close($ch);
+        }
         return $http_code >= 200 && $http_code < 300;
     }
 
-    public static function curl_get_json($url, $extra_headers = [], $timeout = 15)
+    public static function curl_get_json(string $url, array $extra_headers = [], int $timeout = 15): ?array
     {
         $raw = self::curl_get($url, $extra_headers, $timeout);
         if ($raw === false)
+        {
             return null;
+        }
         $decoded = json_decode($raw, true);
         return is_array($decoded) ? $decoded : null;
     }
@@ -87,15 +97,17 @@ class AddonRemoteHelper
     // GitHub helpers
     // -------------------------------------------------------------------------
 
-    public static function github_headers($token)
+    public static function github_headers(string $token): array
     {
         $headers = ['Accept: application/vnd.github.v3+json'];
         if (!empty($token))
+        {
             $headers[] = 'Authorization: token ' . $token;
+        }
         return $headers;
     }
 
-    public static function resolve_github_branch($owner, $repo, $version, $token)
+    public static function resolve_github_branch(string $owner, string $repo, string $version, string $token): string
     {
         $url      = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/branches';
         $branches = self::curl_get_json($url, self::github_headers($token));
@@ -109,29 +121,35 @@ class AddonRemoteHelper
         return 'master';
     }
 
-    public static function github_list_dirs($owner, $repo, $path, $branch, $token)
+    public static function github_list_dirs(string $owner, string $repo, string $path, string $branch, string $token): ?array
     {
         $encoded = $path !== '' ? implode('/', array_map('rawurlencode', explode('/', $path))) : '';
         $url     = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/' . $encoded . '?ref=' . rawurlencode($branch);
         $data    = self::curl_get_json($url, self::github_headers($token));
         if (!is_array($data))
+        {
             return null;
+        }
         $dirs = [];
         foreach ($data as $item)
         {
             if (isset($item['type']) && $item['type'] === 'dir')
+            {
                 $dirs[] = $item;
+            }
         }
         return $dirs;
     }
 
-    public static function github_read_config_ini($owner, $repo, $path, $branch, $token)
+    public static function github_read_config_ini(string $owner, string $repo, string $path, string $branch, string $token): array
     {
         $encoded = implode('/', array_map('rawurlencode', explode('/', $path)));
         $url     = 'https://api.github.com/repos/' . $owner . '/' . $repo . '/contents/' . $encoded . '?ref=' . rawurlencode($branch);
         $data    = self::curl_get_json($url, self::github_headers($token));
         if (!is_array($data) || empty($data['content']))
+        {
             return [];
+        }
         $ini    = base64_decode(str_replace("\n", '', $data['content']));
         $parsed = @parse_ini_string($ini);
         return is_array($parsed) ? $parsed : [];
@@ -226,7 +244,9 @@ class AddonRemoteHelper
                 {
                     $data = json_decode($stale, true);
                     if (is_array($data))
+                    {
                         return $data;
+                    }
                 }
             }
             return null;
@@ -234,20 +254,28 @@ class AddonRemoteHelper
 
         $data = json_decode($raw, true);
         if (!is_array($data))
+        {
             return null;
+        }
 
         // Persist cache atomically: write to a temp file then rename,
         // so concurrent readers never see a partially written file.
         $cache_dir = dirname($cache_file);
         if (!is_dir($cache_dir))
+        {
             @mkdir($cache_dir, 0755, true);
+        }
 
         $tmp     = $cache_file . '.tmp.' . getmypid();
         $written = @file_put_contents($tmp, $raw, LOCK_EX);
         if ($written !== false)
+        {
             @rename($tmp, $cache_file); // atomic on POSIX systems
+        }
         else
+        {
             @unlink($tmp); // clean up if write failed
+        }
 
         return $data;
     }
@@ -275,7 +303,9 @@ class AddonRemoteHelper
 
         $cache_file = self::cache_path('github', $owner, $raw_url, $index_file);
         if (file_exists($cache_file))
+        {
             @unlink($cache_file);
+        }
     }
 
     /**
@@ -320,7 +350,9 @@ class AddonRemoteHelper
                 $subdir = $repo['directory']  ?? '';
 
                 if (empty($owner) || empty($rep))
+                {
                     continue;
+                }
 
                 // resolve_github_branch makes one API call — acceptable at warm-up time
                 $branch = self::resolve_github_branch($owner, $rep, $phpboost_version, $github_token);
@@ -339,7 +371,9 @@ class AddonRemoteHelper
             $dir = $server['directory'] ?? '';
 
             if (empty($url))
+            {
                 continue;
+            }
 
             foreach (self::ADDON_INDEX_FILES as $index_file)
             {
@@ -353,7 +387,9 @@ class AddonRemoteHelper
     {
         $cache_dir = PATH_TO_ROOT . '/cache/addons/';
         if (!is_dir($cache_dir))
+        {
             return;
+        }
 
         foreach (glob($cache_dir . '*.json') ?: [] as $file)
         {
@@ -379,11 +415,13 @@ class AddonRemoteHelper
      * @param  bool   $force        true = bypass the cache and reload from the server
      * @return array                Two-element array: [base_url_string, data_array]
      */
-    public static function fetch_website_index($server_url, $directory, $version, $addon_folder, bool $force = false)
+    public static function fetch_website_index(string $server_url, string $directory, string $version, string $addon_folder, bool $force = false): array
     {
         $base = rtrim($server_url, '/');
         if (!empty($directory))
+        {
             $base .= '/' . trim($directory, '/');
+        }
 
         $real_version = $version === GeneralConfig::load()->get_phpboost_major_version() ? $version : 'dev';
 
@@ -406,7 +444,9 @@ class AddonRemoteHelper
             {
                 $payload = json_decode($cached, true);
                 if (is_array($payload) && isset($payload['base_url'], $payload['data']))
+                {
                     return [$payload['base_url'], $payload['data']];
+                }
             }
         }
 
@@ -422,9 +462,13 @@ class AddonRemoteHelper
                     $tmp     = $cache_file . '.tmp.' . getmypid();
                     $written = @file_put_contents($tmp, $raw, LOCK_EX);
                     if ($written !== false)
+                    {
                         @rename($tmp, $cache_file);
+                    }
                     else
+                    {
                         @unlink($tmp);
+                    }
 
                     return [$versioned_base, $data];
                 }
@@ -439,7 +483,9 @@ class AddonRemoteHelper
             {
                 $payload = json_decode($stale, true);
                 if (is_array($payload) && isset($payload['base_url'], $payload['data']))
+                {
                     return [$payload['base_url'], $payload['data']];
+                }
             }
         }
 
@@ -450,19 +496,23 @@ class AddonRemoteHelper
     // Download and extraction
     // -------------------------------------------------------------------------
 
-    public static function download_and_extract_from_github($owner, $repo, $branch, $addon_prefix, $dest_dir, $token)
+    public static function download_and_extract_from_github(string $owner, string $repo, string $branch, string $addon_prefix, string $dest_dir, string $token): bool
     {
         $zip_url = 'https://github.com/' . $owner . '/' . $repo . '/archive/refs/heads/' . rawurlencode($branch) . '.zip';
         $headers = [];
         if (!empty($token))
+        {
             $headers[] = 'Authorization: token ' . $token;
+        }
         $content = self::curl_get($zip_url, $headers, 60);
         if ($content === false)
+        {
             return false;
+        }
         return self::extract_zip_prefix_to($content, $addon_prefix, $dest_dir);
     }
 
-    public static function extract_zip_prefix_to($zip_binary, $prefix, $dest_dir)
+    public static function extract_zip_prefix_to(string $zip_binary, string $prefix, string $dest_dir): bool
     {
         $tmp = tempnam(sys_get_temp_dir(), 'pbt_addon_') . '.zip';
         file_put_contents($tmp, $zip_binary);
@@ -478,21 +528,29 @@ class AddonRemoteHelper
             $stat     = $zip->statIndex($i);
             $name     = $stat['name'];
             if ($prefix !== '' && strpos($name, $prefix) !== 0)
+            {
                 continue;
+            }
             $relative = $prefix !== '' ? substr($name, strlen($prefix)) : $name;
             if ($relative === '' || $relative === '/')
+            {
                 continue;
+            }
             $target = $dest_dir . $relative;
             if (substr($name, -1) === '/')
             {
                 if (!is_dir($target))
+                {
                     @mkdir($target, 0755, true);
+                }
             }
             else
             {
                 $parent = dirname($target);
                 if (!is_dir($parent))
+                {
                     @mkdir($parent, 0755, true);
+                }
                 $stream = $zip->getStream($name);
                 if ($stream !== false)
                 {
@@ -507,18 +565,22 @@ class AddonRemoteHelper
         return $extracted;
     }
 
-    public static function apply_permissions($path, $mode)
+    public static function apply_permissions(string $path, int $mode): void
     {
         $prev = error_reporting(0);
         if (file_exists($path))
+        {
             chmod($path, $mode);
+        }
         error_reporting($prev);
         if (is_dir($path))
         {
             foreach (scandir($path) as $item)
             {
                 if ($item === '.' || $item === '..')
+                {
                     continue;
+                }
                 self::apply_permissions($path . '/' . $item, $mode);
             }
         }

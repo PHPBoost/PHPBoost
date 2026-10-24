@@ -14,11 +14,11 @@ class NumberHelper
 {
 	/**
 	 * Converts a string to a numeric value.
-	 * @param string $var The value you want to convert.
+	 * @param int|float|string $var The value you want to convert.
 	 * @param string $type 'int' if you want to convert to an integer value, 'float' if you want a floating value.
 	 * @return mixed The integer or floating value (according to the type you chose).
 	 */
-	public static function numeric($var, $type = 'int')
+	public static function numeric(int|float|string $var, string $type = 'int'): int|float
 	{
 		if (is_numeric($var)) //Retourne un nombre
 		{
@@ -41,9 +41,9 @@ class NumberHelper
 	 * Rounds a number
 	 * @param mixed $number Number to round
 	 * @param int $dec The number of decilam points
-	 * @return string The rounded number.
+	 * @return float The rounded number.
 	 */
-	public static function round($number, $dec)
+	public static function round(int|float $number, int $dec): float
 	{
 		return floatval(number_format($number, $dec, '.', ''));
 	}

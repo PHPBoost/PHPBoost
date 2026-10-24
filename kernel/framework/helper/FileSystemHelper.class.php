@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 09
+ * @version     PHPBoost 6.1 - last update: 2026 10 24
  * @since       PHPBoost 5.2 - 2019 02 14
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,29 +20,38 @@ class FileSystemHelper
     {
         $result = false;
 
-        if ($protect_folder && empty($first_folder_name)) {
+        if ($protect_folder && empty($first_folder_name))
+        {
             $first_folder_name = $folder;
         }
 
-        if (empty($parent_folder)) {
+        if (empty($parent_folder))
+        {
             $parent_folder = $folder;
         }
 
-        if (!preg_match("/^.*\/$/", $folder)) {
+        if (!preg_match("/^.*\/$/", $folder))
+        {
             $folder .= '/';
         }
 
         $handle = @opendir($folder);
 
-        if ($handle !== false) {
-            while ($item = readdir($handle)) {
+        if ($handle !== false)
+        {
+            while ($item = readdir($handle))
+            {
                 $protect_folder_delete = $protect_folder ? !preg_match('/' . preg_quote($first_folder_name, '/') . '/', $item) : true;
 
-                if ($item != "." && $item != ".." && $protect_folder_delete) {
+                if ($item != "." && $item != ".." && $protect_folder_delete)
+                {
                     $full_path = $folder . $item;
-                    if (is_dir($full_path)) {
+                    if (is_dir($full_path))
+                    {
                         self::remove_folder($full_path, $protect_folder, $first_folder_name, $parent_folder);
-                    } else {
+                    }
+                    else
+                    {
                         unlink($full_path);
                     }
                 }
@@ -51,7 +60,8 @@ class FileSystemHelper
             closedir($handle);
 
             $protect_folder_delete = $protect_folder ? !preg_match('/' . preg_quote($first_folder_name, '/') . '/', $folder) : true;
-            if ($protect_folder_delete) {
+            if ($protect_folder_delete)
+            {
                 $result = rmdir($folder);
             }
         }
@@ -64,24 +74,33 @@ class FileSystemHelper
      */
     public static function copy_folder(string $source_path, string $destination_path): void
     {
-        if (!preg_match("/^.*\/$/", $source_path)) {
+        if (!preg_match("/^.*\/$/", $source_path))
+        {
             $source_path .= '/';
         }
 
-        if (!preg_match("/^.*\/$/", $destination_path)) {
+        if (!preg_match("/^.*\/$/", $destination_path))
+        {
             $destination_path .= '/';
         }
 
-        if (is_dir($source_path)) {
-            if ($dh = opendir($source_path)) {
-                while (($file = readdir($dh)) !== false) {
-                    if (!is_dir($destination_path)) {
+        if (is_dir($source_path))
+        {
+            if ($dh = opendir($source_path))
+            {
+                while (($file = readdir($dh)) !== false)
+                {
+                    if (!is_dir($destination_path))
+                    {
                         mkdir($destination_path, 0755);
                     }
 
-                    if (is_dir($source_path . $file) && $file != '..' && $file != '.') {
+                    if (is_dir($source_path . $file) && $file != '..' && $file != '.')
+                    {
                         self::copy_folder($source_path . $file . '/', $destination_path . $file . '/');
-                    } elseif ($file != '..' && $file != '.') {
+                    }
+                    elseif ($file != '..' && $file != '.')
+                    {
                         copy($source_path . $file, $destination_path . $file);
                     }
                 }
@@ -96,13 +115,15 @@ class FileSystemHelper
      */
     public static function download_remote_file(string $url, string $destination_path, bool $extract_archive = true, bool $retry = false): bool
     {
-        if (!preg_match("/^.*\/$/", $destination_path)) {
+        if (!preg_match("/^.*\/$/", $destination_path))
+        {
             $destination_path .= '/';
         }
 
         $server_configuration = new ServerConfiguration();
 
-        if (!$server_configuration->has_curl_extension() || !Url::check_url_validity($url)) {
+        if (!$server_configuration->has_curl_extension() || !Url::check_url_validity($url))
+        {
             return false;
         }
 
@@ -119,26 +140,37 @@ class FileSystemHelper
         $downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
 
         if (\PHP_VERSION_ID < 80100)
+        {
             curl_close($ch);
+        }
 
         file_put_contents($file_name, $content);
 
-        if ($code === 200 && $downloaded_size) {
+        if ($code === 200 && $downloaded_size)
+        {
             $original_size = File::get_remote_file_size($url);
             $file = new File($file_name);
 
-            if ($file->exists() && $downloaded_size === $original_size && $original_size === $file->get_file_size()) {
-                if ($extract_archive && $file_extension === 'zip') {
-                    if ($server_configuration->has_zip_extension()) {
+            if ($file->exists() && $downloaded_size === $original_size && $original_size === $file->get_file_size())
+            {
+                if ($extract_archive && $file_extension === 'zip')
+                {
+                    if ($server_configuration->has_zip_extension())
+                    {
                         $zip_archive = new ZipArchive();
-                        if ($zip_archive->open($file_name) === true) {
+                        if ($zip_archive->open($file_name) === true)
+                        {
                             $zip_archive->extractTo($destination_path);
                             $zip_archive->close();
                             unlink($file_name);
-                        } else {
+                        }
+                        else
+                        {
                             return false;
                         }
-                    } else {
+                    }
+                    else
+                    {
                         return false;
                     }
                 }
@@ -146,7 +178,8 @@ class FileSystemHelper
             }
         }
 
-        if (!$retry) {
+        if (!$retry)
+        {
             return self::download_remote_file($url, $destination_path, $extract_archive, true);
         }
 
@@ -160,7 +193,8 @@ class FileSystemHelper
     {
         $server_configuration = new ServerConfiguration();
 
-        if ($server_configuration->has_curl_extension() && Url::check_url_validity($url)) {
+        if ($server_configuration->has_curl_extension() && Url::check_url_validity($url))
+        {
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -170,9 +204,12 @@ class FileSystemHelper
             $downloaded_size = (int)curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD) ?? false;
 
             if (\PHP_VERSION_ID < 80100)
+            {
                 curl_close($ch);
+            }
 
-            if ($code === 200 && $downloaded_size) {
+            if ($code === 200 && $downloaded_size)
+            {
                 return $content;
             }
         }

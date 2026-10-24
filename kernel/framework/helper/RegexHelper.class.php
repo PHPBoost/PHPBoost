@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 10 24
  * @since       PHPBoost 3.0 - 2010 01 21
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class RegexHelper
@@ -21,7 +22,7 @@ class RegexHelper
 	/**
 	 * Returns the sub-regex with its multiplicity option
 	 * @param string $sub_regex the sub-regex on which add the multiplicity
-	 * @param int $occurence REGEX_MULTIPLICITY_OPTION
+	 * @param int $multiplicity_option REGEX_MULTIPLICITY_OPTION
 	 * @return string the subregex with its multiplicity option
 	 * @see RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL
 	 * @see REGEX_MULTIPLICITY_NEEDED
@@ -29,7 +30,7 @@ class RegexHelper
 	 * @see RegexHelper::REGEX_MULTIPLICITY_ALL
 	 * @see RegexHelper::REGEX_MULTIPLICITY_NOT_USED
 	 */
-	public static function set_subregex_multiplicity($sub_regex, $multiplicity_option)
+	public static function set_subregex_multiplicity(string $sub_regex, int $multiplicity_option): string
 	{
 		switch ($multiplicity_option)
 		{
