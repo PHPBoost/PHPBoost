@@ -21,7 +21,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	 */
 	public function __construct(?string $label, mixed $raw_value, array $field_choice_options = [])
 	{
-		parent::__construct($label, $raw_value, $field_choice_options);
+		parent::__construct($label ?? '', $raw_value, $field_choice_options);
 	}
 
 	public function display(): FileTemplate
