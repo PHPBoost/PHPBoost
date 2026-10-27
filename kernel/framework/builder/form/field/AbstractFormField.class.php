@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 22
+ * @version     PHPBoost 6.1 - last update: 2026 10 27
  * @since       PHPBoost 3.0 - 2010 01 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -21,7 +21,7 @@ abstract class AbstractFormField implements FormField
 	private string $form_id = '';
 	private string $fieldset_id = '';
 	protected string $label = '';
-	protected mixed $description = null;
+	protected string $description = '';
 	protected mixed $value = null;
 	protected bool $disabled = false;
 	protected bool $select_to_list = false;
@@ -114,7 +114,7 @@ abstract class AbstractFormField implements FormField
 
 	public function set_description(mixed $description): void
 	{
-		$this->description = $description;
+		$this->description = $description ?? '';
 	}
 
 	public function get_value(): mixed
