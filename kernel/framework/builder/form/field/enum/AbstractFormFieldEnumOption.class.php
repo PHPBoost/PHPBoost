@@ -29,33 +29,21 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 		$this->compute_options($field_choice_options);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_label(): string
 	{
 		return $this->label;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function set_label(string $label): void
 	{
 		$this->label = $label;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_raw_value(): mixed
 	{
 		return $this->raw_value;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function set_raw_value(mixed $value): void
 	{
 		$this->raw_value = $value;

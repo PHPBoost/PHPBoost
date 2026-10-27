@@ -17,12 +17,11 @@
 
 abstract class AbstractFormField implements FormField
 {
-
 	protected string $id = '';
 	private string $form_id = '';
 	private string $fieldset_id = '';
 	protected string $label = '';
-	protected string $description = '';
+	protected mixed $description = null;
 	protected mixed $value = null;
 	protected bool $disabled = false;
 	protected bool $select_to_list = false;
@@ -113,7 +112,7 @@ abstract class AbstractFormField implements FormField
 		return $this->description;
 	}
 
-	public function set_description(string $description): void
+	public function set_description(mixed $description): void
 	{
 		$this->description = $description;
 	}

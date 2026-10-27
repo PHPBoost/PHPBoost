@@ -18,12 +18,12 @@ class FormatingHelper
 
 	/**
 	 * Parses a string with several default parameters. This methods exists to lighten the number of lines written.
-	 * @param string $content Content to parse
+	 * @param mixed $content Content to parse
 	 * @param array $forbidden_tags List of the forbidden formatting tags
 	 * @param bool $addslashes if true, the parsed string will be escaped.
 	 * @return string The parsed string.
 	 */
-	public static function strparse(string $content, array $forbidden_tags = [], bool $addslashes = true): string
+	public static function strparse(mixed $content, array $forbidden_tags = [], bool $addslashes = true): string
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_parser();
 		if ($parser === null)
@@ -31,18 +31,17 @@ class FormatingHelper
 			return $addslashes ? addslashes($content) : $content;
 		}
 
-		//On assigne le contenu à interpréter. Il supprime les antislashes d'échappement seulement si ils ont été ajoutés par magic_quotes
+		// We assign the content to be interpreted. It removes escape backslashes only if they were added by magic_quotes.
 		$parser->set_content($content);
 
-		//Si il y a des balises interdites, on lui signale
+		// Any prohibited tags are reported
 		if (!empty($forbidden_tags) && method_exists($parser, 'set_forbidden_tags'))
 		{
 			$parser->set_forbidden_tags($forbidden_tags);
 		}
-		//Au travail maintenant !
 		$parser->parse();
 
-		//Renvoie le résultat. Echappe par défaut les caractères critiques afin d'être envoyé en base de données
+		// Returns the result. By default, escapes critical characters in order to be sent to the database
 		$result = $parser->get_content();
 		if ($addslashes)
 		{
@@ -57,7 +56,7 @@ class FormatingHelper
 	 * @return string The unparsed string.
 	 * @see ContentFormattingUnparser
 	 */
-	public static function unparse(string $content): string
+	public static function unparse(mixed $content): string
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_unparser();
 		if ($parser === null)
@@ -76,7 +75,7 @@ class FormatingHelper
 	 * @return string The second parsed string.
 	 * @see ContentSecondParser
 	 */
-	public static function second_parse(string $content): string
+	public static function second_parse(mixed $content): string
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_second_parser();
         if ($parser === null)
