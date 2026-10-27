@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 11
+ * @version     PHPBoost 6.1 - last update: 2026 10 27
  * @since       PHPBoost 6.1 - 2026 10 01
 */
 
@@ -13,50 +13,33 @@ class AdminLoggedErrorsService
 	public static function send_alert()
 	{
         $config = ErrorsConfig::load();
-        // get error.log location
-        $file_path = PATH_TO_ROOT . '/cache/error.log';
-        // If error.log doesn't exist, we stop
-        if (!file_exists($file_path))
+        if (!$config->get_send_alerts())
             return;
 
-        // Get the config delay and the time/date of now
         $delay = $config->get_delay() * 60;
-        $now = new Date();
-        // Get all error classes between now and the delay
-        $errclasses = [];
-        foreach (self::get_errors_list() as $errors)
-        {
-            $errdate = new Date($errors['errdate']);
-            if ($now->get_timestamp() - $errdate->get_timestamp() < $delay) {
-                $errclasses[] = $errors['errclass'];
-            }
-        }
+        $now = time();
+        if ($delay > 0 && $now - (int)$config->get_last_alert_timestamp() < $delay)
+            return;
 
-        // Get all alert levels from the config
+        $errors = self::get_errors_list();
+        if (empty($errors))
+            return;
+
         $levels = TextHelper::deserialize($config->get_alert_level());
         if (!is_array($levels))
         {
             $levels = [];
         }
 
-        // Set level list to be an array
         $level_list = [];
         foreach ($levels as $level)
         {
             $level_list[] = $level->get_id();
         }
 
-        // Check if an error class belong to levels
-        $flag = false;
-        foreach ($errclasses as $errclass)
-        {
-            if (in_array($errclass, $level_list)) {
-                $flag = true;
-                break;
-            }
-        }
+        if (!in_array($errors[0]['errclass'], $level_list))
+            return;
 
-        // Get list of recipents from the config or from the general config
         $recipients = [];
         if (!empty($config->get_email_list()))
         {
@@ -71,12 +54,13 @@ class AdminLoggedErrorsService
             $recipients = MailServiceConfig::load()->get_administrators_mails();
         }
 
-        if ($config->get_send_alerts() && $flag)
+        $sender  = MailServiceConfig::load()->get_default_mail_sender();
+        $subject = LangLoader::get_message('configuration.email.subject', 'configuration-lang');
+        $content = LangLoader::get_message('configuration.email.content', 'configuration-lang');
+        if (self::send_mail($recipients, $sender, $subject, $content))
         {
-            $sender  = MailServiceConfig::load()->get_default_mail_sender();
-            $subject = LangLoader::get_message('configuration.email.subject', 'configuration-lang');
-            $content = LangLoader::get_message('configuration.email.content', 'configuration-lang');
-            self::send_mail($recipients, $sender, $subject, $content);
+            $config->set_last_alert_timestamp($now);
+            ErrorsConfig::save();
         }
     }
 
@@ -127,6 +111,7 @@ class AdminLoggedErrorsService
 
     public static function send_mail(array $recipients, string $sender, string $subject, string $content)
 	{
+        $sent = false;
 		foreach ($recipients as $recipient)
 		{
             $mail = new Mail();
@@ -136,7 +121,10 @@ class AdminLoggedErrorsService
 
             $mail->add_recipient($recipient);
 
-            AppContext::get_mail_service()->try_to_send($mail);
+            if (AppContext::get_mail_service()->try_to_send($mail))
+                $sent = true;
 		}
+
+        return $sent;
 	}
 }

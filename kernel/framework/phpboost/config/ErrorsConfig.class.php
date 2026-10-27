@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2029 10 01
+ * @version     PHPBoost 6.1 - last update: 2026 10 27
  * @since       PHPBoost 6.1 - 2029 09 30
 */
 
@@ -13,6 +13,7 @@ class ErrorsConfig extends AbstractConfigData
     const ALERT_LEVEL = 'alert_level';
     const EMAIL_LIST  = 'email_list';
     const DELAY       = 'delay';
+    const LAST_ALERT_TIMESTAMP = 'last_alert_timestamp';
 
     public function get_send_alerts()
     {
@@ -54,6 +55,16 @@ class ErrorsConfig extends AbstractConfigData
 		$this->set_property(self::DELAY, $delay);
 	}
 
+    public function get_last_alert_timestamp()
+    {
+        return $this->get_property(self::LAST_ALERT_TIMESTAMP);
+    }
+
+    public function set_last_alert_timestamp(int $timestamp)
+    {
+        $this->set_property(self::LAST_ALERT_TIMESTAMP, $timestamp);
+    }
+
 	protected function get_default_values()
 	{
 		return [
@@ -61,6 +72,7 @@ class ErrorsConfig extends AbstractConfigData
 			self::ALERT_LEVEL => '',
 			self::EMAIL_LIST  => '',
 			self::DELAY       => 0,
+            self::LAST_ALERT_TIMESTAMP => 0,
 		];
 	}
 
