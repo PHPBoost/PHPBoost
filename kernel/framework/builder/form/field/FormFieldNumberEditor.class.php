@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 23
+ * @version     PHPBoost 6.1 - last update: 2026 10 31
  * @since       PHPBoost 4.1 - 2015 05 20
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -16,9 +16,9 @@
 class FormFieldNumberEditor extends AbstractFormField
 {
 	protected string $type = 'number';
-	protected int $min = 0;
-	protected int $max = 0;
-	protected int $step = 0;
+	protected int|float $min = 0;
+	protected int|float $max = 0;
+	protected int|float $step = 0;
 	protected string $pattern = '[0-9]*';
 
 	/**
