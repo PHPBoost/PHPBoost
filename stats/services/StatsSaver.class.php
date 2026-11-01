@@ -111,7 +111,7 @@ class StatsSaver
         foreach ($array_stats_img as $key => $value)
         {
             if (file_exists(PATH_TO_ROOT . '/cache/' . $value))
-                unlink(PATH_TO_ROOT . '/cache/' . $value);
+                @unlink(PATH_TO_ROOT . '/cache/' . $value);
         }
 
         ########### Détection des navigateurs ###########
