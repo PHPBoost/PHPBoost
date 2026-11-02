@@ -13,7 +13,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 24
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 2.0 - 2009 01 14
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -114,17 +114,11 @@ class Url
         $this->server_url = $data['server_url'] ?? $data["\0" . self::class . "\0server_url"] ?? '';
     }
 
-    /**
-     * @return bool
-     */
     public function is_relative(): bool
     {
         return $this->is_relative;
     }
 
-    /**
-     * @return string
-     */
     public function relative(): string
     {
         if ($this->is_relative())
@@ -137,9 +131,6 @@ class Url
         }
     }
 
-    /**
-     * @return string
-     */
     public function rel(): string
     {
         if ($this->is_relative())
@@ -152,9 +143,6 @@ class Url
         }
     }
 
-    /**
-     * @return string
-     */
     public function absolute(): string
     {
         if ($this->is_relative())
@@ -167,9 +155,6 @@ class Url
         }
     }
 
-    /**
-     * @return string
-     */
     public function root_to_local(): string
     {
         $local_path = $this->server_url;
@@ -185,7 +170,7 @@ class Url
 
     /**
      * Prepares a string for it to be used in an URL (with only a-z, 0-9 and - characters).
-     * @param string $string String to encode.
+     * @param string $url String to encode.
      * @return string The encoded string.
      */
     public static function encode_rewrite(?string $url): string
@@ -200,10 +185,6 @@ class Url
         return $url;
     }
 
-    /**
-     * @param string $url
-     * @return int
-     */
     public static function check_url_validity(string $url): int
     {
         if (empty($url))
@@ -280,10 +261,6 @@ class Url
         return $status === self::STATUS_OK || ($status > self::STATUS_OK && $status < 400) || $status === 429;
     }
 
-    /**
-     * @param Url $url
-     * @return int
-     */
     public static function get_url_file_size(Url $url): int
     {
         $file_size = 0;
@@ -328,10 +305,6 @@ class Url
         return $file_size;
     }
 
-    /**
-     * @param string $url
-     * @return string
-     */
     public static function compress(string $url): string
     {
         $args = '';
@@ -351,21 +324,12 @@ class Url
         return $url . $args;
     }
 
-    /**
-     * @return string
-     */
     public static function get_absolute_root(): string
     {
         $config = GeneralConfig::load();
         return trim($config->get_complete_site_url(), '/');
     }
 
-    /**
-     * @param string $html_text
-     * @param string $path_to_root
-     * @param string $server_url
-     * @return string
-     */
     public static function html_convert_root_relative2absolute(string $html_text, string $path_to_root = PATH_TO_ROOT, string $server_url = SERVER_URL): string
     {
         $path_to_root_bak = self::$root;
@@ -382,12 +346,6 @@ class Url
         return $result;
     }
 
-    /**
-     * @param string $html_text
-     * @param string $path_to_root
-     * @param string $server_url
-     * @return string
-     */
     public static function html_convert_absolute2root_relative(string $html_text, string $path_to_root = PATH_TO_ROOT, string $server_url = SERVER_URL): string
     {
         $path_to_root_bak = self::$root;
@@ -404,12 +362,6 @@ class Url
         return $result;
     }
 
-    /**
-     * @param string $html_text
-     * @param string $path_to_root
-     * @param string $server_url
-     * @return string
-     */
     public static function html_convert_root_relative2relative(string $html_text, string $path_to_root = PATH_TO_ROOT, string $server_url = SERVER_URL): string
     {
         $path_to_root_bak = self::$root;
@@ -426,28 +378,12 @@ class Url
         return $result;
     }
 
-    /**
-     * @param string $url
-     * @param string|null $path_to_root
-     * @param string|null $server_url
-     * @return string
-     */
     public static function get_relative(string $url, ?string $path_to_root = null, ?string $server_url = null): string
     {
         $o_url = new Url($url, $path_to_root, $server_url);
         return $o_url->relative();
     }
 
-    /**
-     * @param int $protocol
-     * @param int $user
-     * @param int $domain
-     * @param int $folders
-     * @param int $file
-     * @param int $args
-     * @param bool $forbid_js
-     * @return string
-     */
     public static function get_wellformness_regex(int $protocol = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $user = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $domain = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $folders = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $file = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, bool $forbid_js = true): string
     {
         $protocol_regex_secured = $forbid_js ? self::FORBID_JS_REGEX . self::PROTOCOL_REGEX : self::PROTOCOL_REGEX;
@@ -462,27 +398,11 @@ class Url
         return $regex;
     }
 
-    /**
-     * @param string $url
-     * @param int $protocol
-     * @param int $user
-     * @param int $domain
-     * @param int $folders
-     * @param int $file
-     * @param int $args
-     * @param int $anchor
-     * @param bool $forbid_js
-     * @return bool
-     */
     public static function check_wellformness(string $url, int $protocol = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $user = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $domain = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $folders = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $file = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $args = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, int $anchor = RegexHelper::REGEX_MULTIPLICITY_OPTIONNAL, bool $forbid_js = true): bool
     {
         return (bool)preg_match('`^' . self::get_wellformness_regex($protocol, $user, $domain, $folders, $file, $args, $anchor, $forbid_js) . '$`iu', $url);
     }
 
-    /**
-     * @param array $url_params
-     * @return string
-     */
     private static function convert_url_to_absolute(array $url_params): string
     {
         $url = new Url($url_params[2]);
@@ -490,10 +410,6 @@ class Url
         return $url_params[1] . $url_params[2] . $url_params[3];
     }
 
-    /**
-     * @param array $url_params
-     * @return string
-     */
     private static function convert_url_to_root_relative(array $url_params): string
     {
         $url = new Url($url_params[2]);
@@ -501,10 +417,6 @@ class Url
         return $url_params[1] . $url_params[2] . $url_params[3];
     }
 
-    /**
-     * @param array $url_params
-     * @return string
-     */
     private static function convert_url_to_relative(array $url_params): string
     {
         $url = new Url($url_params[2]);
@@ -515,10 +427,6 @@ class Url
         return $url_params[1] . $url_params[2] . $url_params[3];
     }
 
-    /**
-     * @param bool $only_match_relative
-     * @return array
-     */
     private static function build_html_match_regex(bool $only_match_relative = false): array
     {
         static $regex_match_all = null;
@@ -556,11 +464,7 @@ class Url
         return $only_match_relative ? $regex_only_match_relative : $regex_match_all;
     }
 
-    /**
-     * @param mixed $url
-     * @return string
-     */
-    public static function to_rel($url): string
+    public static function to_rel(mixed $url): string
     {
         if (!($url instanceof Url))
         {
@@ -569,11 +473,7 @@ class Url
         return $url->rel();
     }
 
-    /**
-     * @param mixed $url
-     * @return string
-     */
-    public static function to_relative($url): string
+    public static function to_relative(mixed $url): string
     {
         if (!($url instanceof Url))
         {
@@ -582,11 +482,7 @@ class Url
         return $url->relative();
     }
 
-    /**
-     * @param mixed $url
-     * @return string
-     */
-    public static function to_absolute($url): string
+    public static function to_absolute(mixed $url): string
     {
         if (!($url instanceof Url))
         {
@@ -595,11 +491,6 @@ class Url
         return $url->absolute();
     }
 
-    /**
-     * @param string $check_url
-     * @param bool $real_url
-     * @return bool
-     */
     public static function is_current_url(string $check_url, bool $real_url = false): bool
     {
         $general_config = GeneralConfig::load();

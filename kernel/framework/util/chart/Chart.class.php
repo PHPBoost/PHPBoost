@@ -4,27 +4,25 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 6.0 - 2024 06 29
  * @see         https://www.chartjs.org/docs/latest/
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class Chart 
 {
 
-    public $name;
-
-    protected $type;
-
-    protected $datasets = [];
-
-    protected $options = [];
+    public string $name;
+    protected string $type;
+    protected array $datasets = [];
+    protected array $options = [];
 
     /**
      * Create a chart
      * @param string $name name of chart in html
      */
-    public function __construct(string $name) 
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -33,7 +31,7 @@ abstract class Chart
      * Add a dataset to the chart
      * @param ChartDataset $dataset
      */
-    public function add_dataset(ChartDataset $dataset)
+    public function add_dataset(ChartDataset $dataset): void
     {
         $this->datasets[] = $dataset;
     }
@@ -42,7 +40,7 @@ abstract class Chart
      * Define options for the chart
      * @param array $options associative array
      */
-    public function set_options(array $options):void
+    public function set_options(array $options): void
     {
         $this->options = $options;
     }
@@ -51,7 +49,7 @@ abstract class Chart
      * Get generated HTML to display chart
      * @return string html
      */
-    public function get_html():string
+    public function get_html(): string
     {
         $template = new FileTemplate('framework/util/chart.tpl');
         $template->put_all([
@@ -64,7 +62,7 @@ abstract class Chart
         return $template->render();
     }
 
-    protected function get_datas():string
+    protected function get_datas(): string
     {
         $formatted_datasets = [];
         $i = 0;
@@ -88,12 +86,12 @@ abstract class Chart
         ]);
     }
 
-    protected function get_options():string
+    protected function get_options(): string
     {
         return json_encode($this->options);
     }
 
-    protected function get_labels():string
+    protected function get_labels(): string
     {
         return json_encode($this->datasets[0]->data_labels);
     }

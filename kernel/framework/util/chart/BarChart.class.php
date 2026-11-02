@@ -4,8 +4,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 6.0 - 2024 06 29
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BarChart extends Chart
@@ -19,7 +20,7 @@ class BarChart extends Chart
      * @param mixed $average If given, will be displayed. Otherwise, average will be calculated
      * @param mixed $color RGB color line
      */
-    public function add_average_dataset(ChartDataset $origin_dataset, string $label, $average = false, $color = '75, 192, 192'):void
+    public function add_average_dataset(ChartDataset $origin_dataset, string $label, $average = false, $color = '75, 192, 192'): void
     {
         $dataset = new ChartDataset($label);
         $dataset->set_colors([$color]);
@@ -37,6 +38,5 @@ class BarChart extends Chart
         $dataset->use_many_colors = false;
         $dataset->set_datas(array_fill(0,$number_datas, $average));
         $this->add_dataset($dataset);
-        
     }
 }

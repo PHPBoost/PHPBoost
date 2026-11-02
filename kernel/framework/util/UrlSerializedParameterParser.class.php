@@ -4,58 +4,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2010 02 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UrlSerializedParameterParser
 {
-    /**
-     * @var string The regex pattern for parameter names
-     */
     private static string $param_name_regex = '`^([a-z][a-z0-9-]*):`iu';
-
-    /**
-     * @var string The escape character
-     */
     private static string $escape_char = '\\';
-
-    /**
-     * @var string The parameter separator
-     */
     private static string $parameter_separator = ',';
-
-    /**
-     * @var string The composed parameter start character
-     */
     private static string $composed_parameter_start_char = '{';
-
-    /**
-     * @var string The composed parameter end character
-     */
     private static string $composed_parameter_end_char = '}';
-
-    /**
-     * @var string The arguments to parse
-     */
     private string $args;
-
-    /**
-     * @var int The length of the arguments
-     */
     private int $args_length;
-
-    /**
-     * @var int The current index in the arguments
-     */
     private int $args_index = 0;
-
-    /**
-     * @var array The parsed parameters
-     */
     private array $parameters = [];
 
     /**
@@ -70,19 +36,11 @@ class UrlSerializedParameterParser
         $this->parse();
     }
 
-    /**
-     * Gets the parsed parameters.
-     *
-     * @return array The parsed parameters
-     */
     public function get_parameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * Parses the arguments.
-     */
     private function parse(): void
     {
         while (!$this->is_ended())
@@ -140,7 +98,7 @@ class UrlSerializedParameterParser
      *
      * @return mixed The parsed parameter value
      */
-    private function parse_parameter_value()
+    private function parse_parameter_value(): mixed
     {
         if ($this->is_parameter_composed())
         {

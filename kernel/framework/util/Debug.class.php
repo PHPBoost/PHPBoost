@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 10 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -106,7 +106,7 @@ class Debug
         return self::is_debug_mode_enabled() && self::get_option(self::DISPLAY_DATABASE_QUERY, false);
     }
 
-    private static function get_option(string $key, $default)
+    private static function get_option(string $key, mixed $default): mixed
     {
         if (array_key_exists($key, self::$options))
         {
@@ -160,7 +160,7 @@ class Debug
      * Prints the stacktrace and exits
      * @param mixed $object
      */
-    public static function stop($object = null): void
+    public static function stop(mixed $object = null): void
     {
         if ($object !== null)
         {
@@ -247,7 +247,7 @@ class Debug
      * Executes a <code>print_r()</code> in an html &lt;pre&gt; block
      * @param mixed $object the object to see using print_r
      */
-    public static function dump($object): void
+    public static function dump(mixed $object): void
     {
         if (self::$html_output)
         {

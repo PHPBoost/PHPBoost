@@ -4,8 +4,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2011 06 19
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class KeyGenerator
@@ -47,7 +48,7 @@ class KeyGenerator
      * If false, does not use any salt.
      * @return string A SHA256 hash of the string, optionally with a salt
      */
-    public static function string_hash(string $string, $salt = true): string
+    public static function string_hash(string $string, bool|string $salt = true): string
     {
         if ($salt === true)
         {

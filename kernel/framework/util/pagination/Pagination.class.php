@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 08
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 12 22
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,42 +22,42 @@ class Pagination
 	const LIGHT_PAGINATION = 'light';
 	const FULL_PAGINATION = 'full';
 
-	private $view;
-	private $nb_pages;
-	private $current_page;
-	private $url_pattern;
-	private $url_builder_callback;
-	private $before_links_nb = self::LINKS_NB;
-	private $after_links_nb = self::LINKS_NB;
+	private FileTemplate $view;
+	private int|float $nb_pages;
+	private int $current_page;
+	private ?string $url_pattern;
+	private object|array|string|null $url_builder_callback;
+	private int $before_links_nb = self::LINKS_NB;
+	private int $after_links_nb = self::LINKS_NB;
 
-	public function __construct($nb_pages, $current_page, $type = self::FULL_PAGINATION)
+	public function __construct(int|float $nb_pages, int $current_page, string $type = self::FULL_PAGINATION)
 	{
 		$this->nb_pages = $nb_pages;
 		$this->current_page = $current_page;
 		$this->init_tpl($type);
 	}
 
-	public function set_url_sprintf_pattern($url_pattern)
+	public function set_url_sprintf_pattern(string $url_pattern): void
 	{
 		$this->url_pattern = $url_pattern;
 	}
 
-	public function set_url_builder_callback($callback)
+	public function set_url_builder_callback(callable $callback): void
 	{
 		$this->url_builder_callback = $callback;
 	}
 
-	public function set_before_links_nb($value)
+	public function set_before_links_nb(int $value): void
 	{
 		$this->before_links_nb = $value;
 	}
 
-	public function set_after_links_nb($value)
+	public function set_after_links_nb(int $value): void
 	{
 		$this->after_links_nb = $value;
 	}
 
-	public function export()
+	public function export(): FileTemplate
 	{
 		$this->generate_first_page_pagination();
 		$this->generate_near_pages_pagination();
@@ -65,12 +65,12 @@ class Pagination
 		return $this->view;
 	}
 
-	public function get_number_pages()
+	public function get_number_pages(): int|float
 	{
 		return $this->nb_pages;
 	}
 
-	private function init_tpl($type)
+	private function init_tpl(string $type): void
 	{
 		$this->view = new FileTemplate('framework/util/pagination.tpl');
 		$this->view->add_lang(LangLoader::get_all_langs());
@@ -80,7 +80,7 @@ class Pagination
 		]);
 	}
 
-	private function generate_first_page_pagination()
+	private function generate_first_page_pagination(): void
 	{
 		if ($this->current_page > 1)
 		{
@@ -88,7 +88,7 @@ class Pagination
 		}
 	}
 
-	private function generate_near_pages_pagination()
+	private function generate_near_pages_pagination(): void
 	{
 		$start = $this->current_page - $this->before_links_nb;
 		$end = $this->current_page + $this->after_links_nb;
@@ -102,7 +102,7 @@ class Pagination
 		}
 	}
 
-	private function generate_last_page_pagination()
+	private function generate_last_page_pagination(): void
 	{
 		if ($this->current_page < $this->nb_pages)
 		{
@@ -110,7 +110,7 @@ class Pagination
 		}
 	}
 
-	private function add_pagination_page($name, $page_number, $is_current_page = false)
+	private function add_pagination_page(int|string $name, int|float $page_number, bool $is_current_page = false): void
 	{
 		$this->view->assign_block_vars('page', [
 			'C_PREVIOUS_PAGE' => $name == self::PREV_LINK,
@@ -125,7 +125,7 @@ class Pagination
 		]);
 	}
 
-	private function get_url($page_number)
+	private function get_url(int|float $page_number): string
 	{
 		if (!empty($this->url_pattern))
 		{

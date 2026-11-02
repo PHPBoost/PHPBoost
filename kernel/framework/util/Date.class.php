@@ -11,7 +11,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 2.0 - 2008 06 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -40,11 +40,7 @@ class Date
     public const FORMAT_HOUR_MINUTE                     = 14;
     public const FORMAT_DAY_MONTH_TEXT                  = 15;
 
-    /**
-     * @var DateTime Representation of date and time.
-     */
     private DateTime $date_time;
-
     protected static array $lang;
 
     /**
@@ -57,7 +53,7 @@ class Date
      * 	<li>Timezone::USER_TIMEZONE if it's an entry coming from the user (it's own timezone will be used)</li>
      * </ul>
      */
-    public function __construct($time = self::DATE_NOW, int $referencial_timezone = Timezone::USER_TIMEZONE)
+    public function __construct(int|string|null $time = self::DATE_NOW, int $referencial_timezone = Timezone::USER_TIMEZONE)
     {
         self::$lang = LangLoader::get('date-lang');
         $date_timezone = Timezone::get_timezone($referencial_timezone);
@@ -106,7 +102,7 @@ class Date
      * </ul>
      * @return string The formatted date
      */
-    public function format($format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
+    public function format(int|string $format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
     {
         $this->compute_server_user_difference($referencial_timezone);
 
@@ -119,37 +115,26 @@ class Date
         {
             case self::FORMAT_TIMESTAMP:
                 return (string)$this->date_time->getTimestamp();
-
             case self::FORMAT_DAY_MONTH:
                 return $this->date_time->format(self::$lang['date.format.day.month']);
-
             case self::FORMAT_DAY_MONTH_YEAR:
                 return $this->date_time->format(self::$lang['date.format.day.month.year']);
-
             case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE:
                 return $this->date_time->format(self::$lang['date.format.day.month.year.hour.minute']);
-
             case self::FORMAT_RFC2822:
                 return $this->date_time->format('r');
-
             case self::FORMAT_ISO8601:
                 return $this->date_time->format('c');
-
             case self::FORMAT_DAY_MONTH_YEAR_LONG:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.year.long']));
-
             case self::FORMAT_DAY_MONTH_YEAR_TEXT:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.year.text']));
-
             case self::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE_TEXT:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.year.hour.minute.text']));
-
             case self::FORMAT_RELATIVE:
                 return self::get_date_relative($this->get_timestamp(), $referencial_timezone);
-
             case self::FORMAT_ISO_DAY_MONTH_YEAR:
                 return $this->date_time->format('Y-m-d');
-
             case self::FORMAT_AGO:
                 $time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
                 if ($time !== self::$lang['date.instantly'])
@@ -157,7 +142,6 @@ class Date
                     $time = StringVars::replace_vars(self::$lang['date.ago'], ['time' => $time]);
                 }
                 return $time;
-
             case self::FORMAT_SINCE:
                 $time = self::get_date_relative($this->get_timestamp(), $referencial_timezone);
                 if ($time !== self::$lang['date.instantly'])
@@ -165,16 +149,12 @@ class Date
                     $time = StringVars::replace_vars(self::$lang['date.since'], ['time' => $time]);
                 }
                 return $time;
-
             case self::FORMAT_DELAY:
                 return self::get_date_delay($this, $referencial_timezone);
-
             case self::FORMAT_HOUR_MINUTE:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.hour.minute']));
-
             case self::FORMAT_DAY_MONTH_TEXT:
                 return self::transform_date($this->date_time->format(self::$lang['date.format.day.month.text']));
-
             default:
                 return '';
         }
@@ -552,7 +532,7 @@ class Date
         return checkdate($month, $day, $year);
     }
 
-    public static function to_format($time, $format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
+    public static function to_format(int|string|null $time, int|string $format = self::FORMAT_DAY_MONTH, int $referencial_timezone = Timezone::USER_TIMEZONE): string
     {
         $date = new Date($time, $referencial_timezone);
         return $date->format($format);

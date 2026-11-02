@@ -4,9 +4,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2010 02 28
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UrlSerializedParameterEncoder
@@ -56,7 +57,7 @@ class UrlSerializedParameterEncoder
      * @param mixed $value The value of the parameter
      * @return string The encoded parameter
      */
-    private static function encode_parameter($key, $value): string
+    private static function encode_parameter(string|int $key, mixed $value): string
     {
         return self::encode_name($key) . self::encode_value($value);
     }
@@ -67,7 +68,7 @@ class UrlSerializedParameterEncoder
      * @param string|int $key The key to encode
      * @return string The encoded name
      */
-    private static function encode_name($key): string
+    private static function encode_name(string|int $key): string
     {
         if (is_string($key) && preg_match('`^[a-z][a-z0-9]*$`iu', $key))
         {
@@ -82,7 +83,7 @@ class UrlSerializedParameterEncoder
      * @param mixed $value The value to encode
      * @return string The encoded value
      */
-    private static function encode_value($value): string
+    private static function encode_value(mixed $value): string
     {
         if (is_array($value))
         {
@@ -100,7 +101,7 @@ class UrlSerializedParameterEncoder
      * @param mixed $value The value to encode
      * @return string The encoded string
      */
-    private static function encode_string($value): string
+    private static function encode_string(mixed $value): string
     {
         return addcslashes((string) $value, ':{}\\,');
     }

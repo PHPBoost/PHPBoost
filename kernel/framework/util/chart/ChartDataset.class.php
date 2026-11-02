@@ -4,8 +4,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 6.0 - 2024 06 29
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ChartDataset
@@ -27,26 +28,16 @@ class ChartDataset
         '102, 133, 237'
     ];
 
-    public $use_many_colors = true;
+    public bool $use_many_colors = true;
+    public array $data_labels = [];
+    public array $data_values = [];
+    public array $data_colors = [];
+    public string $color_pattern = 'rgba(%s, 0.7)';
+    public string $label;
+    public string|false $type = false;
+    public array $options = [];
 
-    public $data_labels = [];
-
-    public $data_values = [];
-
-    public $data_colors = [];
-
-    public $color_pattern = 'rgba(%s, 0.7)';
-
-    public $label;
-
-    public $type = false;
-
-    public $options = [];
-
-    /**
-     * Create a new Dataset for Chart
-     * @param string $label
-     */
+    /** Create a new Dataset for Chart */
     public function __construct(string $label)
     {
         $this->label = $label;
@@ -55,9 +46,8 @@ class ChartDataset
     /**
      * Hydrate a dataset by giving an array with key => value
      * eg : ['Firefox' => 5, 'Chrome' => 2]
-     * @param array $data
      */
-    public function set_datas(array $data)
+    public function set_datas(array $data): void
     {
         $i = 0;
         if ($this->use_many_colors)
@@ -89,9 +79,8 @@ class ChartDataset
      * Set colors by defining an array of colors in RGB
      * eg ['224, 118, 27','48, 149, 53']
      * Have to set this before set_datas
-     * @param array $colors
      */
-    public function set_colors(array $colors):void
+    public function set_colors(array $colors): void
     {
         $this->colors = $colors;
     }
@@ -100,7 +89,7 @@ class ChartDataset
      * Get an item color by its key name
      * @return string color like (rgb(xxx))
      */
-    public function get_color_label(string $label):string 
+    public function get_color_label(string $label): string 
     {
         $key = array_search($label, $this->data_labels);
         return sprintf($this->color_pattern, $this->data_colors[$key]);
@@ -110,7 +99,7 @@ class ChartDataset
      * Build an array with all data patterned colors ready to be used
      * @return array
      */
-    public function get_colors():array
+    public function get_colors(): array
     {
         $colors = [];
         foreach ($this->data_colors as $color)
@@ -125,7 +114,7 @@ class ChartDataset
      * eg : 'rgb(%s)'
      * @param string $pattern
      */
-    public function set_color_pattern(string $pattern)
+    public function set_color_pattern(string $pattern): void
     {
         $this->color_pattern = $pattern;
     }
