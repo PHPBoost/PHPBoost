@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 20
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 09 28
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -20,18 +20,12 @@
 
 class Environment
 {
-    private static $running_module_name = '';
-    private static $home_page_running;
+    private static string $running_module_name = '';
+    private static ?bool $home_page_running = null;
+    private static ?GraphicalEnvironment $graphical_environment = null;
 
-    /**
-     * @var GraphicalEnvironment
-     */
-    private static $graphical_environment = null;
-
-    /**
-     * Loads all the files that the environment requires
-     */
-    public static function load_imports()
+    /** Loads all the files that the environment requires */
+    public static function load_imports(): void
     {
         require_once PATH_TO_ROOT . '/kernel/framework/helper/deprecated_helper.inc.php';
 
@@ -40,10 +34,8 @@ class Environment
         AppContext::init_bench();
     }
 
-    /**
-     * Inits the environment and all its services.
-     */
-    public static function init()
+    /** Inits the environment and all its services. */
+    public static function init(): void
     {
         try
         {
@@ -53,7 +45,7 @@ class Environment
         }
     }
 
-    public static function try_init()
+    public static function try_init(): void
     {
         self::load_static_constants();
         self::load_dynamic_constants();
@@ -74,7 +66,7 @@ class Environment
         self::enable_errors_and_exceptions_management();
     }
 
-    public static function init_http_services()
+    public static function init_http_services(): void
     {
         AppContext::set_request(new HTTPRequestCustom());
         $response = new HTTPResponseCustom();
@@ -82,19 +74,19 @@ class Environment
         AppContext::set_response($response);
     }
 
-    public static function init_services()
+    public static function init_services(): void
     {
         self::init_http_services();
         AppContext::init_extension_provider_service();
     }
 
-    public static function enable_errors_and_exceptions_management()
+    public static function enable_errors_and_exceptions_management(): void
     {
         set_error_handler([new IntegratedErrorHandler(), 'handle']);
         set_exception_handler([new ExceptionHandler(), 'handle']);
     }
 
-    public static function fit_to_php_configuration()
+    public static function fit_to_php_configuration(): void
     {
         defined('ERROR_REPORTING') or define('ERROR_REPORTING', E_ALL | E_NOTICE);
         @ini_set('display_errors', 'on');
@@ -112,7 +104,7 @@ class Environment
         @ini_set('open_basedir', null);
     }
 
-    public static function load_static_constants()
+    public static function load_static_constants(): void
     {
         //Path from the server root
         defined('SCRIPT') or define('SCRIPT', (isset($_SERVER['PHP_SELF']) ? TextHelper::htmlspecialchars($_SERVER['PHP_SELF']) : ''));
@@ -129,7 +121,7 @@ class Environment
 
     }
 
-    public static function load_dynamic_constants()
+    public static function load_dynamic_constants(): void
     {
         $general_config = GeneralConfig::load();
         $site_path      = $general_config->get_site_path();
@@ -138,7 +130,7 @@ class Environment
         defined('TPL_PATH_TO_ROOT') or define('TPL_PATH_TO_ROOT', DIR);
     }
 
-    public static function init_session()
+    public static function init_session(): void
     {
         Session::gc();
         $session_data = Session::start();
@@ -163,12 +155,12 @@ class Environment
         }
     }
 
-    public static function set_default_timezone()
+    public static function set_default_timezone(): void
     {
         Date::set_default_timezone();
     }
 
-    public static function init_output_bufferization()
+    public static function init_output_bufferization(): void
     {
         if (ServerEnvironmentConfig::load()->is_output_gziping_enabled() && !in_array('ob_gzhandler', ob_list_handlers())) {
             ob_start('ob_gzhandler');
@@ -177,7 +169,7 @@ class Environment
         }
     }
 
-    public static function load_lang_files()
+    public static function load_lang_files(): void
     {
         $locale = AppContext::get_current_user()->get_locale();
         LangLoader::set_locale($locale);
@@ -189,7 +181,7 @@ class Environment
         AppContext::get_current_user()->update_visitor_display_name();
     }
 
-    public static function process_changeday_tasks_if_needed()
+    public static function process_changeday_tasks_if_needed(): void
     {
         //If the day changed compared to the last request, we execute the daily tasks
         $last_use_config = LastUseDateConfig::load();
@@ -207,24 +199,18 @@ class Environment
         }
     }
 
-    private static function perform_changeday(Date $current_date)
+    private static function perform_changeday(Date $current_date): void
     {
         self::clear_all_temporary_cache_files();
-
         self::execute_modules_changedays_tasks();
-
         self::update_visit_counter_table();
-
         self::remove_old_unactivated_member_accounts();
-
         self::optimize_database_tables($current_date);
-
         self::clear_feed_cache();
-
         self::check_updates();
     }
 
-    private static function clear_all_temporary_cache_files()
+    private static function clear_all_temporary_cache_files(): void
     {
         //We delete all the images generated by the LaTeX formatter
         $cache_image_folder_path = new Folder(PATH_TO_ROOT . '/images/maths/');
@@ -236,7 +222,7 @@ class Environment
         }
     }
 
-    private static function execute_modules_changedays_tasks()
+    private static function execute_modules_changedays_tasks(): void
     {
         $today     = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
         $yesterday = new Date(self::get_yesterday_timestamp(), Timezone::SERVER_TIMEZONE);
@@ -248,7 +234,7 @@ class Environment
         }
     }
 
-    private static function update_visit_counter_table()
+    private static function update_visit_counter_table(): void
     {
         $now  = new Date(Date::DATE_NOW, Timezone::SITE_TIMEZONE);
         $time = $now->format('Y-m-d');
@@ -263,20 +249,24 @@ class Environment
         PersistenceContext::get_querier()->insert(DB_TABLE_VISIT_COUNTER, ['ip' => AppContext::get_request()->get_ip_address(), 'time' => $time, 'total' => 0]);
     }
 
-    private static function remove_old_unactivated_member_accounts()
+    private static function remove_old_unactivated_member_accounts(): void
     {
         UserService::remove_old_unactivated_member_accounts();
     }
 
-    private static function optimize_database_tables(Date $current_date)
+    private static function optimize_database_tables(Date $current_date): void
     {
-        if (ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database')) {
+        if (ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database'))
+        {
             $database_config = DatabaseConfig::load();
-            if ($database_config->is_database_tables_optimization_enabled()) {
+            if ($database_config->is_database_tables_optimization_enabled())
+            {
                 if (($database_config->get_database_tables_optimization_day() == 7 && $current_date->get_day() == 1) || $database_config->get_database_tables_optimization_day() == $current_date->get_day_of_week()) {
                     $tables_to_optimize = [];
-                    foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info) {
-                        if (NumberHelper::round($table_info['data_free'] / 1024, 1) != 0) {
+                    foreach (PersistenceContext::get_dbms_utils()->list_and_desc_tables(true) as $key => $table_info)
+                    {
+                        if (NumberHelper::round($table_info['data_free'] / 1024, 1) != 0)
+                        {
                             $tables_to_optimize[] = $key;
                         }
 
@@ -287,27 +277,29 @@ class Environment
         }
     }
 
-    private static function clear_feed_cache()
+    private static function clear_feed_cache(): void
     {
         Feed::clear_cache();
     }
 
-    private static function check_updates()
+    private static function check_updates(): void
     {
         new Updates();
     }
 
-    private static function execute_modules_changepage_tasks()
+    private static function execute_modules_changepage_tasks(): void
     {
-        foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job) {
-            if ($job) {
+        foreach (AppContext::get_extension_provider_service()->get_extension_point(ScheduledJobExtensionPoint::EXTENSION_POINT) as $module_id => $job)
+        {
+            if ($job)
+            {
                 $job->on_changepage();
             }
 
         }
     }
 
-    public static function compute_running_module_name()
+    public static function compute_running_module_name(): void
     {
         $path = TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(DIR));
         $path = trim($path, '/');
@@ -315,30 +307,40 @@ class Environment
         $general_config  = GeneralConfig::load();
         $other_home_page = trim($general_config->get_other_home_page(), '/');
 
-        if (preg_match('`^/?modules/([a-z0-9_-]+)/index\.php(?:\?.*)?$`i', $path, $matches)) {
+        if (preg_match('`^/?modules/([a-z0-9_-]+)/index\.php(?:\?.*)?$`i', $path, $matches))
+        {
             self::$running_module_name = $matches[1];
             self::$home_page_running = false;
             return;
         }
 
-        if ((!empty($path) && $path != 'index.php') || (!empty($other_home_page) && $path == $other_home_page)) {
+        if ((!empty($path) && $path != 'index.php') || (!empty($other_home_page) && $path == $other_home_page))
+        {
             $module_name               = explode('/', $path);
             self::$running_module_name = $module_name[0];
 
-            if ($path == $other_home_page) {
+            if ($path == $other_home_page)
+            {
                 self::$home_page_running = true;
-            } else {
+            }
+            else
+            {
                 self::$home_page_running = false;
             }
 
-        } else {
+        }
+        else
+        {
             self::$home_page_running = true;
 
             $module_home_page = $general_config->get_module_home_page();
 
-            if (empty($other_home_page) && !empty($module_home_page)) {
+            if (empty($other_home_page) && !empty($module_home_page))
+            {
                 self::$running_module_name = $module_home_page;
-            } else {
+            }
+            else
+            {
                 self::$running_module_name = '';
             }
 
@@ -349,17 +351,17 @@ class Environment
      * Retrieves the identifier (name of the folder) of the module which is currently executed.
      * @return string The module identifier.
      */
-    public static function get_running_module_name()
+    public static function get_running_module_name(): string
     {
         return self::$running_module_name;
     }
 
-    public static function home_page_running()
+    public static function home_page_running(): ?bool
     {
         return self::$home_page_running;
     }
 
-    public static function csrf_protect_post_requests()
+    public static function csrf_protect_post_requests(): void
     {
         // Verify that the user really wanted to do this POST
         AppContext::get_session()->csrf_post_protect();
@@ -368,10 +370,11 @@ class Environment
     /**
      * Redirect to update script when it is present and not installed.
      */
-    private static function redirect_to_update_script_if_needed()
+    private static function redirect_to_update_script_if_needed(): void
     {
         $folder = new Folder(PATH_TO_ROOT . '/update');
-        if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && ClassLoader::is_class_registered_and_valid('UpdateServices') && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<')) {
+        if ($folder->exists() && !AppContext::get_request()->get_is_localhost() && ClassLoader::is_class_registered_and_valid('UpdateServices') && version_compare(GeneralConfig::load()->get_phpboost_major_version(), UpdateServices::NEW_KERNEL_VERSION, '<'))
+        {
             AppContext::get_response()->redirect(new Url(HOST . DIR . '/update'));
         }
     }
@@ -393,7 +396,7 @@ class Environment
      * Returns the full phpboost version with its build number
      * @return string the full phpboost version with its build number
      */
-    public static function get_phpboost_version()
+    public static function get_phpboost_version(): string
     {
         return GeneralConfig::load()->get_phpboost_major_version() . '.' . self::get_phpboost_minor_version();
     }
@@ -402,7 +405,7 @@ class Environment
      * Returns phpboost minor version (build number)
      * @return string the minor version
      */
-    public static function get_phpboost_minor_version()
+    public static function get_phpboost_minor_version(): string
     {
         $file  = new File(PATH_TO_ROOT . '/kernel/.build');
         $build = $file->read();
@@ -414,7 +417,7 @@ class Environment
      * Returns phpboost name of the major version
      * @return string the name of the major version
      */
-    public static function get_phpboost_name_version()
+    public static function get_phpboost_name_version(): string
     {
         $file  = new File(PATH_TO_ROOT . '/kernel/.name');
         $build = $file->read();
@@ -425,37 +428,34 @@ class Environment
     /**
      * Displays the environment with content of the page.
      */
-    public static function display($content)
+    public static function display(string $content): void
     {
         self::get_graphical_environment()->display($content);
     }
 
-    public static function set_graphical_environment(GraphicalEnvironment $env)
+    public static function set_graphical_environment(GraphicalEnvironment $env): void
     {
         self::$graphical_environment = $env;
     }
 
-    public static function destroy()
+    public static function destroy(): void
     {
         PersistenceContext::close_db_connection();
 
         @ob_end_flush();
     }
 
-    private static function get_yesterday_timestamp()
+    private static function get_yesterday_timestamp(): int
     {
         return time() - 86400;
     }
 
-    private static function get_one_week_ago_timestamp()
+    private static function get_one_week_ago_timestamp(): int
     {
         return time() - 3600 * 24 * 7;
     }
 
-    /**
-     * @return GraphicalEnvironment
-     */
-    public static function get_graphical_environment()
+    public static function get_graphical_environment(): GraphicalEnvironment
     {
         if (self::$graphical_environment === null) {
             self::$graphical_environment = new SiteDisplayGraphicalEnvironment();
@@ -468,7 +468,7 @@ class Environment
      * take a long time. By default, max execution time is 30 seconds.
      * Note that according to PHP configuration, this function can fail.
      */
-    public static function try_to_increase_max_execution_time()
+    public static function try_to_increase_max_execution_time(): void
     {
         @set_time_limit(600);
     }

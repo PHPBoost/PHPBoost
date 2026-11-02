@@ -7,83 +7,40 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 10 01
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AppContext
 {
-	/**
-	 * @var HTTPRequestCustom
-	 */
-	private static $request;
-	/**
-	 * @var HTTPRequestCustom
-	 */
-	private static $response;
+	private static ?HTTPRequestCustom $request = null;
+	private static ?HTTPResponseCustom $response = null;
+	private static ?BreadCrumb $breadcrumb = null;
+	private static ?Bench $bench = null;
+	private static ?SessionData $session = null;
+	private static ?CurrentUser $current_user = null;
+	private static ?ExtensionPointProviderService $extension_provider_service = null;
+	private static ?CacheService $cache_service = null;
+	private static ?MailService $mail_service = null;
+	private static ?ContentFormattingService $content_formatting_service = null;
+	private static ?CaptchaService $captcha_service = null;
 
-	/**
-	 * @var BreadCrumb
-	 */
-	private static $breadcrumb;
-	/**
-	 * @var Bench
-	 */
-	private static $bench;
-	/**
-	 * @var Session
-	 */
-	private static $session;
-	/**
-	 * @var CurrentUser
-	 */
-	private static $current_user;
-	/**
-	 * @var ExtensionPointProviderService
-	 */
-	private static $extension_provider_service;
-	/**
-	 * @var CacheService
-	 */
-	private static $cache_service;
-	/**
-	 *
-	 * @var MailService
-	 */
-	private static $mail_service;
-	/**
-	 * @var ContentFormattingService
-	 */
-	private static $content_formatting_service;
-	/**
-	 * @var CaptchaService
-	 */
-	private static $captcha_service;
-
-	/**
-	 * Returns a unique identifier (useful for example to generate some javascript ids)
-	 * @return int Id
-	 */
-	public static function get_uid()
+	/** Returns a unique identifier (useful for example to generate some javascript ids) */
+	public static function get_uid(): int
 	{
 		static $uid = 1764;
 		return $uid++;
 	}
 
-	/**
-	 * set the <code>HTTPRequestCustom</code>
-	 * @param HTTPRequestCustom $request
-	 */
-	public static function set_request(HTTPRequestCustom $request)
+	/** Set the <code>HTTPRequestCustom</code> */
+	public static function set_request(HTTPRequestCustom $request): void
 	{
 		self::$request = $request;
 	}
 
-	/**
-	 * Returns the <code>HTTPRequestCustom</code> object
-	 * @return HTTPRequestCustom
-	 */
-	public static function get_request()
+	/** Returns the <code>HTTPRequestCustom</code> object */
+	public static function get_request(): HTTPRequestCustom
 	{
 		if (self::$request == null)
 		{
@@ -92,20 +49,14 @@ class AppContext
 		return self::$request;
 	}
 
-	/**
-	 * set the <code>HTTPResponseCustom</code>
-	 * @param HTTPResponseCustom $response
-	 */
-	public static function set_response(HTTPResponseCustom $response)
+	/** Set the <code>HTTPResponseCustom</code> */
+	public static function set_response(HTTPResponseCustom $response): void
 	{
 		self::$response = $response;
 	}
 
-	/**
-	 * Returns the <code>HTTPResponseCustom</code> object
-	 * @return HTTPResponseCustom
-	 */
-	public static function get_response()
+	/** Returns the <code>HTTPResponseCustom</code> object */
+	public static function get_response(): HTTPResponseCustom
 	{
 		if (self::$response == null)
 		{
@@ -114,54 +65,39 @@ class AppContext
 		return self::$response;
 	}
 
-	/**
-	 * Inits the bench
-	 */
-	public static function init_bench()
+	/** Inits the bench */
+	public static function init_bench(): void
 	{
 		self::$bench = new Bench();
 		self::$bench->start();
 	}
 
-	/**
-	 * Returns the current page's bench
-	 * @return Bench
-	 */
-	public static function get_bench()
+	/** Returns the current page's bench */
+	public static function get_bench(): Bench
 	{
 		return self::$bench;
 	}
 
-	/**
-	 * Sets the session
-	 */
-	public static function set_session(SessionData $session)
+	/** Sets the session */
+	public static function set_session(SessionData $session): void
 	{
 		self::$session = $session;
 	}
 
-	/**
-	 * Returns the current user's session
-	 * @return SessionData
-	 */
-	public static function get_session()
+	/** Returns the current user's session */
+	public static function get_session(): SessionData
 	{
 		return self::$session;
 	}
 
-	/**
-	 * Inits the current user
-	 */
-	public static function init_current_user()
+	/** Inits the current user */
+	public static function init_current_user(): void
 	{
 		self::$current_user = CurrentUser::from_session();
 	}
 
-	/**
-	 * Returns the current user
-	 * @return CurrentUser
-	 */
-	public static function get_current_user()
+	/** Returns the current user */
+	public static function get_current_user(): CurrentUser
 	{
 		if (self::$current_user === null)
 		{
@@ -170,16 +106,13 @@ class AppContext
 		return self::$current_user;
 	}
 
-	public static function set_current_user($current_user)
+	public static function set_current_user(CurrentUser $current_user): void
 	{
 		self::$current_user = $current_user;
 	}
 
-	/**
-	 * Returns the cache service
-	 * @return CacheService
-	 */
-	public static function get_cache_service()
+	/** Returns the cache service */
+	public static function get_cache_service(): CacheService
 	{
 		if (self::$cache_service === null)
 		{
@@ -188,23 +121,18 @@ class AppContext
 		return self::$cache_service;
 	}
 
-	public static function set_cache_service(CacheService $cache_service)
+	public static function set_cache_service(CacheService $cache_service): void
 	{
 		self::$cache_service = $cache_service;
 	}
 
-	/**
-	 * Inits the extension provider service
-	 */
-	public static function init_extension_provider_service()
+	/** Inits the extension provider service */
+	public static function init_extension_provider_service(): void
 	{
 		self::$extension_provider_service = new ExtensionPointProviderService();
 	}
 
-	/**
-	 * @return ExtensionPointProviderService
-	 */
-	public static function get_extension_provider_service()
+	public static function get_extension_provider_service(): ExtensionPointProviderService
 	{
 		if (self::$extension_provider_service === null)
 		{
@@ -213,10 +141,7 @@ class AppContext
 		return self::$extension_provider_service;
 	}
 
-	/**
-	 * @return MailService
-	 */
-	public static function get_mail_service()
+	public static function get_mail_service(): MailService
 	{
 		if (self::$mail_service === null)
 		{
@@ -233,10 +158,7 @@ class AppContext
 		return self::$mail_service;
 	}
 
-	/**
-	 * @return ContentFormattingService
-	 */
-	public static function get_content_formatting_service()
+	public static function get_content_formatting_service(): ContentFormattingService
 	{
 		if (self::$content_formatting_service === null)
 		{
@@ -245,10 +167,7 @@ class AppContext
 		return self::$content_formatting_service;
 	}
 
-	/**
-	 * @return CaptchaService
-	 */
-	public static function get_captcha_service()
+	public static function get_captcha_service(): CaptchaService
 	{
 		if (self::$captcha_service === null)
 		{

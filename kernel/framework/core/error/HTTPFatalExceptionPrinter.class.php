@@ -5,24 +5,25 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2010 10 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 defined('TPL_PATH_TO_ROOT') or define('TPL_PATH_TO_ROOT', PATH_TO_ROOT);
 
 class HTTPFatalExceptionPrinter
 {
-	private $type;
-	private $message;
-	private $exception;
-	private $ob_content = '';
-	private $is_row_odd = true;
-	private $output = '';
+	private string $type = '';
+	private string $message = '';
+	private ?Throwable $exception;
+	private string $ob_content = '';
+	private bool $is_row_odd = true;
+	private string $output = '';
 
-	public function __construct($exception)
+	public function __construct(?Throwable $exception)
 	{
 		$this->exception = $exception;
 		$this->type = get_class($this->exception);
@@ -30,7 +31,7 @@ class HTTPFatalExceptionPrinter
 		$this->ob_content = AppContext::get_response()->get_previous_ob_content();
 	}
 
-	public function render()
+	public function render(): string
 	{
 		$this->output .= '<!DOCTYPE html>
 <html lang="en">
@@ -115,7 +116,7 @@ class HTTPFatalExceptionPrinter
 		return $this->output;
 	}
 
-	private function build_stack_trace()
+	private function build_stack_trace(): string
 	{
 		$i = 0;
 		$this->is_row_odd = true;
@@ -147,7 +148,7 @@ class HTTPFatalExceptionPrinter
 		return $stack;
 	}
 
-	private function get_http_context()
+	private function get_http_context(): string
 	{
 		$http_context = '';
 		$http_context .= $this->dump_var('GET', $_GET);
@@ -157,7 +158,7 @@ class HTTPFatalExceptionPrinter
 		return $http_context;
 	}
 
-	private function dump_var($title, $parameters)
+	private function dump_var(string $title, array $parameters): string
 	{
 		$dump =  '';
 		if (!empty($parameters))
@@ -172,7 +173,7 @@ class HTTPFatalExceptionPrinter
 		return $dump;
 	}
 
-	private function add_parameter($key, $value)
+	private function add_parameter(string $key,mixed $value): string
 	{
 		$value_to_display = '';
 		if (is_array($value))

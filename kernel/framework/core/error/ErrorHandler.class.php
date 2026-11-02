@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 01
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 09 30
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -23,25 +23,25 @@ class ErrorHandler
 	 */
 	private static $LOG_FILE_MAX_SIZE = 1048576;
 
-	protected $errno;
-	protected $errfile;
-	protected $errline;
-	protected $errdesc;
-	protected $errclass;
-	protected $fatal;
-	protected $stacktrace;
-	protected $exception;
+	protected ?int $errno = null;
+	protected ?string $errfile = null;
+	protected ?int $errline = null;
+	protected string $errdesc = '';
+	protected string $errclass = '';
+	protected bool $fatal = false;
+	protected string $stacktrace = '';
+	protected ?Exception $exception = null;
 
 	/**
 	 * log the error and displays it in debug mode
-	 * @param unknown_type $errno contains the level of the error raised, as an integer
-	 * @param unknown_type $errstr contains the error message, as a string
-	 * @param unknown_type $errfile the filename that the error was raised in, as a string
-	 * @param unknown_type $errline the line number the error was raised at, as an integer
+	 * @param int $errno contains the level of the error raised, as an integer
+	 * @param string $errstr contains the error message, as a string
+	 * @param string $errfile the filename that the error was raised in, as a string
+	 * @param int $errline the line number the error was raised at, as an integer
 	 * @return bool always true because we don't want the php default error handler to process the
 	 * error again
 	 */
-	public function handle($errno, $errstr, $errfile, $errline)
+	public function handle(int $errno, string $errstr, string $errfile, int $errline)
 	{
 		if ($this->needs_to_be_processed($errno))
 		{
@@ -57,7 +57,7 @@ class ErrorHandler
 		return true;
 	}
 
-	private function prepare($errno, $errstr, $errfile, $errline)
+	private function prepare(int $errno, string $errstr, string $errfile, int $errline): void
 	{
 		$this->exception  = new Exception($errstr);
 		$this->errno      = $errno;
@@ -74,12 +74,12 @@ class ErrorHandler
 	 * @return boolean true if the error is not thrown by a function prefixed with an @ and if the
 	 * errno is in the ERROR_REPORTING level
 	 */
-	private function needs_to_be_processed($errno)
+	private function needs_to_be_processed(int $errno): bool
 	{
 		return (error_reporting() & $errno) && ($errno & ERROR_REPORTING);
 	}
 
-	private function process()
+	private function process(): void
 	{
 		switch (true)
 		{
@@ -141,7 +141,7 @@ class ErrorHandler
 		// }
 	}
 
-	private function display()
+	private function display(): void
 	{
 		AppContext::get_response()->set_status_code(503);
 
@@ -166,7 +166,8 @@ class ErrorHandler
 		}
 	}
 
-	protected function get_stackstrace_as_string($start_trace_index) {
+	protected function get_stackstrace_as_string(int $start_trace_index): string
+    {
 		$stack = '[0] ' . Path::get_path_from_root($this->errfile) . ':' . $this->errline;
 		if (count($this->exception->getTrace()) > 2)
 		{
@@ -176,7 +177,7 @@ class ErrorHandler
 		return $stack;
 	}
 
-	protected function display_debug()
+	protected function display_debug(): void
 	{
 		echo '<div class="message-helper bgc ' . $this->errclass . ' error-handler">
                 <strong>' . $this->errdesc . ' : </strong>' . $this->exception->getMessage() . '<br /><br /><br />
@@ -184,17 +185,17 @@ class ErrorHandler
 			</div>';
 	}
 
-	protected function display_fatal()
+	protected function display_fatal(): void
 	{
 		$this->display_debug();
 	}
 
-	private function log()
+	private function log(): void
 	{
 		self::add_error_in_log($this->exception->getMessage(), $this->get_stackstrace_as_string(4), $this->errno);
 	}
 
-	public static function add_error_in_log($error_msg, $error_stacktrace, $errno = 0)
+	public static function add_error_in_log(string $error_msg, string $error_stacktrace, int $errno = 0): void
 	{
 		$error_log_file = PATH_TO_ROOT . '/cache/error.log';
 		self::clear_error_log_file($error_log_file);
@@ -202,7 +203,7 @@ class ErrorHandler
         AdminLoggedErrorsService::send_alert();
 	}
 
-	private static function clear_error_log_file($log_file)
+	private static function clear_error_log_file(string $log_file): void
 	{
 		if (file_exists($log_file) && filesize($log_file) > self::$LOG_FILE_MAX_SIZE)
 		{
@@ -212,7 +213,7 @@ class ErrorHandler
 		}
 	}
 
-	private static function add_error_in_log_file($log_file, $error_msg, $error_stacktrace, $errno = 0)
+	private static function add_error_in_log_file(string $log_file, string $error_msg, string $error_stacktrace, int $errno = 0): void
 	{
 		$handle = @fopen($log_file, 'a+');
 		$write = @fwrite($handle, self::compute_error_log_string($error_msg, $error_stacktrace, $errno));
@@ -224,15 +225,15 @@ class ErrorHandler
 		}
 	}
 
-	private static function compute_error_log_string($error_msg, $error_stacktrace, $errno = 0)
+	private static function compute_error_log_string(string $error_msg, string $error_stacktrace, int $errno = 0): string
 	{
 		return Date::to_format(time(), 'Y-m-d H:i:s', Timezone::SERVER_TIMEZONE) . "\n" .
-		$errno . "\n" .
-		self::clean_error_string($error_msg) . "\n" .
-		self::clean_error_string($error_stacktrace) . "\n";
+            $errno . "\n" .
+            self::clean_error_string($error_msg) . "\n" .
+            self::clean_error_string($error_stacktrace) . "\n";
 	}
 
-	private static function clean_error_string($message)
+	private static function clean_error_string(string $message): string
 	{
 		return preg_replace("`(\n)+`u", '<br />', preg_replace("`\r|\n|\t`u", "\n", $message));
 	}
@@ -240,7 +241,7 @@ class ErrorHandler
 	/**
 	 * Get Error type
 	 */
-	public static function get_errno_class($errno)
+	public static function get_errno_class(int $errno): string
 	{
 		switch ($errno)
 		{

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 20
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 09 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,18 +13,14 @@
 
 class LangLoader
 {
-    private static $locale = '';
-
-    /**
-     * @var CacheFactory
-     */
-    private static $ram_cache = null;
+    private static string $locale = '';
+    private static ?RAMDataStore $ram_cache = null;
 
     /**
      * sets the language locale
      * @param string $locale the locale
      */
-    public static function set_locale($locale)
+    public static function set_locale(string $locale): void
     {
         self::$locale = in_array($locale, self::get_available_langs()) ? $locale : self::get_default_lang();
     }
@@ -33,12 +29,12 @@ class LangLoader
      * Returns the current language locale
      * @return string the current language locale
      */
-    public static function get_locale($locale = '')
+    public static function get_locale(string $locale = ''): string
     {
         return in_array($locale, self::get_available_langs()) ? $locale : (self::$locale ? self::$locale : self::get_default_lang());
     }
 
-    public static function get_available_langs()
+    public static function get_available_langs(): array
     {
         $langs_folder = new Folder(PATH_TO_ROOT . '/lang');
         $langs_list = $langs_folder->get_folders();
@@ -52,7 +48,7 @@ class LangLoader
         return $available_langs;
     }
 
-    public static function get_default_lang()
+    public static function get_default_lang(): string
     {
         $browser_lang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? TextHelper::strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)) : '';
         $browser_lang = !$browser_lang && isset($_SERVER['HTTP_X_COUNTRY_CODE']) ? TextHelper::strtolower($_SERVER['HTTP_X_COUNTRY_CODE']) : $browser_lang;
@@ -79,7 +75,7 @@ class LangLoader
      * @param string $module the module to look for languages files in
      * @return string the localized message
      */
-    public static function get_message($message_id, $filename, $module = '')
+    public static function get_message(string $message_id, string $filename, string $module = ''): string
     {
         $lang = self::get($filename, $module);
         if (!isset($lang[$message_id]))
@@ -97,7 +93,7 @@ class LangLoader
      * @param string $module the module to look for languages files in
      * @return bool true if filename exists, false otherwise
      */
-    public static function filename_exists($filename, $module = '')
+    public static function filename_exists(string $filename, string $module = ''): string|false
     {
         return self::get_real_lang_path($module, $filename, '', false);
     }
@@ -108,17 +104,17 @@ class LangLoader
      * @param string $locale the locale (optional, uses current locale if empty)
      * @return string the module language folder path
      */
-    public static function get_module_lang_path($module_id, $locale = '')
+    public static function get_module_lang_path(string $module_id, string $locale = ''): string
     {
         $locale = self::get_locale($locale);
-        
+
         // Try new modules folder structure first
         $module_path = PATH_TO_ROOT . '/modules/' . $module_id . '/lang/' . $locale;
         if (is_dir($module_path))
         {
             return $module_path;
         }
-        
+
         // Fallback to root for backward compatibility
         return PATH_TO_ROOT . '/' . $module_id . '/lang/' . $locale;
     }
@@ -133,13 +129,13 @@ class LangLoader
      * @return array  string[] the lang array which keys are languages identifiers and values the
      * translated messages
      */
-    public static function get($filename, $module = '', $forced_file = '')
+    public static function get(string $filename, string $module = '', string $forced_file = ''): array
     {
         $module_name = trim($module, '/');
         return self::get_raw($module_name, $filename, $forced_file);
     }
 
-    private static function get_raw($folder, $filename, $forced_file = '')
+    private static function get_raw(string $folder, string $filename, string $forced_file = ''): array
     {
         $lang_id = $folder . '/' . $filename;
         $ram_cache = self::get_ram_cache();
@@ -150,7 +146,7 @@ class LangLoader
         return $ram_cache->get($lang_id);
     }
 
-    private static function load($lang_id, $folder, $filename, $forced_file = '')
+    private static function load(string $lang_id, string $folder, string $filename, string $forced_file = ''): void
     {
         $lang = [];
         include self::get_real_lang_path($folder, $filename, $forced_file);
@@ -170,7 +166,7 @@ class LangLoader
      * @param bool $throw_exception_on_failure tell if throw an exception on failure. If set to false, false will be returned
      * @return string the real language file path
      */
-    private static function get_real_lang_path($folder, $filename, $forced_file = '', $throw_exception_on_failure = true)
+    private static function get_real_lang_path(string $folder, string $filename, string $forced_file = '', bool $throw_exception_on_failure = true): string
     {
         $real_folder = PATH_TO_ROOT . (!empty($folder) ? '/' . $folder : '') . '/lang/';
         $filename_with_extension = '/' . $filename . '.php';
@@ -186,7 +182,7 @@ class LangLoader
             {
                 return $real_lang_file;
             }
-            
+
             // Check new modules folder structure
             $real_lang_file = PATH_TO_ROOT . '/modules/' . $folder . '/lang/' . self::$locale . $filename_with_extension;
             if (file_exists($real_lang_file))
@@ -215,15 +211,21 @@ class LangLoader
         }
 
         if ($throw_exception_on_failure && Debug::is_debug_mode_enabled())
+        {
             throw new LangNotFoundException($folder, $filename);
+        }
         else
+        {
             return false;
+        }
     }
 
-    public static function get_kernel_langs($locale = '')
+    public static function get_kernel_langs(string $locale = ''): array
     {
         if ($locale)
+        {
             self::set_locale($locale);
+        }
 
         $lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale($locale));
         $files = $lang_directory->get_files();
@@ -246,7 +248,7 @@ class LangLoader
         return $langloader;
     }
 
-    public static function get_theme_langs($locale = '')
+    public static function get_theme_langs(string $locale = ''): array
     {
         if ($locale)
             self::set_locale($locale);
@@ -275,14 +277,14 @@ class LangLoader
         return $theme_langloader;
     }
 
-    public static function get_module_langs($module_id, $locale = '')
+    public static function get_module_langs(string $module_id, string $locale = ''): array
     {
         if ($locale)
             self::set_locale($locale);
 
         // Try new modules folder structure first
         $module_lang_directory = new Folder(PATH_TO_ROOT . '/modules/' . $module_id . '/lang/' . self::get_locale($locale));
-        
+
         // Fallback to root for backward compatibility
         if (!$module_lang_directory->exists())
         {
@@ -307,27 +309,26 @@ class LangLoader
         return $module_langloader;
     }
 
-    public static function get_all_langs($module_id = '', $locale = '')
+    public static function get_all_langs(string $module_id = '', string $locale = ''): array
     {
         if(!empty($module_id) && !in_array($module_id, ['admin', 'cache', 'images', 'kernel', 'lang', 'repository', 'syndication', 'templates', 'upload', 'user']))
+        {
             return array_merge(self::get_kernel_langs($locale), self::get_module_langs($module_id, $locale), self::get_theme_langs($locale));
+        }
         else
+        {
             return array_merge(self::get_kernel_langs($locale), self::get_theme_langs($locale));
+        }
     }
 
-    /**
-     * clear the lang cache (for unit test only)
-     */
-    public static function clear_lang_cache()
+    /** Clear the lang cache (for unit test only) */
+    public static function clear_lang_cache(): void
     {
         self::$ram_cache = null;
         self::get_ram_cache();
     }
 
-    /**
-     * @return RAMDataStore
-     */
-    private static function get_ram_cache()
+    private static function get_ram_cache(): RAMDataStore
     {
         if (self::$ram_cache === null)
         {

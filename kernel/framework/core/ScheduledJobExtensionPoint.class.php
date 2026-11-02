@@ -4,8 +4,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2010 10 16
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface ScheduledJobExtensionPoint extends ExtensionPoint
@@ -17,18 +18,18 @@ interface ScheduledJobExtensionPoint extends ExtensionPoint
 	 * @param Date $yesterday date representing yesterday
 	 * @param Date $today date representing today
 	 */
-	function on_changeday(Date $yesterday, Date $today);
+	function on_changeday(Date $yesterday, Date $today): void;
 
 	/**
 	 * Execute commands to change page.
 	 */
-	function on_changepage();
+	function on_changepage(): void;
 
 	/**
 	 * Execute commands to new session start.
 	 * @param bool $new_visitor true if the new session start with a new visitor
 	 * @param bool $is_robot true if the new session start with a robot visitor
 	 */
-	function on_new_session($new_visitor, $is_robot);
+	function on_new_session(mixed $new_visitor, mixed $is_robot): void;
 }
 ?>

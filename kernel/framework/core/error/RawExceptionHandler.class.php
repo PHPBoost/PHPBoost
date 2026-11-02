@@ -5,25 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 12 15
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class RawExceptionHandler
 {
-	/**
-	 * @var Exception
-	 */
-	private $exception;
+	private Throwable $exception;
 
 	/**
 	 * The user function needs to accept two parameters: the error code, and a string
 	 * describing the error.
-	 * @param Exception $exception contains the level of the error raised, as an integer
-	 * @return bool always true because we don't want the php default error handler to process the
+	 * @param Throwable $exception contains the level of the error raised, as an integer
+	 * @return void always true because we don't want the php default error handler to process the
 	 * error again
 	 */
-	public function handle($exception)
+	public function handle(Throwable $exception): void
 	{
 		$this->exception = $exception;
 		$this->clean_output_buffer();
@@ -31,12 +29,12 @@ class RawExceptionHandler
 		$this->raw_display();
 	}
 
-	private function clean_output_buffer()
+	private function clean_output_buffer(): void
 	{
 		AppContext::get_response()->clean_output();
 	}
 
-	private function log()
+	private function log(): void
 	{
 		$information_to_log = $this->exception->getMessage() .
             "\n" . $this->exception->getTraceAsString();

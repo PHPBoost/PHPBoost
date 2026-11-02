@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 12 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,10 +14,7 @@
 
 class ExceptionHandler
 {
-	/**
-	 * @var Exception
-	 */
-	private $exception;
+	private Throwable $exception;
 
 	/**
 	 * The user function needs to accept two parameters: the error code, and a string
@@ -26,7 +23,7 @@ class ExceptionHandler
 	 * @return bool always true because we don't want the php default error handler to process the
 	 * error again
 	 */
-	public function handle($exception)
+	public function handle(Throwable $exception): void
 	{
 		$this->exception = $exception;
 		$this->clean_output_buffer();
@@ -35,17 +32,17 @@ class ExceptionHandler
 		$this->destroy_app();
 	}
 
-	private function clean_output_buffer()
+	private function clean_output_buffer(): void
 	{
 		AppContext::get_response()->clean_output();
 	}
 
-	private function log()
+	private function log(): void
 	{
 		ErrorHandler::add_error_in_log($this->exception->getMessage(), Debug::get_stacktrace_as_string(0, $this->exception), E_USER_ERROR);
 	}
 
-	private function display()
+	private function display(): void
 	{
 		if (Debug::is_debug_mode_enabled())
 		{
@@ -58,13 +55,13 @@ class ExceptionHandler
 		}
 	}
 
-	private function destroy_app()
+	private function destroy_app(): void
 	{
 		Environment::destroy();
 		exit;
 	}
 
-	private function raw_display()
+	private function raw_display(): void
 	{
 		if (Debug::is_debug_mode_enabled())
 		{
@@ -76,7 +73,7 @@ class ExceptionHandler
 		}
 	}
 
-	private function prepare_controller()
+	private function prepare_controller(): UserErrorController
 	{
 		$title = LangLoader::get_message('warning.error', 'warning-lang');
 
@@ -97,7 +94,7 @@ class ExceptionHandler
 		return $controller;
 	}
 
-	private function send_response(Controller $controller)
+	private function send_response(Controller $controller): void
 	{
 		try
 		{
@@ -110,7 +107,7 @@ class ExceptionHandler
 		}
 	}
 
-	private function integrated_display(Controller $controller)
+	private function integrated_display(Controller $controller): void
 	{
 		$request = AppContext::get_request();
 		$response = $controller->execute($request);

@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 16
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2009 10 21
  * @author      mipel <mipel@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -13,47 +13,29 @@
 
 class ClassLoader
 {
-    /**
-     * @var string The cache file path
-     */
+    /** @var string The cache file path */
     protected static string $cache_file = '/cache/autoload.php';
-
-    /**
-     * @var array The autoload class list
-     */
+    /** @var array The autoload class list */
     protected static array $autoload = [];
-
-    /**
-     * @var array The namespace to path map
-     */
+    /** @var array The namespace to path map */
     protected static array $namespace_map = [];
-
-    /**
-     * @var bool Whether the autoload has already been reloaded
-     */
+    /** @var bool Whether the autoload has already been reloaded */
     protected static bool $already_reloaded = false;
-
-    /**
-     * @var array The paths to exclude from autoload
-     */
+    /** @var array The paths to exclude from autoload */
     protected static array $exclude_paths = [
         '/cache', '/images', '/lang', '/upload', '/templates',
         '/kernel/data', '/kernel/lib/js',
         '/kernel/framework/io/db/dbms/Doctrine',
     ];
-
-    /**
-     * @var array The folder names to exclude from autoload
-     */
+    /** @var array The folder names to exclude from autoload */
     protected static array $exclude_folders_names = ['templates', 'lang', 'lib'];
 
-    /**
-     * Initializes the autoload class list.
-     */
+    /** Initializes the autoload class list. */
     public static function init_autoload(): void
     {
         spl_autoload_register([self::class, 'autoload']);
-        if (!self::inc(PATH_TO_ROOT . self::$cache_file)) {
+        if (!self::inc(PATH_TO_ROOT . self::$cache_file))
+        {
             self::generate_classlist();
         }
     }
@@ -66,15 +48,18 @@ class ClassLoader
     public static function autoload(string $classname): void
     {
         // Check if the class is namespaced
-        if (strpos($classname, '\\') !== false) {
+        if (strpos($classname, '\\') !== false)
+        {
             self::load_namespaced_class($classname);
             return;
         }
 
         // Legacy class loading
-        if (!isset(self::$autoload[$classname]) || !self::inc(PATH_TO_ROOT . self::$autoload[$classname])) {
+        if (!isset(self::$autoload[$classname]) || !self::inc(PATH_TO_ROOT . self::$autoload[$classname]))
+        {
             self::generate_classlist();
-            if (isset(self::$autoload[$classname])) {
+            if (isset(self::$autoload[$classname]))
+            {
                 require_once PATH_TO_ROOT . self::$autoload[$classname];
             }
         }
@@ -92,18 +77,22 @@ class ClassLoader
         $class           = array_pop($namespace_parts);
         $namespace       = implode('\\', $namespace_parts);
 
-        if (isset(self::$namespace_map[$namespace])) {
+        if (isset(self::$namespace_map[$namespace]))
+        {
             $file_path = self::$namespace_map[$namespace] . '/' . $class . '.php';
-            if (file_exists(PATH_TO_ROOT . $file_path)) {
+            if (file_exists(PATH_TO_ROOT . $file_path))
+            {
                 require_once PATH_TO_ROOT . $file_path;
                 return;
             }
         }
 
         // Fallback: Try to find the class in the namespace map
-        foreach (self::$namespace_map as $ns => $path) {
+        foreach (self::$namespace_map as $ns => $path)
+        {
             $file_path = $path . '/' . str_replace('\\', '/', $namespace) . '/' . $class . '.php';
-            if (file_exists(PATH_TO_ROOT . $file_path)) {
+            if (file_exists(PATH_TO_ROOT . $file_path))
+            {
                 require_once PATH_TO_ROOT . $file_path;
                 return;
             }
@@ -130,7 +119,8 @@ class ClassLoader
      */
     public static function get_module_id_from_class_name(string $class_name): string
     {
-        if (!isset(self::$autoload[$class_name])) {
+        if (!isset(self::$autoload[$class_name]))
+        {
             return '';
         }
 
@@ -138,14 +128,17 @@ class ClassLoader
 
         // Try to extract module ID from path
         // Paths like /modules/{module_id}/... or /{module_id}/...
-        if (preg_match('~/modules/([^/]+)/~', $class_path, $matches)) {
+        if (preg_match('~/modules/([^/]+)/~', $class_path, $matches))
+        {
             return $matches[1];
         }
 
-        if (preg_match('~^/([^/]+)/~', $class_path, $matches)) {
+        if (preg_match('~^/([^/]+)/~', $class_path, $matches))
+        {
             $potential_module = $matches[1];
             // Exclude core folders
-            if (!in_array($potential_module, ['kernel', 'admin', 'cache', 'install', 'update', 'user', 'syndication', 'upload', 'images', 'lang', 'templates'])) {
+            if (!in_array($potential_module, ['kernel', 'admin', 'cache', 'install', 'update', 'user', 'syndication', 'upload', 'images', 'lang', 'templates']))
+            {
                 return $potential_module;
             }
         }
@@ -160,7 +153,8 @@ class ClassLoader
      */
     public static function generate_classlist(bool $force = false): void
     {
-        if (!self::$already_reloaded || $force) {
+        if (!self::$already_reloaded || $force)
+        {
             self::$already_reloaded = true;
             self::$autoload         = [];
             self::$namespace_map    = [];
@@ -175,7 +169,8 @@ class ClassLoader
 
             // Scan core framework classes
             $paths = ['/', '/kernel/framework/core/lang'];
-            foreach ($paths as $path) {
+            foreach ($paths as $path)
+            {
                 self::add_classes(Path::phpboost_path() . $path, $phpboost_classfile_pattern);
             }
             self::add_classes(Path::phpboost_path() . '/kernel/framework/io/db/dbms/Doctrine/', $phpboost_classfile_pattern);
@@ -195,7 +190,8 @@ class ClassLoader
     protected static function add_modules_classes(string $pattern): void
     {
         // Check if ModulesManager is available
-        if (!class_exists('ModulesManager')) {
+        if (!class_exists('ModulesManager'))
+        {
             return;
         }
 
@@ -215,7 +211,9 @@ class ClassLoader
                     self::add_classes($module_path, '`\.class\.php$`', true);
                 }
             }
-        } catch (\Exception $ex) {
+        }
+        catch (\Exception $ex)
+        {
             // Silently fail if ModulesManager is not fully initialized
             // This can happen during early bootstrap
         }
@@ -265,28 +263,34 @@ class ClassLoader
         $relative_path = Path::get_path_from_root($folder->get_path());
 
         $files = $folder->get_files($pattern);
-        foreach ($files as $file) {
+        foreach ($files as $file)
+        {
             $filename  = $file->get_name();
             $file_path = $file->get_path();
             $content   = file_get_contents($file_path);
 
             // Check for namespace declaration
-            if (preg_match('~namespace\s+([^;]+)~', $content, $matches)) {
-                $namespace                                      = trim($matches[1]);
-                $classname                                      = $file->get_name_without_extension();
+            if (preg_match('~namespace\s+([^;]+)~', $content, $matches))
+            {
+                $namespace = trim($matches[1]);
+                $classname = $file->get_name_without_extension();
                 self::$namespace_map[$namespace]                = $relative_path;
                 self::$autoload[$namespace . '\\' . $classname] = $relative_path . '/' . $filename;
-            } else {
+            }
+            else
+            {
                 $classname                  = $file->get_name_without_extension();
                 self::$autoload[$classname] = $relative_path . '/' . $filename;
             }
         }
 
-        if ($recursive) {
+        if ($recursive)
+        {
             $folders = $folder->get_folders('`^[a-z]{1}.*$`iu');
-            foreach ($folders as $a_folder) {
-                if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)
-                    && !in_array($a_folder->get_name(), self::$exclude_folders_names)) {
+            foreach ($folders as $a_folder)
+            {
+                if (!in_array($a_folder->get_path_from_root(), self::$exclude_paths)  && !in_array($a_folder->get_name(), self::$exclude_folders_names))
+                {
                     self::add_classes($a_folder->get_path(), $pattern);
                 }
             }
@@ -303,7 +307,9 @@ class ClassLoader
         {
             $file->write('<?php self::$autoload = ' . var_export(self::$autoload, true) . '; self::$namespace_map = ' . var_export(self::$namespace_map, true) . '; ?>');
             $file->close();
-        } catch (IOException $ex) {
+        }
+        catch (IOException $ex)
+        {
             die('The cache folder is not writable, please set CHMOD to 755');
         }
     }
@@ -316,7 +322,8 @@ class ClassLoader
      */
     protected static function inc(string $file): bool
     {
-        if (!file_exists($file)) {
+        if (!file_exists($file))
+        {
             return false;
         }
         include_once $file;
@@ -330,7 +337,8 @@ class ClassLoader
      */
     protected static function call_static_initializer(string $classname): void
     {
-        if (method_exists($classname, '__static')) {
+        if (method_exists($classname, '__static'))
+        {
             call_user_func([$classname, '__static']);
         }
     }

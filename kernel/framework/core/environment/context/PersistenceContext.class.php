@@ -7,30 +7,19 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2010 04 11
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PersistenceContext
 {
-	/**
-	 * @var SQLQuerier
-	 */
-	private static $sql_querier;
-	/**
-	 * @var DBQuerier
-	 */
-	private static $db_querier;
-	/**
-	 * @var DBMSUtils
-	 */
-	private static $dbms_utils;
+	private static ?SQLQuerier $sql_querier = null;
+	private static ?DBQuerier $db_querier = null;
+	private static ?DBMSUtils $dbms_utils = null;
 
-	/**
-	 * Returns the sql querier
-	 * @return DBQuerier
-	 */
-	public static function get_querier()
+	/** Returns the sql querier */
+	public static function get_querier(): DBQuerier
 	{
 		if (self::$db_querier === null)
 		{
@@ -39,11 +28,8 @@ class PersistenceContext
 		return self::$db_querier;
 	}
 
-	/**
-	 * Returns the sql querier
-	 * @return DBMSUtils
-	 */
-	public static function get_dbms_utils()
+	/** Returns the sql querier */
+	public static function get_dbms_utils(): DBMSUtils
 	{
 		if (self::$dbms_utils === null)
 		{
@@ -52,10 +38,8 @@ class PersistenceContext
 		return self::$dbms_utils;
 	}
 
-	/**
-	 * Closes the database connection
-	 */
-	public static function close_db_connection()
+	/** Closes the database connection */
+	public static function close_db_connection(): void
 	{
 		DBFactory::close_db_connection();
 		self::$sql_querier = null;
@@ -63,11 +47,8 @@ class PersistenceContext
 		self::$dbms_utils = null;
 	}
 
-	/**
-	 * Returns the sql querier
-	 * @return SQLQuerier
-	 */
-	private static function get_sql_querier()
+	/** Returns the sql querier */
+	private static function get_sql_querier(): SQLQuerier
 	{
 		if (self::$sql_querier === null)
 		{

@@ -5,13 +5,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2010 10 20
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ExceptionUtils
 {
-	public static function get_file($call)
+	public static function get_file(array $call): string
 	{
 		if (!empty($call['file']))
 		{
@@ -20,7 +21,7 @@ class ExceptionUtils
 		return 'Internal';
 	}
 
-	public static function get_line($call)
+	public static function get_line(array $call): int|string
 	{
 		if (!empty($call['file']))
 		{
@@ -29,7 +30,7 @@ class ExceptionUtils
 		return '';
 	}
 
-	public static function get_method_prototype($call)
+	public static function get_method_prototype(array $call): string
 	{
 		$prototype = '';
 		if (!empty($call['class']))
@@ -42,12 +43,12 @@ class ExceptionUtils
 		return $prototype;
 	}
 
-	public static function has_args($call)
+	public static function has_args(array $call): bool
 	{
 		return !empty($call['args']);
 	}
 
-	private static function get_args_types($call)
+	private static function get_args_types(array $call): array
 	{
 		$types = [];
 		if (empty($call['args']))
@@ -61,7 +62,7 @@ class ExceptionUtils
 		return $types;
 	}
 
-	public static function get_arg_type($arg)
+	public static function get_arg_type(array $arg): string
 	{
 		if (is_array($arg))
 		{
@@ -90,7 +91,7 @@ class ExceptionUtils
 		return 'null';
 	}
 
-	public static function get_args($call)
+	public static function get_args(array $call): string
 	{
 		$args = $call['args'];
 		$trace = '<ul>';
