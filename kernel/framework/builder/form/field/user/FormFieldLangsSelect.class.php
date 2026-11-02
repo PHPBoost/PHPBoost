@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 22
+ * @version     PHPBoost 6.1 - last update: 2026 11 02
  * @since       PHPBoost 3.0 - 2011 09 26
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -24,7 +24,7 @@ class FormFieldLangsSelect extends FormFieldSimpleSelectChoice
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
-    public function __construct(string $id, string $label, int $value = 0, array $field_options = [], array $constraints = [])
+    public function __construct(string $id, string $label, mixed $value = 0, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
