@@ -11,7 +11,7 @@
 
 class BarChart extends Chart
 {
-    protected $type = "bar";
+    protected string $type = "bar";
 
     /**
      * Add a dataset average to display a line behind the bars
