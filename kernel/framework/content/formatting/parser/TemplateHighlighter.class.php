@@ -6,10 +6,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 3.0 - 2010 01 03
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TemplateHighlighter extends AbstractParser
@@ -34,7 +35,7 @@ class TemplateHighlighter extends AbstractParser
 	 * @param bool $line_number Whether to show line numbers (adds line-numbers CSS class for Prism).
 	 * @param bool $inline_code true if it's a single line code, otherwise false.
 	 */
-	public function parse($line_number = false, $inline_code = false)
+	public function parse(bool $line_number = false, bool $inline_code = false): void
 	{
 		// Escape HTML entities for safe display
 		$this->content = TextHelper::htmlspecialchars($this->content);
@@ -62,9 +63,13 @@ class TemplateHighlighter extends AbstractParser
 		// Wrap in a <pre><code> block — Prism.js handles client-side HTML highlighting
 		$pre_class = 'precode';
 		if ($inline_code)
+        {
 			$pre_class .= ' precode-inline';
+        }
 		if ($line_number)
+        {
 			$pre_class .= ' line-numbers';
+        }
 
 		if ($inline_code)
 		{

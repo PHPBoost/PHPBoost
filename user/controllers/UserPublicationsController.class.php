@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -12,11 +12,11 @@
 
 class UserPublicationsController extends AbstractController
 {
-	private $lang;
-	private $view;
-	private $user;
+	private array $lang = [];
+	private ?Template $view = null;
+	private ?CurrentUser $user = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 
@@ -26,10 +26,12 @@ class UserPublicationsController extends AbstractController
 		{
 			AppContext::get_response()->redirect(UserUrlBuilder::home());
 		}
-		else if ($user_id != $this->user->get_id())
+		elseif ($user_id != $this->user->get_id())
 		{
 			if (UserService::user_exists('WHERE user_id = :id', ['id' => $user_id]))
+            {
 				$this->user = UserService::get_user($user_id);
+            }
 			else
 			{
 				$error_controller = PHPBoostErrors::unexisting_element();
@@ -41,7 +43,7 @@ class UserPublicationsController extends AbstractController
 		return $this->build_response($this->view);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->user = AppContext::get_current_user();
 		$this->view = new FileTemplate('user/UserPublicationsController.tpl');
@@ -49,7 +51,7 @@ class UserPublicationsController extends AbstractController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_view()
+	private function build_view(): void
 	{
 		$modules_with_publications = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 
@@ -66,18 +68,22 @@ class UserPublicationsController extends AbstractController
 				$module_icon = new File(PATH_TO_ROOT . '/modules/' . $module->get_publications_module_id() . '/' . $module->get_publications_module_id() . '_mini.png');
 				$is_picture = false;
 				if($module->get_publications_module_icon() != '')
+                {
 					$thumbnail = $module->get_publications_module_icon();
-				else if($module_icon->exists())
+                }
+				elseif($module_icon->exists())
 				{
 					$thumbnail = Url::to_rel($module_icon->get_path());
 					$is_picture = true;
 				}
-				else if($module->get_publications_module_id() != '')
+				elseif($module->get_publications_module_id() != '')
 				{
 					$thumbnail = ModulesManager::get_module($module->get_publications_module_id())->get_configuration()->get_fa_icon();
 				}
 				else
+                {
 					$thumbnail = 'fa fa-cube';
+                }
 
 				$this->view->assign_block_vars('user_publications', [
 					'C_ICON_IS_PICTURE'   => $is_picture,
@@ -90,7 +96,7 @@ class UserPublicationsController extends AbstractController
 		}
 	}
 
-	private function build_response(View $view)
+	private function build_response(View $view): SiteDisplayResponse
 	{
 		$title = $this->lang['user.user.messages'];
 		$response = new SiteDisplayResponse($view);
@@ -106,7 +112,7 @@ class UserPublicationsController extends AbstractController
 		return $response;
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
 		{

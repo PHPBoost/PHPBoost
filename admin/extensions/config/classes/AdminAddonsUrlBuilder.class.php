@@ -1,0 +1,19 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
+ * @since       PHPBoost 6.1 - 2026 11 15
+*/
+
+class AdminAddonsUrlBuilder
+{
+	private static string $dispatcher = '/admin/extensions';
+
+	public static function addons_config(): Url
+	{
+		return DispatchManager::get_url(self::$dispatcher, '/config/');
+	}
+}
+?>

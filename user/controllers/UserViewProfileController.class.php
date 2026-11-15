@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -12,20 +12,23 @@
 
 class UserViewProfileController extends AbstractController
 {
-	private $lang;
-	private $user;
-	private $user_infos;
-	private $view;
+	private array $lang = [];
+	private ?CurrentUser $user = null;
+	private array $user_infos = [];
+	private ?Template $view = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 
 		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
 
-		try {
+		try
+        {
 			$this->user_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'member', ['*'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
@@ -35,7 +38,7 @@ class UserViewProfileController extends AbstractController
 		return $this->build_response($this->view, $user_id);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->lang = LangLoader::get_all_langs();
 		$this->view = new FileTemplate('user/UserViewProfileController.tpl');
@@ -43,7 +46,7 @@ class UserViewProfileController extends AbstractController
 		$this->user = AppContext::get_current_user();
 	}
 
-	private function build_view($user_id)
+	private function build_view(int $user_id): void
 	{
 		$registration_date = !empty($this->user_infos['registration_date']) ? Date::to_format($this->user_infos['registration_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.unknown'];
 		$last_connection_date = !empty($this->user_infos['last_connection_date']) ? Date::to_format($this->user_infos['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['common.never'];
@@ -99,12 +102,12 @@ class UserViewProfileController extends AbstractController
 		]);
 	}
 
-	private function same_user_view_profile($user_id)
+	private function same_user_view_profile(int $user_id): bool
 	{
 		return $user_id == AppContext::get_current_user()->get_id();
 	}
 
-	private function build_groups($user_groups)
+	private function build_groups(array $user_groups = []): bool
 	{
 		$groups_cache = GroupsCache::load();
 		$has_groups = false;
@@ -127,7 +130,7 @@ class UserViewProfileController extends AbstractController
 		return $has_groups;
 	}
 
-	private function build_response(View $view, $user_id)
+	private function build_response(View $view, int $user_id): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();
@@ -142,7 +145,7 @@ class UserViewProfileController extends AbstractController
 		return $response;
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
 		{

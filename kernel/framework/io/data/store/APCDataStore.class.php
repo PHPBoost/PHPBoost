@@ -1,6 +1,6 @@
 <?php
 /**
- * This data store is not already available, the APC PHP extension must be enabled for you yo use it.
+ * The APCu PHP extension must be enabled to use this data store.
  * When it's available, it provides a memory area that is persistent (its life span is no the page execution) and
  * shared by all simultaneous page executions.
  * This is very efficient and has an infinite life span (in fact it's the Web server's one).
@@ -9,37 +9,33 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class APCDataStore implements DataStore
 {
-	private static $website_id = false;
+	private static string|false $website_id = false;
+	private string $cache_id = '';
+	private static string $apc_fields_id = '_apc_fields';
+	private array $apc_fields = [];
 
-	private $cache_id;
-
-	private static $apc_fields_id = '_apc_fields';
-
-	private $apc_fields = [];
-
-	public function __construct($cache_id)
+	public function __construct(object|string $cache_id)
 	{
 		$this->cache_id = self::get_website_id() . '-' . $cache_id;
 		$this->retrieve_apc_fields();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get($id)
+	public function get(string $id): mixed
 	{
 		$id = $this->get_full_object_id($id);
 		$found = false;
-		$object = apc_fetch($id, $found);
+        /** @disregard */
+		$object = apcu_fetch($id, $found);
 		if (!$found)
 		{
 			throw new DataStoreException($id);
@@ -47,43 +43,37 @@ class APCDataStore implements DataStore
 		return $object;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function contains($id)
+	public function contains(string $id): bool
 	{
 		$id = $this->get_full_object_id($id);
 		$found = false;
-		apc_fetch($id, $found);
+        /** @disregard */
+		apcu_fetch($id, $found);
 		return $found;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function store($id, $object)
+	public function store(string $id, mixed $object): void
 	{
 		$this->add_apc_field($id);
 		$id = $this->get_full_object_id($id);
-		return (bool) apc_store($id, $object);
+        /** @disregard */
+		apcu_store($id, $object);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function delete($id)
+	public function delete(string $id): void
 	{
 		$this->delete_apc_field($id);
 		$id = $this->get_full_object_id($id);
-		return apc_delete($id);
+        /** @disregard */
+		apcu_delete($id);
 	}
 
-	private function get_full_object_id($tiny_id)
+	private function get_full_object_id(string $tiny_id): string
 	{
 		return $this->cache_id . '-' . $tiny_id;
 	}
 
-	private static function get_website_id()
+	private static function get_website_id(): string
 	{
 		if (self::$website_id === false)
 		{
@@ -103,10 +93,7 @@ class APCDataStore implements DataStore
 		return self::$website_id;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function clear()
+	public function clear(): void
 	{
 		// Copy the apc_fields array to avoid exceptions due to elements removed during foreach
 		$apc_fields = $this->apc_fields;
@@ -116,7 +103,7 @@ class APCDataStore implements DataStore
 		}
 	}
 
-	private function retrieve_apc_fields()
+	private function retrieve_apc_fields(): void
 	{
 		if ($this->contains(self::$apc_fields_id))
 		{
@@ -128,7 +115,7 @@ class APCDataStore implements DataStore
 		}
 	}
 
-	private function add_apc_field($field_name)
+	private function add_apc_field(string $field_name): void
 	{
 		if (!in_array($field_name, $this->apc_fields))
 		{
@@ -137,7 +124,7 @@ class APCDataStore implements DataStore
 		}
 	}
 
-	private function delete_apc_field($field_name)
+	private function delete_apc_field(string $field_name): void
 	{
 		$value_index = array_search($field_name, $this->apc_fields);
 		if ($value_index !== false)

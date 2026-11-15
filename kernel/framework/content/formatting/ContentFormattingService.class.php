@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 07 27
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 3.0 - 2009 12 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,16 +15,10 @@
 
 class ContentFormattingService
 {
-	/**
-	 * @var AbstractContentFormattingFactory
-	 */
-	private $default_factory;
+	private mixed $default_factory = null;
 
-	/**
-	 * Returns the content formatting factory corresponding to the default configuration
-	 * @return ContentFormattingFactory
-	 */
-	public function get_default_factory()
+	/** Returns the content formatting factory corresponding to the default configuration */
+	public function get_default_factory(): mixed
 	{
 		if ($this->default_factory === null)
 		{
@@ -37,12 +31,8 @@ class ContentFormattingService
 		return $this->default_factory;
 	}
 
-	/**
-	 * Creates a factory for the given language
-	 * @param string $language
-	 * @return ContentFormattingFactory
-	 */
-	public function create_factory($language = '')
+	/** Creates a factory for the given language */
+	public function create_factory(string $language = ''): mixed
 	{
 		$editor = $this->get_existing_editor($language);
 		return ContentFormattingProvidersService::create_factory($editor);
@@ -52,36 +42,27 @@ class ContentFormattingService
 	 * Returns the name of the editor of the current user (chosen in its profile).
 	 * @return string The editor used by the current user.
 	 */
-	public function get_user_editor()
+	public function get_user_editor(): string
 	{
 		return AppContext::get_current_user()->get_editor();
 	}
 
-	/**
-	 * Returns the parser to use in the default configuration
-	 * @return FormattingParser
-	 */
-	public function get_default_parser()
+	/** Returns the parser to use in the default configuration */
+	public function get_default_parser(): FormattingParser
 	{
 		$factory = $this->get_default_factory();
 		return $factory !== null ? $factory->get_parser() : null;
 	}
 
-	/**
-	 * Returns the unparser to use in the default configuration
-	 * @return FormattingParser
-	 */
-	public function get_default_unparser()
+	/** Returns the unparser to use in the default configuration */
+	public function get_default_unparser(): FormattingParser
 	{
 		$factory = $this->get_default_factory();
 		return $factory !== null ? $factory->get_unparser() : null;
 	}
 
-	/**
-	 * Returns the second parser to use in the default configuration
-	 * @return FormattingParser
-	 */
-	public function get_default_second_parser()
+	/** Returns the second parser to use in the default configuration */
+	public function get_default_second_parser(): FormattingParser
 	{
 		$factory = $this->get_default_factory();
 		return $factory !== null ? $factory->get_second_parser() : null;
@@ -90,19 +71,14 @@ class ContentFormattingService
 	/**
 	 * Returns the editor displayer that you have to display beside the associated HTML textarea
 	 * if you use the default configuration.
-	 * @return ContentEditor
 	 */
-	public function get_default_editor()
+	public function get_default_editor(): ContentEditor
 	{
 		$factory = $this->get_default_factory();
 		return $factory !== null ? $factory->get_editor() : null;
 	}
 
-	/**
-	 * @param string $editor
-	 * @return string
-	 */
-	private function get_existing_editor($editor)
+	private function get_existing_editor(string $editor): string
 	{
 		if (in_array($editor, self::get_editors_identifier()))
 		{
@@ -114,12 +90,12 @@ class ContentFormattingService
 		}
 	}
 
-	public function get_editors_identifier()
+	public function get_editors_identifier(): array
 	{
 		return array_keys(ContentFormattingProvidersService::get_editors());
 	}
 
-	public function get_available_editors()
+	public function get_available_editors(): array
 	{
 		$available_editors = [];
 		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
@@ -129,10 +105,7 @@ class ContentFormattingService
 		return $available_editors;
 	}
 
-	/**
-	 * @param string $id_module
-	 */
-	public function uninstall_editor($id_module)
+	public function uninstall_editor(string $id_module): mixed
 	{
 		$editors = $this->get_available_editors();
 
@@ -149,11 +122,16 @@ class ContentFormattingService
 					]);
 				}
 				else
+                {
 					return LangLoader::get_message('warning.is.default.editor', 'warning-lang');
+                }
 			}
 			else
+            {
 				return LangLoader::get_message('warning.last.editor.installed', 'warning-lang');
+            }
 		}
+        return null;
 	}
 
 	/**
@@ -161,7 +139,7 @@ class ContentFormattingService
 	 * The keys of the map are the tags identifiers and the values the tags names.
 	 * @return array The map
 	 */
-	public function get_available_tags()
+	public function get_available_tags(): array
 	{
 		$lang = LangLoader::get_all_langs();
 		return [

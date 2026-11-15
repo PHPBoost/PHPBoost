@@ -7,38 +7,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 01 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CategoriesManager
 {
-	/**
-	 * @var string module identifier.
-	 */
-	protected $module_id;
-
-	/**
-	 * @var string table name where are stocked the categories to manage.
-	 */
-	protected $table_name;
-
-	/**
-	 * @var CategoriesCache The cached data class.
-	 */
-	protected $categories_cache;
-
-	/**
-	 * @var CategoriesItemsParameters
-	 */
-	protected $categories_items_parameters;
-
-	/**
-	 * @var DBQuerier
-	 */
-	protected $db_querier;
+	protected string $module_id;
+	protected string $table_name;
+	protected CategoriesCache $categories_cache;
+	protected CategoriesItemsParameters $categories_items_parameters;
+	protected DBQuerier $db_querier;
 
 	const STANDARD_CATEGORY_CLASS = 'Category';
 	const RICH_CATEGORY_CLASS = 'RichCategory';
@@ -57,10 +39,7 @@ class CategoriesManager
 		$this->db_querier = PersistenceContext::get_querier();
 	}
 
-	/**
-	 * @param Category $category
-	 */
-	public function add(Category $category)
+	public function add(Category $category): mixed
 	{
 		$id_parent = $category->get_id_parent();
 
@@ -79,7 +58,7 @@ class CategoriesManager
 				$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order >= :order', ['id_parent' => $id_parent, 'order' => $category->get_order()]);
 				while ($row = $result->fetch())
 				{
-					$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] + 1), 'WHERE id=:id', ['id' => $row['id']]]);
+					$this->db_querier->update($this->table_name, ['c_order' => ($row['c_order'] + 1)], 'WHERE id=:id', ['id' => $row['id']]);
 				}
 				$result->dispose();
 			}
@@ -94,10 +73,7 @@ class CategoriesManager
 		}
 	}
 
-	/**
-	 * @param Category $category
-	 */
-	public function update(Category $category)
+	public function update(Category $category): void
 	{
 		$id = $category->get_id();
 		$id_parent = $category->get_id_parent();
@@ -124,7 +100,7 @@ class CategoriesManager
 	 * @param int $id_parent
 	 * @param int $position
 	 */
-	public function move_into_another(Category $category, $id_parent, $position = 0)
+	public function move_into_another(Category $category, int $id_parent, int $position = 0): void
 	{
 		$id = $category->get_id();
 		if ($this->get_categories_cache()->category_exists($id) && $this->get_categories_cache()->category_exists($id_parent))
@@ -198,7 +174,7 @@ class CategoriesManager
 	 * @param Category $category
 	 * @param int $id_parent
 	 */
-	public function move_items_into_another(Category $category, $id_parent)
+	public function move_items_into_another(Category $category, int $id_parent): void
 	{
 		if ($this->get_categories_cache()->category_exists($category->get_id()) && $this->get_categories_cache()->category_exists($id_parent))
 		{
@@ -212,7 +188,7 @@ class CategoriesManager
 	 * @param int $id_parent
 	 * @param int $position
 	 */
-	public function update_position(Category $category, $id_parent, $position)
+	public function update_position(Category $category, int $id_parent, int $position): void
 	{
 		$id = $category->get_id();
 		if ($this->get_categories_cache()->category_exists($id) && $this->get_categories_cache()->category_exists($id_parent) && !($category->get_id_parent() == $id_parent && $category->get_order() == $position))
@@ -243,7 +219,7 @@ class CategoriesManager
 	 * Deletes a category and items.
 	 * @param int $id Id of the category to delete.
 	 */
-	public function delete($id)
+	public function delete(int $id): void
 	{
 		if (!$this->get_categories_cache()->category_exists($id) || $id == Category::ROOT_CATEGORY)
 		{
@@ -260,7 +236,9 @@ class CategoriesManager
 		while ($row = $result->fetch())
 		{
 			if ($module_has_items)
+            {
 				$items_manager->delete_from_id($row['id']);
+            }
 			else
 			{
 				$this->db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => $this->module_id, 'id' => $row['id']]);
@@ -271,9 +249,9 @@ class CategoriesManager
 			}
 		}
 		$result->dispose();
-		
+
 		$this->db_querier->delete($this->categories_items_parameters->get_table_name_contains_items(), 'WHERE '.$this->categories_items_parameters->get_field_name_id_category().'=:id_category', ['id_category' => $id]);
-		
+
 		$result = $this->db_querier->select_rows($this->table_name, ['id', 'c_order'], 'WHERE id_parent=:id_parent AND c_order > :order', ['id_parent' => $category->get_id_parent(), 'order' => $category->get_order()]);
 		while ($row = $result->fetch())
 		{
@@ -289,7 +267,7 @@ class CategoriesManager
 	 * @param int $id_category
 	 * @param SearchCategoryChildrensOptions $search_category_children_options
 	 */
-	public function get_children($id_category, SearchCategoryChildrensOptions $search_category_children_options, $add_this = false)
+	public function get_children(int $id_category, SearchCategoryChildrensOptions $search_category_children_options, bool $add_this = false): mixed
 	{
 		if (!$this->get_categories_cache()->category_exists($id_category))
 		{
@@ -321,7 +299,7 @@ class CategoriesManager
 	 * @param int $id_category
 	 * @param bool $add_this Add category in the map
 	 */
-	public function get_parents($id_category, $add_this = false)
+	public function get_parents(int $id_category, bool $add_this = false): array
 	{
 		$parents_categories = [];
 
@@ -333,7 +311,9 @@ class CategoriesManager
 			}
 
 			if ($add_this)
+            {
 				$parents_categories[$id_category] = $this->categories_cache->get_category($id_category);
+            }
 
 			if ($id_category > 0)
 			{
@@ -349,7 +329,9 @@ class CategoriesManager
 		else
 		{
 			if ($add_this)
+            {
 				$parents_categories[$id_category] = $this->categories_cache->get_category($id_category);
+            }
 		}
 
 		return $parents_categories;
@@ -362,7 +344,7 @@ class CategoriesManager
 	 * @param int $mode Merge mode. If it corresponds to a read autorization, use Authorizations::AUTH_PARENT_PRIORITY which will disallow for example all the subcategories of a category to which you can't access, or Authorizations::AUTH_CHILD_PRIORITY if you want to work in write mode, each child will be able to redifine the authorization.
 	 * @return mixed[] The merged array that you can use only for the bit $bit.
 	 */
-	public function get_heritated_authorizations($id_category, $bit, $mode)
+	public function get_heritated_authorizations(int $id_category, int $bit, int $mode): mixed
 	{
 		$categories = array_reverse($this->get_parents($id_category, true));
 
@@ -380,41 +362,38 @@ class CategoriesManager
 		return $result;
 	}
 
-	public function get_select_categories_form_field($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = [], array $select_options = [])
+	public function get_select_categories_form_field(string $id, string $label, mixed $value, SearchCategoryChildrensOptions $search_category_children_options, array $field_options = [], array $select_options = []): FormFieldCategoriesSelect
 	{
 		return new FormFieldCategoriesSelect($id, $label, $value, $search_category_children_options, $field_options, $this->get_categories_cache(), $select_options);
 	}
 
-	/**
-	 * @return FeedsCategoriesModule
-	 */
-	public function get_feeds_categories_module()
+	public function get_feeds_categories_module(): FeedsCategoriesModule
 	{
 		return new FeedsCategoriesModule($this);
 	}
 
-	public function regenerate_cache()
+	public function regenerate_cache(): void
 	{
 		$class = get_class($this->get_categories_cache());
 		call_user_func_array($class . '::invalidate', [$this->module_id]);
 	}
 
-	/**
-	 * @return CategoriesCache
-	 */
-	public function get_categories_cache() { return $this->categories_cache; }
+	public function get_categories_cache(): CategoriesCache
+    {
+        return $this->categories_cache;
+    }
 
-	/**
-	 * @return string module identifier.
-	 */
-	public function get_module_id() { return $this->module_id; }
+	public function get_module_id(): string
+    {
+        return $this->module_id;
+    }
 
-	/**
-	 * @return CategoriesItemsParameters
-	 */
-	public function get_categories_items_parameters() { return $this->categories_items_parameters; }
+	public function get_categories_items_parameters(): CategoriesItemsParameters
+    {
+        return $this->categories_items_parameters;
+    }
 
-	private function build_children_map($id_category, $categories, $id_parent, $search_category_children_options, &$children_categories = [], $node = 1)
+	private function build_children_map(int $id_category, mixed $categories, int $id_parent, mixed $search_category_children_options, array &$children_categories = [], int $node = 1): mixed
 	{
 		foreach ($categories as $id => $category)
 		{

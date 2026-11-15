@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 2.0 - 2008 08 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -16,14 +16,8 @@
 
 abstract class ContentFormattingParser extends AbstractParser
 {
-	/**
-	 * @var array Authorization of the HTML Bbcode tag.
-	 */
-	protected $html_auth = [];
-	/**
-	 * @var array List of the Bbcode forbidden tags
-	 */
-	protected $forbidden_tags = [];
+	protected array $html_auth = [];
+	protected array $forbidden_tags = [];
 
 	/**
 	 * Buils a ContentFormattingParser object.
@@ -41,7 +35,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * Parses the content of the parser
 	 * @return void You will find the result by using the get_content method
 	 */
-	public function parse()
+	public function parse(): void
 	{
 		$this->content = Url::html_convert_absolute2root_relative($this->content, $this->path_to_root, $this->page_path);
 	}
@@ -50,7 +44,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * Sets the tags which mustn't be parsed.
 	 * @param array $forbidden_tags list of the name of the tags which mustn't be parsed.
 	 */
-	public function set_forbidden_tags(array $forbidden_tags)
+	public function set_forbidden_tags(array $forbidden_tags): void
 	{
 		if (is_array($forbidden_tags))
 		{
@@ -62,7 +56,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * Gets the forbidden tags.
 	 * @return array List of the forbidden tags
 	 */
-	public function get_forbidden_tags()
+	public function get_forbidden_tags(): array
 	{
 		return $this->forbidden_tags;
 	}
@@ -72,7 +66,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * will be displayed by the web browser.
 	 * @param mixed[] $array_auth authorization array
 	 */
-	public function set_html_auth(array $array_auth)
+	public function set_html_auth(array $array_auth): void
 	{
 		$this->html_auth = $array_auth;
 	}
@@ -81,7 +75,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * Returns the HTML tag auth
 	 * @return mixed[]
 	 */
-	public function get_html_auth()
+	public function get_html_auth(): array
 	{
 		return $this->html_auth;
 	}
@@ -98,7 +92,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * @param string $tag Tag name
 	 * @param string $attributes Regular expression of the attribute form
 	 */
-	protected function split_imbricated_tag(&$content, $tag, $attributes)
+	protected function split_imbricated_tag(string &$content, string $tag, string $attributes): void
 	{
 		$content = self::preg_split_safe_recurse($content, $tag, $attributes);
 		//1 élément représente les inter tag, un les attributs tag et l'autre le contenu
@@ -126,7 +120,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * There mustn't be any matching parenthesis into that regular expression
 	 * @return array the split string
 	 */
-	protected static function preg_split_safe_recurse($content, $tag, $attributes)
+	protected static function preg_split_safe_recurse(string $content, string $tag, string $attributes): array
 	{
 		// Définitions des index de position de début des tags valides
 		$index_tags = self::index_tags($content, $tag, $attributes);
@@ -196,7 +190,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * @param $attributes The regular expression matching the parameters of the tag (see the preg_split_safe_recurse method).
 	 * @return int[] The positions of the opening tags.
 	 */
-	private static function index_tags($content, $tag, $attributes)
+	private static function index_tags(string $content, string $tag, string $attributes): array
 	{
 		$pos = -1;
 		$nb_open_tags = 0;
@@ -227,10 +221,10 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * It enables you to treat the whole string enough affecting the interior of some tags.
 	 * Example: $my_parser contains this content: 'test1[tag=1]test2[/tag]test3'
 	 * $my_parser->pick_up_tag('tag', '[0-9]'); will replace the content of the parser by 'test1[CODE_TAG_1]test3'
-	 * @param $tag string The tag to isolate
-	 * @param $arguments string The regular expression matching the arguments syntax.
+	 * @param string $tag The tag to isolate
+	 * @param string $arguments The regular expression matching the arguments syntax.
 	 */
-	protected function pick_up_tag($tag, $arguments = '')
+	protected function pick_up_tag(string $tag, string $arguments = ''): void
 	{
 		//On éclate le contenu selon les tags (avec imbrication bien qu'on ne les gèrera pas => ça permettra de faire [code][code]du code[/code][/code])
 		$split_code = $this->preg_split_safe_recurse($this->content, $tag, $arguments);
@@ -266,10 +260,10 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	/**
 	 * reimplants the code which has been picked up by the _pick_up method.
-	 * @param $tag string tag to reimplant.
+	 * @param string $tag tag to reimplant.
 	 * @return bool True if the reimplantation succed, otherwise false.
 	 */
-	protected function reimplant_tag($tag)
+	protected function reimplant_tag(string $tag): bool
 	{
 		//Si cette balise a  été isolée
 		if (!array_key_exists($tag, $this->array_tags))
@@ -295,13 +289,13 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * Parses module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
 	 */
-	protected function parse_module_special_tags()
+	protected function parse_module_special_tags(): void
 	{
 		foreach ($this->get_module_special_tags() as $pattern => $replacement)
 			$this->content = preg_replace($pattern, $replacement, $this->content);
 	}
 
-	protected function parse_feed_tag()
+	protected function parse_feed_tag(): void
 	{
 		$this->content = str_replace(['[[FEED', '[[/FEED]]'], ['\[\[FEED', '\[\[/FEED\]\]'], $this->content);
 		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`uU', '[[FEED$1]]$2[[/FEED]]', $this->content);
@@ -313,25 +307,34 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
-	protected function parse_fa_tag($matches)
+	protected function parse_fa_tag(array $matches): string
 	{
 		$main_fa = (preg_match("/[\s]*(fa-)/i", $matches[3]) ? $matches[3] : 'fa-' . $matches[3]);
 		$fa_code = "";
 		$fa_prefix = "";
-		if ( !empty($matches[1]) ) {
+		if ( !empty($matches[1]) )
+        {
 			$options = str_replace('=', '', explode(',', $matches[1]));
-			foreach ($options as $option) {
-				if ( array_search(ltrim($option), ['fa', 'fas', 'far', 'fat', 'fab', 'fal', 'fad']) ) {
+			foreach ($options as $option)
+            {
+				if ( array_search(ltrim($option), ['fa', 'fas', 'far', 'fat', 'fab', 'fal', 'fad']))
+                {
 					$fa_prefix = ltrim($option);
-				} else {
+				}
+                else
+                {
 					$fa_code = $fa_code . ' ' . ltrim($option);
 				}
 			}
 		}
 		if ($fa_prefix)
+        {
 			return '<i class="' . $fa_prefix . ' ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
+        }
 		else
+        {
 			return '<i class="fa ' . $main_fa . $fa_code .'" ' . (!empty($matches[2]) ? 'style="' . $matches[2] . '" ' : '') . 'aria-hidden="true"></i>';
+        }
 	}
 
 	/**
@@ -339,7 +342,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the emo tag are parsed
 	 */
-	protected function parse_emoji_tag($matches)
+	protected function parse_emoji_tag(array $matches): string
 	{
 		return '<span class="emoji-tag">' . HTMLEmojisDecoder::decode_html_emojis($matches[0]) . '</span>';
 	}
@@ -349,7 +352,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
-	protected function parse_wikipedia_tag($matches)
+	protected function parse_wikipedia_tag(array $matches): string
 	{
 		$lang = (!empty($matches[2])) ? $matches[2] : LangLoader::get_message('editor.wikipedia.subdomain', 'editor-lang');
 		$page_url = !empty($matches[1]) ? $matches[1] : $matches[3];

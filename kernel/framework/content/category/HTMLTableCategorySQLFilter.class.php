@@ -5,19 +5,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 6.0 - 2021 03 22
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLFragmentBuilder
 {
-	private static $param_id_index = 0;
+	private static int $param_id_index = 0;
+	private mixed $db_field = null;
+	private array $options = [];
 
-	private $db_field;
-	private $options = [];
-
-	public function __construct($name, $label = '', $db_field = 'id_category')
+	public function __construct(string $name, string $label = '', string $db_field = 'id_category')
 	{
 		$this->db_field = $db_field;
 		$label = !empty($label) ? $label : LangLoader::get_message('category.category', 'category-lang');
@@ -33,10 +32,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 		parent::__construct($name, $select);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_sql()
+	public function get_sql(): SQLFragment
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->get_value()->get_raw_value() != 'all' ? $this->db_field . ' = :' . $parameter_name : '';
@@ -47,7 +43,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 	/**
 	 * {@inheritdoc}
 	 */
-	public function is_value_allowed($value)
+	public function is_value_allowed(mixed $value): bool
 	{
 		if (is_numeric($value))
 		{
@@ -60,7 +56,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function set_value($value)
+	protected function set_value(mixed $value): void
 	{
 		foreach ($this->options as $option)
 		{
@@ -72,7 +68,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 		}
 	}
 
-    protected function get_sql_value_parameter_prefix()
+    protected function get_sql_value_parameter_prefix(): string
     {
         return self::class . '_' . self::$param_id_index++;
     }

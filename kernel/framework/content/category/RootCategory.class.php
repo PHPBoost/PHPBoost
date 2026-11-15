@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 01 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -26,7 +26,7 @@ class RootCategory extends Category
 	 * @param string $module_id id of the module (optional)
 	 * @return mixed[] Array of ActionAuthorization for AuthorizationsSettings
 	 */
-	public static function get_authorizations_settings($module_id = '')
+	public static function get_authorizations_settings(string $module_id = ''): array
 	{
 		return array_merge(
 			DefaultCategoriesFormController::get_authorizations_settings($module_id), [

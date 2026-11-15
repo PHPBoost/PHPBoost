@@ -5,20 +5,21 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2019 12 23
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultAjaxDeleteItemController extends DefaultDeleteItemController
 {
-	protected function display_response()
+	protected function display_response(): JSONResponse
 	{
 		$deleted_id = ($this->item !== null && $this->check_authorizations()) ? $this->item->get_id() : 0;
 		return new JSONResponse(['deleted_id' => $deleted_id, 'elements_number' => ($deleted_id > 0 ? ItemsService::get_items_manager(self::get_module()->get_id())->count() : 0)]);
 	}
 
-	protected function display_unexisting_page() {}
+	protected function display_unexisting_page(): void {}
 
-	protected function display_user_not_authorized_page() {}
+	protected function display_user_not_authorized_page(): void {}
 }
 ?>

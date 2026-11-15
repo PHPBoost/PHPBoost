@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 12
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 07 25
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -12,13 +12,13 @@
 
 class UserLostPasswordController extends AbstractController
 {
-	private $maintain_config;
-	private $lang;
-	private $view;
-	private $form;
-	private $submit_button;
+	private ?MaintenanceConfig $maintain_config = null;
+	private array $lang = [];
+	private ?Template $view = null;
+	private ?HTMLForm $form = null;
+	private ?FormButtonDefaultSubmit $submit_button = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): AbstractResponse
 	{
 		$this->init();
 
@@ -34,14 +34,14 @@ class UserLostPasswordController extends AbstractController
 		return $this->build_response($this->view);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->lang = LangLoader::get_all_langs();
 		$this->maintain_config = MaintenanceConfig::load();
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->lang['user.forgotten.password']);
@@ -60,7 +60,7 @@ class UserLostPasswordController extends AbstractController
 		$this->form = $form;
 	}
 
-	private function build_response(View $view)
+	private function build_response(View $view): AbstractResponse
 	{
         if ($this->maintain_config->is_under_maintenance())
 		{
@@ -85,7 +85,7 @@ class UserLostPasswordController extends AbstractController
 		return $response;
 	}
 
-	private function send_email()
+	private function send_email(): void
 	{
 		$change_password_pass = KeyGenerator::generate_key(15);
 		$user = $this->get_user();
@@ -111,7 +111,7 @@ class UserLostPasswordController extends AbstractController
 		}
 	}
 
-	private function get_user()
+	private function get_user(): mixed
 	{
 		$email = $this->form->get_value('email');
 		$user_id = UserService::user_exists('WHERE email=:email', ['email' => $email]);
@@ -120,6 +120,7 @@ class UserLostPasswordController extends AbstractController
 		{
 			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['user.forgotten.password.error'], UserErrorController::NOTICE);
 			DispatchManager::redirect($controller);
+            return null;
 		}
 		else
 		{
@@ -127,7 +128,7 @@ class UserLostPasswordController extends AbstractController
 		}
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{

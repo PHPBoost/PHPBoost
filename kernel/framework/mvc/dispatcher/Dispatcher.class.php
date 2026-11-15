@@ -7,8 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 06 08
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('REQUEST_URI', $_SERVER['REQUEST_URI']);
@@ -19,15 +20,14 @@ class Dispatcher
 	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
 	const URL_PARAM_NAME = 'url';
 
-	private $url_controller_mappers = [];
+	private array $url_controller_mappers = [];
 
 	/**
 	 * build a new Dispatcher from a UrlDispatcherItem List
-	 * @param <code>UrlControllerMapper[]</code> $url_controller_mappers
 	 * the list of the <code>UrlControllerMapper</code>
 	 * that could be applied on an url for that module
 	 */
-	public function __construct($url_controller_mappers)
+	public function __construct(array $url_controller_mappers)
 	{
 		$this->url_controller_mappers =& $url_controller_mappers;
 	}
@@ -37,7 +37,7 @@ class Dispatcher
 	 * in the <code>UrlControllerMapper</code> list of the controller object
 	 * @throws NoUrlMatchException
 	 */
-	public function dispatch()
+	public function dispatch(): void
 	{
 		$url = AppContext::get_request()->get_getstring('url', '');
 		foreach ($this->url_controller_mappers as $url_controller_mapper)

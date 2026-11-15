@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 3.0 - 2011 08 30
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -15,7 +15,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 	const LESS_NOTE = 'less';
 	const PLUS_NOTE = 'plus';
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): JSONResponse
 	{
 		parent::execute($request);
 
@@ -31,7 +31,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 				'message' => $lang['comment.note.success']
 			];
 		}
-		else if (!$this->is_access_authorizations())
+		elseif (!$this->is_access_authorizations())
 		{
 			$object = [
 				'success' => false,
@@ -49,7 +49,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		return new JSONResponse($object);
 	}
 
-	private function register_note($note_type, $comment_id)
+	private function register_note(string $note_type, int $comment_id): void
 	{
 		$comment = CommentsCache::load()->get_comment($comment_id);
 		$current_note = $comment['note'];
@@ -71,7 +71,7 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		$this->regenerate_cache();
 	}
 
-	private function verificate_note_type($type)
+	private function verificate_note_type(string $type): bool
 	{
 		switch ($type) {
 			case self::LESS_NOTE:
@@ -84,22 +84,22 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		}
 	}
 
-	private function is_access_authorizations()
+	private function is_access_authorizations(): bool
 	{
 		return $this->is_authorized_note() && $this->is_displayed() && $this->is_authorized_access();
 	}
 
-	private function is_authorized_note()
+	private function is_authorized_note(): bool
 	{
 		return $this->get_authorizations()->is_authorized_note();
 	}
 
-	private function is_authorized_access()
+	private function is_authorized_access(): bool
 	{
 		return $this->get_authorizations()->is_authorized_access_module();
 	}
 
-	private function regenerate_cache()
+	private function regenerate_cache(): void
 	{
 		CommentsCache::invalidate();
 	}

@@ -3,13 +3,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 6.1 - 2026 05 03
 */
 
 class UserPMController extends AbstractController
 {
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): mixed
 	{
 		$user_id = $request->get_getint('user_id', 0);
 		$pm_id = $request->get_getint('pm_id', 0);

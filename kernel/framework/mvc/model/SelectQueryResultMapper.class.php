@@ -5,26 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 05
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SelectQueryResultMapper implements SelectQueryResult
 {
-	/**
-	 * @var SelectQueryResult the internal query result object
-	 */
-	protected $query_result;
+	/** @var SelectQueryResult the internal query result object */
+	protected QueryResult $query_result;
 
-	/**
-	 * @var MappingModel the model that will instantiate retrieved objects
-	 */
-	protected $model;
+	/** @var MappingModel the model that will instantiate retrieved objects */
+	protected MappingModel $model;
 
 	/**
 	 * initialize the dao
-	 * @param SQLQuerier $querier the querier that will be used to interact with the database
+	 * @param QueryResult $query_result the querier that will be used to interact with the database
 	 * @param MappingModel $model the model on which rely to provides services
 	 */
 	public function __construct(QueryResult $query_result, MappingModel $model)
@@ -33,22 +30,22 @@ class SelectQueryResultMapper implements SelectQueryResult
 		$this->model = $model;
 	}
 
-	public function get_query()
+	public function get_query(): string
 	{
 		return  $this->query_result->get_query();
 	}
 
-	public function get_parameters()
+	public function get_parameters(): array
 	{
 		return  $this->query_result->get_parameters();
 	}
 
-	public function set_fetch_mode($fetch_mode)
+	public function set_fetch_mode(mixed $fetch_mode): void
 	{
-		return  $this->query_result->set_fetch_mode($fetch_mode);
+		$this->query_result->set_fetch_mode($fetch_mode);
 	}
 
-	public function get_rows_count()
+	public function get_rows_count(): int
 	{
 		return $this->query_result->get_rows_count();
 	}
@@ -58,49 +55,49 @@ class SelectQueryResultMapper implements SelectQueryResult
 		$this->dispose();
 	}
 
-    public function has_next()
+    public function has_next(): bool
     {
         return $this->query_result->has_next();
     }
 
-    public function fetch()
+    public function fetch(): PropertiesMapInterface
     {
         return $this->model->new_instance($this->query_result->fetch());
     }
 
 	#[\ReturnTypeWillChange]
-	public function rewind()
+	public function rewind(): void
 	{
-		return $this->query_result->rewind();
+		$this->query_result->rewind();
 	}
 
 	#[\ReturnTypeWillChange]
-	public function valid()
+	public function valid(): bool
 	{
 		return $this->query_result->valid();
 	}
 
 	#[\ReturnTypeWillChange]
-	public function current()
+	public function current(): PropertiesMapInterface
 	{
 		return $this->model->new_instance($this->query_result->current());
 	}
 
 	#[\ReturnTypeWillChange]
-	public function key()
+	public function key(): mixed
 	{
 		return $this->query_result->key();
 	}
 
 	#[\ReturnTypeWillChange]
-	public function next()
+	public function next(): void
 	{
-		return $this->query_result->next();
+		$this->query_result->next();
 	}
 
-	public function dispose()
+	public function dispose(): void
 	{
-		return $this->query_result->dispose();
+		$this->query_result->dispose();
 	}
 }
 ?>

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,13 +13,10 @@
 
 class AdminMenuDisplayResponse extends AbstractResponse
 {
-	/**
-	 * @var Template
-	 */
-	private $full_view;
-	private $links = [];
-	protected $title;
-	protected $module;
+	private FileTemplate $full_view;
+	private array $links = [];
+	protected ?string $title = null;
+	protected ?Module $module = null;
 
 	public function __construct(View $view)
 	{
@@ -49,13 +46,13 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		}
 	}
 
-	public function set_title($title)
+	public function set_title(string $title): void
 	{
 		$this->title = $title;
 		$this->full_view->put_all(['TITLE' => $title]);
 	}
 
-	public function add_link($name, $url)
+	public function add_link(string $name, Url|string $url): void
 	{
 		$this->links[] = [
 			'LINK' => $name,
@@ -63,7 +60,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		];
 	}
 
-	public function send()
+	public function send(): void
 	{
 		$this->full_view->put('links', $this->links);
 		parent::send();

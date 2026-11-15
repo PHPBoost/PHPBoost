@@ -44,9 +44,9 @@
                     <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-download"></i>{@menu.updates}</span>
                         <ul class="level-2">
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.updates.kernel}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/administration/updates/updates.php?type=kernel"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.updates.kernel}</a></li>
                             <li><a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.maintenance}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><i aria-hidden="true" class="fa fa-fw fa-list-check"></i> {@menu.alerts}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/administration/admin_alerts.php"><i aria-hidden="true" class="fa fa-fw fa-list-check"></i> {@menu.alerts}</a></li>
                         </ul>
                     </li>
                     # IF C_ADMIN_LINKS_1 #
@@ -93,9 +93,9 @@
                     <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-download"></i>{@menu.updates}</span>
                         <ul class="level-2">
-                            <li><a href="${relative_url(AdminConfigUrlBuilder::addons_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration.addons}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i aria-hidden="true" class="fa fa-fw fa-image"></i>{@menu.themes}</a></li>
+                            <li><a href="${relative_url(AdminAddonsUrlBuilder::addons_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration.addons}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/administration/updates/updates.php?type=module"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/administration/updates/updates.php?type=template"><i aria-hidden="true" class="fa fa-fw fa-image"></i>{@menu.themes}</a></li>
                         </ul>
                     </li>
                     # IF C_ADMIN_LINKS_2 #
@@ -171,8 +171,8 @@
                     <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-users"></i>{@menu.groups}</span>
                         <ul class="level-2">
-                            <li><a href="{PATH_TO_ROOT}/admin/admin_groups.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/admin_groups.php?add=1"><i aria-hidden="true" class="fa fa-fw fa-plus"></i>{@menu.add}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/users/groups/admin_groups.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/users/groups/admin_groups.php?add=1"><i aria-hidden="true" class="fa fa-fw fa-plus"></i>{@menu.add}</a></li>
                         </ul>
                     </li>
                     <li>
@@ -204,14 +204,14 @@
                     <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="far fa-fw fa-square"></i>{@menu.content}</span>
                         <ul class="level-2">
-                            <li><a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.menus.management}</a></li>
-                            <li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/content/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.menus.management}</a></li>
+                            <li><a href="${relative_url(AdminContentUrlBuilder::configuration())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a></li>
                         </ul>
                     </li>
                     <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-file-alt"></i>{@menu.files}</span>
                         <ul class="level-2">
-                            <li><a href="{PATH_TO_ROOT}/admin/admin_files.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/content/files/admin_files.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
                             <li><a href="${relative_url(AdminFilesUrlBuilder::configuration())}"><i aria-hidden="true" class="fa fa-cogs"></i>{@menu.configuration}</a></li>
                         </ul>
                     </li>
@@ -219,7 +219,7 @@
                         <span class="modal-menu-title"><i aria-hidden="true" class="far fa-fw fa-comment"></i>{@menu.comments}</span>
                         <ul class="level-2">
                             <li><a href="${relative_url(UserUrlBuilder::comments())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><i aria-hidden="true" class="fa fa-fw fa-cogs"></i>{@menu.configuration}</a></li>
+                            <li><a href="${relative_url(AdminCommentsUrlBuilder::configuration())}"><i aria-hidden="true" class="fa fa-fw fa-cogs"></i>{@menu.configuration}</a></li>
                         </ul>
                     </li>
                     <li>

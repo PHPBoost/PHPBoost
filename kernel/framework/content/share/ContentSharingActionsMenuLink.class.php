@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 5.1 - 2018 01 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,15 +14,15 @@
 
 class ContentSharingActionsMenuLink
 {
-	private $id;
-	private $name;
-	private $url;
-	private $image_render_html;
-	private $tpl;
-	private $onclick_tag;
-	private $kernel_element;
+	private mixed $id = 0;
+	private string $name = '';
+	private ?Url $url = null;
+	private string $image_render_html = '';
+	private ?Template $tpl = null;
+	private string $onclick_tag = '';
+	private bool $kernel_element = false;
 
-	public function __construct($id, $name, Url $url, $image_render_html, ?Template $tpl = null, $onclick_tag = 'javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700\');return false;', $kernel_element = false)
+	public function __construct(mixed $id, string $name, Url $url, string $image_render_html, ?Template $tpl = null, string $onclick_tag = 'javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700\');return false;', bool $kernel_element = false)
 	{
 		$this->id = $id;
 		$this->name = $name;
@@ -41,32 +41,32 @@ class ContentSharingActionsMenuLink
 		}
 	}
 
-	public function get_id()
+	public function get_id(): mixed
 	{
 		return $this->id;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function get_url()
+	public function get_url(): Url
 	{
 		return $this->url;
 	}
 
-	public function get_image_render_html()
+	public function get_image_render_html(): string
 	{
 		return $this->image_render_html;
 	}
 
-	public function get_onclick_tag()
+	public function get_onclick_tag(): string
 	{
 		return $this->onclick_tag;
 	}
 
-	public function export()
+	public function export(): Template
 	{
 		$this->tpl->put_all([
 			'C_ONCLICK_TAG'   	=> !empty($this->onclick_tag),

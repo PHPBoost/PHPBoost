@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,17 +13,10 @@
 
 abstract class AbstractResponse implements Response
 {
-	/**
-	 * @var View
-	 */
-	private $view;
+	private View $view;
+	private GraphicalEnvironment $graphical_environment;
 
-	/**
-	 * @var GraphicalEnvironment
-	 */
-	private $graphical_environment;
-
-	protected function __construct(GraphicalEnvironment $graphical_environment, View $view, $location_id = '')
+	protected function __construct(GraphicalEnvironment $graphical_environment, View $view, string $location_id = '')
 	{
 		$this->graphical_environment = $graphical_environment;
 
@@ -44,7 +37,7 @@ abstract class AbstractResponse implements Response
 		return $this->graphical_environment;
 	}
 
-	public function send()
+	public function send(): void
 	{
 		$this->graphical_environment->display($this->view->render());
 	}

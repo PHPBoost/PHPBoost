@@ -6,58 +6,41 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 10 05
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
 class DBQuerier implements SQLQuerier
 {
-    /**
-     * @var SQLQuerier
-     */
-    private $querier;
+    private SQLQuerier $querier;
 
     public function __construct(SQLQuerier $querier)
     {
         $this->querier = $querier;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+    public function select(string $query, array $parameters = [], int $fetch_mode = SelectQueryResult::FETCH_ASSOC): SelectQueryResult
     {
         return $this->querier->select($query, $parameters, $fetch_mode);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function inject($query, $parameters = [])
+    public function inject(string $query, array $parameters = []): InjectQueryResult
     {
         return $this->querier->inject($query, $parameters);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function enable_query_translator()
+    public function enable_query_translator(): void
     {
         $this->querier->enable_query_translator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function disable_query_translator()
+    public function disable_query_translator(): void
     {
         $this->querier->disable_query_translator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function get_executed_requests_count()
+    public function get_executed_requests_count(): int
     {
         return $this->querier->get_executed_requests_count();
     }
@@ -66,7 +49,7 @@ class DBQuerier implements SQLQuerier
      * Removes all table rows
      * @param string $table_name the table name
      */
-    public function truncate($table_name)
+    public function truncate(string $table_name): void
     {
         $query = 'TRUNCATE ' . $table_name . ';';
         $this->querier->inject($query);
@@ -78,7 +61,7 @@ class DBQuerier implements SQLQuerier
      * @param string[] $columns the map where columns are keys and values values
      * @return InjectQueryResult the query result set
      */
-    public function insert($table_name, array $columns)
+    public function insert(string $table_name, array $columns): InjectQueryResult
     {
         $columns_names = array_keys($columns);
         $query         = 'INSERT INTO ' . $table_name . ' (`' . implode('`, `', $columns_names) . '`) VALUES (:' . implode(', :', $columns_names) . ');';
@@ -95,7 +78,7 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return InjectQueryResult the query result set
      */
-    public function update($table_name, array $columns, $condition, array $parameters = [])
+    public function update(string $table_name, array $columns, string $condition, array $parameters = []): InjectQueryResult
     {
         $columns_names      = array_keys($columns);
         $columns_definition = [];
@@ -115,7 +98,7 @@ class DBQuerier implements SQLQuerier
      * For example, <code>"length > 50 and weight < 100"</code>
      * @param string[] $parameters the query_var map
      */
-    public function delete($table_name, $condition, array $parameters = [])
+    public function delete(string $table_name, string $condition, array $parameters = []): void
     {
         $query = 'DELETE FROM ' . $table_name . ' ' . $condition . ';';
         $this->querier->inject($query, $parameters);
@@ -131,16 +114,18 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return array the row returned
      */
-    public function select_single_row($table_name, array $columns, $condition, array $parameters = [])
+    public function select_single_row(string $table_name, array $columns, string $condition, array $parameters = []): array
     {
         $query_result = self::select_rows($table_name, $columns, $condition, $parameters);
         $query_result->rewind();
-        if (!$query_result->valid()) {
+        if (!$query_result->valid())
+        {
             throw new RowNotFoundException();
         }
         $result = $query_result->current();
         $query_result->next();
-        if ($query_result->valid()) {
+        if ($query_result->valid())
+        {
             throw new NotASingleRowFoundException($query_result);
         }
         $query_result->dispose();
@@ -153,17 +138,19 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return mixed the value of the returned row
      */
-    public function select_single_row_query($query, $parameters = [])
+    public function select_single_row_query(string $query, array $parameters = []): array
     {
         $query_result = self::select($query, $parameters, SelectQueryResult::FETCH_ASSOC);
 
         $query_result->rewind();
-        if (!$query_result->valid()) {
+        if (!$query_result->valid())
+        {
             throw new RowNotFoundException();
         }
         $result = $query_result->current();
         $query_result->next();
-        if ($query_result->valid()) {
+        if ($query_result->valid())
+        {
             throw new NotASingleRowFoundException($query_result);
         }
         $query_result->dispose();
@@ -178,7 +165,7 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return bool true if a or multiple rows match the given condition.
      */
-    public function row_exists($table_name, $condition, array $parameters = [])
+    public function row_exists(string $table_name, string $condition, array $parameters = []): bool
     {
         return $this->count($table_name, $condition, $parameters) > 0;
     }
@@ -193,7 +180,7 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return mixed the value of the returned row
      */
-    public function get_column_value($table_name, $column, $condition, array $parameters = [])
+    public function get_column_value(string $table_name, string $column, string $condition, array $parameters = []): mixed
     {
         $result = $this->select_single_row($table_name, [$column], $condition, $parameters);
         return array_shift($result);
@@ -209,7 +196,7 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return object the row returned
      */
-    public function select_rows($table_name, array $columns, $condition = 'WHERE 1', $parameters = [])
+    public function select_rows(string $table_name, array $columns, string $condition = 'WHERE 1', array $parameters = []): SelectQueryResult
     {
         $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $table_name . ' ' . $condition;
         return $this->querier->select($query, $parameters);
@@ -225,7 +212,7 @@ class DBQuerier implements SQLQuerier
      * @param string[] $parameters the query_var map
      * @return int the number of rows returned
      */
-    public function count($table_name, $condition = 'WHERE 1', $parameters = [], $count_column = '*')
+    public function count(string $table_name, string $condition = 'WHERE 1', array $parameters = [], string $count_column = '*'): int
     {
         $query = 'SELECT COUNT(' . $count_column . ') FROM ' . $table_name;
         if (!empty($condition)) {
@@ -235,7 +222,7 @@ class DBQuerier implements SQLQuerier
         return (int) $row[0];
     }
 
-    public function get_querier()
+    public function get_querier(): SQLQuerier
     {
         return $this->querier;
     }

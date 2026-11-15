@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -12,23 +12,14 @@
 
 class UserRegistrationController extends AbstractController
 {
-	private $view;
+	private ?Template $view = null;
+	private array $lang = [];
+	private ?HTMLForm $form = null;
+	private ?FormButtonDefaultSubmit $submit_button = null;
+	private ?UserAccountsConfig $user_accounts_config = null;
+	private ?MemberExtendedFieldsService $member_extended_fields_service = null;
 
-	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
-
-	private $user_accounts_config;
-
-	private $member_extended_fields_service;
-
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->get_right_controller_regarding_authorizations();
 		$this->init();
@@ -43,14 +34,14 @@ class UserRegistrationController extends AbstractController
 		return $this->build_response($this->view);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->lang = LangLoader::get_all_langs();
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$security_config = SecurityConfig::load();
 		$form = new HTMLForm(self::class);
@@ -137,7 +128,7 @@ class UserRegistrationController extends AbstractController
 				]
 			));
 
-			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['user.theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme() .'" alt="' . $this->lang['user.theme.preview'] . '" class="preview-img" />'));
+			$options_fieldset->add_field(new FormFieldFree('preview_theme', $this->lang['user.theme.preview'], '<img id="img_theme" src="'. $this->get_picture_theme($this->user_accounts_config->get_default_theme()) .'" alt="' . $this->lang['user.theme.preview'] . '" class="preview-img" />'));
 		}
 
 		$options_fieldset->add_field(new FormFieldEditors('text-editor', $this->lang['user.text.editor'], ContentFormattingConfig::load()->get_default_editor()));
@@ -172,7 +163,7 @@ class UserRegistrationController extends AbstractController
 		$this->form = $form;
 	}
 
-	private function get_accounts_validation_method_explain()
+	private function get_accounts_validation_method_explain(): string
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
 		{
@@ -188,7 +179,7 @@ class UserRegistrationController extends AbstractController
 		}
 	}
 
-	private function save()
+	private function save(): void
 	{
 		$has_error = false;
 
@@ -218,9 +209,13 @@ class UserRegistrationController extends AbstractController
 		$auth_method = new PHPBoostAuthenticationMethod($login, $this->form->get_value('password'));
 		$auth_method->set_association_parameters($user_aprobation, $registration_pass);
 
-		try {
+		$user_id = null;
+		try
+        {
 			$user_id = UserService::create($user, $auth_method, $this->member_extended_fields_service);
-		} catch (MemberExtendedFieldErrorsMessageException $e) {
+		}
+        catch (MemberExtendedFieldErrorsMessageException $e)
+        {
 			$has_error = true;
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
@@ -234,7 +229,7 @@ class UserRegistrationController extends AbstractController
 		}
 	}
 
-	private function confirm_registration($user_id)
+	private function confirm_registration(int $user_id): void
 	{
 		if ($this->user_accounts_config->get_member_accounts_validation_method() == UserAccountsConfig::MAIL_USER_ACCOUNTS_VALIDATION)
 		{
@@ -257,7 +252,7 @@ class UserRegistrationController extends AbstractController
 		}
 	}
 
-	private function build_response(View $view)
+	private function build_response(View $view): SiteDisplayResponse
 	{
 		$title = $this->lang['user.registration'];
 		$response = new SiteDisplayResponse($view);
@@ -273,7 +268,7 @@ class UserRegistrationController extends AbstractController
 		return $response;
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (!UserAccountsConfig::load()->is_registration_enabled() || AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
@@ -282,7 +277,7 @@ class UserRegistrationController extends AbstractController
 		return $this;
 	}
 
-	private function build_javascript_picture_themes()
+	private function build_javascript_picture_themes(): string
 	{
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemesManager::get_activated_themes_map() as $theme)
@@ -293,9 +288,8 @@ class UserRegistrationController extends AbstractController
 		return $text;
 	}
 
-	private function get_picture_theme()
+	private function get_picture_theme(string $theme_id): string
 	{
-		$theme_id = $this->user_accounts_config->get_default_theme();
 		$picture = ThemesManager::get_theme($theme_id)->get_configuration()->get_first_picture();
 		return TPL_PATH_TO_ROOT .'/templates/' . $theme_id . '/' . $picture;
 	}

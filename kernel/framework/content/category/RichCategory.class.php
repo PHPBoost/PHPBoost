@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 4.0 - 2013 01 29
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -16,7 +16,7 @@ class RichCategory extends Category
 {
 	const THUMBNAIL_URL = '/templates/__default__/images/default_category.webp';
 
-	protected function set_kernel_additional_attributes_list()
+	protected function set_kernel_additional_attributes_list(): void
 	{
 		$this->add_additional_attribute('description', ['type' => 'text', 'length' => 65000, 'attribute_field_parameters' => [
 			'field_class' => 'FormFieldRichTextEditor',
@@ -37,25 +37,27 @@ class RichCategory extends Category
 		]);
 	}
 
-	public function set_description($description)
+	public function set_description(string $description): void
 	{
 		$this->set_additional_property('description', $description);
 	}
 
-	public function get_description()
+	public function get_description(): string
 	{
 		return $this->get_additional_property('description');
 	}
 
-	public function get_thumbnail()
+	public function get_thumbnail(): mixed
 	{
 		if (!$this->get_additional_property('thumbnail') instanceof Url)
+        {
 			return new Url($this->get_additional_property('thumbnail') == FormFieldThumbnail::DEFAULT_VALUE ? FormFieldThumbnail::get_default_thumbnail_url(self::THUMBNAIL_URL) : $this->get_additional_property('thumbnail'));
+        }
 
 		return $this->get_additional_property('thumbnail');
 	}
 
-	public function set_thumbnail($thumbnail)
+	public function set_thumbnail(mixed $thumbnail): void
 	{
 		$this->set_additional_property('thumbnail', $thumbnail);
 	}

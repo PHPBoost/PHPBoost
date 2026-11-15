@@ -5,15 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 3.0 - 2012 05 22
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CommentsTopics implements CommentsExtensionPoint
 {
-	private $comments_topics = [];
+	private array $comments_topics = [];
 
-	public function __construct(Array $comments_topics)
+	public function __construct(array $comments_topics)
 	{
 		if (is_array($comments_topics))
 		{
@@ -31,12 +32,12 @@ class CommentsTopics implements CommentsExtensionPoint
 		}
 	}
 
-	public function get_comments_topics()
+	public function get_comments_topics(): array
 	{
 		return $this->comments_topics;
 	}
 
-	public function get_comments_topic($identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+	public function get_comments_topic(string $identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER): mixed
 	{
 		if ($this->topic_exists($identifier))
 		{
@@ -45,7 +46,7 @@ class CommentsTopics implements CommentsExtensionPoint
 		throw new Exception($identifier . ' not exists');
 	}
 
-	public function topic_exists($identifier)
+	public function topic_exists(string $identifier): bool
 	{
 		return array_key_exists($identifier, $this->comments_topics);
 	}

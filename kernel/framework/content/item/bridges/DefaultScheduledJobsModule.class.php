@@ -5,19 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 02
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2020 01 27
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultScheduledJobsModule extends AbstractScheduledJobExtensionPoint
 {
-	/**
-	 * @var string the module identifier
-	 */
-	protected $module_id;
+	protected string $module_id = '';
 
-	public function __construct($module_id)
+	public function __construct(string $module_id)
 	{
 		$this->module_id = $module_id;
 	}
@@ -25,10 +22,12 @@ class DefaultScheduledJobsModule extends AbstractScheduledJobExtensionPoint
 	public function on_changepage(): void
 	{
 		if (Environment::get_running_module_name() == $this->module_id)
+        {
 			$this->deferred_publication_processing();
+        }
 	}
 
-	protected function deferred_publication_processing()
+	protected function deferred_publication_processing(): void
 	{
 		$module_configuration = ModuleConfigurationManager::get($this->module_id);
 
@@ -36,7 +35,7 @@ class DefaultScheduledJobsModule extends AbstractScheduledJobExtensionPoint
 		{
 			$config_class = $module_configuration->get_configuration_name();
 			$config = $module_configuration->get_configuration_parameters();
-			
+
 			$deferred_operations = $config->get_deferred_operations();
 
 			if (!empty($deferred_operations))

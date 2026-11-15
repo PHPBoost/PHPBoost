@@ -6,28 +6,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 06 08
  * @author      mipel <mipel@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UrlControllerMapper extends AbstractUrlMapper
 {
-	private $classname;
-	private $parameters_names;
-	private $module_id;
+	private string $classname = '';
+	private array $parameters_names = [];
+	private string $module_id = '';
 
 	/**
 	 * build a new UrlDispatcherItem
-	 * @param string $classpath the controller classname
+	 * @param string $classname the controller classname
 	 * @param string $capture_regex the regular expression matching the url
 	 * and capturing the controller method parameters. By default, match the empty url <code>/</code>
-     * @param string $parameters_names the names of the parameters in the capture order
+     * @param array $parameters_names the names of the parameters in the capture order
 	 * @param string $module_id id of the current module (optional).
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($classname, $capture_regex = '`^/?$`u', $parameters_names = [], $module_id = '')
+	public function __construct(string $classname, string $capture_regex = '`^/?$`u', array $parameters_names = [], string $module_id = '')
 	{
 		$this->classname =& $classname;
 		$this->parameters_names = $parameters_names;
@@ -38,13 +39,13 @@ class UrlControllerMapper extends AbstractUrlMapper
 	/**
 	 * Call the controller method if the url match and if the method exists
 	 */
-	public function call()
+	public function call(): void
 	{
 		$this->build_parameters();
 		$this->do_call();
 	}
 
-	private function build_parameters()
+	private function build_parameters(): void
 	{
 		$captured_parameters = $this->get_captured_parameters();
 
@@ -61,7 +62,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 		}
 	}
 
-	private function do_call()
+	private function do_call(): void
 	{
 		$controller = $this->module_id ? new $this->classname($this->module_id) : new $this->classname();
 		if (!($controller instanceof Controller))

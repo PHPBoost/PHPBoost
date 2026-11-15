@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 02
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MappingModelField
@@ -15,27 +16,12 @@ class MappingModelField
 	const GETTER_PREFIX = 'get_';
 	const SETTER_PREFIX = 'set_';
 
-	/**
-	 * @var string
-	 */
-	private $db_field_name;
+	private string $db_field_name;
+	private string $property_name;
+	private string $getter;
+	private string $setter;
 
-	/**
-	 * @var string
-	 */
-	private $property_name;
-
-	/**
-	 * @var string
-	 */
-	private $getter;
-
-	/**
-	 * @var string
-	 */
-	private $setter;
-
-	public function __construct($property_name, $db_field_name = self::DEFAULT_PROPERTY_NAME)
+	public function __construct(string $property_name, int|string $db_field_name = self::DEFAULT_PROPERTY_NAME)
 	{
 		$this->property_name = $property_name;
 		if ($db_field_name !== self::DEFAULT_PROPERTY_NAME)
@@ -51,34 +37,22 @@ class MappingModelField
 		$this->setter = self::SETTER_PREFIX . $property_name;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_db_field_name()
+	public function get_db_field_name(): string
 	{
 		return $this->db_field_name;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_property_name()
+	public function get_property_name(): string
 	{
 		return $this->property_name;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getter()
+	public function getter(): string
 	{
 		return $this->getter;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function setter()
+	public function setter(): string
 	{
 		return $this->setter;
 	}

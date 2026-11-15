@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -12,12 +12,12 @@
 
 class UserUsersListController extends AbstractController
 {
-	private $lang;
-	private $view;
-	private $elements_number = 0;
-	private $ids = [];
+	private array $lang = [];
+	private ?Template $view = null;
+	private int $elements_number = 0;
+	private array $ids = [];
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 
@@ -29,14 +29,14 @@ class UserUsersListController extends AbstractController
 		return $this->generate_response($current_page);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->lang = LangLoader::get_all_langs();
 		$this->view = new StringTemplate('# INCLUDE FORM # # INCLUDE TABLE #');
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$form = new HTMLForm(self::class);
 
@@ -50,7 +50,7 @@ class UserUsersListController extends AbstractController
 		$this->view->put('FORM', $form->display());
 	}
 
-	private function build_table()
+	private function build_table(): int
 	{
 		$number_admins = UserService::count_admin_members();
 
@@ -72,7 +72,7 @@ class UserUsersListController extends AbstractController
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('registration_date', 'filter5', $this->lang['user.registration.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('last_connection_date', 'filter6', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('last_connection_date', 'filter7', $this->lang['user.last.connection'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
-		
+
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
 
@@ -100,7 +100,7 @@ class UserUsersListController extends AbstractController
 				$delete_link = new DeleteLinkHTMLElement('', '', ['aria-label' => '', 'disabled' => true], 'd-none');
             }
 
-			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level());
 
 			$modules = AppContext::get_extension_provider_service()->get_extension_point(UserExtensionPoint::EXTENSION_POINT);
 			$contributions_number = 0;
@@ -131,10 +131,10 @@ class UserUsersListController extends AbstractController
 	{
 		if ($request->get_string('delete-selected-elements', false))
 		{
+            $last_admin_delete = false;
+            $selected_users_number = 0;
 			for ($i = 1 ; $i <= $this->elements_number ; $i++)
 			{
-				$last_admin_delete = false;
-				$selected_users_number = 0;
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
 				{
 					if (isset($this->ids[$i]))
@@ -151,18 +151,24 @@ class UserUsersListController extends AbstractController
 							HooksService::execute_hook_action('delete_user', 'user', array_merge($user->get_properties(), ['title' => $user->get_display_name()]));
 						}
 						if ($user->is_admin() && UserService::count_admin_members() == 1)
+                        {
 							$last_admin_delete = true;
+                        }
 					}
 				}
 			}
 			if ($last_admin_delete && $selected_users_number == 1)
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::home(), $this->lang['warning.unauthorized.action'], MessageHelper::ERROR);
+            }
 			else
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::home(), $this->lang['warning.process.success']);
+            }
 		}
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
 		{
@@ -172,7 +178,7 @@ class UserUsersListController extends AbstractController
 		return $this;
 	}
 
-	private function generate_response($page = 1)
+	private function generate_response(int $page = 1): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();

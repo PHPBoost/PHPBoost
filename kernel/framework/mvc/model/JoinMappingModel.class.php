@@ -5,20 +5,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 05
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class JoinMappingModel
 {
-	private $table_name;
-	private $fk_db_field_name;
-	private $primary_key;
-	private $fields;
-	private $classname;
+	private string $table_name;
+	private string $fk_db_field_name;
+	private MappingModelField $primary_key;
+	private array $fields;
+	private string $classname = '';
 
-	public function __construct($table_name, $fk_db_field_name, MappingModelField $primary_key,
-	$fields)
+	public function __construct(string $table_name, string $fk_db_field_name, MappingModelField $primary_key, array $fields)
 	{
 		$this->table_name = $table_name;
 

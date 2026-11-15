@@ -7,8 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 2.0 - 2008 04 21
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
 */
 
@@ -23,7 +24,7 @@ class ATOM extends Feed
      * @param string $feed_name the feeds name / type. default is Feed::DEFAULT_FEED_NAME
      * @param int $id_cat the feed category id
      */
-    public function __construct($module_id, $feed_name = Feed::DEFAULT_FEED_NAME, $id_cat = 0)
+    public function __construct(string $module_id, string $feed_name = Feed::DEFAULT_FEED_NAME, int $id_cat = 0)
     {
         parent::__construct($module_id, $feed_name, $id_cat);
         $this->tpl = new FileTemplate(self::DEFAULT_ATOM_TEMPLATE);
@@ -33,7 +34,7 @@ class ATOM extends Feed
      * Loads a feed by its url
      * @param string $url the feed url
      */
-    public function load_file($url)
+    public function load_file(string $url): bool
     {
         if (($file = @file_get_contents($url)) !== false)
         {
@@ -41,9 +42,9 @@ class ATOM extends Feed
             if (preg_match('`<entry>(.*)</entry>`isu', $file))
             {
                 $expParsed = explode('<entry>', $file);
-                $nbItems = (count($expParsed) - 1) > $nbItems ? $nbItems : count($expParsed) - 1;
+                $nbItems = count($expParsed) - 1;
 
-                $this->data->set_date(preg_match('`<updated>(.*)</updated>`isu', $expParsed[0], $var) ? $var[1] : '');
+                $this->data->set_date(preg_match('`<updated>(.*)</updated>`isu', $expParsed[0], $var) ? new Date(strtotime($var[1]), Timezone::SERVER_TIMEZONE) : null);
                 $this->data->set_title(preg_match('`<title>(.*)</title>`isu', $expParsed[0], $var) ? $var[1] : '');
                 $this->data->set_link(preg_match('`<link href="(.*)"/>`isu', $expParsed[0], $var) ? $var[1] : '');
                 $this->data->set_host(preg_match('`<link href="(.*)"/>`isu', $expParsed[0], $var) ? $var[1] : '');
@@ -57,8 +58,8 @@ class ATOM extends Feed
                     $item->set_desc(preg_match('`<summary>(.*)</summary>`isu', $expParsed[$i], $desc) ? $desc[1] : '');
                     $item->set_date(preg_match('`<updated>(.*)</updated>`isu', $expParsed[$i], $date) ? new Date(strtotime($date[1]), Timezone::SERVER_TIMEZONE) : null);
 
-                    $enclosure = preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`isu', $expParsed[$i]);
-                    if ($enclosure)
+                    $enclosure = [];
+                    if (preg_match('`<enclosure rel="enclosure" url="(.*)" length="(.*)" type="(.*)" />`isu', $expParsed[$i], $enclosure))
                     {
                         $enclosure_item = new FeedItemEnclosure();
                         $enclosure_item->set_lenght($enclosure[2]);

@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 10
  * @since       PHPBoost 3.0 - 2010 02 14
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,10 +15,9 @@
 
 class NotationService
 {
-	private static $js_already_included = false;
-
-	private static $user;
-	private static $db_querier;
+	private static bool $js_already_included = false;
+	private static ?CurrentUser $user = null;
+	private static ?DBQuerier $db_querier = null;
 
 	public static function __static()
 	{
@@ -29,9 +28,8 @@ class NotationService
 	/**
 	 * This function required object Notation containing the module_name, id in module and notation_scale.
 	 * @param object $notation Notation
-	 * @param boolean $average_notes
 	 */
-	public static function display_static_image(Notation $notation)
+	public static function display_static_image(Notation $notation): string
 	{
 		$notation_scale = $notation->get_notation_scale();
 		if (!empty($notation_scale))
@@ -50,31 +48,38 @@ class NotationService
 				$star_empty = false;
 				$width = 0;
 
-				if ($int >= $i || ($int+1 == $i && $decimal == 1)) {
+				if ($int >= $i || ($int+1 == $i && $decimal == 1))
+                {
 					$star_full = true;
 					$star_width = 'star-width-100';
 				}
-				else if ($int+1 == $i && $decimal >= 0.90) {
+				elseif ($int+1 == $i && $decimal >= 0.90)
+                {
 					$star_full = true;
 					$star_width = 'star-width-90';
 				}
-				else if ($int+1 == $i && $decimal >= 0.75 && $decimal < 0.9) {
+				elseif ($int+1 == $i && $decimal >= 0.75 && $decimal < 0.9)
+                {
 					$star_full = true;
 					$star_width = 'star-width-75';
 				}
-				else if ($int+1 == $i && $decimal >= 0.5 && $decimal < 0.75) {
+				elseif ($int+1 == $i && $decimal >= 0.5 && $decimal < 0.75)
+                {
 					$star_half = true;
 					$star_width = 'star-width-50';
 				}
-				else if ($int+1 == $i && $decimal >= 0.25 && $decimal < 0.5) {
+				elseif ($int+1 == $i && $decimal >= 0.25 && $decimal < 0.5)
+                {
 					$star_half = true;
 					$star_width = 'star-width-25';
 				}
-				else if ($int+1 == $i && $decimal >= 0.1 && $decimal < 0.25) {
+				elseif ($int+1 == $i && $decimal >= 0.1 && $decimal < 0.25)
+                {
 					$star_empty = true;
 					$star_width = 'star-width-10';
 				}
-				else {
+				else
+                {
 					$star_empty = true;
 					$star_width = 'star-width-0';
 				}
@@ -111,7 +116,7 @@ class NotationService
 	 * This function required object Notation containing the module_name, id_in_module, user_id, note and notation_scale.
 	 * @param object $notation Notation
 	 */
-	public static function display_active_image(Notation $notation)
+	public static function display_active_image(Notation $notation): string
 	{
 		$note_post = AppContext::get_request()->get_int('note', 0);
 		$id_post = AppContext::get_request()->get_int('id', 0);
@@ -122,6 +127,7 @@ class NotationService
 			$notation->set_id_in_module($id_post);
 			$notation->set_note($note_post);
 			self::register_notation($notation);
+            return '';
 		}
 		else
 		{
@@ -139,31 +145,38 @@ class NotationService
 				$star_empty = false;
 				$width = 0;
 
-				if ($int >= $i || ($int+1 == $i && $decimal == 1)) {
+				if ($int >= $i || ($int+1 == $i && $decimal == 1))
+                {
 					$star_full = true;
 					$star_width = 'star-width-100';
 				}
-				else if ($int+1 == $i && $decimal >= 0.90) {
+				elseif ($int+1 == $i && $decimal >= 0.90)
+                {
 					$star_full = true;
 					$star_width = 'star-width-90';
 				}
-				else if ($int+1 == $i && $decimal >= 0.75 && $decimal < 0.9) {
+				elseif ($int+1 == $i && $decimal >= 0.75 && $decimal < 0.9)
+                {
 					$star_full = true;
 					$star_width = 'star-width-75';
 				}
-				else if ($int+1 == $i && $decimal >= 0.5 && $decimal < 0.75) {
+				elseif ($int+1 == $i && $decimal >= 0.5 && $decimal < 0.75)
+                {
 					$star_half = true;
 					$star_width = 'star-width-50';
 				}
-				else if ($int+1 == $i && $decimal >= 0.25 && $decimal < 0.5) {
+				elseif ($int+1 == $i && $decimal >= 0.25 && $decimal < 0.5)
+                {
 					$star_half = true;
 					$star_width = 'star-width-25';
 				}
-				else if ($int+1 == $i && $decimal >= 0.1 && $decimal < 0.25) {
+				elseif ($int+1 == $i && $decimal >= 0.1 && $decimal < 0.25)
+                {
 					$star_empty = true;
 					$star_width = 'star-width-10';
 				}
-				else {
+				else
+                {
 					$star_empty = true;
 					$star_width = 'star-width-0';
 				}
@@ -203,7 +216,7 @@ class NotationService
 	 * @param string $old_notation_scale
 	 * @param string $new_notation_scale
 	 */
-	public static function update_notation_scale($module_name, $old_notation_scale, $new_notation_scale)
+	public static function update_notation_scale(string $module_name, string $old_notation_scale, string $new_notation_scale): void
 	{
 		if ($old_notation_scale !== $new_notation_scale)
 		{
@@ -216,45 +229,48 @@ class NotationService
 	/**
 	 * This fonction delete all notes by id module and id in module element
 	 * @param string $module_name
-	 * @param string $id_in_module
+	 * @param int $id_in_module
 	 */
-	public static function delete_notes_id_in_module($module_name, $id_in_module)
+	public static function delete_notes_id_in_module(string $module_name, int $id_in_module): void
 	{
-		try {
+		try
+        {
 			$condition = 'WHERE module_name=:module_name AND id_in_module=:id_in_module';
 			$parameters = ['module_name' => $module_name, 'id_in_module' => $id_in_module];
 
 			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
-		} catch (MySQLQuerierException $e) {
 		}
+        catch (MySQLQuerierException $e) {}
 	}
 
 	/**
 	 * This fonction delete all notes by module
 	 * @param string $module_name
 	 */
-	public static function delete_notes_module($module_name)
+	public static function delete_notes_module(string $module_name): void
 	{
-		try {
+		try
+        {
 			$condition = 'WHERE module_name=:module_name';
 			$parameters = ['module_name' => $module_name];
 
 			self::$db_querier->delete(DB_TABLE_AVERAGE_NOTES, $condition, $parameters);
 			self::$db_querier->delete(DB_TABLE_NOTE, $condition, $parameters);
-		} catch (MySQLQuerierException $e) {
 		}
+        catch (MySQLQuerierException $e) {}
 	}
 
-	/**
-	 * This function required object Notation containing the module_name and id_in_module.
-	 */
-	public static function get_notes_number(Notation $notation)
+	/** This function required object Notation containing the module_name and id_in_module. */
+	public static function get_notes_number(Notation $notation): int
 	{
-		try {
+		try
+        {
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'notes_number', 'WHERE module_name = :module_name AND id_in_module = :id_in_module',
 			['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			return 0;
 		}
 	}
@@ -262,12 +278,15 @@ class NotationService
 	/**
 	 * This function required object Notation containing the module_name and id_in_module.
 	 */
-	public static function get_average_notes(Notation $notation)
+	public static function get_average_notes(Notation $notation): float
 	{
-		try {
+		try
+        {
 			return self::$db_querier->get_column_value(DB_TABLE_AVERAGE_NOTES, 'average_notes', 'WHERE module_name = :module_name AND id_in_module = :id_in_module',
 			['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			return 0;
 		}
 	}
@@ -275,18 +294,23 @@ class NotationService
 	/**
 	 * This function required object Notation containing the module_name, id_in_module and user_id.
 	 */
-	public static function get_informations_note(Notation $notation)
+	public static function get_informations_note(Notation $notation): string|array
 	{
-		try {
-			return self::$db_querier->select_single_row_query('SELECT average_notes, notes_number, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
-			WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
-			FROM ' . DB_TABLE_AVERAGE_NOTES . '
-			WHERE module_name = :module_name AND id_in_module = :id_in_module', [
-				'module_name' => $notation->get_module_name(),
-				'id_in_module' => $notation->get_id_in_module(),
-				'user_id' => $notation->get_user_id()
-			]);
-		} catch (RowNotFoundException $e) {
+		try
+        {
+			return self::$db_querier->select_single_row_query('
+                SELECT average_notes, notes_number, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
+                WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
+                FROM ' . DB_TABLE_AVERAGE_NOTES . '
+                WHERE module_name = :module_name AND id_in_module = :id_in_module', [
+                    'module_name' => $notation->get_module_name(),
+                    'id_in_module' => $notation->get_id_in_module(),
+                    'user_id' => $notation->get_user_id()
+                ]
+            );
+		}
+        catch (RowNotFoundException $e)
+        {
 			return [
 				'average_notes' => 0,
 				'notes_number' => 0,
@@ -295,7 +319,7 @@ class NotationService
 		}
 	}
 
-	private static function register_notation(Notation $notation)
+	private static function register_notation(Notation $notation): void
 	{
 		if (self::$user->check_level(User::MEMBER_LEVEL))
 		{
@@ -348,7 +372,8 @@ class NotationService
 
 	private static function calculates_average_notes(Notation $notation)
 	{
-		try {
+		try
+        {
 			$result = self::$db_querier->select_rows(DB_TABLE_NOTE, ['note'], 'WHERE module_name=:module_name AND id_in_module=:id_in_module',
 			['module_name' => $notation->get_module_name(), 'id_in_module' => $notation->get_id_in_module()]);
 
@@ -360,7 +385,9 @@ class NotationService
 			$result->dispose();
 
 			return (round(($notes / $result->get_rows_count()) / 0.25) * 0.25);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			return 0;
 		}
 	}

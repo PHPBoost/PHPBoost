@@ -7,34 +7,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 2.0 - 2008 08 29
  * @author      mipel <mipel@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BbcodeHighlighter extends AbstractParser
 {
 	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
 	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;
-	/**
-	 * @var string color of a bbcode tag
-	 */
-	private static $bbcode_tag_color = '#0000FF';
-	/**
-	 * @var string Color of a bbcode param
-	 */
-	private static $bbcode_param_color = '#7B00FF';
-	/**
-	 * @var string Color of a bbcode param name
-	 */
-	private static $bbcode_param_name_color = '#FF0000';
-	/**
-	 * @var string Color of the list tag
-	 */
-	private static $bbcode_list_item_color = '#00AF07';
+
+    private static string $bbcode_tag_color = '#0000FF';
+	private static string $bbcode_param_color = '#7B00FF';
+	private static string $bbcode_param_name_color = '#FF0000';
+	private static string $bbcode_list_item_color = '#00AF07';
 
 	/**
 	 * Builds a BbcodeHighlighter objet
@@ -51,7 +41,7 @@ class BbcodeHighlighter extends AbstractParser
 	 * (default parameter) and if you want that it would be integrated in a line, use BBCODE_HIGHLIGHTER_INLINE_CODE
 	 * @return void You can get the result by calling the get_content method
 	 */
-	public function parse($inline_code = self::BBCODE_HIGHLIGHTER_BLOCK_CODE)
+	public function parse(bool $inline_code = self::BBCODE_HIGHLIGHTER_BLOCK_CODE): void
 	{
 		//Protection of html code
 		$this->content = TextHelper::htmlspecialchars($this->content);

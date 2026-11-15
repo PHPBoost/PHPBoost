@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2020 02 11
  * @author      xela <xela@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,9 +13,9 @@
 
 class DefaultConfigurationController extends AbstractAdminItemController
 {
-	protected $additional_fields_list = [];
+	protected array $additional_fields_list = [];
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): DefaultAdminDisplayResponse
 	{
 		$this->build_form();
 
@@ -43,7 +43,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		return new DefaultAdminDisplayResponse($this->view);
 	}
 
-	protected function build_form()
+	protected function build_form(): void
 	{
 		$item_class_name = self::get_module_configuration()->get_item_name();
 		$form = new HTMLForm(self::$module_id . '_config_form');
@@ -74,29 +74,31 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DefaultRichModuleConfig::LIST_VIEW, ['data_option_icon' => 'fa fa-list']),
 					new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DefaultRichModuleConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
 				],
-				['select_to_list' => true,
+				[
+                    'select_to_list' => true,
 					'events' => ['change' => '
-					if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::GRID_VIEW . '\') {
-						HTMLForms.getField("items_per_row").enable();
-						HTMLForms.getField("full_item_display").disable();
-						HTMLForms.getField("auto_cut_characters_number").enable();
-						HTMLForms.getField("summary_displayed_to_guests").enable();
-					} else if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::LIST_VIEW . '\') {
-						HTMLForms.getField("items_per_row").disable();
-						HTMLForms.getField("full_item_display").enable();
-						HTMLForms.getField("summary_displayed_to_guests").enable();
-						if (HTMLForms.getField("full_item_display").getValue()) {
-							HTMLForms.getField("auto_cut_characters_number").disable();
-						} else {
-							HTMLForms.getField("auto_cut_characters_number").enable();
-						}
-					} else {
-						HTMLForms.getField("items_per_row").disable();
-						HTMLForms.getField("full_item_display").disable();
-						HTMLForms.getField("auto_cut_characters_number").disable();
-						HTMLForms.getField("summary_displayed_to_guests").disable();
-					}'
-				]]
+                        if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::GRID_VIEW . '\') {
+                            HTMLForms.getField("items_per_row").enable();
+                            HTMLForms.getField("full_item_display").disable();
+                            HTMLForms.getField("auto_cut_characters_number").enable();
+                            HTMLForms.getField("summary_displayed_to_guests").enable();
+                        } else if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::LIST_VIEW . '\') {
+                            HTMLForms.getField("items_per_row").disable();
+                            HTMLForms.getField("full_item_display").enable();
+                            HTMLForms.getField("summary_displayed_to_guests").enable();
+                            if (HTMLForms.getField("full_item_display").getValue()) {
+                                HTMLForms.getField("auto_cut_characters_number").disable();
+                            } else {
+                                HTMLForms.getField("auto_cut_characters_number").enable();
+                            }
+                        } else {
+                            HTMLForms.getField("items_per_row").disable();
+                            HTMLForms.getField("full_item_display").disable();
+                            HTMLForms.getField("auto_cut_characters_number").disable();
+                            HTMLForms.getField("summary_displayed_to_guests").disable();
+                        }'
+                    ]
+                ]
 			));
 
 			$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['config.items.per.row'], $this->config->get_items_per_row(),
@@ -220,7 +222,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$this->form = $form;
 	}
 
-	protected function save()
+	protected function save(): void
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 
@@ -235,22 +237,31 @@ class DefaultConfigurationController extends AbstractAdminItemController
 			$this->config->set_views_number_enabled($this->form->get_value('views_number_enabled'));
 			$this->config->set_display_type($this->form->get_value('display_type')->get_raw_value());
 			if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
+            {
 				$this->config->set_items_per_row($this->form->get_value('items_per_row'));
+            }
 
 			if ($this->module_item->content_field_enabled())
 			{
 				if ($this->module_item->summary_field_enabled())
 				{
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW)
+                    {
 						$this->config->set_full_item_display($this->form->get_value('full_item_display'));
+                    }
 					if ($this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW && !$this->config->get_full_item_display())
+                    {
 						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
-					if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW) {
+                    }
+					if ($this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW)
+                    {
 						$this->config->set_auto_cut_characters_number($this->form->get_value('auto_cut_characters_number'));
 						$this->config->set_full_item_display(false);
 					}
 					if ($this->config->get_display_type() != DefaultRichModuleConfig::TABLE_VIEW)
+                    {
 						$this->config->set_summary_displayed_to_guests($this->form->get_value('summary_displayed_to_guests'));
+                    }
 				}
 				$this->config->set_default_content($this->form->get_value('default_content'));
 			}
@@ -273,17 +284,19 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		$configuration_class_name::save(self::$module_id);
 
 		if (self::get_module_configuration()->has_categories())
+        {
 			CategoriesService::get_categories_manager(self::$module_id)->regenerate_cache();
+        }
 	}
 
-	protected function execute_edit_config_hook()
+	protected function execute_edit_config_hook(): void
 	{
 		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
-	protected function hide_fields() {}
+	protected function hide_fields(): void {}
 
-	protected function add_additional_fields(&$fieldset)
+	protected function add_additional_fields(mixed &$fieldset): void
 	{
 		// Automatically add module dedicated configuration parameters to config form
 		// Lang variable config.parameter.name (for a parameter PARAMETER_NAME in module config file) requested in lang file
@@ -304,7 +317,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 					{
 						$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
 
-						switch ($type) {
+						switch ($type)
+                        {
 							case 'boolean':
 								$fieldset->add_field(new FormFieldCheckbox($parameter, $this->lang[$parameter_lang_variable], $this->config->$parameter_get_method(),
 									['class' => 'custom-checkbox', 'description' => (isset($this->lang[$parameter_lang_variable . '.explain']) ? $this->lang[$parameter_lang_variable . '.explain'] : '')]
@@ -328,7 +342,7 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		}
 	}
 
-	protected function save_additional_fields()
+	protected function save_additional_fields(): void
 	{
 		foreach ($this->additional_fields_list as $parameter)
 		{
@@ -337,8 +351,8 @@ class DefaultConfigurationController extends AbstractAdminItemController
 		}
 	}
 
-	protected function add_additional_fieldsets(&$form) {}
+	protected function add_additional_fieldsets(mixed &$form): void {}
 
-	protected function add_additional_actions_authorization() { return []; }
+	protected function add_additional_actions_authorization(): array { return []; }
 }
 ?>

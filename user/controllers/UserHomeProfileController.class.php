@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 3.0 - 2011 10 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -11,11 +11,11 @@
 
 class UserHomeProfileController extends AbstractController
 {
-	private $lang;
-	private $view;
-	private $user;
+	private array $lang;
+	private Template $view;
+	private CurrentUser $user;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 
@@ -29,7 +29,7 @@ class UserHomeProfileController extends AbstractController
 		return $this->build_response($this->view);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->user = AppContext::get_current_user();
 		$this->view = new FileTemplate('user/UserHomeProfileController.tpl');
@@ -37,7 +37,7 @@ class UserHomeProfileController extends AbstractController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$user_avatar = AppContext::get_session()->get_cached_data('user_avatar');
 		$user_accounts_config = UserAccountsConfig::load();
@@ -96,17 +96,19 @@ class UserHomeProfileController extends AbstractController
 				{
 					$thumbnail = $module->get_publications_module_icon();
 				}
-				else if($module_icon->exists())
+				elseif($module_icon->exists())
 				{
 					$thumbnail = Url::to_rel($module_icon->get_path());
 					$is_picture = true;
 				}
-				else if($module->get_publications_module_id() != '')
+				elseif($module->get_publications_module_id() != '')
 				{
 					$thumbnail = ModulesManager::get_module($module->get_publications_module_id())->get_configuration()->get_fa_icon();
 				}
 				else
+                {
 					$thumbnail = 'fa fa-fw fa-cube';
+                }
 
 				$this->view->assign_block_vars('user_publications', [
 					'C_ICON_IS_PICTURE'   => $is_picture,
@@ -119,7 +121,7 @@ class UserHomeProfileController extends AbstractController
 		}
 	}
 
-	private function get_unread_contributions_number()
+	private function get_unread_contributions_number(): int
 	{
 		$unread_contributions = UnreadContributionsCache::load();
 
@@ -163,7 +165,7 @@ class UserHomeProfileController extends AbstractController
 		return $contribution_number;
 	}
 
-	private function build_response(View $view)
+	private function build_response(View $view): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($view);
 		$graphical_environment = $response->get_graphical_environment();

@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 12 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DispatchManager
@@ -18,7 +19,7 @@ class DispatchManager
      * Redirect the request to the right controller using the url controller mappes list
      * @param UrlControllerMapper[] $url_controller_mappers the url controllers mapper list
      */
-    public static function dispatch($url_controller_mappers)
+    public static function dispatch(array $url_controller_mappers): void
     {
         try
         {
@@ -35,7 +36,7 @@ class DispatchManager
 	 * Cleans the output buffer and execute the given controller before exiting
 	 * @param Controller $controller the controller to execute
 	 */
-	public static function redirect(Controller $controller)
+	public static function redirect(Controller $controller): void
 	{
 		AppContext::get_response()->clean_output();
 		Environment::init_output_bufferization();
@@ -54,7 +55,7 @@ class DispatchManager
 	 * @param boolean $not_rewriting_url_forced forced to have a non-rewritten url
 	 * @return Url an url object relative to the current script path
 	 */
-	public static function get_url($path, $url, $not_rewriting_url_forced = false)
+	public static function get_url(string $path, string $url, bool $not_rewriting_url_forced = false): Url
 	{
 		$dispatcher_url = new Url(rtrim($path, '/'));
 		$url = ltrim($url, '/');
@@ -82,12 +83,12 @@ class DispatchManager
 		}
 	}
 
-	protected static function get_dispatcher_path($dispatcher_name)
+	protected static function get_dispatcher_path(string $dispatcher_name): string
 	{
 		return preg_replace('`(.*/)[a-z0-9]+\.php`u','$1', $dispatcher_name);
 	}
 
-	protected static function handle_dispatch_exception($exception)
+	protected static function handle_dispatch_exception(Throwable $exception): void
 	{
 		if (Debug::is_debug_mode_enabled())
 		{
@@ -100,7 +101,7 @@ class DispatchManager
 		}
 	}
 
-	protected static function show_error($exception)
+	protected static function show_error(Throwable $exception): void
 	{
 		Debug::fatal($exception);
 	}

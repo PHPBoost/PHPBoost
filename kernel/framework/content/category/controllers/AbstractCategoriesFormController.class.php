@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 20
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 02 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,31 +15,21 @@
 
 abstract class AbstractCategoriesFormController extends ModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	protected $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	protected $submit_button;
+	protected ?HTMLForm $form = null;
+	protected ?FormButtonSubmit $submit_button = null;
 
-	protected static $lang;
-	protected static $categories_manager;
+	protected static array $lang = [];
+	protected static CategoriesManager $categories_manager;
+	private ?Category $category = null;
+	protected bool $is_new_category = false;
 
-	/**
-	 * @var Category
-	 */
-	private $category;
-	protected $is_new_category;
-
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$module_id = self::$module_id ? self::$module_id : Environment::get_running_module_name();
 		self::$lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
@@ -65,7 +55,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		return $this->generate_response($tpl);
 	}
 
-	protected function build_form(HTTPRequestCustom $request)
+	protected function build_form(HTTPRequestCustom $request): void
 	{
 		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->get_title());
@@ -136,7 +126,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$this->form = $form;
 	}
 
-	protected function set_properties()
+	protected function set_properties(): void
 	{
 		$this->get_category()->set_name($this->form->get_value('name'));
 		$rewrited_name = $this->form->get_value('rewrited_name', '');
@@ -174,7 +164,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}
 	}
 
-	private function build_options_fieldset(HTMLForm $form)
+	private function build_options_fieldset(HTMLForm $form): void
 	{
 		$fieldset = new FormFieldsetHTML('options_fieldset', self::$lang['common.options']);
 		$this->get_options_fields($fieldset);
@@ -184,7 +174,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}
 	}
 
-	protected function get_options_fields(FormFieldset $fieldset)
+	protected function get_options_fields(FormFieldset $fieldset): void
 	{
 		foreach ($this->get_category()->get_additional_attributes_list() as $id => $attribute)
 		{
@@ -195,14 +185,22 @@ abstract class AbstractCategoriesFormController extends ModuleController
 				$options = isset($parameters['options']) ? $parameters['options'] : [];
 
 				if ($this->is_new_category)
+                {
 					$value = isset($parameters['default_value']) ? $parameters['default_value'] : '';
+                }
 				else
+                {
 					$value = ($this->get_category()->get_additional_property($id) instanceof Url) ? $this->get_category()->get_additional_property($id)->relative() : $this->get_category()->get_additional_property($id);
+                }
 
 				if ($field_class == 'FormFieldThumbnail')
+                {
 					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, isset($parameters['default_picture']) ? $parameters['default_picture'] : '', $options));
+                }
 				else
+                {
 					$fieldset->add_field(new $field_class($id, $parameters['label'], $value, $options));
+                }
 			}
 		}
 	}
@@ -210,7 +208,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 	/**
 	 * Update or add category
 	 */
-	private function save()
+	private function save(): void
 	{
 		$category = $this->get_category();
 		if ($category->get_id())
@@ -226,10 +224,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		}
 	}
 
-	/**
-	 * @return Category
-	 */
-	protected function get_category()
+	protected function get_category(): Category
 	{
 		if ($this->category === null)
 		{
@@ -305,11 +300,7 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		return $this->is_new_category ? self::$lang['category.success.add'] : self::$lang['category.success.edit'];
 	}
 
-	/**
-	 * @param View $view
-	 * @return Response
-	 */
-	protected function generate_response(View $view)
+	protected function generate_response(View $view): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($view);
 
@@ -326,48 +317,23 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		return $response;
 	}
 
-	/**
-	 * @return CategoriesManager
-	 */
-	protected static function get_categories_manager()
+	protected static function get_categories_manager(): CategoriesManager
 	{
 		return CategoriesService::get_categories_manager();
 	}
 
-	/**
-	 * @return string id of the category to edit / delete
-	 */
-	abstract protected function get_id_category();
+	abstract protected function get_id_category(): int;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_categories_management_url();
+	abstract protected function get_categories_management_url(): Url;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_add_category_url();
+	abstract protected function get_add_category_url(): Url;
 
-	/**
-	 * @param int $category Category
-	 * @return Url
-	 */
-	abstract protected function get_edit_category_url(Category $category);
+	abstract protected function get_edit_category_url(Category $category): Url;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_module_home_page_url();
+	abstract protected function get_module_home_page_url(): Url;
 
-	/**
-	 * @return string module home page title
-	 */
-	abstract protected function get_module_home_page_title();
+	abstract protected function get_module_home_page_title(): string;
 
-	/**
-	 * @return boolean Authorization to manage categories
-	 */
-	abstract protected function check_authorizations();
+	abstract protected function check_authorizations(): void;
 }
 ?>

@@ -5,24 +5,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 08 27
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 10 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MySQLDBConnection implements DBConnection
 {
-	/**
-	 * @var mysqli|null
-	 */
-	private $link = null;
+	private  ?mysqli $link = null;
 
 	public function __destruct()
 	{
 		$this->disconnect();
 	}
 
-	public function connect(array $db_connection_data)
+	public function connect(array $db_connection_data): void
 	{
 		if (!extension_loaded('mysqli'))
 		{
@@ -58,12 +56,12 @@ class MySQLDBConnection implements DBConnection
 		}
 	}
 
-	public function get_link()
+	public function get_link(): ?mysqli
 	{
 		return $this->link;
 	}
 
-	public function disconnect()
+	public function disconnect(): void
 	{
 		if ($this->link !== null)
 		{
@@ -78,22 +76,22 @@ class MySQLDBConnection implements DBConnection
 		}
 	}
 
-	public function start_transaction()
+	public function start_transaction(): void
 	{
 		$this->execute("START TRANSACTION;");
 	}
 
-	public function commit()
+	public function commit(): void
 	{
 		$this->execute("COMMIT;");
 	}
 
-	public function rollback()
+	public function rollback(): void
 	{
 		$this->execute("ROLLBACK;");
 	}
 
-	private function execute($command)
+	private function execute(string $command): void
 	{
 		$resource = mysqli_query($this->link, $command);
 		if ($resource === false)
@@ -102,7 +100,7 @@ class MySQLDBConnection implements DBConnection
 		}
 	}
 
-	private function select_database($database)
+	private function select_database(string $database): void
 	{
 		if (!mysqli_select_db($this->link, $database))
 		{

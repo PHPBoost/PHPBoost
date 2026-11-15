@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 2.0 - 2008 04 21
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,35 +20,11 @@ class Feed
 {
 	const DEFAULT_FEED_NAME = 'master';
 
-	/**
-	 * @var int Module ID
-	 */
-	private $module_id = '';
-	/**
-	 *
-	 * @var int ID cat
-	 */
-	private $id_cat = 0;
-	/**
-	 *
-	 * @var string Feed Name
-	 */
-	private $name = '';
-	/**
-	 *
-	 * @var string The feed as a string
-	 */
-	private $str = '';
-	/**
-	 *
-	 * @var string The feed Template to use
-	 */
-	protected $tpl = null;
-	/**
-	 *
-	 * @var string The data structure
-	 */
-	private $data = null;
+	private string $module_id = '';
+	private int $id_cat = 0;
+	private string $name = '';
+	protected ?Template $tpl = null;
+	protected ?FeedData $data = null;
 
 	/**
 	 * Builds a new feed object
@@ -56,7 +32,7 @@ class Feed
 	 * @param string $name the feeds name / type. default is DEFAULT_FEED_NAME
 	 * @param int $id_cat the feed category id
 	 */
-	public function __construct($module_id, $name = self::DEFAULT_FEED_NAME, $id_cat = 0)
+	public function __construct(string $module_id, string $name = self::DEFAULT_FEED_NAME, int $id_cat = 0)
 	{
 		$this->module_id = $module_id;
 		$this->name = $name;
@@ -67,12 +43,15 @@ class Feed
 	 * Loads a FeedData element
 	 * @param FeedData $data the element to load
 	 */
-	public function load_data($data) { $this->data = $data; }
+	public function load_data(FeedData $data): void
+    {
+        $this->data = $data;
+    }
 	/**
 	 * Loads a feed by its url
 	 * @param string $url the feed url
 	 */
-	public function load_file($url) { }
+	public function load_file(string $url): bool { return false; }
 
 	/**
 	 * Exports the feed as a string parsed by the <$view> template
@@ -83,15 +62,24 @@ class Feed
 	 * @param int $begin_at the first item to display
 	 * @return string The exported feed
 	 */
-	public function export($template = false, $number = 10, $begin_at = 0)
+	public function export($template = false, int $number = 10, int $begin_at = 0): string
 	{
 		if ($template === false)
-		{    // A specific template is used
+		{    // Use the default template
 			$view = clone $this->tpl;
+		}
+		elseif (is_array($template))
+		{
+			$view = clone $this->tpl;
+			$view->put_all($template);
+		}
+		elseif ($template instanceof Template)
+		{
+			$view = clone $template;
 		}
 		else
 		{
-			$view = clone $template;
+			throw new InvalidArgumentException('The feed template must be false, an array, or a Template instance.');
 		}
 
 		if (!empty($this->data))
@@ -99,15 +87,15 @@ class Feed
 			$view->put_all(array_merge(
 				Date::get_array_tpl_vars($this->data->get_date(), 'date'),
 				[
-				'THIS_YEAR'    => date('Y'),
-				'TITLE'        => $this->data->get_title(),
-				'RAW_TITLE'    => TextHelper::htmlspecialchars($this->data->get_title()),
-				'HOST'         => $this->data->get_host(),
-				'DESC'         => ContentSecondParser::export_html_text($this->data->get_desc()),
-				'RAW_DESC'     => TextHelper::htmlspecialchars($this->data->get_desc()),
-				'LANG'         => $this->data->get_lang(),
+                    'THIS_YEAR'    => date('Y'),
+                    'TITLE'        => $this->data->get_title(),
+                    'RAW_TITLE'    => TextHelper::htmlspecialchars($this->data->get_title()),
+                    'HOST'         => $this->data->get_host(),
+                    'DESC'         => ContentSecondParser::export_html_text($this->data->get_desc()),
+                    'RAW_DESC'     => TextHelper::htmlspecialchars($this->data->get_desc()),
+                    'LANG'         => $this->data->get_lang(),
 
-				'U_LINK' => $this->data->get_link(),
+                    'U_LINK' => $this->data->get_link(),
 			]));
 
 			$items = $this->data->subitems($number, $begin_at);
@@ -142,7 +130,7 @@ class Feed
 	 * Loads the feed data in cache and export it
 	 * @return string the exported feed
 	 */
-	public function read()
+	public function read(): string
 	{
 		if ($this->is_in_cache())
 		{
@@ -156,10 +144,8 @@ class Feed
 		return '';
 	}
 
-	/**
-	 * Send the feed data in the cache
-	 */
-	public function cache()
+	/** Send the feed data in the cache */
+	public function cache(): void
 	{
 		self::update_cache($this->module_id, $this->name, $this->data, $this->id_cat);
 	}
@@ -168,7 +154,7 @@ class Feed
 	 * Returns true if the feed data are in the cache
 	 * @return bool true if the feed data are in the cache
 	 */
-	public function is_in_cache()
+	public function is_in_cache(): bool
 	{
 		return file_exists($this->get_cache_file_name());
 	}
@@ -177,7 +163,7 @@ class Feed
 	 * Returns the feed data cache filename
 	 * @return string the feed data cache filename
 	 */
-	public function get_cache_file_name()
+	public function get_cache_file_name(): string
 	{
 		return FEEDS_PATH . $this->module_id . '_' . $this->name . '_' . $this->id_cat . '.php';
 	}
@@ -188,7 +174,7 @@ class Feed
 	 * Clear all feeds data from the cache
 	 * @static
 	 */
-	public static function clear_cache($module_id = false)
+	public static function clear_cache(bool $module_id = false): void
 	{
 		$folder = new Folder(FEEDS_PATH);
 		$files = null;
@@ -215,7 +201,7 @@ class Feed
 	 * @param int $idcat the feed data category
 	 * @static
 	 */
-	private static function update_cache($module_id, $name, $data, $idcat = 0)
+	private static function update_cache(string $module_id, string $name, FeedData $data, int $idcat = 0)
 	{
 		if ($data instanceof FeedData)
 		{
@@ -232,7 +218,7 @@ class Feed
 	 * @param string $module_id the module id
 	 * @param string $name the feed name / type
 	 * @param int $idcat the feed data category
-	 * @param mixed $view If false, uses de default tpl. If an associative array,
+	 * @param mixed $template If false, uses de default tpl. If an associative array,
 	 * uses the default tpl but assigns it the array vars first.
 	 * It could also be a Template object
 	 * @param int $number the number of item to display
@@ -240,15 +226,17 @@ class Feed
 	 * @return string The exported feed
 	 * @static
 	 */
-	public static function get_parsed($module_id, $name = self::DEFAULT_FEED_NAME, $idcat = 0, $template = false, $number = 10, $begin_at = 0)
+	public static function get_parsed(string $module_id, string $name = self::DEFAULT_FEED_NAME, int $idcat = 0, $template = null, int $number = 10, int $begin_at = 0): string
 	{
-		if (!($template instanceof Template))
+		if (is_array($template))
+		{
+			$view = new FileTemplate('framework/content/syndication/feed.tpl');
+			$view->put_all($template);
+			$template = $view;
+		}
+		elseif (!($template instanceof Template))
 		{
 			$template = new FileTemplate('framework/content/syndication/feed.tpl');
-			if (gettype($template) == 'array')
-			{
-				$template->put_all($template);
-			}
 		}
 
 		$feed_data_cache_file_exists = true;
@@ -290,10 +278,9 @@ class Feed
 	/**
 	 * @static
 	 * Generates the code which shows all the feeds formats.
-	 * @param string $feed_url Feed URL
 	 * @return string The HTML code to display.
 	 */
-	public static function get_feed_menu($module_id, $id_cat = 0)
+	public static function get_feed_menu(string $module_id, int $id_cat = 0): string
 	{
 		$feed_menu = new FileTemplate('framework/content/syndication/menu.tpl');
 

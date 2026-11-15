@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 4.0 - 2013 01 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,20 +14,20 @@
 
 class Category
 {
-	protected $id;
-	protected $name;
-	protected $rewrited_name;
-	protected $order;
-	protected $special_authorizations = false;
-	protected $auth = [];
-	protected $id_parent;
-	protected $elements_number;
-	protected $allowed_to_have_childs = true;
+	protected int $id = 0;
+	protected string $name = '';
+	protected string $rewrited_name = '';
+	protected ?int $order = null;
+	protected bool $special_authorizations = false;
+	protected array $auth = [];
+	protected ?int $id_parent = null;
+	protected int|array $elements_number = 0;
+	protected bool $allowed_to_have_childs = true;
 
-	protected $additional_attributes_values = [];
-	protected $additional_attributes_list = [];
-	protected $additional_attributes_categories_table_fields = [];
-	protected $additional_attributes_categories_table_options = [];
+	protected array $additional_attributes_values = [];
+	protected array $additional_attributes_list = [];
+	protected array $additional_attributes_categories_table_fields = [];
+	protected array $additional_attributes_categories_table_options = [];
 
 	const READ_AUTHORIZATIONS = 1;
 	const WRITE_AUTHORIZATIONS = 2;
@@ -36,7 +36,7 @@ class Category
 	const MODERATION_AUTHORIZATIONS = 16;
 	const CATEGORIES_MANAGEMENT_AUTHORIZATIONS = 32;
 
-	const ROOT_CATEGORY = '0';
+	const ROOT_CATEGORY = 0;
 
 	public function __construct()
 	{
@@ -44,122 +44,124 @@ class Category
 		$this->set_additional_attributes_list();
 	}
 
-	public function get_id()
+	public function get_id(): int
 	{
 		return $this->id;
 	}
 
-	public function set_id($id)
+	public function set_id(int $id): void
 	{
 		$this->id = $id;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function set_name($name)
+	public function set_name(string $name): void
 	{
 		$this->name = $name;
 	}
 
-	public function get_rewrited_name()
+	public function get_rewrited_name(): string
 	{
 		return $this->rewrited_name;
 	}
 
-	public function set_rewrited_name($rewrited_name)
+	public function set_rewrited_name(string $rewrited_name): void
 	{
 		$this->rewrited_name = $rewrited_name;
 	}
 
-	public function rewrited_name_is_personalized()
+	public function rewrited_name_is_personalized(): bool
 	{
 		return $this->rewrited_name != Url::encode_rewrite($this->name);
 	}
 
-	public function get_order()
+	public function get_order(): ?int
 	{
 		return $this->order;
 	}
 
-	public function set_order($order)
+	public function set_order(?int $order): void
 	{
 		$this->order = $order;
 	}
 
-	public function increment_order()
+	public function increment_order(): void
 	{
 		$this->order++;
 	}
 
-	public function has_special_authorizations()
+	public function has_special_authorizations(): bool
 	{
 		return $this->special_authorizations;
 	}
 
-	public function set_special_authorizations($special_authorizations)
+	public function set_special_authorizations(bool $special_authorizations): void
 	{
 		$this->special_authorizations = (bool)$special_authorizations;
 	}
 
-	public function get_authorizations()
+	public function get_authorizations(): array
 	{
 		return $this->auth;
 	}
 
-	public function set_authorizations(array $auth)
+	public function set_authorizations(array $auth): void
 	{
 		$this->auth = $auth;
 	}
 
-	public function auth_is_empty()
+	public function auth_is_empty(): bool
 	{
 		return empty($this->auth);
 	}
 
-	public function auth_is_equals(Array $auth)
+	public function auth_is_equals(array $auth): bool
 	{
 		return $this->auth === $auth;
 	}
 
-	public function get_id_parent()
+	public function get_id_parent(): int
 	{
 		return $this->id_parent;
 	}
 
-	public function set_id_parent($id_parent)
+	public function set_id_parent(int $id_parent): void
 	{
 		$this->id_parent = $id_parent;
 	}
 
-	public function get_elements_number()
+	public function get_elements_number(): int|array
 	{
 		return $this->elements_number;
 	}
 
-	public function set_elements_number($elements_number)
+	public function set_elements_number(int|array $elements_number): void
 	{
 		$this->elements_number = $elements_number;
 	}
 
-	public function is_allowed_to_have_childs()
+	public function is_allowed_to_have_childs(): bool
 	{
 		return $this->allowed_to_have_childs;
 	}
 
-	public function check_auth($bit)
+	public function check_auth(int $bit): mixed
 	{
 		return AppContext::get_current_user()->check_auth($this->auth, $bit);
 	}
 
-	protected function add_additional_attribute($id, array $parameters)
+	protected function add_additional_attribute(string $id, array $parameters): void
 	{
 		if (isset($parameters['key']))
 		{
 			if ($parameters['key'] == true)
+            {
 				$this->additional_attributes_categories_table_options[$id] = ['type' => 'key', 'fields' => $id];
+            }
 
 			unset($parameters['key']);
 		}
@@ -181,26 +183,26 @@ class Category
 		$this->additional_attributes_categories_table_fields[$id] = $parameters;
 	}
 
-	public function get_additional_attributes_list()
+	public function get_additional_attributes_list(): array
 	{
 		return $this->additional_attributes_list;
 	}
 
-	protected function set_kernel_additional_attributes_list() {}
+	protected function set_kernel_additional_attributes_list(): void {}
 
-	protected function set_additional_attributes_list() {}
+	protected function set_additional_attributes_list(): void {}
 
-	public function get_additional_attributes_categories_table_fields()
+	public function get_additional_attributes_categories_table_fields(): array
 	{
 		return $this->additional_attributes_categories_table_fields;
 	}
 
-	public function get_additional_attributes_categories_table_options()
+	public function get_additional_attributes_categories_table_options(): array
 	{
 		return $this->additional_attributes_categories_table_options;
 	}
 
-	public function get_properties()
+	public function get_properties(): array
 	{
 		return array_merge([
 			'id' => $this->get_id(),
@@ -213,7 +215,7 @@ class Category
 		], $this->get_additional_properties());
 	}
 
-	protected function get_additional_properties()
+	protected function get_additional_properties(): array
 	{
 		$properties = [];
 
@@ -236,12 +238,12 @@ class Category
 		return $properties;
 	}
 
-	public function get_additional_property($id)
+	public function get_additional_property(string $id): mixed
 	{
 		return $this->additional_attributes_values[$id];
 	}
 
-	public function set_properties(array $properties)
+	public function set_properties(array $properties): void
 	{
 		$this->set_id($properties['id']);
 		$this->set_name($properties['name']);
@@ -253,7 +255,7 @@ class Category
 		$this->set_additional_properties($properties);
 	}
 
-	protected function set_additional_properties(array $properties)
+	protected function set_additional_properties(array $properties): void
 	{
 		foreach ($this->additional_attributes_list as $id => $attribute)
 		{
@@ -264,15 +266,19 @@ class Category
 		}
 	}
 
-	public function set_additional_property($id, $value, $is_url = false)
+	public function set_additional_property(string $id, mixed $value, bool $is_url = false)
 	{
 		if ($is_url)
+        {
 			$this->additional_attributes_values[$id] = new Url($value);
+        }
 		else
+        {
 			$this->additional_attributes_values[$id] = $value;
+        }
 	}
 
-	public static function create_categories_table($table_name)
+	public static function create_categories_table(string $table_name): void
 	{
 		$class_name = get_called_class();
 		$object = new $class_name();

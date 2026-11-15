@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 5.2 - 2019 04 23
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class IdcardService
@@ -17,20 +18,23 @@ class IdcardService
 	 * Select some item author datas
 	 * @param User $user
 	 */
-	public static function display_idcard(User $user)
+	public static function display_idcard(User $user): string
 	{
 		$lang = LangLoader::get_all_langs();
 		$view = new FileTemplate('framework/content/idcard/idcard.tpl');
 		$view->add_lang($lang);
 		$user_accounts_config = UserAccountsConfig::load();
 
-		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level());
 
 		if(!$user->is_guest())
 		{
-			try {
+			try
+            {
 				$user_extended_fields = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, ['user_avatar', 'user_biography'], 'WHERE user_id=:user_id', ['user_id' => $user->get_id()]);
-			} catch (RowNotFoundException $e) {
+			}
+            catch (RowNotFoundException $e)
+            {
 				$user_extended_fields = [];
 			}
 

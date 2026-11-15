@@ -5,34 +5,32 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 4.0 - 2013 08 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class KeywordsManager
 {
-	/**
-	 * @var string module identifier.
-	 */
-	private $module_id;
+	private string $module_id = '';
 
-	private $db_querier;
+	private ?DBQuerier $db_querier = null;
 
-	public function __construct($module_id = '')
+	public function __construct(string $module_id = '')
 	{
 		$this->module_id = $module_id ? $module_id : KeywordsCache::get_module_identifier();
 
 		$this->db_querier = PersistenceContext::get_querier();
 	}
 
-	public function get_form_field($id_in_module, $id, $label, array $field_options = [], array $constraints = [])
+	public function get_form_field(int $id_in_module, mixed $id, string $label, array $field_options = [], array $constraints = []): mixed
 	{
 		$field_options['file'] = TPL_PATH_TO_ROOT . '/kernel/framework/ajax/dispatcher.php?url=/tags/';
 		return new FormFieldMultipleAutocompleter($id, $label, array_keys($this->get_keywords($id_in_module)), $field_options, $constraints);
 	}
 
-	public function put_relations($id_in_module, $keywords)
+	public function put_relations(int $id_in_module, array $keywords): void
 	{
 		$this->delete_relations($id_in_module);
 
@@ -59,7 +57,7 @@ class KeywordsManager
 		}
 	}
 
-	public function get_keyword($condition, array $parameters = [])
+	public function get_keyword(string $condition, array $parameters = []): Keyword
 	{
 		$row = $this->db_querier->select_single_row(DB_TABLE_KEYWORDS, ['*'], $condition, $parameters);
 		$keyword = new Keyword();
@@ -67,34 +65,34 @@ class KeywordsManager
 		return $keyword;
 	}
 
-	public function get_keywords($id_in_module)
+	public function get_keywords(int $id_in_module): array
 	{
 		return KeywordsCache::load($this->module_id)->get_keywords($id_in_module);
 	}
 
-	public function delete_relations($id_in_module)
+	public function delete_relations(int $id_in_module): void
 	{
 		$this->db_querier->delete(DB_TABLE_KEYWORDS_RELATIONS, 'WHERE module_id = :module_id AND id_in_module=:id_in_module', ['module_id' => $this->module_id, 'id_in_module' => $id_in_module]);
 	}
 
-	public function delete_module_relations()
+	public function delete_module_relations(): void
 	{
 		$this->db_querier->delete(DB_TABLE_KEYWORDS_RELATIONS, 'WHERE module_id=:module_id', ['module_id' => $this->module_id]);
 	}
 
-	private function exists($name)
+	private function exists(string $name): bool
 	{
 		return $this->db_querier->row_exists(DB_TABLE_KEYWORDS, 'WHERE name=:name OR rewrited_name=:rewrited_name', ['name' => TextHelper::htmlspecialchars($name), 'rewrited_name' => TextHelper::htmlspecialchars(Url::encode_rewrite($name))]);
 	}
 
-	public function regenerate_cache()
+	public function regenerate_cache(): void
 	{
 		KeywordsCache::invalidate();
 	}
 
-	/**
-	 * @return string module identifier.
-	 */
-	public function get_module_id() { return $this->module_id; }
+	public function get_module_id(): string
+    {
+        return $this->module_id;
+    }
 }
 ?>

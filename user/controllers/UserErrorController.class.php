@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 3.0 - 2009 12 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -25,15 +25,12 @@ class UserErrorController extends AbstractController
 	private int $error_type;
 	private string $title = '';
 	private string $message = '';
-	private $time;
+	private ?int $time = null;
 	private string $link = self::PREVIOUS_PAGE;
 	private string $link_name = '';
-	private $response_classname = self::SITE_RESPONSE;
+	private string $response_classname = self::SITE_RESPONSE;
 
-	/**
-	 * @var View
-	 */
-	protected View $view;
+    protected Template $view;
 
 	public function __construct(string $title, string $message, int $error_type = self::QUESTION)
 	{
@@ -43,18 +40,18 @@ class UserErrorController extends AbstractController
 		$this->link_name = LangLoader::get_message('common.back', 'common-lang');
 	}
 
-	public function set_correction_link($link_name, $link = self::PREVIOUS_PAGE)
+	public function set_correction_link(string $link_name, string $link = self::PREVIOUS_PAGE): void
 	{
 		$this->link_name = $link_name;
 		$this->link = $link;
 	}
 
-	public function set_error_type($error_type)
+	public function set_error_type(int $error_type): void
 	{
 		$this->error_type = $error_type;
 	}
 
-	public function set_time_redirect($time)
+	public function set_time_redirect(mixed $time): void
 	{
 		if (is_numeric($time))
 		{
@@ -62,17 +59,18 @@ class UserErrorController extends AbstractController
 		}
 	}
 
-	public function set_response_classname($response_classname)
+	public function set_response_classname(string $response_classname): void
 	{
 		$this->response_classname = $response_classname;
 	}
 
-	public function disable_correction_link() {
+	public function disable_correction_link(): void
+    {
 		$this->link_name = "";
 		$this->link = "";
 	}
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): Response
 	{
 		$this->create_view();
 		$this->fill_view();
@@ -80,27 +78,28 @@ class UserErrorController extends AbstractController
 		$maintenance_config = MaintenanceConfig::load();
 
 		if ($maintenance_config->is_under_maintenance() && !$maintenance_config->is_authorized_in_maintenance())
+        {
 			return new SiteNodisplayResponse($this->view);
+        }
 		else
 		{
 			$response = new $this->response_classname($this->view);
 			$graphical_env = $response->get_graphical_environment();
 			if (!($graphical_env instanceof AbstractDisplayGraphicalEnvironment))
 			{
-				throw new Exception($this->response_classname . ' does not contains a graphical environement ' .
-					'that is an instance of AbstractDisplayGraphicalEnvironment');
+				throw new Exception($this->response_classname . ' does not contains a graphical environement ' . 'that is an instance of AbstractDisplayGraphicalEnvironment');
 			}
 			$graphical_env->set_page_title($this->title);
 			return $response;
 		}
 	}
 
-	protected function create_view()
+	protected function create_view(): void
 	{
 		$this->view = new FileTemplate('user/UserErrorController.tpl');
 	}
 
-	private function fill_view()
+	private function fill_view(): void
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/images/error.webp'))
@@ -121,7 +120,7 @@ class UserErrorController extends AbstractController
 		]);
 	}
 
-	private function get_error_type()
+	private function get_error_type(): string
 	{
 		$css_class_name = 'question';
 		switch ($this->error_type)

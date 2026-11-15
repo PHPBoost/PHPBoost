@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 07 29
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 3.0 - 2011 09 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,14 +14,14 @@
 
 class CommentsManager
 {
-    private static $user;
+    private static mixed $user = null;
 
     public static function __static()
     {
         self::$user = AppContext::get_current_user();
     }
 
-    public static function add_comment($module_id, $id_in_module, $topic_identifier, $topic_path, $message, $pseudo = '', $email = '')
+    public static function add_comment(string $module_id, int $id_in_module, mixed $topic_identifier, string $topic_path, string $message, ?string $pseudo = '', string $email = ''): int
     {
         if (!CommentsTopicDAO::topic_exists($module_id, $id_in_module, $topic_identifier))
         {
@@ -39,9 +39,13 @@ class CommentsManager
         else
         {
             if(CommentsConfig::load()->is_visitor_email_enabled())
+            {
                 $comment_id = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, AppContext::get_request()->get_ip_address(), $email);
+            }
             else
+            {
                 $comment_id = CommentsDAO::add_comment($id_topic, $message, self::$user->get_id(), $pseudo, '', AppContext::get_request()->get_ip_address());
+            }
         }
 
         CommentsTopicDAO::increment_comments_number_topic($id_topic);
@@ -60,7 +64,7 @@ class CommentsManager
         return $comment_id;
     }
 
-    public static function edit_comment($comment_id, $message)
+    public static function edit_comment(int $comment_id, string $message): void
     {
         CommentsDAO::edit_comment($comment_id, $message);
         self::regenerate_cache();
@@ -76,7 +80,7 @@ class CommentsManager
         HooksService::execute_hook_action('edit_comment', $comment['module_id'], $properties);
     }
 
-    public static function delete_comment($comment_id)
+    public static function delete_comment(int $comment_id): void
     {
         $comment = CommentsCache::load()->get_comment($comment_id);
         CommentsDAO::delete_comment($comment_id);
@@ -92,19 +96,19 @@ class CommentsManager
         HooksService::execute_hook_action('delete_comment', $comment['module_id'], $properties);
     }
 
-    public static function comment_exists($comment_id)
+    public static function comment_exists(int $comment_id): bool
     {
         return CommentsDAO::comment_exists($comment_id);
     }
 
-    public static function delete_comments_module($module_id)
+    public static function delete_comments_module(string $module_id): void
     {
         CommentsDAO::delete_comments_module(CommentsTopicDAO::get_id_topics_module($module_id));
         CommentsTopicDAO::delete_topics_module($module_id);
         self::regenerate_cache();
     }
 
-    public static function delete_comments_topic_module($module_id, $id_in_module)
+    public static function delete_comments_topic_module(string $module_id, int $id_in_module): void
     {
         $id_topic = CommentsTopicDAO::get_id_topic_module($module_id, $id_in_module);
         CommentsDAO::delete_comments_by_topic($id_topic);
@@ -112,22 +116,22 @@ class CommentsManager
         self::regenerate_cache();
     }
 
-    public static function get_comments_number($module_id, $id_in_module = '', $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+    public static function get_comments_number(string $module_id, int $id_in_module, string $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER): int
     {
         return CommentsDAO::get_comments_number($module_id, $id_in_module, $topic_identifier);
     }
 
-    public static function get_user_id_posted_comment($comment_id)
+    public static function get_user_id_posted_comment(int $comment_id): int
     {
         return CommentsDAO::get_user_id_posted_comment($comment_id);
     }
 
-    public static function get_last_comment_added($user_id)
+    public static function get_last_comment_added(int $user_id): int
     {
         return CommentsDAO::get_last_comment_added($user_id);
     }
 
-    public static function comment_topic_locked($module_id, $id_in_module, $topic_identifier)
+    public static function comment_topic_locked(string $module_id, int $id_in_module, string $topic_identifier): bool
     {
         if (CommentsTopicDAO::topic_exists($module_id, $id_in_module, $topic_identifier))
         {
@@ -136,17 +140,17 @@ class CommentsManager
         return false;
     }
 
-    public static function lock_topic($module_id, $id_in_module, $topic_identifier)
+    public static function lock_topic(string $module_id, int $id_in_module, string $topic_identifier): void
     {
         CommentsTopicDAO::lock_topic($module_id, $id_in_module, $topic_identifier);
     }
 
-    public static function unlock_topic($module_id, $id_in_module, $topic_identifier)
+    public static function unlock_topic(string $module_id, int $id_in_module, string $topic_identifier): void
     {
         CommentsTopicDAO::unlock_topic($module_id, $id_in_module, $topic_identifier);
     }
 
-    private static function regenerate_cache()
+    private static function regenerate_cache(): void
     {
         CommentsCache::invalidate();
     }

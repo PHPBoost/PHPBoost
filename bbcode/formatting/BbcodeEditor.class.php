@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 2.0 - 2008 07 05
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -14,13 +14,13 @@
 class BbcodeEditor extends ContentEditor
 {
 	/**
-	 * @var Usefull to know if we have to include all the necessary JS includes
+	 * @var bool Usefull to know if we have to include all the necessary JS includes
 	 */
-	private static $editor_already_included = false;
-	private $forbidden_positions = 0;
-	protected $forbidden_tags;
+	private static bool $editor_already_included = false;
+	private int $forbidden_positions = 0;
+	protected array $forbidden_tags = [];
 
-	public function get_template()
+	public function get_template(): Template
 	{
 		if (!is_object($this->template) || !($this->template instanceof Template))
 		{
@@ -33,7 +33,7 @@ class BbcodeEditor extends ContentEditor
 	 * Display the editor
 	 * @return string Formated editor.
 	 */
-	public function display()
+	public function display(): string
 	{
 		$template = $this->get_template();
 

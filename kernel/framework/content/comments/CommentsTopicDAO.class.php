@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 3.0 - 2011 09 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,16 +13,16 @@
 
 class CommentsTopicDAO
 {
-	private static $comments_cache;
-	private static $db_querier;
+	private static ?CommentsCache $comments_cache = null;
+	private static ?DBQuerier $db_querier = null;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$comments_cache = CommentsCache::load();
 		self::$db_querier = PersistenceContext::get_querier();
 	}
 
-	public static function comments_topic_exists_by_module_id($module_id)
+	public static function comments_topic_exists_by_module_id(string $module_id): mixed
 	{
 		$parameters = [
 			'module_id' => $module_id,
@@ -30,7 +30,7 @@ class CommentsTopicDAO
 		return self::$db_querier->row_exists(DB_TABLE_COMMENTS_TOPIC, "WHERE module_id = :module_id", $parameters);
 	}
 
-	public static function get_id_topic_module($module_id, $id_in_module, $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER)
+	public static function get_id_topic_module(string $module_id, int $id_in_module, string $topic_identifier = CommentsTopic::DEFAULT_TOPIC_IDENTIFIER): mixed
 	{
 		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = [
@@ -41,7 +41,7 @@ class CommentsTopicDAO
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'id_topic', $condition, $parameters);
 	}
 
-	public static function get_id_topics_module($module_id)
+	public static function get_id_topics_module(string $module_id): array
 	{
 		$condition = "WHERE module_id = :module_id";
 		$parameters = [
@@ -59,7 +59,7 @@ class CommentsTopicDAO
 		return $id_topics;
 	}
 
-	public static function create_topic($module_id, $id_in_module, $topic_identifier, $path)
+	public static function create_topic(string $module_id, int $id_in_module, string $topic_identifier, string $path): int
 	{
 		$columns = [
 			'module_id' => $module_id,
@@ -73,7 +73,7 @@ class CommentsTopicDAO
 		return $result->get_last_inserted_id();
 	}
 
-	public static function topic_exists($module_id, $id_in_module, $topic_identifier)
+	public static function topic_exists(string $module_id, int $id_in_module, string $topic_identifier): mixed
 	{
 		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = [
@@ -84,31 +84,31 @@ class CommentsTopicDAO
 		return self::$db_querier->row_exists(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 
-	public static function delete_topics_module($module_id)
+	public static function delete_topics_module(string $module_id): void
 	{
 		$condition = "WHERE module_id = :module_id";
 		$parameters = ['module_id' => $module_id];
 		self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 
-	public static function delete_topic_module($module_id, $id_in_module)
+	public static function delete_topic_module(string $module_id, int $id_in_module): void
 	{
 		$condition = "WHERE module_id = :module_id AND id_in_module = :id_in_module";
 		$parameters = ['module_id' => $module_id, 'id_in_module' => $id_in_module];
-		Debug::dump(self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters));
+		self::$db_querier->delete(DB_TABLE_COMMENTS_TOPIC, $condition, $parameters);
 	}
 
-	public static function increment_comments_number_topic($id_topic)
+	public static function increment_comments_number_topic(int $id_topic): void
 	{
 		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET comments_number = comments_number + 1 WHERE id_topic = '" . $id_topic . "'");
 	}
 
-	public static function decrement_comments_number_topic($id_topic)
+	public static function decrement_comments_number_topic(int $id_topic): void
 	{
 		self::$db_querier->inject("UPDATE ". DB_TABLE_COMMENTS_TOPIC ." SET comments_number = comments_number - 1 WHERE id_topic = '" . $id_topic . "'");
 	}
 
-	public static function comments_topic_locked($module_id, $id_in_module, $topic_identifier)
+	public static function comments_topic_locked(string $module_id, int $id_in_module, string $topic_identifier): mixed
 	{
 		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
 		$parameters = [
@@ -119,7 +119,7 @@ class CommentsTopicDAO
 		return self::$db_querier->get_column_value(DB_TABLE_COMMENTS_TOPIC, 'is_locked', $condition, $parameters) > 0 ? true : false;
 	}
 
-	public static function lock_topic($module_id, $id_in_module, $topic_identifier)
+	public static function lock_topic(string $module_id, int $id_in_module, string $topic_identifier): void
 	{
 		$columns = ['is_locked' => 1];
 		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";
@@ -131,7 +131,7 @@ class CommentsTopicDAO
 		self::$db_querier->update(DB_TABLE_COMMENTS_TOPIC, $columns, $condition, $parameters);
 	}
 
-	public static function unlock_topic($module_id, $id_in_module, $topic_identifier)
+	public static function unlock_topic(string $module_id, int $id_in_module, string $topic_identifier): void
 	{
 		$columns = ['is_locked' => 0];
 		$condition = "WHERE id_in_module = :id_in_module AND module_id = :module_id AND topic_identifier=:topic_identifier";

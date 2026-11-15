@@ -9,19 +9,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 01 11
  * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class RAMDataStore implements DataStore
 {
-	private $data = [];
+	private array $data = [];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get($id)
+	public function get(string $id): mixed
 	{
 		if ($this->contains($id))
 		{
@@ -30,34 +28,22 @@ class RAMDataStore implements DataStore
 		throw new DataStoreException($id);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function contains($id)
+	public function contains(string $id): bool
 	{
 		return isset($this->data[$id]);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function store($id, $data)
+	public function store(string $id, mixed $data): void
 	{
 		$this->data[$id] = $data;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function delete($id)
+	public function delete(string $id): void
 	{
 		unset($this->data[$id]);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function clear()
+	public function clear(): void
 	{
 		$this->data = [];
 	}

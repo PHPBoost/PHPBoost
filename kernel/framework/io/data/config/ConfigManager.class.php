@@ -14,9 +14,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ConfigManager
@@ -29,7 +30,7 @@ class ConfigManager
 	 * it's the name of the entry you want to load
 	 * @return ConfigData The loaded data
 	 */
-	public static function load($classname, $module_name, $entry_name = '')
+	public static function load(string $classname, string $module_name, string $entry_name = ''): ConfigData
 	{
 		try
 		{
@@ -71,10 +72,7 @@ class ConfigManager
 		}
 	}
 
-	/**
-	 * @return ConfigData
-	 */
-	private static function load_in_db($module_name, $entry_name = '')
+	private static function load_in_db(string $module_name, string $entry_name = ''): ConfigData
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
 
@@ -101,10 +99,7 @@ class ConfigManager
 		return $required_value;
 	}
 
-	/**
-	 * @return string
-	 */
-	private static function compute_entry_name($module_name, $entry_name)
+	private static function compute_entry_name(string $module_name, string $entry_name): string
 	{
 		if (!empty($entry_name))
 		{
@@ -122,7 +117,7 @@ class ConfigManager
 	 * @param ConfigData $data Data to save
 	 * @param string $entry_name The name of the entry if the module uses several entries
 	 */
-	public static function save($module_name, ConfigData $data, $entry_name = '')
+	public static function save(string $module_name, ConfigData $data, string $entry_name = '')
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
 
@@ -136,19 +131,20 @@ class ConfigManager
 	 * @param string $module_name Name of the module owning this entry
 	 * @param string $entry_name The name of the entry if the module uses several entries
 	 */
-	public static function delete($module_name, $entry_name = '')
+	public static function delete(string $module_name, string $entry_name = ''): void
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
 
-		try {
+		try
+        {
 			PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, 'WHERE name=:name', ['name' => $name]);
-		} catch (MySQLQuerierException $e) {
 		}
+        catch (MySQLQuerierException $e) {}
 
 		CacheManager::invalidate($module_name, $entry_name);
 	}
 
-	private static function save_in_db($name, ConfigData $data)
+	private static function save_in_db(string $name, ConfigData $data): void
 	{
 		$serialized_data = TextHelper::serialize($data);
 

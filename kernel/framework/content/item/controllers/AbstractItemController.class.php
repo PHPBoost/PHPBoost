@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,19 +14,25 @@
 
 abstract class AbstractItemController extends DefaultModuleController
 {
-	protected $enabled_features = [];
-	protected $module_item;
+	protected array $enabled_features = [];
+	protected mixed $module_item = null;
 
-	public function __construct($module_id = '')
+	public function __construct(string $module_id = '')
 	{
 		parent::__construct($module_id);
 
 		if (self::get_module_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::get_module()->get_id()))
+        {
 			$this->enabled_features[] = 'comments';
+        }
 		if (self::get_module_configuration()->feature_is_enabled('idcard') && ContentManagementConfig::load()->module_id_card_is_enabled(self::get_module()->get_id()))
+        {
 			$this->enabled_features[] = 'idcard';
+        }
 		if (self::get_module_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::get_module()->get_id()))
+        {
 			$this->enabled_features[] = 'notation';
+        }
 
 		$this->view->put_all([
 			'MODULE_ID'            => self::get_module()->get_id(),
@@ -70,7 +76,8 @@ abstract class AbstractItemController extends DefaultModuleController
 				{
 					$type = gettype($configuration_class->getMethod('get_default_value')->invoke($this->config, $parameter));
 
-					switch ($type) {
+					switch ($type)
+                    {
 						case 'boolean':
 							$configuration_variables['C_' . strtoupper($parameter)] = $this->config->$parameter_get_method();
 						break;
@@ -83,7 +90,9 @@ abstract class AbstractItemController extends DefaultModuleController
 			}
 
 			if ($configuration_variables)
+            {
 				$this->view->put_all($configuration_variables);
+            }
 		}
 
 		$this->view->put_all($this->get_additional_view_parameters());
@@ -95,35 +104,32 @@ abstract class AbstractItemController extends DefaultModuleController
 		$this->view->put_all($this->module_item->get_global_template_vars());
 	}
 
-	/**
-	 * @return ItemsManager
-	 */
-	protected static function get_items_manager()
+	protected static function get_items_manager(): ItemsManager
 	{
 		return ItemsService::get_items_manager(self::get_module()->get_id());
 	}
 
-	protected function display_unexisting_page()
+	protected function display_unexisting_page(): void
 	{
 		DispatchManager::redirect(PHPBoostErrors::unexisting_page());
 	}
 
-	protected function display_user_not_authorized_page()
+	protected function display_user_not_authorized_page(): void
 	{
 		DispatchManager::redirect(PHPBoostErrors::user_not_authorized());
 	}
 
-	protected function display_user_in_read_only_page()
+	protected function display_user_in_read_only_page(): void
 	{
 		DispatchManager::redirect(PHPBoostErrors::user_in_read_only());
 	}
 
-	protected function get_additional_view_parameters()
+	protected function get_additional_view_parameters(): array
 	{
 		return [];
 	}
-	
-	protected function init_lang()
+
+	protected function init_lang(): void
 	{
 		$this->lang = array_merge(
 			LangLoader::get_all_langs(self::$module_id),
@@ -131,10 +137,7 @@ abstract class AbstractItemController extends DefaultModuleController
 		);
 	}
 
-	/**
-	 * @return Template
-	 */
-	protected function get_template_to_use()
+	protected function get_template_to_use(): Template
 	{
 		$class_name = get_called_class();
 		$current_user_theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
@@ -146,42 +149,55 @@ abstract class AbstractItemController extends DefaultModuleController
 
 		// If the module has a template with the name of the called class we take it
 		if (file_exists($module_template_path . '/' . $class_name . '.tpl'))
+        {
 			return new FileTemplate(self::$module_id . '/' . $class_name . '.tpl');
+        }
 		// Otherwise if the module has a template with the name of the called class which begins with Default and Default is replace by module id we take it
-		else if (preg_match('/^Default/', $class_name) && file_exists($module_template_path . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl'))
+		elseif (preg_match('/^Default/', $class_name) && file_exists($module_template_path . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl'))
+        {
 			return new FileTemplate(self::$module_id . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), $class_name) . '.tpl');
+        }
 		// Otherwise if a template url is defined and it ends with tpl extension we go further
-		else if ($this->get_template_url() && preg_match('/\.tpl$/', $this->get_template_url()))
+		elseif ($this->get_template_url() && preg_match('/\.tpl$/', $this->get_template_url()))
 		{
 			// If the module has a template with the name of the template put in url we take it
 			if (file_exists($module_template_path . '/' . basename($this->get_template_url())) || file_exists($template_module_folder . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . basename($this->get_template_url()))))
+            {
 				return new FileTemplate(self::$module_id . '/' . basename($this->get_template_url()));
+            }
 			// Otherwise if the module has a template with the name of the template put in url which begins with Default and Default is replace by module id we take it
-			else if (preg_match('/^Default/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
+			elseif (preg_match('/^Default/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
+            {
 				return new FileTemplate(self::$module_id . '/' . str_replace('Default', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url())));
+            }
 			// Otherwise if the module has a template with the name of the template put in url which begins with Module and Module is replace by module id we take it
-			else if (preg_match('/^Module/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
+			elseif (preg_match('/^Module/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || file_exists($template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))) || ($parent_template_module_folder && file_exists($parent_template_module_folder . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url()))))))
+            {
 				return new FileTemplate(self::$module_id . '/' . str_replace('Module', TextHelper::ucfirst(self::$module_id), basename($this->get_template_url())));
+            }
 			// Otherwise if the module has a template with the name of the template put in url which does not begin with Default or Module but module id is added at the beginning f the template name we take it
-			else if (!preg_match('/^Default/', basename($this->get_template_url())) && !preg_match('/^Module/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || file_exists($template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())))))
+			elseif (!preg_match('/^Default/', basename($this->get_template_url())) && !preg_match('/^Module/', basename($this->get_template_url())) && (file_exists($module_template_path . '/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || file_exists($template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())) || ($parent_template_module_folder && file_exists($parent_template_module_folder . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url())))))
+            {
 				return new FileTemplate(self::$module_id . '/' . TextHelper::ucfirst(self::$module_id) . basename($this->get_template_url()));
+            }
 			// Otherwise we take the default url defined for the default template
 			else
+            {
 				return new FileTemplate($this->get_template_url());
+            }
 		}
 		// Otherwise if no template url is defined we take the value of the template string content defined (blank per default but used by templates with only TABLE of FORM for instance)
 		else
+        {
 			return new StringTemplate($this->get_template_string_content());
+        }
 	}
 
-	protected function get_template_url()
+	protected function get_template_url(): string
 	{
 		return '';
 	}
 
-	/**
-	 * @return boolean Authorization to display the controller
-	 */
-	abstract protected function check_authorizations();
+	abstract protected function check_authorizations(): mixed;
 }
 ?>

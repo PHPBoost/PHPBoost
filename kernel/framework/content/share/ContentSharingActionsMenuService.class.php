@@ -5,16 +5,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 10
  * @since       PHPBoost 5.1 - 2018 01 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentSharingActionsMenuService
 {
-	private static $tpl;
+	private static ?Template $tpl = null;
 
-	public static function get_content_sharing_actions_links()
+	public static function get_content_sharing_actions_links(): array
 	{
 		$content_sharing_actions_menu_links = [];
 		$extension_point = AppContext::get_extension_provider_service()->get_extension_point(ContentSharingActionsMenuLinksExtensionPoint::EXTENSION_POINT);
@@ -29,13 +30,13 @@ class ContentSharingActionsMenuService
 		return $content_sharing_actions_menu_links;
 	}
 
-	public static function display_sharing_elements($tpl = null)
+	public static function display_sharing_elements(?Template $tpl = null): string
 	{
 		if ($tpl instanceof Template)
 		{
 			self::$tpl = $tpl;
 		}
-		else if (!empty($tpl))
+		elseif (!empty($tpl))
 		{
 			self::$tpl = new FileTemplate($tpl);
 		}
@@ -55,7 +56,7 @@ class ContentSharingActionsMenuService
 		return self::$tpl->render();
 	}
 
-	public static function display($tpl = null)
+	public static function display(?Template $tpl = null): string
 	{
 		return ContentManagementConfig::load()->is_content_sharing_enabled() ? self::display_sharing_elements($tpl) : '';
 	}

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 12
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 3.0 - 2011 07 16
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -12,7 +12,7 @@ class DisplayRssSyndicationController extends AbstractController
 {
 	private $tpl;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): mixed
 	{
 		$module_id = $request->get_getstring('module_id', '');
 

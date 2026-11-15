@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -12,12 +12,12 @@
 
 class UserExploreGroupsController extends AbstractController
 {
-	private $lang;
-	private $groups_cache;
-	private $view;
-	private $extended_fields_number;
+	private array $lang = [];
+	private ?GroupsCache $groups_cache = null;
+	private ?Template $view = null;
+	private int $extended_fields_number = 0;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$group_id = $request->get_getint('id', 0);
 
@@ -33,9 +33,16 @@ class UserExploreGroupsController extends AbstractController
 		return $this->build_response();
 	}
 
-	private function build_view($group_id)
+	private function init(): void
 	{
+		$this->lang = LangLoader::get_all_langs();
+		$this->view = new FileTemplate('user/UserExploreGroupsController.tpl');
+		$this->view->add_lang($this->lang);
+		$this->groups_cache = GroupsCache::load();
+	}
 
+	private function build_view(int $group_id): void
+	{
 		if (!empty($group_id))
 		{
 			// Single group display
@@ -50,15 +57,21 @@ class UserExploreGroupsController extends AbstractController
 				if (!empty($user_id))
 				{
 					if ($number_member != 0)
+                    {
 						$group_users_id .=  ',' . $user_id;
+                    }
 					else
+                    {
 						$group_users_id .= $user_id;
+                    }
 					$number_member++;
 				}
 			}
 
 			if (!empty($group_users_id))
+            {
 				$this->display_group_user($group_users_id, 'members_list');
+            }
 
 			$this->view->put_all([
 				'C_ONE_GROUP'    => true,
@@ -75,9 +88,10 @@ class UserExploreGroupsController extends AbstractController
 		{
 			// Display of all groups + administrators + moderators
 			// Display of administrators and moderators
-			$users_data = PersistenceContext::get_querier()->select('SELECT
-				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned,
-				ext_field.user_avatar
+			$users_data = PersistenceContext::get_querier()->select('
+                SELECT
+                    member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned,
+                    ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.level IN (1,2)
@@ -94,7 +108,8 @@ class UserExploreGroupsController extends AbstractController
 						$this->display_data($user, 'modos_list');
 						$number_modos++;
 					}
-					if ($user['level'] == 2){
+					if ($user['level'] == 2)
+                    {
 						$this->display_data($user, 'admins_list');
 						$number_admins++;
 					}
@@ -114,9 +129,13 @@ class UserExploreGroupsController extends AbstractController
 					if (!empty($user_id))
 					{
 						if ($number_member != 0)
+                        {
 							$group_users_id .=  ',' . $user_id;
+                        }
 						else
+                        {
 							$group_users_id .= $user_id;
+                        }
 						$number_member++;
 					}
 				}
@@ -139,7 +158,9 @@ class UserExploreGroupsController extends AbstractController
 
 				// Display of members
 				if (!empty($group_users_id))
+                {
 					$this->display_group_user($group_users_id, 'group.group_members_list');
+                }
 			}
 
 			$this->view->put_all([
@@ -153,13 +174,14 @@ class UserExploreGroupsController extends AbstractController
 		}
 	}
 
-	private function display_group_user($group_users_id, $list)
+	private function display_group_user(int $group_users_id, string $list): void
 	{
 		if (!empty($group_users_id))
 		{
-			$users_data = PersistenceContext::get_querier()->select('SELECT
-				member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned,
-				ext_field.user_avatar
+			$users_data = PersistenceContext::get_querier()->select('
+                SELECT
+                    member.user_id, member.display_name, member.level, member.user_groups, member.warning_percentage, member.delay_banned,
+                    ext_field.user_avatar
 				FROM ' . DB_TABLE_MEMBER . ' member
 				LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 				WHERE member.user_id IN (' . $group_users_id . ')
@@ -170,13 +192,15 @@ class UserExploreGroupsController extends AbstractController
 				foreach ($users_data as $key => $user)
 				{
 					if (!empty($user))
+                    {
 						$this->display_data($user, $list);
+                    }
 				}
 			}
 		}
 	}
 
-	private function display_data($user, $list_name)
+	private function display_data(array $user, string $list_name): void
 	{
 		$user_accounts_config = UserAccountsConfig::load();
 
@@ -210,7 +234,7 @@ class UserExploreGroupsController extends AbstractController
 		]);
 	}
 
-	private function get_members_group($group_id_selected)
+	private function get_members_group(int $group_id_selected): mixed
 	{
 		if (empty($group_id_selected))
 		{
@@ -220,7 +244,7 @@ class UserExploreGroupsController extends AbstractController
 		return $group['members'];
 	}
 
-	private function get_all_members()
+	private function get_all_members(): array
 	{
 		$members = [];
 		foreach ($this->groups_cache->get_groups() as $groups)
@@ -228,21 +252,15 @@ class UserExploreGroupsController extends AbstractController
 			foreach ($groups['members'] as $user_id)
 			{
 				if (!in_array($user_id, $members))
+                {
 					$members[] = $user_id;
+                }
 			}
 		}
 		return $members;
 	}
 
-	private function init()
-	{
-		$this->lang = LangLoader::get_all_langs();
-		$this->view = new FileTemplate('user/UserExploreGroupsController.tpl');
-		$this->view->add_lang($this->lang);
-		$this->groups_cache = GroupsCache::load();
-	}
-
-	private function build_response()
+	private function build_response(): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
@@ -257,7 +275,7 @@ class UserExploreGroupsController extends AbstractController
 		return $response;
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (!AppContext::get_current_user()->check_auth(UserAccountsConfig::load()->get_auth_read_members(), UserAccountsConfig::AUTH_READ_MEMBERS_BIT))
 		{

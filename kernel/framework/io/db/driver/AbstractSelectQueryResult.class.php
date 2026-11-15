@@ -6,23 +6,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 11 04
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractSelectQueryResult extends AbstractQueryResult implements SelectQueryResult
 {
-	public function  __construct($query, array $parameters)
+	public function  __construct(string $query, array $parameters)
 	{
 		parent::__construct($query, $parameters);
 	}
 
-	public function has_next()
+	public function has_next(): bool
 	{
 		return $this->valid();
 	}
 
-	public function fetch()
+	public function fetch(): mixed
 	{
 		if ($this->needs_rewind())
 		{
@@ -34,9 +35,6 @@ abstract class AbstractSelectQueryResult extends AbstractQueryResult implements 
 		return $current;
 	}
 
-	/**
-	 * @return bool
-	 */
-	abstract protected function needs_rewind();
+    abstract protected function needs_rewind(): bool;
 }
 ?>

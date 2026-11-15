@@ -1,0 +1,68 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @since       PHPBoost 3.0 - 2011 10 09
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
+class UserExtensionPointProvider extends ExtensionPointProvider
+{
+	public function __construct()
+	{
+		parent::__construct('user');
+	}
+
+	public function css_files(): mixed
+	{
+		$module_css_files = new ModuleCssFiles();
+		$module_css_files->adding_always_displayed_file('user.css');
+		$module_css_files->adding_always_displayed_file('upload.css');
+		return $module_css_files;
+	}
+
+	public function commands(): mixed
+	{
+		return new CLICommandsList(['user' => 'CLIUserManagementCommand']);
+	}
+
+	public function user(): mixed
+	{
+		return new UserUserExtensionPoint();
+	}
+
+	public function tree_links(): mixed
+	{
+		return new UserTreeLinks();
+	}
+
+	public function url_mappings(): mixed
+	{
+		return new UrlMappings([
+			new DispatcherUrlMapping('/user/index.php', 'pm/?$'),
+			new DispatcherUrlMapping('/user/index.php', 'pm-([0-9]+)/?$'),
+			new DispatcherUrlMapping('/user/index.php', 'pm-[0-9]+-([0-9]+)/?$'),
+			new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$'),
+			new DispatcherUrlMapping('/user/index.php', 'login/?$', 'root', 'login/'),
+			new DispatcherUrlMapping('/user/index.php', 'aboutcookie/?$', 'root', 'aboutcookie/'),
+			new DispatcherUrlMapping('/user/index.php', 'registration/?$', 'root', 'registration/'),
+			new DispatcherUrlMapping('/user/index.php', 'registration/confirm/?([a-z0-9]+)?/?$', 'root', 'registration/confirm/$1'),
+			new DispatcherUrlMapping('/user/index.php', 'password/lost/?$', 'root', 'password/lost/'),
+			new DispatcherUrlMapping('/user/index.php', 'password/change/?([a-z0-9]+)?/?$', 'root', 'password/change/$1'),
+			new DispatcherUrlMapping('/user/index.php', 'error/403/?$', 'root', 'error/403/'),
+			new DispatcherUrlMapping('/user/index.php', 'error/404/?$', 'root', 'error/404/')
+		]);
+	}
+
+	public function comments(): mixed
+	{
+		return new CommentsTopics([
+			new UserEventsCommentsTopic()
+		]);
+	}
+}
+?>

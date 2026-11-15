@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 2.0 - 2008 07 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -19,7 +19,7 @@ class BbcodeUnparser extends ContentFormattingUnparser
 	 * Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
 	 */
-	public function parse()
+	public function parse(): void
 	{
 		//Isolement du code source et du code HTML qui ne sera pas protégé
 		$this->unparse_html(self::PICK_UP);
@@ -56,7 +56,7 @@ class BbcodeUnparser extends ContentFormattingUnparser
 	 * Unparse the smiley's code of the content of the parser.
 	 * Replace the HTML code by the smiley code (for instance :) or :|)
 	 */
-	protected function unparse_smilies()
+	protected function unparse_smilies(): void
 	{
 		$smiley_img_url = $smiley_code = [];
 		foreach (SmileysCache::load()->get_smileys() as $code => $infos)
@@ -65,14 +65,16 @@ class BbcodeUnparser extends ContentFormattingUnparser
 			$smiley_code[] = $code;
 		}
 		if (!empty($smiley_img_url))
+        {
 			$this->content = preg_replace($smiley_img_url, $smiley_code, $this->content);
+        }
 	}
 
 	/**
 	 * Unparsed the simple tags of the content of the parser.
 	 * The simple tags are the ones which are processable in a few lines
 	 */
-	protected function unparse_simple_tags()
+	protected function unparse_simple_tags(): void
 	{
 		$array_preg = [
 			'`<span style="text-decoration: ?underline;?">(.*)</span>`isuU',
@@ -174,16 +176,16 @@ class BbcodeUnparser extends ContentFormattingUnparser
 
 		//Nested tags
 		//Quotes
-		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote]$2[/quote]', $this->content);
-		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote=$1]$2[/quote]', $this->content);
+		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote]$2[/quote]');
+		$this->_parse_imbricated('<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">', '`<blockquote class="formatter-container formatter-blockquote"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></blockquote>`isuU', '[quote=$1]$2[/quote]');
 
 		//Hidden bloc
-		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide]$2[/hide]');
+		$this->_parse_imbricated('<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">', '`<div class="formatter-container formatter-hide no-js"><span class="formatter-title title-perso">(.*) :</span><div class="formatter-content">(.*)</div></div>`suU', '[hide=$1]$2[/hide]');
 
 		//Block
-		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]', $this->content);
-		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
+		$this->_parse_imbricated('<div class="formatter-container formatter-block"', '`<div class="formatter-container formatter-block">(.+)</div>`suU', '[block]$1[/block]');
+		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]');
 
 		//Container
 		// La regex capture une <div> avec n'importe quelle combinaison d'attributs
@@ -217,13 +219,13 @@ class BbcodeUnparser extends ContentFormattingUnparser
 		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link offload">(.*)</a>`suU', [$this, 'unparse_wikipedia_tag'], $this->content);
 
 		//Indentation
-		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);
+		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]');
 
 		// Feed
 		$this->content = preg_replace('`\[\[FEED([^\]]*)\]\](.+)\[\[/FEED\]\]`uU', '[feed$1]$2[/feed]', $this->content);
 	}
 
-	private function unparse_img($matches)
+	private function unparse_img(array $matches): string
 	{
 		$img_pathinfo = pathinfo($matches[1]);
 		$file_array = explode('.', $img_pathinfo['filename']);

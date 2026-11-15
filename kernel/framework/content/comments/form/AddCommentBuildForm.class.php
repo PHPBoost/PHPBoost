@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 3.0 - 2011 09 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,15 +13,15 @@
 
 class AddCommentBuildForm extends AbstractCommentsBuildForm
 {
-	private $user;
-	private $comments_configuration;
-	private $module_id;
-	private $id_in_module;
-	private $topic_identifier;
-	private $topic_path;
-	private $comments_topic;
+	private mixed $user = null;
+	private mixed $comments_configuration = null;
+	private string $module_id = '';
+	private int $id_in_module;
+	private mixed $topic_identifier = null;
+	private mixed $topic_path = null;
+	private ?CommentsTopic $comments_topic = null;
 
-	public static function create(CommentsTopic $comments_topic)
+	public static function create(CommentsTopic $comments_topic): mixed
 	{
 		$instance = new self($comments_topic);
 
@@ -47,7 +47,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 
 	}
 
-	protected function create_form()
+	protected function create_form(): mixed
 	{
 		$lang = LangLoader::get_all_langs();
 		$form = new HTMLForm('comments', TextHelper::htmlspecialchars($this->comments_topic->get_url()) . '#comments-list');
@@ -64,12 +64,14 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 			));
 
 			if($this->comments_configuration->is_visitor_email_enabled())
+            {
 				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $lang['form.email'], '',
 					[
 						'maxlength' => 25, 'required' => true,
 						'placeholder' => $lang['comment.form.visitor.email'],
 						'description' => $lang['comment.form.visitor.email.clue']]
 				));
+            }
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], '', [
@@ -89,22 +91,30 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		return $form;
 	}
 
-	protected function handle_submit()
+	protected function handle_submit(): void
 	{
 		$form = $this->get_form();
 		if ($form->has_field('name'))
 		{
 			if($this->comments_configuration->is_visitor_email_enabled())
+            {
 				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'), $form->get_value('visitor_email'));
+            }
 			else
+            {
 				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('name'));
+            }
 		}
 		else
 		{
 			if($this->comments_configuration->is_visitor_email_enabled())
+            {
 				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'), $form->get_value('visitor_email'));
+            }
 			else
+            {
 				$id_comment = CommentsManager::add_comment($this->module_id, $this->id_in_module, $this->topic_identifier, $this->topic_path, $form->get_value('message'));
+            }
 		}
 
 		$this->comments_topic->get_events()->execute_add_comment_event();
@@ -112,7 +122,7 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		AppContext::get_response()->redirect(CommentsUrlBuilder::comment_added($this->topic_path, $id_comment));
 	}
 
-	private function get_formatter()
+	private function get_formatter(): mixed
 	{
 		$formatter = AppContext::get_content_formatting_service()->get_default_factory();
 		$formatter->set_forbidden_tags($this->comments_configuration->get_forbidden_tags());

@@ -5,17 +5,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 6.0 - 2019 11 02
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CategoriesAuthorizationsService
 {
-	public $id_category;
-	public $module_id;
+	public int $id_category = 0;
+	public string $module_id = '';
 
-	public static function check_authorizations($id_category = Category::ROOT_CATEGORY, $module_id = '')
+	public static function check_authorizations(int $id_category = Category::ROOT_CATEGORY, string $module_id = '')
 	{
 		$class_name = get_called_class();
 		$instance = new $class_name();

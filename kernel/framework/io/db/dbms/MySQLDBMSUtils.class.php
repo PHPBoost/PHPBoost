@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 11 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,28 +14,21 @@
 
 class MySQLDBMSUtils implements DBMSUtils
 {
-	/**
-	 * @var SQLQuerier
-	 */
-	private $querier;
-
-	/**
-	 * @var MySqlPlatform
-	 */
-	private $platform;
+	private SQLQuerier $querier;
+	private ?MySqlPlatform $platform = null;
 
 	public function __construct(SQLQuerier $querier)
 	{
 		$this->querier = $querier;
 	}
 
-	public function get_dbms_version()
+	public function get_dbms_version(): string
 	{
 		$result = $this->select('SELECT VERSION();')->fetch();
 		return 'MySQL ' . $result['VERSION()'];
 	}
 
-	public function list_databases()
+	public function list_databases(): array
 	{
 		$databases = [];
 		$results = $this->select('SHOW DATABASES;', [], SelectQueryResult::FETCH_NUM);
@@ -46,20 +39,20 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $databases;
 	}
 
-	function create_database($database_name)
+	function create_database(string $database_name): string
 	{
 		$database_name = str_replace(['/', '\\', '.', ' ', '"', '\''], '_', $database_name);
 		$this->inject('CREATE DATABASE `' . $database_name . '`;');
 		return $database_name;
 	}
 
-	public function get_database_name()
+	public function get_database_name(): string
 	{
 		$result = $this->select('SELECT DATABASE();')->fetch();
 		return $result['DATABASE()'];
 	}
 
-	public function list_tables($with_prefix = false)
+	public function list_tables(bool $with_prefix = false): array
 	{
 		$tables = [];
 		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
@@ -71,7 +64,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $tables;
 	}
 
-	public function list_module_tables($module_id)
+	public function list_module_tables(string $module_id): array
 	{
 		$tables = [];
 		$module_table = ' LIKE \'' . PREFIX . $module_id .'%\'';
@@ -83,7 +76,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $tables;
 	}
 
-	public function list_and_desc_tables($with_prefix = false)
+	public function list_and_desc_tables(bool $with_prefix = false): array
 	{
 		$tables = [];
 		$like_prefix = $with_prefix ? ' LIKE \'' . PREFIX . '%\'' : '';
@@ -109,7 +102,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $tables;
 	}
 
-	public function desc_table($table)
+	public function desc_table(string $table): array
 	{
 		$fields = [];
 		$results = $this->select('DESC ' . $table . ';');
@@ -127,7 +120,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $fields;
 	}
 
-	public function create_table($table_name, array $fields, array $options = [])
+	public function create_table(string $table_name, array $fields, array $options = []): void
 	{
 		// Force charset to utf8 if not set
 		if (!isset($options['charset']) || empty($options['charset']))
@@ -143,19 +136,19 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	public function copy_table($table_name, $new_table_name)
+	public function copy_table(string $table_name, string $new_table_name): void
 	{
         $this->drop([$new_table_name]);
         $this->inject('CREATE TABLE `' . $new_table_name . '` LIKE `' . $table_name . '`;');
         $this->inject('INSERT INTO `' . $new_table_name . '` SELECT * FROM `' . $table_name . '`;');
 	}
 
-	public function drop($tables)
+	public function drop(array|string $tables): void
 	{
 		$this->inject($this->get_drop_table_query($tables));
 	}
 
-	public function truncate($tables)
+	public function truncate(array|string $tables): void
 	{
 		if (!is_array($tables))
 		{
@@ -167,27 +160,31 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	public function optimize($tables)
+	public function optimize(array|string $tables): void
 	{
 		if (is_array($tables))
 		{
 			$tables = implode('`, `', array_filter($tables));
 		}
 		if (!empty($tables))
+        {
 			$this->inject('OPTIMIZE TABLE`' . $tables . '`;');
+        }
 	}
 
-	public function repair($tables)
+	public function repair(array|string $tables): void
 	{
 		if (is_array($tables))
 		{
 			$tables = implode('`, `', array_filter($tables));
 		}
 		if (!empty($tables))
+        {
 			$this->inject('REPAIR TABLE `' . $tables . '`;');
+        }
 	}
 
-	public function add_column($table_name, $column_name, array $column_description)
+	public function add_column(string $table_name, string $column_name, array $column_description): void
 	{
 		$changes = ['add' => [$column_name => $column_description]];
 		$alter_query = $this->get_platform()->getAlterTableSql($table_name, $changes);
@@ -195,27 +192,31 @@ class MySQLDBMSUtils implements DBMSUtils
 	}
 
 
-	public function drop_column($table_name, $column_name)
+	public function drop_column(string $table_name, string $column_name): void
 	{
-		$result = $this->select('SELECT column_name  FROM `information_schema`.`COLUMNS` C WHERE TABLE_SCHEMA=:schema
-			AND TABLE_NAME=:table_name AND COLUMN_NAME=:column_name',
-			[
+		$result = $this->select('
+            SELECT column_name
+            FROM `information_schema`.`COLUMNS` C
+            WHERE TABLE_SCHEMA = :schema
+			AND TABLE_NAME = :table_name
+            AND COLUMN_NAME = :column_name', [
 				'schema' => $this->get_database_name(),
 				'table_name' => $table_name,
 				'column_name' => $column_name
-		]);
+            ]
+        );
 		if ($result->get_rows_count() > 0)
 		{
 			$this->inject('ALTER TABLE `' . $table_name . '` DROP `' . $column_name . '`');
 		}
 	}
 
-	public function dump_phpboost(FileWriter $file, $what = self::DUMP_STRUCTURE_AND_DATA)
+	public function dump_phpboost(FileWriter $file, int $what = self::DUMP_STRUCTURE_AND_DATA): void
 	{
 		$this->dump_tables($file, $this->list_tables(), $what);
 	}
 
-	public function dump_tables(FileWriter $file, array $tables, $what = self::DUMP_STRUCTURE_AND_DATA)
+	public function dump_tables(FileWriter $file, array $tables, int $what = self::DUMP_STRUCTURE_AND_DATA): void
 	{
 		$tables = array_intersect($tables, $this->list_tables());
 		foreach ($tables as $table)
@@ -225,7 +226,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		$file->flush();
 	}
 
-	public function dump_table(FileWriter $file, $table, $what = self::DUMP_STRUCTURE_AND_DATA)
+	public function dump_table(FileWriter $file, string $table, int $what = self::DUMP_STRUCTURE_AND_DATA): void
 	{
 		if ($what == self::DUMP_STRUCTURE || $what == self::DUMP_STRUCTURE_AND_DATA)
 		{
@@ -239,7 +240,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	public function dump_table_rows($table, $file = null)
+	public function dump_table_rows(string $table, mixed $file = null): void
 	{
 		$results = $this->select('SELECT * FROM `' . $table . '`');
 		$field_names = array_keys($this->desc_table($table));
@@ -256,13 +257,13 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	private function export_field($field)
+	private function export_field(mixed $field): mixed
 	{
 		if (is_numeric($field))
 		{
 			return $field;
 		}
-		else if (is_string($field))
+		elseif (is_string($field))
 		{
 			return '\'' .
 			str_replace(chr(13), '\r',
@@ -276,12 +277,12 @@ class MySQLDBMSUtils implements DBMSUtils
 		}
 	}
 
-	private function write($string, FileWriter $file)
+	private function write(string $string, FileWriter $file): void
 	{
 		$file->append($string .  "\n");
 	}
 
-	private function get_drop_table_query($tables)
+	private function get_drop_table_query(string $tables): string
 	{
 		if (is_array($tables))
 		{
@@ -290,13 +291,13 @@ class MySQLDBMSUtils implements DBMSUtils
 		return 'DROP TABLE IF EXISTS `' . $tables . '`;';
 	}
 
-	private function get_create_table_query($table)
+	private function get_create_table_query(string $table): mixed
 	{
 		$result = $this->select('SHOW CREATE TABLE ' . $table)->fetch();
 		return $result['Create Table'] . ';';
 	}
 
-	private function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	private function select(string $query, array $parameters = [], int $fetch_mode = SelectQueryResult::FETCH_ASSOC)
 	{
 		$this->querier->disable_query_translator();
 		$result = $this->querier->select($query, $parameters, $fetch_mode);
@@ -304,7 +305,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result;
 	}
 
-	private function inject($query, $parameters = [])
+	private function inject(string $query, array $parameters = []): InjectQueryResult
 	{
 		$this->querier->disable_query_translator();
 		$result = $this->querier->inject($query, $parameters);
@@ -312,7 +313,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return $result;
 	}
 
-	public function parse_file(File $file, $prefix = '')
+	public function parse_file(File $file, string $prefix = ''): bool
 	{
 		$reader = new BufferedFileReader($file);
 
@@ -349,10 +350,7 @@ class MySQLDBMSUtils implements DBMSUtils
 		return true;
 	}
 
-	/**
-	 * @return MySqlPlatform
-	 */
-	private function get_platform()
+	private function get_platform(): MySqlPlatform
 	{
 		if ($this->platform === null)
 		{

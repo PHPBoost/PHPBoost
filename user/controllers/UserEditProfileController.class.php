@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 3.0 - 2011 10 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -13,38 +13,45 @@
 
 class UserEditProfileController extends AbstractController
 {
-	private $view;
-	private $user_accounts_config;
-	private $lang;
-
+	private StringTemplate $view;
+	private UserAccountsConfig $user_accounts_config;
+	private array $lang;
     private HTMLForm $form;
 	private FormButtonDefaultSubmit $submit_button;
+	private User|false $user;
+	private ?array $internal_auth_infos = null;
+	private array $user_auth_types;
+	private MemberExtendedFieldsService $member_extended_fields_service;
 
-	private $user;
-	private $internal_auth_infos;
-	private $user_auth_types;
-
-	private $member_extended_fields_service;
-
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 
 		$user_id = $request->get_getint('user_id', AppContext::get_current_user()->get_id());
 
-		try {
+		try
+        {
 			$this->user = UserService::get_user($user_id);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
 
-		try {
-			$this->internal_auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
-		} catch (RowNotFoundException $e) {
+		if (!$this->user)
+		{
+			$error_controller = PHPBoostErrors::unexisting_element();
+			DispatchManager::redirect($error_controller);
 		}
 
-		if (!$this->check_authorizations($user_id))
+		try
+        {
+			$this->internal_auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
+		}
+        catch (RowNotFoundException $e) {}
+
+		if (!$this->check_authorizations())
 		{
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
@@ -79,7 +86,9 @@ class UserEditProfileController extends AbstractController
 		if ($this->user->get_level() != User::ADMINISTRATOR_LEVEL || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
 			if ($request->has_getparameter('delete-account') && $request->get_getvalue('delete-account'))
+            {
 				$this->delete_account();
+            }
 		}
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -92,19 +101,19 @@ class UserEditProfileController extends AbstractController
 		return $this->build_response();
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->lang = LangLoader::get_all_langs();
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER # # INCLUDE FORM #');
 		$this->user_accounts_config = UserAccountsConfig::load();
 	}
 
-	private function check_authorizations()
+	private function check_authorizations(): bool
 	{
 		return AppContext::get_current_user()->get_id() == $this->user->get_id() || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL);
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$security_config = SecurityConfig::load();
 
@@ -178,9 +187,12 @@ class UserEditProfileController extends AbstractController
 				'description'=> $this->lang['user.username.custom.clue'],
 				'hidden' => !$internal_auth_connected,
 				'events' => ['click' => '
-					if (HTMLForms.getField("custom_login").getValue()) {
+					if (HTMLForms.getField("custom_login").getValue())
+                    {
 						HTMLForms.getField("login").enable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("login").disable();
 					}'
 				]
@@ -289,7 +301,7 @@ class UserEditProfileController extends AbstractController
 		$this->form = $form;
 	}
 
-	private function delete_account()
+	private function delete_account(): void
 	{
 		if ($this->user->get_level() != User::ADMINISTRATOR_LEVEL || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() != AppContext::get_current_user()->get_id()) || ($this->user->get_level() == User::ADMINISTRATOR_LEVEL && $this->user->get_id() == AppContext::get_current_user()->get_id() && UserService::count_admin_members() > 1))
 		{
@@ -298,12 +310,16 @@ class UserEditProfileController extends AbstractController
 		}
 
 		if ($this->user->get_id() == AppContext::get_current_user()->get_id())
+        {
 			AppContext::get_response()->redirect(Environment::get_home_page(), $this->lang['user.message.success.delete.member']);
+        }
 		else
+        {
 			AppContext::get_response()->redirect(UserUrlBuilder::home(), StringVars::replace_vars($this->lang['user.message.success.delete'], ['name' => $this->user->get_display_name()]));
+        }
 	}
 
-	private function save(HTTPRequestCustom $request)
+	private function save(HTTPRequestCustom $request): void
 	{
 		$has_error = false;
 
@@ -315,7 +331,9 @@ class UserEditProfileController extends AbstractController
 		{
 			$old_approbation = $approbation;
 			if ($this->internal_auth_infos)
+            {
 				$approbation = $this->form->get_value('approbation');
+            }
 
 			$groups = [];
 			foreach ($this->form->get_value('groups') as $field => $option)
@@ -325,13 +343,15 @@ class UserEditProfileController extends AbstractController
 
 			GroupsService::edit_member($user_id, $groups);
 			$this->user->set_groups($groups);
-			
+
 			$old_level = $this->user->get_level();
 			$level = $this->form->get_value('rank')->get_raw_value();
 			$this->user->set_level($level);
-			
+
 			if ($old_level != $level)
+            {
 				HooksService::execute_hook_action('user_change_level', 'user', array_merge($this->user->get_properties(), ['title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel()]), UserService::get_level_lang($this->user->get_level()));
+            }
 		}
 
 		if ($this->form->has_field('theme'))
@@ -348,9 +368,12 @@ class UserEditProfileController extends AbstractController
 		$this->user->set_show_email(!$this->form->get_value('user_hide_mail'));
 		$this->user->set_timezone($this->form->get_value('timezone')->get_raw_value());
 
-		try {
+		try
+        {
 			UserService::update($this->user, $this->member_extended_fields_service);
-		} catch (MemberExtendedFieldErrorsMessageException $e) {
+		}
+        catch (MemberExtendedFieldErrorsMessageException $e)
+        {
 			$has_error = true;
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($e->getMessage(), MessageHelper::NOTICE));
 		}
@@ -359,13 +382,19 @@ class UserEditProfileController extends AbstractController
 		$custom_login_hidden = $this->form->get_field_by_id('custom_login')->is_hidden();
 
 		if ($custom_login_hidden)
+        {
 			$this->form->get_field_by_id('custom_login')->set_hidden(false);
+        }
 
 		if ($this->form->get_value('custom_login', false))
+        {
 			$login = $this->form->get_value('login');
+        }
 
 		if ($custom_login_hidden)
+        {
 			$this->form->get_field_by_id('custom_login')->set_hidden(true);
+        }
 
 		$password = $this->form->get_value('password');
 		if ($this->internal_auth_infos === null && !empty($password))
@@ -469,14 +498,14 @@ class UserEditProfileController extends AbstractController
 			$description = StringVars::replace_vars($this->lang['user.change.profile.field.description'], ['field' => $this->lang['user.email'], 'old_value' => $user_properties['email'], 'new_value' => $this->user->get_email()]);
 			HooksService::execute_hook_action('user_change_email', 'user', array_merge($this->user->get_properties(), ['title' => $this->user->get_display_name(), 'url' => UserUrlBuilder::profile($user_id)->rel()]), $description);
 		}
-		
+
 		if (!$has_error)
 		{
 			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : UserUrlBuilder::edit_profile($user_id)), $this->lang['user.message.success.edit']);
 		}
 	}
 
-	private function build_response()
+	private function build_response(): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
@@ -490,7 +519,7 @@ class UserEditProfileController extends AbstractController
 		return $response;
 	}
 
-	private function build_javascript_picture_themes()
+	private function build_javascript_picture_themes(): string
 	{
 		$text = 'var theme = new Array;' . "\n";
 		foreach (ThemesManager::get_activated_themes_map() as $theme)
@@ -502,7 +531,7 @@ class UserEditProfileController extends AbstractController
 		return $text;
 	}
 
-	private function get_picture_theme($user_theme)
+	private function get_picture_theme(string $user_theme): string
 	{
 		$picture = ThemesManager::get_theme($user_theme)->get_configuration()->get_first_picture();
 		return TPL_PATH_TO_ROOT .'/templates/' . $user_theme . '/' . $picture;

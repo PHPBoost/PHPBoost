@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 5.0 - 2016 09 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,23 +11,23 @@
 
 class UserAboutCookieController extends AbstractController
 {
-	private $lang;
-	private $view;
+	private array $lang = [];
+	private ?Template $view = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 		return $this->build_response($this->view);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->view = new FileTemplate('user/UserAboutCookieController.tpl');
 		$this->lang = LangLoader::get_all_langs();
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_response(View $view)
+	private function build_response(View $view): SiteDisplayResponse
 	{
 		$config = CookieBarConfig::load();
 

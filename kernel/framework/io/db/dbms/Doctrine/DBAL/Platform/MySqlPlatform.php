@@ -8,8 +8,9 @@
  * @license     https://www.gnu.org/licenses/lgpl-2.1.fr.html LGPL 2.1
  * @link        https://www.doctrine-project.org
  * @author      Roman BORSCHEL <roman@code-factory.org>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 4.0 - 2013 01 01
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
 */
@@ -396,10 +397,10 @@ class MySqlPlatform extends AbstractPlatform
      *                              'type'    => 'innodb',
      *                          ];
      *
-     * @return void
+     * @return array The SQL statements to create the table.
      * @override
      */
-    public function getCreateTableSql($name, array $fields, array $options = [])
+    public function getCreateTableSql($name, array $fields, array $options = []): array
     {
         if ( ! $name) {
             throw DoctrineException::missingTableName();

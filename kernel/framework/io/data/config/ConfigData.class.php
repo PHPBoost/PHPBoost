@@ -8,9 +8,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface ConfigData extends CacheData
@@ -20,7 +21,7 @@ interface ConfigData extends CacheData
 	 * @param string $name Name of the property to read
 	 * @return bool true if the property exists, false otherwise
 	 */
-	function has_property($name);
+	function has_property(string $name): bool;
 
 	/**
 	 * Reads a property's value.
@@ -28,7 +29,7 @@ interface ConfigData extends CacheData
 	 * @return mixed the read value
 	 * @throws PropertyNotFoundException If the property if not found
 	 */
-	function get_property($name);
+	function get_property(string $name): mixed;
 
 	/**
 	 * Sets a property value. If the property exists, it overrides its value,
@@ -36,19 +37,19 @@ interface ConfigData extends CacheData
 	 * @param string $name Name of the property
 	 * @param mixed $value Value of the property
 	 */
-	function set_property($name, $value);
+	function set_property(string $name, mixed $value): void;
 
 	/**
 	 * Sets the default value to avoid having unexisting values when we use it.
 	 * If some entries doesn't exist, they can be created here.
 	 */
-	function set_default_values();
+	function set_default_values(): void;
 
 	/**
 	 * Remove a property from the list of properties.
 	 * Usefull to remove an old property when the config evolves between two versions.
 	 * @param string $name Name of the property
 	 */
-	function delete_property($name);
+	function delete_property(string $name): void;
 }
 ?>

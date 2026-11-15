@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
  * @since       PHPBoost 1.2 - 2005 06 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -25,7 +25,7 @@ $request = AppContext::get_request();
 $writingpad = $request->get_postvalue('writingpad', '');
 if (!empty($writingpad))
 {
-    $content = $request->get_postvalue('writing_pad_content', '', TSTRING_UNCHANGE);
+    $content = $request->get_postvalue('writing_pad_content', '');
 
     $writing_pad_content = WritingPadConfig::load();
     $writing_pad_content->set_content($content);
@@ -89,7 +89,9 @@ if ($request->get_string('delete-selected-comments', false))
         if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on')
         {
             if (isset($ids[$i]))
+            {
                 CommentsManager::delete_comment($ids[$i]);
+            }
         }
     }
     AppContext::get_response()->redirect(HOST . REWRITED_SCRIPT, $this->lang['warning.process.success']);
@@ -103,7 +105,6 @@ AdminServerSystemReportController::get_advice($advises_form);
 $theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 $customize_interface = $theme->get_customize_interface();
 $header_logo_path = $customize_interface->get_header_logo_path();
-
 
 // Check if modules are installed for quicklinks
 $module_database_installed = ModulesManager::is_module_installed('database') && ModulesManager::is_module_activated('database');
@@ -134,15 +135,14 @@ $view->put_all([
 
 // List of connected users
 $result = PersistenceContext::get_querier()->select("
-        SELECT
-            s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, s.cached_data,
-            m.display_name, m.user_groups, m.level
-        FROM " . DB_TABLE_SESSIONS . " s
-        LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
-        WHERE s.timestamp > :timestamp
-        ORDER BY s.timestamp DESC
-    ", [
-        'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration())
+    SELECT
+        s.user_id, s.ip, s.timestamp, s.location_script, s.location_title, s.cached_data,
+        m.display_name, m.user_groups, m.level
+    FROM " . DB_TABLE_SESSIONS . " s
+    LEFT JOIN " . DB_TABLE_MEMBER . " m ON s.user_id = m.user_id
+    WHERE s.timestamp > :timestamp
+    ORDER BY s.timestamp DESC", [
+    'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration())
     ]
 );
 while ($row = $result->fetch())

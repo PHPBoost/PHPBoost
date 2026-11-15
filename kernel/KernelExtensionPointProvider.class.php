@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 14
  * @since       PHPBoost 3.0 - 2010 02 06
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -26,18 +26,20 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
     public function url_mappings()
     {
         return new UrlMappings([
-            new DispatcherUrlMapping('/admin/cache/index.php'),
-            new DispatcherUrlMapping('/admin/config/index.php'),
-            new DispatcherUrlMapping('/admin/content/index.php'),
-            new DispatcherUrlMapping('/admin/errors/index.php'),
-            new DispatcherUrlMapping('/admin/files/index.php'),
-            new DispatcherUrlMapping('/admin/langs/index.php'),
-            new DispatcherUrlMapping('/admin/maintain/index.php'),
-            new DispatcherUrlMapping('/admin/member/index.php'),
-            new DispatcherUrlMapping('/admin/modules/index.php'),
-            new DispatcherUrlMapping('/admin/server/index.php'),
-            new DispatcherUrlMapping('/admin/smileys/index.php'),
-            new DispatcherUrlMapping('/admin/themes/index.php'),
+            new DispatcherUrlMapping('/admin/administration/config/index.php'),
+            new DispatcherUrlMapping('/admin/administration/maintain/index.php'),
+            new DispatcherUrlMapping('/admin/content/config/index.php'),
+            new DispatcherUrlMapping('/admin/content/comments/index.php'),
+            new DispatcherUrlMapping('/admin/content/files/index.php'),
+            new DispatcherUrlMapping('/admin/content/smileys/index.php'),
+            new DispatcherUrlMapping('/admin/extensions/config/index.php'),
+            new DispatcherUrlMapping('/admin/extensions/langs/index.php'),
+            new DispatcherUrlMapping('/admin/extensions/modules/index.php'),
+            new DispatcherUrlMapping('/admin/extensions/themes/index.php'),
+            new DispatcherUrlMapping('/admin/tools/cache/index.php'),
+            new DispatcherUrlMapping('/admin/tools/errors/index.php'),
+            new DispatcherUrlMapping('/admin/tools/server/index.php'),
+            new DispatcherUrlMapping('/admin/users/member/index.php'),
             new DispatcherUrlMapping('/syndication/index.php')
         ]);
     }

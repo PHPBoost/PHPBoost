@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 3.0 - 2012 05 02
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -16,46 +16,27 @@
 
 class CommentsUrlBuilder
 {
-	/**
-	 * @param string $comment_path
-	 * @param integer $id
-	 * @return Url
-	 */
-	public static function edit($comment_path, $id)
+	public static function edit(string $comment_path, int $id): Url
 	{
 		return self::build_url($comment_path, 'edit_comment=' . $id . '#add-comment');
 	}
 
-	/**
-	 * @param string $comment_path
-	 * @param integer $id
-	 * @return Url
-	 */
-	public static function delete($comment_path, $id, $return_path = '')
+	public static function delete(string $comment_path, int $id, string $return_path = ''): Url
 	{
 		return self::build_url($comment_path, 'delete_comment=' . $id . '&token=' . AppContext::get_session()->get_token() . ($return_path ? '&return_path=' . $return_path : '#comments-section'));
 	}
 
-	/**
-	 * @param string $comment_path
-	 * @param integer $lock
-	 * @return Url
-	 */
-	public static function lock_and_unlock($comment_path, $lock)
+	public static function lock_and_unlock(string $comment_path, int $lock): Url
 	{
 		return self::build_url($comment_path, 'lock=' . (int)$lock . '&token=' . AppContext::get_session()->get_token() . '#comments-section');
 	}
 
-	/**
-	 * @param string $comment_path
-	 * @param integer $id_comment
-	 */
-	public static function comment_added($comment_path, $id_comment)
+	public static function comment_added(string $comment_path, int $id_comment): Url
 	{
 		return new Url($comment_path . '#com' . $id_comment);
 	}
 
-	private static function build_url($comment_path, $parameters)
+	private static function build_url(string $comment_path, mixed $parameters): Url
 	{
 		if (TextHelper::strpos($comment_path, '?') === false)
 		{

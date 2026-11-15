@@ -1,0 +1,146 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
+ * @since       PHPBoost 3.0 - 2011 09 20
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
+class AdminModuleDeleteController extends DefaultAdminController
+{
+	private mixed $module_id = null;
+	private bool $multiple = false;
+	private string|FileTemplate $error = '';
+	private ?File $file = null;
+	private ?string $level = null;
+
+	public function execute(HTTPRequestCustom $request): mixed
+	{
+		$this->module_id = $request->get_value('id', null);
+		$this->level     = $request->get_value('level', null);
+
+		if ($this->module_id == 'delete_multiple')
+		{
+			$temporary_file = PATH_TO_ROOT . '/cache/modules_to_delete.txt';
+			$this->file = new File($temporary_file);
+			if ($this->file->exists())
+			{
+				$this->module_id  = explode(',', $this->file->read());
+				$this->multiple = true;
+			}
+		}
+
+		if ($this->module_exists())
+		{
+            $this->delete_module($this->level);
+
+            if (!$this->error)
+            {
+                AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), $this->lang['warning.process.success']);
+            }
+            else
+            {
+                $this->view->put('MESSAGE_HELPER', $this->error);
+            }
+		}
+		else
+		{
+			$error_controller = PHPBoostErrors::unexisting_page();
+			DispatchManager::redirect($error_controller);
+		}
+        return null;
+	}
+
+	private function module_exists(): bool
+	{
+		if ($this->module_id == null)
+		{
+			return false;
+		}
+
+		if ($this->multiple)
+		{
+			$module_exists = false;
+			foreach ($this->module_id as $id)
+			{
+				if (ModulesManager::is_module_installed($id))
+				{
+					$module_exists = true;
+					break;
+				}
+			}
+			return $module_exists;
+		}
+		else
+			return ModulesManager::is_module_installed($this->module_id);
+	}
+
+	private function delete_module(?string $drop_files): void
+	{
+		if ($this->multiple)
+		{
+			foreach ($this->module_id as $id)
+			{
+				$module = ModulesManager::get_module($id);
+				$this->error_check(ModulesManager::uninstall_module($id, $drop_files));
+				if (!$this->error)
+                {
+                    if ($drop_files)
+                    {
+                        HooksService::execute_hook_action('delete', $id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                    }
+                    else
+                    {
+                        HooksService::execute_hook_typed_action('uninstall', 'module', $id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                    }
+                }
+			}
+			$this->file->delete();
+		}
+		else
+		{
+			$module = ModulesManager::get_module($this->module_id);
+			$this->error_check(ModulesManager::uninstall_module($this->module_id, $drop_files));
+			if (!$this->error)
+            {
+                if ($drop_files)
+                {
+                    HooksService::execute_hook_action('delete', $this->module_id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                }
+                else
+                {
+                    HooksService::execute_hook_typed_action('uninstall', 'module', $this->module_id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                }
+            }
+		}
+	}
+
+	private function error_check(int|string $error): void
+	{
+		if (is_int($error))
+		{
+			switch($error)
+			{
+				case ModulesManager::MODULE_FILES_COULD_NOT_BE_DROPPED:
+					$this->error = MessageHelper::display($this->lang['warning.files.del.failed'], MessageHelper::WARNING, 10);
+					break;
+				case ModulesManager::NOT_INSTALLED_MODULE:
+					$this->error = MessageHelper::display($this->lang['addon.modules.not.installed'], MessageHelper::WARNING, 10);
+					break;
+				case ModulesManager::MODULE_UNINSTALLED:
+					break;
+				default:
+					$this->error = MessageHelper::display($this->lang['warning.process.error'], MessageHelper::WARNING, 10);
+			}
+		}
+		else
+		{
+			$this->error = MessageHelper::display($error, MessageHelper::WARNING, 10);
+		}
+	}
+}
+?>

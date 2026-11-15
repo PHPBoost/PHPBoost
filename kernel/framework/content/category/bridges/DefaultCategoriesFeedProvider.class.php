@@ -5,31 +5,28 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 6.0 - 2020 01 28
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultCategoriesFeedProvider implements FeedProvider
 {
-	/**
-	 * @var string the module identifier
-	 */
-	protected $module_id;
+	protected string $module_id;
 
 	const MAXIMUM_ITEMS_NUMBER = 100;
 
-	public function __construct($module_id)
+	public function __construct(string $module_id)
 	{
 		$this->module_id = $module_id;
 	}
 
-	public function get_feeds_list()
+	public function get_feeds_list(): mixed
 	{
 		return CategoriesService::get_categories_manager($this->module_id)->get_feeds_categories_module()->get_feed_list();
 	}
 
-	public function get_feed_data_struct($id_category = 0, $name = '')
+	public function get_feed_data_struct(int $id_category = 0, string $name = ''): mixed
 	{
 		$categories_cache = CategoriesService::get_categories_manager($this->module_id)->get_categories_cache();
 		if ($categories_cache->category_exists($id_category))
@@ -73,9 +70,9 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 
 				$data->add_item($feed_item);
 			}
-
 			return $data;
 		}
+		return null;
 	}
 }
 ?>

@@ -5,34 +5,32 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 02 19
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 {
-	/**
-	 * @var CategoriesManager
-	 */
-	private $categories_manager;
+	private mixed $categories_manager = null;
 
 	public function __construct(CategoriesManager $categories_manager)
 	{
 		$this->categories_manager = $categories_manager;
 	}
 
-	public function get_public_sitemap()
+	public function get_public_sitemap(): mixed
 	{
 		return $this->get_module_map(Sitemap::AUTH_PUBLIC);
 	}
 
-	public function get_user_sitemap()
+	public function get_user_sitemap(): mixed
 	{
 		return $this->get_module_map(Sitemap::AUTH_USER);
 	}
 
-	private function get_module_map($auth_mode)
+	private function get_module_map(mixed $auth_mode): mixed
 	{
 		$module = ModulesManager::get_module($this->categories_manager->get_module_id());
 		$module_configuration = $module->get_configuration();
@@ -62,7 +60,7 @@ abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 		return $module_map;
 	}
 
-	private function create_module_map_sections($categories, $id_cat, $auth_mode)
+	private function create_module_map_sections(mixed $categories, mixed $id_cat, mixed $auth_mode): mixed
 	{
 		$category = $this->categories_manager->get_categories_cache()->get_category($id_cat);
 		$this_category = new SitemapLink($category->get_name(), $this->get_category_url($category));
@@ -89,11 +87,13 @@ abstract class SitemapCategoriesModule implements SitemapExtensionPoint
 		}
 
 		if ($i == 0)
+        {
 			$section = $this_category;
+        }
 
 		return $section;
 	}
 
-	abstract protected function get_category_url(Category $category);
+	abstract protected function get_category_url(Category $category): mixed;
 }
 ?>

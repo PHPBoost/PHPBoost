@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 01 31
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,17 +13,14 @@
 
 class FeedsCategoriesModule
 {
-	/**
-	 * @var CategoriesManager
-	 */
-	private $categories_manager;
+	private mixed $categories_manager = null;
 
 	public function __construct(CategoriesManager $categories_manager)
 	{
 		$this->categories_manager = $categories_manager;
 	}
 
-	public function get_feed_list()
+	public function get_feed_list(): mixed
 	{
 		$module_id = $this->categories_manager->get_module_id();
 		$list = new FeedsList();
@@ -35,7 +32,7 @@ class FeedsCategoriesModule
 		return $list;
 	}
 
-	public function build_feeds_sub_list($module_id, $categories, FeedsCat $tree, $parent_id)
+	public function build_feeds_sub_list(string $module_id, mixed $categories, FeedsCat $tree, mixed $parent_id): void
 	{
 		$id_categories = array_keys($categories);
 		$num_cats =	count($id_categories);

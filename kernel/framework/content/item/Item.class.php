@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      xela <xela@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,33 +13,33 @@
 
 class Item
 {
-	protected $id;
-	protected $id_category;
-	protected $title;
-	protected $rewrited_title;
-	protected $content;
-	protected $author_user;
-	protected $creation_date;
-	protected $update_date;
-	protected $notation;
-	protected $keywords;
-	protected $sources;
+	protected int $id = 0;
+	protected int $id_category = 0;
+	protected string $title = '';
+	protected string $rewrited_title = '';
+	protected string $content = '';
+	protected ?User $author_user = null;
+	protected ?Date $creation_date = null;
+	protected ?Date $update_date = null;
+	protected ?Notation $notation = null;
+	protected array $keywords = [];
+	protected array $sources = [];
 
-	protected $published;
-	protected $publishing_start_date;
-	protected $publishing_end_date;
-	protected $end_date_enabled;
+	protected bool $published = false;
+	protected ?Date $publishing_start_date = null;
+	protected ?Date $publishing_end_date = null;
+	protected bool $end_date_enabled = false;
 
-	protected static $module_id;
-	protected static $module;
-	protected $additional_attributes_values              = [];
-	protected $additional_attributes_list                = [];
-	protected $additional_attributes_items_table_fields  = [];
-	protected $additional_attributes_items_table_options = [];
+	protected static string $module_id = '';
+	protected static ?Module $module = null;
+	protected array $additional_attributes_values              = [];
+	protected array $additional_attributes_list                = [];
+	protected array $additional_attributes_items_table_fields  = [];
+	protected array $additional_attributes_items_table_options = [];
 
-	protected $content_field_enabled    = true;
-	protected $content_field_required   = true;
-	protected $sub_categories_displayed = true;
+	protected bool $content_field_enabled    = true;
+	protected bool $content_field_required   = true;
+	protected bool $sub_categories_displayed = true;
 
 	const READ_AUTHORIZATIONS         = 1;
 	const WRITE_AUTHORIZATIONS        = 2;
@@ -54,7 +54,7 @@ class Item
 	const ASC  = 'ASC';
 	const DESC = 'DESC';
 
-	public function __construct($module_id = '')
+	public function __construct(string $module_id = '')
 	{
 		self::$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
 		self::$module = ModulesManager::get_module(self::$module_id);
@@ -63,102 +63,102 @@ class Item
 		$this->set_additional_attributes_list();
 	}
 
-	public function get_id()
+	public function get_id(): int
 	{
 		return $this->id;
 	}
 
-	public function set_id(int $id)
+	public function set_id(int $id): void
 	{
 		$this->id = $id;
 	}
 
-	public function get_id_category()
+	public function get_id_category(): int
 	{
 		return $this->id_category;
 	}
 
-	public function set_id_category(int $id_category)
+	public function set_id_category(int $id_category): void
 	{
 		$this->id_category = $id_category;
 	}
 
-	public function get_category()
+	public function get_category(): Category
 	{
 		return CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_category($this->id_category);
 	}
 
-	public static function get_title_label()
+	public static function get_title_label(): string
 	{
 		return 'title';
 	}
 
-	public function get_title()
+	public function get_title(): string
 	{
 		return $this->title;
 	}
 
-	public function set_title($value)
+	public function set_title(string $value): void
 	{
 		$this->title = $value;
 	}
 
-	public function get_rewrited_title()
+	public function get_rewrited_title(): string
 	{
 		return $this->rewrited_title;
 	}
 
-	public function set_rewrited_title($value)
+	public function set_rewrited_title(string $value): void
 	{
 		$this->rewrited_title = $value;
 	}
 
-	public function rewrited_title_is_personalized()
+	public function rewrited_title_is_personalized(): bool
 	{
 		return $this->rewrited_title != Url::encode_rewrite($this->title);
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->title;
 	}
 
-	public function set_name($value)
+	public function set_name(string $value): void
 	{
 		$this->title = $value;
 	}
 
-	public function get_rewrited_name()
+	public function get_rewrited_name(): string
 	{
 		return $this->rewrited_title;
 	}
 
-	public function set_rewrited_name($value)
+	public function set_rewrited_name(string $value): void
 	{
 		$this->rewrited_title = $value;
 	}
 
-	public function rewrited_name_is_personalized()
+	public function rewrited_name_is_personalized(): bool
 	{
 		return $this->rewrited_title != Url::encode_rewrite($this->title);
 	}
 
-	public static function get_content_label()
+	public static function get_content_label(): string
 	{
 		return 'content';
 	}
 
-	public function get_content()
+	public function get_content(): string
 	{
 		return $this->content;
 	}
 
-	public function set_content($content)
+	public function set_content(string $content): void
 	{
 		$this->content = $content;
 	}
 
-	public function get_author_user()
+	public function get_author_user(): User
 	{
 		return $this->author_user;
 	}
@@ -168,42 +168,42 @@ class Item
 		$this->author_user = $user;
 	}
 
-	public function get_creation_date()
+	public function get_creation_date(): Date
 	{
 		return $this->creation_date;
 	}
 
-	public function set_creation_date(Date $date)
+	public function set_creation_date(Date $date): void
 	{
 		$this->creation_date = $date;
 	}
 
-	public function get_update_date()
+	public function get_update_date(): ?Date
 	{
 		return $this->update_date;
 	}
 
-	public function set_update_date(Date $date)
+	public function set_update_date(?Date $date): void
 	{
 		$this->update_date = $date;
 	}
 
-	public function has_update_date()
+	public function has_update_date(): bool
 	{
 		return $this->update_date !== null && $this->update_date > $this->creation_date;
 	}
 
-	public function get_notation()
+	public function get_notation(): Notation
 	{
 		return $this->notation;
 	}
 
-	public function set_notation(Notation $notation)
+	public function set_notation(Notation $notation): void
 	{
 		$this->notation = $notation;
 	}
 
-	public function get_keywords()
+	public function get_keywords(): array
 	{
 		if ($this->keywords === null)
 		{
@@ -212,79 +212,76 @@ class Item
 		return $this->keywords;
 	}
 
-	public function get_keywords_name()
+	public function get_keywords_name(): array
 	{
 		return array_keys($this->get_keywords());
 	}
 
-	public function get_sources()
+	public function get_sources(): array
 	{
 		return $this->sources;
 	}
 
-	public function add_source($source)
+	public function add_source(array $source)
 	{
 		$this->sources[] = $source;
 	}
 
-	public function set_sources($sources)
+	public function set_sources(array $sources): void
 	{
 		$this->sources = $sources;
 	}
 
-	public function set_publishing_state($state)
+	public function set_publishing_state(string $state): void
 	{
 		$this->published = $state;
 	}
 
-	public function get_publishing_state()
+	public function get_publishing_state(): string
 	{
 		return $this->published;
 	}
 
-	public function is_published()
+	public function is_published(): bool
 	{
 		$now = new Date();
 		return $this->get_authorizations_checker()->read() && ($this->get_publishing_state() == self::PUBLISHED || ($this->get_publishing_state() == self::DEFERRED_PUBLICATION && $this->get_publishing_start_date()->is_anterior_to($now) && ($this->end_date_enabled() ? $this->get_publishing_end_date()->is_posterior_to($now) : true)));
 	}
 
-	public function get_status()
+	public function get_status(): string
 	{
 		switch ($this->published)
         {
 			case self::NOT_PUBLISHED:
 				return LangLoader::get_message('common.status.draft', 'common-lang');
-			break;
 			case self::PUBLISHED:
 				return LangLoader::get_message('common.status.published', 'common-lang');
-			break;
 			case self::DEFERRED_PUBLICATION:
 				return $this->is_published() ? LangLoader::get_message('common.status.published', 'common-lang') : LangLoader::get_message('common.status.deffered.date', 'common-lang');
-			break;
 		}
+        return '';
 	}
 
-	public function get_status_class()
+	public function get_status_class(): string
 	{
-		switch ($this->published) {
+		switch ($this->published)
+        {
 			case self::NOT_PUBLISHED:
 				return 'draft';
-			break;
 			case self::PUBLISHED:
 				return 'published';
-			break;
 			case self::DEFERRED_PUBLICATION:
 				return $this->is_published() ? 'published' : 'waiting';
-			break;
 		}
+        return '';
 	}
 
-	public function set_publishing_start_date(Date $publishing_start_date)
+	public function set_publishing_start_date(Date $publishing_start_date): void
 	{
 		$this->publishing_start_date = $publishing_start_date;
 	}
 
-	public function get_publishing_start_date()
+	public function get_publishing_start_date(): ?Date
 	{
 		return $this->publishing_start_date;
 	}
@@ -295,47 +292,49 @@ class Item
 		$this->end_date_enabled = true;
 	}
 
-	public function get_publishing_end_date()
+	public function get_publishing_end_date(): ?Date
 	{
 		return $this->publishing_end_date;
 	}
 
-	public function end_date_enabled()
+	public function end_date_enabled(): bool
 	{
 		return $this->end_date_enabled;
 	}
 
-	private function get_authorizations_checker()
+	private function get_authorizations_checker(): mixed
 	{
 		return self::$module->get_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->id_category ? $this->id_category : Category::ROOT_CATEGORY, self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 	}
 
-	public function is_authorized_to_add()
+	public function is_authorized_to_add(): bool
 	{
 		return $this->get_authorizations_checker()->write() || $this->get_authorizations_checker()->contribution();
 	}
 
-	public function is_authorized_to_duplicate()
+	public function is_authorized_to_duplicate(): bool
 	{
         return self::$module->get_configuration()->has_duplication() && ($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && $this->get_authorizations_checker()->duplication()));
     }
 
-	public function is_authorized_to_edit()
+	public function is_authorized_to_edit(): bool
 	{
 		return $this->get_authorizations_checker()->moderation() || (($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))));
 	}
 
-	public function is_authorized_to_delete()
+	public function is_authorized_to_delete(): bool
 	{
 		return $this->get_authorizations_checker()->moderation() || (($this->get_authorizations_checker()->write() || ($this->get_authorizations_checker()->contribution() && !$this->is_published())) && $this->get_author_user()->get_id() == AppContext::get_current_user()->get_id() && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL));
 	}
 
-	protected function add_additional_attribute($id, array $parameters)
+	protected function add_additional_attribute(mixed $id, array $parameters): void
 	{
 		if (isset($parameters['key']))
 		{
 			if ($parameters['key'] == true)
+            {
 				$this->additional_attributes_items_table_options[$id] = ['type' => 'key', 'fields' => $id];
+            }
 
 			unset($parameters['key']);
 		}
@@ -343,7 +342,9 @@ class Item
 		if (isset($parameters['fulltext']))
 		{
 			if ($parameters['fulltext'] == true)
+            {
 				$this->additional_attributes_items_table_options[$id] = ['type' => 'fulltext', 'fields' => $id];
+            }
 
 			unset($parameters['fulltext']);
 		}
@@ -351,19 +352,25 @@ class Item
 		if (isset($parameters['is_url']))
 		{
 			if ($parameters['is_url'] == true)
+            {
 				$this->additional_attributes_list[$id] = ['is_url' => $parameters['is_url'], 'is_array' => false];
+            }
 
 			unset($parameters['is_url']);
 		}
 		elseif (isset($parameters['is_array']))
 		{
 			if ($parameters['is_array'] == true)
+            {
 				$this->additional_attributes_list[$id] = ['is_array' => $parameters['is_array'], 'is_url' => false];
+            }
 
 			unset($parameters['is_array']);
 		}
 		else
+        {
 			$this->additional_attributes_list[$id] = ['is_url' => false, 'is_array' => false];
+        }
 
 		foreach (['attribute_pre_content_field_parameters', 'attribute_post_content_field_parameters', 'attribute_options_field_parameters'] as $attribute_field)
 		{
@@ -383,51 +390,51 @@ class Item
 		return $this->additional_attributes_list;
 	}
 
-	protected function set_kernel_additional_attributes_list() {}
+	protected function set_kernel_additional_attributes_list(): void {}
 
-	protected function set_additional_attributes_list() {}
+	protected function set_additional_attributes_list(): void {}
 
-	public function get_additional_attributes_items_table_fields()
+	public function get_additional_attributes_items_table_fields(): array
 	{
 		return $this->additional_attributes_items_table_fields;
 	}
 
-	public function get_additional_attributes_items_table_options()
+	public function get_additional_attributes_items_table_options(): array
 	{
 		return $this->additional_attributes_items_table_options;
 	}
 
-	protected function disable_content_field()
+	protected function disable_content_field(): void
 	{
 		$this->content_field_enabled = false;
 	}
 
-	public function content_field_enabled()
+	public function content_field_enabled(): bool
 	{
 		return $this->content_field_enabled;
 	}
 
-	protected function unrequire_content_field()
+	protected function unrequire_content_field(): void
 	{
 		$this->content_field_required = false;
 	}
 
-	public function content_field_required()
+	public function content_field_required(): bool
 	{
 		return $this->content_field_required;
 	}
 
-	protected function hide_sub_categories()
+	protected function hide_sub_categories(): void
 	{
 		$this->sub_categories_displayed = false;
 	}
 
-	public function sub_categories_displayed()
+	public function sub_categories_displayed(): bool
 	{
 		return $this->sub_categories_displayed;
 	}
 
-	public function get_properties()
+	public function get_properties(): array
 	{
 		$category_properties = self::$module->get_configuration()->has_categories() ? ['id_category' => $this->get_id_category()] : [];
 		$content_properties = $this->content_field_enabled ? [self::get_content_label() => $this->get_content()] : [];
@@ -447,7 +454,7 @@ class Item
         );
 	}
 
-	protected function get_additional_properties()
+	protected function get_additional_properties(): mixed
 	{
 		$properties = [];
 
@@ -466,36 +473,46 @@ class Item
 		foreach ($this->additional_attributes_list as $id => $attribute)
 		{
 			if ($attribute['is_url'])
+            {
 				$properties[$id] = $this->additional_attributes_values[$id]->relative();
+            }
 			elseif ($attribute['is_array'])
+            {
 				$properties[$id] = TextHelper::serialize($this->additional_attributes_values[$id]);
+            }
 			else
+            {
 				$properties[$id] = $this->additional_attributes_values[$id];
+            }
 		}
 
 		return $properties;
 	}
 
-	public function get_additional_property($id)
+	public function get_additional_property(string $id): mixed
 	{
 		return $this->additional_attributes_values[$id];
 	}
 
-	public function set_properties(array $properties)
+	public function set_properties(array $properties): void
 	{
 		$this->set_id($properties['id']);
 		$this->set_title($properties[self::get_title_label()]);
 		$this->set_rewrited_title($properties['rewrited_' . self::get_title_label()]);
 
 		if ($this->content_field_enabled)
+        {
 			$this->set_content($properties[self::get_content_label()]);
+        }
 
 		$this->set_creation_date(new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE));
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->set_publishing_state($properties['published']);
 
 		if (self::$module->get_configuration()->has_categories())
+        {
 			$this->set_id_category($properties['id_category']);
+        }
 
 		if (!($author = UserService::get_user($properties['author_user_id'])))
 		{
@@ -519,7 +536,7 @@ class Item
 		$this->set_additional_properties($properties);
 	}
 
-	protected function set_additional_properties(array $properties)
+	protected function set_additional_properties(array $properties): void
 	{
 		if (self::$module->get_configuration()->feature_is_enabled('deferred_publication'))
 		{
@@ -542,21 +559,27 @@ class Item
 		}
 	}
 
-	public function set_additional_property($id, $value, $is_url = false, $is_array = false)
+	public function set_additional_property(string $id, string $value, bool $is_url = false, bool $is_array = false): void
 	{
 		if ($is_url)
+        {
 			$this->additional_attributes_values[$id] = new Url($value);
+        }
 		elseif ($is_array)
+        {
 			$this->additional_attributes_values[$id] = TextHelper::unserialize($value);
+        }
 		else
+        {
 			$this->additional_attributes_values[$id] = $value;
+        }
 	}
 
-	protected function kernel_default_properties() {}
+	protected function kernel_default_properties(): void {}
 
-	protected function default_properties() {}
+	protected function default_properties(): void {}
 
-	public function init_default_properties($id_category = Category::ROOT_CATEGORY)
+	public function init_default_properties(int $id_category = Category::ROOT_CATEGORY): void
 	{
 		$this->id_category = $id_category;
 		$this->author_user = AppContext::get_current_user();
@@ -570,20 +593,20 @@ class Item
 		$this->default_properties();
 	}
 
-	public function clean_publishing_start_and_end_date()
+	public function clean_publishing_start_and_end_date(): void
 	{
 		$this->publishing_start_date = null;
 		$this->publishing_end_date = null;
 		$this->end_date_enabled = false;
 	}
 
-	public function clean_publishing_end_date()
+	public function clean_publishing_end_date(): void
 	{
 		$this->publishing_end_date = null;
 		$this->end_date_enabled = false;
 	}
 
-	public function get_sorting_fields_list()
+	public function get_sorting_fields_list(): array
 	{
 		$lang = LangLoader::get_all_langs();
 
@@ -599,24 +622,28 @@ class Item
 		);
 
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('comments') && CommentsConfig::load()->module_comments_is_enabled(self::$module_id))
+        {
 			$fields_list['comments'] = ['database_field' => 'comments_number', 'label' => $lang['common.sort.by.comments.number'], 'icon' => 'far fa-comments'];
+        }
 		if (self::$module && self::$module->get_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::$module_id))
+        {
 			$fields_list['notes'] = ['database_field' => 'average_notes', 'label' => $lang['common.sort.by.best.note'], 'icon' => 'far fa-star'];
+        }
 
 		return $fields_list;
 	}
 
-	protected function get_kernel_additional_sorting_fields()
+	protected function get_kernel_additional_sorting_fields(): array
 	{
 		return [];
 	}
 
-	protected function get_additional_sorting_fields()
+	protected function get_additional_sorting_fields(): array
 	{
 		return [];
 	}
 
-	public function get_sorting_field_options()
+	public function get_sorting_field_options(): array
 	{
 		$sort_options = [];
 
@@ -628,7 +655,7 @@ class Item
 		return $sort_options;
 	}
 
-	public static function get_sorting_mode_options()
+	public static function get_sorting_mode_options(): array
 	{
 		$lang = LangLoader::get_all_langs();
 		return [
@@ -637,19 +664,19 @@ class Item
 		];
 	}
 
-	public function get_global_template_vars()
+	public function get_global_template_vars(): array
 	{
 		return [
 			'C_DISPLAY_SUB_CATEGORIES' => $this->sub_categories_displayed
 		];
 	}
 
-	public function get_item_url()
+	public function get_item_url(): string
 	{
 		return self::$module->get_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title(), self::$module->get_id())->rel() : ItemsUrlBuilder::display_item($this->get_id(), $this->get_rewrited_title(), self::$module->get_id())->rel();
 	}
 
-	public function get_template_vars()
+	public function get_template_vars(): array
 	{
 		$categories_template_vars = $comments_template_vars = $notation_template_vars = $newcontent_template_vars = $sources_template_vars = $keywords_template_vars = [];
 
@@ -662,9 +689,9 @@ class Item
 				'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
 				'CATEGORY_ID'          => $category->get_id(),
 				'CATEGORY_NAME'        => $category->get_name(),
-				'CATEGORY_DESCRIPTION' => $category->get_description(),
+				'CATEGORY_DESCRIPTION' => method_exists($category, 'get_description') ? $category->get_description() : '',
 				'U_CATEGORY'           => CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id)->rel(),
-				'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
+				'U_CATEGORY_THUMBNAIL' => method_exists($category, 'get_thumbnail') ? $category->get_thumbnail()->rel() : '',
 				'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), self::$module_id)->rel()
 			];
 		}
@@ -677,7 +704,7 @@ class Item
 				'C_SEVERAL_COMMENTS' => $comments_number > 1,
 				'COMMENTS_LABEL'     => CommentsService::get_number_and_lang_comments(self::$module_id, $this->get_id()),
 				'COMMENTS_NUMBER'    => $comments_number,
-				'U_COMMENTS'         => self::$module->get_configuration()->has_categories() ? ItemsUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item_comments($this->get_id(), $this->get_rewrited_title())->rel(),
+				'U_COMMENTS'         => self::$module->get_configuration()->has_categories() ? ItemsUrlBuilder::display_comments($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $this->get_id(), $this->get_rewrited_title())->rel() : ItemsUrlBuilder::display_item_comments($this->get_id(), $this->get_rewrited_title())->rel(),
 			];
 		}
 
@@ -712,7 +739,7 @@ class Item
 		$content            = FormatingHelper::second_parse($this->content);
 		$rich_content       = HooksService::execute_hook_display_action(self::$module->get_id(), $content, $this->get_properties());
 		$author             = $this->get_author_user();
-		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level(), true);
+		$author_group_color = User::get_group_color($author->get_groups(), $author->get_level());
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
@@ -725,56 +752,56 @@ class Item
 			$keywords_template_vars,
 			$sources_template_vars,
 			[
-			// Conditions
-			'C_CONTROLS'            => $this->is_authorized_to_edit() || $this->is_authorized_to_duplicate() || $this->is_authorized_to_delete(),
-			'C_DUPLICATE'           => $this->is_authorized_to_duplicate(),
-			'C_EDIT'                => $this->is_authorized_to_edit(),
-			'C_DELETE'              => $this->is_authorized_to_delete(),
-			'C_AUTHOR_EXISTS'       => $author->get_id() !== User::VISITOR_LEVEL,
-			'C_AUTHOR_GROUP_COLOR'  => !empty($author_group_color),
-			'C_HAS_UPDATE_DATE'     => $this->has_update_date(),
-			'C_PUBLISHED'           => $this->is_published(),
-			'C_DEFFERED_PUBLISHING' => $this->published == self::DEFERRED_PUBLICATION,
+                // Conditions
+                'C_CONTROLS'            => $this->is_authorized_to_edit() || $this->is_authorized_to_duplicate() || $this->is_authorized_to_delete(),
+                'C_DUPLICATE'           => $this->is_authorized_to_duplicate(),
+                'C_EDIT'                => $this->is_authorized_to_edit(),
+                'C_DELETE'              => $this->is_authorized_to_delete(),
+                'C_AUTHOR_EXISTS'       => $author->get_id() !== User::VISITOR_LEVEL,
+                'C_AUTHOR_GROUP_COLOR'  => !empty($author_group_color),
+                'C_HAS_UPDATE_DATE'     => $this->has_update_date(),
+                'C_PUBLISHED'           => $this->is_published(),
+                'C_DEFFERED_PUBLISHING' => $this->published == self::DEFERRED_PUBLICATION,
 
-			// Item parameters
-			'ID'                                              => $this->get_id(),
-			TextHelper::strtoupper(self::get_title_label())   => $this->get_title(),
-			TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $rich_content : '',
-			'AUTHOR_DISPLAY_NAME'                             => $author->get_display_name(),
-			'AUTHOR_LEVEL_CLASS'                              => UserService::get_level_class($author->get_level()),
-			'AUTHOR_GROUP_COLOR'                              => $author_group_color,
-			'STATUS'                                          => $this->get_status(),
+                // Item parameters
+                'ID'                                              => $this->get_id(),
+                TextHelper::strtoupper(self::get_title_label())   => $this->get_title(),
+                TextHelper::strtoupper(self::get_content_label()) => $this->content_field_enabled ? $rich_content : '',
+                'AUTHOR_DISPLAY_NAME'                             => $author->get_display_name(),
+                'AUTHOR_LEVEL_CLASS'                              => UserService::get_level_class($author->get_level()),
+                'AUTHOR_GROUP_COLOR'                              => $author_group_color,
+                'STATUS'                                          => $this->get_status(),
 
-			// Links
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
-			'U_AUTHOR_CONTRIB' => ItemsUrlBuilder::display_member_items($author->get_id())->rel(),
-			'U_ITEM'           => $this->get_item_url(),
-			'U_DUPLICATE'      => ItemsUrlBuilder::duplicate($this->id, self::$module->get_id())->rel(),
-			'U_EDIT'           => ItemsUrlBuilder::edit($this->id, self::$module->get_id())->rel(),
-			'U_DELETE'         => ItemsUrlBuilder::delete($this->id, self::$module->get_id())->rel(),
-			'U_SYNDICATION'    => SyndicationUrlBuilder::rss(self::$module_id, $this->id_category)->rel()
+                // Links
+                'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
+                'U_AUTHOR_CONTRIB' => ItemsUrlBuilder::display_member_items($author->get_id())->rel(),
+                'U_ITEM'           => $this->get_item_url(),
+                'U_DUPLICATE'      => ItemsUrlBuilder::duplicate($this->id, self::$module->get_id())->rel(),
+                'U_EDIT'           => ItemsUrlBuilder::edit($this->id, self::$module->get_id())->rel(),
+                'U_DELETE'         => ItemsUrlBuilder::delete($this->id, self::$module->get_id())->rel(),
+                'U_SYNDICATION'    => SyndicationUrlBuilder::rss(self::$module_id, $this->id_category)->rel()
 			],
-			$this->get_kernel_additional_template_vars($content),
+			$this->get_kernel_additional_template_vars(),
 			$this->get_additional_template_vars()
 		);
 	}
 
-	protected function get_kernel_additional_template_vars()
+	protected function get_kernel_additional_template_vars(): array
 	{
 		return [];
 	}
 
-	protected function get_additional_template_vars()
+	protected function get_additional_template_vars(): array
 	{
 		return [];
 	}
 
-	public function get_additional_content_template()
+	public function get_additional_content_template(): Template
 	{
 		return new StringTemplate('');
 	}
 
-	public function get_template_keyword_vars($keyword)
+	public function get_template_keyword_vars(Keyword $keyword): array
 	{
 		return [
 			'NAME' => $keyword->get_name(),
@@ -782,7 +809,7 @@ class Item
 		];
 	}
 
-	public function get_template_source_vars($source_name)
+	public function get_template_source_vars(mixed $source_name): mixed
 	{
 		$vars = [];
 		$sources = $this->get_sources();
@@ -799,7 +826,7 @@ class Item
 		return $vars;
 	}
 
-	public static function create_items_table($module_id)
+	public static function create_items_table(string $module_id)
 	{
 		$module = new Module($module_id, true);
 
@@ -814,7 +841,9 @@ class Item
 			$content_option = ['content' => ['type' => 'fulltext', 'fields' => $class_name::get_content_label()]];
 		}
 		else
+        {
 			$content_field = $content_option = [];
+        }
 
 		if ($module->get_configuration()->has_categories())
 		{

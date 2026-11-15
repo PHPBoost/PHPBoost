@@ -3,28 +3,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserConfirmRegistrationController extends AbstractController
 {
-	private $lang;
+	private array $lang = [];
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): mixed
 	{
 		$this->init();
 		$registration_pass = $request->get_value('registration_pass', '');
 		$this->check_activation($registration_pass);
+		return null;
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->lang = LangLoader::get_all_langs();
 	}
 
-	private function check_activation($registration_pass)
+	private function check_activation(mixed $registration_pass): void
 	{
 		$user_id = PHPBoostAuthenticationMethod::registration_pass_exists($registration_pass);
 		if ($user_id)
@@ -47,7 +48,7 @@ class UserConfirmRegistrationController extends AbstractController
 		}
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{

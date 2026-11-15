@@ -7,28 +7,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 11 09
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MySQLDBFactory implements DBMSFactory
 {
-	public function new_db_connection()
+	public function new_db_connection(): DBConnection
 	{
 		return new MySQLDBConnection();
 	}
 
-	public function new_sql_querier(DBConnection $db_connection)
+	public function new_sql_querier(DBConnection $db_connection): SQLQuerier
 	{
 		return new MySQLQuerier($db_connection, $this->new_query_translator());
 	}
 
-	public function new_dbms_util(SQLQuerier $querier)
+	public function new_dbms_util(SQLQuerier $querier): DBMSUtils
 	{
 		return new MySQLDBMSUtils($querier);
 	}
 
-	private function new_query_translator()
+	private function new_query_translator(): MySQLQueryTranslator
 	{
 		return new MySQLQueryTranslator();
 	}

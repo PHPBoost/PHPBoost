@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 23
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 01 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,22 +16,16 @@
 
 class FileSystemDataStore implements DataStore
 {
-	private $prefix;
-	/**
-	 * @var RAMDataStore
-	 */
-	private $files_cache;
+	private string $prefix = '';
+	private RAMDataStore $files_cache;
 
-	public function __construct($id)
+	public function __construct(object|string $id)
 	{
 		$this->prefix = $id;
 		$this->files_cache = new RAMDataStore();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get($id)
+	public function get(string $id): mixed
 	{
 		if ($this->contains($id))
 		{
@@ -40,7 +34,7 @@ class FileSystemDataStore implements DataStore
 		throw new DataStoreException($id);
 	}
 
-	private function get_data($name)
+	private function get_data(string $name): mixed
 	{
 		$file = $this->get_file($name);
 		$content = $file->read();
@@ -64,18 +58,12 @@ class FileSystemDataStore implements DataStore
 		return $data;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function contains($id)
+	public function contains(string $id): bool
 	{
 		return $this->get_file($id)->exists();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function store($id, $data)
+	public function store(string $id, mixed $data): void
 	{
 		$file = $this->get_file($id);
 		$data_to_write = TextHelper::serialize($data);
@@ -87,24 +75,16 @@ class FileSystemDataStore implements DataStore
 		$file->change_chmod(0666);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function delete($id)
+	public function delete(string $id): void
 	{
 		try
 		{
 			$this->get_file($id)->delete();
 		}
-		catch(IOException $ex)
-		{
-		}
+		catch(IOException $ex) {}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function clear()
+	public function clear(): void
 	{
 		$cache_dir = new Folder(PATH_TO_ROOT . '/cache');
 		$files = $cache_dir->get_files('`^' . $this->prefix . '-.*`');
@@ -114,7 +94,7 @@ class FileSystemDataStore implements DataStore
 		}
 	}
 
-	private function get_file($id)
+	private function get_file(string $id): File
 	{
 		if ($this->files_cache->contains($id))
 		{

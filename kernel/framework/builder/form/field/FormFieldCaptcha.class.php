@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 22
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 3.0 - 2010 01 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -27,7 +27,10 @@ class FormFieldCaptcha extends AbstractFormField
 
 	public function retrieve_value(): void
 	{
-		$this->captcha->set_html_id($this->get_html_id());
+		if ($this->captcha !== null)
+		{
+			$this->captcha->set_html_id($this->get_html_id());
+		}
 		if ($this->is_enabled())
 		{
 			$this->set_value($this->captcha->is_valid());
@@ -40,12 +43,23 @@ class FormFieldCaptcha extends AbstractFormField
 
 	public function display(): Template
 	{
-		$this->captcha->set_html_id($this->get_html_id());
-		$this->captcha->set_form_id($this->get_form_id());
-
 		$template = $this->get_template_to_use();
 
 		$this->assign_common_template_variables($template);
+
+		if ($this->captcha === null)
+		{
+			$template->put_all([
+				'C_IS_ENABLED' => false,
+				'C_IS_VISIBLE' => false,
+				'CAPTCHA' => '',
+			]);
+
+			return $template;
+		}
+
+		$this->captcha->set_html_id($this->get_html_id());
+		$this->captcha->set_form_id($this->get_form_id());
 
 		$template->put_all([
 			'C_IS_ENABLED' => $this->is_enabled(),
@@ -69,7 +83,7 @@ class FormFieldCaptcha extends AbstractFormField
 
 	private function is_enabled(): bool
 	{
-		return !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $this->captcha->is_available();
+		return $this->captcha !== null && !AppContext::get_current_user()->check_level(User::MEMBER_LEVEL) && $this->captcha->is_available();
 	}
 
 	protected function get_default_template(): FileTemplate

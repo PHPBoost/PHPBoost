@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 10 01
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface SQLQuerier
@@ -26,7 +27,7 @@ interface SQLQuerier
 	 * @param string[] $parameters the query_var map
 	 * @return SelectQueryResult the query result set
 	 */
-	function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC);
+	function select(string $query, array $parameters = [], int $fetch_mode = SelectQueryResult::FETCH_ASSOC): SelectQueryResult;
 
 	/**
 	 * executes the <code>$query</code> sql request.
@@ -40,12 +41,12 @@ interface SQLQuerier
 	 * @param string[] $parameters the query_var map
 	 * @return InjectQueryResult the query result
 	 */
-	function inject($query, $parameters = []);
+	function inject(string $query, array $parameters = []): InjectQueryResult;
 
-	function enable_query_translator();
+	function enable_query_translator(): void;
 
-	function disable_query_translator();
+	function disable_query_translator(): void;
 
-	function get_executed_requests_count();
+	function get_executed_requests_count(): int;
 }
 ?>

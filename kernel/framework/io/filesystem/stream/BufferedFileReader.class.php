@@ -18,13 +18,13 @@ class BufferedFileReader implements FileReader
 	/**
 	 * @var File
 	 */
-	private $file;
-	private $buffer_max_size;
-	private $offset_in_file = 0;
-	private $reached_end_of_file = false;
-	private $lines = [];
+	private File $file;
+	private int $buffer_max_size;
+	private int $offset_in_file = 0;
+	private bool $reached_end_of_file = false;
+	private array $lines = [];
 
-	public function __construct(File $file, $buffer_size = self::DEFAULT_BUFFER_SIZE)
+	public function __construct(File $file, int $buffer_size = self::DEFAULT_BUFFER_SIZE)
 	{
 		$this->file = $file;
 		$this->buffer_max_size = $buffer_size;

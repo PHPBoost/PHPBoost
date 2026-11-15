@@ -6,23 +6,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 11 01
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SQLQueryVars extends StringVars
 {
-    /**
-     * @var AbstractSQLQuerier
-     */
-    private AbstractSQLQuerier $querier;
+    private MySQLQuerier $querier;
 
     /**
      * Constructs a new SQLQueryVars.
-     *
-     * @param AbstractSQLQuerier $querier The SQL querier
+     * @param MySQLQuerier $querier The SQL querier
      */
-    public function __construct(AbstractSQLQuerier $querier)
+    public function __construct(MySQLQuerier $querier)
     {
         $this->querier = $querier;
         $strict = true;
@@ -31,11 +28,10 @@ class SQLQueryVars extends StringVars
 
     /**
      * Sets the value for a variable, escaping it if necessary.
-     *
      * @param mixed $parameter The value to set
      * @return string The value to use for replacement
      */
-    protected function set_var($parameter): string
+    protected function set_var(mixed $parameter): string
     {
         if ($parameter === null)
         {

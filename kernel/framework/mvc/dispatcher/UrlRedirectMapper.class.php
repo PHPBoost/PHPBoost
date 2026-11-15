@@ -6,14 +6,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2010 11 06
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UrlRedirectMapper extends AbstractUrlMapper
 {
-	private $redirect_url;
+	private string $redirect_url = '';
 
 	/**
 	 * build a new UrlDispatcherItem
@@ -22,16 +23,14 @@ class UrlRedirectMapper extends AbstractUrlMapper
 	 * and capturing the controller method parameters. By default, match the empty url <code>/</code>
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($redirect_url, $capture_regex = '`^/?$`u')
+	public function __construct(string $redirect_url, string $capture_regex = '`^/?$`u')
 	{
 		$this->redirect_url = $redirect_url;
 		parent::__construct($capture_regex);
 	}
 
-	/**
-	 * Call the controller method if the url match and if the method exists
-	 */
-	public function call()
+	/** Call the controller method if the url match and if the method exists */
+	public function call(): void
 	{
 		AppContext::get_response()->redirect($this->redirect_url);
 	}

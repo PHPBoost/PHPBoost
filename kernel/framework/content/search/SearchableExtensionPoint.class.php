@@ -5,23 +5,24 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 10
  * @since       PHPBoost 3.0 - 2010 02 08
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface SearchableExtensionPoint extends ExtensionPoint
 {
 	const EXTENSION_POINT = 'search';
 
-	function get_search_request($args);
+	function get_search_request(array $args): string;
 
 	/**
 	 * Returns <code>true</code> if special search options could be applied to this module
 	 * @return bool <code>true</code> if special search options could be applied to this module
 	 */
-	function has_search_options();
+	function has_search_options(): bool;
 
-	function has_customized_results();
+	function has_customized_results(): bool;
 
 	/*function compute_search_results($args);
 

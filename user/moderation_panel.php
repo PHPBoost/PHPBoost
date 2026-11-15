@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 1.6 - 2007 03 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -20,7 +20,7 @@ $Bread_crumb->add($lang['user.moderation.panel'], UserUrlBuilder::moderation_pan
 
 $request = AppContext::get_request();
 
-$action        = $request->get_getvalue('action', 'warning', TSTRING_UNCHANGE);
+$action        = $request->get_getvalue('action', 'warning');
 $id_get        = $request->get_getint('id', 0);
 $valid_user    = $request->get_postbool('valid_user', false);
 $search_member = $request->get_postbool('search_member', false);
@@ -49,6 +49,7 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL)) // If u
 
 $view = new FileTemplate('user/moderation_panel.tpl');
 $view->add_lang($lang);
+$member = $info_mbr = [];
 
 $view->put_all([
 	'U_WARNING' => UserUrlBuilder::moderation_panel('warning')->rel(),
@@ -64,7 +65,7 @@ if ($action == 'punish')
 	// User management
 	$readonly_duration = $request->get_postint('new_info', 0);
 	$readonly = $readonly_duration > 0 ? (time() + $readonly_duration) : 0;
-	$readonly_contents = $request->get_postvalue('action_contents', '', TSTRING_UNCHANGE);
+	$readonly_contents = $request->get_postvalue('action_contents', '');
 	if (!empty($id_get) && $valid_user) // Update of warning level
 	{
 		if ($id_get != AppContext::get_current_user()->get_id())
@@ -100,14 +101,20 @@ if ($action == 'punish')
 			$login = $request->get_postvalue('login_mbr', '');
 
 			$user_id = 0;
-			try {
+			try
+            {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', ['name' => '%' . $login . '%']);
-			} catch (RowNotFoundException $ex) {}
+			}
+            catch (RowNotFoundException $ex) {}
 
 			if (!empty($user_id) && !empty($login))
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish', $user_id));
+            }
 			else
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('punish'));
+            }
 		}
 
 		$view->put_all([
@@ -154,9 +161,12 @@ if ($action == 'punish')
 	}
 	else // Display of user infos
 	{
-		try {
+		try
+        {
 			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'delay_readonly'], 'WHERE user_id=:id', ['id' => $id_get]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
@@ -226,15 +236,18 @@ if ($action == 'punish')
 		]);
 	}
 }
-else if ($action == 'warning')
+elseif ($action == 'warning')
 {
 	$new_warning_level = $request->get_postint('new_info', 0);
-	$warning_contents = $request->get_postvalue('action_contents', '', TSTRING_UNCHANGE);
+	$warning_contents = $request->get_postvalue('action_contents', '');
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && AppContext::get_request()->has_postparameter('new_info') && !empty($id_get) && $valid_user) //On met à  jour le niveau d'avertissement
 	{
-		try {
+		try
+        {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['user_id', 'level', 'email'], 'WHERE user_id=:id', ['id' => $id_get]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
@@ -276,14 +289,20 @@ else if ($action == 'warning')
 			$login = $request->get_postvalue('login_mbr', '');
 
 			$user_id = 0;
-			try {
+			try
+            {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', ['name' => '%' . $login . '%']);
-			} catch (RowNotFoundException $ex) {}
+			}
+            catch (RowNotFoundException $ex) {}
 
 			if (!empty($user_id) && !empty($login))
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning', $user_id));
+            }
 			else
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('warning'));
+            }
 		}
 
 		$view->put_all([
@@ -328,9 +347,12 @@ else if ($action == 'warning')
 	}
 	else // Display of user infos
 	{
-		try {
+		try
+        {
 			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'warning_percentage'], 'WHERE user_id=:id', ['id' => $id_get]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
@@ -341,9 +363,13 @@ else if ($action == 'warning')
 		for ($j = 0; $j <=10; $j++)
 		{
 			if (10 * $j == $member['warning_percentage'])
+            {
 				$select .= '<option value="' . 10 * $j . '" selected="selected">' . 10 * $j . '%</option>';
+            }
 			else
+            {
 				$select .= '<option value="' . 10 * $j . '">' . 10 * $j . '%</option>';
+            }
 		}
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
@@ -369,13 +395,16 @@ else if ($action == 'warning')
 }
 else
 {
-	$user_ban_duration = $request->get_postvalue('user_ban', '', TSTRING_UNCHANGE);
+	$user_ban_duration = $request->get_postvalue('user_ban', '');
 	$user_ban = $user_ban_duration > 0 ? (time() + $user_ban_duration) : 0;
 	if ($valid_user && !empty($id_get)) // User ban
 	{
-		try {
+		try
+        {
 			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['user_id', 'display_name', 'warning_percentage', 'email'], 'WHERE user_id=:id', ['id' => $id_get]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
@@ -409,14 +438,20 @@ else
 			$login = $request->get_postvalue('login_mbr', '');
 
 			$user_id = 0;
-			try {
+			try
+            {
 				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :name', ['name' => '%' . $login . '%']);
-			} catch (RowNotFoundException $ex) {}
+			}
+            catch (RowNotFoundException $ex) {}
 
 			if (!empty($user_id) && !empty($login))
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban', $user_id));
+            }
 			else
+            {
 				AppContext::get_response()->redirect(UserUrlBuilder::moderation_panel('ban'));
+            }
 		}
 
 		$view->put_all([
@@ -464,9 +499,12 @@ else
 	}
 	else // Display of user infos
 	{
-		try {
+		try
+        {
 			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'delay_banned', 'warning_percentage'], 'WHERE user_id=:id', ['id' => $id_get]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
@@ -507,7 +545,9 @@ else
 			}
 		}
 		if ($member['warning_percentage'] == 100)
+        {
 			$key_sanction = count($array_time);
+        }
 
 		// Display of warnings
 		foreach ($array_time as $key => $time)

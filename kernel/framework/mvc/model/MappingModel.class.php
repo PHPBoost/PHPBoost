@@ -5,21 +5,21 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 02
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MappingModel
 {
-	private $classname;
-	private $table_name;
-	private $primary_key;
-	private $fields;
-	private $joins;
-	private $properties_list = [];
+	private string $classname;
+	private string $table_name;
+	private MappingModelField$primary_key;
+	private array $fields;
+	private array $joins;
+	private array $properties_list = [];
 
-	public function __construct($classname, $table_name, MappingModelField $primary_key, $fields,
-	$joins = [])
+	public function __construct(string $classname, string $table_name, MappingModelField $primary_key, array $fields, array $joins = [])
 	{
 		$this->classname = $classname;
 		$this->table_name = $table_name;
@@ -40,7 +40,7 @@ class MappingModel
 	 * @param mixed[] $properties_map
 	 * @return PropertiesMapInterface
 	 */
-	public function new_instance($properties_map = [])
+	public function new_instance(array $properties_map = []): PropertiesMapInterface
 	{
 		/* @var PropertiesMapInterface */
 		$instance = new $this->classname();
@@ -52,52 +52,39 @@ class MappingModel
 	 * @param PropertiesMapInterface $instance
 	 * @return mixed[]
 	 */
-	public function get_raw_value($instance)
+	public function get_raw_value($instance): array
 	{
 		return $instance->get_raw_value($this->properties_list);
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_class_name()
+	public function get_class_name(): string
 	{
 		return $this->classname;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function get_table_name()
+	public function get_table_name(): string
 	{
 		return $this->table_name;
 	}
 
-	/**
-	 * @return MappingModelField
-	 */
-	public function get_primary_key()
+	public function get_primary_key(): MappingModelField
 	{
 		return $this->primary_key;
 	}
 
-	/**
-	 * @return MappingModelField[]
-	 */
-	public function get_fields()
+	/** @return MappingModelField[] */
+	public function get_fields(): array
 	{
 		return $this->fields;
 	}
 
-	/**
-	 * @return MappingModelField[]
-	 */
-	public function get_joins()
+	/** @return JoinMappingModel[] */
+	public function get_joins(): array
 	{
 		return $this->joins;
 	}
 
-	private function build_properties_list()
+	private function build_properties_list(): void
 	{
 		$this->properties_list[] = $this->primary_key->get_property_name();
 		foreach ($this->fields as $field)

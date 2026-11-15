@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2012 02 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,24 +11,27 @@
 
 class UserCommentsController extends AbstractController
 {
-	private $module;
-	private $user;
-	private $view;
-	private $lang;
-	private $current_user;
-	private $comments_number;
-	private $ids = [];
+	private mixed $module = null;
+	private ?User $user = null;
+	private ?Template $view = null;
+	private array $lang = [];
+	private ?CurrentUser $current_user = null;
+	private int $comments_number = 0;
+	private array $ids = [];
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$module_id = $request->get_getstring('module_id', '');
 		$user_id = $request->get_getint('user_id', 0);
 
 		if (!empty($user_id))
 		{
-			try {
+			try
+            {
 				$this->user = UserService::get_user($user_id);
-			} catch (Exception $e) {
+			}
+            catch (Exception $e)
+            {
 				$error_controller = PHPBoostErrors::unexisting_element();
 				DispatchManager::redirect($error_controller);
 			}
@@ -50,7 +53,7 @@ class UserCommentsController extends AbstractController
 		return $this->build_response($request);
 	}
 
-	private function init($request)
+	private function init(HTTPRequestCustom $request): void
 	{
 		$this->view = new FileTemplate('user/UserCommentsController.tpl');
 		$this->lang = LangLoader::get_all_langs();
@@ -76,13 +79,12 @@ class UserCommentsController extends AbstractController
 		}
 	}
 
-	private function build_view($request)
+	private function build_view(HTTPRequestCustom $request): FileTemplate
 	{
 		$template = new FileTemplate('framework/content/comments/comments_list.tpl');
 		$template->add_lang($this->lang);
 		$page = $request->get_getint('page', 1);
 
-		$id_module = $this->module === null ? null : $this->module->get_id();
 		$pagination = $this->get_pagination($page);
 
 		$this->view->put_all([
@@ -90,11 +92,12 @@ class UserCommentsController extends AbstractController
 			'PAGINATION' => $pagination->display()
 		]);
 
-		$result = PersistenceContext::get_querier()->select('SELECT
-			comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
-			topic.*,
-			member.user_id, member.display_name, member.level, member.user_groups,
-			ext_field.user_avatar
+		$result = PersistenceContext::get_querier()->select('
+            SELECT
+                comments.*, comments.timestamp AS comment_timestamp, comments.id AS id_comment,
+                topic.*,
+                member.user_id, member.display_name, member.level, member.user_groups,
+                ext_field.user_avatar
 			FROM ' . DB_TABLE_COMMENTS . ' comments
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = comments.user_id
@@ -104,7 +107,8 @@ class UserCommentsController extends AbstractController
 			LIMIT :number_items_per_page OFFSET :display_from', [
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-		]);
+            ]
+        );
 
 		$user_accounts_config = UserAccountsConfig::load();
 		$comments_authorizations = new CommentsAuthorizations();
@@ -119,7 +123,9 @@ class UserCommentsController extends AbstractController
 			$this->ids[$this->comments_number] = $id;
 
 			if ($row['user_id'] == $this->current_user->get_id())
+            {
 				$display_delete_button = true;
+            }
 
 			$timestamp = new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE);
 
@@ -128,30 +134,31 @@ class UserCommentsController extends AbstractController
 			$template->assign_block_vars('comments', array_merge(
 				Date::get_array_tpl_vars($timestamp,'date'),
 				[
-				'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
-				'C_VISITOR'              => empty($row['display_name']),
-				'C_VIEW_TOPIC'           => true,
-				'C_GROUP_COLOR'          => !empty($group_color),
-				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
-				'C_MODERATOR'            => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
+                    'C_CURRENT_USER_MESSAGE' => $this->current_user->get_display_name() == $row['display_name'],
+                    'C_VISITOR'              => empty($row['display_name']),
+                    'C_VIEW_TOPIC'           => true,
+                    'C_GROUP_COLOR'          => !empty($group_color),
+                    'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
+                    'C_MODERATOR'            => $comments_authorizations->is_authorized_moderation() || $display_delete_button,
 
-				'U_TOPIC'   => Url::to_rel($path),
-				'U_EDIT'    => CommentsUrlBuilder::edit($path, $id)->rel(),
-				'U_DELETE'  => CommentsUrlBuilder::delete($path, $id, REWRITED_SCRIPT)->rel(),
-				'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-				'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
+                    'U_TOPIC'   => Url::to_rel($path),
+                    'U_EDIT'    => CommentsUrlBuilder::edit($path, $id)->rel(),
+                    'U_DELETE'  => CommentsUrlBuilder::delete($path, $id, REWRITED_SCRIPT)->rel(),
+                    'U_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+                    'U_AVATAR'  => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
 
-				'COMMENT_NUMBER' => $this->comments_number,
-				'ID_COMMENT'     => $id,
-				'MESSAGE'        => FormatingHelper::second_parse($row['message']),
+                    'COMMENT_NUMBER' => $this->comments_number,
+                    'ID_COMMENT'     => $id,
+                    'MESSAGE'        => FormatingHelper::second_parse($row['message']),
 
-				// User
-				'USER_ID'     => $row['user_id'],
-				'PSEUDO'      => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
-				'LEVEL_CLASS' => UserService::get_level_class($row['level']),
-				'GROUP_COLOR' => $group_color,
-				'L_LEVEL'     => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
-			]));
+                    // User
+                    'USER_ID'     => $row['user_id'],
+                    'PSEUDO'      => empty($row['display_name']) ? $row['pseudo'] : $row['display_name'],
+                    'LEVEL_CLASS' => UserService::get_level_class($row['level']),
+                    'GROUP_COLOR' => $group_color,
+                    'L_LEVEL'     => UserService::get_level_lang($row['level'] !== null ? $row['level'] : User::VISITOR_LEVEL)
+                ]
+            ));
 
 			$template->put_all([
 				'MODULE_ID'    => $row['module_id'],
@@ -170,7 +177,7 @@ class UserCommentsController extends AbstractController
 		return $template;
 	}
 
-	private function get_pagination($page)
+	private function get_pagination(int $page): ModulePagination
 	{
 		$id_module = $this->module === null ? null : $this->module->get_id();
 		$user_id = $this->user !== null ? $this->user->get_id() : null;
@@ -192,7 +199,7 @@ class UserCommentsController extends AbstractController
 		return $pagination;
 	}
 
-	private function build_where_request()
+	private function build_where_request(): string
 	{
 		$where = 'WHERE ';
 		if ($this->module !== null && $this->user !== null)
@@ -214,7 +221,7 @@ class UserCommentsController extends AbstractController
 		return $where;
 	}
 
-	private function build_modules_choice_form()
+	private function build_modules_choice_form(): HTMLForm
 	{
 		$selected = $this->module !== null ? $this->module->get_id() : '';
 		$user_id = $this->user !== null ? $this->user->get_id() : null;
@@ -227,7 +234,7 @@ class UserCommentsController extends AbstractController
 		return $form;
 	}
 
-	private function build_select()
+	private function build_select(): array
 	{
 		$modules = [new FormFieldSelectChoiceOption($this->lang['comment.see.all.comments'], '')];
 		$comments_config = CommentsConfig::load();
@@ -242,7 +249,7 @@ class UserCommentsController extends AbstractController
 		return $modules;
 	}
 
-	private function build_response($request)
+	private function build_response(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$module_id = $request->get_getstring('module_id', '');
 		$page = $request->get_getint('page', 1);
@@ -251,9 +258,13 @@ class UserCommentsController extends AbstractController
 		$graphical_environment = $response->get_graphical_environment();
 
 		if ($this->user !== null)
+        {
 			$graphical_environment->set_page_title($this->user->get_display_name(), $this->lang['comment.comments'], $page);
+        }
 		else
+        {
 			$graphical_environment->set_page_title($this->lang['comment.comments'], '', $page);
+        }
 
 		$graphical_environment->get_seo_meta_data()->set_description($this->user !== null ? StringVars::replace_vars($this->lang['user.seo.comments.user'], ['name' => $this->user->get_display_name()]) : $this->lang['user.seo.comments']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::comments($module_id, $this->user !== null ? $this->user->get_id() : null, $page));
@@ -275,7 +286,7 @@ class UserCommentsController extends AbstractController
 		return $response;
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (!AppContext::get_current_user()->check_auth(CommentsConfig::load()->get_authorizations(), CommentsAuthorizations::READ_AUTHORIZATIONS))
 		{

@@ -5,44 +5,44 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 6.0 - 2019 11 02
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultCategoriesFormController extends AbstractCategoriesFormController
 {
-	protected function get_id_category()
+	protected function get_id_category(): int
 	{
 		return AppContext::get_request()->get_getint('id', 0);
 	}
 
-	protected function get_categories_management_url()
+	protected function get_categories_management_url(): Url
 	{
 		return CategoriesUrlBuilder::manage(Environment::get_running_module_name());
 	}
 
-	protected function get_add_category_url()
+	protected function get_add_category_url(): Url
 	{
 		return CategoriesUrlBuilder::add(AppContext::get_request()->get_getint('id_parent', 0), Environment::get_running_module_name());
 	}
 
-	protected function get_edit_category_url(Category $category)
+	protected function get_edit_category_url(Category $category): Url
 	{
 		return CategoriesUrlBuilder::edit($category->get_id(), Environment::get_running_module_name());
 	}
 
-	protected function get_module_home_page_url()
+	protected function get_module_home_page_url(): Url
 	{
 		return ModulesUrlBuilder::home();
 	}
 
-	protected function get_module_home_page_title()
+	protected function get_module_home_page_title(): string
 	{
 		return ModulesManager::get_module(Environment::get_running_module_name())->get_configuration()->get_name();
 	}
 
-	protected function check_authorizations()
+	protected function check_authorizations(): void
 	{
 		if (!CategoriesAuthorizationsService::check_authorizations()->manage())
 		{

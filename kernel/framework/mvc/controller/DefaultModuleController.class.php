@@ -6,40 +6,37 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 6.0 - 2021 11 29
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class DefaultModuleController extends ModuleController
 {
-	/**
-	 * @var HTTPRequestCustom
-	 */
-	protected $request;
+	protected ?HTTPRequestCustom $request;
+	protected mixed $config = null;
+	protected ?array $lang = null;
+	protected ?Template $view = null;
+	protected mixed $item = null;
+	protected bool $is_new_item = false;
+	protected bool $is_duplication = false;
+	protected ?HTMLForm $form = null;
+	protected ?FormButtonDefaultSubmit $submit_button = null;
 
-	protected $config;
-	protected $lang;
-	protected $view;
-	protected $item;
-
-	protected $is_new_item;
-	protected $is_duplication;
-	protected $form;
-	protected $submit_button;
-
-	public function __construct($module_id = '')
+	public function __construct(string $module_id = '')
 	{
 		parent::__construct($module_id);
 
 		if (!ModulesManager::is_module_installed(self::$module_id))
+        {
 			return PHPBoostErrors::module_not_installed();
+        }
 
 		$this->init_parameters();
 		$this->init_view();
 	}
 
-	protected function init_parameters()
+	protected function init_parameters(): void
 	{
 		$this->request        = AppContext::get_request();
 		$this->config         = self::get_module_configuration()->get_configuration_parameters();
@@ -47,7 +44,7 @@ abstract class DefaultModuleController extends ModuleController
 		$this->init_lang();
 	}
 
-	protected function init_view()
+	protected function init_view(): void
 	{
 		$this->view = $this->get_template_to_use();
 
@@ -59,20 +56,17 @@ abstract class DefaultModuleController extends ModuleController
 		]);
 	}
 
-	protected function init_lang()
+	protected function init_lang(): void
 	{
 		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
-	/**
-	 * @return Template
-	 */
-	protected function get_template_to_use()
+	protected function get_template_to_use(): Template
 	{
 		return new StringTemplate($this->get_template_string_content());
 	}
 
-	protected function get_template_string_content()
+	protected function get_template_string_content(): string
 	{
 		return '# INCLUDE MESSAGE_HELPER # # INCLUDE CONTENT #';
 	}

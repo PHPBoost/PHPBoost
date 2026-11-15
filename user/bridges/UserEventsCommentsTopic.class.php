@@ -1,0 +1,31 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @since       PHPBoost 3.0 - 2011 09 30
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
+class UserEventsCommentsTopic extends CommentsTopic
+{
+	const TOPIC_IDENTIFIER = 'events';
+
+	public function __construct()
+	{
+		parent::__construct('user', self::TOPIC_IDENTIFIER);
+	}
+
+	public function get_events(): CommentsTopicEvents
+	{
+		return new UserEventsCommentsTopicEvents($this);
+	}
+
+	public function is_displayed(): bool
+	{
+		return true;
+	}
+}
+?>

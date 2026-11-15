@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 02
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2010 10 20
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -62,7 +62,7 @@ class ExceptionUtils
 		return $types;
 	}
 
-	public static function get_arg_type(array $arg): string
+	public static function get_arg_type(mixed $arg): string
 	{
 		if (is_array($arg))
 		{

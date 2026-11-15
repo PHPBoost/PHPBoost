@@ -6,8 +6,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2009 10 02
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface DAO
@@ -20,7 +21,7 @@ interface DAO
      * If the object does not exist, it is created, else,  just updated
      * @param PropertiesMapInterface $object the object to save
      */
-    function save(PropertiesMapInterface $object);
+    function save(PropertiesMapInterface $object): void;
 
     /**
      * Update all fields in the table to the given value if row match the where clause.
@@ -28,28 +29,28 @@ interface DAO
      * @param string $where the part of the query that came just after the from
      * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
-    function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = []);
+    function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = []): void;
 
     /**
      * Deletes <code>$object</code> from the table.
      * If the object does not exist, nothing is done
      * @param PropertiesMapInterface $object the object to delete
      */
-    function delete(PropertiesMapInterface $object);
+    function delete(PropertiesMapInterface $object): void;
 
     /**
      * Deletes all object matching the where clause from the table.
      * @param string $where the part of the query that came just after the from
      * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
-    function delete_all($where = DAO::WHERE_ALL, array $parameters = []);
+    function delete_all($where = DAO::WHERE_ALL, array $parameters = []): void;
 
     /**
      * Count the number of object in the table matching the <code>$where</code> clause
      * @param string $where the part of the query that came just after the from
      * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
-    function count($where = DAO::WHERE_ALL, array $parameters = []);
+    function count($where = DAO::WHERE_ALL, array $parameters = []): void;
 
 	/**
 	 * retrieves the object with the <code>$id</code> primary identifier
@@ -57,7 +58,7 @@ interface DAO
 	 * @return PropertiesMapInterface the objet retrieved from the table
 	 * @throws ObjectNotFoundException if no objects with this id are found in the table
 	 */
-	function find_by_id($id);
+	function find_by_id(int|string $id): PropertiesMapInterface;
 
 	/**
 	 * retrieves the <code>$limit</code> first objects from the <code>$offset</code> one.
@@ -69,16 +70,16 @@ interface DAO
 	 * <code>[['column' => $column1, 'way' => $way1], ...]</code>
 	 * <code>$column1</code> must be a column name or an alias and <code>$way</code> could be
 	 * ascending (<code>SQLQuerier::ORDER_BY_ASC</code>) or descending (<code>SQLQuerier::ORDER_BY_DESC</code>)
-	 * @return QueryResultMapper the objects list
+	 * @return SelectQueryResultMapper the objects list
 	 */
-	function find_all($limit = 100, $offset = 0, $order_by = []);
+	function find_all(int $limit = 100, int $offset = 0, array $order_by = []): SelectQueryResultMapper;
 
 	/**
 	 * retrieves all the objects in the table matching the <code>$criteria</code>
 	 * @param string $criteria the part of the query that came just after the from
 	 * @param string[] $parameters the query vars to inject into the <code>$criteria</code>
-	 * @return QueryResultMapper the objects list
+	 * @return SelectQueryResultMapper the objects list
 	 */
-	function find_by_criteria($criteria, $parameters = []);
+	function find_by_criteria(string $criteria, array $parameters = []): SelectQueryResultMapper;
 }
 ?>

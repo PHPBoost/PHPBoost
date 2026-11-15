@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 16
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2020 01 16
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      xela <xela@phpboost.com>
@@ -13,13 +13,15 @@
 
 class DefaultItemsManagementController extends AbstractItemController
 {
-	private $elements_number = 0;
-	private $ids = [];
+	private int $elements_number = 0;
+	private array $ids = [];
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		if (!$this->check_authorizations())
+        {
 			$this->display_user_not_authorized_page();
+        }
 
 		$current_page = $this->build_table();
 
@@ -28,7 +30,7 @@ class DefaultItemsManagementController extends AbstractItemController
 		return $this->generate_response($current_page);
 	}
 
-	private function build_table()
+	private function build_table(): mixed
 	{
 		$display_categories = self::get_module_configuration()->has_categories() && CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->has_categories();
 
@@ -45,7 +47,9 @@ class DefaultItemsManagementController extends AbstractItemController
 		);
 
 		if ($display_categories)
+        {
 			array_splice($columns, 1, 0, [new HTMLTableColumn($this->lang['category.category'], 'id_category')]);
+        }
 
 		$table_model = new SQLHTMLTableModel(self::get_module_configuration()->get_items_table_name(), 'items-manager', $columns, new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
@@ -56,7 +60,9 @@ class DefaultItemsManagementController extends AbstractItemController
 		$table_model->add_filter(new HTMLTableDateLessThanOrEqualsToSQLFilter('creation_date', 'filter2', $this->lang['common.creation.date'] . ' ' . TextHelper::lcfirst($this->lang['common.maximum'])));
 		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['common.author']));
 		if ($display_categories)
+        {
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
+        }
 
 		if (!empty($this->get_additional_html_table_filters()))
 		{
@@ -66,7 +72,9 @@ class DefaultItemsManagementController extends AbstractItemController
 
 		$status_list = [Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']];
 		if (self::get_module_configuration()->feature_is_enabled('deferred_publication'))
+        {
 			$status_list[Item::DEFERRED_PUBLICATION] = $this->lang['common.status.deffered.date'];
+        }
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model, $this->lang);
@@ -93,7 +101,7 @@ class DefaultItemsManagementController extends AbstractItemController
 			$edit_link = new EditLinkHTMLElement(ItemsUrlBuilder::edit($item->get_id()));
 			$delete_link = new DeleteLinkHTMLElement(ItemsUrlBuilder::delete($item->get_id()));
 
-			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
+			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level());
 			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$br = new BrHTMLElement();
@@ -106,21 +114,26 @@ class DefaultItemsManagementController extends AbstractItemController
 			else
 			{
 				if ($item->get_publishing_start_date() != null)
+                {
 					$dates = $item->get_publishing_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+                }
 				else
 				{
 					if ($item->get_publishing_end_date() != null)
+                    {
 						$dates = $this->lang['common.until.alt'] . ' ' . $item->get_publishing_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE);
+                    }
 				}
 			}
 
 			$start_and_end_dates = new SpanHTMLElement($dates, [], 'smaller');
 			$status = new SpanHTMLElement($item->get_status(), [], 'publication-status ' . $item->get_status_class());
 
-			$row = array_merge([
-				new HTMLTableRowCell(new LinkHTMLElement(self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()) : ItemsUrlBuilder::display_item($item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'align-left'),
-				new HTMLTableRowCell($author),
-				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
+			$row = array_merge(
+                [
+                    new HTMLTableRowCell(new LinkHTMLElement(self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()) : ItemsUrlBuilder::display_item($item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'align-left'),
+                    new HTMLTableRowCell($author),
+                    new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
 				],
 				$this->get_additional_html_table_row_cells($item),
 				[
@@ -130,7 +143,9 @@ class DefaultItemsManagementController extends AbstractItemController
 			);
 
 			if ($display_categories)
+            {
 				array_splice($row, 1, 0, [new HTMLTableRowCell(new LinkHTMLElement(CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), self::$module_id), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name())))]);
+            }
 
 			$results[] = new HTMLTableRow($row);
 		}
@@ -164,27 +179,27 @@ class DefaultItemsManagementController extends AbstractItemController
 		}
 	}
 
-	protected function check_authorizations()
+	protected function check_authorizations(): mixed
 	{
 		return self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, self::$module_id)->moderation() : ItemsAuthorizationsService::check_authorizations(self::$module_id)->moderation();
 	}
 
-	protected function get_additional_html_table_columns()
+	protected function get_additional_html_table_columns(): array
 	{
 		return [];
 	}
 
-	protected function get_additional_html_table_row_cells(&$item)
+	protected function get_additional_html_table_row_cells(mixed &$item): array
 	{
 		return [];
 	}
 
-	protected function get_additional_html_table_filters()
+	protected function get_additional_html_table_filters(): array
 	{
 		return [];
 	}
 
-	private function generate_response($page = 1)
+	private function generate_response($page = 1): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($this->view);
 

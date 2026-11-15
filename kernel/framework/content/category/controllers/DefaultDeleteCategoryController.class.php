@@ -5,50 +5,52 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 6.0 - 2019 11 02
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
 {
-	protected function get_id_category()
+	protected function get_id_category(): int
 	{
 		return AppContext::get_request()->get_getint('id', 0);
 	}
 
-	protected function get_categories_management_url()
+	protected function get_categories_management_url(): Url
 	{
 		return CategoriesUrlBuilder::manage(Environment::get_running_module_name());
 	}
 
-	protected function get_delete_category_url(Category $category)
+	protected function get_delete_category_url(Category $category): Url
 	{
 		return CategoriesUrlBuilder::delete($category->get_id(), Environment::get_running_module_name());
 	}
 
-	protected function get_module_home_page_url()
+	protected function get_module_home_page_url(): Url
 	{
 		return ModulesUrlBuilder::home();
 	}
 
-	protected function get_module_home_page_title()
+	protected function get_module_home_page_title(): string
 	{
 		return ModulesManager::get_module(Environment::get_running_module_name())->get_configuration()->get_name();
 	}
 
-	protected function clear_cache()
+	protected function clear_cache(): void
 	{
 		$module_id = Environment::get_running_module_name();
 		$cache_classes = [ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache'];
 		foreach ($cache_classes as $cache_class)
 		{
 			if (ClassLoader::is_class_registered_and_valid($cache_class) && is_subclass_of($cache_class, 'CacheData'))
+            {
 				call_user_func($cache_class .'::invalidate');
+            }
 		}
 	}
 
-	protected function check_authorizations()
+	protected function check_authorizations(): void
 	{
 		if (!CategoriesAuthorizationsService::check_authorizations()->manage())
 		{

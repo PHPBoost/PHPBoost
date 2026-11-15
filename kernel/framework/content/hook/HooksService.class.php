@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2021 09 14
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HooksService
@@ -15,7 +16,7 @@ class HooksService
      * Get the list of modules that have a Hook child class
      * @return array ist of modules that have a Hook child class
      */
-    public static function get_hooks()
+    public static function get_hooks(): array
     {
         $hooks = [];
         foreach (AppContext::get_extension_provider_service()->get_extension_point(Hook::EXTENSION_POINT) as $id => $provider)
@@ -30,7 +31,7 @@ class HooksService
      * Get the list of all specific hooks defined in additional modules
      * @return array List of modules specific hooks
      */
-    public static function get_modules_specific_hooks_actions()
+    public static function get_modules_specific_hooks_actions(): array
     {
         $actions = [];
         foreach (ModulesManager::get_installed_modules_map() as $name => $module)
@@ -44,7 +45,7 @@ class HooksService
      * Get the list of modules that have specific hooks defined
      * @return array List of modules
      */
-    public static function get_modules_with_specific_hooks_list()
+    public static function get_modules_with_specific_hooks_list(): array
     {
         $modules = [];
         foreach (ModulesManager::get_installed_modules_map() as $name => $module)
@@ -59,7 +60,7 @@ class HooksService
      * Get the list of all the specific hooks defined in the modules with their localized name
      * @return array List of specific hooks (hook name in id and localized name in parameter if exists, empty value otherwise)
      */
-    public static function get_specific_hooks_list_with_localized_names()
+    public static function get_specific_hooks_list_with_localized_names(): array
     {
         $hooks = [];
         foreach (self::get_modules_with_specific_hooks_list() as $module_id)
@@ -81,7 +82,7 @@ class HooksService
      * @param array $properties (optional) Properties of the item (title, content, ...)
      * @param string $description (optional) Description of the action
      */
-    public static function execute_hook_action($action, $module_id, array $properties = [], $description = '')
+    public static function execute_hook_action(string $action, string $module_id, array $properties = [], string $description = ''): void
     {
         $action_function = 'on_' . $action . '_action';
 
@@ -89,9 +90,13 @@ class HooksService
         {
             $hook_name = $hook->get_hook_name();
             if (method_exists($hook_name, $action_function) && is_callable([new $hook_name(), $action_function]))
+            {
                 $hook->$action_function($module_id, $properties, $description);
+            }
             else if (in_array($action, self::get_modules_specific_hooks_actions()) && ModulesManager::is_module_installed($module_id) && ModulesManager::is_module_activated($module_id))
+            {
                 $hook->execute_module_specific_hook_action($action, $module_id, $properties, $description);
+            }
         }
     }
 
@@ -103,15 +108,17 @@ class HooksService
      * @param array $properties (optional) Properties of the element (title, url, ...)
      * @param string $description (optional) Description of the action
      */
-    public static function execute_hook_typed_action($action, $type, $element_id, array $properties = [], $description = '')
+    public static function execute_hook_typed_action(string $action, string $type, string $element_id, array $properties = [], string $description = ''): void
     {
         $action_function = 'on_' . $action . '_action';
-        
+
         foreach (self::get_hooks() as $hook)
         {
             $hook_name = $hook->get_hook_name();
             if (method_exists($hook_name, $action_function) && is_callable([new $hook_name(), $action_function]))
+            {
                 $hook->$action_function($type, $element_id, $properties, $description);
+            }
         }
     }
 
@@ -122,7 +129,7 @@ class HooksService
      * @param array $properties (optional) Properties of the item (title, content, ...)
      * @return string Modified content
      */
-    public static function execute_hook_display_action($module_id, $content, array $properties = [])
+    public static function execute_hook_display_action(string $module_id, string $content, array $properties = []): string
     {
         foreach (self::get_hooks() as $hook)
         {
@@ -140,9 +147,9 @@ class HooksService
      * Execute all Hook child classes functions defined to display additional content related to a user.
      * @param string $module_id Name of the current module
      * @param array $properties (optional) Properties of the user (display_name, ...)
-     * @return string Content to display
+     * @return array Content to display
      */
-    public static function execute_hook_display_user_additional_informations_action($module_id, array $properties = [])
+    public static function execute_hook_display_user_additional_informations_action(string $module_id, array $properties = []): array
     {
         $content = [];
         foreach (self::get_hooks() as $hook)

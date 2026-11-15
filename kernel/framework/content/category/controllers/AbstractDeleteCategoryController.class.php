@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 02 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,31 +14,27 @@
 
 abstract class AbstractDeleteCategoryController extends ModuleController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	protected $form;
-	/**
-	 * @var FormButtonSubmit
-	 */
-	private $submit_button;
+	protected HTMLForm $form;
+	private FormButtonSubmit $submit_button;
+	private array $lang;
+	protected static CategoriesManager $categories_manager;
 
-	private $lang;
-
-	protected static $categories_manager;
-
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->check_authorizations();
 
 		$this->init();
 
-		try {
+		try
+        {
 			$category = $this->get_category();
-		} catch (CategoryNotFoundException $e) {
+		}
+        catch (CategoryNotFoundException $e)
+        {
 			$controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($controller);
-		}
+            throw $e;
+        }
 
 		$children = $this->get_category_children($category);
 		if (empty($children) && !$this->get_category_items_exists($category))
@@ -86,7 +82,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		return $this->generate_response($tpl);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
@@ -94,7 +90,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$this->lang = LangLoader::get_all_langs(self::$module_id);
 	}
 
-	private function build_form()
+	private function build_form(): void
 	{
 		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->get_title());
@@ -115,11 +111,9 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 			)
 		);
 
-
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($this->get_category()->get_id());
 		$fieldset->add_field(self::$categories_manager->get_select_categories_form_field('move_in_other_cat', $this->lang['category.move.to'], $this->get_category()->get_id_parent(), $options));
-
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -128,7 +122,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$this->form = $form;
 	}
 
-	private function get_category_children(Category $category, $enable_recursive_exploration = true)
+	private function get_category_children(Category $category, bool $enable_recursive_exploration = true): array
 	{
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($category->get_id());
@@ -136,7 +130,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		return self::$categories_manager->get_children($category->get_id(), $options);
 	}
 
-	private function get_category_items_exists(Category $category)
+	private function get_category_items_exists(Category $category): mixed
 	{
 		return PersistenceContext::get_querier()->row_exists(
 		self::$categories_manager->get_categories_items_parameters()->get_table_name_contains_items(),
@@ -145,7 +139,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		]);
 	}
 
-	private function get_category()
+	private function get_category(): Category
 	{
 		$id_category = $this->get_id_category();
 		if (!empty($id_category) && self::$categories_manager->get_categories_cache()->category_exists($id_category))
@@ -158,7 +152,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	/**
 	 * @return string Categories management page title
 	 */
-	protected function get_categories_management_title()
+	protected function get_categories_management_title(): string
 	{
 		return $this->lang['category.categories.management'];
 	}
@@ -166,7 +160,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	/**
 	 * @return string Page title
 	 */
-	protected function get_title()
+	protected function get_title(): string
 	{
 		return $this->lang['category.delete'];
 	}
@@ -174,7 +168,7 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	/**
 	 * @return string delete description
 	 */
-	protected function get_description()
+	protected function get_description(): string
 	{
 		return $this->lang['category.delete.description'];
 	}
@@ -182,24 +176,16 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 	/**
 	 * @return string delete success message
 	 */
-	protected function get_success_message()
+	protected function get_success_message(): string
 	{
 		return $this->lang['category.success.delete'];
 	}
 
-	/**
-	 * @return Clear elements cache if any
-	 */
-	protected function clear_cache()
+	protected function clear_cache(): void
 	{
-		return true;
 	}
 
-	/**
-	 * @param View $view
-	 * @return Response
-	 */
-	protected function generate_response(View $view)
+	protected function generate_response(View $view): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($view);
 
@@ -216,43 +202,21 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		return $response;
 	}
 
-	/**
-	 * @return CategoriesManager
-	 */
-	protected static function get_categories_manager()
+	protected static function get_categories_manager(): CategoriesManager
 	{
 		return CategoriesService::get_categories_manager();
 	}
 
-	/**
-	 * @return string id of the category to edit / delete
-	 */
-	abstract protected function get_id_category();
+	abstract protected function get_id_category(): int;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_categories_management_url();
+	abstract protected function get_categories_management_url(): Url;
 
-	/**
-	 * @param int $category Category
-	 * @return Url
-	 */
-	abstract protected function get_delete_category_url(Category $category);
+	abstract protected function get_delete_category_url(Category $category): Url;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_module_home_page_url();
+	abstract protected function get_module_home_page_url(): Url;
 
-	/**
-	 * @return string module home page title
-	 */
-	abstract protected function get_module_home_page_title();
+	abstract protected function get_module_home_page_title(): string;
 
-	/**
-	 * @return boolean Authorization to manage categories
-	 */
-	abstract protected function check_authorizations();
+	abstract protected function check_authorizations(): void;
 }
 ?>

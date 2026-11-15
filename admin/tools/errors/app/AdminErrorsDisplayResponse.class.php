@@ -1,0 +1,28 @@
+<?php
+/**
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
+ * @since       PHPBoost 3.0 - 2009 12 13
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
+class AdminErrorsDisplayResponse extends AdminMenuDisplayResponse
+{
+	public function __construct(View $view, string $title_page, int $page = 1)
+	{
+		parent::__construct($view);
+
+		$lang = LangLoader::get_all_langs();
+		$this->set_title($lang['admin.errors']);
+
+		$this->add_link($lang['admin.logged.errors'], AdminErrorsUrlBuilder::logged_errors());
+		$this->add_link($lang['admin.404.errors'], AdminErrorsUrlBuilder::list_404_errors());
+
+		$env = $this->get_graphical_environment();
+		$env->set_page_title($title_page, '', $page);
+	}
+}
+?>

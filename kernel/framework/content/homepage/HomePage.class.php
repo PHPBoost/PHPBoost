@@ -5,19 +5,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 3.0 - 2011 10 08
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 interface HomePage
 {
 	/**
-	 * @return The title of the home page
+	 * @return string The title of the home page
 	 */
-	function get_title();
+	function get_title(): string;
 
 	/**
 	 * @return View The content of the home page
 	 */
-	function get_view();
+	function get_view(): View;
 }
 ?>

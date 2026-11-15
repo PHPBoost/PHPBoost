@@ -1,0 +1,208 @@
+<?php
+/**
+ * @package     PHPBoost
+ * @subpackage  Config
+ * @copyright   &copy; 2005-2026 PHPBoost
+ * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @version     PHPBoost 6.1 - last update: 2026 11 07
+ * @since       PHPBoost 3.0 - 2010 07 05
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+*/
+
+class GeneralConfig extends AbstractConfigData
+{
+	const SITE_URL          = 'site_url';
+	const SITE_PATH         = 'site_path';
+	const SITE_NAME         = 'site_name';
+	const SITE_SLOGAN       = 'site_slogan';
+	const SITE_DESCRIPTION  = 'site_description';
+	const MODULE_HOME_PAGE  = 'module_home_page';
+	const OTHER_HOME_PAGE   = 'other_home_page';
+	const PHPBOOST_VERSION  = 'phpboost_version';
+	const SITE_INSTALL_DATE = 'site_install_date';
+	const SITE_TIMEZONE     = 'timezone';
+
+	public function get_site_url(): mixed
+	{
+		return $this->get_property(self::SITE_URL);
+	}
+
+	public function get_complete_site_url(): mixed
+	{
+		return $this->get_property(self::SITE_URL) . $this->get_property(self::SITE_PATH);
+	}
+
+	public function is_site_url_https(): bool
+	{
+		return TextHelper::substr($this->get_property(self::SITE_URL), 0, 8) == "https://";
+	}
+
+	/**
+	 * @param string $url The URL must begin with a protocol (for instance http://) and must not end with a slash.
+	 */
+	public function set_site_url(string $url): void
+	{
+		$this->set_property(self::SITE_URL, $url);
+	}
+
+	public function get_site_path(): mixed
+	{
+		return $this->get_property(self::SITE_PATH);
+	}
+
+	/**
+	 * @param string $path The URL must begin with a slash but must not end with a slash.
+	 */
+	public function set_site_path(string $path): void
+	{
+		$this->set_property(self::SITE_PATH, $path == '/' ? '' : $path);
+	}
+
+	public function get_phpboost_major_version(): mixed
+	{
+		return $this->get_property(self::PHPBOOST_VERSION);
+	}
+
+	public function set_phpboost_major_version(mixed $version): void
+	{
+		$this->set_property(self::PHPBOOST_VERSION, $version);
+	}
+
+	public function get_site_install_date(): mixed
+	{
+		return $this->get_property(self::SITE_INSTALL_DATE);
+	}
+
+	public function set_site_install_date(Date $date): void
+	{
+		$this->set_property(self::SITE_INSTALL_DATE, $date);
+	}
+
+	public function get_site_timezone(): mixed
+	{
+		return $this->get_property(self::SITE_TIMEZONE);
+	}
+
+	public function set_site_timezone(mixed $timezone): void
+	{
+		$this->set_property(self::SITE_TIMEZONE, $timezone);
+	}
+
+	protected function get_default_values(): array
+	{
+		$site_url = self::get_default_site_url();
+		$site_path = self::get_default_site_path();
+
+		return [
+			self::SITE_URL          => $site_url,
+			self::SITE_PATH         => $site_path,
+			self::SITE_NAME         => '',
+			self::SITE_SLOGAN       => '',
+			self::SITE_DESCRIPTION  => '',
+			self::MODULE_HOME_PAGE  => '',
+			self::OTHER_HOME_PAGE   => '',
+			self::PHPBOOST_VERSION  => '6.1',
+			self::SITE_INSTALL_DATE => new Date(Date::DATE_NOW, Timezone::SERVER_TIMEZONE),
+			self::SITE_TIMEZONE     => 'Europe/Paris',
+		];
+	}
+
+	public static function get_default_site_url(): string
+	{
+		return 'http://' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST'));
+	}
+
+	public static function get_default_site_path(): mixed
+	{
+		$server_path = !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : getenv('PHP_SELF');
+		if (!$server_path)
+		{
+			$server_path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : getenv('REQUEST_URI');
+		}
+		return self::remove_dirs_from_root($server_path);
+	}
+
+	private static function remove_dirs_from_root(string $path): string
+	{
+        $root_path_fragments = [];
+        $path_fragments = explode('/', $path);
+        $depth = 1;
+		if (!in_array(PATH_TO_ROOT, ['.', '', null]))
+		{
+			$depth = count(explode('/', PATH_TO_ROOT)) + 1;
+		}
+		$length = count($path_fragments) - $depth;
+		for ($i = 0; $i < $length; $i++)
+		{
+			$root_path_fragments[] = $path_fragments[$i];
+		}
+		return implode('/', $root_path_fragments);
+	}
+
+	public function get_site_name(): string
+	{
+		return $this->get_property(self::SITE_NAME);
+	}
+
+	public function set_site_name(string $site_name): void
+	{
+		$this->set_property(self::SITE_NAME, $site_name);
+	}
+
+	public function get_site_slogan(): string
+	{
+		return $this->get_property(self::SITE_SLOGAN);
+	}
+
+	public function set_site_slogan(string $site_slogan): void
+	{
+		$this->set_property(self::SITE_SLOGAN, $site_slogan);
+	}
+
+	public function get_site_description(): string
+	{
+		return $this->get_property(self::SITE_DESCRIPTION);
+	}
+
+	public function set_site_description(string $site_description): void
+	{
+		$this->set_property(self::SITE_DESCRIPTION, $site_description);
+	}
+
+	public function get_module_home_page(): mixed
+	{
+		return $this->get_property(self::MODULE_HOME_PAGE);
+	}
+
+	public function set_module_home_page(mixed $start_page): void
+	{
+		$this->set_property(self::MODULE_HOME_PAGE, $start_page);
+	}
+
+	public function get_other_home_page(): mixed
+	{
+		return $this->get_property(self::OTHER_HOME_PAGE);
+	}
+
+	public function set_other_home_page(mixed $start_page): void
+	{
+		$this->set_property(self::OTHER_HOME_PAGE, $start_page);
+	}
+
+	public static function load(): GeneralConfig
+	{
+		return ConfigManager::load(self::class, 'kernel', 'general-config');
+	}
+
+	/**
+	 * Saves the configuration in the database. Has it become persistent.
+	 */
+	public static function save(): void
+	{
+		ConfigManager::save('kernel', self::load(), 'general-config');
+	}
+}
+?>

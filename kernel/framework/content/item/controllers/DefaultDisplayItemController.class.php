@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 6.0 - 2020 03 12
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -15,11 +15,10 @@ class DefaultDisplayItemController extends AbstractItemController
 	/**
 	 * @var Item
 	 */
-	protected $item;
+	protected mixed $item = null;
+	protected mixed $current_url = null;
 
-	protected $current_url;
-
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 		$this->check_authorizations();
@@ -29,26 +28,29 @@ class DefaultDisplayItemController extends AbstractItemController
 		return $this->generate_response();
 	}
 
-	protected function init()
+	protected function init(): void
 	{
 		$this->current_url = self::get_module_configuration()->has_categories() ? ItemsUrlBuilder::display($this->get_item()->get_category()->get_id(), $this->get_item()->get_category()->get_rewrited_name(), $this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id) : ItemsUrlBuilder::display_item($this->get_item()->get_id(), $this->get_item()->get_rewrited_title(), self::$module_id);
 	}
 
-	protected function get_item()
+	protected function get_item(): mixed
 	{
 		if ($this->item === null)
 		{
 			$id = $this->request->get_getint('id', 0);
-			try {
+			try
+            {
 				$this->item = self::get_items_manager()->get_item($id);
-			} catch (RowNotFoundException $e) {
+			}
+            catch (RowNotFoundException $e)
+            {
 				$this->display_unexisting_page();
 			}
 		}
 		return $this->item;
 	}
 
-	protected function update_views_number()
+	protected function update_views_number(): void
 	{
 		if (!$this->get_item()->is_published())
 		{
@@ -63,7 +65,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		}
 	}
 
-	protected function build_view()
+	protected function build_view(): void
 	{
 		if (in_array('comments', $this->enabled_features))
 		{
@@ -109,12 +111,12 @@ class DefaultDisplayItemController extends AbstractItemController
 		));
 	}
 
-	protected function get_template_url()
+	protected function get_template_url(): string
 	{
 		return 'framework/content/items/ModuleItemController.tpl';
 	}
 
-	protected function check_authorizations()
+	protected function check_authorizations(): mixed
 	{
 		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_category()->get_id(), self::$module_id) : ItemsAuthorizationsService::check_authorizations(self::$module_id);
 
@@ -145,19 +147,20 @@ class DefaultDisplayItemController extends AbstractItemController
 				$this->display_unexisting_page();
 			break;
 		}
+        return null;
 	}
 
-	protected function get_additionnal_seo_properties()
+	protected function get_additionnal_seo_properties(): array
 	{
 		return [];
 	}
 
-	protected function get_seo_page_type()
+	protected function get_seo_page_type(): string
 	{
 		return '';
 	}
 
-	protected function generate_response()
+	protected function generate_response(): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($this->view);
 
@@ -168,14 +171,20 @@ class DefaultDisplayItemController extends AbstractItemController
 		if (self::get_module_configuration()->has_rich_items() && $item instanceof RichItem)
 		{
 			if ($this->module_item->content_field_enabled())
+            {
 				$graphical_environment->get_seo_meta_data()->set_description($item->get_real_summary());
+            }
 
 			if ($item->has_thumbnail())
+            {
 				$graphical_environment->get_seo_meta_data()->set_picture_url($item->get_thumbnail());
+            }
 		}
 
 		if ($seo_page_type = $this->get_seo_page_type())
+        {
 			$graphical_environment->get_seo_meta_data()->set_page_type($seo_page_type);
+        }
 
 		$graphical_environment->get_seo_meta_data()->set_additionnal_properties($this->get_additionnal_seo_properties());
 
@@ -188,7 +197,9 @@ class DefaultDisplayItemController extends AbstractItemController
 			foreach ($categories as $id => $category)
 			{
 				if ($category->get_id() != Category::ROOT_CATEGORY)
+                {
 					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id));
+                }
 			}
 		}
 		$breadcrumb->add($this->get_item()->get_title(), $this->current_url);
@@ -196,7 +207,7 @@ class DefaultDisplayItemController extends AbstractItemController
 		return $response;
 	}
 
-	public static function get_view($module_id = '')
+	public static function get_view(string $module_id = ''): mixed
 	{
 		$object = new self($module_id);
 		$object->check_authorizations();

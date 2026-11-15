@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2020 01 22
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      xela <xela@phpboost.com>
@@ -13,28 +13,28 @@
 
 class DefaultSeveralItemsController extends AbstractItemController
 {
-	protected $sort_field;
-	protected $sort_mode;
-	protected $page;
-	protected $subcategories_page;
-	protected $summary_displayed_to_guests;
+	protected mixed $sort_field = null;
+	protected mixed $sort_mode = null;
+	protected mixed $page = null;
+	protected mixed $subcategories_page = null;
+	protected mixed $summary_displayed_to_guests = null;
 
-	protected $sql_condition;
-	protected $sql_parameters = [];
+	protected mixed $sql_condition = null;
+	protected array $sql_parameters = [];
 
-	protected $page_title;
-	protected $customized_page_title;
-	protected $page_description;
-	protected $current_url;
-	protected $pagination_url;
-	protected $url_without_sorting_parameters;
-	protected $display_published_items_list = false;
+	protected mixed $page_title = null;
+	protected mixed $customized_page_title = null;
+	protected mixed $page_description = null;
+	protected mixed $current_url = null;
+	protected mixed $pagination_url = null;
+	protected mixed $url_without_sorting_parameters = null;
+	protected bool $display_published_items_list = false;
 
-	protected $category;
-	protected $keyword;
-	protected $member;
+	protected ?RichCategory $category = null;
+	protected ?Keyword $keyword = null;
+	protected ?User $member = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init();
 		$this->check_authorizations();
@@ -43,7 +43,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $this->generate_response();
 	}
 
-	protected function init()
+	protected function init(): void
 	{
 		$requested_sort_field = $this->request->get_getstring('field', '');
 		$requested_sort_mode = $this->request->get_getstring('sort', '');
@@ -112,7 +112,9 @@ class DefaultSeveralItemsController extends AbstractItemController
 			}
 
             if ($this->member)
+            {
                 $this->sql_parameters['user_id'] = $this->get_member()->get_id();
+            }
 
 			$this->page_title = $this->member ? ($this->is_current_member_displayed() ? $this->lang['my.items'] : $this->get_member()->get_display_name()) : '';
 			if ($this->member)
@@ -130,10 +132,12 @@ class DefaultSeveralItemsController extends AbstractItemController
 
             $this->view->put('C_MEMBER_ITEMS', true);
             if ($this->member)
+            {
                 $this->view->put_all([
                     'C_MY_ITEMS'  => $this->is_current_member_displayed(),
                     'MEMBER_NAME' => $this->get_member()->get_display_name()
                 ]);
+            }
             else {
                 $this->view->put_all([
                     'C_MEMBERS_LIST' => true,
@@ -207,34 +211,40 @@ class DefaultSeveralItemsController extends AbstractItemController
 		}
 	}
 
-	protected function get_category()
+	protected function get_category(): RichCategory
 	{
 		if ($this->category === null)
 		{
-			$id = $this->request->get_getstring('id_category', Category::ROOT_CATEGORY);
-			try {
+			$id = $this->request->get_getstring('id_category', (string) Category::ROOT_CATEGORY);
+			try
+            {
 				$this->category = CategoriesService::get_categories_manager(self::$module->get_id())->get_categories_cache()->get_category($id);
-			} catch (CategoryNotFoundException $e) {
+			}
+            catch (CategoryNotFoundException $e)
+            {
 				$this->display_unexisting_page();
 			}
 		}
 		return $this->category;
 	}
 
-	protected function get_keyword()
+	protected function get_keyword(): Keyword
 	{
 		if ($this->keyword === null)
 		{
-			try {
+			try
+            {
 				$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', ['rewrited_name' => $this->request->get_getstring('tag', '')]);
-			} catch (RowNotFoundException $e) {
+			}
+            catch (RowNotFoundException $e)
+            {
 				$this->display_unexisting_page();
 			}
 		}
 		return $this->keyword;
 	}
 
-	protected function get_member()
+	protected function get_member(): User
 	{
 		if (!$this->member && $this->member !== null)
 		{
@@ -243,12 +253,12 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $this->member;
 	}
 
-	protected function is_current_member_displayed()
+	protected function is_current_member_displayed(): bool
 	{
 		return $this->member && $this->member->get_id() == AppContext::get_current_user()->get_id();
 	}
 
-	protected function build_view()
+	protected function build_view(): void
 	{
 		$pagination = $this->get_pagination();
 		$sorting_fields_list = $this->module_item->get_sorting_fields_list();
@@ -318,7 +328,7 @@ class DefaultSeveralItemsController extends AbstractItemController
         }
 	}
 
-	protected function build_sorting_form()
+	protected function build_sorting_form(): Template
 	{
 		$form = new HTMLForm(self::$module_id . '_sorting_form', '', false);
 		$form->set_css_class('options');
@@ -352,7 +362,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $form->display();
 	}
 
-	protected function build_categories_listing_view()
+	protected function build_categories_listing_view(): void
 	{
 		$displayed_categories_number = 0;
 		if ($this->module_item->sub_categories_displayed())
@@ -434,11 +444,12 @@ class DefaultSeveralItemsController extends AbstractItemController
 	{
 		if ($this->keyword)
 		{
-			$result = self::get_items_manager()->count_items_having_keyword($this->sql_condition, $this->sql_parameters);
-			$items_number = $result['items_number'];
+			$items_number = self::get_items_manager()->count_items_having_keyword($this->sql_condition, $this->sql_parameters);
 		}
 		else
+        {
 			$items_number = self::get_items_manager()->count($this->sql_condition, $this->sql_parameters);
+        }
 
 		$pagination = new ModulePagination($this->page, $items_number, $this->config->get_items_per_page());
 		$pagination->set_url($this->pagination_url);
@@ -449,7 +460,7 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $pagination;
 	}
 
-	protected function get_subcategories_pagination($subcategories_number)
+	protected function get_subcategories_pagination(int $subcategories_number): ModulePagination
 	{
 		$pagination = new ModulePagination($this->subcategories_page, $subcategories_number, $this->config->get_categories_per_page());
 		$pagination->set_url(ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, $this->page, '%d'));
@@ -460,24 +471,30 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $pagination;
 	}
 
-	protected function get_template_url()
+	protected function get_template_url(): string
 	{
 		return 'framework/content/items/ModuleSeveralItemsController.tpl';
 	}
 
-	protected function check_authorizations()
+	protected function check_authorizations(): bool
 	{
 		$authorizations = self::get_module_configuration()->has_categories() ? CategoriesAuthorizationsService::check_authorizations($this->get_category()->get_id(), self::$module->get_id()) : ItemsAuthorizationsService::check_authorizations(self::$module->get_id());
 
 		if ($this->category !== null)
+        {
 			return ((AppContext::get_current_user()->is_guest() && $this->summary_displayed_to_guests && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $this->get_category()->get_authorizations(), Category::READ_AUTHORIZATIONS)) || $authorizations->read()) ? true : $this->display_user_not_authorized_page();
+        }
 		else if ($this->keyword !== null)
+        {
 			return $authorizations->read() ? true : $this->display_user_not_authorized_page();
+        }
 		else
+        {
 			return ($authorizations->write() || $authorizations->contribution() || $authorizations->moderation()) ? true : $this->display_user_not_authorized_page();
+        }
 	}
 
-	protected function generate_response()
+	protected function generate_response(): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($this->view);
 
@@ -502,20 +519,24 @@ class DefaultSeveralItemsController extends AbstractItemController
 					$breadcrumb->add($category->get_name(), ItemsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), self::$module_id, $sort_field, $sort_mode, ($category->get_id() == $this->category->get_id() ? $this->page : 1)));
 			}
 		}
-		else if (!$this->display_published_items_list)
+		elseif (!$this->display_published_items_list)
         {
             if (TextHelper::strstr($this->request->get_current_url(), '/member/'))
+            {
                 $breadcrumb->add($this->lang['contribution.members.list'], ItemsUrlBuilder::display_member_items());
+            }
             $breadcrumb->add($this->page_title, $this->current_url);
         }
 
 		if ($this->customized_page_title)
+        {
 			$breadcrumb->add($this->customized_page_title, $this->current_url);
+        }
 
 		return $response;
 	}
 
-	public static function get_view($module_id = '')
+	public static function get_view($module_id = ''): mixed
 	{
 		$object = new self($module_id);
 		$object->check_authorizations();

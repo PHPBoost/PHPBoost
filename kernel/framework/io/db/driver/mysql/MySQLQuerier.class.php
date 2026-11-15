@@ -5,16 +5,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 10 01
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MySQLQuerier extends AbstractSQLQuerier
 {
-	/**
-	 * @var SQLQueryVar
-	 */
-	private $query_var_replacator;
+	private SQLQueryVars $query_var_replacator;
 
 	public function __construct(DBConnection $connection, SQLQueryTranslator $translator)
 	{
@@ -22,24 +20,24 @@ class MySQLQuerier extends AbstractSQLQuerier
 		$this->query_var_replacator = new SQLQueryVars($this);
 	}
 
-	public function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC)
+	public function select(string $query, array $parameters = [], int $fetch_mode = SelectQueryResult::FETCH_ASSOC): SelectQueryResult
 	{
 		$resource = $this->execute($query, $parameters);
 		return new MySQLSelectQueryResult($query, $parameters, $resource, $fetch_mode);
 	}
 
-	public function inject($query, $parameters = [])
+	public function inject(string $query, array $parameters = []): InjectQueryResult
 	{
 		$resource = $this->execute($query, $parameters);
 		return new MySQLInjectQueryResult($query, $parameters, $resource, $this->link);
 	}
 
-	public function escape($value)
+	public function escape(string $value): string
 	{
 		return mysqli_real_escape_string($this->link, $value);
 	}
 
-	private function execute($query, $parameters)
+	private function execute(string $query, array $parameters): mysqli_result|bool
 	{
 		$query = $this->prepare($query);
 		if (!empty($parameters))
@@ -56,7 +54,7 @@ class MySQLQuerier extends AbstractSQLQuerier
 		return $resource;
 	}
 
-	private function display_database_query($query)
+	private function display_database_query(string $query): void
 	{
 		if (Debug::is_display_database_query_enabled())
 		{

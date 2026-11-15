@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 05
  * @since       PHPBoost 4.0 - 2013 02 11
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,25 +15,22 @@
 
 abstract class AbstractCategoriesManagementController extends ModuleController
 {
-	protected $lang;
-	protected $view;
+	protected array $lang = [];
+	protected FileTemplate $view;
 
-	protected static $categories_manager;
+	protected static CategoriesManager $categories_manager;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->check_authorizations();
-
 		$this->init();
-
 		$this->update_positions($request);
-
 		$this->build_view();
 
 		return $this->generate_response($this->view);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$class_name = get_called_class();
 		self::$categories_manager = $class_name::get_categories_manager();
@@ -43,7 +40,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$this->view->add_lang($this->lang);
 	}
 
-	private function build_view()
+	private function build_view(): void
 	{
 		$categories_cache = self::$categories_manager->get_categories_cache()->get_class();
 		$categories = $categories_cache::load()->get_categories();
@@ -60,7 +57,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		$this->build_children_view($this->view, $categories, Category::ROOT_CATEGORY);
 	}
 
-	private function build_children_view($template, $categories, $id_parent)
+	private function build_children_view(Template $template, mixed $categories, int $id_parent): void
 	{
 		foreach ($categories as $id => $category)
 		{
@@ -105,7 +102,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		}
 	}
 
-	private function update_positions(HTTPRequestCustom $request)
+	private function update_positions(HTTPRequestCustom $request): void
 	{
 		if ($request->get_postvalue('submit', false))
 		{
@@ -128,7 +125,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		}
 	}
 
-	private function update_children_positions($categories, $id_parent)
+	private function update_children_positions(mixed $categories, int $id_parent): void
 	{
 		if (!empty($categories))
 		{
@@ -147,10 +144,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		}
 	}
 
-	/**
-	 * @return string Page title
-	 */
-	protected function get_title()
+	protected function get_title(): string
 	{
 		return $this->lang['category.categories.management'];
 	}
@@ -158,16 +152,12 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 	/**
 	 * @return string Delete category confirmation message
 	 */
-	protected function get_delete_confirmation_message()
+	protected function get_delete_confirmation_message(): string
 	{
 		return $this->lang['category.delete.confirmation'];
 	}
 
-	/**
-	 * @param View $view
-	 * @return Response
-	 */
-	protected function generate_response(View $view)
+	protected function generate_response(View $view): SiteDisplayResponse
 	{
 		$response = new SiteDisplayResponse($view);
 
@@ -183,50 +173,23 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 		return $response;
 	}
 
-	/**
-	 * @return CategoriesManager
-	 */
-	protected static function get_categories_manager()
+	protected static function get_categories_manager(): CategoriesManager
 	{
 		return CategoriesService::get_categories_manager();
 	}
 
-	/**
-	 * @param int $category Category
-	 * @return Url
-	 */
-	abstract protected function get_display_category_url(Category $category);
+	abstract protected function get_display_category_url(Category $category): Url;
 
-	/**
-	 * @param int $category Category
-	 * @return Url
-	 */
-	abstract protected function get_edit_category_url(Category $category);
+	abstract protected function get_edit_category_url(Category $category): Url;
 
-	/**
-	 * @param int $category Category
-	 * @return Url
-	 */
-	abstract protected function get_delete_category_url(Category $category);
+	abstract protected function get_delete_category_url(Category $category): Url;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_categories_management_url();
+	abstract protected function get_categories_management_url(): Url;
 
-	/**
-	 * @return Url
-	 */
-	abstract protected function get_module_home_page_url();
+	abstract protected function get_module_home_page_url(): Url;
 
-	/**
-	 * @return string module home page title
-	 */
-	abstract protected function get_module_home_page_title();
+	abstract protected function get_module_home_page_title(): string;
 
-	/**
-	 * @return boolean Authorization to manage categories
-	 */
-	abstract protected function check_authorizations();
+	abstract protected function check_authorizations(): void;
 }
 ?>

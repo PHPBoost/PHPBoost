@@ -3,14 +3,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 6.0 - 2019 12 18
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultAdminDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct($view)
+	public function __construct(View $view)
 	{
 		parent::__construct($view);
 

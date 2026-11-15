@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 29
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 2.0 - 2008 07 03
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -22,7 +22,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * Parses the parser content from Bbcode to XHTML.
 	 * @return void You will find the result by using the get_content method
 	 */
-	public function parse()
+	public function parse(): void
 	{
 		//On remplace les tabulations par des espaces
 		$this->content = preg_replace('`\t`suU', '    ', $this->content);
@@ -97,7 +97,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * 	<li>Treats the Word pasted characters</li>
 	 * </ul>
 	 */
-	protected function protect_content()
+	protected function protect_content(): void
 	{
 		//Breaking the HTML code
 		$this->content = TextHelper::htmlspecialchars($this->content, ENT_NOQUOTES);
@@ -124,7 +124,7 @@ class BbcodeParser extends ContentFormattingParser
 	/**
 	 * Replaces the smiley's code by the corresponding HTML image tag
 	 */
-	protected function parse_smilies()
+	protected function parse_smilies(): void
 	{
 		$smileys_cache = SmileysCache::load()->get_smileys();
         $smiley_code = $smiley_img_url = [];
@@ -145,7 +145,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * The simple tags are those which can be treated enough requiring many different treatments.
 	 * The not simple tags are [code], [html], [table] and its content [row] [col] [head], [list].
 	 */
-	protected function parse_simple_tags()
+	protected function parse_simple_tags(): void
 	{
 		$array_preg = [
 			'b' => '`\[b\](.+)\[/b\]`isuU',
@@ -285,7 +285,9 @@ class BbcodeParser extends ContentFormattingParser
 
 		//Line tag
 		if ($parse_line)
-		$this->content = str_replace('[line]', '<hr class="formatter-hr" />', $this->content);
+        {
+            $this->content = str_replace('[line]', '<hr class="formatter-hr" />', $this->content);
+        }
 
 		//Title tag
 		if (!in_array('title', $this->forbidden_tags))
@@ -380,7 +382,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * Serializes a split content according to the table tag and generates the complete HTML code.
 	 * @param array $content Content of the parser split according to the table tag
 	 */
-	protected function parse_imbricated_table(&$content)
+	protected function parse_imbricated_table(array &$content): void
 	{
 		if (is_array($content))
 		{
@@ -425,7 +427,9 @@ class BbcodeParser extends ContentFormattingParser
 				}
 				//On concatène la chaîne finale si ce n'est pas le style du tableau
 				if ($i % 3 !== 1)
-				$string_content .= $content[$i];
+                {
+                    $string_content .= $content[$i];
+                }
 			}
 			$content = $string_content;
 		}
@@ -434,7 +438,7 @@ class BbcodeParser extends ContentFormattingParser
 	/**
 	 * Parses the table tag in the content of the parser
 	 */
-	protected function parse_table()
+	protected function parse_table(): void
 	{
 		//On supprime les éventuels quote qui ont été transformés en leur entité html
 		$this->split_imbricated_tag($this->content, 'table', ' style="[^"]+"');
@@ -448,7 +452,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * Generates the HTML code
 	 * @param array $content Content split according to the list tag
 	 */
-	protected function parse_imbricated_list(&$content)
+	protected function parse_imbricated_list(array &$content): void
 	{
 		if (is_array($content))
 		{
@@ -483,7 +487,9 @@ class BbcodeParser extends ContentFormattingParser
 				}
 				//On concatène la chaîne finale si ce n'est pas le style ou le type de tableau
 				if ($i % 3 !== 1)
-				$string_content .= $content[$i];
+                {
+                    $string_content .= $content[$i];
+                }
 			}
 			$content = $string_content;
 		}
@@ -492,7 +498,7 @@ class BbcodeParser extends ContentFormattingParser
 	/**
 	 * Parses the list tag of the content of the parser.
 	 */
-	protected function parse_list()
+	protected function parse_list(): void
 	{
 		//On nettoie les guillemets échappés
 		//on travaille dessus
@@ -508,7 +514,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the title tag are parsed
 	 */
-	protected function parse_title($matches)
+	protected function parse_title(array $matches): string
 	{
 		$level = (int)$matches[1] + 1;
 		return '<h' . $level . ' class="formatter-title">' . $matches[2] . '</h' . $level . '>';
@@ -519,7 +525,8 @@ class BbcodeParser extends ContentFormattingParser
         $raw_url = trim($matches[4]);
 
         // Prevent dangerous non-HTTP/file protocols (e.g., javascript:, vbscript:)
-        if (preg_match('`^(?:javascript|vbscript):`i', $raw_url)) {
+        if (preg_match('`^(?:javascript|vbscript):`i', $raw_url))
+        {
             return '';
         }
 
@@ -528,14 +535,17 @@ class BbcodeParser extends ContentFormattingParser
         {
             $src_url = 'data:' . $raw_url;
             $img_name = 'image'; // Default fallback name for alt tag when using base64
-        } else {
+        }
+        else
+        {
             // Robust Extension & Query String Validation
             // Extract real path ignoring query strings (?key=val) or fragments (#hash)
             $path = parse_url($raw_url, PHP_URL_PATH);
             $extension = TextHelper::strtolower(pathinfo($path, PATHINFO_EXTENSION));
 
             $allowed_extensions = ['jpg', 'jpeg', 'bmp', 'webp', 'gif', 'png', 'tiff', 'svg'];
-            if (!in_array($extension, $allowed_extensions, true)) {
+            if (!in_array($extension, $allowed_extensions, true))
+            {
                 return ''; // Reject execution vectors like script.php?file=photo.png
             }
 
@@ -557,7 +567,7 @@ class BbcodeParser extends ContentFormattingParser
         return '<img src="' . $src . '"' . $alt . $class . $style . ' />';
     }
 
-    protected function parse_modal($matches)
+    protected function parse_modal(array $matches): string
     {
         $name = $matches[1];
         $target = Url::encode_rewrite($matches[1]);
@@ -570,7 +580,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the new line tag are cleared
 	 */
-	protected static function clear_html_br($matches)
+	protected static function clear_html_br(array $matches): string
 	{
 		return str_replace("<br />", "", $matches[0]);
 	}

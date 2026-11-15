@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 2.0 - 2008 08 10
  * @author      mipel <mipel@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -27,16 +27,18 @@ abstract class ContentFormattingUnparser extends AbstractParser
 
 	/**
 	* Unparses the html code. In a first time, it pick the html tags up, and then, when you have done all the processings you wanted, you reimplant it.
-	* @param bool $action self::PICK_UP if you want to pick up the html tag and self::REIMPLANT to reimplant it.
+	* @param string $action self::PICK_UP if you want to pick up the html tag and self::REIMPLANT to reimplant it.
 	*/
-	protected function unparse_html($action)
+	protected function unparse_html(string $action): bool
 	{
 		//Prélèvement du HTML
 		if ($action == self::PICK_UP)
 		{
 			/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
 			if ($this->content === null)
+            {
                 $this->content = '';
+            }
 			$mask = '`<!-- START HTML -->' . "\n" . '(.+)' . "\n" . '<!-- END HTML -->`suU';
 			$content_split = preg_split($mask, str_replace('&nbsp;', '&amp;nbsp;', $this->content), -1, PREG_SPLIT_DELIM_CAPTURE);
 
@@ -93,9 +95,9 @@ abstract class ContentFormattingUnparser extends AbstractParser
 
 	/**
 	 * Unparses the code tag. In a first time, you pick it up and you reimplant it.
-	 * @param bool $action self::PICK_UP to pick the code tag up, self::REIMPLANT to reinsert them.
+	 * @param string $action self::PICK_UP to pick the code tag up, self::REIMPLANT to reinsert them.
 	 */
-	protected function unparse_code($action)
+	protected function unparse_code(string $action): bool
 	{
 		//Prélèvement du HTML
 		if ($action == self::PICK_UP)
@@ -156,7 +158,9 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	protected function unparse_module_special_tags()
 	{
 		foreach ($this->get_module_special_tags() as $pattern => $replacement)
+        {
 			$this->content = preg_replace($pattern, $replacement, $this->content);
+        }
 	}
 
 	/**
@@ -164,20 +168,26 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
-	protected function unparse_fa_tag($matches)
+	protected function unparse_fa_tag(array $matches): string
 	{
 		$fa_code = '';
 		$special_fa = in_array($matches[1], ['b', 'l', 'r', 's', 'd', 't']);
 		$options_list = isset($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 
-		if ( !empty($options_list) ) {
+		if ( !empty($options_list) )
+        {
 			$options = explode(' ', $options_list);
-			foreach ($options as $index => $option) {
-				if (!empty($option)) {
-					if ( $index == 1 && empty($fa_code) ) {
+			foreach ($options as $index => $option)
+            {
+				if (!empty($option))
+                {
+					if ( $index == 1 && empty($fa_code) )
+                    {
 						$fa_code = "=" . ($special_fa ? 'fa' . $matches[1] . ',' : '') . $option;
-					} else {
+					}
+                    else
+                    {
 						if ( !empty($fa_code) ) { $fa_code = $fa_code . ","; }
 						$fa_code = $fa_code . $option;
 					}
@@ -187,7 +197,9 @@ abstract class ContentFormattingUnparser extends AbstractParser
 		else
 		{
 			if ($special_fa)
+            {
 				$fa_code = "=" . 'fa' . $matches[1];
+            }
 		}
 
 		return '[fa' . $fa_code . $style . ']' . $matches[2] . '[/fa]';
@@ -198,7 +210,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */
-	protected function unparse_wikipedia_tag($matches)
+	protected function unparse_wikipedia_tag(array $matches): string
 	{
 		$lang = ($matches[1] == LangLoader::get_message('editor.wikipedia.subdomain', 'editor-lang')) ? '' : $matches[1];
 		$page_name = ($matches[2] != $matches[3]) ? $matches[2] : '';

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 2.0 - 2008 07 21
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -27,10 +27,10 @@ $id_to_delete    = $request->get_getint('del', 0);
 $id_to_update    = $request->get_postint('idedit', 0);
 $id_update       = $request->get_getint('edit', 0);
 
+$contribution = new Contribution();
+
 if ($contribution_id > 0)
 {
-	$contribution = new Contribution();
-
 	// Loading the contribution into an object from the database and checking if the user is authorizes to read it
 	if (($contribution = ContributionService::find_by_id($contribution_id)) == null || (!AppContext::get_current_user()->check_auth($contribution->get_auth(), Contribution::CONTRIBUTION_AUTH_BIT) && $contribution->get_poster_id() != AppContext::get_current_user()->get_id()))
 	{
@@ -76,8 +76,8 @@ elseif ($id_to_update > 0)
     }
 
 	// Retriving parts of contribution
-	$entitled = $request->get_postvalue('entitled', '', TSTRING_UNCHANGE);
-	$description = stripslashes($request->get_postvalue('contents', '', TSTRING_PARSE));
+	$entitled = $request->get_postvalue('entitled', '');
+	$description = stripslashes($request->get_postvalue('contents', ''));
 	$status = $request->get_postvalue('status', Event::EVENT_STATUS_UNREAD);
 
 	// If title is not empty

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 23
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
  * @since       PHPBoost 3.0 - 2012 02 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -1117,298 +1117,201 @@ class UpdateServices
 
     private function delete_old_files_admin(): void
     {
-        $folder = new Folder(PATH_TO_ROOT . '/admin/controllers');
-        if ($folder->exists())
+        $folders = [
+            '/admin/cache',
+            '/admin/config',
+            '/admin/content/controllers',
+            '/admin/content/util',
+            '/admin/controllers',
+            '/admin/errors',
+            '/admin/files',
+            '/admin/langs',
+            '/admin/maintain',
+            '/admin/member',
+            '/admin/menus',
+            '/admin/modules',
+            '/admin/server',
+            '/admin/smileys',
+            '/admin/themes',
+            '/admin/updates',
+
+            '/templates/__default__/admin/langs',
+            '/templates/__default__/admin/member',
+            '/templates/__default__/admin/menus',
+            '/templates/__default__/admin/modules',
+            '/templates/__default__/admin/themes',
+            '/templates/__default__/admin/updates',
+        ];
+
+        foreach ($folders as $folder_path)
         {
-            $folder->delete();
+            $folder = new Folder(PATH_TO_ROOT . $folder_path);
+            if ($folder->exists())
+            {
+                $folder->delete();
+            }
         }
 
-        $file = new File(PATH_TO_ROOT . '/admin/langs/controllers/AdminUninstallLangController.class.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/admin/langs/controllers/AdminLangsInstalledListController.class.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/langs/controllers/AdminLangsInstalledListController.tpl');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/admin/langs/controllers/AdminLangsNotInstalledListController.class.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/langs/controllers/AdminLangsNotInstalledListController.tpl');
-        $file->delete();
+        $files = [
+            '/admin/admin_alerts.php',
+            '/admin/admin_files.php',
+            '/admin/admin_groups.php',
 
-        $file = new File(PATH_TO_ROOT . '/admin/themes/controllers/AdminThemesInstalledListController.class.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/themes/controllers/AdminThemesInstalledListController.tpl');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/admin/themes/controllers/AdminThemesNotInstalledListController.class.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/themes/controllers/AdminThemesNotInstalledListController.tpl');
-        $file->delete();
+            '/templates/__default__/admin/admin_alerts.tpl',
+            '/templates/__default__/admin/admin_files_management.tpl',
+            '/templates/__default__/admin/admin_files_mmove.tpl',
+            '/templates/__default__/admin/admin_groups_management.tpl',
+            '/templates/__default__/admin/admin_groups_management2.tpl',
+        ];
 
+        foreach ($files as $file_path)
+        {
+            $file = new File(PATH_TO_ROOT . $file_path);
+            if ($file->exists())
+            {
+                $file->delete();
+            }
+        }
     }
 
     private function delete_old_files_kernel()
     {
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/content/newcontent');
-        if ($folder->exists())
+        $folders = [
+            '/kernel/framework/phpboost',
+            '/kernel/framework/content/newcontent',
+            '/kernel/framework/builder/form/field/phpboost',
+            '/kernel/lib/php/geshi',
+            '/kernel/lib/php/pcl',
+            '/kernel/lib/php/facebook',
+            '/kernel/lib/php/google',
+            '/kernel/lib/php/html5shiv',
+            '/kernel/lib/js/lightcase',
+            '/kernel/lib/js/phpboost',
+            '/kernel/lib/css/font-awesome-animation',
+            '/kernel/lib/flash',
+        ];
+
+        foreach ($folders as $folder_path)
         {
-            $folder->delete();
+            $folder = new Folder(PATH_TO_ROOT . $folder_path);
+            if ($folder->exists())
+            {
+                $folder->delete();
+            }
         }
 
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/framework/builder/form/field/phpboost');
-        if ($folder->exists())
+        $files = [
+            '/admin/content/index.php',
+            '/kernel/lib/js/global.js',
+            '/kernel/lib/php/phpmailer/class.phpmailer.php',
+            '/kernel/lib/php/phpmailer/class.pop3.php',
+            '/kernel/lib/php/phpmailer/class.smtp.php',
+            '/kernel/lib/php/phpmailer/PHPMailerAutoload.php',
+            '/kernel/framework/builder/form/fieldset/FormFieldsetHTMLHeading.class.php',
+            '/kernel/framework/builder/form/field/FormFieldMultipleFilePicker.class.php',
+            '/kernel/framework/content/category/CategoriesCache.class.php',
+            '/kernel/framework/content/category/controllers/AbstractCategoriesManageController.class.php',
+            '/kernel/framework/content/category/controllers/AbstractRichCategoriesFormController.class.php',
+            '/kernel/framework/content/comments/extension-point/AbstractCommentsExtensionPoint.class.php',
+            '/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php',
+            '/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php',
+            '/kernel/framework/content/share/AbstractShare.class.php',
+            '/kernel/framework/content/share/FacebookLikeShare.class.php',
+            '/kernel/framework/content/share/GooglePlusOneShare.class.php',
+            '/kernel/framework/content/share/ShareInterface.class.php',
+            '/kernel/framework/content/share/TwitterTweeterShare.class.php',
+            '/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php',
+            '/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php',
+        ];
+
+        foreach ($files as $file_path)
         {
-            $folder->delete();
+            $file = new File(PATH_TO_ROOT . $file_path);
+            if ($file->exists())
+            {
+                $file->delete();
+            }
         }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/geshi');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/pcl');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/facebook');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/google');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/html5shiv');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/lightcase');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/js/phpboost');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/css');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/flash');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
-
-        $file = new File(PATH_TO_ROOT . '/kernel/lib/js/global.js');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.phpmailer.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.pop3.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/class.smtp.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/lib/php/phpmailer/PHPMailerAutoload.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/fieldset/FormFieldsetHTMLHeading.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/builder/form/field/FormFieldMultipleFilePicker.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/CategoriesCache.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/controllers/AbstractCategoriesManageController.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/category/controllers/AbstractRichCategoriesFormController.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/comments/extension-point/AbstractCommentsExtensionPoint.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/AbstractNotationExtensionPoint.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/notation/extension-point/NotationExtensionPoint.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/AbstractShare.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/FacebookLikeShare.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/GooglePlusOneShare.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/ShareInterface.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/content/share/TwitterTweeterShare.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/phpboost/user/authentication/FacebookAuthenticationMethod.class.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/kernel/framework/phpboost/user/authentication/GoogleAuthenticationMethod.class.php');
-        $file->delete();
     }
 
     private function delete_old_files_lang(): void
     {
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-common.php');
-        $file->delete();
+        $files = [
+            '/lang/english/admin-common.php',
+            '/lang/french/admin-common.php',
+            '/lang/english/admin-cache-common.php',
+            '/lang/french/admin-cache-common.php',
+            '/lang/english/admin-config-common.php',
+            '/lang/french/admin-config-common.php',
+            '/lang/english/admin-contents-common.php',
+            '/lang/french/admin-contents-common.php',
+            '/lang/english/admin-errors-common.php',
+            '/lang/french/admin-errors-common.php',
+            '/lang/english/admin-langs-common.php',
+            '/lang/french/admin-langs-common.php',
+            '/lang/english/admin-links-common.php',
+            '/lang/french/admin-links-common.php',
+            '/lang/english/admin-modules-common.php',
+            '/lang/french/admin-modules-common.php',
+            '/lang/english/admin-maintain-common.php',
+            '/lang/french/admin-maintain-common.php',
+            '/lang/english/admin-menus-common.php',
+            '/lang/french/admin-menus-common.php',
+            '/lang/english/admin-themes-common.php',
+            '/lang/french/admin-themes-common.php',
+            '/lang/english/admin-server-common.php',
+            '/lang/french/admin-server-common.php',
+            '/lang/english/admin-user-common.php',
+            '/lang/french/admin-user-common.php',
+            '/lang/english/admin.php',
+            '/lang/french/admin.php',
+            '/lang/english/categories-common.php',
+            '/lang/french/categories-common.php',
+            '/lang/english/comments-common.php',
+            '/lang/french/comments-common.php',
+            '/lang/english/common.php',
+            '/lang/french/common.php',
+            '/lang/english/date-common.php',
+            '/lang/french/date-common.php',
+            '/lang/english/editor-common.php',
+            '/lang/french/editor-common.php',
+            '/lang/english/items-common.php',
+            '/lang/french/items-common.php',
+            '/lang/english/main.php',
+            '/lang/french/main.php',
+            '/lang/english/status-messages-common.php',
+            '/lang/french/status-messages-common.php',
+            '/lang/english/upload-common.php',
+            '/lang/french/upload-common.php',
+            '/lang/english/user-common.php',
+            '/lang/french/user-common.php',
+        ];
 
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-cache-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-cache-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-config-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-config-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-contents-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-contents-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-errors-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-errors-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-langs-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-langs-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-links-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-links-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-modules-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-modules-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-maintain-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-maintain-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-menus-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-menus-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-themes-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-themes-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-server-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-server-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin-user-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin-user-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/admin.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/admin.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/categories-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/categories-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/comments-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/comments-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/date-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/date-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/editor-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/editor-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/items-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/items-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/main.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/main.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/status-messages-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/status-messages-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/upload-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/upload-common.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/lang/english/user-common.php');
-        $file->delete();
-        $file = new File(PATH_TO_ROOT . '/lang/french/user-common.php');
-        $file->delete();
+        foreach ($files as $file_path)
+        {
+            $file = new File(PATH_TO_ROOT . $file_path);
+            if ($file->exists())
+            {
+                $file->delete();
+            }
+        }
     }
 
     private function delete_old_files_templates(): void
     {
-        $folder = new Folder(PATH_TO_ROOT . '/templates/default');
-        if ($folder->exists())
-        {
-            $folder->delete();
-        }
+        $folders = [
+            '/templates/default',
+            '/templates/base/images',
+            '/templates/__default__/plugins/form',
+        ];
 
-        $folder = new Folder(PATH_TO_ROOT . '/templates/base/images');
-        if ($folder->exists())
+        foreach ($folders as $folder_path)
         {
-            $folder->delete();
+            $folder = new Folder(PATH_TO_ROOT . $folder_path);
+            if ($folder->exists())
+            {
+                $folder->delete();
+            }
         }
 
         $folder = new Folder(PATH_TO_ROOT . '/templates/__default__/plugins');
@@ -1416,72 +1319,57 @@ class UpdateServices
         {
             foreach ($folder->get_files('.min.') as $file)
             {
-                $file->delete();
+                if ($file->exists())
+                {
+                    $file->delete();
+                }
             }
         }
 
-        $folder = new Folder(PATH_TO_ROOT . '/templates/__default__/plugins/form');
-        if ($folder->exists())
+        $files = [
+            '/templates/__default__/dashboard/dashboard_content.css',
+            '/templates/base/theme/colors.css',
+            '/templates/base/theme/content.css',
+            '/templates/base/theme/cssmenu.css',
+            '/templates/base/theme/design.css',
+            '/templates/base/theme/form.css',
+            '/templates/base/theme/global.css',
+            '/templates/base/theme/login.css',
+            '/templates/base/theme/menus.css',
+            '/templates/base/theme/shape.css',
+            '/templates/base/theme/table.css',
+            '/templates/base/theme/images/logo.png',
+            '/templates/base/theme/images/admin.jpg',
+            '/templates/base/theme/images/theme.jpg',
+            '/templates/base/body.tpl',
+            '/templates/base/frame.tpl',
+        ];
+
+        foreach ($files as $file_path)
         {
-            $folder->delete();
+            $file = new File(PATH_TO_ROOT . $file_path);
+            if ($file->exists())
+            {
+                $file->delete();
+            }
         }
-
-        $file = new File(PATH_TO_ROOT . '/templates/__default__/dashboard/dashboard_content.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/colors.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/content.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/cssmenu.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/design.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/form.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/global.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/login.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/menus.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/shape.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/table.css');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/images/logo.png');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/images/admin.jpg');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/theme/images/theme.jpg');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/body.tpl');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/templates/base/frame.tpl');
-        $file->delete();
     }
 
     private function delete_old_files_user(): void
     {
-        $file = new File(PATH_TO_ROOT . '/user/controllers/UserMessagesController.class.php');
-        $file->delete();
+        $files = [
+            '/user/controllers/UserMessagesController.class.php',
+            '/user/templates/UserMessagesController.tpl',
+        ];
 
-        $file = new File(PATH_TO_ROOT . '/user/templates/UserMessagesController.tpl');
-        $file->delete();
+        foreach ($files as $file_path)
+        {
+            $file = new File(PATH_TO_ROOT . $file_path);
+            if ($file->exists())
+            {
+                $file->delete();
+            }
+        }
     }
 
     private static function define_prefix(mixed $tables_prefix): void

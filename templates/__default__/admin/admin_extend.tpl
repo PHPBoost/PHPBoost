@@ -95,13 +95,13 @@
 						</a>
 					</li>
 					<li>
-						<a href="${relative_url(AdminContentUrlBuilder::content_configuration())}">
+						<a href="${relative_url(AdminContentUrlBuilder::configuration())}">
 							<i class="far fa-square fa-2x" aria-hidden="true"></i>
 							<p>{@menu.content}</p>
 						</a>
 					</li>
 					<li>
-						<a href="{PATH_TO_ROOT}/admin/menus/">
+						<a href="{PATH_TO_ROOT}/admin/content/menus/">
 							<i class="fa fa-list-ul fa-2x" aria-hidden="true"></i>
 							<p>{@menu.menus}</p>
 						</a>

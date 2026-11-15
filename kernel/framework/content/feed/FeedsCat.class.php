@@ -6,16 +6,17 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 08
  * @since       PHPBoost 3.0 - 2009 02 25
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FeedsCat
 {
-	private $id = 0;
-    private $cat_name = '';
-    private $module_id = '';
-    private $children = [];
+	private int $id = 0;
+    private string $cat_name = '';
+    private string $module_id = '';
+    private array $children = [];
 
     /**
      * Builds a FeedsCat Object
@@ -23,7 +24,7 @@ class FeedsCat
      * @param int $category_id the category id
      * @param string $category_name the category name
      */
-    public function __construct($module_id, $category_id, $category_name)
+    public function __construct(string $module_id, int $category_id, string $category_name)
     {
         $this->id = $category_id;
         $this->module_id = $module_id;
@@ -35,7 +36,7 @@ class FeedsCat
      * @param string $feed_type The feed type
      * @return string the feed url
      */
-    public function get_url($feed_type = '')
+    public function get_url(string $feed_type = ''): string
     {
         $url = DispatchManager::get_url('/syndication', '/rss/' . $this->module_id . '/' . $this->id . '/' . $feed_type . '/');
         return $url->relative();
@@ -45,7 +46,7 @@ class FeedsCat
      * Returns the module id
      * @return string the module id
      */
-    public function get_module_id()
+    public function get_module_id(): string
     {
         return $this->module_id;
     }
@@ -55,7 +56,7 @@ class FeedsCat
      * Returns the category id
      * @return int the category id
      */
-    public function get_category_id()
+    public function get_category_id(): int
     {
         return $this->id;
     }
@@ -64,7 +65,7 @@ class FeedsCat
      * Returns the category name
      * @return string the category name
      */
-    public function get_category_name()
+    public function get_category_name(): string
     {
         return $this->cat_name;
     }
@@ -73,7 +74,7 @@ class FeedsCat
      * Adds a FeedsCat child to the current FeedsCat object
      * @param FeedsCat $child The element to add
      */
-    public function add_child($child)
+    public function add_child($child): void
     {
         $this->children[] = $child;
     }
@@ -82,7 +83,7 @@ class FeedsCat
      * Returns the current category children
      * @return FeedsCat[] The current category children
      */
-    public function get_children()
+    public function get_children(): array
     {
         return $this->children;
     }

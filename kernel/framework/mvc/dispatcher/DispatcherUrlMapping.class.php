@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 3.0 - 2010 10 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -45,9 +45,6 @@ class DispatcherUrlMapping extends UrlMapping
 		return false;
 	}
 
-	/**
-	 * @param UrlMapping[] $mappings
-	 */
 	public function __construct(string $dispatcher_name, string $match = '([\w/_-]*)$', string $from_path = '', string $redirect_path = '', bool $high_priority = false)
 	{
 		$module = explode('/', $dispatcher_name)[1];
@@ -86,17 +83,13 @@ class DispatcherUrlMapping extends UrlMapping
 		parent::__construct($from, $to);
 	}
 
-	/**
-	 * Returns true when this mapping must be placed at high priority in .htaccess.
-	 */
+	/** Returns true when this mapping must be placed at high priority in .htaccess. */
 	public function is_high_priority(): bool
 	{
 		return $this->high_priority;
 	}
 
-	/**
-	 * Returns true when this mapping must be placed at low priority in .htaccess.
-	 */
+	/** Returns true when this mapping must be placed at low priority in .htaccess. */
 	public function is_low_priority(): bool
 	{
 		return $this->low_priority;

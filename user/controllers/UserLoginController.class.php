@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 13
  * @since       PHPBoost 3.0 - 2012 04 05
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,27 +14,26 @@ class UserLoginController extends AbstractController
 	const USER_LOGIN = 1;
 	const ADMIN_LOGIN = 2;
 
-	private $login_type;
-	private $redirect;
+	private int $login_type;
+	private string $redirect;
 
-	private $view;
-	private $lang;
-	private $request;
-	private $form;
-	private $fieldset;
-	private $submit_button;
+	private Template $view;
+	private array $lang;
+	private HTTPRequestCustom $request;
+	private HTMLForm $form;
+	private FormFieldsetHTML $fieldset;
+	private FormButtonSubmit $submit_button;
+	private bool $has_error = false;
+	private MaintenanceConfig $maintain_config;
 
-	private $has_error;
-	private $maintain_config;
-
-	public function __construct($login_type = self::USER_LOGIN, $redirect = '')
+	public function __construct(int $login_type = self::USER_LOGIN, string $redirect = '')
 	{
 		$this->login_type = $login_type;
 		if (!empty($redirect))
 			$this->redirect = $redirect;
 	}
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
 	{
 		$this->init($request);
 		$this->build_form();
@@ -77,13 +76,21 @@ class UserLoginController extends AbstractController
 			if (!$this->maintain_config->is_under_maintenance() || ($this->maintain_config->is_under_maintenance() && $this->maintain_config->is_authorized_in_maintenance()))
 			{
 				if ($this->login_type == self::ADMIN_LOGIN && !AppContext::get_current_user()->is_admin())
+                {
 					AppContext::get_response()->redirect(Environment::get_home_page());
-				else if ($this->request->get_value('redirect', '') || $this->redirect !== null)
+                }
+				elseif ($this->request->get_value('redirect', '') || $this->redirect !== null)
+                {
 					AppContext::get_response()->redirect($this->get_redirect_url());
-				else if ($was_already_authenticated)
+                }
+				elseif ($was_already_authenticated)
+                {
 					AppContext::get_response()->redirect(UserUrlBuilder::edit_profile(AppContext::get_current_user()->get_id())->rel());
+                }
 				else
+                {
 					AppContext::get_response()->redirect(Environment::get_home_page());
+                }
 			}
 		}
 
@@ -100,7 +107,7 @@ class UserLoginController extends AbstractController
 		return $this->build_view();
 	}
 
-	private function init(HTTPRequestCustom $request)
+	private function init(HTTPRequestCustom $request): void
 	{
 		$this->request = $request;
 		$this->view = new FileTemplate('user/UserLoginController.tpl');
@@ -109,7 +116,7 @@ class UserLoginController extends AbstractController
 		$this->maintain_config = MaintenanceConfig::load();
 	}
 
-	private function init_vars_template()
+	private function init_vars_template(): void
 	{
 		$external_authentication = 0;
 
@@ -161,13 +168,13 @@ class UserLoginController extends AbstractController
 		}
 	}
 
-	private function phpboost_authenticate($login, $password, $autoconnect)
+	private function phpboost_authenticate(string $login, string $password, bool $autoconnect): void
 	{
 		$authentication = new PHPBoostAuthenticationMethod($login, $password);
 		$this->authenticate($authentication, $autoconnect);
 	}
 
-	private function authenticate(AuthenticationMethod $authentication, $autoconnect)
+	private function authenticate(AuthenticationMethod $authentication, bool $autoconnect): void
 	{
 		$user_id = AuthenticationService::authenticate($authentication, $autoconnect);
 
@@ -195,7 +202,7 @@ class UserLoginController extends AbstractController
 		}
 	}
 
-	private function build_view()
+	private function build_view(): Response
 	{
 		if ($this->maintain_config->is_under_maintenance() || $this->login_type == self::ADMIN_LOGIN)
 		{
@@ -218,10 +225,7 @@ class UserLoginController extends AbstractController
 		}
 	}
 
-	/**
-	 * @return HTMLForm
-	 */
-	private function build_form()
+	private function build_form(): void
 	{
 		$this->form = new HTMLForm('loginForm', $this->build_target(), false);
 
@@ -244,7 +248,7 @@ class UserLoginController extends AbstractController
 		$this->form->add_button($this->submit_button);
 	}
 
-	private function build_target()
+	private function build_target(): Url
 	{
 		$redirect_url = $this->request->get_value('redirect', '/');
 		$redirect = $redirect_url !== '/' ? '?redirect=' . str_replace('%2F', '/', urlencode($redirect_url)) : '';
@@ -260,15 +264,19 @@ class UserLoginController extends AbstractController
 		return DispatchManager::get_url($dispatch, '/login/' . $redirect);
 	}
 
-	private function get_redirect_url()
+	private function get_redirect_url(): Url
 	{
 		if ($this->redirect !== null && $this->redirect)
+        {
 			return new Url($this->redirect);
+        }
 		else
+        {
 			return new Url($this->request->get_value('redirect', '/'));
+        }
 	}
 
-    private function init_maintain_delay()
+    private function init_maintain_delay(): void
 	{
 		$array_time = [0 => '-1', 1 => '0', 2 => '60', 3 => '300', 4 => '900', 5 => '1800', 6 => '3600', 7 => '7200', 8 => '86400', 9 => '172800', 10 => '604800'];
 		$array_delay = [0 => $this->lang['common.unspecified'], 1 => '', 2 => '1 ' . $this->lang['date.minute'], 3 => '5 ' . $this->lang['date.minutes'], 4 => '15 ' . $this->lang['date.minutes'], 5 => '30 ' . $this->lang['date.minutes'], 6 => '1 ' . $this->lang['date.hour'], 7 => '2 ' . $this->lang['date.hours'], 8 => '1 ' . $this->lang['date.day'], 9 => '2 ' . $this->lang['date.days'], 10 => '1 ' . $this->lang['date.week']];

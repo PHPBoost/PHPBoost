@@ -7,8 +7,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 11 10
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface DBMSFactory
@@ -17,20 +18,20 @@ interface DBMSFactory
 	 * returns the opened <code>DBConnection</code>. If not yet opened, opens it
 	 * @return DBConnection the opened <code>DBConnection</code>. If not yet opened, opens it
 	 */
-	function new_db_connection();
+	function new_db_connection(): DBConnection;
 
 	/**
 	 * returns a new <code>SQLQuerier</code> instance
 	 * @param DBConnection $db_connection the db connection that the <code>SQLQuerier</code> will use
 	 * @return SQLQuerier a new <code>SQLQuerier</code> instance
 	 */
-	function new_sql_querier(DBConnection $db_connection);
+	function new_sql_querier(DBConnection $db_connection): SQLQuerier;
 
 	/**
 	 * returns a new <code>DBMSUtils</code> instance
 	 * @param SQLQuerier $querier the <code>SQLQuerier</code> that the <code>DBMSUtils</code> will use
 	 * @return DBMSUtils a new <code>DBMSUtils</code> instance
 	 */
-	function new_dbms_util(SQLQuerier $querier);
+	function new_dbms_util(SQLQuerier $querier): DBMSUtils;
 }
 ?>

@@ -5,34 +5,40 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 6.0 - 2020 01 08
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsService
 {
-	protected static $items_manager;
+	protected static ?ItemsManager $items_manager = null;
 
-	public static function get_items_manager($module_id = '')
+	public static function get_items_manager(string $module_id = '')
 	{
 		if (self::$items_manager === null || (!empty($module_id) && $module_id != self::$items_manager->get_module_id()))
 		{
 			$module_id = !empty($module_id) ? $module_id : Environment::get_running_module_name();
 
 			if (preg_match('/^index\.php\?/suU', $module_id))
+            {
 				$module_id = GeneralConfig::load()->get_module_home_page();
+            }
 
 			$items_manager_class_name = TextHelper::ucfirst($module_id) . 'Manager';
 			if (ClassLoader::is_class_registered_and_valid($items_manager_class_name) && is_subclass_of($items_manager_class_name, 'ItemsManager'))
+            {
 				self::$items_manager = new $items_manager_class_name($module_id);
+            }
 			else
+            {
 				self::$items_manager = new ItemsManager($module_id);
+            }
 		}
 		return self::$items_manager;
 	}
 
-	public static function get_items_lang($module_id, $filename = 'common')
+	public static function get_items_lang(string $module_id, string $filename = 'common'): array
 	{
 		$items_lang = LangLoader::get('item-lang');
 		$module_lang = LangLoader::filename_exists($filename, $module_id) ? LangLoader::get($filename, $module_id) : [];
@@ -45,17 +51,25 @@ class ItemsService
 
 		// Specific lang variables
 		if (AppContext::get_current_user()->get_locale() == 'french' && in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), ['a', 'e', 'i', 'o', 'u', 'y']) && isset($items_lang['the.item.alt2']))
+        {
 			$module_lang['the.item'] = $items_lang['the.item.alt2'];
+        }
 		if (AppContext::get_current_user()->get_locale() == 'english' && !in_array(Url::encode_rewrite(TextHelper::mb_substr($items_lang['item'], 0, 1)), ['a', 'e', 'i', 'o', 'u', 'y']) && isset($items_lang['an.item.alt']))
+        {
 			$module_lang['an.item'] = $items_lang['an.item.alt'];
+        }
 
 		foreach (array_keys($items_lang) as $element)
 		{
 			if (isset($module_lang['the.item']) && TextHelper::mb_substr(strtolower($module_lang['the.item']), 0, 2) == 'la' && isset($items_lang[$element . '.alt']) || isset($module_lang['an.item']) && TextHelper::mb_substr(strtolower($module_lang['an.item']), 0, 3) == 'une' && isset($items_lang[$element . '.alt']))
+            {
 				$items_lang[$element] = $items_lang[$element . '.alt'];
+            }
 
 			if (isset($module_lang['the.item']) && TextHelper::mb_substr(strtolower($module_lang['the.item']), 0, 2) == 'l\'' && isset($items_lang[$element . '.alt2']))
+            {
 				$items_lang[$element] = $items_lang[$element . '.alt2'];
+            }
 
 			if (TextHelper::mb_substr($element, -4) != '.alt')
 			{
@@ -63,7 +77,9 @@ class ItemsService
 				$parameters_list[str_replace('.', '_', TextHelper::lcfirst($element))] = isset($module_lang[$element]) ? TextHelper::lcfirst($module_lang[$element]) : TextHelper::lcfirst($items_lang[$element]);
 			}
 			else
+            {
 				unset($items_lang[$element]);
+            }
 		}
 
 		foreach ($parameters_list as $id => $value)

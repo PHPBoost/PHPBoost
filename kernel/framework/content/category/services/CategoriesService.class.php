@@ -5,48 +5,60 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 06
  * @since       PHPBoost 6.0 - 2019 11 11
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CategoriesService
 {
-	protected static $categories_manager;
+	protected static ?CategoriesManager $categories_manager = null;
 
-	public static function get_authorized_categories($current_id_category = Category::ROOT_CATEGORY, $are_descriptions_displayed_to_guests = true, $module_id = '')
+	public static function get_authorized_categories(int $current_id_category = Category::ROOT_CATEGORY, bool $are_descriptions_displayed_to_guests = true, string $module_id = '')
 	{
 		$search_category_children_options = new SearchCategoryChildrensOptions();
 		$search_category_children_options->add_authorizations_bits(Category::READ_AUTHORIZATIONS);
 
 		if (AppContext::get_current_user()->is_guest())
+        {
 			$search_category_children_options->set_allow_only_member_level_authorizations($are_descriptions_displayed_to_guests);
+        }
 
 		$categories = self::get_categories_manager($module_id)->get_children($current_id_category, $search_category_children_options, true);
 		return array_keys($categories);
 	}
 
-	public static function get_categories_manager($requested_module_id = '')
+	public static function get_categories_manager(string $requested_module_id = ''): mixed
 	{
 		if (self::$categories_manager === null || (!empty($requested_module_id) && $requested_module_id != self::$categories_manager->get_module_id()))
 		{
 			$module_id = !empty($requested_module_id) ? $requested_module_id : Environment::get_running_module_name();
 
 			if (preg_match('/^index\.php\?/suU', $module_id))
+            {
 				$module_id = GeneralConfig::load()->get_module_home_page();
+            }
 
 			$module = ModulesManager::get_module($module_id);
 
 			$module_categories_cache_class_name = TextHelper::ucfirst($module_id) . 'CategoriesCache';
 			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) && is_subclass_of($module_categories_cache_class_name, 'CategoriesCache') ? $module_categories_cache_class_name : '';
 			if ($categories_cache_class)
+            {
 				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', [$requested_module_id]) : call_user_func($categories_cache_class . '::load');
-			else if ($module->get_configuration()->feature_is_enabled('rich_categories'))
+            }
+			elseif ($module->get_configuration()->feature_is_enabled('rich_categories'))
+            {
 				$categories_cache = DefaultRichCategoriesCache::load($module_id);
-			else if ($module->get_configuration()->feature_is_enabled('categories'))
+            }
+			elseif ($module->get_configuration()->feature_is_enabled('categories'))
+            {
 				$categories_cache = DefaultCategoriesCache::load($module_id);
-			else if (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, ['admin', 'kernel', 'user']))
+            }
+			elseif (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, ['admin', 'kernel', 'user']))
+            {
 				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . $module_id);
+            }
 
 			$categories_items_parameters = new CategoriesItemsParameters();
 			$categories_items_parameters->set_table_name_contains_items($categories_cache->get_table_name_containing_items());
@@ -58,7 +70,7 @@ class CategoriesService
 		return self::$categories_manager;
 	}
 
-	public static function get_default_root_category_description($module_id, $categories_number = 1, $items_number = 1, $lang_filename = 'common')
+	public static function get_default_root_category_description(string $module_id, int $categories_number = 1, int $items_number = 1, string $lang_filename = 'common'): mixed
 	{
 		$lang = LangLoader::get_all_langs($module_id);
 		$items_lang = ItemsService::get_items_lang($module_id, $lang_filename);

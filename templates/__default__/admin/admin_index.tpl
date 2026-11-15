@@ -10,7 +10,7 @@
 			<a href="${relative_url(AdminMembersUrlBuilder::management())}" class="quick-link">{@user.members}</a>
 		</li>
 		<li>
-			<a href="{PATH_TO_ROOT}/admin/menus/menus.php" class="quick-link">{@menu.menus}</a>
+			<a href="{PATH_TO_ROOT}/admin/content/menus/menus.php" class="quick-link">{@menu.menus}</a>
 		</li>
 		<li>
 			<a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}" class="quick-link">{@addon.modules}</a>

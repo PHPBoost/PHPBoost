@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 14
  * @since       PHPBoost 3.0 - 2009 10 02
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,70 +15,44 @@
 
 abstract class SQLDAO implements DAO
 {
-	/**
-	 * @var DBQuerier the sql querier that will interact with the database
-	 */
-	protected $querier;
+	/** @var DBQuerier the sql querier that will interact with the database */
+	protected SQLQuerier $querier;
 
-	/**
-	 * @var MappingModel the model on which services are based
-	 */
-	protected $model;
+	/** @var MappingModel the model on which services are based */
+	protected MappingModel $model;
 
-	/**
-	 * @var string the name of the table in which objects will be stored
-	 */
-	protected $table;
+	/** @var string the name of the table in which objects will be stored */
+	protected string $table;
 
-	/**
-	 * @var string the primary key database field name (prefixed by the table name)
-	 */
-	protected $pk_db_field;
+	/** @var string the primary key database field name (prefixed by the table name) */
+	protected string $pk_db_field;
 
-	/**
-	 * @var string the primary key property
-	 */
-	protected $pk_property;
+	/** @var string the primary key property */
+	protected string $pk_property;
 
-	/**
-	 * @var string the primary key getter method name
-	 */
-	protected $pk_getter;
+	/** @var string the primary key getter method name */
+	protected string $pk_getter;
 
-	/**
-	 * @var string the primary key setter method name
-	 */
-	protected $pk_setter;
+	/** @var string the primary key setter method name */
+	protected string $pk_setter;
 
-	/**
-	 * @var string[] $fields_mapping[$property] => $db_field_name
-	 */
-	protected $fields_mapping = [];
+	/** @var string[] $fields_mapping[$property] => $db_field_name */
+	protected array $fields_mapping = [];
 
-	/**
-	 * @var string the delete prepared query
-	 */
-	protected $delete_query;
+	/** @var string the delete prepared query */
+	protected ?string $delete_query = null;
 
-	/**
-	 * @var string the insert prepared query
-	 */
-	protected $insert_query;
+	/** @var string the insert prepared query */
+	protected ?string $insert_query = null;
 
-	/**
-	 * @var string the update prepared query
-	 */
-	protected $update_query;
+	/** @var string the update prepared query */
+	protected ?string $update_query = null;
 
-	/**
-	 * @var string the find by id prepared query
-	 */
-	protected $find_by_id_query;
+	/** @var string the find by id prepared query */
+	protected ?string $find_by_id_query = null;
 
-	/**
-	 * @var string the find by criteria prepared query
-	 */
-	protected $find_by_criteria_query;
+	/** @var string the find by criteria prepared query */
+	protected ?string $find_by_criteria_query = null;
 
 	/**
 	 * initialize the dao
@@ -99,7 +73,7 @@ abstract class SQLDAO implements DAO
 		$this->cache_model();
 	}
 
-	public function save(PropertiesMapInterface $object, $on_duplicate_update_column = '')
+	public function save(PropertiesMapInterface $object, string $on_duplicate_update_column = ''): void
 	{
 		$pk_value = $object->{$this->pk_getter}();
 		if (empty($pk_value))
@@ -113,12 +87,12 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	public function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = [])
+	public function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = []): void
 	{
 		$this->querier->update($this->table, $fields, $where, $parameters);
 	}
 
-	public function delete(PropertiesMapInterface $object)
+	public function delete(PropertiesMapInterface $object): void
 	{
 		if ($this->delete_query === null)
 		{
@@ -131,17 +105,17 @@ abstract class SQLDAO implements DAO
 
 	// TODO delete_by_id
 
-	public function delete_all($where = DAO::WHERE_ALL, array $parameters = [])
+	public function delete_all($where = DAO::WHERE_ALL, array $parameters = []): void
     {
 		$this->querier->delete($this->table, $where, $parameters);
     }
 
-    public function count($where = DAO::WHERE_ALL, array $parameters = [])
+    public function count($where = DAO::WHERE_ALL, array $parameters = []): void
     {
         $this->querier->count($this->table, $where, $parameters);
     }
 
-	public function find_by_id($id)
+	public function find_by_id(int|string $id): PropertiesMapInterface
 	{
 		$this->compute_find_by_id_query();
 		$parameters = ['id' => $id];
@@ -154,7 +128,7 @@ abstract class SQLDAO implements DAO
 		throw new ObjectNotFoundException($this->model->get_class_name(), $id);
 	}
 
-	public function find_all($limit = DAO::FIND_ALL, $offset = 0, $order_by = [])
+	public function find_all(int $limit = DAO::FIND_ALL, int $offset = 0, array $order_by = []): SelectQueryResultMapper
 	{
 		$query = '';
 		if (!empty($order_by))
@@ -162,7 +136,19 @@ abstract class SQLDAO implements DAO
 			$order_clause = '';
 			foreach ($order_by as $order)
 			{
-				$order_clause .= ', ' . $order['column'] . ' ' . $order['way'];
+				if (!is_array($order))
+				{
+					continue;
+				}
+
+				$column = $order['column'] ?? null;
+				$way = $order['way'] ?? null;
+				if ($column === null || $way === null)
+				{
+					continue;
+				}
+
+				$order_clause .= ', ' . $column . ' ' . $way;
 			}
 			$query .= 'ORDER BY' . ltrim($order_clause, ',');
 		}
@@ -175,7 +161,7 @@ abstract class SQLDAO implements DAO
 		return $this->find_by_criteria($query . ';');
 	}
 
-	public function find_by_criteria($criteria, $parameters = [])
+	public function find_by_criteria(string $criteria, array $parameters = []): SelectQueryResultMapper
 	{
 		$this->compute_find_by_criteria_query();
 		$full_query = $this->find_by_criteria_query . $criteria;
@@ -183,7 +169,7 @@ abstract class SQLDAO implements DAO
 		return new SelectQueryResultMapper($result, $this->model);
 	}
 
-	private function cache_model()
+	private function cache_model(): void
 	{
 		$this->table = $this->model->get_table_name();
 
@@ -204,7 +190,7 @@ abstract class SQLDAO implements DAO
 	 * @param PropertiesMapInterface $object
 	 * @return InjectQueryResult
 	 */
-	private function raw_insert(PropertiesMapInterface $object, $on_duplicate_update_column = '')
+	private function raw_insert(PropertiesMapInterface $object, string $on_duplicate_update_column = ''): InjectQueryResult
 	{
 		$this->compute_insert_query($on_duplicate_update_column);
 		$prepared_vars = $this->model->get_raw_value($object);
@@ -216,7 +202,7 @@ abstract class SQLDAO implements DAO
 	 * @param PropertiesMapInterface $object
 	 * @return InjectQueryResult
 	 */
-	private function raw_update(PropertiesMapInterface $object, $pk_value)
+	private function raw_update(PropertiesMapInterface $object, int|string $pk_value): InjectQueryResult
 	{
 		$this->compute_update_query();
 		$prepared_vars = $this->model->get_raw_value($object);
@@ -224,7 +210,7 @@ abstract class SQLDAO implements DAO
 		return $this->querier->inject($this->update_query, $prepared_vars);
 	}
 
-	private function compute_find_by_id_query()
+	private function compute_find_by_id_query(): void
 	{
 		if ($this->find_by_id_query === null)
 		{
@@ -233,7 +219,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function compute_find_by_criteria_query()
+	private function compute_find_by_criteria_query(): void
 	{
 		if ($this->find_by_criteria_query === null)
 		{
@@ -248,7 +234,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function compute_insert_query($on_duplicate_update_column = '')
+	private function compute_insert_query(string $on_duplicate_update_column = ''): void
 	{
 		if ($this->insert_query === null)
 		{
@@ -261,7 +247,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function compute_update_query()
+	private function compute_update_query(): void
 	{
 		if ($this->update_query === null)
 		{
@@ -276,7 +262,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function add_select_columns($fields_mapping)
+	private function add_select_columns(array $fields_mapping): void
 	{
 		foreach ($fields_mapping as $property => $db_field)
 		{
@@ -284,7 +270,7 @@ abstract class SQLDAO implements DAO
 		}
 	}
 
-	private function compute_joins()
+	private function compute_joins(): array
 	{
 		$left_joins = [];
 		foreach ($this->model->get_joins() as $join)

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 12
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -11,13 +11,13 @@
 
 class UserChangeLostPasswordController extends AbstractController
 {
-	private $maintain_config;
-	private $lang;
-	private $view;
-	private $form;
-	private $submit_button;
+	private ?MaintenanceConfig $maintain_config = null;
+	private array $lang = [];
+	private ?Template $view = null;
+	private ?HTMLForm $form = null;
+	private ?FormButtonDefaultSubmit $submit_button = null;
 
-	public function execute(HTTPRequestCustom $request)
+	public function execute(HTTPRequestCustom $request): AbstractResponse
 	{
 		$this->init();
 
@@ -42,14 +42,14 @@ class UserChangeLostPasswordController extends AbstractController
 		return $this->build_response($this->view, $change_password_pass);
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->view = new StringTemplate('# INCLUDE MESSAGE_HELPER ## INCLUDE FORM #');
 		$this->lang = LangLoader::get_all_langs();
 		$this->maintain_config = MaintenanceConfig::load();
 	}
 
-	private function build_form($user_id)
+	private function build_form(int $user_id): void
 	{
 		$security_config = SecurityConfig::load();
 		$user = UserService::get_user($user_id);
@@ -91,15 +91,16 @@ class UserChangeLostPasswordController extends AbstractController
 		$this->form = $form;
 	}
 
-	private function change_password($user_id, $password)
+	private function change_password(int $user_id, string $password): void
 	{
 		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, $password, null, '');
 
 		$auth_infos = [];
-		try {
+		try
+        {
 			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
-		} catch (RowNotFoundException $e) {
 		}
+        catch (RowNotFoundException $e) {}
 
 		if (!empty($auth_infos) && $auth_infos['login'])
 		{
@@ -138,7 +139,7 @@ class UserChangeLostPasswordController extends AbstractController
 		}
 	}
 
-	private function build_response(View $view, $key)
+	private function build_response(View $view, int $key): AbstractResponse
 	{
         if ($this->maintain_config->is_under_maintenance())
 		{
@@ -160,7 +161,7 @@ class UserChangeLostPasswordController extends AbstractController
 		return $response;
 	}
 
-	public function get_right_controller_regarding_authorizations()
+	public function get_right_controller_regarding_authorizations(): Controller
 	{
 		if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{

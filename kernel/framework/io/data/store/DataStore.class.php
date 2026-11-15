@@ -10,8 +10,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 3.0 - 2009 12 09
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface DataStore
@@ -22,31 +23,31 @@ interface DataStore
 	 * @return mixed The data that is stored
 	 * @throws DataStoreException If data cannot be found.
 	 */
-    function get($id);
+    function get(string $id): mixed;
 
     /**
      * Tells whether the container contains the data at the key $id.
      * @param string $id The key
      * @return bool true if the container contains it, false otherwise
      */
-    function contains($id);
+    function contains(string $id): bool;
 
     /**
      * Stores data.
      * @param string $id The key corresponding to what you store.
      * @param mixed $object The data you want to store
      */
-    function store($id, $object);
+    function store(string $id, mixed $object): void;
 
     /**
      * Deletes the data you had stored.
      * @param string $id The key
      */
-    function delete($id);
+    function delete(string $id): void;
 
     /**
      * Clears all data
      */
-    function clear();
+    function clear(): void;
 }
 ?>

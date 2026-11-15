@@ -6,40 +6,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 11
  * @since       PHPBoost 2.0 - 2007 11 29
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractParser implements FormattingParser
 {
 	const PICK_UP = true;
 	const REIMPLANT = false;
-	/**
-	 * @var string Content of the parser
-	 */
-	protected $content = '';
-	/**
-	 * @var array List of the tags which have been picked up by the parser
-	 */
-	protected $array_tags = [];
-	/**
-	 * @var string Path to root of the page in which has been written the content to parse.
-	 */
-	protected $path_to_root = PATH_TO_ROOT;
 
-	/**
-	 * @var string Path of the page in which has been written the content to parse.
-	 */
-	protected $page_path = '';
-
-	/**
-	 * @var array List of the tags to add from a module. Allows to add a tag [link] from pages or wiki from example
-	 */
-	protected $module_special_tags = [];
+	protected mixed $content = '';
+	/** List of the tags which have been picked up by the parser */
+	protected array $array_tags = [];
+	/** Path to root of the page in which has been written the content to parse. */
+	protected string $path_to_root = PATH_TO_ROOT;
+	/** Path of the page in which has been written the content to parse. */
+	protected string $page_path = '';
+	/** List of the tags to add from a module. Allows to add a tag [link] from pages or wiki from example */
+	protected array $module_special_tags = [];
 
 	/**
 	 * Builds a Parser object.
@@ -50,66 +39,42 @@ abstract class AbstractParser implements FormattingParser
 		$this->page_path = $_SERVER['PHP_SELF'];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_content()
+	public function get_content(): mixed
 	{
 		return trim($this->content);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_content($content)
+	public function set_content(mixed $content): void
 	{
 		$this->content = $content;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_path_to_root($path)
+	public function set_path_to_root(string $path): void
 	{
 		$this->path_to_root = $path;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_path_to_root()
+	public function get_path_to_root(): string 
 	{
 		return $this->path_to_root;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_page_path($page_path)
+	public function set_page_path(string $page_path): void
 	{
 		$this->page_path = $page_path;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_page_path()
+	public function get_page_path(): string
 	{
 		return $this->page_path;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function add_module_special_tag($pattern, $replacement)
+	public function add_module_special_tag(string $pattern, string $replacement): void
 	{
 		$this->module_special_tags[$pattern] = $replacement;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_module_special_tags()
+	public function get_module_special_tags(): array
 	{
 		return $this->module_special_tags;
 	}
@@ -120,7 +85,7 @@ abstract class AbstractParser implements FormattingParser
 	 * @param string $regex The regular expression which matches the replacement
 	 * @param string $replace The replacement syntax.
 	 */
-	protected function _parse_imbricated($match, $regex, $replace)
+	protected function _parse_imbricated(string $match, string $regex, string $replace): void
 	{
 		$nbr_match = TextHelper::substr_count($this->content, $match);
 		for ($i = 0; $i < $nbr_match; $i++)
@@ -134,7 +99,7 @@ abstract class AbstractParser implements FormattingParser
 	 * @param string $matches The regular expression which matches the tag args
 	 * @param array $allowed_args The args that are allowed to be present
 	 */
-	protected static function parse_tag_args($matches, $allowed_args = [])
+	protected static function parse_tag_args(string $matches, array $allowed_args = []): array
 	{
 		$args = explode(' ', trim($matches));
 		$result = [];

@@ -11,7 +11,7 @@
 
 class PDOQuerierException extends SQLQuerierException
 {
-	public function __construct($message, PDOStatement $statement)
+	public function __construct(string $message, PDOStatement $statement)
 	{
 		$infos = [];
 		foreach ($statement->errorInfo() as $key => $info)

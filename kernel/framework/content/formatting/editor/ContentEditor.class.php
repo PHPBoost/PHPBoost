@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 07
+ * @version     PHPBoost 6.1 - last update: 2026 11 09
  * @since       PHPBoost 3.0 - 2008 07 05
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,9 +14,9 @@
 
 abstract class ContentEditor
 {
-    protected $template = null;
-    protected $forbidden_tags = [];
-    protected $identifier = 'contents';
+    protected ?Template $template = null;
+    protected array $forbidden_tags = [];
+    protected string $identifier = 'contents';
 
     public function __construct()
     {
@@ -28,7 +28,7 @@ abstract class ContentEditor
      * Set the forbidden tags
      * @param array List of forbidden tags.
      */
-    public function set_forbidden_tags($forbidden_tags)
+    public function set_forbidden_tags(array $forbidden_tags): void
     {
         $this->forbidden_tags = $forbidden_tags;
     }
@@ -37,42 +37,33 @@ abstract class ContentEditor
      * Get the fordidden tags.
      * @return array List of forbidden tags.
      */
-    public function get_forbidden_tags()
+    public function get_forbidden_tags(): array
     {
         return $this->forbidden_tags;
     }
 
     /**
      * Set the html identifier of the textarea field which contain the content to edit.
-     * @param string The html identifier.
+     * @param string T$identifier he html identifier.
      */
-    public function set_identifier($identifier)
+    public function set_identifier(string $identifier): void
     {
         $this->identifier = $identifier;
     }
 
-    /**
-     * Set an alternative template for the editor.
-     * @param Template $template.
-     */
-    public function set_template($template)
+    /** Set an alternative template for the editor. */
+    public function set_template(Template $template): void
     {
         $this->template = $template;
     }
 
-    /**
-     * Get the template used for the editor.
-     * @return Template The template
-     */
-    public function get_template()
+    /** Get the template used for the editor. */
+    public function get_template(): Template
     {
         return $this->template;
     }
 
-    /**
-     * Display the editor interface.
-     * @return string
-     */
-    abstract public function display();
+    /** Display the editor interface. */
+    abstract public function display(): string;
 }
 ?>

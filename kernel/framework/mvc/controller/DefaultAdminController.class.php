@@ -6,25 +6,19 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 03
  * @since       PHPBoost 6.0 - 2021 11 29
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class DefaultAdminController extends AdminController
 {
-	/**
-	 * @var HTMLForm
-	 */
-	protected $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	protected $submit_button;
+	protected ?HTMLForm $form = null;
+	protected ?FormButtonDefaultSubmit $submit_button = null;
 
-	protected $config;
-	protected $lang;
-	protected $view;
+	protected mixed $config = null;
+	protected mixed $lang = null;
+	protected mixed $view = null;
 
 	public function __construct()
 	{
@@ -35,15 +29,12 @@ abstract class DefaultAdminController extends AdminController
 		$this->view->add_lang($this->lang);
 	}
 
-	/**
-	 * @return Template
-	 */
-	protected function get_template_to_use()
+	protected function get_template_to_use(): FileTemplate|StringTemplate
 	{
 		return new StringTemplate($this->get_template_string_content());
 	}
 
-	protected function get_template_string_content()
+	protected function get_template_string_content(): string
 	{
 		return '# INCLUDE MESSAGE_HELPER # # INCLUDE CONTENT #';
 	}
