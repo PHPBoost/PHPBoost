@@ -11,7 +11,7 @@
 
 class AdminCacheMenuDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct($view, $title_page)
+	public function __construct(View $view, string $title_page)
 	{
 		parent::__construct($view);
 

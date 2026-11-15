@@ -9,7 +9,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
+defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 

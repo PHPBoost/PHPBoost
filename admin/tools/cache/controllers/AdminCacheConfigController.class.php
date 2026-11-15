@@ -70,9 +70,12 @@ class AdminCacheConfigController extends DefaultAdminController
                 'class' => 'top-field custom-checkbox',
                 'events' => [
                     'click' => '
-                        if (HTMLForms.getField("enable_css_cache").getValue()) {
+                        if (HTMLForms.getField("enable_css_cache").getValue())
+                        {
                             HTMLForms.getField("level_css_cache").enable();
-                        } else {
+                        }
+                        else
+                        {
                             HTMLForms.getField("level_css_cache").disable();
                         }'
                 ]

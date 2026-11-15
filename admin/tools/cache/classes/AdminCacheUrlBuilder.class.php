@@ -11,35 +11,23 @@
 
 class AdminCacheUrlBuilder
 {
-    private static string $dispatcher = '/admin/cache';
+    private static string $dispatcher = '/admin/tools/cache';
 
-    /**
-     * @return Url
-     */
     public static function clear_cache(): Url
     {
         return DispatchManager::get_url(self::$dispatcher, '/data', true);
     }
 
-    /**
-     * @return Url
-     */
     public static function configuration(): Url
     {
         return DispatchManager::get_url(self::$dispatcher, '/config', true);
     }
 
-    /**
-     * @return Url
-     */
     public static function clear_css_cache(): Url
     {
         return DispatchManager::get_url(self::$dispatcher, '/css', true);
     }
 
-    /**
-     * @return Url
-     */
     public static function clear_syndication_cache(): Url
     {
         return DispatchManager::get_url(self::$dispatcher, '/syndication', true);
