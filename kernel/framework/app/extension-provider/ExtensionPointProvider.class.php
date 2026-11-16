@@ -9,29 +9,26 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
  * @since       PHPBoost 2.0 - 2008 01 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ExtensionPointProvider
 {
-	/**
-	 * @var string the module identifier
-	 */
-	private $id;
+	/** The module identifier */
+	private string $id;
 
-	/**
-	 * @var array list of the extensions points provided
-	 */
-	private $extensions_points = [];
+	/** list of the extensions points provided */
+	private array $extensions_points = [];
 
 	/**
 	 * ExtensionPointProvider constructor
 	 * @param string $extension_provider_id the provider id. It's the name of the folder in witch
 	 * the extension provider is
 	 */
-	public function __construct($extension_provider_id = '')
+	public function __construct(string $extension_provider_id = '')
 	{
 		$this->id = $extension_provider_id;
 		$this->extensions_points = $this->get_provider_extensions_points($this);
@@ -40,7 +37,7 @@ abstract class ExtensionPointProvider
 	/**
 	 * @return string Return the id of the ExtensionPoint
 	 */
-	public function get_id()
+	public function get_id(): string
 	{
 		return $this->id;
 	}
@@ -52,7 +49,7 @@ abstract class ExtensionPointProvider
 	 * @return mixed the $extension_point returns
 	 * @throws ExtensionPointNotFoundException
 	 */
-	public function get_extension_point($extension_point, $args = null)
+	public function get_extension_point(string $extension_point, mixed $args = null): mixed
 	{
 		if ($this->has_extension_point($extension_point))
 		{
@@ -66,7 +63,7 @@ abstract class ExtensionPointProvider
 	 * @param string $extension_point the name of the method you want to check the availability
 	 * @return bool true if the extension point exists, false otherwise
 	 */
-	public function has_extension_point($extension_point)
+	public function has_extension_point(string $extension_point): bool
 	{
 		return in_array($extension_point, $this->extensions_points);
 	}
@@ -76,7 +73,7 @@ abstract class ExtensionPointProvider
 	 * @param array $extensions_points the names of the methods you want to check the availability
 	 * @return bool true if all extensions points exist, false otherwise
 	 */
-	public function has_extensions_points(array $extensions_points)
+	public function has_extensions_points(array $extensions_points): bool
 	{
 		foreach($extensions_points as $extension_point)
 		{
@@ -88,25 +85,31 @@ abstract class ExtensionPointProvider
 		return true;
 	}
 
-	private function get_provider_extensions_points($provider)
+	private function get_provider_extensions_points(mixed $provider): array
 	{
 		$module_methods = get_class_methods($provider);
 		$generics_methods = get_class_methods('ExtensionPointProvider');
 		return array_values(array_diff($module_methods, $generics_methods));
 	}
 
-	protected function get_class($extension_point_label, $extension_point_full_name = '')
+	protected function get_class(string $extension_point_label, string $extension_point_full_name = ''): mixed
 	{
 		$extension_point_full_name = !empty($extension_point_full_name) ? $extension_point_full_name : $extension_point_label;
 		$class = TextHelper::ucfirst($this->get_id()) . $extension_point_label;
 		$default_class = 'Default' . $extension_point_label;
-		
+
 		if (ClassLoader::is_class_registered_and_valid($class) && (in_array($extension_point_full_name, class_implements($class)) || is_subclass_of($class, $extension_point_full_name)))
+        {
 			return new $class($this->get_id());
-		else if (ClassLoader::is_class_registered_and_valid($default_class) && (in_array($extension_point_full_name, class_implements($default_class)) || is_subclass_of($default_class, $extension_point_full_name)))
+        }
+		elseif (ClassLoader::is_class_registered_and_valid($default_class) && (in_array($extension_point_full_name, class_implements($default_class)) || is_subclass_of($default_class, $extension_point_full_name)))
+        {
 			return new $default_class($this->get_id());
+        }
 		else
+        {
 			return false;
+        }
 	}
 }
 ?>

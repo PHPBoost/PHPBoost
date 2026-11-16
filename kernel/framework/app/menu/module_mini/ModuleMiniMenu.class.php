@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
  * @since       PHPBoost 2.0 - 2008 11 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -25,38 +25,38 @@ class ModuleMiniMenu extends Menu
 		parent::__construct($this->get_formated_title());
 	}
 
-	public function get_menu_id()
+	public function get_menu_id(): string
 	{
 		return '';
 	}
 
-	public function get_menu_title()
+	public function get_menu_title(): string
 	{
 		return '';
 	}
 
-	public function get_formated_title()
+	public function get_formated_title(): string
 	{
 		return !empty($this->get_menu_title()) ? $this->get_menu_title() : $this->get_format_title();
 	}
 
-	public function is_mini_from_module()
+	public function is_mini_from_module(): bool
 	{
 		$class_name = get_class($this);
 		return !empty($class_name);
 	}
 
-	public function get_menu_content()
+	public function get_menu_content(): string
 	{
 		return '';
 	}
 
-	public function is_displayed()
+	public function is_displayed(): bool
 	{
 		return true;
 	}
 
-	public function get_format_title()
+	public function get_format_title(): bool
 	{
 		$class_name = get_class($this);
 		$module_name = TextHelper::strstr($class_name, self::MODULE_MINI_MENU__CLASS, true);
@@ -69,7 +69,9 @@ class ModuleMiniMenu extends Menu
 			foreach (ModulesManager::get_activated_modules_map() as $activated_module)
 			{
 				if (TextHelper::strstr(TextHelper::strtolower($module_name), TextHelper::strtolower($activated_module->get_id())))
+                {
 					$module = $activated_module;
+                }
 			}
 		}
 
@@ -78,7 +80,7 @@ class ModuleMiniMenu extends Menu
 		return !empty($localized_module_name) ? (!preg_match('/^' . Langloader::get_message('menu.menu', 'menu-lang') . ' /u', $localized_module_name) ? Langloader::get_message('menu.menu', 'menu-lang') . ' ' : '') . $localized_module_name : $class_name;
 	}
 
-	public function display()
+	public function display(): string
 	{
 		$filters = $this->get_filters();
 		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/';
@@ -109,14 +111,17 @@ class ModuleMiniMenu extends Menu
 		return '';
 	}
 
-	public function get_default_block()
+	public function get_default_block(): int
 	{
 		return self::BLOCK_POSITION__NOT_ENABLED;
 	}
 
-	public function default_is_enabled() { return false; }
+	public function default_is_enabled(): bool
+    {
+        return false;
+    }
 
-	protected function get_default_template()
+	protected function get_default_template(): FileTemplate
 	{
 		return new FileTemplate('framework/menus/modules_mini.tpl');
 	}

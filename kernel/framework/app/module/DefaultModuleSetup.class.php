@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
  * @since       PHPBoost 2.0 - 2009 01 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      xela <xela@phpboost.com>
@@ -14,22 +14,22 @@
 
 class DefaultModuleSetup implements ModuleSetup
 {
-	protected static $db_querier;
-	protected static $dbms_utils;
-	protected $module_id;
-	protected $module_configuration;
-	protected $item_class_name;
-	protected $additional_tables = [];
-	private $id_category = 1;
-	private $id_item = 1;
+	protected static ?DBQuerier $db_querier = null;
+	protected static ?DBMSUtils $dbms_utils = null;
+	protected string $module_id;
+	protected ?ModuleConfiguration $module_configuration = null;
+	protected string $item_class_name = '';
+	protected array $additional_tables = [];
+	private int $id_category = 1;
+	private int $id_item = 1;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 		self::$dbms_utils = PersistenceContext::get_dbms_utils();
 	}
 
-	public function __construct($module_id = '')
+	public function __construct(string $module_id = '')
 	{
 		if ($module_id)
 		{
@@ -43,7 +43,7 @@ class DefaultModuleSetup implements ModuleSetup
 	/* (non-PHPdoc)
 	 * @see kernel/framework/phpboost/module/ModuleSetup#check_environment()
 	 */
-	public function check_environment()
+	public function check_environment(): ValidationResult
 	{
 		return new ValidationResult();
 	}
@@ -51,7 +51,7 @@ class DefaultModuleSetup implements ModuleSetup
 	/* (non-PHPdoc)
 	 * @see kernel/framework/phpboost/module/ModuleSetup#install()
 	 */
-	public function install()
+	public function install(): void
 	{
 		$this->drop_tables();
 		$this->create_tables();
@@ -61,60 +61,68 @@ class DefaultModuleSetup implements ModuleSetup
 	/* (non-PHPdoc)
 	 * @see kernel/framework/phpboost/module/ModuleSetup#uninstall()
 	 */
-	public function uninstall()
+	public function uninstall(): void
 	{
 		$this->drop_tables();
 		KeywordsService::get_keywords_manager()->delete_module_relations();
 
 		if ($this->module_id && $this->module_configuration->get_configuration_name())
+        {
 			ConfigManager::delete($this->module_id, 'config');
+        }
 	}
 
 	/* (non-PHPdoc)
 	 * @see kernel/framework/phpboost/module/ModuleSetup#upgrade()
 	 */
-	public function upgrade($installed_version)
+	public function upgrade(string $installed_version): mixed
 	{
 		return null;
 	}
 
-	protected function set_additional_tables() {}
+	protected function set_additional_tables(): void {}
 
-	protected function add_additional_table($table_name)
+	protected function add_additional_table(string $table_name): void
 	{
 		$this->additional_tables[] = $table_name;
 	}
 
-	protected function get_additional_tables()
+	protected function get_additional_tables(): array
 	{
 		return $this->additional_tables;
 	}
 
-	protected function get_sql_tables_list()
+	protected function get_sql_tables_list(): array
 	{
 		$tables_list = $this->get_additional_tables();
 
 		if ($this->module_id)
 		{
 			if ($this->module_configuration->has_items())
+            {
 				$tables_list[] = $this->module_configuration->get_items_table_name();
+            }
 
 			if ($this->module_configuration->has_categories())
+            {
 				$tables_list[] = $this->module_configuration->get_categories_table_name();
+            }
 		}
 
 		return $tables_list;
 	}
 
-	private function drop_tables()
+	private function drop_tables(): void
 	{
 		$tables_list = $this->get_sql_tables_list();
 
 		if ($tables_list)
+        {
 			self::$dbms_utils->drop($tables_list);
+        }
 	}
 
-	private function create_tables()
+	private function create_tables(): void
 	{
 		if ($this->module_id)
 		{
@@ -134,9 +142,9 @@ class DefaultModuleSetup implements ModuleSetup
 		$this->create_additional_tables();
 	}
 
-	protected function create_additional_tables() {}
+	protected function create_additional_tables(): void {}
 
-	protected function insert_default_data()
+	protected function insert_default_data(): void
 	{
 		if ($this->module_id)
 		{
@@ -146,15 +154,19 @@ class DefaultModuleSetup implements ModuleSetup
 				$lang = LangLoader::get('install', $this->module_id);
 
 				if ($this->module_configuration->has_categories())
+                {
 					$this->insert_default_categories($lang);
+                }
 
 				if ($this->module_configuration->has_items() && $this->item_class_name)
+                {
 					$this->insert_default_items($lang);
+                }
 			}
 		}
 	}
 
-	protected function insert_default_categories($lang)
+	protected function insert_default_categories(array $lang): void
 	{
 		if (isset($lang['categories']) && is_array($lang['categories']))
 		{
@@ -165,7 +177,7 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 	}
 
-	protected function insert_default_items($lang)
+	protected function insert_default_items(array $lang): void
 	{
 		if (isset($lang['items']) && is_array($lang['items']))
 		{
@@ -176,7 +188,7 @@ class DefaultModuleSetup implements ModuleSetup
 		}
 	}
 
-	protected function get_default_category_additional_fields($lang, $category_id)
+	protected function get_default_category_additional_fields(array $lang, int $category_id): array
 	{
 		$additional_fields = [];
 		if (isset($lang['categories']) && is_array($lang['categories']) && isset($lang['categories'][$category_id]) && is_array($lang['categories'][$category_id]))
@@ -192,7 +204,7 @@ class DefaultModuleSetup implements ModuleSetup
 		return $additional_fields;
 	}
 
-	protected function get_default_item_additional_fields($lang, $item_id)
+	protected function get_default_item_additional_fields(array $lang, int $item_id): array
 	{
 		$additional_fields = [];
 		if (isset($lang['items']) && is_array($lang['items']) && isset($lang['items'][$item_id]) && is_array($lang['items'][$item_id]))
@@ -208,7 +220,7 @@ class DefaultModuleSetup implements ModuleSetup
 		return $additional_fields;
 	}
 
-	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = Category::ROOT_CATEGORY, $additional_fields = [], $auth = '')
+	protected function add_category(string $name, string $description = '', string $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, int $id_parent = Category::ROOT_CATEGORY, array $additional_fields = [], string $auth = ''): void
 	{
 		self::$db_querier->insert($this->module_configuration->get_categories_table_name(), array_merge([
 			'id' => $this->id_category,
@@ -223,7 +235,7 @@ class DefaultModuleSetup implements ModuleSetup
 		$this->id_category++;
 	}
 
-	protected function add_item($title, $content, $summary = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_category = Category::ROOT_CATEGORY, $additional_fields = [])
+	protected function add_item(string $title, string $content, string $summary = '', string $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, int $id_category = Category::ROOT_CATEGORY, array $additional_fields = []): void
 	{
 		$item = new $this->item_class_name();
 
@@ -238,10 +250,14 @@ class DefaultModuleSetup implements ModuleSetup
 		];
 
 		if ($item->content_field_enabled())
+        {
 			$fields['content'] = $content;
+        }
 
 		if ($this->module_configuration->has_categories())
+        {
 			$fields['id_category'] = $id_category ? $id_category : ($this->id_category - 1);
+        }
 
 		if ($this->module_configuration->feature_is_enabled('deferred_publication'))
 		{
@@ -257,13 +273,19 @@ class DefaultModuleSetup implements ModuleSetup
 		if ($this->module_configuration->has_rich_items())
 		{
 			if ($item->content_field_enabled() && $item->summary_field_enabled())
+            {
 				$fields['summary'] = $summary;
+            }
 
 			if ($item->thumbnail_field_enabled())
+            {
 				$fields['thumbnail'] = $thumbnail;
+            }
 
 			if ($item->author_custom_name_field_enabled())
+            {
 				$fields['author_custom_name'] = '';
+            }
 
 			$fields['views_number'] = 0;
 		}

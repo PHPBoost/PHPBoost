@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2012 02 20
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -177,12 +177,13 @@ class UserCommentsController extends AbstractController
 		return $template;
 	}
 
-	private function get_pagination(int $page): ModulePagination
+	private function get_pagination(int $page): ?ModulePagination
 	{
 		$id_module = $this->module === null ? null : $this->module->get_id();
 		$user_id = $this->user !== null ? $this->user->get_id() : null;
 
-		$row = PersistenceContext::get_querier()->select('SELECT COUNT(*) AS nbr_comments
+		$row = PersistenceContext::get_querier()->select('
+            SELECT COUNT(*) AS nbr_comments
 			FROM ' . DB_TABLE_COMMENTS . ' comments
 			LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' topic ON comments.id_topic = topic.id_topic
 			'. $this->build_where_request())->fetch();

@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 15
  * @since       PHPBoost 4.0 - 2013 01 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      janus57 <janus57@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class CategoriesCache implements CacheData
@@ -16,14 +17,13 @@ abstract class CategoriesCache implements CacheData
 	/**
 	 * @var string the module identifier
 	 */
-	protected static $module_id;
+	protected static mixed $module_id = null;
+	protected static mixed $module = null;
+	protected static mixed $module_category = null;
 
-	protected static $module;
-	protected static $module_category;
+	protected array $categories;
 
-	protected $categories;
-
-	public static function __static()
+	public static function __static(): void
 	{
 		$module_id = self::$module_id ? self::$module_id : Environment::get_running_module_name();
 		if (!in_array($module_id, ['admin', 'kernel', 'user']))
@@ -35,7 +35,7 @@ abstract class CategoriesCache implements CacheData
 		}
 	}
 
-	public function __construct($module_id = '')
+	public function __construct(string $module_id = '')
 	{
 		if ($module_id)
 		{
@@ -50,7 +50,7 @@ abstract class CategoriesCache implements CacheData
 		}
 	}
 
-	public function synchronize()
+	public function synchronize(): void
 	{
 		$categories_cache = self::get_class($this->get_module_identifier());
 		$category_class = $categories_cache->get_category_class();
@@ -69,11 +69,13 @@ abstract class CategoriesCache implements CacheData
 			}
 			$result->dispose();
 		}
-		
+
 		foreach ($this->categories as &$category)
 		{
 			if (!$category->has_special_authorizations())
+            {
 				$category->set_authorizations($this->categories[$category->get_id_parent()]->get_authorizations());
+            }
 
 			$category->set_elements_number($categories_cache->get_category_elements_number($category->get_id()));
 
@@ -95,7 +97,9 @@ abstract class CategoriesCache implements CacheData
 						$this->categories[$id_parent]->set_elements_number($parent_elements_number);
 					}
 					else
+                    {
 						$this->categories[$id_parent]->set_elements_number((int)$this->categories[$id_parent]->get_elements_number() + (int)$category->get_elements_number());
+                    }
 
 					$id_parent = $this->categories[$id_parent]->get_id_parent();
 				}
@@ -103,38 +107,38 @@ abstract class CategoriesCache implements CacheData
 		}
 	}
 
-	public function get_module_identifier()
+	public function get_module_identifier(): mixed
 	{
 		return self::$module_id;
 	}
 
-	abstract public function get_category_class();
+	abstract public function get_category_class(): mixed;
 
-	abstract public function get_root_category();
+	abstract public function get_root_category(): mixed;
 
-	abstract public function get_table_name();
+	abstract public function get_table_name(): mixed;
 
-	public function get_table_name_containing_items()
+	public function get_table_name_containing_items(): mixed
 	{
 		return '';
 	}
 
-	public function is_contribution_enabled()
+	public function is_contribution_enabled(): bool
 	{
 		return ModulesManager::get_module(self::get_class()->get_module_identifier())->get_configuration()->has_contribution();
 	}
 
-	protected function get_category_elements_number($id_category)
+	protected function get_category_elements_number(int $id_category): mixed
 	{
 		return 0;
 	}
 
-	public function get_categories()
+	public function get_categories(): mixed
 	{
 		return $this->categories;
 	}
 
-	public function get_children($id_category, $allowed_categories_filter = [])
+	public function get_children(int $id_category, array $allowed_categories_filter = []): mixed
 	{
 		$children = [];
 		foreach ($this->categories as $id => $category)
@@ -142,7 +146,9 @@ abstract class CategoriesCache implements CacheData
 			if ($category->get_id_parent() == $id_category && $id != Category::ROOT_CATEGORY)
 			{
 				if ((!empty($allowed_categories_filter) && in_array($id, $allowed_categories_filter)) || empty($allowed_categories_filter))
+                {
 					$children[$id] = $category;
+                }
 			}
 
 			if (!empty($allowed_categories_filter) && !in_array($id, $allowed_categories_filter))
@@ -173,12 +179,12 @@ abstract class CategoriesCache implements CacheData
 		return $children;
 	}
 
-	public function category_exists($id)
+	public function category_exists(int $id): bool
 	{
 		return array_key_exists($id, $this->categories);
 	}
 
-	public function get_category($id)
+	public function get_category(int $id): mixed
 	{
 		if ($this->category_exists($id))
 		{
@@ -187,7 +193,7 @@ abstract class CategoriesCache implements CacheData
 		throw new CategoryNotFoundException($id);
 	}
 
-	public function has_categories()
+	public function has_categories(): bool
 	{
 		return count($this->categories) > 1;
 	}
@@ -196,22 +202,27 @@ abstract class CategoriesCache implements CacheData
 	 * Loads and returns the categories cached data.
 	 * @return CategoriesCache The cached data
 	 */
-	public static function load($module_id = '')
+	public static function load(string $module_id = ''): ?CategoriesCache
 	{
 		if (!in_array($module_id, ['admin', 'kernel', 'user']))
+        {
 			return CacheManager::load(get_called_class(), self::get_class($module_id)->get_module_identifier(), 'categories');
+        }
+        return null;
 	}
 
 	/**
 	 * Invalidates categories cached data.
 	 */
-	public static function invalidate($module_id = '')
+	public static function invalidate(string $module_id = ''): void
 	{
 		if (!in_array($module_id, ['admin', 'kernel', 'user']))
+        {
 			CacheManager::invalidate(self::get_class($module_id)->get_module_identifier(), 'categories');
+        }
 	}
 
-	public static function get_class($module_id = '')
+	public static function get_class(string $module_id = ''): mixed
 	{
 		$class_name = get_called_class();
 		return new $class_name($module_id);

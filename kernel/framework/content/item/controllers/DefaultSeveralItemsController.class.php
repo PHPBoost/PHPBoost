@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 09
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 6.0 - 2020 01 22
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      xela <xela@phpboost.com>
@@ -460,13 +460,15 @@ class DefaultSeveralItemsController extends AbstractItemController
 		return $pagination;
 	}
 
-	protected function get_subcategories_pagination(int $subcategories_number): ModulePagination
+	protected function get_subcategories_pagination(int $subcategories_number): ?ModulePagination
 	{
 		$pagination = new ModulePagination($this->subcategories_page, $subcategories_number, $this->config->get_categories_per_page());
 		$pagination->set_url(ItemsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name(), self::$module_id, $this->sort_field, $this->sort_mode, $this->page, '%d'));
 
 		if ($pagination->current_page_is_empty() && $this->subcategories_page > 1)
+        {
 			$this->display_unexisting_page();
+        }
 
 		return $pagination;
 	}
