@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 13
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 09 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      janus57 <janus57@janus57.fr>
@@ -15,13 +15,8 @@
 
 class GroupsCache implements CacheData
 {
-	private static array $default_groups_value = [];
-
 	private array $groups = [];
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function synchronize(): void
     {
 		$this->groups = [];
@@ -89,7 +84,7 @@ class GroupsCache implements CacheData
 	 */
 	public static function load(): GroupsCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'user_groups');
+		return CacheManager::load(self::class, 'kernel', 'user_groups');
 	}
 
 	/**

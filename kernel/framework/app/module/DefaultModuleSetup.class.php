@@ -41,7 +41,7 @@ class DefaultModuleSetup implements ModuleSetup
 	}
 
 	/* (non-PHPdoc)
-	 * @see kernel/framework/phpboost/module/ModuleSetup#check_environment()
+	 * @see kernel/framework/app/module/ModuleSetup#check_environment()
 	 */
 	public function check_environment(): ValidationResult
 	{
@@ -49,7 +49,7 @@ class DefaultModuleSetup implements ModuleSetup
 	}
 
 	/* (non-PHPdoc)
-	 * @see kernel/framework/phpboost/module/ModuleSetup#install()
+	 * @see kernel/framework/app/module/ModuleSetup#install()
 	 */
 	public function install(): void
 	{
@@ -59,7 +59,7 @@ class DefaultModuleSetup implements ModuleSetup
 	}
 
 	/* (non-PHPdoc)
-	 * @see kernel/framework/phpboost/module/ModuleSetup#uninstall()
+	 * @see kernel/framework/app/module/ModuleSetup#uninstall()
 	 */
 	public function uninstall(): void
 	{
@@ -73,7 +73,7 @@ class DefaultModuleSetup implements ModuleSetup
 	}
 
 	/* (non-PHPdoc)
-	 * @see kernel/framework/phpboost/module/ModuleSetup#upgrade()
+	 * @see kernel/framework/app/module/ModuleSetup#upgrade()
 	 */
 	public function upgrade(string $installed_version): mixed
 	{

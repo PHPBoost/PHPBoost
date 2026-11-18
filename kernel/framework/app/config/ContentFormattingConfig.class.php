@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 07
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentFormattingConfig extends AbstractConfigData
@@ -16,32 +16,32 @@ class ContentFormattingConfig extends AbstractConfigData
     const FORBIDDEN_TAGS = 'forbidden_tags';
     const HTML_TAG_AUTH = 'html_tag_auth';
 
-    public function get_default_editor()
+    public function get_default_editor(): string
     {
         return $this->get_property(self::DEFAULT_EDITOR);
     }
 
-    public function set_default_editor(string $editor)
+    public function set_default_editor(string $editor): void
     {
         $this->set_property(self::DEFAULT_EDITOR, $editor);
     }
 
-    public function get_forbidden_tags()
+    public function get_forbidden_tags(): array
     {
         return $this->get_property(self::FORBIDDEN_TAGS);
     }
 
-    public function set_forbidden_tags(array $forbidden_tags)
+    public function set_forbidden_tags(array $forbidden_tags): void
     {
         $this->set_property(self::FORBIDDEN_TAGS, $forbidden_tags);
     }
 
-    public function get_html_tag_auth()
+    public function get_html_tag_auth(): array
     {
         return $this->get_property(self::HTML_TAG_AUTH);
     }
 
-    public function set_html_tag_auth(array $auth)
+    public function set_html_tag_auth(array $auth): void
     {
         $this->set_property(self::HTML_TAG_AUTH, $auth);
     }
@@ -59,7 +59,7 @@ class ContentFormattingConfig extends AbstractConfigData
      * Returns the configuration.
      * @return ContentFormattingConfig
      */
-    public static function load()
+    public static function load(): ContentFormattingConfig
     {
         return ConfigManager::load(self::class, 'kernel', 'content-formatting');
     }
@@ -67,7 +67,7 @@ class ContentFormattingConfig extends AbstractConfigData
     /**
      * Saves the configuration in the database. Has it become persistent.
      */
-    public static function save()
+    public static function save(): void
     {
         ConfigManager::save('kernel', self::load(), 'content-formatting');
     }

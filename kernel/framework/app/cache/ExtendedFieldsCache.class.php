@@ -5,22 +5,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 08 10
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ExtendedFieldsCache implements CacheData
 {
 	private $extended_fields = [];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function synchronize(): void {
+	public function synchronize(): void
+    {
 		$this->extended_fields = [];
 		$querier = PersistenceContext::get_querier();
 
@@ -53,17 +51,17 @@ class ExtendedFieldsCache implements CacheData
 		$result->dispose();
 	}
 
-	public function get_extended_fields()
+	public function get_extended_fields(): array
 	{
 		return $this->extended_fields;
 	}
 
-	public function get_exist_fields()
+	public function get_exist_fields(): mixed
 	{
 		return (count($this->extended_fields) > 0);
 	}
 
-	public function get_extended_field($id)
+	public function get_extended_field(string $id): mixed
 	{
 		if (isset($this->extended_fields[$id]))
 		{
@@ -72,7 +70,7 @@ class ExtendedFieldsCache implements CacheData
 		return null;
 	}
 
-	public function get_extended_field_by_field_name($field_name)
+	public function get_extended_field_by_field_name(mixed $field_name): mixed
 	{
 		$field = null;
 
@@ -87,7 +85,7 @@ class ExtendedFieldsCache implements CacheData
 		return $field;
 	}
 
-	public function get_websites_or_emails_extended_field_field_types()
+	public function get_websites_or_emails_extended_field_field_types(): array
 	{
 		$list = [];
 
@@ -106,15 +104,15 @@ class ExtendedFieldsCache implements CacheData
 	 * Loads and returns the extended_fields cached data.
 	 * @return ExtendedFieldsCache The cached data
 	 */
-	public static function load()
+	public static function load(): ExtendedFieldsCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'extended-fields');
+		return CacheManager::load(self::class, 'kernel', 'extended-fields');
 	}
 
 	/**
 	 * Invalidates the current extended_fields cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate(): void
 	{
 		CacheManager::invalidate('kernel', 'extended-fields');
 	}

@@ -7,21 +7,19 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 5.2 - 2019 10 26
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NginxFileCache implements CacheData
 {
-	private $nginx_file_content = '';
-	private $general_config;
-	private $server_environment_config;
+	private string $nginx_file_content = '';
+	private mixed $general_config = null;
+	private mixed $server_environment_config = null;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function synchronize(): void {
+	public function synchronize(): void
+    {
 		$this->nginx_file_content = '';
 		$this->general_config = GeneralConfig::load();
 		$this->server_environment_config = ServerEnvironmentConfig::load();
@@ -68,29 +66,29 @@ class NginxFileCache implements CacheData
 		$this->clean_file_content();
 	}
 
-	private function add_line($line)
+	private function add_line(mixed $line): void
 	{
 		$this->nginx_file_content .= "\n" . $line;
 	}
 
-	private function add_empty_line()
+	private function add_empty_line(): void
 	{
 		$this->add_line('');
 	}
 
-	private function add_section($name)
+	private function add_section(string $name): void
 	{
 		$this->add_empty_line();
 		$this->add_line('# ' . $name . ' #');
 	}
 
-	private function set_default_charset()
+	private function set_default_charset(): void
 	{
 		$this->add_section('Charset');
 		$this->add_line('charset utf-8;');
 	}
 
-	private function add_core_rules()
+	private function add_core_rules(): void
 	{
 		$this->add_section('Core');
 
@@ -99,7 +97,7 @@ class NginxFileCache implements CacheData
 		$this->add_url_mapping($mappings['kernel']);
 	}
 
-	private function add_modules_rules()
+	private function add_modules_rules(): void
 	{
 		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
@@ -116,7 +114,9 @@ class NginxFileCache implements CacheData
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping && $mapping->is_high_priority())
+                    {
 						$mappings_high_priority[] = $mapping;
+                    }
 				}
 
 				if (!empty($mappings_high_priority))
@@ -185,8 +185,10 @@ class NginxFileCache implements CacheData
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping && (!$mapping->is_high_priority() && !$mapping->is_low_priority()))
+                    {
 						$mappings_normal_priority[] = $mapping;
-					// Skip plain UrlMapping for UrlUpdater — already written in high-priority section above
+					    // Skip plain UrlMapping for UrlUpdater — already written in high-priority section above
+                    }
 				}
 
 				if (!empty($mappings_normal_priority))
@@ -209,7 +211,9 @@ class NginxFileCache implements CacheData
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
 				{
 					if ($mapping instanceof DispatcherUrlMapping && $mapping->is_low_priority())
+                    {
 						$mappings_low_priority[] = $mapping;
+                    }
 				}
 
 				if (!empty($mappings_low_priority))
@@ -227,7 +231,7 @@ class NginxFileCache implements CacheData
 		}
 	}
 
-	private function add_user_rules()
+	private function add_user_rules(): void
 	{
 		$this->add_section('User');
 
@@ -238,15 +242,17 @@ class NginxFileCache implements CacheData
 		$this->add_url_mapping($mappings['user'], $rules);
 	}
 
-	private function add_rewrite_rule($match, $path)
+	private function add_rewrite_rule(mixed $match, string $path): void
 	{
 		$this->add_line('	rewrite ' . str_replace('^', '^/', $match) . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' break;');
 	}
 
-	private function add_url_mapping($mapping_list, $rules = [])
+	private function add_url_mapping(mixed $mapping_list, array $rules = []): void
     {
         if ($mapping_list instanceof UrlMappingsExtensionPoint)
+        {
             $mapping_list = $mapping_list->list_mappings();
+        }
 
         $locations = [];
         foreach ($mapping_list as $mapping)
@@ -286,10 +292,8 @@ class NginxFileCache implements CacheData
         }
     }
 
-	private function force_redirection_if_available()
+	private function force_redirection_if_available(): void
 	{
-		$domain = AppContext::get_request()->get_domain_name();
-
 		if (!$this->server_environment_config->is_redirection_https_enabled() && $this->server_environment_config->is_redirection_www_enabled() && $this->server_environment_config->is_redirection_www_mode_with_www())
 		{
 			$this->add_section('Site redirection to www');
@@ -358,7 +362,7 @@ class NginxFileCache implements CacheData
 		}
 	}
 
-	private function add_bandwidth_protection()
+	private function add_bandwidth_protection(): void
 	{
 		//Bandwidth protection. The /upload directory can be forbidden if the request comes from out of PHPBoost
 		if (FileUploadConfig::load()->get_enable_bandwidth_protect())
@@ -379,7 +383,7 @@ class NginxFileCache implements CacheData
 		}
 	}
 
-	private function add_error_redirection()
+	private function add_error_redirection(): void
 	{
 		//Error page
 		$this->add_section('Error pages');
@@ -387,7 +391,7 @@ class NginxFileCache implements CacheData
 		$this->add_line('error_page 404 ' . $this->general_config->get_site_path() . UserUrlBuilder::error_404()->relative());
 	}
 
-	private function add_expires_headers()
+	private function add_expires_headers(): void
 	{
 		$this->add_section('Expires Headers');
 		$this->add_line('map $sent_http_content_type $expires {');
@@ -449,7 +453,7 @@ class NginxFileCache implements CacheData
 		$this->add_line('expires $expires;');
 	}
 
-	private function add_http_headers()
+	private function add_http_headers(): void
 	{
 		$this->add_section('HTTP Headers');
 
@@ -475,13 +479,13 @@ class NginxFileCache implements CacheData
         $this->add_line('}');
 	}
 
-	private function disable_file_etags()
+	private function disable_file_etags(): void
 	{
 		$this->add_section('Disable file etags');
 		$this->add_line('etag off;');
 	}
 
-	private function add_manual_content()
+	private function add_manual_content(): void
 	{
 		$manual_content = $this->server_environment_config->get_nginx_manual_content();
 		if (!empty($manual_content))
@@ -491,7 +495,7 @@ class NginxFileCache implements CacheData
 		}
 	}
 
-	private function clean_file_content()
+	private function clean_file_content(): void
 	{
 		$this->nginx_file_content = trim($this->nginx_file_content);
 	}
@@ -500,7 +504,7 @@ class NginxFileCache implements CacheData
 	 * Returns the content of the nginx.conf file
 	 * @return string its content
 	 */
-	public function get_nginx_file_content()
+	public function get_nginx_file_content(): string
 	{
 		return $this->nginx_file_content;
 	}
@@ -509,15 +513,15 @@ class NginxFileCache implements CacheData
 	 * Loads and returns the groups cached data.
 	 * @return NginxFileCache The cached data
 	 */
-	public static function load()
+	public static function load(): NginxFileCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'nginx-file');
+		return CacheManager::load(self::class, 'kernel', 'nginx-file');
 	}
 
 	/**
 	 * Invalidates the current groups cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate(): void
 	{
 		CacheManager::invalidate('kernel', 'nginx-file');
 	}
@@ -525,13 +529,13 @@ class NginxFileCache implements CacheData
 	/**
 	 * Regenerates the nginx.conf file
 	 */
-	public static function regenerate()
+	public static function regenerate(): void
 	{
 		self::invalidate();
 		self::update_nginx_file();
 	}
 
-	private static function update_nginx_file()
+	private static function update_nginx_file(): void
 	{
 		if (isset($_SERVER["SERVER_SOFTWARE"]) && !preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]))
 		{
@@ -549,11 +553,7 @@ class NginxFileCache implements CacheData
 		}
 	}
 
-	/**
-	 *
-	 * @return string
-	 */
-	private static function get_file_content()
+	private static function get_file_content(): string
 	{
 		return self::load()->get_nginx_file_content();
 	}

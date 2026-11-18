@@ -12,12 +12,10 @@
 
 class StatsCache implements CacheData
 {
-	private $stats = [];
+	private array $stats = [];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function synchronize(): void {
+	public function synchronize(): void
+    {
 		$this->stats = [];
 		$querier = PersistenceContext::get_querier();
 
@@ -33,12 +31,12 @@ class StatsCache implements CacheData
 		];
 	}
 
-	public function get_stats()
+	public function get_stats(): array
 	{
 		return $this->stats;
 	}
 
-	public function get_stats_properties($identifier)
+	public function get_stats_properties(string $identifier): mixed
 	{
 		if (isset($this->stats[$identifier]))
 		{
@@ -51,15 +49,15 @@ class StatsCache implements CacheData
 	 * Loads and returns the stats cached data.
 	 * @return StatsCache The cached data
 	 */
-	public static function load()
+	public static function load(): StatsCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'stats');
+		return CacheManager::load(self::class, 'kernel', 'stats');
 	}
 
 	/**
 	 * Invalidates the current stats cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate(): void
 	{
 		CacheManager::invalidate('kernel', 'stats');
 	}

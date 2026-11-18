@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 6.1 - 2026 03 07
 */
 
@@ -48,59 +48,56 @@ class AddonsConfig extends AbstractConfigData
         ]
     ];
 
-    public function get_github_token()
+    public function get_github_token(): string
     {
         return $this->get_property(self::GITHUB_TOKEN);
     }
 
-    public function set_github_token($token)
+    public function set_github_token(string $token): void
     {
         $this->set_property(self::GITHUB_TOKEN, $token);
     }
 
-    public function get_modules_repo()
+    public function get_modules_repo(): array
     {
         return $this->get_property(self::MODULES_REPO);
     }
 
-    public function set_modules_repo(array $modules_repo)
+    public function set_modules_repo(array $modules_repo): void
     {
         $this->set_property(self::MODULES_REPO, $modules_repo);
     }
 
-    public function get_themes_repo()
+    public function get_themes_repo(): array
     {
         return $this->get_property(self::THEMES_REPO);
     }
 
-    public function set_themes_repo(array $themes_repo)
+    public function set_themes_repo(array $themes_repo): void
     {
         $this->set_property(self::THEMES_REPO, $themes_repo);
     }
 
-    public function get_langs_repo()
+    public function get_langs_repo(): array
     {
         return $this->get_property(self::LANGS_REPO);
     }
 
-    public function set_langs_repo(array $langs_repo)
+    public function set_langs_repo(array $langs_repo): void
     {
         $this->set_property(self::LANGS_REPO, $langs_repo);
     }
 
-    public function get_addons_server()
+    public function get_addons_server(): array
     {
         return $this->get_property(self::ADDONS_SERVER);
     }
 
-    public function set_addons_server(array $addons_server)
+    public function set_addons_server(array $addons_server): void
     {
         $this->set_property(self::ADDONS_SERVER, $addons_server);
     }
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [
@@ -116,7 +113,7 @@ class AddonsConfig extends AbstractConfigData
 	 * Loads and returns the addons cached data.
 	 * @return AddonsConfig The cached data
 	 */
-	public static function load()
+	public static function load(): AddonsConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'addons-config');
 	}
@@ -124,7 +121,7 @@ class AddonsConfig extends AbstractConfigData
 	/**
 	 * Invalidates the current addons cached data.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'addons-config');
 	}

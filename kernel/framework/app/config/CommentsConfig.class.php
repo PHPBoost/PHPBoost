@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 08
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -22,86 +22,87 @@ class CommentsConfig extends AbstractConfigData
 	const FORBIDDEN_TAGS               = 'forbidden_tags';
 	const MAX_LINKS_COMMENT            = 'max_links_comment';
 	const ORDER_DISPLAY_COMMENTS       = 'order_display_comments';
+	const APPROBATION_COMMENTS         = 'approbation_comments';
 
 	const ASC_ORDER                    = 'ASC';
 	const DESC_ORDER                   = 'DESC';
 
-	public function are_comments_enabled()
+	public function are_comments_enabled(): bool
 	{
 		return $this->get_property(self::COMMENTS_ENABLED);
 	}
 
-	public function set_comments_enabled($enabled)
+	public function set_comments_enabled(bool $enabled): void
 	{
 		$this->set_property(self::COMMENTS_ENABLED, $enabled);
 	}
 
-	public function is_visitor_email_enabled()
+	public function is_visitor_email_enabled(): bool
 	{
 		return $this->get_property(self::VISITOR_EMAIL_ENABLED);
 	}
 
-	public function set_visitor_email_enabled($enabled)
+	public function set_visitor_email_enabled(bool $enabled): void
 	{
 		$this->set_property(self::VISITOR_EMAIL_ENABLED, $enabled);
 	}
 
-	public function get_comments_unauthorized_modules()
+	public function get_comments_unauthorized_modules(): array
 	{
 		return $this->get_property(self::COMMENTS_UNAUTHORIZED_MODULE);
 	}
 
-	public function set_comments_unauthorized_modules(array $modules)
+	public function set_comments_unauthorized_modules(array $modules): void
 	{
 		$this->set_property(self::COMMENTS_UNAUTHORIZED_MODULE, $modules);
 	}
 
-	public function module_comments_is_enabled($module_id)
+	public function module_comments_is_enabled(string $module_id): bool
 	{
 		return $this->are_comments_enabled() && !in_array($module_id, $this->get_comments_unauthorized_modules());
 	}
 
-	public function get_authorizations()
+	public function get_authorizations(): array
 	{
 		return $this->get_property(self::AUTHORIZATIONS);
 	}
 
-	public function set_authorizations(Array $array)
+	public function set_authorizations(array $array): void
 	{
 		$this->set_property(self::AUTHORIZATIONS, $array);
 	}
 
-	public function get_comments_number_display()
+	public function get_comments_number_display(): int
 	{
 		return $this->get_property(self::COMMENTS_NUMBER_DISPLAY);
 	}
 
-	public function set_comments_number_display($number)
+	public function set_comments_number_display(int $number): void
 	{
 		$this->set_property(self::COMMENTS_NUMBER_DISPLAY, $number);
 	}
 
-	public function get_forbidden_tags()
+	public function get_forbidden_tags(): array
 	{
 		return $this->get_property(self::FORBIDDEN_TAGS);
 	}
 
-	public function set_forbidden_tags(array $forbidden_tags)
+	public function set_forbidden_tags(array $forbidden_tags): void
 	{
 		$this->set_property(self::FORBIDDEN_TAGS, $forbidden_tags);
 	}
 
-	public function get_max_links_comment()
+	public function get_max_links_comment(): int
 	{
 		return $this->get_property(self::MAX_LINKS_COMMENT);
 	}
 
-	public function set_max_links_comment($number)
+	public function set_max_links_comment(int $number): void
 	{
 		$this->set_property(self::MAX_LINKS_COMMENT, $number);
 	}
 
-	public function get_order_display_comments()
+	public function get_order_display_comments(): int
 	{
 		$order_display_comments = $this->get_property(self::ORDER_DISPLAY_COMMENTS);
 		switch ($order_display_comments) {
@@ -116,17 +117,17 @@ class CommentsConfig extends AbstractConfigData
 		return $valid_order;
 	}
 
-	public function set_order_display_comments($order)
+	public function set_order_display_comments(int $order): void
 	{
 		$this->set_property(self::ORDER_DISPLAY_COMMENTS, $order);
 	}
 
-	public function get_approbation_comments()
+	public function get_approbation_comments(): mixed
 	{
 		return $this->get_property(self::APPROBATION_COMMENTS);
 	}
 
-	public function set_approbation_comments($approbation)
+	public function set_approbation_comments(mixed $approbation): void
 	{
 		$this->set_property(self::APPROBATION_COMMENTS, $approbation);
 	}
@@ -149,7 +150,7 @@ class CommentsConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return CommentsConfig
 	 */
-	public static function load()
+	public static function load(): CommentsConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'comments-config');
 	}
@@ -157,7 +158,7 @@ class CommentsConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'comments-config');
 	}

@@ -8,25 +8,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 11 10
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UnreadContributionsCache implements CacheData
 {
-	private $admin = 0;
-	private $moderators = false;
-	private $members = false;
-	private $groups = [];
-	private $users = [];
+	private int $admin = 0;
+	private bool $moderators = false;
+	private bool $members = false;
+	private array $groups = [];
+	private array $users = [];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function synchronize(): void {
+	public function synchronize(): void
+    {
 		$result = ContributionService::compute_number_contrib_for_each_profile();
 
 		$this->set_values($result);
@@ -36,7 +34,7 @@ class UnreadContributionsCache implements CacheData
 	 * Tells whether there are unread contributions
 	 * @return bool true if there are, false otherwise
 	 */
-	public function are_there_unread_contributions()
+	public function are_there_unread_contributions(): bool
 	{
 		return $this->get_admin_unread_contributions_number() > 0;
 	}
@@ -45,7 +43,7 @@ class UnreadContributionsCache implements CacheData
 	 * Tells how much contributions there are for administrators.
 	 * @return int The number of contributions.
 	 */
-	public function get_admin_unread_contributions_number()
+	public function get_admin_unread_contributions_number(): int
 	{
 		return $this->admin;
 	}
@@ -55,7 +53,7 @@ class UnreadContributionsCache implements CacheData
 	 * This method should be private but is public for unit tests.
 	 * @param int $number The number
 	 */
-	public function set_admin_unread_contributions_number($number)
+	public function set_admin_unread_contributions_number(int $number): void
 	{
 		$this->admin = $number;
 	}
@@ -64,7 +62,7 @@ class UnreadContributionsCache implements CacheData
 	 * Tells whether moderators have unread contributions.
 	 * @return bool true if they have, false otherwise
 	 */
-	public function have_moderators_unread_contributions()
+	public function have_moderators_unread_contributions(): bool
 	{
 		return $this->moderators;
 	}
@@ -75,7 +73,7 @@ class UnreadContributionsCache implements CacheData
 	 * @param int $user_id The id if the user
 	 * @return bool true if the user has, false if it doesn't
 	 */
-	public function has_user_unread_contributions($user_id)
+	public function has_user_unread_contributions(int $user_id): bool
 	{
 		return in_array($user_id, $this->get_users_with_unread_contributions());
 	}
@@ -86,7 +84,7 @@ class UnreadContributionsCache implements CacheData
 	 * @param int $group_id The id of the group
 	 * @return bool true if the group has, false otherwise
 	 */
-	public function has_group_unread_contributions($group_id)
+	public function has_group_unread_contributions(int $group_id): bool
 	{
 		return in_array($group_id, $this->get_groups_with_unread_contributions());
 	}
@@ -96,7 +94,7 @@ class UnreadContributionsCache implements CacheData
 	 * This method should be private but is public for unit tests.
 	 * @param bool $have true if there are, false otherwise
 	 */
-	public function set_moderators_have_unread_contributions($have)
+	public function set_moderators_have_unread_contributions(bool $have): void
 	{
 		$this->moderators = $have;
 	}
@@ -105,7 +103,7 @@ class UnreadContributionsCache implements CacheData
 	 * Tells whether members have unread contributions.
 	 * @return bool true if they have, false otherwise
 	 */
-	public function have_members_unread_contributions()
+	public function have_members_unread_contributions(): bool
 	{
 		return $this->members;
 	}
@@ -115,7 +113,7 @@ class UnreadContributionsCache implements CacheData
 	 * This method should be private but is public for unit tests.
 	 * @param bool $have true if there are, false otherwise
 	 */
-	public function set_members_have_unread_contributions($have)
+	public function set_members_have_unread_contributions(bool $have): void
 	{
 		$this->members = $have;
 	}
@@ -124,7 +122,7 @@ class UnreadContributionsCache implements CacheData
 	 * Returns the list of the groups which have unread contributions.
 	 * @return int[] The list of their ids
 	 */
-	public function get_groups_with_unread_contributions()
+	public function get_groups_with_unread_contributions(): array
 	{
 		return $this->groups;
 	}
@@ -134,7 +132,7 @@ class UnreadContributionsCache implements CacheData
 	 * This method should be private but is public for unit tests.
 	 * @param int $id The id of the group
 	 */
-	public function add_group_with_unread_contributions($id)
+	public function add_group_with_unread_contributions(int $id): void
 	{
 		$this->add_unique_item_in_list($this->groups, $id);
 	}
@@ -143,7 +141,7 @@ class UnreadContributionsCache implements CacheData
 	 * Returns the list of the users who have unread contributions.
 	 * @return int[] The list of their ids.
 	 */
-	public function get_users_with_unread_contributions()
+	public function get_users_with_unread_contributions(): array
 	{
 		return $this->users;
 	}
@@ -153,7 +151,7 @@ class UnreadContributionsCache implements CacheData
 	 * This method should be private but is public for unit tests.
 	 * @param int $id The id of the user
 	 */
-	public function add_user_with_unread_contributions($id)
+	public function add_user_with_unread_contributions(int $id): void
 	{
 		$this->add_unique_item_in_list($this->users, $id);
 	}
@@ -165,7 +163,7 @@ class UnreadContributionsCache implements CacheData
 	 * ContributionService::compute_number_contrib_for_each_profile
 	 * This method should be private but is public for unit tests.
 	 */
-	public function set_values(array $numbers)
+	public function set_values(array $numbers): void
 	{
 		$this->set_admin_unread_contributions_number($numbers['r2']);
 		$this->set_moderators_have_unread_contributions((bool)$numbers['r1']);
@@ -183,7 +181,7 @@ class UnreadContributionsCache implements CacheData
 				{
 					$this->add_group_with_unread_contributions((int) TextHelper::substr($profile, 1));
 				}
-				else if ($profile[0] == 'm')
+				elseif ($profile[0] == 'm')
 				{
 					$this->add_user_with_unread_contributions((int) TextHelper::substr($profile, 1));
 				}
@@ -203,12 +201,12 @@ class UnreadContributionsCache implements CacheData
 	/**
 	 * Invalidates the current modules css files cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate(): void
 	{
 		CacheManager::invalidate('kernel', 'unread-contributions');
 	}
 
-	private function add_unique_item_in_list(&$list, $item)
+	private function add_unique_item_in_list(array &$list, mixed $item): void
 	{
 		if (!in_array($item, $list))
 		{

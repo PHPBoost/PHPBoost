@@ -5,13 +5,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 07
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentManagementConfig extends AbstractConfigData
@@ -34,197 +34,197 @@ class ContentManagementConfig extends AbstractConfigData
 	const ID_CARD_ENABLED     			   = 'id_card';
 	const ID_CARD_UNAUTHORIZED_MODULES     = 'id_card_unauthorized_modules';
 
-	public function is_anti_flood_enabled()
+	public function is_anti_flood_enabled(): bool
 	{
 		return $this->get_property(self::ANTI_FLOOD_ENABLED);
 	}
 
-	public function set_anti_flood_enabled($enabled)
+	public function set_anti_flood_enabled(bool $enabled): void
 	{
 		$this->set_property(self::ANTI_FLOOD_ENABLED, $enabled);
 	}
 
-	public function get_anti_flood_duration()
+	public function get_anti_flood_duration(): int
 	{
 		return $this->get_property(self::ANTI_FLOOD_DURATION);
 	}
 
-	public function set_anti_flood_duration($duration)
+	public function set_anti_flood_duration(int $duration): void
 	{
 		$this->set_property(self::ANTI_FLOOD_DURATION, $duration);
 	}
 
-	public function get_used_captcha_module()
+	public function get_used_captcha_module(): string
 	{
 		return $this->get_property(self::USED_CAPTCHA_MODULE);
 	}
 
-	public function set_used_captcha_module($module)
+	public function set_used_captcha_module(string $module): void
 	{
 		$this->set_property(self::USED_CAPTCHA_MODULE, $module);
 	}
 
-	public function is_new_content_enabled()
+	public function is_new_content_enabled(): bool
 	{
 		return $this->get_property(self::NEW_CONTENT_ENABLED);
 	}
 
-	public function set_new_content_enabled($enabled)
+	public function set_new_content_enabled(bool $enabled): void
 	{
 		$this->set_property(self::NEW_CONTENT_ENABLED, $enabled);
 	}
 
-	public function get_new_content_duration()
+	public function get_new_content_duration(): int
 	{
 		return $this->get_property(self::NEW_CONTENT_DURATION);
 	}
 
-	public function set_new_content_duration($duration)
+	public function set_new_content_duration(int $duration): void
 	{
 		$this->set_property(self::NEW_CONTENT_DURATION, $duration);
 	}
 
-	public function get_new_content_unauthorized_modules()
+	public function get_new_content_unauthorized_modules(): array
 	{
 		return $this->get_property(self::NEW_CONTENT_UNAUTHORIZED_MODULES);
 	}
 
-	public function set_new_content_unauthorized_modules(array $modules)
+	public function set_new_content_unauthorized_modules(array $modules): void
 	{
 		$this->set_property(self::NEW_CONTENT_UNAUTHORIZED_MODULES, $modules);
 	}
 
-	public function is_notation_enabled()
+	public function is_notation_enabled(): bool
 	{
 		return $this->get_property(self::NOTATION_ENABLED);
 	}
 
-	public function set_notation_enabled($enabled)
+	public function set_notation_enabled(bool $enabled): void
 	{
 		$this->set_property(self::NOTATION_ENABLED, $enabled);
 	}
 
-	public function get_notation_scale()
+	public function get_notation_scale(): int
 	{
 		return $this->get_property(self::NOTATION_SCALE);
 	}
 
-	public function set_notation_scale($scale)
+	public function set_notation_scale(int $scale): void
 	{
 		$this->set_property(self::NOTATION_SCALE, $scale);
 	}
 
-	public function get_notation_unauthorized_modules()
+	public function get_notation_unauthorized_modules(): array
 	{
 		return $this->get_property(self::NOTATION_UNAUTHORIZED_MODULES);
 	}
 
-	public function set_notation_unauthorized_modules(array $modules)
+	public function set_notation_unauthorized_modules(array $modules): void
 	{
 		$this->set_property(self::NOTATION_UNAUTHORIZED_MODULES, $modules);
 	}
 
-	public function is_content_sharing_enabled()
+	public function is_content_sharing_enabled(): bool
 	{
 		return $this->get_property(self::CONTENT_SHARING_ENABLED);
 	}
 
-	public function set_content_sharing_enabled($enabled)
+	public function set_content_sharing_enabled(bool $enabled): void
 	{
 		$this->set_property(self::CONTENT_SHARING_ENABLED, $enabled);
 	}
 
-	public function is_content_sharing_email_enabled()
+	public function is_content_sharing_email_enabled(): bool
 	{
 		return $this->get_property(self::CONTENT_SHARING_EMAIL_ENABLED);
 	}
 
-	public function set_content_sharing_email_enabled($enabled)
+	public function set_content_sharing_email_enabled(bool $enabled): void
 	{
 		$this->set_property(self::CONTENT_SHARING_EMAIL_ENABLED, $enabled);
 	}
 
-	public function is_content_sharing_print_enabled()
+	public function is_content_sharing_print_enabled(): bool
 	{
 		return $this->get_property(self::CONTENT_SHARING_PRINT_ENABLED);
 	}
 
-	public function set_content_sharing_print_enabled($enabled)
+	public function set_content_sharing_print_enabled(bool $enabled): void
 	{
 		$this->set_property(self::CONTENT_SHARING_PRINT_ENABLED, $enabled);
 	}
 
-	public function is_content_sharing_sms_enabled()
+	public function is_content_sharing_sms_enabled(): bool
 	{
 		return $this->get_property(self::CONTENT_SHARING_SMS_ENABLED);
 	}
 
-	public function set_content_sharing_sms_enabled($enabled)
+	public function set_content_sharing_sms_enabled(bool $enabled): void
 	{
 		$this->set_property(self::CONTENT_SHARING_SMS_ENABLED, $enabled);
 	}
 
-	public function is_opengraph_enabled()
+	public function is_opengraph_enabled(): bool
 	{
 		return $this->get_property(self::OPENGRAPH_ENABLED);
 	}
 
-	public function set_opengraph_enabled($enabled)
+	public function set_opengraph_enabled(bool $enabled): void
 	{
 		$this->set_property(self::OPENGRAPH_ENABLED, $enabled);
 	}
 
-	public function get_site_default_picture_url()
+	public function get_site_default_picture_url(): Url
 	{
 		return new Url($this->get_property(self::SITE_DEFAULT_PICTURE_URL));
 	}
 
-	public function set_site_default_picture_url($url)
+	public function set_site_default_picture_url(string $url): void
 	{
 		$this->set_property(self::SITE_DEFAULT_PICTURE_URL, $url);
 	}
 
-	public function module_new_content_is_enabled($module_id)
+	public function module_new_content_is_enabled(string $module_id): bool
 	{
 		return $this->is_new_content_enabled() && !in_array($module_id, $this->get_new_content_unauthorized_modules());
 	}
 
-	public function module_new_content_is_enabled_and_check_date($module_id, $date)
+	public function module_new_content_is_enabled_and_check_date(string $module_id, mixed $date): bool
 	{
 		return $this->module_new_content_is_enabled($module_id) && $this->check_date($date);
 	}
 
-	private function check_date($date)
+	private function check_date(mixed $date): bool
 	{
 		return (time() - $date) <= $this->get_new_content_duration()*86400;
 	}
 
-	public function module_notation_is_enabled($module_id)
+	public function module_notation_is_enabled(string $module_id): bool
 	{
 		return $this->is_notation_enabled() && !in_array($module_id, $this->get_notation_unauthorized_modules());
 	}
 
-	public function is_id_card_enabled()
+	public function is_id_card_enabled(): bool
 	{
 		return $this->get_property(self::ID_CARD_ENABLED);
 	}
 
-	public function set_id_card_enabled($enabled)
+	public function set_id_card_enabled(bool $enabled): void
 	{
 		$this->set_property(self::ID_CARD_ENABLED, $enabled);
 	}
 
-	public function get_id_card_unauthorized_modules()
+	public function get_id_card_unauthorized_modules(): array
 	{
 		return $this->get_property(self::ID_CARD_UNAUTHORIZED_MODULES);
 	}
 
-	public function set_id_card_unauthorized_modules(array $modules)
+	public function set_id_card_unauthorized_modules(array $modules): void
 	{
 		$this->set_property(self::ID_CARD_UNAUTHORIZED_MODULES, $modules);
 	}
 
-	public function module_id_card_is_enabled($module_id)
+	public function module_id_card_is_enabled(string $module_id): bool
 	{
 		return $this->is_id_card_enabled() && !in_array($module_id, $this->get_id_card_unauthorized_modules());
 	}
@@ -256,7 +256,7 @@ class ContentManagementConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return ContentManagementConfig
 	 */
-	public static function load()
+	public static function load(): ContentManagementConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'content-management');
 	}
@@ -264,7 +264,7 @@ class ContentManagementConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'content-management');
 	}

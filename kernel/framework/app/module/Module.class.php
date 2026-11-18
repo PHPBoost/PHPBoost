@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2009 12 12
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -69,6 +69,20 @@ class Module
             'activated' => $this->activated,
             'installed_version' => $this->installed_version
         ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $module_id = $data['module_id'] ?? $data["\0Module\0module_id"] ?? null;
+        $installed_version = $data['installed_version'] ?? $data["\0Module\0installed_version"] ?? null;
+        if (!is_string($module_id) || !is_string($installed_version))
+        {
+            throw new UnexpectedValueException('Invalid serialized module configuration.');
+        }
+
+        $this->module_id = $module_id;
+        $this->activated = (bool) ($data['activated'] ?? $data["\0Module\0activated"] ?? false);
+        $this->installed_version = $installed_version;
     }
 }
 ?>

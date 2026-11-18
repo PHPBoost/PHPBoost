@@ -5,20 +5,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 08 10
 * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdministratorAlertCache implements CacheData
 {
-	private $all_administrator_alert;
+	private mixed $all_administrator_alert = null;
+	private mixed $unread_administrator_alert = null;
 
-	private $unread_administrator_alert;
-	/**
-	 * {@inheritdoc}
-	 */
-	public function synchronize(): void {
+	public function synchronize(): void
+    {
 		$querier = PersistenceContext::get_querier();
 
 		$parameters = [
@@ -29,15 +27,14 @@ class AdministratorAlertCache implements CacheData
 
 		$parameters = ['contribution_type' => ADMINISTRATOR_ALERT_TYPE];
 		$this->all_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE contribution_type = :contribution_type', $parameters);
+    }
 
-	}
-
-	public function get_all_alerts_number()
+	public function get_all_alerts_number(): mixed
 	{
 		return $this->all_administrator_alert;
 	}
 
-	public function get_unread_alerts_number()
+	public function get_unread_alerts_number(): mixed
 	{
 		return $this->unread_administrator_alert;
 	}
@@ -46,15 +43,15 @@ class AdministratorAlertCache implements CacheData
 	 * Loads and returns the administrator alert cached data.
 	 * @return AdministratorAlertCache The cached data
 	 */
-	public static function load()
+	public static function load(): AdministratorAlertCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'administrator-alert');
+		return CacheManager::load(self::class, 'kernel', 'administrator-alert');
 	}
 
 	/**
 	 * Invalidates the current administrator alert cached data.
 	 */
-	public static function invalidate()
+	public static function invalidate(): void
 	{
 		CacheManager::invalidate('kernel', 'administrator-alert');
 	}

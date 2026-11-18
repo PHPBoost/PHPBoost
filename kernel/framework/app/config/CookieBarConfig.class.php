@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Arnaud GENET <elenwii@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -24,67 +24,67 @@ class CookieBarConfig extends AbstractConfigData
 	const NOTRACKING_COOKIE             = 'notracking';
 	const TRACKING_COOKIE               = 'tracking';
 
-	public function enable_cookiebar()
+	public function enable_cookiebar(): void
 	{
 		$this->set_property(self::COOKIEBAR_ENABLED, true);
 	}
 
-	public function disable_cookiebar()
+	public function disable_cookiebar(): void
 	{
 		$this->set_property(self::COOKIEBAR_ENABLED, false);
 	}
 
-	public function is_cookiebar_enabled()
+	public function is_cookiebar_enabled(): bool
 	{
 		return $this->get_property(self::COOKIEBAR_ENABLED);
 	}
 
-	public function get_cookiebar_duration()
+	public function get_cookiebar_duration(): int
 	{
 		return $this->get_property(self::COOKIEBAR_DURATION);
 	}
 
-	public function set_cookiebar_duration($value)
+	public function set_cookiebar_duration(int $value): void
 	{
 		$this->set_property(self::COOKIEBAR_DURATION, $value);
 	}
 
-	public function get_cookiebar_tracking_mode()
+	public function get_cookiebar_tracking_mode(): string
 	{
 		return $this->get_property(self::COOKIEBAR_TRACKING_MODE);
 	}
 
-	public function set_cookiebar_tracking_mode($value)
+	public function set_cookiebar_tracking_mode(string $value): void
 	{
 		$this->set_property(self::COOKIEBAR_TRACKING_MODE, $value);
 	}
 
-	public function get_cookiebar_content()
+	public function get_cookiebar_content(): string
 	{
 		return $this->get_property(self::COOKIEBAR_CONTENT);
 	}
 
-	public function set_cookiebar_content($value)
+	public function set_cookiebar_content(string $value): void
 	{
 		$this->set_property(self::COOKIEBAR_CONTENT, $value);
 	}
 
-	public function get_cookiebar_aboutcookie_title()
+	public function get_cookiebar_aboutcookie_title(): string
 	{
 		return $this->get_property(self::COOKIEBAR_ABOUTCOOKIE_TITLE);
 	}
 
-	public function set_cookiebar_aboutcookie_title($value)
+	public function set_cookiebar_aboutcookie_title(string $value): void
 	{
 		$this->set_property(self::COOKIEBAR_ABOUTCOOKIE_TITLE, $value);
 	}
 
-	public function get_cookiebar_aboutcookie_content()
+	public function get_cookiebar_aboutcookie_content(): string
 	{
 		return $this->get_property(self::COOKIEBAR_ABOUTCOOKIE_CONTENT);
 	}
 
-	public function set_cookiebar_aboutcookie_content($value)
+	public function set_cookiebar_aboutcookie_content(string $value): void
 	{
 		$this->set_property(self::COOKIEBAR_ABOUTCOOKIE_CONTENT, $value);
 	}
@@ -108,7 +108,7 @@ class CookieBarConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return CookieBarConfig
 	 */
-	public static function load()
+	public static function load(): CookieBarConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'cookiebar-config');
 	}
@@ -116,7 +116,7 @@ class CookieBarConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'cookiebar-config');
 	}
