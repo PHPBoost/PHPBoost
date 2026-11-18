@@ -8,28 +8,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultTemplateRenderer implements TemplateRenderer
 {
-	/**
-	 * @var TemplateFunctions
-	 */
-	private $functions;
+	private TemplateFunctions $functions;
 
 	public function __construct()
 	{
 		$this->functions = new TemplateFunctions();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function render(TemplateData $data, TemplateLoader $loader)
+	public function render(TemplateData $data, TemplateLoader $loader): string
 	{
 		if ($loader->supports_caching())
 		{
@@ -41,15 +36,12 @@ class DefaultTemplateRenderer implements TemplateRenderer
 		}
 	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public function add_lang(array $lang)
+    public function add_lang(array $lang): void
     {
 		$this->functions->add_language_maps($lang);
     }
 
-	private function parse(TemplateLoader $loader, TemplateData $data)
+	private function parse(TemplateLoader $loader, TemplateData $data): string
 	{
 		$_result = '';
 		$_functions = $this->functions;
@@ -58,7 +50,7 @@ class DefaultTemplateRenderer implements TemplateRenderer
 		return $_result;
 	}
 
-	private function execute(TemplateLoader $loader, TemplateData $data)
+	private function execute(TemplateLoader $loader, TemplateData $data): string
 	{
 		$_result = '';
 		$_functions = $this->functions;
@@ -67,13 +59,11 @@ class DefaultTemplateRenderer implements TemplateRenderer
 		return $_result;
 	}
 
-	private function get_code_to_eval(TemplateLoader $loader)
+	private function get_code_to_eval(TemplateLoader $loader): string
 	{
 		$template_code = $loader->load();
 		// Removes the <?php and the ? > tags
 		return TextHelper::substr($template_code, 6, TextHelper::strlen($template_code) - 9);
 	}
 }
-
-
 ?>

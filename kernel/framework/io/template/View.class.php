@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 10 13
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface View
@@ -16,6 +17,6 @@ interface View
      * @return string a string representation of the view
      * @throws TemplateRenderingException
      */
-	function render();
+	function render(): string;
 }
 ?>

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 09 04
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,15 +14,12 @@
 
 class TemplateRenderingException extends Exception
 {
-	/**
-	 * @var StringInputStream
-	 */
-	private $input = null;
-	private $tpl_line = 0;
-	private $offset = 0;
-	private $error_message = 0;
+	private ?StringInputStream $input = null;
+	private int $tpl_line = 0;
+	private int $offset = 0;
+	private int $error_message = 0;
 
-	public function __construct($message, ?StringInputStream $input = null)
+	public function __construct(string $message, ?StringInputStream $input = null)
 	{
 		$this->error_message = $message;
 		if ($input != null)
@@ -33,7 +30,7 @@ class TemplateRenderingException extends Exception
 		parent::__construct($this->get_message());
 	}
 
-	private function get_message()
+	private function get_message(): string
 	{
 		$msg = $this->error_message;
 		if ($this->input != null)
@@ -44,7 +41,7 @@ class TemplateRenderingException extends Exception
 		return $msg;
 	}
 
-	private function compute_position()
+	private function compute_position(): void
 	{
 		$position = $this->input->tell();
 		$string = $this->input->entire_string();

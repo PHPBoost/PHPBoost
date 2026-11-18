@@ -8,8 +8,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 06
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface TemplateRenderer
@@ -20,12 +21,12 @@ interface TemplateRenderer
 	 * @param TemplateLoader $loader The loader to use
 	 * @return string The parsed template
 	 */
-	function render(TemplateData $data, TemplateLoader $loader);
+	function render(TemplateData $data, TemplateLoader $loader): string;
 
     /**
      * Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
      * @param string[] $lang the language map
      */
-    function add_lang(array $lang);
+    function add_lang(array $lang): void;
 }
 ?>

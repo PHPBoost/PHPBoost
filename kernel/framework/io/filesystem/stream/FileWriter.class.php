@@ -13,6 +13,7 @@
 interface FileWriter
 {
 	function append(string $content): void;
-	function flush(): void;
+
+    function flush(): void;
 }
 ?>

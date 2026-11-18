@@ -22,22 +22,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 06 18
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FileTemplate extends AbstractTemplate
 {
-	private $file_identifier;
+	private string $file_identifier;
 
 	/**
 	 * Builds a FileTemplate object
 	 * @param string $file_identifier The identifier of the file you want to load (see this class' description)
 	 * to know how to compose a indentifier.
 	 */
-	public function __construct($file_identifier)
+	public function __construct(string $file_identifier)
 	{
 		$this->file_identifier = $file_identifier;
 		$data = new DefaultTemplateData();
@@ -47,10 +48,7 @@ class FileTemplate extends AbstractTemplate
 		parent::__construct($loader, $renderer, $data);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-    public function render()
+    public function render(): string
     {
         try
         {

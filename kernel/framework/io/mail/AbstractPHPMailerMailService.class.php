@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 12
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2010 03 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -16,14 +16,14 @@ include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/PHPMailer.php';
 
 abstract class AbstractPHPMailerMailService implements MailService
 {
-	private static $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,}';
+	private static string $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,}';
 
 	/**
 	 * @var \PHPMailer\PHPMailer\PHPMailer
 	 */
-	private $mailer;
+	private \PHPMailer\PHPMailer\PHPMailer $mailer;
 
-	public function send(Mail $mail)
+	public function send(Mail $mail): void
 	{
 		$converter = new MailToPHPMailerConverter();
 		$this->mailer = $converter->convert($mail);
@@ -38,7 +38,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 		}
 	}
 
-	public function try_to_send(Mail $mail)
+	public function try_to_send(Mail $mail): bool
 	{
 		try
 		{
@@ -51,7 +51,7 @@ abstract class AbstractPHPMailerMailService implements MailService
 		}
 	}
 
-	public function send_from_properties($mail_to, $mail_subject, $mail_content, $mail_from = '', $sender_name = Mail::SENDER_ADMIN)
+	public function send_from_properties(string $mail_to, string $mail_subject, string $mail_content, string $mail_from = '', string $sender_name = Mail::SENDER_ADMIN): bool
 	{
 		// Initialization of the mail properties
 		$mail = new Mail();
@@ -71,17 +71,17 @@ abstract class AbstractPHPMailerMailService implements MailService
 
 	abstract protected function set_send_settings(PHPMailer\PHPMailer\PHPMailer $mailer);
 
-	public function is_mail_valid($mail_address)
+	public function is_mail_valid($mail_address): bool
 	{
 		return preg_match($this->get_mail_checking_regex(), $mail_address);
 	}
 
-	public function get_mail_checking_regex()
+	public function get_mail_checking_regex(): string
 	{
 		return '`^' . self::$regex . '$`iu';
 	}
 
-	public function get_mail_checking_raw_regex()
+	public function get_mail_checking_raw_regex(): string
 	{
 		return self::$regex;
 	}

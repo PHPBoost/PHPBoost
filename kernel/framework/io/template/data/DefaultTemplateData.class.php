@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 07 27
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -15,29 +15,20 @@
 
 class DefaultTemplateData implements TemplateData
 {
-	private $strict = false;
-	private $vars = [];
+	private bool $strict = false;
+	private array $vars = [];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function enable_strict_mode()
+	public function enable_strict_mode(): void
 	{
 		$this->strict = true;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function disable_strict_mode()
+	public function disable_strict_mode(): void
 	{
 		$this->strict = false;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function auto_load_frequent_vars()
+	public function auto_load_frequent_vars(): void
 	{
 		$session = AppContext::get_session();
 		$user = AppContext::get_current_user();
@@ -113,15 +104,12 @@ class DefaultTemplateData implements TemplateData
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function put($key, $value)
+	public function put(string $key, mixed $value): void
 	{
 		$this->vars[$key] = $value;
 	}
 
-	public function put_all(array $vars)
+	public function put_all(array $vars): void
 	{
 		foreach ($vars as $key => $value)
 		{
@@ -129,10 +117,7 @@ class DefaultTemplateData implements TemplateData
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = [])
+	public function assign_block_vars(string $block_name, array $array_vars, array $subtemplates = []): void
 	{
 		$current_block = null;
 		if (TextHelper::strpos($block_name, '.') !== false) // nested block
@@ -155,18 +140,12 @@ class DefaultTemplateData implements TemplateData
 		$current_block = array_merge($array_vars, $subtemplates);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_block($blockname)
+	public function get_block(string $blockname): array
 	{
 		return $this->get_block_from_list($blockname, $this->vars);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_block_from_list($blockname, $parent_block)
+	public function get_block_from_list(string $blockname, mixed $parent_block): array
 	{
 		if (isset($parent_block[$blockname]) && is_array($parent_block[$blockname]))
 		{
@@ -179,26 +158,17 @@ class DefaultTemplateData implements TemplateData
 		return [];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function is_true($value)
+	public function is_true(mixed $value): bool
 	{
 		return !empty($value);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get($varname)
+	public function get(string $varname): mixed
 	{
 		return $this->get_from_list($varname, $this->vars);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_from_list($varname, &$list)
+	public function get_from_list(string $varname, mixed &$list): mixed
 	{
 		if (isset($list[$varname]))
 		{
@@ -211,16 +181,13 @@ class DefaultTemplateData implements TemplateData
 		return null;
 	}
 
-	private function register_var($name, $value, &$list)
+	private function register_var(string $name, mixed $value, mixed &$list): mixed
 	{
 		$list[$name] = $value;
 		return $value;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function bind_vars(TemplateData $data)
+	public function bind_vars(TemplateData $data): void
 	{
 		$data->vars =& $this->vars;
 	}

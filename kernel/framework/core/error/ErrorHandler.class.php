@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 02
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2009 09 30
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -208,18 +208,27 @@ class ErrorHandler
 		if (file_exists($log_file) && filesize($log_file) > self::$LOG_FILE_MAX_SIZE)
 		{
 			$handle = @fopen($log_file, 'w+');
-			@ftruncate($handle, 0);
-			@fclose($handle);
+			if ($handle !== false)
+			{
+				@ftruncate($handle, 0);
+				@fclose($handle);
+			}
 		}
 	}
 
 	private static function add_error_in_log_file(string $log_file, string $error_msg, string $error_stacktrace, int $errno = 0): void
 	{
 		$handle = @fopen($log_file, 'a+');
+		if ($handle === false)
+		{
+			echo '<span id="message_handler">Can\'t write error to log file</span>';
+			return;
+		}
+
 		$write = @fwrite($handle, self::compute_error_log_string($error_msg, $error_stacktrace, $errno));
 		$close = @fclose($handle);
 
-		if ($handle === false || $write === false || $close === false)
+		if ($write === false || $close === false)
 		{
 			echo '<span id="message_handler">Can\'t write error to log file</span>';
 		}

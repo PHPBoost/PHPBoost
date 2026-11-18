@@ -5,47 +5,30 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 15
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 6.0 - 2024 07 06
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class JSFileOptimizer 
 {
-    /**
-     * Scripts to be minified
-     * @var array
-     */
-    protected $files = [];
+    /** Scripts to be minified */
+    protected array $files = [];
+    /** Scripts who cannot be minified */
+    protected array $ignored_scripts = [];
+    /** Minified content */
+    protected string $content = '';
 
-    /**
-     * Scripts who cannot be minified
-     * @var array
-     */
-    protected $ignored_scripts = [];
-
-    /**
-     * Minified content
-     * @var string
-     */
-    protected $content = '';
-
-    /**
-     * Const Delete comments, tabulations, spaces and newline
-    */
+    /** Const Delete comments, tabulations, spaces and newline */
     const HIGH_OPTIMIZATION = 'high';
-
-    /**
-     * Const Remove comments, white-space(s) outside the string and regex
-    */
+    /** Const Remove comments, white-space(s) outside the string and regex */
     const LOW_OPTIMIZATION = 'low';
 
     /**
      * Minify content
      * @param string $intensity LOW_OPTIMIZATION || HIGH_OPTIMIZATION
-     * @return void
      */
-    public function optimize($intensity = self::HIGH_OPTIMIZATION):void
+    public function optimize(string $intensity = self::HIGH_OPTIMIZATION): void
     {
         $this->assemble_files();
         $content = preg_replace(
@@ -100,7 +83,7 @@ class JSFileOptimizer
      * Get Optimized JS content
      * @return string
      */
-    public function export()
+    public function export(): string
     {
         return $this->content;
     }
@@ -121,7 +104,7 @@ class JSFileOptimizer
     /**
      * This class allows you to add file to optimize. Required path file
      */
-    public function add_file($path_file)
+    public function add_file(string $path_file): void
     {
         $this->files[] = $path_file;
     }
@@ -131,7 +114,7 @@ class JSFileOptimizer
      * @param mixed $script
      * @return void
      */
-    public function add_ignored_script($script)
+    public function add_ignored_script(string $script): void
     {
         $this->ignored_scripts[] = $script;
     }
@@ -140,7 +123,7 @@ class JSFileOptimizer
      * Get all files content and assemble them into content
      * @return void
      */
-    public function assemble_files():void
+    public function assemble_files(): void
     {
         $content = '';
         foreach ($this->files as $file)
@@ -152,7 +135,6 @@ class JSFileOptimizer
                 {
                     // Maybe we can't get the file cause cUrl isn't available, it will be called normally
                     $this->ignored_scripts[] = $file;
-                    
                 }
                 else
                 {
@@ -171,7 +153,7 @@ class JSFileOptimizer
      * Get array of scripts who aren't minified
      * @return array
      */
-    public function get_ignored_scripts():array
+    public function get_ignored_scripts(): array
     {
         return $this->ignored_scripts;
     }

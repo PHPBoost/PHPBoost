@@ -5,9 +5,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2010 03 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 include_once PATH_TO_ROOT . '/kernel/lib/php/phpmailer/src/Exception.php';
@@ -19,20 +20,14 @@ use PHPMailer\PHPMailer\SMTP;
 
 class MailToPHPMailerConverter
 {
-	/**
-	 * @var PHPMailer
-	 */
-	private $mailer;
-	/**
-	 * @var Mail
-	 */
-	private $mail_to_send;
+	private PHPMailer $mailer;
+	private Mail $mail_to_send;
 
 	/**
 	 * @param Mail $mail
 	 * @return PHPMailer
 	 */
-	public function convert(Mail $mail)
+	public function convert(Mail $mail): PHPMailer
 	{
 		$this->mail_to_send = $mail;
 		$this->mailer = new PHPMailer();
@@ -42,7 +37,7 @@ class MailToPHPMailerConverter
 		return $this->mailer;
 	}
 
-	private function convert_mail()
+	private function convert_mail(): void
 	{
 		foreach ($this->mail_to_send->get_recipients() as $recipient => $name)
 		{
@@ -71,7 +66,7 @@ class MailToPHPMailerConverter
 		$this->convert_content();
 	}
 
-	private function convert_content()
+	private function convert_content(): void
 	{
 		if ($this->mail_to_send->is_html())
 		{

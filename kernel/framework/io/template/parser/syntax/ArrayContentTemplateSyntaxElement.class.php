@@ -5,13 +5,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 09 05
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output): void
 	{
 		$this->register($context, $input, $output);
         while (!$input->assert_next('\s*\]'))
@@ -29,7 +30,7 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
         }
 	}
 
-	private function process_key()
+	private function process_key(): void
 	{
 		$matches = [];
 		if ($this->input->consume_next('\s*(?P<key>(?:[0-9]+)|(?:\'[^\']+\'))\s*:\s*', '', $matches))
@@ -38,7 +39,7 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function process_value()
+	private function process_value(): void
 	{
 		$this->parse_elt(new ExpressionContentTemplateSyntaxElement());
 	}

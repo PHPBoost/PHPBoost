@@ -7,20 +7,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 06
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StringTemplateLoader implements TemplateLoader
 {
-	private $content = '';
-	private $hashed_content;
-	/**
-	 * @var DataStore
-	 */
-	private static $parsing_cache = null;
+	private string $content = '';
+	private string $hashed_content;
+	private static ?RAMDataStore $parsing_cache = null;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$parsing_cache = new RAMDataStore();
 	}
@@ -29,16 +27,13 @@ class StringTemplateLoader implements TemplateLoader
 	 * Constructs the {@link StringTemplateLoader} from the input source.
 	 * @param string $content The input source
 	 */
-	public function __construct($content)
+	public function __construct(string $content)
 	{
 		$this->content = $content;
 		$this->hashed_content = md5($content);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function load()
+	public function load(): string
 	{
 		if (self::is_cached($this->hashed_content))
 		{
@@ -53,35 +48,34 @@ class StringTemplateLoader implements TemplateLoader
 		}
 	}
 
-	private static function is_cached($hashed_content)
+	private static function is_cached(string $hashed_content): bool
 	{
 		return self::$parsing_cache->contains($hashed_content);
 	}
 
-	private static function get_cached_template($hashed_content)
+	private static function get_cached_template(string $hashed_content): string
 	{
 		return self::$parsing_cache->get($hashed_content);
 	}
 
-	private static function register_cached_template($hashed_content, $parsed_content)
+	private static function register_cached_template(string $hashed_content, string $parsed_content): void
 	{
 		self::$parsing_cache->store($hashed_content, $parsed_content);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function supports_caching()
+	public function supports_caching(): bool
 	{
 		return false;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_cache_file_path()
+	public function get_cache_file_path(): ?string
 	{
 		return null;
+	}
+
+	public function get_pictures_data_path(): string
+	{
+		return '';
 	}
 }
 

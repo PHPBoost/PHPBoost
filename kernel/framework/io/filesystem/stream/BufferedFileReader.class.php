@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2010 05 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BufferedFileReader implements FileReader
@@ -30,7 +31,7 @@ class BufferedFileReader implements FileReader
 		$this->buffer_max_size = $buffer_size;
 	}
 
-	public function read_all()
+	public function read_all(): string
 	{
 		$result = '';
 		while (!$this->reached_end_of_file)
@@ -40,7 +41,7 @@ class BufferedFileReader implements FileReader
 		return $result;
 	}
 
-	private function read_packet()
+	private function read_packet(): string
 	{
 		$buffer = $this->file->read($this->offset_in_file, $this->buffer_max_size);
 		$buffer_size = TextHelper::strlen($buffer);
@@ -52,7 +53,7 @@ class BufferedFileReader implements FileReader
 		return $buffer;
 	}
 
-	public function read_line()
+	public function read_line(): ?string
 	{
 		if ($this->has_no_more_line())
 		{
@@ -72,13 +73,13 @@ class BufferedFileReader implements FileReader
 		}
 	}
 
-	private function has_buffered_line()
+	private function has_buffered_line(): bool
 	{
 		// We must have at least two entries because we don't know if the last one is a full line or a partial one.
 		return count($this->lines) > 1;
 	}
 
-	private function read_lines_in_new_packet()
+	private function read_lines_in_new_packet(): void
 	{
 		$packet = $this->read_packet();
 		$lines = explode("\n", $packet);
@@ -92,17 +93,17 @@ class BufferedFileReader implements FileReader
 		$this->lines = array_merge($this->lines, $lines);
 	}
 
-	private function is_last_line()
+	private function is_last_line(): bool
 	{
 		return $this->reached_end_of_file && count($this->lines) == 1;
 	}
 
-	private function has_no_more_line()
+	private function has_no_more_line(): bool
 	{
 		return $this->reached_end_of_file && count($this->lines) == 0;
 	}
 
-	private function get_oldest_line()
+	private function get_oldest_line(): ?string
 	{
 		return array_shift($this->lines);
 	}

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 01
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2011 03 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -14,11 +14,11 @@
 
 class CSSFileOptimizer
 {
-	protected $files = [];
-	protected $scripts = [];
-	protected $content = '';
-	protected $regex_search_files_path = '';
-	protected $replace_value_files_path = '';
+	protected array $files = [];
+	protected array $scripts = [];
+	protected string $content = '';
+	protected string $regex_search_files_path = '';
+	protected string $replace_value_files_path = '';
 
 	/**
 	 * Const Delete comments, tabulations, spaces and newline
@@ -39,7 +39,7 @@ class CSSFileOptimizer
 	/**
 	 * This class allows you to add file to optimize. Required path file
 	 */
-	public function add_file($path_file)
+	public function add_file(string $path_file): void
 	{
 		$this->files[] = $path_file;
 	}
@@ -47,7 +47,7 @@ class CSSFileOptimizer
 	/**
 	 * This class allows you to add script to optimize. Required script value
 	 */
-	public function add_script($script)
+	public function add_script(string $script): void
 	{
 		if (!empty($script))
 		{
@@ -58,7 +58,7 @@ class CSSFileOptimizer
 	/**
 	 * This class optimize your code. Parameter $intensity serves to configuration highlest
 	 */
-	public function optimize($intensity = self::HIGH_OPTIMIZATION)
+	public function optimize(string $intensity = self::HIGH_OPTIMIZATION): void
 	{
 		$this->assemble_files();
 
@@ -79,7 +79,7 @@ class CSSFileOptimizer
 		$this->content = trim($content);
 	}
 
-	public function export()
+	public function export(): string
 	{
 		return $this->content;
 	}
@@ -100,7 +100,7 @@ class CSSFileOptimizer
 	/**
 	 * This class return Array files
 	 */
-	public function get_files()
+	public function get_files(): array
 	{
 		return $this->files;
 	}
@@ -108,19 +108,19 @@ class CSSFileOptimizer
 	/**
 	 * This class return Array scripts
 	 */
-	public function get_scripts()
+	public function get_scripts(): array
 	{
 		return $this->scripts;
 	}
 
-	private function delete_comments($value)
+	private function delete_comments(string $value): string
 	{
 		$value = preg_replace('<!\-\- [\/\ a-zA-Z]* \-\->u', '', $value);
 		$value = preg_replace('#/\*.*?\*/#su', '', $value);
 		return $value;
 	}
 
-	private function assemble_files()
+	private function assemble_files(): void
 	{
 		$content = '';
 		foreach ($this->files as $file)

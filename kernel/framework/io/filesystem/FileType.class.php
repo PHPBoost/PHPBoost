@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2011 08 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,32 +13,32 @@
 
 class FileType
 {
-	private $file;
-	private $extensions_image = ['png', 'webp', 'gif', 'jpg', 'jpeg', 'bmp', 'tiff', 'ico', 'svg'];
-	private $extensions_audio = ['mp3', 'wav', 'raw', 'flac'];
-	private $extensions_video = ['mpeg', 'mp4', 'wmv', 'ogg', 'ogv', 'webm'];
+	private File $file;
+	private array $extensions_image = ['png', 'webp', 'gif', 'jpg', 'jpeg', 'bmp', 'tiff', 'ico', 'svg'];
+	private array $extensions_audio = ['mp3', 'wav', 'raw', 'flac'];
+	private array $extensions_video = ['mpeg', 'mp4', 'wmv', 'ogg', 'ogv', 'webm'];
 
 	public function __construct(File $file)
 	{
 		$this->file = $file;
 	}
 
-	public function is_picture()
+	public function is_picture(): bool
 	{
 		return in_array($this->get_extension(), $this->extensions_image);
 	}
 
-	public function is_audio()
+	public function is_audio(): bool
 	{
 		return in_array($this->get_extension(), $this->extensions_audio);
 	}
 
-	public function is_video()
+	public function is_video(): bool
 	{
 		return in_array($this->get_extension(), $this->extensions_video);
 	}
 
-	public function get_extension()
+	public function get_extension(): string
 	{
 		$file_name = $this->file->get_name();
 		$parts = explode('.', $file_name);

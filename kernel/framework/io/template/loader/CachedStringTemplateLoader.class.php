@@ -8,34 +8,32 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 06
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CachedStringTemplateLoader implements TemplateLoader
 {
-	private $content = '';
-	private $cache_file_path = '';
+	private string $content = '';
+	private string $cache_file_path = '';
 
 	/**
 	 * Constructs a {@link CachedStringTemplateLoader} from the source string.
 	 * @param string $content The template's source as a string.
 	 */
-	public function __construct($content)
+	public function __construct(string $content)
 	{
 		$this->content = $content;
 		$this->compute_cache_file_path();
 	}
 
-	private function compute_cache_file_path()
+	private function compute_cache_file_path(): void
 	{
 		$this->cache_file_path = PATH_TO_ROOT . '/cache/tpl/string-' . md5($this->content) . '.php';
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function load()
+	public function load(): string
 	{
 		if (!$this->file_cache_exists())
 		{
@@ -47,19 +45,19 @@ class CachedStringTemplateLoader implements TemplateLoader
 		return file_get_contents($this->cache_file_path);
 	}
 
-	private function file_cache_exists()
+	private function file_cache_exists(): bool
 	{
 		return file_exists($this->cache_file_path) && @filesize($this->cache_file_path) !== 0;
 	}
 
-	private function generate_cache_file()
+	private function generate_cache_file(string $content): void
 	{
 		try
 		{
 			$cache_file = new File($this->cache_file_path);
 			$cache_file->open(File::WRITE);
 			$cache_file->lock();
-			$cache_file->write($this->get_parsed_content());
+			$cache_file->write($content);
 			$cache_file->unlock();
 			$cache_file->close();
 			$cache_file->change_chmod(0666);
@@ -70,24 +68,18 @@ class CachedStringTemplateLoader implements TemplateLoader
 		}
 	}
 
-	private function get_parsed_content()
+	private function get_parsed_content(): string
 	{
 		$parser = new TemplateSyntaxParser();
 		return $parser->parse($this->content);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function supports_caching()
+	public function supports_caching(): bool
 	{
 		return true;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_cache_file_path()
+	public function get_cache_file_path(): string
 	{
 		if (!$this->file_cache_exists())
 		{
@@ -95,6 +87,11 @@ class CachedStringTemplateLoader implements TemplateLoader
 			$this->generate_cache_file($content);
 		}
 		return $this->cache_file_path;
+	}
+
+	public function get_pictures_data_path(): string
+	{
+		return '';
 	}
 }
 ?>

@@ -303,7 +303,7 @@ class UpdateServices
         // being populated — leaving MaintenanceConfig unresolvable at that exact moment.
         require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
         require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
-        require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/MaintenanceConfig.class.php';
+        require_once PATH_TO_ROOT . '/kernel/framework/app/config/MaintenanceConfig.class.php';
         $maintenance_config = MaintenanceConfig::load();
 
         if (!$maintenance_config->is_under_maintenance())

@@ -12,27 +12,18 @@
 
 abstract class AbstractTemplateSyntaxElement implements TemplateSyntaxElement
 {
-    /**
-     * @var TemplateSyntaxParserContext
-     */
-    protected $context;
-    /**
-     * @var StringInputStream
-     */
-    protected $input;
-    /**
-     * @var StringOutputStream
-     */
-    protected $output;
+    protected TemplateSyntaxParserContext $context;
+    protected StringInputStream $input;
+    protected StringOutputStream $output;
 
-    protected function register(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
+    protected function register(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output): void
     {
-    $this->context = $context;
-    $this->input = $input;
-    $this->output = $output;
+        $this->context = $context;
+        $this->input = $input;
+        $this->output = $output;
     }
 
-    protected function parse_elt(TemplateSyntaxElement $element)
+    protected function parse_elt(TemplateSyntaxElement $element): void
     {
         $element->parse($this->context, $this->input, $this->output);
     }

@@ -5,22 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 08
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $ended = false;
-	private $escaped = false;
+	private bool $ended = false;
+	private bool $escaped = false;
 
-	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output): void
 	{
 		$this->register($context, $input, $output);
 		$this->do_parse();
 	}
 
-	private function do_parse()
+	private function do_parse(): void
 	{
 		while ($this->input->has_next() && !$this->ended)
 		{
@@ -36,7 +37,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function process_char($char)
+	private function process_char(string $char): void
 	{
 		if ($char == '\\' && $this->input->assert_next('[\\{}$#]'))
 		{
@@ -56,7 +57,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function process_escaped_char($char)
+	private function process_escaped_char(string $char): void
 	{
 		if (!in_array($char, ['\\', '{', '}', '#', '$']))
 		{
@@ -66,12 +67,12 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->write($char);
 	}
 
-	private function write($char)
+	private function write(string $char): void
 	{
 		$this->output->write(addcslashes($char, '\\\''));
 	}
 
-	private function parse_text($current)
+	private function parse_text(string $current): ?TemplateSyntaxElement
 	{
 		if ($current == '{' && $this->input->assert_next('(?:@(?:H\|)?)?(?:\w+\.)*\w+\}'))
 		{
@@ -96,7 +97,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		return null;
 	}
 
-	private function build_statement_elt()
+	private function build_statement_elt(): ?TemplateSyntaxElement
 	{
 		$this->input->move(-1);
 		if (ConditionTemplateSyntaxElement::is_element($this->input))

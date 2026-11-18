@@ -12,7 +12,7 @@
 
 class UploadedFileTooLargeException extends Exception
 {
-	public function __construct($varname, $filename)
+	public function __construct(string $varname, string $filename)
 	{
 		parent::__construct('The file ' . $filename . ' is couldn\'t be uploaded because it\'s too large');
 	}

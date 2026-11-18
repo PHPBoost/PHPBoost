@@ -5,20 +5,21 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 09 04
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	public static function is_element(StringInputStream $input)
+	public static function is_element(StringInputStream $input): bool
 	{
 		return $input->assert_next('\s*(?:\w+::)?\w+\(\s*');
 	}
 
-	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output): void
 	{
         $this->register($context, $input, $output);
 		$matches = [];
@@ -37,7 +38,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function check_method_call($class, $method)
+	private function check_method_call(string $class, string $method): void
 	{
 		if (empty($class))
 		{
@@ -60,7 +61,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function write($class, $method)
+	private function write(string $class, string $method): void
 	{
 		if (!empty($class))
 		{
@@ -76,12 +77,12 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->output->write($method . '(');
 	}
 
-	private function parameters()
+	private function parameters(): void
 	{
 		$this->parse_elt(new ParametersTemplateSyntaxElement());
 	}
 
-	private function end()
+	private function end(): void
 	{
 		if (!$this->input->consume_next('\)'))
 		{
@@ -90,12 +91,11 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->output->write(')');
 	}
 
-	private function is_php_function($prefix)
+	private function is_php_function(string $prefix): bool
 	{
 		return TextHelper::strtoupper($prefix) == 'PHP';
 	}
 }
 
 class InvalidTemplateFunctionCallException extends TemplateRenderingException {}
-
 ?>

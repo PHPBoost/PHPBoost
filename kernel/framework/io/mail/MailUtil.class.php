@@ -15,14 +15,14 @@
 
 class MailUtil
 {
-	private static $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}';
+	private static string $regex = '(?:[a-z0-9_!#$%&\'*+/=?^|~-]\.?){0,63}[a-z0-9_!#$%&\'*+/=?^|~-]+@(?:[a-z0-9_-]{2,}\.)+([a-z0-9_-]{2,}\.)*[a-z]{2,4}';
 
 	/**
 	 * Check whether the mail address is valid, it respects the mail RFC
 	 * @param string $mail_address
 	 * @return boolean true if the mail is valid, false otherwise
 	 */
-	public static function is_mail_valid($mail_address)
+	public static function is_mail_valid(string $mail_address): bool
 	{
 		return (bool)preg_match(self::get_mail_checking_regex(), $mail_address);
 	}
@@ -31,7 +31,7 @@ class MailUtil
 	 * Return the RFC mail regex.
 	 * @return string the mail regex
 	 */
-	public static function get_mail_checking_regex()
+	public static function get_mail_checking_regex(): string
 	{
 		return '`^' . self::$regex . '$`iu';
 	}
@@ -40,7 +40,7 @@ class MailUtil
      * Return the RFC mail regex without delimiters, it's commonly used for compatibility with javascript regex.
      * @return string the mail regex without delimiters
      */
-	public static function get_mail_checking_raw_regex()
+	public static function get_mail_checking_raw_regex(): string
 	{
 		return self::$regex;
 	}

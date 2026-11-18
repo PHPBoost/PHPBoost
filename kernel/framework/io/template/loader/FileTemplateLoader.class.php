@@ -12,7 +12,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 06 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -21,26 +21,26 @@
 
 class FileTemplateLoader implements TemplateLoader
 {
-    private $filepath;
-    private $real_filepath = '';
-    private $cache_filepath = '';
-    private $pictures_data_path = '';
+    private string $filepath;
+    private string $real_filepath = '';
+    private string $cache_filepath = '';
+    private string $pictures_data_path = '';
 
-    private $module;
-    private $file;
-    private $filename;
+    private string $module = '';
+    private string $file = '';
+    private string $filename = '';
 
-    private $templates_folder;
-    private $default_templates_folder;
-    private $parent_theme_templates_folder;
-    private $theme_templates_folder;
+    private string $templates_folder = '';
+    private string $default_templates_folder = '';
+    private string $parent_theme_templates_folder = '';
+    private string $theme_templates_folder = '';
 
     /**
      * Get the module template folder path
      * @param string $module_id the module identifier
      * @return string the module templates folder path
      */
-    public static function get_module_template_path($module_id)
+    public static function get_module_template_path(string $module_id): string
     {
         // Try new modules folder structure first
         $modules_path = PATH_TO_ROOT . '/modules/' . $module_id . '/templates';
@@ -60,7 +60,7 @@ class FileTemplateLoader implements TemplateLoader
      * the PICTURES_DATA_PATH variable that corresponds the the module's pictures data path (it depends on
      * whether the theme redefines them or not).
      */
-    public function __construct($identifier, TemplateData $data)
+    public function __construct(string $identifier, TemplateData $data)
     {
         $this->filepath = $identifier;
         $this->compute_real_file_path();
@@ -68,11 +68,13 @@ class FileTemplateLoader implements TemplateLoader
         $data->put('PICTURES_DATA_PATH', $this->pictures_data_path);
     }
 
-    private function compute_cache_file_path()
+    private function compute_cache_file_path(): void
     {
         $template_folder = new Folder(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
         if (!$template_folder->exists())
+        {
             mkdir(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
+        }
 
         $this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme() . '/' . trim(str_replace(
         ['/', '.', '..', 'tpl', 'templates'],
@@ -82,10 +84,7 @@ class FileTemplateLoader implements TemplateLoader
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function load()
+    public function load(): string
     {
         if (!$this->is_cache_file_up_to_date())
         {
@@ -95,7 +94,7 @@ class FileTemplateLoader implements TemplateLoader
         return $this->get_file_cache_content();
     }
 
-    private function is_cache_file_up_to_date()
+    private function is_cache_file_up_to_date(): bool
     {
         if (file_exists($this->cache_filepath))
         {
@@ -104,12 +103,12 @@ class FileTemplateLoader implements TemplateLoader
         return false;
     }
 
-    private function generate_cache_file()
+    private function generate_cache_file(): void
     {
         $real_file_content = @file_get_contents($this->real_filepath);
         if ($real_file_content === false)
         {
-            throw new FileTemplateLoadingException($this->filepath, $this->real_filepath);
+            throw new FileTemplateLoadingException($this->filepath);
         }
 
         $parser = new TemplateSyntaxParser();
@@ -131,16 +130,16 @@ class FileTemplateLoader implements TemplateLoader
         }
     }
 
-    private function get_file_cache_content()
+    private function get_file_cache_content(): string
     {
         return @file_get_contents($this->cache_filepath);
     }
 
     /**
      * Computes the path of the file to load dinamycally according to the user theme and the kind of file (kernel, module, menu or framework file).
-     * @return string The path to load.
+     * @return void The path to load.
      */
-    private function compute_real_file_path()
+    private function compute_real_file_path(): void
     {
         if (TextHelper::strpos($this->filepath, '/') === 0)
         {
@@ -176,7 +175,7 @@ class FileTemplateLoader implements TemplateLoader
         {
             $this->get_template_paths();
         }
-        else if (!in_array($this->module, ['__default__', 'admin', 'framework']))
+        elseif (!in_array($this->module, ['__default__', 'admin', 'framework']))
         {
             // Module - Templates priority order
             //      /templates/$theme/modules/$module/$file.tpl
@@ -193,7 +192,7 @@ class FileTemplateLoader implements TemplateLoader
         }
     }
 
-    private function get_template_paths()
+    private function get_template_paths(): void
     {
         $this->get_template_real_filepaths_and_data_path([
             $this->theme_templates_folder . $this->filepath,
@@ -202,7 +201,7 @@ class FileTemplateLoader implements TemplateLoader
         ]);
     }
 
-    private function get_kernel_paths()
+    private function get_kernel_paths(): void
     {
         $this->get_template_real_filepaths_and_data_path([
             $this->theme_templates_folder . $this->filepath,
@@ -211,7 +210,7 @@ class FileTemplateLoader implements TemplateLoader
         ]);
     }
 
-    private function get_module_paths()
+    private function get_module_paths(): void
     {
         $this->get_template_real_filepaths_and_data_path([
             $this->theme_templates_folder . 'modules/' . $this->module . '/' . $this->file,
@@ -221,7 +220,7 @@ class FileTemplateLoader implements TemplateLoader
         ]);
     }
 
-    private function get_template_real_filepaths_and_data_path($paths)
+    private function get_template_real_filepaths_and_data_path(array $paths): void
     {
         foreach ($paths as $path)
         {
@@ -248,23 +247,17 @@ class FileTemplateLoader implements TemplateLoader
         }
     }
 
-    private function convert_to_tpl_path($path_to_root_filepath)
+    private function convert_to_tpl_path(string $path_to_root_filepath): string
     {
         return TPL_PATH_TO_ROOT . TextHelper::substr($path_to_root_filepath, TextHelper::strlen(PATH_TO_ROOT));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports_caching()
+    public function supports_caching(): bool
     {
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get_cache_file_path()
+    public function get_cache_file_path(): string
     {
         if (!$this->is_cache_file_up_to_date())
         {
@@ -273,7 +266,8 @@ class FileTemplateLoader implements TemplateLoader
         return $this->cache_filepath;
     }
 
-    public function get_pictures_data_path() {
+    public function get_pictures_data_path(): string
+    {
         return $this->pictures_data_path;
     }
 }

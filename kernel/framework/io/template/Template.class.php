@@ -52,8 +52,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 03
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface Template extends View
@@ -62,33 +63,33 @@ interface Template extends View
 	 * Enables the strict mode. If a variable that does not exist in the object is requested,
 	 *   then an exception will be raised.
 	 */
-	function enable_strict_mode();
+	function enable_strict_mode(): void;
 
 	/**
 	 * Disables the strict mode. If a variable that does not exist in the object is requested,
 	 *   then an empty value will be returned.
 	 */
-	function disable_strict_mode();
+	function disable_strict_mode(): void;
 
 	/**
 	 * Assigns the value <code>$code</code> to the template variable of name <code>$key</code>
 	 * @param $key the template parameter name
 	 * @param $value the template parameter value
 	 */
-	function put($key, $value);
+	function put(string $key, mixed $value): static;
 
 	/**
      * Assigns template variables. It could be simple variables, loop or subtemplates.
      * @param mixed[] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
      */
-    function put_all(array $vars);
+    function put_all(array $vars): static;
 
     /**
      * @deprecated Use <code>put_all</code> or <code>put</code> instead
      * Assigns some simple template vars.  Those variables will be accessed in your template with the {var_name} syntax.
      * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
      */
-    function assign_vars(array $array_vars);
+    function assign_vars(array $array_vars): static;
 
 	/**
 	 * Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
@@ -97,18 +98,18 @@ interface Template extends View
 	 * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 * @param Template[] $subtemplates A list
 	 */
-	function assign_block_vars($block_name, array $array_vars, array $subtemplates = []);
+	function assign_block_vars(string $block_name, array $array_vars, array $subtemplates = []): static;
 
 	/**
 	 * Displays the template.
 	 */
-	function display();
+	function display(): void;
 
 	/**
      * Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
      * @param string[] $lang the language map
      */
-    function add_lang(array $lang);
+    function add_lang(array $lang): void;
 
 	/**
      * @deprecated Use <code>put_all</code> or <code>put</code> instead
@@ -116,24 +117,24 @@ interface Template extends View
 	 * @param string $identifier the identifier
 	 * @param Template $template the template to include (variables must be set in this template)
 	 */
-	function add_subtemplate($identifier, Template $template);
+	function add_subtemplate(string $identifier, Template $template): static;
 
 	/**
 	 * Inject data into the template. This is for internal use only.
-	 * @param TemplateData the data to inject into the template
+	 * @param TemplateData $data the data to inject into the template
 	 */
-	function set_data(TemplateData $data);
+	function set_data(TemplateData $data): void;
 
 	/**
 	 * Returns the template data
 	 * @return TemplateData
 	 */
-	function get_data();
+	function get_data(): TemplateData;
 
 	/**
 	 * Returns the pictures data path
-	 * @return String
+	 * @return string
 	 */
-	function get_pictures_data_path();
+	function get_pictures_data_path(): string;
 }
 ?>

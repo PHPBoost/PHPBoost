@@ -12,9 +12,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 06 18
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface TemplateLoader
@@ -24,14 +25,14 @@ interface TemplateLoader
 	 * @return string Returns the parsed template ready to be executed by the PHP engine.
 	 * @throws TemplateLoadingException If the template cannot been loaded
 	 */
-	function load();
+	function load(): string;
 
 	/**
 	 * Tells whether the loader supports caching. If it supports it, its {@link get_cache_file_path()}
 	 *  will have to return a non-empty value.
 	 * @return boolean true if it supports caching, false otherwise.
 	 */
-	function supports_caching();
+	function supports_caching(): bool;
 
 	/**
 	 * Returns the path of the cache file that can be directly executed by the include PHP instruction.
@@ -40,6 +41,11 @@ interface TemplateLoader
 	 * @return string The path of the cache file.
 	 * @throws TemplateLoadingException If the template cannot been loaded or cached
 	 */
-	function get_cache_file_path();
+	function get_cache_file_path(): ?string;
+
+	/**
+	 * Returns the path of the pictures data directory, if available.
+	 */
+	function get_pictures_data_path(): string;
 }
 ?>

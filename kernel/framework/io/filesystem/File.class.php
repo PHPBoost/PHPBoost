@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 15
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 2.0 - 2008 07 06
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -20,28 +20,18 @@ class File extends FileSystemElement
 	const READ = 0x1;
 	const WRITE = 0x2;
 	const APPEND = 0x3;
-	private static $BUFFER_SIZE = 8192;
+	private static int $BUFFER_SIZE = 8192;
 
-	/**
-	 * @var string Content of the file
-	 */
-	private $contents;
-	/**
-	 * @var int Open mode
-	 */
-	private $mode = 0;
-	/**
-	 * @var File descriptor of the open file.
-	 */
-	private $file_descriptor;
+	/** @var int Open mode */
+	private int $mode = 0;
+	/** @var File descriptor of the open file. */
+	private mixed $file_descriptor = null;
 
 	/**
 	 * Builds a File object.
 	 * @param string $path Path of the file you want to work with.
-	 * @param int $mode If you want to open it only to read it, use the flag File::READ, if it's to write it use the File::WRITE flag, you also can use the File::READ_WRITE flag.
-	 * @param bool $whenopen If you want to open the file now, use the File::DIRECT_OPENING constant, if you want to open it only when you will need it, use the File::LAZY_OPENING constant.
 	 */
-	public function __construct($path)
+	public function __construct(string $path)
 	{
 		parent::__construct($path);
 	}
@@ -55,7 +45,7 @@ class File extends FileSystemElement
 	 * Returns the element name without extension.
 	 * @return string The element name without extension.
 	 */
-	public function get_name_without_extension()
+	public function get_name_without_extension(): string
 	{
 		$name = $this->get_name();
 		return mb_substr($name, 0, mb_strpos($name, '.'));
@@ -65,7 +55,7 @@ class File extends FileSystemElement
 	 * Returns the extension of the element.
 	 * @return string Element extension.
 	 */
-	public function get_extension()
+	public function get_extension(): string
 	{
 		$name = $this->get_name();
 		return mb_substr(mb_strrchr($name,'.'), 1);
@@ -77,7 +67,7 @@ class File extends FileSystemElement
 	 * @param int $len Number of bytes you want to read.
 	 * @return string The read content.
 	 */
-	public function read($start = 0, $len = -1)
+	public function read(int $start = 0, int $len = -1): string
 	{
 		$opened_by_me = $this->open(self::READ);
 
@@ -105,7 +95,7 @@ class File extends FileSystemElement
 	 * Returns the content of the file grouped by lines.
 	 * @return array The list of the lines of the file.
 	 */
-	public function read_lines()
+	public function read_lines(): array
 	{
 		return explode("\n", $this->read());
 	}
@@ -115,7 +105,7 @@ class File extends FileSystemElement
 	 * @param string $data The text you want to write in the file.
 	 * @throws IOException If it's not possible to write the file
 	 */
-	public function write($data)
+	public function write(string $data): void
 	{
 		$opened_by_me = $this->open(self::WRITE);
 		$this->write_data($data);
@@ -130,7 +120,7 @@ class File extends FileSystemElement
 	 * @param string $data The text you want to write in the file.
 	 * @throws IOException If it's not possible to write the file
 	 */
-	public function append($data)
+	public function append(string $data): void
 	{
 		$opened_by_me = $this->open(self::APPEND);
 		$this->write_data($data);
@@ -140,10 +130,8 @@ class File extends FileSystemElement
 		}
 	}
 
-	/**
-	 * empty the file
-	 */
-	public function erase()
+	/** Empty the file */
+	public function erase(): void
 	{
 		$opened_by_me = $this->open(self::WRITE);
 		ftruncate($this->file_descriptor, 0);
@@ -182,10 +170,8 @@ class File extends FileSystemElement
         return false;
     }
 
-	/**
-	 * Closes a file and frees the allocated memory relative to the file.
-	 */
-	public function close()
+	/** Closes a file and frees the allocated memory relative to the file. */
+	public function close(): void
 	{
 		if ($this->is_open())
 		{
@@ -199,7 +185,7 @@ class File extends FileSystemElement
 	 * Deletes the file.
 	 * @throws IOException if the file cannot been deleted
 	 */
-	public function delete()
+	public function delete(): void
 	{
 		$this->close();
 		if (file_exists($this->get_path()) && !@unlink($this->get_path()))
@@ -220,7 +206,7 @@ class File extends FileSystemElement
 	 * Locks the file (it won't be readable by another thread which could try to access it).
 	 * @throws IOException if the file cannot been locked
 	 */
-	public function lock($blocking = true)
+	public function lock(bool $blocking = true): void
 	{
 		if (!$this->is_open())
 		{
@@ -240,14 +226,14 @@ class File extends FileSystemElement
 	 * Unlocks a file. The file must have been locked before you call this method.
 	 * @throws IOException if the file cannot been unlocked
 	 */
-	public function unlock()
+	public function unlock(): void
 	{
 		if (!$this->is_open())
 		{
 			throw new IOException('The file ' . $this->get_path() . ' should be opened before trying to unlock it');
 		}
 		$this->open(self::WRITE);
-		$succeed = @flock($this->file_descriptor, LOCK_UN);
+		// $succeed = @flock($this->file_descriptor, LOCK_UN);
 		/*if (!$succeed)
 		{
 			throw new IOException('The file ' . $this->get_path() . ' couldn\'t been unlocked');
@@ -255,10 +241,8 @@ class File extends FileSystemElement
 		*/
 	}
 
-	/**
-	 * Forces the system to write all the buffered output.
-	 */
-	public function flush()
+	/** Forces the system to write all the buffered output. */
+	public function flush(): void
 	{
 		if ($this->is_open())
 		{
@@ -270,7 +254,7 @@ class File extends FileSystemElement
 	 * Returns the date of the last modification of the file.
 	 * @return int The UNIX timestamp corresponding to the last modification date.
 	 */
-	public function get_last_modification_date()
+	public function get_last_modification_date(): int
 	{
 		return @filemtime($this->get_path());
 	}
@@ -279,7 +263,7 @@ class File extends FileSystemElement
 	 * Returns the last access date of the file.
 	 * @return int The UNIX timestamp corresponding to the last access date of the file.
 	 */
-	public function get_last_access_date()
+	public function get_last_access_date(): int
 	{
 		return @filectime($this->get_path());
 	}
@@ -288,7 +272,7 @@ class File extends FileSystemElement
 	 * Returns the size of the file.
 	 * @return int The size of the file in bytes.
 	 */
-	public function get_file_size()
+	public function get_file_size(): int
 	{
 		return (int)@filesize($this->get_path());
 	}
@@ -298,7 +282,7 @@ class File extends FileSystemElement
 	 * @param string $file_size The size of the file in bytes.
 	 * @return string The size of the file in Kb or Mb or Gb.
 	 */
-	public static function get_formated_size($file_size)
+	public static function get_formated_size(string $file_size): string
 	{
 		$units = [LangLoader::get_message('common.unit.bytes', 'common-lang'), LangLoader::get_message('common.unit.kilobytes', 'common-lang'), LangLoader::get_message('common.unit.megabytes', 'common-lang'), LangLoader::get_message('common.unit.gigabytes', 'common-lang')];
 		$power = $file_size > 0 ? floor(log($file_size, 1024)) : 0;
@@ -309,7 +293,7 @@ class File extends FileSystemElement
 	 * Opens the file. You cannot read or write a closed file, use this method to open it.
 	 * @throws IOException If the file can neither been read nor created.
 	 */
-	public function open($mode)
+	public function open(int $mode): bool
 	{
 		if ($this->mode != $mode)
 		{
@@ -340,12 +324,12 @@ class File extends FileSystemElement
 	 * Allows you to know if the file is already open.
 	 * @return bool true if the file is open, false if it's closed.
 	 */
-	private function is_open()
+	private function is_open(): bool
 	{
 		return is_resource($this->file_descriptor);
 	}
 
-	private function write_data($data)
+	private function write_data(string $data): void
 	{
 		$bytes_to_write = TextHelper::strlen($data);
 		$bytes_written = 0;
@@ -360,7 +344,7 @@ class File extends FileSystemElement
 		}
 	}
 
-	private function check_file_descriptor($message)
+	private function check_file_descriptor(string $message): void
 	{
 		if ($this->file_descriptor === false || $this->file_descriptor === null)
 		{
@@ -373,7 +357,7 @@ class File extends FileSystemElement
 	 * @param string $filename Path of the file you want to work with.
 	 * @return string The hash of the file in sha256.
 	 */
-	public static function get_file_checksum($filename)
+	public static function get_file_checksum(string $filename): string
 	{
 		return hash_file('sha256', $filename);
 	}
@@ -383,7 +367,7 @@ class File extends FileSystemElement
 	 * Return -1 if file don't exist
 	 * @return int The size of the file in bytes.
 	 */
-	public static function get_remote_file_size($file_url):int
+	public static function get_remote_file_size(string $file_url): int
 	{
 		$ch = curl_init($file_url);
 		curl_setopt($ch, CURLOPT_NOBODY, true);
@@ -393,7 +377,9 @@ class File extends FileSystemElement
 		curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
 		$data = curl_exec($ch);
 		if (\PHP_VERSION_ID < 80100)
+        {
             curl_close($ch);
+        }
 		if ($data) 
 		{
 			$response_headers = [];

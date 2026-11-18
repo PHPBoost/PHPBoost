@@ -6,29 +6,32 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2010 01 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTTPCookie
 {
-	private $name;
-	private $value;
-	private $expiration_date;
-	private $path = '/';
-	private $domain = '';
-	private $secure = false;
-	private $httponly = true;
+	private string $name;
+	private string $value;
+	private int $expiration_date;
+	private string $path = '/';
+	private string $domain = '';
+	private bool $secure = false;
+	private bool $httponly = true;
 
-	public function __construct($name, $value, $timestamp = null)
+	public function __construct(string $name, string $value, ?int $timestamp = null)
 	{
 		$this->name = $name;
 		$this->value = stripslashes($value);
 
 		if (AppContext::get_request()->get_is_https())
+        {
 			$this->set_secure(true);
+        }
 
 		$site_path = GeneralConfig::load()->get_site_path();
 		if (!empty($site_path))
@@ -53,7 +56,7 @@ class HTTPCookie
 	 * plus the number of seconds before you want it to expire.
 	 * @param int $timestamp
 	 */
-	public function set_expiration_date($timestamp)
+	public function set_expiration_date(int $timestamp): void
 	{
 		$this->expiration_date = $timestamp;
 	}
@@ -64,7 +67,7 @@ class HTTPCookie
 	 * within the entire domain.
 	 * @param string $path
 	 */
-	public function set_path($path)
+	public function set_path(string $path): void
 	{
 		$this->path = $path;
 	}
@@ -73,7 +76,7 @@ class HTTPCookie
 	 * The domain that the cookie is available.
 	 * @param string $domain
 	 */
-	public function set_domain($domain)
+	public function set_domain(string $domain):void
 	{
 		$this->domain = $domain;
 	}
@@ -87,7 +90,7 @@ class HTTPCookie
 	 * $_SERVER["HTTPS"]).
 	 * @param boolean $secure
 	 */
-	public function set_secure($secure)
+	public function set_secure(bool $secure): void
 	{
 		$this->secure = (bool)$secure;
 	}
@@ -100,42 +103,42 @@ class HTTPCookie
 	 * not supported by all browsers). Added in PHP 5.2.0.
 	 * @param boolean $httponly
 	 */
-	public function set_httponly($httponly)
+	public function set_httponly(bool $httponly): void
 	{
 		$this->httponly = (bool)$httponly;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function get_value()
+	public function get_value(): string
 	{
 		return $this->value;
 	}
 
-	public function get_expiration_date()
+	public function get_expiration_date(): int
 	{
 		return $this->expiration_date;
 	}
 
-	public function get_path()
+	public function get_path(): string
 	{
 		return $this->path;
 	}
 
-	public function get_domain()
+	public function get_domain(): string
 	{
 		return $this->domain;
 	}
 
-	public function get_secure()
+	public function get_secure(): bool
 	{
 		return $this->secure;
 	}
 
-	public function get_httponly()
+	public function get_httponly(): bool
 	{
 		return $this->httponly;
 	}

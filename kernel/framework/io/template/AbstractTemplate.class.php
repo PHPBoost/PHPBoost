@@ -7,28 +7,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 06 18
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractTemplate implements Template
 {
-	/**
-	 * @var TemplateLoader
-	 */
-	protected $loader;
-	/**
-	 * @var TemplateRenderer
-	 */
-	protected $renderer;
-	/**
-	 * @var TemplateData
-	 */
-	protected $data;
+	protected TemplateLoader $loader;
+	protected TemplateRenderer $renderer;
+	protected TemplateData $data;
 
 	/**
 	 * Builds an AbstractTemplate from the different services it has to use.
@@ -43,108 +35,79 @@ abstract class AbstractTemplate implements Template
 		$this->set_data($data);
 	}
 
-	private function set_loader(TemplateLoader $loader)
+	private function set_loader(TemplateLoader $loader): void
 	{
 		$this->loader = $loader;
 	}
 
-	private function set_renderer(TemplateRenderer $renderer)
+	private function set_renderer(TemplateRenderer $renderer): void
 	{
 		$this->renderer = $renderer;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function enable_strict_mode()
+	public function enable_strict_mode(): void
 	{
 		$this->data->enable_strict_mode();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function disable_strict_mode()
+	public function disable_strict_mode(): void
 	{
 		$this->data->disable_strict_mode();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function put($key, $value)
+	public function put(string $key, mixed $value): static
 	{
 		$this->data->put($key, $value);
 		return $this;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function put_all(array $vars)
+	public function put_all(array $vars): static
 	{
 		$this->data->put_all($vars);
 		return $this;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function assign_vars(array $array_vars)
+	public function assign_vars(array $array_vars): static
 	{
 		$this->data->put_all($array_vars);
 		return $this;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = [])
+	public function assign_block_vars(string $block_name, array $array_vars, array $subtemplates = []): static
 	{
 		$this->data->assign_block_vars($block_name, $array_vars, $subtemplates);
 		return $this;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function add_subtemplate($identifier, Template $template)
+	public function add_subtemplate(string $identifier, Template $template): static
 	{
 		$this->data->put($identifier, $template);
 		return $this;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __clone()
+	public function __clone(): void
 	{
 		$this->data = clone $this->data;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function render()
+	public function render(): string
 	{
 		return $this->renderer->render($this->data, $this->loader);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display($reorder_js = false)
+	public function display(bool $reorder_js = false): void
 	{
 		if ($reorder_js)
+        {
 			$this->render_with_reordered_js();
+        }
 		else
+        {
 			echo $this->render();
+        }
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	private function render_with_reordered_js()
+	private function render_with_reordered_js(): void
 	{
 		$generated_page = $this->render();
 
@@ -157,16 +120,22 @@ abstract class AbstractTemplate implements Template
 			$array_match_js[] = '`<script(?: type="text/javascript")?>(?:<!--)?(.*)(?:-->)?</script>`isU';
 
 			preg_match_all($array_match_js[0], $generated_page, $matches);
-			foreach ($matches[1] as $value) {
+			foreach ($matches[1] as $value)
+            {
 				$included_js .= '<script src="' . $value . '"></script>';
 			}
 
 			preg_match_all($array_match_js[1], $generated_page, $matches);
-			foreach ($matches[1] as $key => $value) {
+			foreach ($matches[1] as $key => $value)
+            {
 				if ($key == 0)
+                {
 					$js_variables_definition = $value;
+                }
 				else
+                {
 					$all_js .= $value;
+                }
 			}
 
 			$all_js = str_replace(['<!--', '-->'], '', $all_js);
@@ -181,34 +150,23 @@ abstract class AbstractTemplate implements Template
 		echo $generated_page;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function add_lang(array $lang)
+	public function add_lang(array $lang): void
 	{
 		$this->renderer->add_lang($lang);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set_data(TemplateData $data)
+	public function set_data(TemplateData $data): void
 	{
 		$this->data = $data;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_data()
+	public function get_data(): TemplateData
 	{
 		return $this->data;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_pictures_data_path() {
+	public function get_pictures_data_path(): string
+    {
 		return $this->loader->get_pictures_data_path();
 	}
 }

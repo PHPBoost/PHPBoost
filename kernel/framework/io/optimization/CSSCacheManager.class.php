@@ -5,15 +5,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2011 03 29
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CSSCacheManager
 {
-    private $css_optimizer;
-    private $cache_file_location = '';
+    private CSSFileOptimizer $css_optimizer;
+    private string $cache_file_location = '';
 
     public function __construct()
     {
@@ -21,7 +22,7 @@ class CSSCacheManager
     }
 
     /* This function return address is stored in the file where the css sent to the function */
-    public static function get_css_path($files)
+    public static function get_css_path(array|string $files): ?string
     {
         if (!empty($files))
         {
@@ -45,7 +46,9 @@ class CSSCacheManager
                 if (basename($file) == '@import.css')
                 {
                     foreach (self::extract_css_urls(implode(' ', file(PATH_TO_ROOT . $file))) as $url)
+                    {
                         $files[] = $url;
+                    }
 
                     unset($files[array_search($file, $files)]);
                 }
@@ -58,12 +61,13 @@ class CSSCacheManager
 
             return TPL_PATH_TO_ROOT . $cache_file_location;
         }
+        return null;
     }
 
     /**
      * Extract URLs from CSS text.
      */
-    public static function extract_css_urls($text)
+    public static function extract_css_urls(string $text): array
     {
         $urls = [];
 
@@ -73,12 +77,14 @@ class CSSCacheManager
             '(@import\s*[\'"]' . $url_pattern     . '[\'"])' .
             '|(@import\s*'      . $urlfunc_pattern . ')'      .
             '|('                . $urlfunc_pattern . ')'      .  ')/iu';
-        if ( !preg_match_all( $pattern, $text, $matches ) )
+        if (!preg_match_all($pattern, $text, $matches))
+        {
             return $urls;
+        }
 
         foreach ( array_merge($matches[3], $matches[7]) as $match )
         {
-            if ( !empty($match) )
+            if (!empty($match))
             {
                 $url = preg_replace( '/\\\\(.)/u', '\\1', $match );
                 $urls[] = preg_match( '/^..\/..\//', $url) ? str_replace('../../', '/templates/', $url) : '/templates/' . AppContext::get_current_user()->get_theme() . '/theme/' . $url;
@@ -88,7 +94,7 @@ class CSSCacheManager
         return $urls;
     }
 
-    public function set_files(Array $files)
+    public function set_files(array $files): void
     {
         foreach ($files as $file)
         {
@@ -96,12 +102,12 @@ class CSSCacheManager
         }
     }
 
-    public function set_cache_file_location($location)
+    public function set_cache_file_location(string $location): void
     {
         $this->cache_file_location = $location;
     }
 
-    public function execute($intensity = CSSFileOptimizer::LOW_OPTIMIZATION)
+    public function execute(string $intensity = CSSFileOptimizer::LOW_OPTIMIZATION): void
     {
         if (!file_exists($this->cache_file_location))
         {
@@ -122,12 +128,12 @@ class CSSCacheManager
         }
     }
 
-    public function get_cache_file_location()
+    public function get_cache_file_location(): string
     {
         return $this->cache_file_location;
     }
 
-    public function force_regenerate_cache($intensity)
+    public function force_regenerate_cache(string $intensity): void
     {
         $this->css_optimizer->optimize($intensity);
         $this->css_optimizer->export_to_file($this->cache_file_location);

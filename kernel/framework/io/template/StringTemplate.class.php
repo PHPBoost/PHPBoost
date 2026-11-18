@@ -10,10 +10,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StringTemplate extends AbstractTemplate
@@ -31,9 +32,8 @@ class StringTemplate extends AbstractTemplate
 	 * Constructs a StringTemplate
 	 * @param string $content The content of the template (a string containing PHPBoost's template engine syntax).
 	 * @param bool $use_cache Controls if it has or not to use cache
-	 * @param bool $auto_load_vars Tells whether it has to load or not the most common variables.
 	 */
-	public function __construct($content, $use_cache = self::USE_CACHE_IF_FASTER)
+	public function __construct(string $content, bool $use_cache = self::USE_CACHE_IF_FASTER)
 	{
 		$data = new DefaultTemplateData();
 		$data->auto_load_frequent_vars();
@@ -50,7 +50,7 @@ class StringTemplate extends AbstractTemplate
 		parent::__construct($loader, $renderer, $data);
 	}
 
-	private function has_to_cache($content, $use_cache)
+	private function has_to_cache(string $content, bool $use_cache): bool
 	{
 		if ($use_cache == self::DONT_USE_CACHE)
 		{

@@ -5,28 +5,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 {
-	private $ended = false;
+	private bool $ended = false;
 
-	public static function is_element(StringInputStream $input)
+	public static function is_element(StringInputStream $input): bool
 	{
 		return $input->assert_next('#\sSTART\s+(?:\w+\.)*\w+\s#');
 	}
 
-	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
+	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output): void
 	{
         $this->register($context, $input, $output);
 		$this->do_parse();
 	}
 
-	private function do_parse()
+	private function do_parse(): void
 	{
 		$this->process_start();
 		$this->process_content();
@@ -37,7 +38,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		}
 	}
 
-	private function process_start()
+	private function process_start(): void
 	{
 		$matches = [];
 		$this->input->consume_next('#\sSTART\s+(?P<loop>(?:\w+\.)*\w+)\s#', '', $matches);
@@ -61,24 +62,24 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 		$this->output->write(' as ' . $loop_var . '){' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
-	private function get_tmp_var_name($loop_name)
+	private function get_tmp_var_name(string $loop_name): string
 	{
 		return '$_tmp_' . str_replace('.', '_', $loop_name);
 	}
 
-	private function process_end()
+	private function process_end(): void
 	{
 		$this->ended = $this->input->consume_next('#\sEND(?P<loop>\s+(?:\w+\.)*\w+)?\s#');
 		$this->context->exit_loop();
 		$this->output->write('\';}' . TemplateSyntaxElement::RESULT . '.=\'');
 	}
 
-	private function process_content()
+	private function process_content(): void
 	{
 		$this->parse_elt(new TextTemplateSyntaxElement());
 	}
 
-	private function loop_end()
+	private function loop_end(): void
 	{
 		throw new TemplateRenderingException('Missing loop end', $this->input);
 	}

@@ -6,31 +6,27 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 2.0 - 2008 07 06
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Folder extends FileSystemElement
 {
-	private $opened = false;
-
-	/**
-	 * @var File[] List of the files contained by this folder.
-	 */
-	private $files = [];
-	/**
-	 * @var Folder[] List of the folders contained by this folder.
-	 */
-	private $folders = [];
+	private bool $opened = false;
+	/** @var File[] List of the files contained by this folder. */
+	private array $files = [];
+	/** @var Folder[] List of the folders contained by this folder. */
+	private array $folders = [];
 
 	/**
 	 * Builds a Folder object.
 	 * @param string $path Path of the folder.
 	 */
-	public function __construct($path)
+	public function __construct(string $path)
 	{
 		parent::__construct(rtrim($path, '/'));
 	}
@@ -39,7 +35,7 @@ class Folder extends FileSystemElement
 	 * Returns true if the folder exists after this call, else, false
 	 * @return bool true if the folder exists after this call, else, false
 	 */
-	public function create()
+	public function create(): bool
 	{
 		$path = $this->get_path();
 		if (@file_exists($path))
@@ -49,7 +45,7 @@ class Folder extends FileSystemElement
 				return false;
 			}
 		}
-		else if (!@mkdir($path))
+		elseif (!@mkdir($path))
 		{
 			return false;
 		}
@@ -59,7 +55,7 @@ class Folder extends FileSystemElement
 	/**
 	 * Opens the folder.
 	 */
-	private function open()
+	private function open(): void
 	{
 		if (!$this->opened)
 		{
@@ -104,7 +100,7 @@ class Folder extends FileSystemElement
 	 * @param bool $regex_exclude_files true if the regex to exclude files
 	 * @return File[] The files list.
 	 */
-	public function get_files($regex = '', $regex_exclude_files = false)
+	public function get_files(string $regex = '', bool $regex_exclude_files = false): array
 	{
 		$this->open();
 		if (empty($regex))
@@ -139,7 +135,7 @@ class Folder extends FileSystemElement
 	 * @param string $regex PREG which describes the pattern the folders you want to list must match. If you want all of them, don't use this parameter.
 	 * @return Folder[] The folders list.
 	 */
-	public function get_folders($regex = '')
+	public function get_folders(string $regex = ''): array
 	{
 		$this->open();
 		if (empty($regex))
@@ -162,33 +158,30 @@ class Folder extends FileSystemElement
 	 * Returns the first folder present in this folder
 	 * @return Folder The first folder of this folder or null if it doesn't contain any folder.
 	 */
-	public function get_first_folder()
+	public function get_first_folder(): ?Folder
 	{
 		$this->open();
-		if (isset($this->folders[0]))
-		{
-			return $this->folders[0];
-		}
-		else
+		if (!isset($this->folders[0]))
 		{
 			return null;
 		}
+        return $this->folders[0];
 	}
 
 	/**
 	 * Returns all the file system elements contained by the folder.
 	 * @return FileSystemElement[] The list of the file system element contained in this folder.
 	 */
-	public function get_all_content()
+	public function get_all_content(): array
 	{
 		return array_merge($this->get_files(), $this->get_folders());
 	}
 
 	/**
 	 * Deletes the folder and all what it contains.
-	 * @return True if deleted successfully.
+	 * @return void if deleted successfully.
 	 */
-	public function delete()
+	public function delete(): void
 	{
 		$fs = $this->get_all_content();
 
@@ -207,7 +200,7 @@ class Folder extends FileSystemElement
 	 * Returns the date of the last modification of the folder.
 	 * @return int The UNIX timestamp corresponding to the last modification date.
 	 */
-	public function get_last_modification_date()
+	public function get_last_modification_date(): int
 	{
 		$folder_infos = stat($this->get_path());
 		return $folder_infos['mtime'];

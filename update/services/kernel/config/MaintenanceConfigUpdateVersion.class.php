@@ -25,7 +25,7 @@ class MaintenanceConfigUpdateVersion extends ConfigUpdateVersion
         // cover MaintenanceConfig — we must require_once it here directly.
         require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
         require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
-        require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/MaintenanceConfig.class.php';
+        require_once PATH_TO_ROOT . '/kernel/framework/app/config/MaintenanceConfig.class.php';
         $maintenance_config = MaintenanceConfig::load();
 
         if (!$maintenance_config->is_under_maintenance())

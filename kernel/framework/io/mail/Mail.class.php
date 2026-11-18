@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 3.0 - 2010 03 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -19,66 +19,30 @@ class Mail
 
 	const SENDER_USER = 'user';
 
-	/**
-	 * @var sting object of the mail
-	 */
-	var $subject = '';
-
-	/**
-	 * @var string content of the mail
-	 */
-	var $content = '';
-
-	/**
-	 * @var string Address of the mail sender.
-	 */
-	var $sender_mail = '';
-
-	/**
-	 * @var string The mail sender name.
-	 */
-	var $sender_name = '';
-
-	/**
-	 * @var string Address of the mail to reply to.
-	 */
-	var $reply_to_mail = '';
-
-	/**
-	 * @var string The reply to mail sender name.
-	 */
-	var $reply_to_name = '';
-
-	/**
-	 * @var The mail headers.
-	 */
-	var $headers = '';
-
-	/**
-	 * @var array Recipients of the mail. If they are more than one, a comma separates their addresses.
-	 */
-	var $recipients = [];
-
-	/**
-	 * @var array Cc recipients of the mail. If they are more than one, a comma separates their addresses.
-	 */
-	var $cc_recipients = [];
-
-	/**
-	 * @var array Bcc recipients of the mail. If they are more than one, a comma separates their addresses.
-	 */
-	var $bcc_recipients = [];
-
-	/**
-	 * @var array Attachments of the mail. If they are more than one, a comma separates their addresses.
-	 */
-	var $attachments = [];
-
-	/**
-	 * @var string Tells whether the content contains HTML code
-	 */
-	var $is_html = false;
-
+	/** object of the mail */
+	public string $subject = '';
+	/** content of the mail */
+	public string $content = '';
+	/** Address of the mail sender. */
+	public string $sender_mail = '';
+	/** The mail sender name. */
+	public string $sender_name = '';
+	/** Address of the mail to reply to. */
+	public string $reply_to_mail = '';
+	/** The reply to mail sender name. */
+	public string $reply_to_name = '';
+	/** mail headers. */
+	public string $headers = '';
+	/** Recipients of the mail. If they are more than one, a comma separates their addresses. */
+	public array $recipients = [];
+	/** Cc recipients of the mail. If they are more than one, a comma separates their addresses. */
+	public array $cc_recipients = [];
+	/** Bcc recipients of the mail. If they are more than one, a comma separates their addresses. */
+	public array $bcc_recipients = [];
+	/** Attachments of the mail. If they are more than one, a comma separates their addresses. */
+	public array $attachments = [];
+	/** Tells whether the content contains HTML code */
+	public bool $is_html = false;
 
 	/**
 	 * Builds a Mail subject.
@@ -92,7 +56,7 @@ class Mail
 	 * @param string $sender The mail sender address.
 	 * @param string $sender_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
 	 */
-	public function set_sender($sender, $sender_name = self::SENDER_ADMIN)
+	public function set_sender(string $sender, string $sender_name = self::SENDER_ADMIN): void
 	{
 		$site_name = GeneralConfig::load()->get_site_name();
 
@@ -111,7 +75,7 @@ class Mail
 	 * @param string $reply_to The mail address to reply to.
 	 * @param string $reply_to_name SENDER_ADMIN constante if the mail is sent by the administrator, SENDER_USER constante for user or string for other name
 	 */
-	public function set_reply_to($reply_to, $reply_to_name = '')
+	public function set_reply_to(string $reply_to, string $reply_to_name = ''): void
 	{
 		if ($reply_to_name == self::SENDER_ADMIN || $reply_to_name == self::SENDER_USER)
 		{
@@ -128,7 +92,7 @@ class Mail
 	 * @param string $address The address to which the mail must be sent
 	 * @param string $name Name of the recipient (facultative)
 	 */
-	public function add_recipient($address, $name = '')
+	public function add_recipient(string $address, string $name = ''): void
 	{
 		if (self::check_mail($address))
 		{
@@ -136,7 +100,7 @@ class Mail
 		}
 	}
 
-	public function clear_recipients()
+	public function clear_recipients(): void
 	{
 		$this->recipients = [];
 	}
@@ -146,7 +110,7 @@ class Mail
 	 * @param string $address The address to which the mail must be sent
 	 * @param string $name Name of the recipient (facultative)
 	 */
-	public function add_cc_recipient($address, $name = '')
+	public function add_cc_recipient(string $address, string $name = ''): void
 	{
 		if (self::check_mail($address))
 		{
@@ -154,7 +118,7 @@ class Mail
 		}
 	}
 
-	public function clear_cc_recipients()
+	public function clear_cc_recipients(): void
 	{
 		$this->cc_recipients = [];
 	}
@@ -164,7 +128,7 @@ class Mail
 	 * @param string $address The address to which the mail must be sent
 	 * @param string $name Name of the recipient (facultative)
 	 */
-	public function add_bcc_recipient($address, $name = '')
+	public function add_bcc_recipient(string $address, string $name = ''): void
 	{
 		if (self::check_mail($address))
 		{
@@ -172,12 +136,12 @@ class Mail
 		}
 	}
 
-	public function clear_bcc_recipients()
+	public function clear_bcc_recipients(): void
 	{
 		$this->bcc_recipients = [];
 	}
 
-	private static function check_mail($mail)
+	private static function check_mail(string $mail): bool
 	{
 		return AppContext::get_mail_service()->is_mail_valid($mail);
 	}
@@ -186,7 +150,7 @@ class Mail
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[]
 	 */
-	public function get_recipients()
+	public function get_recipients(): array
 	{
 		return $this->recipients;
 	}
@@ -195,7 +159,7 @@ class Mail
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[]
 	 */
-	public function get_cc_recipients()
+	public function get_cc_recipients(): array
 	{
 		return $this->cc_recipients;
 	}
@@ -204,7 +168,7 @@ class Mail
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
 	 * @return string[]
 	 */
-	public function get_bcc_recipients()
+	public function get_bcc_recipients(): array
 	{
 		return $this->bcc_recipients;
 	}
@@ -213,7 +177,7 @@ class Mail
 	 * Returns email attachments list.
 	 * @return string[]
 	 */
-	public function get_attachments()
+	public function get_attachments(): array
 	{
 		return $this->attachments;
 	}
@@ -222,7 +186,7 @@ class Mail
 	 * Sets the mail attachments
 	 * @param string[] $attachments Mail attachments
 	 */
-	public function set_attachments(Array $attachments)
+	public function set_attachments(array $attachments): void
 	{
 		$this->attachments = $attachments;
 	}
@@ -231,7 +195,7 @@ class Mail
 	 * Sets the mail subject
 	 * @param string $subject Mail subject
 	 */
-	public function set_subject($subject)
+	public function set_subject(string $subject): void
 	{
 		$this->subject = $subject;
 	}
@@ -240,7 +204,7 @@ class Mail
 	 * The mail content.
 	 * @param string $content The mail content
 	 */
-	public function set_content($content)
+	public function set_content(string $content): void
 	{
 		$this->content = $content;
 		$this->set_is_html($content != strip_tags($content));
@@ -250,7 +214,7 @@ class Mail
 	 * Sets the headers. Forces them, they won't be generated automatically.
 	 * @param string $headers The mail headers.
 	 */
-	public function set_headers($headers)
+	public function set_headers(string $headers): void
 	{
 		$this->headers = $headers;
 	}
@@ -259,7 +223,7 @@ class Mail
 	 * Returns the mail address of the sender.
 	 * @return string the sender's mail address
 	 */
-	public function get_sender_mail()
+	public function get_sender_mail(): string
 	{
 		return $this->sender_mail;
 	}
@@ -268,7 +232,7 @@ class Mail
 	 * Returns the mail sender's name.
 	 * @return string The mail sender's name.
 	 */
-	public function get_sender_name()
+	public function get_sender_name(): string
 	{
 		return $this->sender_name;
 	}
@@ -277,7 +241,7 @@ class Mail
 	 * Returns the mail address to reply to.
 	 * @return string the reply to mail address
 	 */
-	public function get_reply_to_mail()
+	public function get_reply_to_mail(): string
 	{
 		return $this->reply_to_mail;
 	}
@@ -286,7 +250,7 @@ class Mail
 	 * Returns the reply to mail sender's name.
 	 * @return string The reply to mail sender's name.
 	 */
-	public function get_reply_to_name()
+	public function get_reply_to_name(): string
 	{
 		return $this->reply_to_name;
 	}
@@ -295,7 +259,7 @@ class Mail
 	 * Returns the mail subject.
 	 * @return string The mail subject.
 	 */
-	public function get_subject()
+	public function get_subject(): string
 	{
 		return $this->subject;
 	}
@@ -304,17 +268,17 @@ class Mail
 	 * Returns the mail content.
 	 * @return string The mail content.
 	 */
-	public function get_content()
+	public function get_content(): string
 	{
 		return $this->content;
 	}
 
-	public function set_is_html($is)
+	public function set_is_html(bool $is): void
 	{
 		$this->is_html = $is;
 	}
 
-	public function is_html()
+	public function is_html(): bool
 	{
 		return $this->is_html;
 	}

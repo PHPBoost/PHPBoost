@@ -6,9 +6,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2010 01 24
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FileUploadService
@@ -20,7 +21,7 @@ class FileUploadService
 	 * @throws UploadedFileTooLargeException if the file is too big
 	 * @throws Exception if an unknown error occurs
 	 */
-	public static function retrieve_file($varname)
+	public static function retrieve_file(string $varname): UploadedFile|array
 	{
 		$properties = $_FILES[$varname];
 
@@ -45,16 +46,15 @@ class FileUploadService
 			foreach ($properties['name'] as $id => $element)
 			{
 				if ($properties['error'][$id] == UPLOAD_ERR_OK)
+                {
 					$files[] = new UploadedFile($properties['name'][$id], $properties['type'][$id], $properties['size'][$id], $properties['tmp_name'][$id]);
+                }
 			}
 			return $files;
 		}
 	}
 
-	/**
-	 * @return UploadedFile
-	 */
-	private static function build_file(array $properties)
+	private static function build_file(array $properties): UploadedFile
 	{
 		return $file = new UploadedFile($properties['name'], $properties['type'], $properties['size'], $properties['tmp_name']);
 	}

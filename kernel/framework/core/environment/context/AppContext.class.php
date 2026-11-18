@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 02
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2009 10 01
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -16,7 +16,6 @@ class AppContext
 {
 	private static ?HTTPRequestCustom $request = null;
 	private static ?HTTPResponseCustom $response = null;
-	private static ?BreadCrumb $breadcrumb = null;
 	private static ?Bench $bench = null;
 	private static ?SessionData $session = null;
 	private static ?CurrentUser $current_user = null;
@@ -85,7 +84,7 @@ class AppContext
 	}
 
 	/** Returns the current user's session */
-	public static function get_session(): SessionData
+	public static function get_session(): ?SessionData
 	{
 		return self::$session;
 	}

@@ -5,38 +5,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 6.0 - 2024 07 06
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class JSCacheManager
 {
-    /**
-     * @var \JSFileOptimizer
-     */
-    private $js_optimizer;
+    private JSFileOptimizer $js_optimizer;
 
-    /**
-     * @var string Cache file location (used for PHP)
-     */
-    private $cache_file_location = '';
-
-    /**
-     * @var string Cache file location (used for TPL)
-     */
-    private $script_cache_file_location = '';
-
-    /**
-     * Array of files to minify
-     * @var array
-     */
-    private $files = [];
-
-    /**
-     * Array of scripts that can't be minified
-     * @var array
-     */
-    private $ignored_files = [];
+    /** Cache file location (used for PHP) */
+    private string $cache_file_location = '';
+    /** ache file location (used for TPL) */
+    private string $script_cache_file_location = '';
+    /** Array of files to minify */
+    private array $files = [];
+    /** Array of scripts that can't be minified */
+    private array $ignored_files = [];
 
     public function __construct()
     {
@@ -48,7 +33,7 @@ class JSCacheManager
      * @param array $files
      * @return void
      */
-    private function set_files($files):void
+    private function set_files(array $files): void
     {
         foreach ($files as $file)
         {
@@ -68,7 +53,7 @@ class JSCacheManager
      * @param string JSFileOptimizer::LOW_OPTIMIZATION || JSFileOptimizer::HIGH_OPTIMIZATION
      * @return void
      */
-    private function execute($intensity = JSFileOptimizer::HIGH_OPTIMIZATION)
+    private function execute(string $intensity = JSFileOptimizer::HIGH_OPTIMIZATION): void
     {
         if (!file_exists($this->cache_file_location))
         {
@@ -91,7 +76,7 @@ class JSCacheManager
      * @param string JSFileOptimizer::LOW_OPTIMIZATION || JSFileOptimizer::HIGH_OPTIMIZATION
      * @return void
      */
-    private function force_regenerate_cache($intensity)
+    private function force_regenerate_cache(string $intensity): void
     {
         $this->js_optimizer->optimize($intensity);
         $this->js_optimizer->export_to_file($this->cache_file_location);
@@ -101,7 +86,7 @@ class JSCacheManager
      * Get array of scripts who aren't minified
      * @return array
      */
-    public function get_ignored_scripts():array
+    public function get_ignored_scripts(): array
     {
         return $this->ignored_files;
     }
@@ -110,7 +95,7 @@ class JSCacheManager
      * Get script location to call file cache in TPL
      * @return string
      */
-    public function get_script_cache_location():string
+    public function get_script_cache_location(): string
     {
         return $this->script_cache_file_location;
     }
@@ -120,11 +105,11 @@ class JSCacheManager
      * @param array $files
      * @return ?JSCacheManager
      */
-    public static function get_js_path($files)
+    public static function get_js_path(array $files): ?JSCacheManager
     {
         if (empty($files))
         {
-            return false;
+            return null;
         }
         $folder_path = '/cache/js/' . AppContext::get_current_user()->get_theme();
         $template_folder = new Folder(PATH_TO_ROOT . $folder_path);
@@ -142,3 +127,4 @@ class JSCacheManager
         return $js_cache;
     }
 }
+?>

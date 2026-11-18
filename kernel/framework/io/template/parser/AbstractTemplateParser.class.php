@@ -6,39 +6,37 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 06 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractTemplateParser implements TemplateParser
 {
-	protected $content;
+	protected string $content;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function parse($content)
+	public function parse(string $content): string
 	{
 		$this->content = $content;
 		$this->do_parse();
 		return $this->content;
 	}
 
-	abstract protected function do_parse();
+	abstract protected function do_parse(): void;
 
-	protected function clean()
+	protected function clean(): void
 	{
 		$this->content = preg_replace(
-		['`# START [\w\.]+ #(.*)# END [\w\.]+ #`su', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'],
-		['', '', '', ''],
-		$this->content
+            ['`# START [\w\.]+ #(.*)# END [\w\.]+ #`su', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'],
+            ['', '', '', ''],
+            $this->content
 		);
 	}
 
-	protected function get_getvar_method_name($varname)
+	protected function get_getvar_method_name(string $varname): array
 	{
 		$method = 'var';
 		$tiny_varname = $varname;

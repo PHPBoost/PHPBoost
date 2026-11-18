@@ -6,17 +6,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 16
  * @since       PHPBoost 3.0 - 2010 01 23
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTTPResponseCustom
 {
 	const PROTOCOL = 'HTTP/2';
 
-	private static $status_list = [
+	private static array $status_list = [
 		'101' => 'Switching Protocols',
 		'200' => 'OK',
 		'201' => 'Created',
@@ -58,27 +59,21 @@ class HTTPResponseCustom
 		'504' => 'Gateway Timeout',
 		'505' => 'HTTP Version Not Supported'];
 
-	private $last_ob_content_before_clean = '';
+	private string $last_ob_content_before_clean = '';
 
-	public function __construct($status_code = 200)
+	public function __construct(int|string $status_code = 200)
 	{
 		$this->set_status_code($status_code);
 	}
 
-	/**
-	 * Send header to client.
-	 * @param string $url
-	 */
-	public function set_header($name, $value)
+	/** Send header to client. */
+	public function set_header(string $name, string $value): void
 	{
 		header($name . ': ' . $value);
 	}
 
-	/**
-	 * Set defaut headers for the response.
-	 * @param string $url
-	 */
-	public function set_default_attributes()
+	/** Set defaut headers for the response. */
+	public function set_default_attributes(): void
 	{
 		$this->set_header('Expires', '-1');
 		$this->set_header('Last-Modified', gmdate("D, d M Y H:i:s") . " GMT");
@@ -90,7 +85,7 @@ class HTTPResponseCustom
 	 * Redirects the user to the URL and stops purely the script execution (database deconnexion...).
 	 * @param string $url URL at which you want to redirect the user.
 	 */
-	public function redirect($url, $message = '', $message_type = MessageHelper::SUCCESS, $message_duration = 5)
+	public function redirect(string $url, string $message = '', string $message_type = MessageHelper::SUCCESS, int $message_duration = 5): void
 	{
 		if (!($url instanceof Url))
 		{
@@ -113,7 +108,7 @@ class HTTPResponseCustom
 	 * Set cookie for the application's client.
 	 * @param HTTPCookie $cookie
 	 */
-	public function set_cookie(HTTPCookie $cookie)
+	public function set_cookie(HTTPCookie $cookie): void
 	{
 		setcookie($cookie->get_name(), $cookie->get_value(), $cookie->get_expiration_date(), $cookie->get_path(), $cookie->get_domain(), $cookie->get_secure(), $cookie->get_httponly());
 	}
@@ -122,7 +117,7 @@ class HTTPResponseCustom
 	 * Deletes the cookie
 	 * @param string $cookie_name the name of the cookie to delete
 	 */
-	public function delete_cookie($cookie_name)
+	public function delete_cookie(string $cookie_name): void
 	{
 		$this->set_cookie(new HTTPCookie($cookie_name, '', -1));
 	}
@@ -130,7 +125,7 @@ class HTTPResponseCustom
 	/**
 	 * Clean the output buffer.
 	 */
-	public function clean_output()
+	public function clean_output(): void
 	{
 		$this->last_ob_content_before_clean = ob_get_contents();
 		ob_end_clean();
@@ -140,7 +135,7 @@ class HTTPResponseCustom
 	 * Returns the previous output buffer content.
 	 * @return string the previous output buffer content.
 	 */
-	public function get_previous_ob_content()
+	public function get_previous_ob_content(): string|false
 	{
 		return $this->last_ob_content_before_clean;
 	}
@@ -149,7 +144,7 @@ class HTTPResponseCustom
 	 * Send the status code
 	 * @param int $status_code
 	 */
-	public function set_status_code($status_code)
+	public function set_status_code(int|string $status_code): void
 	{
 		if (isset(self::$status_list[$status_code]))
 		{

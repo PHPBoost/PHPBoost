@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 02
+ * @version     PHPBoost 6.1 - last update: 2026 11 17
  * @since       PHPBoost 1.6 - 2007 01 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -16,15 +16,15 @@
 
 class Upload
 {
-    private $error             = '';
-    private $base_directory;
-    private $extension         = '';
-    private $filename          = '';
-    private $original_filename = '';
-    private $size              = 0;
-    private $contentCheck      = true;
-    private $isMultiple        = false;
-    private $files_parameters  = [];
+    private string $error             = '';
+    private string $base_directory;
+    private string $extension         = '';
+    private string $filename          = '';
+    private string $original_filename = '';
+    private int $size              = 0;
+    private bool $contentCheck      = true;
+    private bool $isMultiple        = false;
+    private array $files_parameters  = [];
 
     const UNIQ_NAME          = true;
     const NO_UNIQ_NAME       = false;
@@ -36,7 +36,7 @@ class Upload
      * constructor
      * @param string $base_directory Set the directory to upload the files.
      */
-    public function __construct($base_directory = 'upload')
+    public function __construct(string $base_directory = 'upload')
     {
         $this->base_directory = $base_directory;
     }
@@ -45,12 +45,12 @@ class Upload
      * Uploads a file.
      * @param string $filepostname Name in the input file formulary.
      * @param string $regexp Regular expression to specify file format.
-     * @param boolean $uniq_name If true assign a new name if a file with same name already exist. Otherwise previous file is overwrite.
-     * @param int $weight_max The maximum file size.
-     * @param boolean $check_exist If true verify if a file with the same name exist on the ftp. Otherwise previous file is overwrite.
-     * @return boolean True if the file has been succefully uploaded. Error code if an error occured.
+     * @param bool $uniq_name If true assign a new name if a file with same name already exist. Otherwise previous file is overwrite.
+     * @param int|float $weight_max The maximum file size.
+     * @param bool $check_exist If true verify if a file with the same name exist on the ftp. Otherwise previous file is overwrite.
+     * @return bool True if the file has been succefully uploaded. Error code if an error occured.
      */
-    public function file($filepostname, $regexp = '', $uniq_name = false, $weight_max = 100000000, $check_exist = true)
+    public function file(string $filepostname, string $regexp = '', bool $uniq_name = false, int|float $weight_max = 100000000, bool $check_exist = true): bool
     {
         $file = isset($_FILES[$filepostname]) ? $_FILES[$filepostname] : [];
         if (isset($file['name']) && isset($file['name'][0]) && !empty($file['name'][0]))
@@ -138,20 +138,21 @@ class Upload
             }
         }
         else
+        {
             $this->error = 'e_upload_no_selected_file';
+        }
 
         return $this->error ? false : true;
     }
 
     /**
      * Checks whether an image is compliant to an maximum width and height, otherwise is $delete value is true delete it.
-     * @param string $filepath Path to the image.
-     * @param int $width_max Max width
-     * @param int $height_max Max height
+     * @param int|float $width_max Max width
+     * @param int|float $height_max Max height
      * @param boolean $delete
      * @return string Error code.
      */
-    public function check_img($width_max, $height_max, $delete = true)
+    public function check_img(int|float $width_max, int|float $height_max, bool $delete = true): string
     {
         $error = '';
         if (!empty($this->filename))
@@ -175,15 +176,18 @@ class Upload
 
     /**
      * Check the file content for php tags to avoid illegal uploads
-     * @param tmp file path
+     * @param string $file file path
      */
-    private function check_file_content($file) {
+    private function check_file_content(string $file): bool
+    {
         $file_content = file_get_contents($file);
 
-        if (TextHelper::strpos($file_content, "<?php") === false) {
+        if (TextHelper::strpos($file_content, "<?php") === false)
+        {
             return true;
         }
-        if (TextHelper::strpos($file_content, "<?") === false) {
+        if (TextHelper::strpos($file_content, "<?") === false)
+        {
             return true;
         }
 
@@ -194,11 +198,10 @@ class Upload
 
     /**
      * Checks the validity of a file with regular expression.
-     * @param string $filename The file name
      * @param string $regexp Regular expression
      * @return boolean The result of the regular expression test.
      */
-    private function check_file_path($regexp)
+    private function check_file_path(string $regexp): bool
     {
         if (!empty($regexp))
         {
@@ -213,10 +216,9 @@ class Upload
 
     /**
      * Generates a unique file name. Completes informations on the file.
-     * @param string $filename The filename
      * @param boolean $uniq_name
      */
-    private function generate_file_info($uniq_name)
+    private function generate_file_info(bool $uniq_name): void
     {
         $filename = $this->original_filename;
 
@@ -232,29 +234,35 @@ class Upload
         {
             $filename_tmp = $filename;
             if (!empty($this->extension))
+            {
                 $filename_tmp .= '.' . $this->extension;
+            }
             $filename1 = $filename;
             while (file_exists($this->base_directory . $filename_tmp))
             {
                 $filename1 = $filename . '_' . KeyGenerator::generate_key(5);
                 $filename_tmp = $filename1;
                 if (!empty($this->extension))
+                {
                     $filename_tmp .= '.' . $this->extension;
+                }
             }
             $filename = $filename1;
         }
 
         if (!empty($this->extension))
+        {
             $filename .= '.' . $this->extension;
+        }
         $this->filename = $filename;
     }
 
     /**
      * Clean the url, replace special characters with underscore.
-     * @param string The file name.
+     * @param string $string The file name.
      * @return string The cleaned file name.
      */
-    private static function clean_filename($string)
+    private static function clean_filename(string $string): string
     {
         $string = mb_convert_encoding(TextHelper::html_entity_decode($string), 'ISO-8859-1', 'UTF-8');
         $string = TextHelper::strtolower(strtr($string, mb_convert_encoding('²ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ()[]\'"~$&%*@ç!?;,:/\^¨€{}<>|+.- #', 'ISO-8859-1', 'UTF-8'),  '2aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn    __      c  ___    e       -_ '));
@@ -271,23 +279,20 @@ class Upload
      * @param string $error
      * @return string Error code.
      */
-    private static function error_manager($error)
+    private static function error_manager(string $error): string
     {
         switch ($error)
         {
-            //Ok
+            // Ok
             case 0:
                 return '';
-            break;
-            //Fichier trop volumineux.
+            // File too large
             case 1:
             case 2:
                 return 'e_upload_max_weight';
-            break;
-            //Upload partiel.
+            // Partial Upload.
             case 3:
                 return 'e_upload_error';
-            break;
             default:
                 return 'e_upload_error';
         }
@@ -298,20 +303,21 @@ class Upload
      * @param int $round The number of decimal points
      * @return float filesize
      */
-    public function get_human_readable_size($round = 1)
+    public function get_human_readable_size(int $round = 1): float
     {
         return (float)NumberHelper::round($this->size/1024, $round);
     }
 
-    public function disableContentCheck() {
+    public function disableContentCheck(): void
+    {
         $this->contentCheck = false;
     }
 
-    public function get_error() { return $this->error; }
-    public function get_extension() { return $this->extension; }
-    public function get_original_filename() { return $this->original_filename; }
-    public function get_filename() { return $this->filename; }
-    public function get_size() { return $this->size; }
-    public function get_files_parameters() { return $this->files_parameters; }
+    public function get_error(): string { return $this->error; }
+    public function get_extension(): string { return $this->extension; }
+    public function get_original_filename(): string { return $this->original_filename; }
+    public function get_filename(): string { return $this->filename; }
+    public function get_size(): int { return $this->size; }
+    public function get_files_parameters(): array { return $this->files_parameters; }
 }
 ?>

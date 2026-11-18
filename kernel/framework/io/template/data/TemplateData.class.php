@@ -14,9 +14,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 02 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface TemplateData
@@ -25,13 +26,13 @@ interface TemplateData
 	 * Enables the strict mode. If a variable that does not exist in the object is requested,
 	 *   then an exception will be raised.
 	 */
-	function enable_strict_mode();
+	function enable_strict_mode(): void;
 
 	/**
 	 * Disables the strict mode. If a variable that does not exist in the object is requested,
 	 *   then an empty value will be returned.
 	 */
-	function disable_strict_mode();
+	function disable_strict_mode(): void;
 
 	/**
 	 * Loads the most common vars which are useful in the whole PHPBoost templates. The variables are:
@@ -53,20 +54,20 @@ interface TemplateData
 	 * 	<li>C_*TEXT_EDITOR_NAME*_EDITOR for each installed editor, tell if current user use it or not. For instance C_BBCODE_EDITOR.</li>
 	 * </ul>
 	 */
-	function auto_load_frequent_vars();
+	function auto_load_frequent_vars(): void;
 
 	/**
 	 * Assigns the value <code>$value</code> to the template variable of name <code>$key</code>
 	 * @param $key the template parameter name
 	 * @param $value the template parameter value
 	 */
-	function put($key, $value);
+	function put(string $key, mixed $value): void;
 
 	/**
 	 * Assigns template variables. It could be simple variables, loop or subtemplates.
 	 * @param mixed[] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
 	 */
-	function put_all(array $vars);
+	function put_all(array $vars): void;
 
 	/**
 	 * Assigns a template block. A block represents a loop and has a name which be used in your template file to indicate which loop you want to browse.
@@ -75,14 +76,14 @@ interface TemplateData
 	 * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 * @param Template[] $subtemplates The list of subtemplates to embed in the loop's iteration.
 	 */
-	function assign_block_vars($block_name, array $array_vars, array $subtemplates = []);
+	function assign_block_vars(string $block_name, array $array_vars, array $subtemplates = []);
 
 	/**
 	 * Returns the block $blockname in the template block list
 	 * @param string $blockname the blockname of the block to retrieve
 	 * @return mixed[] the requested block
 	 */
-	function get_block($blockname);
+	function get_block(string $blockname): array;
 
 	/**
 	 * Returns the block $blockname in the parent_block
@@ -90,11 +91,11 @@ interface TemplateData
 	 * @param mixed[] $parent_block the parent block in which $blockname will be searched for
 	 * @return mixed[] The requested block
 	 */
-	function get_block_from_list($blockname, $parent_block);
+	function get_block_from_list(string $blockname, mixed $parent_block): array;
 
 	/**
 	 * Tells whether a condition is true. Conditions are global boolean variables.
-	 * @param string $varname the name of the variable to check if it is true
+	 * @param string $value the name of the variable to check if it is true
 	 * @return bool true if the variable $varname exists and is not considered as false
 	 */
 	function is_true($value);
@@ -102,10 +103,9 @@ interface TemplateData
 	/**
 	 * Returns the $varname variable content searched in from the $list
 	 * @param string $varname the name of the variable to retrieve
-	 * @param mixed[] $list the list in which the variable will be searched for
 	 * @return string the $varname variable content
 	 */
-	function get($varname);
+	function get(string $varname): mixed;
 
 	/**
 	 * Similar from the get_var method but it works with loop variables instead of global variables.
@@ -113,12 +113,12 @@ interface TemplateData
 	 * @param mixed[] $list The list into which retrieve the variable
 	 * @return string The variable content
 	 */
-	function get_from_list($varname, &$list);
+	function get_from_list(string $varname, mixed &$list): mixed;
 
 	/**
 	 * Binds vars on another {@link TemplateData} object. The two instances will share the same data.
 	 * @param TemplateData $data The data to use.
 	 */
-	function bind_vars(TemplateData $data);
+	function bind_vars(TemplateData $data): void;
 }
 ?>
