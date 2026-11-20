@@ -83,9 +83,9 @@ class HTTPResponseCustom
 
 	/**
 	 * Redirects the user to the URL and stops purely the script execution (database deconnexion...).
-	 * @param string $url URL at which you want to redirect the user.
+	 * @param Url $url URL at which you want to redirect the user.
 	 */
-	public function redirect(string $url, string $message = '', string $message_type = MessageHelper::SUCCESS, int $message_duration = 5): void
+	public function redirect(Url|string $url, string $message = '', string $message_type = MessageHelper::SUCCESS, int $message_duration = 5): void
 	{
 		if (!($url instanceof Url))
 		{

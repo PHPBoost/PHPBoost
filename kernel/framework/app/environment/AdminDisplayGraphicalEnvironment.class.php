@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 29
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2009 10 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@
 
 class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
-	private static $lang;
+	private static array $lang;
 
 	public function __construct()
 	{
@@ -23,12 +23,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$this->load_lang();
 	}
 
-	private function load_lang()
+	private function load_lang(): void
 	{
 		self::$lang = LangLoader::get_all_langs();
 	}
 
-	public function display($content)
+	public function display(string $content): void
 	{
 		$view = new FileTemplate('admin/body.tpl');
 		$view->add_lang(self::$lang);
@@ -51,7 +51,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'U_HEADER_LOGO' 	=> Url::to_rel($header_logo_path),
 		]);
 
-		if ($config->is_page_bench_enabled()) {
+		if ($config->is_page_bench_enabled())
+        {
 			$view->put_all([
 				'C_DISPLAY_BENCH' => true,
 				'BENCH'			  => AppContext::get_bench()->to_string(), //Fin du benchmark
@@ -90,7 +91,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$this->display_page($view);
 	}
 
-	private function display_page(View $body_template)
+	private function display_page(View $body_template): void
 	{
 		$view = new FileTemplate('admin/frame.tpl');
 		$view->add_lang(self::$lang);
@@ -122,7 +123,7 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$view->display();
 	}
 
-	private static function get_subheader_tpl()
+	private static function get_subheader_tpl(): mixed
 	{
 		$subheader_tpl = new FileTemplate('admin/subheader_menu.tpl');
 		$subheader_tpl->add_lang(self::$lang);
@@ -130,8 +131,10 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
 
 		$modules_number = 0;
-		foreach ($modules as $module) {
-			if ($module->get_configuration()->get_admin_menu() == 'modules') {
+		foreach ($modules as $module)
+        {
+			if ($module->get_configuration()->get_admin_menu() == 'modules')
+            {
 				$modules_number++;
 			}
 		}
@@ -146,17 +149,20 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'modules' => 6
 		];
 
-		foreach ($modules as $module) {
+		foreach ($modules as $module)
+        {
 			$module_id = $module->get_id();
 			$configuration = $module->get_configuration();
 			$menu_pos_name = $configuration->get_admin_menu();
 			$menu_pos = 0;
 
-			if (!empty($menu_pos_name) && !empty($menus_numbers[$menu_pos_name])) {
+			if (!empty($menu_pos_name) && !empty($menus_numbers[$menu_pos_name]))
+            {
 				$menu_pos = $menus_numbers[$menu_pos_name];
 			}
 
-			if ($menu_pos > 0) {
+			if ($menu_pos > 0)
+            {
 				$array_pos[$menu_pos - 1]++;
 				$idmenu = $array_pos[$menu_pos - 1];
 				$subheader_tpl->put('C_ADMIN_LINKS_' . $menu_pos, true);

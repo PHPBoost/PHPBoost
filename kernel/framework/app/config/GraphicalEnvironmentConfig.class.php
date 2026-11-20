@@ -5,9 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 08
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GraphicalEnvironmentConfig extends AbstractConfigData
@@ -19,62 +19,62 @@ class GraphicalEnvironmentConfig extends AbstractConfigData
 	const DISPLAY_THEME_AUTHOR  = 'display_theme_author';
 	const PAGE_BENCH_ENABLED    = 'page_bench_enabled';
 
-	public function is_visit_counter_enabled()
+	public function is_visit_counter_enabled(): bool
 	{
 		return $this->get_property(self::VISIT_COUNTER_ENABLED);
 	}
 
-	public function set_visit_counter_enabled($enabled)
+	public function set_visit_counter_enabled(bool $enabled): void
 	{
 		$this->set_property(self::VISIT_COUNTER_ENABLED, $enabled);
 	}
 
-	public function get_display_copyright()
+	public function get_display_copyright(): bool
 	{
 		return $this->get_property(self::DISPLAY_COPYRIGHT);
 	}
 
-	public function set_display_copyright($display)
+	public function set_display_copyright(bool $display): void
 	{
 		$this->set_property(self::DISPLAY_COPYRIGHT, $display);
 	}
 
-	public function get_copyright_name()
+	public function get_copyright_name(): string
 	{
 		return $this->get_property(self::COPYRIGHT_NAME);
 	}
 
-	public function set_copyright_name($name)
+	public function set_copyright_name(string $name): void
 	{
 		$this->set_property(self::COPYRIGHT_NAME, $name);
 	}
 
-	public function get_copyright_url()
+	public function get_copyright_url(): string
 	{
 		return $this->get_property(self::COPYRIGHT_URL);
 	}
 
-	public function set_copyright_url($url)
+	public function set_copyright_url(string $url): void
 	{
 		$this->set_property(self::COPYRIGHT_URL, $url);
 	}
 
-	public function get_display_theme_author()
+	public function get_display_theme_author(): bool
 	{
 		return $this->get_property(self::DISPLAY_THEME_AUTHOR);
 	}
 
-	public function set_display_theme_author($display)
+	public function set_display_theme_author(bool $display): void
 	{
 		$this->set_property(self::DISPLAY_THEME_AUTHOR, $display);
 	}
 
-	public function is_page_bench_enabled()
+	public function is_page_bench_enabled(): bool
 	{
 		return $this->get_property(self::PAGE_BENCH_ENABLED);
 	}
 
-	public function set_page_bench_enabled($enabled)
+	public function set_page_bench_enabled(bool $enabled): void
 	{
 		$this->set_property(self::PAGE_BENCH_ENABLED, $enabled);
 	}
@@ -95,7 +95,7 @@ class GraphicalEnvironmentConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return GraphicalEnvironmentConfig
 	 */
-	public static function load()
+	public static function load(): GraphicalEnvironmentConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'graphical-environment-config');
 	}
@@ -103,7 +103,7 @@ class GraphicalEnvironmentConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'graphical-environment-config');
 	}

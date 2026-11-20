@@ -25,19 +25,14 @@ class GeneralConfig extends AbstractConfigData
 	const SITE_INSTALL_DATE = 'site_install_date';
 	const SITE_TIMEZONE     = 'timezone';
 
-	public function get_site_url(): mixed
-	{
-		return $this->get_property(self::SITE_URL);
-	}
-
-	public function get_complete_site_url(): mixed
-	{
-		return $this->get_property(self::SITE_URL) . $this->get_property(self::SITE_PATH);
-	}
-
 	public function is_site_url_https(): bool
 	{
 		return TextHelper::substr($this->get_property(self::SITE_URL), 0, 8) == "https://";
+	}
+
+	public function get_site_url(): string
+	{
+		return $this->get_property(self::SITE_URL);
 	}
 
 	/**
@@ -48,7 +43,7 @@ class GeneralConfig extends AbstractConfigData
 		$this->set_property(self::SITE_URL, $url);
 	}
 
-	public function get_site_path(): mixed
+	public function get_site_path(): string
 	{
 		return $this->get_property(self::SITE_PATH);
 	}
@@ -59,6 +54,11 @@ class GeneralConfig extends AbstractConfigData
 	public function set_site_path(string $path): void
 	{
 		$this->set_property(self::SITE_PATH, $path == '/' ? '' : $path);
+	}
+
+	public function get_complete_site_url(): string
+	{
+		return $this->get_property(self::SITE_URL) . $this->get_property(self::SITE_PATH);
 	}
 
 	public function get_phpboost_major_version(): mixed

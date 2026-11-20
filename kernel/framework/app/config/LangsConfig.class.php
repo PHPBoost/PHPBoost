@@ -5,18 +5,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2012 01 20
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LangsConfig extends AbstractConfigData
 {
-	private static $langs_property = 'langs';
+	private static string $langs_property = 'langs';
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [
@@ -24,12 +21,17 @@ class LangsConfig extends AbstractConfigData
 		];
 	}
 
-	public function get_langs()
+	public function get_langs(): array
 	{
 		return $this->get_property(self::$langs_property);
 	}
 
-	public function get_lang($id)
+    public function set_langs(array $langs): void
+    {
+        $this->set_property(self::$langs_property, $langs);
+    }
+
+	public function get_lang(string $id): ?Lang
 	{
 		$langs = $this->get_property(self::$langs_property);
 		if (array_key_exists($id, $langs))
@@ -39,33 +41,28 @@ class LangsConfig extends AbstractConfigData
 		return null;
 	}
 
-    public function set_langs(array $langs)
-    {
-        $this->set_property(self::$langs_property, $langs);
-    }
-
-    public function add_lang(Lang $lang)
+    public function add_lang(Lang $lang): void
     {
         $langs = $this->get_property(self::$langs_property);
         $langs[$lang->get_id()] = $lang;
         $this->set_property(self::$langs_property, $langs);
     }
 
-    public function remove_lang(Lang $lang)
+    public function remove_lang(Lang $lang): void
     {
         $langs = $this->get_property(self::$langs_property);
         unset($langs[$lang->get_id()]);
         $this->set_property(self::$langs_property, $langs);
     }
 
-    public function remove_lang_by_id($id)
+    public function remove_lang_by_id(string $id): void
     {
         $langs = $this->get_property(self::$langs_property);
         unset($langs[$id]);
         $this->set_property(self::$langs_property, $langs);
     }
 
-	public function update(Lang $lang)
+	public function update(Lang $lang): void
 	{
 		$langs = $this->get_property(self::$langs_property);
         $langs[$lang->get_id()] = $lang;
@@ -77,7 +74,7 @@ class LangsConfig extends AbstractConfigData
 	 * Loads and returns the langs cached data.
 	 * @return LangsConfig The cached data
 	 */
-	public static function load()
+	public static function load(): LangsConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'langs');
 	}
@@ -85,7 +82,7 @@ class LangsConfig extends AbstractConfigData
 	/**
 	 * Invalidates the current langs cached data.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'langs');
 	}

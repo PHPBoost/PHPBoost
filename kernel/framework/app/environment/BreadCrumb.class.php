@@ -9,10 +9,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 1.6 - 2007 02 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BreadCrumb
@@ -20,18 +21,18 @@ class BreadCrumb
 	/**
 	 * @var string[] List of the links
 	 */
-	private $array_links = [];
+	private array $array_links = [];
 	/**
 	 * @var SiteDisplayGraphicalEnvironment The graphical environment in which the breadcrumb is
 	 */
-	private $graphical_environment;
+	private ?SiteDisplayGraphicalEnvironment $graphical_environment = null;
 
 	/**
 	 * Adds a link in the bread crumb. This link will be put at the end of the list.
 	 * @param string $text Name of the page
 	 * @param string $target Link whose target is the page
 	 */
-	public function add($text, $target = '')
+	public function add(string $text, string|Url $target = ''): bool
 	{
 		if (!empty($text))
 		{
@@ -49,7 +50,7 @@ class BreadCrumb
 	 * Reverses the whole list of the links. It's very useful when it's easier for you to make the list in the reverse way, at the
 	 * end, you only need to reverse the list and it will be ok.
 	 */
-	public function reverse()
+	public function reverse(): void
 	{
 		$this->array_links = array_reverse($this->array_links);
 	}
@@ -57,7 +58,7 @@ class BreadCrumb
 	/**
 	 * Removes the last link of the list
 	 */
-	public function remove_last()
+	public function remove_last(): void
 	{
 		array_pop($this->array_links);
 	}
@@ -65,7 +66,7 @@ class BreadCrumb
 	/**
 	 * Displays the bread crumb.
 	 */
-	public function display(Template $tpl)
+	public function display(Template $tpl): void
 	{
 		if (empty($this->array_links))
 		{
@@ -91,7 +92,7 @@ class BreadCrumb
 	/**
 	 * Removes all the existing links.
 	 */
-	public function clean()
+	public function clean(): void
 	{
 		$this->array_links = [];
 	}
@@ -99,7 +100,7 @@ class BreadCrumb
 	/**
 	 * Get all links of the list
 	 */
-	public function get_links()
+	public function get_links(): array
 	{
 		return $this->array_links;
 	}
@@ -108,7 +109,7 @@ class BreadCrumb
 	 * Sets the reference to the parent graphical environment
 	 * @param SiteDisplayGraphicalEnvironment $env The parent environment
 	 */
-	public function set_graphical_environment(SiteDisplayGraphicalEnvironment $env)
+	public function set_graphical_environment(SiteDisplayGraphicalEnvironment $env): void
 	{
 		$this->graphical_environment = $env;
 	}

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 08 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,68 +14,68 @@
 class FileUploadConfig extends AbstractConfigData
 {
 	const AUTHORIZATION_ENABLE_INTERFACE_FILES = 'authorization_enable_interface_files';
-	const MAXIMUM_SIZE_UPLOAD = 'maximum_size_upload';
-	const ENABLE_BANDWIDTH_PROTECTION = 'enable_bandwidth_protect';
-	const DISPLAY_FILE_THUMBNAIL = 'display_file_thumbnail';
-	const AUTHORIZED_EXTENSIONS = 'authorized_extensions';
-	const AUTH_FILES_BIT = 0x01;
+	const MAXIMUM_SIZE_UPLOAD                  = 'maximum_size_upload';
+	const ENABLE_BANDWIDTH_PROTECTION          = 'enable_bandwidth_protect';
+	const DISPLAY_FILE_THUMBNAIL               = 'display_file_thumbnail';
+	const AUTHORIZED_EXTENSIONS                = 'authorized_extensions';
+	const AUTH_FILES_BIT                       = 0x01;
 
-	public function get_authorization_enable_interface_files()
+	public function get_authorization_enable_interface_files(): array
 	{
 		return $this->get_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES);
 	}
 
-	public function set_authorization_enable_interface_files(array $array)
+	public function set_authorization_enable_interface_files(array $array): void
 	{
 		$this->set_property(self::AUTHORIZATION_ENABLE_INTERFACE_FILES, $array);
 	}
 
-	public function is_authorized_to_access_interface_files()
+	public function is_authorized_to_access_interface_files(): bool
 	{
 		return AppContext::get_current_user()->check_auth($this->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT);
 	}
 
-	public function get_maximum_size_upload()
+	public function get_maximum_size_upload(): int
 	{
 		return $this->get_property(self::MAXIMUM_SIZE_UPLOAD);
 	}
 
-	public function set_maximum_size_upload($size)
+	public function set_maximum_size_upload(int $size): void
 	{
 		$this->set_property(self::MAXIMUM_SIZE_UPLOAD, $size);
 	}
 
-	public function get_enable_bandwidth_protect()
+	public function get_enable_bandwidth_protect(): bool
 	{
 		return $this->get_property(self::ENABLE_BANDWIDTH_PROTECTION);
 	}
 
-	public function set_enable_bandwidth_protect($value)
+	public function set_enable_bandwidth_protect(bool $value): void
 	{
 		$this->set_property(self::ENABLE_BANDWIDTH_PROTECTION, $value);
 	}
 
-	public function get_display_file_thumbnail()
+	public function get_display_file_thumbnail(): bool
 	{
 		return $this->get_property(self::DISPLAY_FILE_THUMBNAIL);
 	}
 
-	public function set_display_file_thumbnail($value)
+	public function set_display_file_thumbnail(bool $value): void
 	{
 		$this->set_property(self::DISPLAY_FILE_THUMBNAIL, $value);
 	}
 
-	public function get_authorized_extensions()
+	public function get_authorized_extensions(): array
 	{
 		return $this->get_property(self::AUTHORIZED_EXTENSIONS);
 	}
 
-	public function set_authorized_extensions(array $array)
+	public function set_authorized_extensions(array $array): void
 	{
 		$this->set_property(self::AUTHORIZED_EXTENSIONS, $array);
 	}
 
-	public function get_authorized_picture_extensions()
+	public function get_authorized_picture_extensions(): array
 	{
 		$pictures_extensions = ['jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp'];
 		$authorized_pictures_extensions = [];
@@ -93,9 +93,9 @@ class FileUploadConfig extends AbstractConfigData
 	{
 		return [
 			self::AUTHORIZATION_ENABLE_INTERFACE_FILES => ['r0' => 1, 'r1' => 1],
-			self::MAXIMUM_SIZE_UPLOAD => 512,
-			self::ENABLE_BANDWIDTH_PROTECTION => true,
-			self::DISPLAY_FILE_THUMBNAIL => true,
+			self::MAXIMUM_SIZE_UPLOAD                  => 512,
+			self::ENABLE_BANDWIDTH_PROTECTION          => true,
+			self::DISPLAY_FILE_THUMBNAIL               => true,
 			self::AUTHORIZED_EXTENSIONS => [
 				'jpg', 'jpeg', 'bmp', 'gif', 'png', 'webp', 'tif', 'svg', 'ico', 'nef',
 				'rar', 'zip', 'gz', '7z',
@@ -110,7 +110,7 @@ class FileUploadConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return FileUploadConfig
 	 */
-	public static function load()
+	public static function load(): FileUploadConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'file-upload-config');
 	}
@@ -118,7 +118,7 @@ class FileUploadConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'file-upload-config');
 	}

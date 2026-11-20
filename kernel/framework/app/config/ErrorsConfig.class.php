@@ -3,64 +3,64 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 6.1 - 2029 09 30
 */
 
 class ErrorsConfig extends AbstractConfigData
 {
-    const SEND_ALERTS = 'send_alerts';
-    const ALERT_LEVEL = 'alert_level';
-    const EMAIL_LIST  = 'email_list';
-    const DELAY       = 'delay';
+    const SEND_ALERTS          = 'send_alerts';
+    const ALERT_LEVEL          = 'alert_level';
+    const EMAIL_LIST           = 'email_list';
+    const DELAY                = 'delay';
     const LAST_ALERT_TIMESTAMP = 'last_alert_timestamp';
 
-    public function get_send_alerts()
+    public function get_send_alerts(): bool
     {
 		return $this->get_property(self::SEND_ALERTS);
     }
 
-	public function set_send_alerts(bool $value)
+	public function set_send_alerts(bool $value): void
 	{
 		$this->set_property(self::SEND_ALERTS, $value);
 	}
 
-    public function get_alert_level()
+    public function get_alert_level(): string
     {
 		return $this->get_property(self::ALERT_LEVEL);
     }
 
-	public function set_alert_level(string $value)
+	public function set_alert_level(string $value): void
 	{
 		$this->set_property(self::ALERT_LEVEL, $value);
 	}
 
-    public function get_email_list()
+    public function get_email_list(): ?string
     {
 		return $this->get_property(self::EMAIL_LIST);
     }
 
-	public function set_email_list(?string $value)
+	public function set_email_list(?string $value): void
 	{
 		$this->set_property(self::EMAIL_LIST, $value);
 	}
 
-    public function get_delay()
+    public function get_delay(): int
     {
 		return $this->get_property(self::DELAY);
     }
 
-	public function set_delay(int $delay)
+	public function set_delay(int $delay): void
 	{
 		$this->set_property(self::DELAY, $delay);
 	}
 
-    public function get_last_alert_timestamp()
+    public function get_last_alert_timestamp(): int
     {
         return $this->get_property(self::LAST_ALERT_TIMESTAMP);
     }
 
-    public function set_last_alert_timestamp(int $timestamp)
+    public function set_last_alert_timestamp(int $timestamp): void
     {
         $this->set_property(self::LAST_ALERT_TIMESTAMP, $timestamp);
     }
@@ -80,7 +80,7 @@ class ErrorsConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return ErrorsConfig
 	 */
-	public static function load()
+	public static function load(): ErrorsConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'errors-config');
 	}
@@ -88,7 +88,7 @@ class ErrorsConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'errors-config');
 	}

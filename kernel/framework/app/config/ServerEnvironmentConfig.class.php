@@ -5,12 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 07 08
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      janus57 <janus57@janus57.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ServerEnvironmentConfig extends AbstractConfigData
@@ -28,144 +28,144 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	const NGINX_MANUAL_CONTENT        = 'nginx_manual_content';
 	const OUTPUT_GZIPING_ENABLED      = 'output_gziping_enabled';
 
-	public function is_url_rewriting_enabled()
+	public function is_url_rewriting_enabled(): bool
 	{
 		return $this->get_property(self::URL_REWRITING_ENABLED);
 	}
 
-	public function set_url_rewriting_enabled($enabled)
+	public function set_url_rewriting_enabled(bool $enabled): void
 	{
 		$this->set_property(self::URL_REWRITING_ENABLED, $enabled);
 	}
 
-	public function is_redirection_www_enabled()
+	public function is_redirection_www_enabled(): bool
 	{
 		return $this->get_property(self::REDIRECTION_WWW_ENABLED);
 	}
 
-	public function enable_redirection_www()
+	public function enable_redirection_www(): void
 	{
-		return $this->set_property(self::REDIRECTION_WWW_ENABLED, true);
+		$this->set_property(self::REDIRECTION_WWW_ENABLED, true);
 	}
 
-	public function disable_redirection_www()
+	public function disable_redirection_www(): void
 	{
-		return $this->set_property(self::REDIRECTION_WWW_ENABLED, false);
+		$this->set_property(self::REDIRECTION_WWW_ENABLED, false);
 	}
 
-	public function get_redirection_www_mode()
+	public function get_redirection_www_mode(): bool
 	{
 		return $this->get_property(self::REDIRECTION_WWW_MODE);
 	}
 
-	public function is_redirection_www_mode_with_www()
+	public function is_redirection_www_mode_with_www(): bool
 	{
 		return $this->get_property(self::REDIRECTION_WWW_MODE) == self::REDIRECTION_WWW_WITH_WWW;
 	}
 
-	public function set_redirection_www_mode($value)
+	public function set_redirection_www_mode(bool $value): void
 	{
-		return $this->set_property(self::REDIRECTION_WWW_MODE, $value);
+		$this->set_property(self::REDIRECTION_WWW_MODE, $value);
 	}
 
-	public function is_redirection_https_enabled()
+	public function is_redirection_https_enabled(): bool
 	{
 		return $this->get_property(self::REDIRECTION_HTTPS_ENABLED);
 	}
 
-	public function enable_redirection_https()
+	public function enable_redirection_https(): void
 	{
-		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, true);
+		$this->set_property(self::REDIRECTION_HTTPS_ENABLED, true);
 	}
 
-	public function disable_redirection_https()
+	public function disable_redirection_https(): void
 	{
-		return $this->set_property(self::REDIRECTION_HTTPS_ENABLED, false);
+		$this->set_property(self::REDIRECTION_HTTPS_ENABLED, false);
 	}
 
-	public function is_hsts_security_enabled()
+	public function is_hsts_security_enabled(): bool
 	{
 		return $this->get_property(self::HSTS_SECURITY_ENABLED);
 	}
 
-	public function enable_hsts_security()
+	public function enable_hsts_security(): void
 	{
-		return $this->set_property(self::HSTS_SECURITY_ENABLED, true);
+		$this->set_property(self::HSTS_SECURITY_ENABLED, true);
 	}
 
-	public function disable_hsts_security()
+	public function disable_hsts_security(): void
 	{
-		return $this->set_property(self::HSTS_SECURITY_ENABLED, false);
+		$this->set_property(self::HSTS_SECURITY_ENABLED, false);
 	}
 
-	public function get_hsts_security_duration()
+	public function get_hsts_security_duration(): bool
 	{
 		return $this->get_property(self::HSTS_SECURITY_DURATION);
 	}
 
-	public function set_hsts_security_duration($value)
+	public function set_hsts_security_duration(int $value): void
 	{
-		return $this->set_property(self::HSTS_SECURITY_DURATION, ($value * (24 * 60 * 60))); // hour, minute, second
+		$this->set_property(self::HSTS_SECURITY_DURATION, ($value * (24 * 60 * 60))); // hour, minute, second
 	}
 
-	public function get_config_hsts_security_duration()
+	public function get_config_hsts_security_duration(): int
 	{
 		return ($this->get_property(self::HSTS_SECURITY_DURATION) / (24 * 60 * 60));
 	}
 
-	public function is_hsts_security_subdomain_enabled()
+	public function is_hsts_security_subdomain_enabled(): bool
 	{
 		return $this->get_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED);
 	}
 
-	public function enable_hsts_subdomain_security()
+	public function enable_hsts_subdomain_security(): void
 	{
-		return $this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, true);
+		$this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, true);
 	}
 
-	public function disable_hsts_subdomain_security()
+	public function disable_hsts_subdomain_security(): void
 	{
-		return $this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, false);
+		$this->set_property(self::HSTS_SECURITY_SUBDOMAIN_ENABLED, false);
 	}
 
-	private function htaccess_exists()
+	public static function htaccess_exists()
 	{
 		$file = new File(PATH_TO_ROOT . '/.htaccess');
 		return $file->exists();
 	}
 
-	public function get_htaccess_manual_content()
+	public function get_htaccess_manual_content(): string
 	{
 		return $this->get_property(self::HTACCESS_MANUAL_CONTENT);
 	}
 
-	public function set_htaccess_manual_content($content)
+	public function set_htaccess_manual_content(string $content): void
 	{
 		$this->set_property(self::HTACCESS_MANUAL_CONTENT, $content);
 	}
 
-	private function nginx_conf_exists()
+	public static function nginx_conf_exists()
 	{
 		$file = new File(PATH_TO_ROOT . '/nginx.conf');
 		return $file->exists();
 	}
 
-	public function get_nginx_manual_content()
+	public function get_nginx_manual_content(): string
 	{
 		return $this->get_property(self::NGINX_MANUAL_CONTENT);
 	}
 
-	public function set_nginx_manual_content($content)
+	public function set_nginx_manual_content(string $content): void
 	{
 		$this->set_property(self::NGINX_MANUAL_CONTENT, $content);
 	}
 
-	public function is_output_gziping_enabled()
+	public function is_output_gziping_enabled(): bool
 	{
 		return $this->get_property(self::OUTPUT_GZIPING_ENABLED);
 	}
 
-	public function set_output_gziping_enabled($enabled)
+	public function set_output_gziping_enabled(bool $enabled): void
 	{
 		$this->set_property(self::OUTPUT_GZIPING_ENABLED, $enabled);
 	}
@@ -190,7 +190,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return ServerEnvironmentConfig
 	 */
-	public static function load()
+	public static function load(): ServerEnvironmentConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'server-environment-config');
 	}
@@ -198,7 +198,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'server-environment-config');
 	}

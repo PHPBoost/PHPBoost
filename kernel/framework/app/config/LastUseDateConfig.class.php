@@ -7,10 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 10 18
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LastUseDateConfig extends AbstractConfigData
@@ -19,7 +19,7 @@ class LastUseDateConfig extends AbstractConfigData
 	 * Sets the date of the last time PHPBoost executed the daily tasks.
 	 * @param Date $date The date
 	 */
-	public function set_last_use_date(Date $date)
+	public function set_last_use_date(Date $date): void
 	{
 		$this->set_property('year', $date->get_year());
 		$this->set_property('month', $date->get_month());
@@ -30,7 +30,7 @@ class LastUseDateConfig extends AbstractConfigData
 	 * Returns the date of the last time PHPBoost executed the daily tasks.
 	 * @return Date
 	 */
-	public function get_last_use_date()
+	public function get_last_use_date(): Date
 	{
 		try
 		{
@@ -46,16 +46,13 @@ class LastUseDateConfig extends AbstractConfigData
 		}
 	}
 
-	private function get_date_far_in_the_past()
+	private function get_date_far_in_the_past(): Date
 	{
 		$date = new Date();
 		$date->set_year($date->get_year() - 1);
 		return $date;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [];
@@ -65,7 +62,7 @@ class LastUseDateConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return LastUseDateConfig
 	 */
-	public static function load()
+	public static function load(): LastUseDateConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'last-use-date');
 	}
@@ -73,7 +70,7 @@ class LastUseDateConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'last-use-date');
 	}

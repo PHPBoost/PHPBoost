@@ -5,18 +5,15 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2011 04 11
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ThemesConfig extends AbstractConfigData
 {
 	private static $themes_property = 'themes';
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [
@@ -54,7 +51,7 @@ class ThemesConfig extends AbstractConfigData
      * @param array $themes An array of themes to set as the new configuration.
      * @return void
      */
-    public function set_themes(array $themes)
+    public function set_themes(array $themes): void
     {
         $this->set_property(self::$themes_property, $themes);
     }
@@ -65,7 +62,7 @@ class ThemesConfig extends AbstractConfigData
      * @param Theme $theme The theme to add.
      * @return void
      */
-    public function add_theme(Theme $theme)
+    public function add_theme(Theme $theme): void
     {
         $themes = $this->get_property(self::$themes_property);
         $themes[$theme->get_id()] = $theme;
@@ -78,7 +75,7 @@ class ThemesConfig extends AbstractConfigData
      * @param Theme $theme The theme to remove.
      * @return void
      */
-    public function remove_theme(Theme $theme)
+    public function remove_theme(Theme $theme): void
     {
         $themes = $this->get_property(self::$themes_property);
         unset($themes[$theme->get_id()]);
@@ -91,7 +88,7 @@ class ThemesConfig extends AbstractConfigData
      * @param string $theme_id The ID (name) of the theme to remove.
      * @return void
      */
-    public function remove_theme_by_id($theme_id)
+    public function remove_theme_by_id($theme_id): void
     {
         $themes = $this->get_property(self::$themes_property);
         unset($themes[$theme_id]);
@@ -104,7 +101,7 @@ class ThemesConfig extends AbstractConfigData
 	 * @param Theme $theme The theme to update.
 	 * @return void
 	 */
-	public function update(Theme $theme)
+	public function update(Theme $theme): void
 	{
 		$themes = $this->get_property(self::$themes_property);
         $themes[$theme->get_id()] = $theme;
@@ -116,7 +113,7 @@ class ThemesConfig extends AbstractConfigData
 	 * Loads and returns the themes cached data.
 	 * @return ThemesConfig The cached data
 	 */
-	public static function load()
+	public static function load(): ThemesConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'themes');
 	}
@@ -124,7 +121,7 @@ class ThemesConfig extends AbstractConfigData
 	/**
 	 * Invalidates the current themes cached data.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'themes');
 	}

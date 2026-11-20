@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 10 17
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,7 +18,7 @@ class WritingPadConfig extends AbstractConfigData
 	 * Sets the content of the writing pad
 	 * @param string $content The content
 	 */
-	public function set_content($content)
+	public function set_content(string $content): void
 	{
 		$this->set_property('content', $content);
 	}
@@ -27,7 +27,7 @@ class WritingPadConfig extends AbstractConfigData
 	 * Returns the content of the writing pad
 	 * @return string its content
 	 */
-	public function get_content()
+	public function get_content(): string
 	{
 		try
 		{
@@ -39,9 +39,6 @@ class WritingPadConfig extends AbstractConfigData
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [
@@ -53,7 +50,7 @@ class WritingPadConfig extends AbstractConfigData
 	 * Returs the configuration.
 	 * @return WritingPadConfig The configuration
 	 */
-	public static function load()
+	public static function load(): WritingPadConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'writing-pad');
 	}
@@ -61,7 +58,7 @@ class WritingPadConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'writing-pad');
 	}

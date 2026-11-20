@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 10 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2009 10 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Kevin MASSY <reidlos@phpboost.com>
@@ -14,7 +14,7 @@
 
 abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 {
-	protected function process_site_maintenance()
+	protected function process_site_maintenance(): void
 	{
 		$maintenance_config = MaintenanceConfig::load();
 		if ($maintenance_config->is_under_maintenance())
@@ -40,12 +40,12 @@ abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment
 		}
 	}
 
-	protected static function set_page_localization($page_title, $location_id)
+	protected static function set_page_localization(string $page_title, string $location_id): void
 	{
 		AppContext::get_session()->update_location($page_title, $location_id);
 	}
 
-	protected static function no_session_location()
+	protected static function no_session_location(): void
 	{
 		AppContext::get_session()->no_session_location();
 	}

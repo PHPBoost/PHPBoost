@@ -6,19 +6,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 12 12
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModulesConfig extends AbstractConfigData
 {
 	private static $modules_property = 'modules';
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [
@@ -30,7 +27,7 @@ class ModulesConfig extends AbstractConfigData
 	 * Returns the list of the modules
 	 * @return array id_module => module properties (map)
 	 */
-	public function get_modules()
+	public function get_modules(): array
 	{
 		return $this->get_property(self::$modules_property);
 	}
@@ -40,7 +37,7 @@ class ModulesConfig extends AbstractConfigData
 	 * @param $module_id the id of the module
 	 * @return Module the requested module
 	 */
-	public function get_module($module_id)
+	public function get_module(string $module_id): mixed
 	{
 		$modules = $this->get_property(self::$modules_property);
 		return isset($modules[$module_id]) ? $modules[$module_id] : null;
@@ -50,7 +47,7 @@ class ModulesConfig extends AbstractConfigData
 	 * Sets the modules list
 	 * @param Module[] $modules_list The modules list
 	 */
-	public function set_modules(array $modules)
+	public function set_modules(array $modules): void
 	{
 		$this->set_property(self::$modules_property, $modules);
 	}
@@ -59,28 +56,28 @@ class ModulesConfig extends AbstractConfigData
 	 * Install a new module
 	 * @param Module $modules The module to add (~ install)
 	 */
-	public function add_module(Module $module)
+	public function add_module(Module $module): void
 	{
 		$modules = $this->get_property(self::$modules_property);
 		$modules[$module->get_id()] = $module;
 		$this->set_property(self::$modules_property, $modules);
 	}
 
-	public function remove_module(Module $module)
+	public function remove_module(Module $module): void
 	{
 		$modules = $this->get_property(self::$modules_property);
 		unset($modules[$module->get_id()]);
 		$this->set_property(self::$modules_property, $modules);
 	}
 
-	public function remove_module_by_id($module_id)
+	public function remove_module_by_id(string $module_id): void
 	{
 		$modules = $this->get_property(self::$modules_property);
 		unset($modules[$module_id]);
 		$this->set_property(self::$modules_property, $modules);
 	}
 
-	public function update(Module $module)
+	public function update(Module $module): void
 	{
 		$modules = $this->get_property(self::$modules_property);
 		$modules[$module->get_id()] = $module;
@@ -92,7 +89,7 @@ class ModulesConfig extends AbstractConfigData
 	 * Loads and returns the modules cached data.
 	 * @return ModulesConfig The cached data
 	 */
-	public static function load()
+	public static function load(): ModulesConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'modules');
 	}
@@ -100,7 +97,7 @@ class ModulesConfig extends AbstractConfigData
 	/**
 	 * Invalidates the current modules cached data.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'modules');
 	}

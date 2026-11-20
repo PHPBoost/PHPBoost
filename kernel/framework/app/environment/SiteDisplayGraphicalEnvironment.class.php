@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 09 29
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2009 10 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -18,9 +18,9 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	/**
 	 * @var BreadCrumb The page breadcrumb
 	 */
-	private $breadcrumb = null;
+	private ?BreadCrumb $breadcrumb = null;
 
-	private static $lang;
+	private static array $lang;
 
 	public function __construct()
 	{
@@ -37,10 +37,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		self::$lang = LangLoader::get_all_langs();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display($content)
+	public function display(string $content): void
 	{
 		$view = new FileTemplate('body.tpl');
 		$view->add_lang(self::$lang);
@@ -115,7 +112,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$this->display_page($view);
 	}
 
-	function display_page(View $body_template)
+	function display_page(View $body_template): void
 	{
 		$view = new FileTemplate('frame.tpl');
 		$view->add_lang(self::$lang);
@@ -190,14 +187,17 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		$view->display(true);
 	}
 
-	protected function display_counter(Template $view)
+	protected function display_counter(Template $view): void
 	{
 		//If the counter is to be displayed, we display it
 		if (GraphicalEnvironmentConfig::load()->is_visit_counter_enabled())
 		{
-			try {
+			try
+            {
 				$visit_counter = PersistenceContext::get_querier()->select_single_row(DB_TABLE_VISIT_COUNTER, ['ip AS nbr_ip', 'total'], 'WHERE id = 1');
-			} catch (RowNotFoundException $e) {
+			}
+            catch (RowNotFoundException $e)
+            {
 				$visit_counter = ['nbr_ip' => 1, 'total' => 1];
 			}
 
@@ -210,7 +210,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 		}
 	}
 
-	protected function display_menus(Template $view)
+	protected function display_menus(Template $view): void
 	{
 		$theme = ThemesManager::get_theme(AppContext::get_current_user()->get_theme());
 		$menus = MenusCache::load()->get_menus();
@@ -227,64 +227,68 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				foreach ($filters as $filter)
 				{
 					if (($nbr_filters > 1 && $filter->get_pattern() != '/') || ($filter->match() && !$display))
+                    {
 						$display = true;
+                    }
 				}
 
 				if ($display)
 				{
 					$menu_content = $cached_menu->has_cached_string() ? $cached_menu->get_cached_string() : $menu->display();
 					$block = $menu->get_block();
-					switch ($block) {
+					switch ($block)
+                    {
 						case Menu::BLOCK_POSITION__TOP_HEADER:
 							$view->put('C_MENUS_TOP_HEADER_CONTENT', true);
 							$view->assign_block_vars('menus_top_header', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__HEADER:
 							$view->put('C_MENUS_HEADER_CONTENT', true);
 							$view->assign_block_vars('menus_header', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__SUB_HEADER:
 							$view->put('C_MENUS_SUB_HEADER_CONTENT', true);
 							$view->assign_block_vars('menus_sub_header', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__LEFT:
 							$view->put('C_MENUS_LEFT_CONTENT', true);
-							$view->assign_block_vars('menus_left', ['MENU' => $menu_content]);
-						break;
+                            $view->assign_block_vars('menus_left', ['MENU' => $menu_content]);
+                            break;
 
 						case Menu::BLOCK_POSITION__RIGHT:
 							$view->put('C_MENUS_RIGHT_CONTENT', true);
 							$view->assign_block_vars('menus_right', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__TOP_CENTRAL:
 							$view->put('C_MENUS_TOPCENTRAL_CONTENT', $menu_content);
 							$view->assign_block_vars('menus_top_central', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__BOTTOM_CENTRAL:
 							$view->put('C_MENUS_BOTTOM_CENTRAL_CONTENT', $menu_content);
 							$view->assign_block_vars('menus_bottom_central', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__TOP_FOOTER:
 							$view->put('C_MENUS_TOP_FOOTER_CONTENT', true);
 							$view->assign_block_vars('menus_top_footer', ['MENU' => $menu_content]);
-						break;
+                            break;
 
 						case Menu::BLOCK_POSITION__FOOTER:
 							$view->put('C_MENUS_FOOTER_CONTENT', true);
 							$view->assign_block_vars('menus_footer', ['MENU' => $menu_content]);
+                            break;
 					}
 				}
 			}
 		}
 	}
 
-	protected function display_site_maintenance()
+	protected function display_site_maintenance(): Template
 	{
 		//Users not authorized cannot come here
 		parent::process_site_maintenance();
@@ -327,8 +331,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 				$end_timestamp = $maintenance_config->get_end_date()->get_timestamp();
 				for ($i = $array_size; $i >= 1; $i--)
 				{
-					if (($end_timestamp - $current_time) - $array_time[$i] < 0
-					&&  ($end_timestamp - $current_time) - $array_time[$i-1] > 0)
+					if (($end_timestamp - $current_time) - $array_time[$i] < 0 &&  ($end_timestamp - $current_time) - $array_time[$i-1] > 0)
 					{
 						$key_delay = $i-1;
 						break;
@@ -396,7 +399,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 * Returns the bread crumb
 	 * @return BreadCrumb The breadcrumb
 	 */
-	public function get_breadcrumb()
+	public function get_breadcrumb(): BreadCrumb
 	{
 		return $this->breadcrumb;
 	}
@@ -405,7 +408,7 @@ class SiteDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironmen
 	 * Sets the page's bread crumb
 	 * @param BreadCrumb $breadcrumb The bread crumb to use
 	 */
-	public function set_breadcrumb(BreadCrumb $breadcrumb)
+	public function set_breadcrumb(BreadCrumb $breadcrumb): void
 	{
 		$this->breadcrumb = $breadcrumb;
 		$this->breadcrumb->set_graphical_environment($this);

@@ -5,78 +5,75 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 5.1 - 2015 07 17
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SecurityConfig extends AbstractConfigData
 {
-	const INTERNAL_PASSWORD_MIN_LENGTH = 'internal_password_min_length';
-	const INTERNAL_PASSWORD_STRENGTH = 'internal_password_strength';
+	const INTERNAL_PASSWORD_MIN_LENGTH          = 'internal_password_min_length';
+	const INTERNAL_PASSWORD_STRENGTH            = 'internal_password_strength';
 	const LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD = 'login_and_email_forbidden_in_password';
-	const FORBIDDEN_MAIL_DOMAINS = 'forbidden_mail_domains';
+	const FORBIDDEN_MAIL_DOMAINS                = 'forbidden_mail_domains';
 
-	const PASSWORD_STRENGTH_WEAK = 'weak';
-	const PASSWORD_STRENGTH_MEDIUM = 'medium';
-	const PASSWORD_STRENGTH_STRONG = 'strong';
+	const PASSWORD_STRENGTH_WEAK        = 'weak';
+	const PASSWORD_STRENGTH_MEDIUM      = 'medium';
+	const PASSWORD_STRENGTH_STRONG      = 'strong';
 	const PASSWORD_STRENGTH_VERY_STRONG = 'very_strong';
 
-	public function get_internal_password_min_length()
+	public function get_internal_password_min_length(): int
 	{
 		return $this->get_property(self::INTERNAL_PASSWORD_MIN_LENGTH);
 	}
 
-	public function set_internal_password_min_length($value)
+	public function set_internal_password_min_length(int $value): void
 	{
 		$this->set_property(self::INTERNAL_PASSWORD_MIN_LENGTH, $value);
 	}
 
-	public function get_internal_password_strength()
+	public function get_internal_password_strength(): string
 	{
 		return $this->get_property(self::INTERNAL_PASSWORD_STRENGTH);
 	}
 
-	public function set_internal_password_strength($value)
+	public function set_internal_password_strength(string $value): void
 	{
 		$this->set_property(self::INTERNAL_PASSWORD_STRENGTH, $value);
 	}
 
-	public function forbid_login_and_email_in_password()
+	public function forbid_login_and_email_in_password(): void
 	{
 		$this->set_property(self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD, true);
 	}
 
-	public function allow_login_and_email_in_password()
+	public function allow_login_and_email_in_password(): void
 	{
 		$this->set_property(self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD, false);
 	}
 
-	public function are_login_and_email_forbidden_in_password()
+	public function are_login_and_email_forbidden_in_password(): bool
 	{
 		return $this->get_property(self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD);
 	}
 
-	public function get_forbidden_mail_domains()
+	public function get_forbidden_mail_domains(): array
 	{
 		return $this->get_property(self::FORBIDDEN_MAIL_DOMAINS);
 	}
 
-	public function set_forbidden_mail_domains(array $value)
+	public function set_forbidden_mail_domains(array $value): void
 	{
 		$this->set_property(self::FORBIDDEN_MAIL_DOMAINS, $value);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return [
-			self::INTERNAL_PASSWORD_MIN_LENGTH => 6,
-			self::INTERNAL_PASSWORD_STRENGTH => self::PASSWORD_STRENGTH_WEAK,
+			self::INTERNAL_PASSWORD_MIN_LENGTH          => 6,
+			self::INTERNAL_PASSWORD_STRENGTH            => self::PASSWORD_STRENGTH_WEAK,
 			self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD => false,
-			self::FORBIDDEN_MAIL_DOMAINS => []
+			self::FORBIDDEN_MAIL_DOMAINS                => []
 		];
 	}
 
@@ -84,7 +81,7 @@ class SecurityConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return SecurityConfig
 	 */
-	public static function load()
+	public static function load(): SecurityConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'security');
 	}
@@ -92,7 +89,7 @@ class SecurityConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'security');
 	}

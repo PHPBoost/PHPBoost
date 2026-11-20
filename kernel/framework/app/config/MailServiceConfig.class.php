@@ -6,131 +6,125 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2010 04 13
-* @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MailServiceConfig extends AbstractConfigData
 {
-	public function get_default_mail_sender()
+	public function get_default_mail_sender(): string
 	{
 		return $this->get_property('default_mail_sender');
 	}
 
-	public function set_default_mail_sender($sender)
+	public function set_default_mail_sender(string $sender): void
 	{
 		$this->set_property('default_mail_sender', $sender);
 	}
 
-	public function get_administrators_mails()
+	public function get_administrators_mails(): array
 	{
 		return $this->get_property('administrators_mails');
 	}
 
-	public function set_administrators_mails(array $mails)
+	public function set_administrators_mails(array $mails): void
 	{
 		$this->set_property('administrators_mails', $mails);
 	}
 
-	public function get_mail_signature()
+	public function get_mail_signature(): string
 	{
 		return $this->get_property('mail_signature');
 	}
 
-	public function set_mail_signature($signature)
+	public function set_mail_signature(string $signature): void
 	{
 		$this->set_property('mail_signature', $signature);
 	}
 
-	public function is_smtp_enabled()
+	public function is_smtp_enabled(): bool
 	{
 		return $this->get_property('use_smtp');
 	}
 
-	public function enable_smtp()
+	public function enable_smtp(): void
 	{
-		return $this->set_property('use_smtp', true);
+		$this->set_property('use_smtp', true);
 	}
 
-	public function disable_smtp()
+	public function disable_smtp(): void
 	{
 		$this->set_property('use_smtp', false);
 	}
 
-	public function get_smtp_host()
+	public function get_smtp_host(): string
 	{
 		return $this->get_property('smtp_host');
 	}
 
-	public function set_smtp_host($host)
+	public function set_smtp_host(string $host): void
 	{
 		$this->set_property('smtp_host', $host);
 	}
 
-	public function get_smtp_port()
+	public function get_smtp_port(): int
 	{
 		return $this->get_property('smtp_port');
 	}
 
-	public function set_smtp_port($port)
+	public function set_smtp_port(int $port): void
 	{
 		$this->set_property('smtp_port', $port);
 	}
 
-	public function get_smtp_login()
+	public function get_smtp_login(): string
 	{
 		return $this->get_property('smtp_login');
 	}
 
-	public function set_smtp_login($login)
+	public function set_smtp_login(string $login): void
 	{
 		$this->set_property('smtp_login', $login);
 	}
 
-	public function get_smtp_password()
+	public function get_smtp_password(): string
 	{
 		return $this->get_property('smtp_password');
 	}
 
-	public function set_smtp_password($password)
+	public function set_smtp_password(string $password): void
 	{
 		$this->set_property('smtp_password', $password);
 	}
 
-	public function get_smtp_protocol()
+	public function get_smtp_protocol(): string
 	{
 		return $this->get_property('smtp_protocol');
 	}
 
-	public function set_smtp_protocol($protocol)
+	public function set_smtp_protocol(string $protocol): void
 	{
 		$this->set_property('smtp_protocol', $protocol);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		//TODO Add mail signature lang
 		return [
-			'use_smtp' => false,
-			'smtp_host' => '',
-			'smtp_port' => 25,
-			'smtp_login' => '',
-			'smtp_password' => '',
-			'smtp_protocol' => 'none',
-			'default_mail_sender' => '',
+			'use_smtp'             => false,
+			'smtp_host'            => '',
+			'smtp_port'            => 25,
+			'smtp_login'           => '',
+			'smtp_password'        => '',
+			'smtp_protocol'        => 'none',
+			'default_mail_sender'  => '',
 			'administrators_mails' => [],
-			'mail_signature' => ''
+			'mail_signature'       => ''
 		];
 	}
 
-	/**
-	 * @return SMTPConfiguration
-	 */
-	public function to_smtp_config()
+	public function to_smtp_config(): ?SMTPConfiguration
 	{
 		if ($this->is_smtp_enabled())
 		{
@@ -152,7 +146,7 @@ class MailServiceConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return MailServiceConfig
 	 */
-	public static function load()
+	public static function load(): MailServiceConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'mail-service');
 	}
@@ -160,7 +154,7 @@ class MailServiceConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'mail-service');
 	}

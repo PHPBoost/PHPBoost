@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 05 30
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
@@ -17,12 +17,12 @@ class ServerConfiguration
 {
 	const MIN_PHP_VERSION = '8.0';
 	const RECOMMENDED_PHP_VERSION = '8.4';
-	private static $mod_rewrite = 'mod_rewrite';
+	private static string $mod_rewrite = 'mod_rewrite';
 
 	/**
 	 * @return string system php version.
 	 */
-	public static function get_phpversion()
+	public static function get_phpversion(): string
 	{
 		$system_phpversion = phpversion();
 		$matches = [];
@@ -42,7 +42,7 @@ class ServerConfiguration
 	*
 	* @return int Max file size in bytes
 	*/
-	public static function get_upload_max_filesize()
+	public static function get_upload_max_filesize(): int
 	{
 		$normalize = function($size)
 		{
@@ -60,13 +60,20 @@ class ServerConfiguration
 		$max_upload = $normalize(ini_get('upload_max_filesize'));
 		$max_post = $normalize(ini_get('post_max_size'));
 		$memory_limit = $normalize(ini_get('memory_limit'));
-		if ($memory_limit <= '0' AND $max_post <= '0') {
+		if ($memory_limit <= '0' AND $max_post <= '0')
+            {
 			$maxFileSize = $max_upload;
-		} elseif ($max_post <= '0') {
+		}
+        elseif ($max_post <= '0')
+        {
             $maxFileSize = min($max_upload, $memory_limit);
-		} elseif ($memory_limit <= '0') {
+		}
+        elseif ($memory_limit <= '0')
+        {
             $maxFileSize = min($max_upload, $max_post);
-		} else {
+		}
+        else
+        {
             $maxFileSize = min($max_upload, $max_post, $memory_limit);
 		}
 		return $maxFileSize;
@@ -75,7 +82,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if php version fits to phpboost's requirements.
 	 */
-	public function is_php_compatible()
+	public function is_php_compatible(): bool
 	{
 		return self::get_phpversion() >= self::MIN_PHP_VERSION;
 	}
@@ -83,7 +90,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if GD library is available.
 	 */
-	public function has_gd_extension()
+	public function has_gd_extension(): bool
 	{
 		return @extension_loaded('gd');
 	}
@@ -91,7 +98,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if curl library is available.
 	 */
-	public function has_curl_extension()
+	public function has_curl_extension(): bool
 	{
 		return @extension_loaded('curl');
 	}
@@ -99,7 +106,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if MBstring (UTF-8) library is available.
 	 */
-	public function has_mbstring_extension()
+	public function has_mbstring_extension(): bool
 	{
 		return @extension_loaded('mbstring');
 	}
@@ -107,7 +114,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if zip library is available.
 	 */
-	public function has_zip_extension()
+	public function has_zip_extension(): bool
 	{
 		return @extension_loaded('zip');
 	}
@@ -115,7 +122,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if allow_url_fopen directive is enabled.
 	 */
-	public function has_allow_url_fopen()
+	public function has_allow_url_fopen(): bool
 	{
 		return ini_get('allow_url_fopen');
 	}
@@ -123,7 +130,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if url rewriting is available.
 	 */
-	public function has_url_rewriting()
+	public function has_url_rewriting(): bool
 	{
 		if (function_exists('apache_get_modules'))
 		{

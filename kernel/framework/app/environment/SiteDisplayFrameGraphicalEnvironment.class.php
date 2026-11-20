@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 4.0 - 2014 06 21
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@
 
 class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
-	private $display_css_login = false;
+	private bool $display_css_login = false;
 
 	public function __construct()
 	{
@@ -23,10 +23,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$this->maintenance_config = MaintenanceConfig::load();
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function display($content)
+	public function display(string $content): void
 	{
 		$lang = LangLoader::get_all_langs();
 		$view = new FileTemplate('frame.tpl');
@@ -75,7 +72,7 @@ class SiteDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvir
 		$view->display(true);
 	}
 
-	public function display_css_login()
+	public function display_css_login(): void
 	{
 		$this->display_css_login = true;
 	}

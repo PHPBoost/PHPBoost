@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 18
  * @since       PHPBoost 3.0 - 2009 10 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -96,32 +96,32 @@ class UserAccountsConfig extends AbstractConfigData
 	const NO_AVATAR_URL = '/templates/__default__/images/no_avatar.webp';
 
 
-	public function get_display_type()
+	public function get_display_type(): string
 	{
 		return $this->get_property(self::DISPLAY_TYPE);
 	}
 
-	public function set_display_type($value)
+	public function set_display_type(string $value): void
 	{
 		$this->set_property(self::DISPLAY_TYPE, $value);
 	}
 
-	public function get_items_per_page()
+	public function get_items_per_page(): int
 	{
 		return $this->get_property(self::ITEMS_PER_PAGE);
 	}
 
-	public function set_items_per_page($value)
+	public function set_items_per_page(int $value): void
 	{
 		$this->set_property(self::ITEMS_PER_PAGE, $value);
 	}
 
-	public function get_items_per_row()
+	public function get_items_per_row(): int
 	{
 		return $this->get_property(self::ITEMS_PER_ROW);
 	}
 
-	public function set_items_per_row($value)
+	public function set_items_per_row(int $value): void
 	{
 		$this->set_property(self::ITEMS_PER_ROW, $value);
 	}
@@ -131,7 +131,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * @return int 0 if there is no activation, 1 if the member activates its account thanks to the
 	 * mail it receives, 2 if the administrator has to approbate it.
 	 */
-	public function get_member_accounts_validation_method()
+	public function get_member_accounts_validation_method(): int
 	{
 		return $this->get_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY);
 	}
@@ -141,7 +141,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * @param int $method 0 if there is no activation, 1 if the member activates its account
 	 * thanks to the mail it receives, 2 if the administrator has to approbate it.
 	 */
-	public function set_member_accounts_validation_method($method)
+	public function set_member_accounts_validation_method(int $method): void
 	{
 		$this->set_property(self::MEMBER_ACCOUNTS_VALIDATION_METHOD_PROPERTY, $method);
 	}
@@ -150,16 +150,15 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Send email to administrators if activation by administrator is selected
 	 * @return bool 0 if selected, 1 if not
 	 */
-	public function get_administrator_accounts_validation_email()
+	public function get_administrator_accounts_validation_email(): bool
 	{
 		return $this->get_property(self::ADMINISTRATOR_ACCOUNTS_VALIDATION_EMAIL);
 	}
 
 	/**
 	 * Sets the send of an email to administrators if activation by administrator is selected
-	 * @param bool 0 if selected, 1 if not
 	 */
-	public function set_administrator_accounts_validation_email($method)
+	public function set_administrator_accounts_validation_email(bool $method): void
 	{
 		$this->set_property(self::ADMINISTRATOR_ACCOUNTS_VALIDATION_EMAIL, $method);
 	}
@@ -168,7 +167,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the welcome message
 	 * @return string the message
 	 */
-	public function get_welcome_message()
+	public function get_welcome_message(): string
 	{
 		return $this->get_property(self::WELCOME_MESSAGE_PROPERTY);
 	}
@@ -177,7 +176,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the welcome message displayed on the member profile main page.
 	 * @param string $message The welcome message
 	 */
-	public function set_welcome_message($message)
+	public function set_welcome_message(string $message): void
 	{
 		$this->set_property(self::WELCOME_MESSAGE_PROPERTY, $message);
 	}
@@ -186,7 +185,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Tells whether the member registration is enabled
 	 * @return bool true if it is, false otherwise.
 	 */
-	public function is_registration_enabled()
+	public function is_registration_enabled(): bool
 	{
 		return $this->get_property(self::REGISTRATION_ENABLED_PROPERTY);
 	}
@@ -195,7 +194,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the boolean indicating if the registration is enabled
 	 * @param bool $enabled true if enabled, false otherwise
 	 */
-	public function set_registration_enabled($enabled)
+	public function set_registration_enabled(bool $enabled): void
 	{
 		$this->set_property(self::REGISTRATION_ENABLED_PROPERTY, $enabled);
 	}
@@ -203,7 +202,7 @@ class UserAccountsConfig extends AbstractConfigData
 	/**
 	 * Enables the member registration
 	 */
-	public function enable_registration()
+	public function enable_registration(): void
 	{
 		$this->set_registration_enabled(true);
 	}
@@ -211,7 +210,7 @@ class UserAccountsConfig extends AbstractConfigData
 	/**
 	 * Disables the member registration
 	 */
-	public function disable_registration()
+	public function disable_registration(): void
 	{
 		$this->set_registration_enabled(false);
 	}
@@ -229,7 +228,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the agreement that users mut accept to register
 	 * @param $agreement The agreement
 	 */
-	public function set_registration_agreement($agreement)
+	public function set_registration_agreement(string $agreement): void
 	{
 		$this->set_property(self::REGISTRATION_AGREEMENT_PROPERTY, $agreement);
 	}
@@ -238,7 +237,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Tells whether users can upload their avatar
 	 * @return bool true if they can, false otherwise
 	 */
-	public function is_avatar_upload_enabled()
+	public function is_avatar_upload_enabled(): bool
 	{
 		return $this->get_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY);
 	}
@@ -247,7 +246,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the boolean indicating if avatars can be uploaded on the server
 	 * @param bool $enabled true if enabled, false otherwise
 	 */
-	public function set_avatar_upload_enabled($enabled)
+	public function set_avatar_upload_enabled(bool $enabled): void
 	{
 		$this->set_property(self::ENABLE_AVATAR_UPLOAD_PROPERTY, $enabled);
 	}
@@ -256,7 +255,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Tells whether the scaling is enabled avatars
 	 * @return bool true if they can, false otherwise
 	 */
-	public function is_avatar_auto_resizing_enabled()
+	public function is_avatar_auto_resizing_enabled(): bool
 	{
 		return $this->get_property(self::ENABLE_AVATAR_AUTO_RESIZING);
 	}
@@ -265,7 +264,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the boolean value indicating whether the avatars should be resized automatically
 	 * @param bool $enabled true if enabled, false otherwise
 	 */
-	public function set_avatar_auto_resizing_enabled($enabled)
+	public function set_avatar_auto_resizing_enabled(bool $enabled): void
 	{
 		$this->set_property(self::ENABLE_AVATAR_AUTO_RESIZING, $enabled);
 	}
@@ -273,7 +272,7 @@ class UserAccountsConfig extends AbstractConfigData
 	/**
 	 * Lets users upload their avatar
 	 */
-	public function enable_avatar_upload()
+	public function enable_avatar_upload(): void
 	{
 		$this->set_avatar_upload_enabled(true);
 	}
@@ -281,7 +280,7 @@ class UserAccountsConfig extends AbstractConfigData
 	/**
 	 * Forbid users to upload their avatar
 	 */
-	public function disable_avatar_upload()
+	public function disable_avatar_upload(): void
 	{
 		$this->set_avatar_upload_enabled(false);
 	}
@@ -290,7 +289,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the time after which the member accounts which haven't been activated are removed
 	 * @return int The time (in days)
 	 */
-	public function get_unactivated_accounts_timeout()
+	public function get_unactivated_accounts_timeout(): int
 	{
 		return $this->get_property(self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY);
 	}
@@ -299,7 +298,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the duration of the unactivated accounts timeout
 	 * @param int $duration The duration (in days)
 	 */
-	public function set_unactivated_accounts_timeout($duration)
+	public function set_unactivated_accounts_timeout(int $duration): void
 	{
 		$this->set_property(self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY, $duration);
 	}
@@ -308,7 +307,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the default avatar URL
 	 * @return string The URL
 	 */
-	public function get_default_avatar_name()
+	public function get_default_avatar_name(): string
 	{
 		return $this->get_property(self::DEFAULT_AVATAR_URL_PROPERTY);
 	}
@@ -317,7 +316,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the default avatar URL
 	 * @param string $url The URL of the default avatar
 	 */
-	public function set_default_avatar_name($url)
+	public function set_default_avatar_name(string $url): void
 	{
 		$this->set_property(self::DEFAULT_AVATAR_URL_PROPERTY, $url);
 	}
@@ -326,7 +325,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Tells whether the default avatar is set or not
 	 * @return bool true if it is, false otherwise
 	 */
-	public function is_default_avatar_enabled()
+	public function is_default_avatar_enabled(): bool
 	{
 		return !empty($this->get_default_avatar());
 	}
@@ -335,7 +334,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the default avatar proper URL adapted to user template if exists
 	 * @return string The URL
 	 */
-	public function get_default_avatar()
+	public function get_default_avatar(): string
 	{
 		return ($this->get_default_avatar_name() == FormFieldThumbnail::DEFAULT_VALUE) ? Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(self::NO_AVATAR_URL)) : Url::to_rel($this->get_default_avatar_name());
 	}
@@ -344,7 +343,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the max width of avatars
 	 * @return int The width in pixels
 	 */
-	public function get_max_avatar_width()
+	public function get_max_avatar_width(): int
 	{
 		return $this->get_property(self::MAX_AVATAR_WIDTH_PROPERTY);
 	}
@@ -353,7 +352,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the max width of avatars
 	 * @param int $width The width in pixels
 	 */
-	public function set_max_avatar_width($width)
+	public function set_max_avatar_width(int $width): void
 	{
 		$this->set_property(self::MAX_AVATAR_WIDTH_PROPERTY, $width);
 	}
@@ -362,7 +361,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the max height of avatars
 	 * @return int The height in pixels
 	 */
-	public function get_max_avatar_height()
+	public function get_max_avatar_height(): int
 	{
 		return $this->get_property(self::MAX_AVATAR_HEIGHT_PROPERTY);
 	}
@@ -371,7 +370,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Sets the max height of avatars
 	 * @param int $height The height in pixels
 	 */
-	public function set_max_avatar_height($height)
+	public function set_max_avatar_height(int $height): void
 	{
 		$this->set_property(self::MAX_AVATAR_HEIGHT_PROPERTY, $height);
 	}
@@ -380,7 +379,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the max weight of avatars
 	 * @return int The weight in kilobytes
 	 */
-	public function get_max_avatar_weight()
+	public function get_max_avatar_weight(): int
 	{
 		return $this->get_property(self::MAX_AVATAR_WEIGHT_PROPERTY);
 	}
@@ -389,16 +388,16 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the max weight of avatars to use in form fields (converted in kilobytes)
 	 * @return int The weight in kilobytes
 	 */
-	public function get_max_avatar_weight_in_kb()
+	public function get_max_avatar_weight_in_kb(): int
 	{
 		return $this->get_property(self::MAX_AVATAR_WEIGHT_PROPERTY) * 1024;
 	}
 
 	/**
 	 * Sets the max weight of avatars
-	 * @param int $height The weight in kilobytes
+	 * @param int $weight The weight in kilobytes
 	 */
-	public function set_max_avatar_weight($weight)
+	public function set_max_avatar_weight(int $weight): void
 	{
 		$this->set_property(self::MAX_AVATAR_WEIGHT_PROPERTY, $weight);
 	}
@@ -407,73 +406,70 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the authorization to read members all
 	 * @return array The array of authorizations.
 	 */
-	public function get_auth_read_members()
+	public function get_auth_read_members(): array
 	{
 		return $this->get_property(self::AUTH_READ_MEMBERS);
 	}
 
 	/**
 	 * Sets the authorization to read members all
-	 * @param array The array of authorizations.
+	 * @param array $auth The array of authorizations.
 	 */
-	public function set_auth_read_members($auth)
+	public function set_auth_read_members(array $auth): void
 	{
 		$this->set_property(self::AUTH_READ_MEMBERS, $auth);
 	}
 
-	public function get_default_lang()
+	public function get_default_lang(): string
 	{
 		return $this->get_property(self::DEFAULT_LANG);
 	}
 
-	public function set_default_lang($lang)
+	public function set_default_lang(string $lang): void
 	{
 		$this->set_property(self::DEFAULT_LANG, $lang);
 	}
 
-	public function get_default_theme()
+	public function get_default_theme(): string
 	{
 		return $this->get_property(self::DEFAULT_THEME);
 	}
 
-	public function set_default_theme($theme)
+	public function set_default_theme(string $theme): void
 	{
 		$this->set_property(self::DEFAULT_THEME, $theme);
 	}
 
-	public function get_max_private_messages_number()
+	public function get_max_private_messages_number(): int
 	{
 		return $this->get_property(self::MAX_PRIVATE_MESSAGES_NUMBER);
 	}
 
-	public function set_max_private_messages_number($number)
+	public function set_max_private_messages_number(int $number): void
 	{
 		$this->set_property(self::MAX_PRIVATE_MESSAGES_NUMBER, $number);
 	}
 
-	public function are_users_allowed_to_change_display_name()
+	public function are_users_allowed_to_change_display_name(): bool
 	{
 		return $this->get_property(self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME);
 	}
 
-	public function set_allow_users_to_change_display_name($enabled)
+	public function set_allow_users_to_change_display_name(bool $enabled): void
 	{
 		$this->set_property(self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME, $enabled);
 	}
 
-	public function are_users_allowed_to_change_email()
+	public function are_users_allowed_to_change_email(): bool
 	{
 		return $this->get_property(self::ALLOW_USERS_TO_CHANGE_EMAIL);
 	}
 
-	public function set_allow_users_to_change_email($enabled)
+	public function set_allow_users_to_change_email(bool $enabled): void
 	{
 		$this->set_property(self::ALLOW_USERS_TO_CHANGE_EMAIL, $enabled);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		$server_configuration = new ServerConfiguration();
@@ -507,7 +503,7 @@ class UserAccountsConfig extends AbstractConfigData
 	 * Returns the configuration.
 	 * @return UserAccountsConfig
 	 */
-	public static function load()
+	public static function load(): UserAccountsConfig
 	{
 		return ConfigManager::load(self::class, 'kernel', 'user-accounts');
 	}
@@ -515,7 +511,7 @@ class UserAccountsConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. Has it become persistent.
 	 */
-	public static function save()
+	public static function save(): void
 	{
 		ConfigManager::save('kernel', self::load(), 'user-accounts');
 	}
