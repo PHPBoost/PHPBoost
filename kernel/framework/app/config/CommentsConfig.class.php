@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 18
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 07 08
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -102,10 +102,11 @@ class CommentsConfig extends AbstractConfigData
 		$this->set_property(self::MAX_LINKS_COMMENT, $number);
 	}
 
-	public function get_order_display_comments(): int
+	public function get_order_display_comments(): string
 	{
 		$order_display_comments = $this->get_property(self::ORDER_DISPLAY_COMMENTS);
-		switch ($order_display_comments) {
+		switch ($order_display_comments)
+        {
 			case self::ASC_ORDER:
 			case self::DESC_ORDER:
 				$valid_order = $order_display_comments;

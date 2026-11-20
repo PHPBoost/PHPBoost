@@ -8,7 +8,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 2.0 - 2008 08 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -38,12 +38,12 @@ class AdministratorAlert extends Event
 	/**
 	 * @var int Priority of the alert
 	 */
-	private $priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
+	private int $priority = self::ADMIN_ALERT_MEDIUM_PRIORITY;
 
 	/**
 	 * @var string Properties of the alert (string field of unlimited length) which can for example contain a serializes array of object.
 	 */
-	private $alert_properties = '';
+	private string $alert_properties = '';
 
 	/**
 	 * Builds an AdministratorAlert object.
@@ -68,7 +68,7 @@ class AdministratorAlert extends Event
 	 * @param string $type Type of the alert.
 	 * @param int $priority Priority of the alert.
 	 */
-	public function build($id, $entitled, $properties, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type, $priority)
+	public function build(int $id, string $entitled, string $properties, string $fixing_url, int $current_status, Date $creation_date, int $id_in_module, string $identifier, string $type, int $priority): void
 	{
 		parent::build_event($id, $entitled, $fixing_url, $current_status, $creation_date, $id_in_module, $identifier, $type);
 		$this->set_priority($priority);
@@ -86,7 +86,7 @@ class AdministratorAlert extends Event
 	 *  <li>AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
 	 * </ul>
 	 */
-	public function get_priority()
+	public function get_priority(): int
 	{
 		return $this->priority;
 	}
@@ -95,7 +95,7 @@ class AdministratorAlert extends Event
 	 * Gets the alert properties.
 	 * @return string The properties.
 	 */
-	public function get_alert_properties()
+	public function get_alert_properties(): string
 	{
 		return $this->alert_properties;
 	}
@@ -111,7 +111,7 @@ class AdministratorAlert extends Event
 	 *  <li>AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY Very high priority</li>
 	 * </ul>
 	 */
-	public function set_priority($priority)
+	public function set_priority(int $priority): void
 	{
 		$priority = intval($priority);
 		if ($priority >= self::ADMIN_ALERT_VERY_LOW_PRIORITY && $priority <= self::ADMIN_ALERT_VERY_HIGH_PRIORITY)
@@ -128,7 +128,7 @@ class AdministratorAlert extends Event
 	 * Sets the properties of the alert.
 	 * @param string $properties Properties.
 	 */
-	public function set_alert_properties($properties)
+	public function set_alert_properties(string $properties): void
 	{
 		//If properties has the good type
 		if (is_string($properties))
@@ -141,35 +141,27 @@ class AdministratorAlert extends Event
 	 * Gets the priority name. It's automatically translater to the user language, ready to be displayed.
 	 * @return string The priority name.
 	 */
-	public function get_priority_name()
+	public function get_priority_name(): string
 	{
 		$lang = LangLoader::get_all_langs();
 		switch ($this->priority)
 		{
 			case self::ADMIN_ALERT_VERY_LOW_PRIORITY:
 				return $lang['admin.priority.very.low'];
-				break;
 			case self::ADMIN_ALERT_LOW_PRIORITY:
 				return $lang['admin.priority.low'];
-				break;
 			case self::ADMIN_ALERT_MEDIUM_PRIORITY:
 				return $lang['admin.priority.medium'];
-				break;
 			case self::ADMIN_ALERT_HIGH_PRIORITY:
 				return $lang['admin.priority.high'];
-				break;
 			case self::ADMIN_ALERT_VERY_HIGH_PRIORITY:
 				return $lang['admin.priority.very.high'];
-				break;
 			default:
 				return $lang['admin.priority.medium'];
 		}
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get_properties()
+	public function get_properties(): array
 	{
 		return array_merge(parent::get_properties(), [
 			'priority'         => $this->get_priority(),

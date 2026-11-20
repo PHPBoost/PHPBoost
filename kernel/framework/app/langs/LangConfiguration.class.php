@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Bruno MERCIER <aiglobulles@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2012 01 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,85 +13,85 @@
 
 class LangConfiguration
 {
-	private $addon_type;
-	private $name;
-	private $author_name;
-	private $author_mail;
-	private $author_link;
-	private $date;
-	private $version;
-	private $compatibility;
-	private $identifier;
-	private $repository;
-	private $picture_url;
+	private string $addon_type = '';
+	private string $name = '';
+	private string $author_name = '';
+	private string $author_mail = '';
+	private string $author_link = '';
+	private string $date = '';
+	private string $version = '';
+	private string $compatibility = '';
+	private string $identifier = '';
+	private string $repository = '';
+	private ?Url $picture_url = null;
 
-	public function __construct($config_ini_file)
+	public function __construct(string $config_ini_file)
 	{
 		$this->load_configuration($config_ini_file);
 	}
 
-	public function get_addon_type()
+	public function get_addon_type(): string
 	{
 		return $this->addon_type;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function get_author_name()
+	public function get_author_name(): string
 	{
 		return $this->author_name;
 	}
 
-	public function get_author_mail()
+	public function get_author_mail(): string
 	{
 		return $this->author_mail;
 	}
 
-	public function get_author_link()
+	public function get_author_link(): string
 	{
 		return $this->author_link;
 	}
 
-	public function get_date()
+	public function get_date(): string
 	{
 		return $this->date;
 	}
 
-	public function get_version()
+	public function get_version(): string
 	{
 		return $this->version;
 	}
 
-	public function get_compatibility()
+	public function get_compatibility(): string
 	{
 		return $this->compatibility;
 	}
 
-	public function get_identifier()
+	public function get_identifier(): string
 	{
 		return $this->identifier;
 	}
 
-	public function get_repository()
+	public function get_repository(): string
 	{
 		return $this->repository;
 	}
 
-	public function get_picture_url()
+	public function get_picture_url(): Url
 	{
 		return $this->picture_url;
 	}
 
-	public function has_picture()
+	public function has_picture(): bool
 	{
 		$picture = $this->picture_url->rel();
 		return !empty($picture);
 	}
 
-	private function load_configuration($config_ini_file)
+	private function load_configuration(string $config_ini_file): void
 	{
 		$config = @parse_ini_file($config_ini_file);
 		$this->check_parse_ini_file($config, $config_ini_file);
@@ -110,12 +110,14 @@ class LangConfiguration
 		$url = '/images/stats/countries/' . $this->identifier . '.png';
 		$picture = new File(PATH_TO_ROOT . $url);
 		if (!$picture->exists())
+        {
 			$url = '';
+        }
 
 		$this->picture_url = new Url($url);
 	}
 
-	private function check_parse_ini_file($parse_result, $ini_file)
+	private function check_parse_ini_file(mixed $parse_result, string $ini_file): void
 	{
 		if ($parse_result === false)
 		{
@@ -123,7 +125,7 @@ class LangConfiguration
 		}
 	}
 
-	public function get_properties()
+	public function get_properties(): array
 	{
 		return [
 			'addon_type'    => $this->addon_type,

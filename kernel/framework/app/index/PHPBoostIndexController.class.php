@@ -27,7 +27,7 @@ class PHPBoostIndexController extends AbstractController
         {
             AppContext::get_response()->redirect(UserUrlBuilder::home());
         }
-        else if (!empty($other_home_page))
+        elseif (!empty($other_home_page))
         {
             AppContext::get_response()->redirect($other_home_page);
         }

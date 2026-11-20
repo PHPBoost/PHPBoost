@@ -6,66 +6,64 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2012 01 19
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Lang
 {
-    private $id;
-    private $activated;
-    private $authorizations;
+    private string $id;
+    private bool $activated;
+    private array $authorizations;
 
     const ACCES_LANG = 1;
 
-	public function __construct($id, array $authorizations = [], $activated = false)
+	public function __construct(string $id, array $authorizations = [], bool $activated = false)
 	{
         $this->id = $id;
         $this->activated = $activated;
         $this->authorizations = $authorizations;
 	}
 
-    public function get_id()
+    public function get_id(): string
     {
         return $this->id;
     }
 
-    public function get_identifier()
+    public function get_identifier(): string
     {
         return TextHelper::substr($this->id, 1, 2);
     }
 
-    public function is_activated()
+    public function is_activated(): bool
     {
         return $this->activated;
     }
 
-    public function get_authorizations()
-    {
-        return $this->authorizations;
-    }
-
-    public function set_activated($activated)
+    public function set_activated(bool $activated)
     {
         $this->activated = $activated;
     }
 
-    public function set_authorizations($authorizations)
+    public function get_authorizations(): array
+    {
+        return $this->authorizations;
+    }
+
+    public function set_authorizations(array $authorizations): void
     {
         $this->authorizations = $authorizations;
     }
 
-    /**
-     * @return LangConfiguration
-     */
-    public function get_configuration()
+    public function get_configuration(): LangConfiguration
     {
         return LangConfigurationManager::get($this->id);
     }
 
-    public function check_auth()
+    public function check_auth(): bool
     {
         if ($this->id == UserAccountsConfig::load()->get_default_lang())
         {

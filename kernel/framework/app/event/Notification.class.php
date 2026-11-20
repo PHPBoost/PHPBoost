@@ -5,10 +5,11 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2013 08 30
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Notification extends Event
@@ -22,22 +23,22 @@ class Notification extends Event
 	/**
 	 * @var int Priority of the alert
 	 */
-	private $priority = self::NOTIFICATION_ALERT_MEDIUM_PRIORITY;
+	private int $priority = self::NOTIFICATION_ALERT_MEDIUM_PRIORITY;
 
 	/**
 	 * @var string String containing the identifier of the module corresponding to the notification (ex: forum).
 	 */
-	private $module_id = '';
+	private string $module_id = '';
 
 	/**
 	 * @var Date The fixing date of the notification.
 	 */
-	private $fixing_date = '';
+	private ?Date $fixing_date = null;
 
 	/**
 	 * @var array Authorization array containing the people who can read the contribution.
 	 */
-	private $auth = [];
+	private array $auth = [];
 
 	/**
 	 * Builds a Contribution object.
@@ -52,7 +53,7 @@ class Notification extends Event
 	 * Sets the module id from which the notification.
 	 * @param string $module_id Module identifier (for example the name of the module folder).
 	 */
-	public function set_module_id($module_id)
+	public function set_module_id(string $module_id): void
 	{
 		$this->module_id = $module_id;
 	}
@@ -61,7 +62,7 @@ class Notification extends Event
 	 * Sets the fixing date.
 	 * @param Date $date Date
 	 */
-	public function set_fixing_date($date)
+	public function set_fixing_date(Date $date): void
 	{
 		if (is_object($date) && $date instanceof Date)
 		{
@@ -73,7 +74,7 @@ class Notification extends Event
 	 * Sets the authorization of the notification. It will determines who can read notifications.
 	 * @param mixed[] $auth Auth array.
 	 */
-	public function set_auth($auth)
+	public function set_auth(array $auth): void
 	{
 		if (is_array($auth))
 		{
@@ -85,7 +86,7 @@ class Notification extends Event
 	 * Gets the module from which the notification.
 	 * @return string The module identifier (for example the name of its folder).
 	 */
-	public function get_module_id()
+	public function get_module_id(): string
 	{
 		return $this->module_id;
 	}
@@ -94,7 +95,7 @@ class Notification extends Event
 	 * Gets permission to read this notification
 	 * @return mixed[] The authorization array.
 	 */
-	public function get_auth()
+	public function get_auth(): array
 	{
 		return $this->auth;
 	}
@@ -103,7 +104,7 @@ class Notification extends Event
 	 * Gets the name of the module from which the notification.
 	 * @return string The module name.
 	 */
-	public function get_module_name()
+	public function get_module_name(): string
 	{
 		if (!empty($this->module_id))
 		{

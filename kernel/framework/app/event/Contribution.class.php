@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 2.0 - 2008 07 21
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -20,62 +20,62 @@ class Contribution extends Event
 	/**
 	 * @var string Description of the contribution (for instance to justify a contribution).
 	 */
-	private $description;
+	private string $description;
 
 	/**
 	 * @var string String containing the identifier of the module corresponding to the contribution (ex: forum).
 	 */
-	private $module = '';
+	private string $module = '';
 
 	/**
 	 * @var Date Date at which the contribution has been processed (if it is obviously). Default value: date at which is created the contribution.
 	 */
-	private $fixing_date;
+	private Date $fixing_date;
 
 	/**
 	 * @var array Authorization array containing the people who can treat the contribution.
 	 */
-	private $auth = [];
+	private array $auth = [];
 
 	/**
 	 * @var int Identifier of the member who has posted the contribution.
 	 */
-	private $poster_id = 0;
+	private int $poster_id = 0;
 
 	/**
 	 * @var int Identifier of the member who has fixed the contribution.
 	 */
-	private $fixer_id = 0;
+	private int $fixer_id = 0;
 
 	/**
 	 * @var string Login of the member who has posted the contribution.
 	 */
-	private $poster_login = '';
+	private string $poster_login = '';
 
 	/**
 	 * @var string Login of the member who has fixed the contribution.
 	 */
-	private $fixer_login = '';
+	private string $fixer_login = '';
 
 	/**
 	 * @var string Level of the member who has posted the contribution.
 	 */
-	private $poster_level = '';
+	private string $poster_level = '';
 
 	/**
 	 * @var string Level of the member who has fixed the contribution.
 	 */
-	private $fixer_level = '';
+	private string $fixer_level = '';
 
 	/**
 	 * @var string Groups of the member who has posted the contribution.
 	 */
-	private $poster_groups = '';
+	private string $poster_groups = '';
 
 	/**
 	 * @var string Groups of the member who has fixed the contribution.
 	 */
-	private $fixer_groups = '';
+	private string $fixer_groups = '';
 
 	/**
 	 * Builds a Contribution object.
@@ -107,7 +107,7 @@ class Contribution extends Event
 	 * @param string $poster_login Login of the poster of the contribution.
 	 * @param string $fixer_login Login of the fixer of the contribution.
 	 */
-	public function build($id, $entitled, $description, $fixing_url, $module, $status, $creation_date, $fixing_date, $auth, $poster_id, $fixer_id, $id_in_module, $identifier, $type, $poster_login = '', $fixer_login = '', $poster_level = '', $fixer_level = '', $poster_groups = '', $fixer_groups = '')
+	public function build(int $id, string $entitled, string $description, string $fixing_url, string $module, int $status, Date $creation_date, Date $fixing_date, array $auth, int $poster_id, int $fixer_id, int $id_in_module, string $identifier, string $type, string $poster_login = '', string $fixer_login = '', string $poster_level = '', string $fixer_level = '', string $poster_groups = '', string $fixer_groups = ''): void
 	{
 		//Building parent class
 		parent::build_event($id, $entitled, $fixing_url, $status, $creation_date, $id_in_module, $identifier, $type);
@@ -134,7 +134,7 @@ class Contribution extends Event
 	 * Sets the module in which the contribution is used.
 	 * @param string $module Module identifier (for example the name of the module folder).
 	 */
-	public function set_module($module)
+	public function set_module(string $module): void
 	{
 		$this->module = $module;
 	}
@@ -143,7 +143,7 @@ class Contribution extends Event
 	 * Sets the fixing date.
 	 * @param Date $date Date
 	 */
-	public function set_fixing_date($date)
+	public function set_fixing_date(Date $date): void
 	{
 		if (is_object($date) && $date instanceof Date)
 		{
@@ -160,7 +160,7 @@ class Contribution extends Event
 	 * 	<li>Event::EVENT_STATUS_PROCESSED if the event is processed.
 	 * </ul>
 	 */
-	public function set_status($new_current_status)
+	public function set_status(int $new_current_status): void
 	{
 		if (in_array($new_current_status, [Event::EVENT_STATUS_UNREAD, Event::EVENT_STATUS_BEING_PROCESSED, Event::EVENT_STATUS_PROCESSED], TRUE))
 		{
@@ -190,7 +190,7 @@ class Contribution extends Event
 	 * Sets the authorization of the contribution. It will determine who will be able to treat the contribution.
 	 * @param mixed[] $auth Auth array.
 	 */
-	public function set_auth($auth)
+	public function set_auth(array $auth): void
 	{
 		if (is_array($auth))
 		{
@@ -202,7 +202,7 @@ class Contribution extends Event
 	 * Sets the id of the poster.
 	 * @param int $poster_id Id.
 	 */
-	public function set_poster_id($poster_id)
+	public function set_poster_id(int $poster_id): void
 	{
 		if ($poster_id  > 0)
 		{
@@ -216,7 +216,7 @@ class Contribution extends Event
 	 * Sets the id of the fixer.
 	 * @param int $fixer_id Id.
 	 */
-	public function set_fixer_id($fixer_id)
+	public function set_fixer_id(int $fixer_id): void
 	{
 		if ($fixer_id  > 0)
 		{
@@ -230,7 +230,7 @@ class Contribution extends Event
 	 * Sets the description of the contribution.
 	 * @param string $description Description (can be some HTML content).
 	 */
-	public function set_description($description)
+	public function set_description(string $description): void
 	{
 		if (is_string($description))
 		{
@@ -242,7 +242,7 @@ class Contribution extends Event
 	 * Gets the description of the contribution.
 	 * @return string the description
 	 */
-	public function get_description()
+	public function get_description(): string
 	{
 		return $this->description;
 	}
@@ -251,7 +251,7 @@ class Contribution extends Event
 	 * Gets the module in which the contribution is used.
 	 * @return string The module identifier (for example the name of its folder).
 	 */
-	public function get_module()
+	public function get_module(): string
 	{
 		return $this->module;
 	}
@@ -260,7 +260,7 @@ class Contribution extends Event
 	 * Gets the contribution fixing date.
 	 * @return mixed The date at which the contribution has been treated.
 	 */
-	public function get_fixing_date()
+	public function get_fixing_date(): ?Date
 	{
 		return $this->fixing_date;
 	}
@@ -269,7 +269,7 @@ class Contribution extends Event
 	 * Gets the authorization of treatment of this contribution.
 	 * @return mixed[] The authorization array.
 	 */
-	public function get_auth()
+	public function get_auth(): array
 	{
 		return $this->auth;
 	}
@@ -278,7 +278,7 @@ class Contribution extends Event
 	 * Gets the identifier of the poster.
 	 * @return int Its id.
 	 */
-	public function get_poster_id()
+	public function get_poster_id(): int
 	{
 		return $this->poster_id;
 	}
@@ -287,7 +287,7 @@ class Contribution extends Event
 	 * Gets the identifier of the fixer.
 	 * @return int Its id.
 	 */
-	public function get_fixer_id()
+	public function get_fixer_id(): int
 	{
 		return $this->fixer_id;
 	}
@@ -296,7 +296,7 @@ class Contribution extends Event
 	 * Gets the poster login.
 	 * @return string The poster login.
 	 */
-	public function get_poster_login()
+	public function get_poster_login(): string
 	{
 		return $this->poster_login;
 	}
@@ -305,7 +305,7 @@ class Contribution extends Event
 	 * Gets the fixer login.
 	 * @return string The fixer login.
 	 */
-	public function get_fixer_login()
+	public function get_fixer_login(): string
 	{
 		return $this->fixer_login;
 	}
@@ -314,7 +314,7 @@ class Contribution extends Event
 	 * Gets the poster level.
 	 * @return string The poster level.
 	 */
-	public function get_poster_level()
+	public function get_poster_level(): string
 	{
 		return $this->poster_level;
 	}
@@ -323,7 +323,7 @@ class Contribution extends Event
 	 * Gets the fixer level.
 	 * @return string The fixer level.
 	 */
-	public function get_fixer_level()
+	public function get_fixer_level(): string
 	{
 		return $this->fixer_level;
 	}
@@ -332,7 +332,7 @@ class Contribution extends Event
 	 * Gets the poster groups.
 	 * @return string The poster groups.
 	 */
-	public function get_poster_groups()
+	public function get_poster_groups(): string
 	{
 		return $this->poster_groups;
 	}
@@ -341,7 +341,7 @@ class Contribution extends Event
 	 * Gets the fixer groups.
 	 * @return string The fixer groups.
 	 */
-	public function get_fixer_groups()
+	public function get_fixer_groups(): string
 	{
 		return $this->fixer_groups;
 	}
@@ -350,7 +350,7 @@ class Contribution extends Event
 	 * Gets the contribution status name. It's automatically translated in the user language, ready to be displayed.
 	 * @return string The status name.
 	 */
-	public function get_status_name()
+	public function get_status_name(): string
 	{
 		switch ($this->current_status)
 		{
@@ -361,13 +361,14 @@ class Contribution extends Event
 			case Event::EVENT_STATUS_PROCESSED:
 				return LangLoader::get_message('contribution.processed', 'contribution-lang');
 		}
+        return '';
 	}
 
 	/**
 	 * Gets the name of the module in which the contribution is used.
 	 * @return string The module name.
 	 */
-	public function get_module_name()
+	public function get_module_name(): string
 	{
 		if (!empty($this->module))
 		{
@@ -381,7 +382,7 @@ class Contribution extends Event
 		}
 	}
 
-	public function get_properties()
+	public function get_properties(): array
 	{
 		return array_merge(parent::get_properties(), [
 			'description'   => $this->get_description(),

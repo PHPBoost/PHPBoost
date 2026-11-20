@@ -14,27 +14,18 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
 class CacheManager
 {
-    /**
-     * @var DataStore The RAM cache
-     */
-    private static $ram_cache = null;
+    private static ?RAMDataStore $ram_cache = null;
+    private static ?DataStore $fs_cache = null;
 
-    /**
-     * @var DataStore
-     */
-    private static $fs_cache = null;
-
-    /**
-     * @return DataStore
-     */
-    private static function get_ram_cache()
+    private static function get_ram_cache(): RAMDataStore
     {
         if (self::$ram_cache == null) {
             self::$ram_cache = new RAMDataStore();
@@ -42,10 +33,7 @@ class CacheManager
         return self::$ram_cache;
     }
 
-    /**
-     * @return DataStore
-     */
-    private static function get_fs_cache()
+    private static function get_fs_cache(): DataStore
     {
         if (self::$fs_cache === null) {
             self::$fs_cache = DataStoreFactory::get_filesystem_store(__CLASS__);
@@ -61,7 +49,7 @@ class CacheManager
      * it's the name of the entry you want to load
      * @return CacheData The loaded data
      */
-    public static function load($classname, $module_name, $entry_name = '')
+    public static function load(string $classname, string $module_name, string $entry_name = ''): CacheData
     {
         $name = self::compute_entry_name($module_name, $entry_name);
         try
@@ -85,7 +73,7 @@ class CacheManager
      * @return CacheData The loaded data
      * @throws CacheDataNotFoundException if the cache doesn't exist
      */
-    public static function try_load($classname, $module_name, $entry_name)
+    public static function try_load(string $classname, string $module_name, string $entry_name): CacheData
     {
         $name = self::compute_entry_name($module_name, $entry_name);
 
@@ -108,7 +96,7 @@ class CacheManager
      * @param string $entry_name If the module wants to manage several entries,
      * it's the name of the entry you want to invalidate
      */
-    public static function invalidate($module_name, $entry_name = '')
+    public static function invalidate(string $module_name, string $entry_name = ''): void
     {
         $name = self::compute_entry_name($module_name, $entry_name);
         self::invalidate_file_cache($name);
@@ -118,7 +106,7 @@ class CacheManager
     /**
      * Invalidates all the cached data
      */
-    public static function clear()
+    public static function clear(): void
     {
         self::get_ram_cache()->clear();
         self::get_fs_cache()->clear();
@@ -130,79 +118,67 @@ class CacheManager
      * @param string $module_name Name of the module owning the entry to save
      * @param string $entry_name Name of the entry to save
      */
-    public static function save($data, $module_name, $entry_name = '')
+    public static function save(mixed $data, string $module_name, string $entry_name = ''): void
     {
         $name = self::compute_entry_name($module_name, $entry_name);
         self::file_cache_data($name, $data);
         self::memory_cache_data($name, $data);
     }
 
-    /**
-     * @return string
-     */
-    private static function compute_entry_name($module_name, $entry_name)
+    private static function compute_entry_name(string $module_name, string $entry_name): string
     {
-        if (!empty($entry_name)) {
+        if (!empty($entry_name))
+        {
             return Url::encode_rewrite($module_name . '-' . $entry_name);
-        } else {
+        }
+        else
+        {
             return Url::encode_rewrite($module_name);
         }
     }
 
     //RAM cache management
-    /**
-     * @return bool
-     */
-    private static function is_memory_cached($name)
+    private static function is_memory_cached(string $name): bool
     {
         return self::get_ram_cache()->contains($name);
     }
 
-    /**
-     * @return CacheData
-     */
-    private static function get_memory_cached_data($name)
+    private static function get_memory_cached_data(string $name): CacheData
     {
         return self::get_ram_cache()->get($name);
     }
 
-    private static function memory_cache_data($name, CacheData $value)
+    private static function memory_cache_data(string $name, CacheData $value): void
     {
         self::get_ram_cache()->store($name, $value);
     }
 
-    private static function invalidate_memory_cache($name)
+    private static function invalidate_memory_cache(string $name): void
     {
         self::get_ram_cache()->delete($name);
     }
 
-    private static function get_file_name($name)
+    private static function get_file_name(string $name): string
     {
         return $name . '.data';
     }
 
-    /**
-     * @return bool
-     */
-    private static function is_file_cached($name)
+    private static function is_file_cached(string $name): bool
     {
         return self::get_fs_cache()->contains(self::get_file_name($name));
     }
 
-    /**
-     * @return CacheData
-     */
-    private static function get_file_cached_data($name)
+    private static function get_file_cached_data(string $name): CacheData
     {
         return self::get_fs_cache()->get(self::get_file_name($name));
     }
 
-    private static function file_cache_data($name, CacheData $value)
+    private static function file_cache_data(string $name, CacheData $value): void
     {
         self::get_fs_cache()->store(self::get_file_name($name), $value);
     }
 
-    private static function invalidate_file_cache($name)
+    private static function invalidate_file_cache(string $name): void
     {
         self::get_fs_cache()->delete(self::get_file_name($name));
     }
