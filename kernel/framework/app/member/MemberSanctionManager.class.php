@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 21
  * @since       PHPBoost 3.0 - 2011 02 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,14 +14,15 @@
 
 class MemberSanctionManager
 {
-	private static $db_querier;
-	private static $lang;
-	const NO_SEND_CONFIRMATION = 'no_send_confirmation';
-	const SEND_MAIL = 'send_mail';
-	const SEND_MP = 'send_mp';
-	const SEND_MP_AND_MAIL = 'send_mp_and_mail';
+	private static ?DBQuerier $db_querier = null;
+	private static array $lang;
 
-	public static function __static()
+	const NO_SEND_CONFIRMATION = 'no_send_confirmation';
+	const SEND_MAIL            = 'send_mail';
+	const SEND_MP              = 'send_mp';
+	const SEND_MP_AND_MAIL     = 'send_mp_and_mail';
+
+	public static function __static(): void
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 		self::$lang = LangLoader::get_all_langs();
@@ -30,7 +31,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_punish_duration, set_content_to_send. Use setters set_send_mp and set_send_mail for sending message personel or mail to confirm the sanction
 	 */
-	public static function remove_write_permissions($user_id, $punish_duration, $send_confirmation = self::SEND_MP, $content_to_send = '')
+	public static function remove_write_permissions(int $user_id, string $punish_duration, string $send_confirmation = self::SEND_MP, string $content_to_send = ''): void
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -50,7 +51,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_punish_duration, set_content_to_send.
 	 */
-	public static function banish($user_id, $punish_duration, $send_confirmation = self::SEND_MAIL, $content_to_send = '')
+	public static function banish(int $user_id, string $punish_duration, string $send_confirmation = self::SEND_MAIL, string $content_to_send = ''): void
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -70,7 +71,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id, set_level_punish, set_content_to_send. Use setters set_send_mp and set_send_mail for sending message personel or mail to confirm the sanction
 	 */
-	public static function caution($user_id, $level_punish, $send_confirmation = self::SEND_MP, $content_to_send = '')
+	public static function caution(int $user_id, string $level_punish, string $send_confirmation = self::SEND_MP, string $content_to_send = ''): void
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -100,7 +101,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id.
 	 */
-	public static function cancel_caution($user_id)
+	public static function cancel_caution(int $user_id): void
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -111,7 +112,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id.
 	 */
-	public static function restore_write_permissions($user_id)
+	public static function restore_write_permissions(int $user_id): void
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -122,7 +123,7 @@ class MemberSanctionManager
 	/*
 	 * This function request settters set_user_id.
 	 */
-	public static function cancel_banishment($user_id)
+	public static function cancel_banishment(int $user_id): void
 	{
 		if (self::verificate_user_id($user_id))
 		{
@@ -136,22 +137,22 @@ class MemberSanctionManager
 		}
 	}
 
-	private static function send_mp($user_id, $title, $content)
+	private static function send_mp(int $user_id, string $title, string $content): void
 	{
 		PrivateMsg::start_conversation($user_id, addslashes($title), nl2br($content), '-1', PrivateMsg::SYSTEM_PM);
 	}
 
-	private static function send_mail($user_id, $title, $content)
+	private static function send_mail(int $user_id, string $title, string $content): void
 	{
 		AppContext::get_mail_service()->send_from_properties(self::get_member_mail($user_id), $title, sprintf($content, GeneralConfig::load()->get_site_name(), MailServiceConfig::load()->get_mail_signature()));
 	}
 
-	private static function verificate_user_id($user_id)
+	private static function verificate_user_id(int $user_id): bool
 	{
 		return self::$db_querier->count(DB_TABLE_MEMBER, "WHERE user_id = '" . $user_id . "'") > 0 ? true : false;
 	}
 
-	private static function get_member_mail($user_id)
+	private static function get_member_mail(int $user_id): string
 	{
 		return self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'email', 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 	}

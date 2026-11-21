@@ -200,9 +200,9 @@ abstract class CategoriesCache implements CacheData
 
 	/**
 	 * Loads and returns the categories cached data.
-	 * @return CategoriesCache The cached data
+	 * @return static|null The cached data
 	 */
-	public static function load(string $module_id = ''): ?CategoriesCache
+	public static function load(string $module_id = ''): mixed
 	{
 		if (!in_array($module_id, ['admin', 'kernel', 'user']))
         {

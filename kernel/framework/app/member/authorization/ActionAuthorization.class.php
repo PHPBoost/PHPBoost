@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 03 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,15 +18,12 @@
 
 class ActionAuthorization
 {
-	private $label;
-	private $description = '';
-	private $bit;
-	/**
-	 * @var RolesAuthorizations
-	 */
-	private $roles;
+	private string $label = '';
+	private string $description = '';
+	private int $bit;
+	private ?RolesAuthorizations $roles = null;
 
-	private $disabled_ranks = [];
+	private array $disabled_ranks = [];
 
 	/**
 	 * Builds an ActionAuthorization from its properties
@@ -36,7 +33,7 @@ class ActionAuthorization
 	 * @param RolesAuthorizations $roles The authorization roles
 	 * @param mixed[] $disabled_ranks The ranks to disable in select
 	 */
-	public function __construct($label, $bit, $description = '', ?RolesAuthorizations $roles = null, $disabled_ranks = [])
+	public function __construct(string $label, int $bit, string $description = '', ?RolesAuthorizations $roles = null, array $disabled_ranks = [])
 	{
 		$this->label = $label;
 		$this->bit = $bit;
@@ -56,7 +53,7 @@ class ActionAuthorization
 	 * Returns the label
 	 * @return string The label
 	 */
-	public function get_label()
+	public function get_label(): string
 	{
 		return $this->label;
 	}
@@ -65,7 +62,7 @@ class ActionAuthorization
 	 * Sets the label
 	 * @param string $label The label to set
 	 */
-	public function set_label($label)
+	public function set_label(string $label): void
 	{
 		$this->label  = $label;
 	}
@@ -74,7 +71,7 @@ class ActionAuthorization
 	 * Returns the bit which is used to store the authorization flags.
 	 * @return int The bit (see the {@link #set_bit()} to know how the bit is built
 	 */
-	public function get_bit()
+	public function get_bit(): int
 	{
 		return $this->bit;
 	}
@@ -84,7 +81,7 @@ class ActionAuthorization
 	 * @param int $bit The bit to use. It's an integer whose boolean representation is 0 everywhere but 1 where the flag is.
 	 * In fact it's 2^n where n is the number of the bit to use.
 	 */
-	public function set_bit($bit)
+	public function set_bit(int $bit): void
 	{
 		$this->bit = $bit;
 	}
@@ -93,7 +90,7 @@ class ActionAuthorization
 	 * Returns the action description
 	 * @return string the description
 	 */
-	public function get_description()
+	public function get_description(): string
 	{
 		return $this->description;
 	}
@@ -102,7 +99,7 @@ class ActionAuthorization
 	 * Sets the description associated to the action
 	 * @param string $description The description
 	 */
-	public function set_description($description)
+	public function set_description(string $description): void
 	{
 		$this->description = $description;
 	}
@@ -111,7 +108,7 @@ class ActionAuthorization
 	 * Returns the roles authorizations associated to this action
 	 * @return RolesAuthorizations
 	 */
-	public function get_roles_auths()
+	public function get_roles_auths(): RolesAuthorizations
 	{
 		return $this->roles;
 	}
@@ -120,7 +117,7 @@ class ActionAuthorization
 	 * Sets the roles authorizations
 	 * @param RolesAuthorizations $roles The roles
 	 */
-	public function set_roles_auths(RolesAuthorizations $roles)
+	public function set_roles_auths(RolesAuthorizations $roles): void
 	{
 		$this->roles = $roles;
 	}
@@ -129,7 +126,7 @@ class ActionAuthorization
 	 * Returns the disabled ranks in select associated to this action
 	 * @return mixed[] The disabled ranks
 	 */
-	public function get_disabled_ranks()
+	public function get_disabled_ranks(): array
 	{
 		return $this->disabled_ranks;
 	}
@@ -138,7 +135,7 @@ class ActionAuthorization
 	 * Sets the disabled ranks in select
 	 * @param mixed[] $disabled_ranks The ranks to disable
 	 */
-	public function set_disabled_ranks(Array $disabled_ranks)
+	public function set_disabled_ranks(array $disabled_ranks): void
 	{
 		$this->disabled_ranks = $disabled_ranks;
 	}
@@ -147,7 +144,7 @@ class ActionAuthorization
 	 * Builds the array at the legacy format containing only the action's authorizations.
 	 * @return mixed[] The array at the legacy format.
 	 */
-	public function build_auth_array()
+	public function build_auth_array(): array
 	{
 		$auth_array = $this->roles->build_auth_array();
 		foreach ($auth_array as &$profile)
@@ -161,7 +158,7 @@ class ActionAuthorization
 	 * Sets authorizations from a array at the legacy format.
 	 * @param array $auth_array The array to read
 	 */
-	public function build_from_auth_array(array $auth_array)
+	public function build_from_auth_array(array $auth_array): void
 	{
 		foreach ($auth_array as &$profile)
 		{

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 21
  * @since       PHPBoost 3.0 - 2010 12 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -29,7 +29,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$this->authorized_pictures_extensions = FileUploadConfig::load()->get_authorized_picture_extensions();
 	}
 
-	public function display_field_create(MemberExtendedField $member_extended_field)
+	public function display_field_create(MemberExtendedField $member_extended_field): void
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
@@ -45,7 +45,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		));
 	}
 
-	public function display_field_update(MemberExtendedField $member_extended_field)
+	public function display_field_update(MemberExtendedField $member_extended_field): void
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
@@ -67,7 +67,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['user.extended.field.avatar.delete'], FormFieldCheckbox::UNCHECKED));
 	}
 
-	public function display_field_profile(MemberExtendedField $member_extended_field)
+	public function display_field_profile(MemberExtendedField $member_extended_field): mixed
 	{
 		$value = $member_extended_field->get_value();
 		if (empty($value) && $this->user_accounts_config->is_default_avatar_enabled())
@@ -87,9 +87,10 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		{
 			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $avatar];
 		}
+        return null;
 	}
 
-	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field)
+	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field): mixed
 	{
 		$delete = $form->get_value('delete_avatar');
 		if ($delete)
@@ -103,7 +104,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		}
 	}
 
-	private function upload_avatar($form, $member_extended_field)
+	private function upload_avatar(HTMLForm $form, MemberExtendedField $member_extended_field): mixed
 	{
 		$avatar = $form->get_value('upload_avatar');
 
@@ -161,11 +162,14 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 					$directory = $dir . Url::encode_rewrite($name . '_' . $this->key_hash()) . '.' . $extension;
 
-					try {
+					try
+                    {
 						$resizer->resize_with_max_values($image, $this->user_accounts_config->get_max_avatar_width(), $this->user_accounts_config->get_max_avatar_height(), PATH_TO_ROOT . $directory);
 						$this->delete_old_avatar($member_extended_field);
 						return $directory;
-					} catch (UnsupportedOperationException $e) {
+					}
+                    catch (UnsupportedOperationException $e)
+                    {
 						throw new MemberExtendedFieldErrorsMessageException(LangLoader::get_message('warning.file.max.dimension', 'warning-lang'));
 					}
 				}
@@ -194,14 +198,15 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		{
 			return MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
 		}
+        return null;
 	}
 
-	private function key_hash()
+	private function key_hash(): string
 	{
 		return KeyGenerator::generate_key(5);
 	}
 
-	private function delete_old_avatar($member_extended_field)
+	private function delete_old_avatar(MemberExtendedField $member_extended_field): void
 	{
 		$value = MemberExtendedFieldsService::return_field_member($member_extended_field->get_field_name(), $member_extended_field->get_user_id());
 

@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 15
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 2.0 - 2008 07 26
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -27,7 +27,7 @@ class Authorizations
 	 * @return array The array of authorizations.
 	 * @static
 	 */
-	public static function build_auth_array_from_form(...$args)
+	public static function build_auth_array_from_form(mixed ...$args): array
 	{
 		$array_auth_all = [];
 		$sum_auth = 0;
@@ -46,13 +46,19 @@ class Authorizations
 		{
 			$admin_auth_default = $args[$nbr_arg - 1];
 			if (!is_bool($admin_auth_default))
+            {
 				$admin_auth_default = true;
+            }
 			else
+            {
 				$nbr_arg--; //On diminue de 1 le nombre d'argument, car le denier est le flag.
+            }
 		}
 		//On balaye les tableaux passés en argument.
 		for ($i = 0; $i < $nbr_arg; $i++)
+        {
 			self::get_auth_array($args[$i], $idselect, $array_auth_all, $sum_auth);
+        }
 
 		ksort($array_auth_all); //Tri des clés du tableau par ordre alphabétique, question de lisibilité.
 
@@ -67,7 +73,7 @@ class Authorizations
 	 * @return array with the authorization for the bit specified.
 	* @static
 	 */
-	public static function auth_array_simple($bit_value, $idselect, $admin_auth_default = true)
+	public static function auth_array_simple(int $bit_value, string $idselect, bool $admin_auth_default = true): array
 	{
 		$array_auth_all = [];
 		$sum_auth = 0;
@@ -91,13 +97,13 @@ class Authorizations
 	 * @param array $array_auth Array of authorization, allow you to select value authorized for this bit.
 	 * @param array $array_ranks_default Array of ranks selected by default.
 	 * @param string $idselect Html id used for the select.
-	 * @param int $disabled Disabled all options for the select. Set to true to disable all options.
+	 * @param boolean $disabled Disabled all options for the select. Set to true to disable all options.
 	 * @param boolean $disabled_advanced_auth Disable advanced authorizations.
 	 * @param mixed[] $disabled_ranks The ranks to disable in select.
-	 * @return String The formated select.
+	 * @return string The formated select.
 	 * @static
 	 */
-	public static function generate_select($auth_bit, $array_auth = [], $array_ranks_default = [], $idselect = '', $disabled = false, $disabled_advanced_auth = false, $disabled_ranks = [])
+	public static function generate_select(int$auth_bit, array $array_auth = [], array $array_ranks_default = [], string $idselect = '', bool $disabled = false, bool $disabled_advanced_auth = false, array $disabled_ranks = []): string
 	{
 		$lang = LangLoader::get_all_langs();
 
@@ -226,28 +232,42 @@ class Authorizations
 	 * @return boolean True if authorized, false otherwise.
 	 * @static
 	 */
-	public static function check_auth($type, $value, $array_auth, $bit)
+	public static function check_auth(int $type, int $value, array $array_auth, int $bit): bool
 	{
 		if (!is_int($value))
+        {
 			return false;
+        }
 
 		switch ($type)
 		{
 			case RANK_TYPE:
 				if ($value <= 2 && $value >= -1)
+                {
 					return isset($array_auth['r' . $value]) && $array_auth['r' . $value] & $bit;
+                }
 				else
+                {
 					return false;
+                }
 			case GROUP_TYPE:
 				if ($value >= 1)
+                {
 					return isset($array_auth[$value]) && !empty($array_auth[$value]) ? $array_auth[$value] & $bit : false;
+                }
 				else
+                {
 					return false;
+                }
 			case USER_TYPE:
 				if ($value >= 1)
+                {
 					return isset($array_auth['m' . $value]) && !empty($array_auth['m' . $value]) ? $array_auth['m' . $value] & $bit : false;
+                }
 				else
+                {
 					return false;
+                }
 			default:
 				return false;
 		}
@@ -262,7 +282,7 @@ class Authorizations
 	 * @return array The new array merged.
 	 * @static
 	 */
-	public static function merge_auth($parent, $child, $auth_bit, $mode)
+	public static function merge_auth(array $parent, array $child, int $auth_bit, int $mode): array
 	{
 		//Parcours des différents types d'utilisateur
 		$merged = [];
@@ -330,10 +350,12 @@ class Authorizations
 	 * @return array The new authorization array.
 	 * @static
 	 */
-	public static function capture_and_shift_bit_auth($auth, $original_bit, $final_bit = 1)
+	public static function capture_and_shift_bit_auth(array $auth, int $original_bit, int $final_bit = 1): array
 	{
 		if ($final_bit == 0)
+        {
 			die('<strong>Error :</strong> The destination bit must not be void.');
+        }
 
 		$result = $auth;
 
@@ -373,21 +395,21 @@ class Authorizations
 	 * @param int $bit_value The bit emplacement in the authorization array used to set it.
 	 * @param string $idselect Html id used for the select.
 	 * @param array $array_auth_all Array where the authorizations collected are stored.
-	 * @param array $sum_auth Sum up all authorizations for the authorization array.
+	 * @param int $sum_auth Sum up all authorizations for the authorization array.
 	 * @static
 	 */
-	private static function get_auth_array($bit_value, $idselect, &$array_auth_all, &$sum_auth)
+	private static function get_auth_array(int $bit_value, string $idselect, array &$array_auth_all, int &$sum_auth): void
 	{
 		$idselect = ($idselect == '') ? $bit_value : $idselect; //Identifiant du formulaire.
 
-		##### Niveau et Groupes #####
+		##### Level and groups #####
 		$array_auth_groups = !empty($_REQUEST['groups_auth' . $idselect]) ? $_REQUEST['groups_auth' . $idselect] : '';
 		if (!empty($array_auth_groups)) //Récupération du formulaire.
 		{
 			$sum_auth += $bit_value;
 			if (is_array($array_auth_groups))
 			{
-				//Ajout des autorisations supérieures si une autorisations inférieure est autorisée. Ex: Membres autorisés implique modérateurs autorisés.
+				// Adding higher permissions if lower permissions are allowed. Ex: Authorized members implies authorized moderators.
 				$array_level = [0 => 'r-1', 1 => 'r0', 2 => 'r1'];
 				$min_auth = 3;
 				foreach ($array_level as $level => $key)
@@ -399,7 +421,9 @@ class Authorizations
 					else
 					{
 						if ($min_auth < $level)
+                        {
 							$array_auth_groups[] = $key;
+                        }
 					}
 				}
 
@@ -422,13 +446,13 @@ class Authorizations
 			}
 		}
 
-		##### Membres (autorisations avancées) ######
+		##### Members (advanced autorizations) ######
 		$array_auth_members = !empty($_REQUEST['members_auth' . $idselect]) ? $_REQUEST['members_auth' . $idselect] : '';
 		if (!empty($array_auth_members)) //Récupération du formulaire.
 		{
 			if (is_array($array_auth_members))
 			{
-				//Ajout des autorisations au tableau final.
+				// Add autorizations to final array.
 				foreach ($array_auth_members as $key => $value)
 				{
 					if ($value == "")

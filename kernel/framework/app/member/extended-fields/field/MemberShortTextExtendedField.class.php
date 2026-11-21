@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 21
  * @since       PHPBoost 3.0 - 2010 12 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -42,7 +42,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		$this->set_name($this->lang['user.field.type.short.text']);
 	}
 
-	public function display_field_create(MemberExtendedField $member_extended_field)
+	public function display_field_create(MemberExtendedField $member_extended_field): void
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		$regex = $member_extended_field->get_regex();
@@ -76,7 +76,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		));
 	}
 
-	public function display_field_update(MemberExtendedField $member_extended_field)
+	public function display_field_update(MemberExtendedField $member_extended_field): void
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 		$regex = $member_extended_field->get_regex();
@@ -110,16 +110,17 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 		));
 	}
 
-	public function display_field_profile(MemberExtendedField $member_extended_field)
+	public function display_field_profile(MemberExtendedField $member_extended_field): mixed
 	{
 		$value = $member_extended_field->get_value();
 		if ($value !== null && !empty($value))
 		{
 			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $this->get_value($member_extended_field, $value)];
 		}
+        return null;
 	}
 
-	private function get_value(MemberExtendedField $member_extended_field, $value)
+	private function get_value(MemberExtendedField $member_extended_field, string $value): string
 	{
 		if ($member_extended_field->get_regex() == 4)
 		{
@@ -131,7 +132,7 @@ class MemberShortTextExtendedField extends AbstractMemberExtendedField
 					$displayed_value = '<a href="mailto:' . $value . '" class="button alt-button smaller"><i class="fab ' . $parameters['picture'] . '"></i> ' . $parameters['title'] . '</a>';
 			}
 		}
-		else if ($member_extended_field->get_regex() == 5)
+		elseif ($member_extended_field->get_regex() == 5)
 		{
 			$displayed_value = '<a href="' . $value . '" class="button alt-button smaller">' . $this->lang['form.website'] . '</a>';
 

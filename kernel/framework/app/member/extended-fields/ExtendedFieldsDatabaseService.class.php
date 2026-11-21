@@ -7,15 +7,16 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 08 14
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ExtendedFieldsDatabaseService
 {
-	private static $db_querier;
-	private static $db_utils;
+	private static ?DBQuerier $db_querier = null;
+	private static ?DBMSUtils $db_utils = null;
 
 	public static function __static()
 	{
@@ -23,7 +24,7 @@ class ExtendedFieldsDatabaseService
 		self::$db_utils = PersistenceContext::get_dbms_utils();
 	}
 
-	public static function add_extended_field(ExtendedField $extended_field)
+	public static function add_extended_field(ExtendedField $extended_field): void
 	{
 		self::add_extended_field_to_member($extended_field);
 
@@ -45,7 +46,7 @@ class ExtendedFieldsDatabaseService
 		]);
 	}
 
-	public static function update_extended_field(ExtendedField $extended_field)
+	public static function update_extended_field(ExtendedField $extended_field): void
 	{
 		self::change_extended_field_to_member($extended_field);
 
@@ -79,7 +80,7 @@ class ExtendedFieldsDatabaseService
 		}
 	}
 
-	public static function delete_extended_field(ExtendedField $extended_field)
+	public static function delete_extended_field(ExtendedField $extended_field): void
 	{
 		$id = $extended_field->get_id();
 		$field_name = $extended_field->get_field_name();
@@ -103,7 +104,7 @@ class ExtendedFieldsDatabaseService
 		}
 	}
 
-	public static function update_extended_field_display_by_id(ExtendedField $extended_field)
+	public static function update_extended_field_display_by_id(ExtendedField $extended_field):void
 	{
 		self::$db_querier->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
@@ -115,7 +116,7 @@ class ExtendedFieldsDatabaseService
 		]);
 	}
 
-	public static function update_extended_field_display_by_field_name(ExtendedField $extended_field)
+	public static function update_extended_field_display_by_field_name(ExtendedField $extended_field): void
 	{
 		self::$db_querier->inject(
 			"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
@@ -127,62 +128,66 @@ class ExtendedFieldsDatabaseService
 		]);
 	}
 
-	public static function select_data_field_by_id(ExtendedField $extended_field)
+	public static function select_data_field_by_id(ExtendedField $extended_field): mixed
 	{
 		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['*'], "WHERE id = '" . $extended_field->get_id() . "'");
 	}
 
-	public static function select_data_field_by_field_name(ExtendedField $extended_field)
+	public static function select_data_field_by_field_name(ExtendedField $extended_field): mixed
 	{
 		return self::$db_querier->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['*'], "WHERE field_name = '" . $extended_field->get_field_name() . "'");
 	}
 
-	public static function check_field_exist_by_field_name(ExtendedField $extended_field)
+	public static function check_field_exist_by_field_name(ExtendedField $extended_field): mixed
 	{
 		return self::$db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_name = '" . $extended_field->get_field_name() . "'") > 0;
 	}
 
-	public static function check_field_exist_by_id(ExtendedField $extended_field)
+	public static function check_field_exist_by_id(ExtendedField $extended_field): mixed
 	{
 		return self::$db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE id = '" . $extended_field->get_id() . "'") > 0;
 	}
 
-	public static function check_field_exist_by_type(ExtendedField $extended_field)
+	public static function check_field_exist_by_type(ExtendedField $extended_field): mixed
 	{
 		return self::$db_querier->count(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, "WHERE field_type = '" . $extended_field->get_field_type() . "'") > 0;
 	}
 
-	private static function delete_empty_fields_member(ExtendedField $extended_field)
+	private static function delete_empty_fields_member(ExtendedField $extended_field): void
 	{
 		self::$db_querier->inject("UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " SET ".$extended_field->get_field_name()." = :value WHERE '" . $extended_field->get_field_name() . "' IS NOT NULL", ['value' => '']);
 	}
 
-	private static function add_extended_field_to_member(ExtendedField $extended_field)
+	private static function add_extended_field_to_member(ExtendedField $extended_field): void
 	{
 		self::$db_querier->inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ADD " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field));
 	}
 
-	private static function change_extended_field_to_member(ExtendedField $extended_field)
+	private static function change_extended_field_to_member(ExtendedField $extended_field): void
 	{
 		$data = self::select_data_field_by_id($extended_field);
 		self::$db_querier->inject("ALTER TABLE " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " CHANGE " . $data['field_name'] . " " . $extended_field->get_field_name() . " " . self::type_columm_field($extended_field));
 	}
 
-	private static function drop_extended_field_to_member(ExtendedField $extended_field)
+	private static function drop_extended_field_to_member(ExtendedField $extended_field): void
 	{
 		$columns = self::$db_utils->desc_table(DB_TABLE_MEMBER_EXTENDED_FIELDS);
-		
+
 		if (isset($columns[$extended_field->get_field_name()]))
+        {
 			self::$db_utils->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, $extended_field->get_field_name());
+        }
 		else
 		{
 			$data = self::select_data_field_by_id($extended_field);
 			if (isset($columns[$data['field_name']]))
+            {
 				self::$db_utils->drop_column(DB_TABLE_MEMBER_EXTENDED_FIELDS, $data['field_name']);
+            }
 		}
 	}
 
-	public static function type_columm_field(ExtendedField $extended_field)
+	public static function type_columm_field(ExtendedField $extended_field): string
 	{
 		return "TEXT";
 	}

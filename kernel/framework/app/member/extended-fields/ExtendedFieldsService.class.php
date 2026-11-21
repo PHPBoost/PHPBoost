@@ -5,13 +5,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 08 14
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ExtendedFieldsService
 {
-	private static $error;
+	private static string $error = '';
 	const SORT_BY_ID = 1;
 	const SORT_BY_FIELD_NAME = 2;
 
@@ -19,7 +20,7 @@ class ExtendedFieldsService
 	 * Add a extended field
 	 * @param object $extended_field ExtendedField containing the name, field name, position, content, field type, possible values, default values, required and regex.
 	 */
-	public static function add(ExtendedField $extended_field)
+	public static function add(ExtendedField $extended_field): void
 	{
 		$name = $extended_field->get_name();
 		$type_field = $extended_field->get_field_type();
@@ -52,7 +53,7 @@ class ExtendedFieldsService
 	 * Update a extended field
 	 * @param object $extended_field ExtendedField containing the id, name, field name, content, field type, possible values, default values, required and regex.
 	 */
-	public static function update(ExtendedField $extended_field)
+	public static function update(ExtendedField $extended_field): void
 	{
 		$name = $extended_field->get_name();
 		$type_field = $extended_field->get_field_type();
@@ -71,7 +72,7 @@ class ExtendedFieldsService
 	 * Delete a extended field for id
 	 * @param integer $id the id of the extended field
 	 */
-	public static function delete_by_id($id)
+	public static function delete_by_id(int $id): void
 	{
 		if (!empty($id))
 		{
@@ -96,7 +97,7 @@ class ExtendedFieldsService
 	 * Delete a extended field for field name
 	 * @param string $field_name the field name of the extended field
 	 */
-	public static function delete_by_field_name($field_name)
+	public static function delete_by_field_name(string $field_name): void
 	{
 		if (!empty($field_name))
 		{
@@ -120,10 +121,10 @@ class ExtendedFieldsService
 	/**
 	 * Return informations for extended field by id or field name
 	 * @param object ExtendedField containing the id or the field name
-	 * @param const $sort SORT_BY_ID or SORT_BY_FIELD_NAME
+	 * @param int $sort SORT_BY_ID or SORT_BY_FIELD_NAME
 	 * $return Object ExtendedField containing the informations field
 	 */
-	public static function data_field(ExtendedField $extended_field, $sort = self::SORT_BY_ID)
+	public static function data_field(ExtendedField $extended_field, int $sort = self::SORT_BY_ID): mixed
 	{
 		$field_name = $extended_field->get_field_name();
 		$id = $extended_field->get_id();
@@ -155,7 +156,7 @@ class ExtendedFieldsService
 
 	}
 
-	private static function set_error($error)
+	private static function set_error(string $error): void
 	{
 		self::$error = $error;
 	}
@@ -163,13 +164,14 @@ class ExtendedFieldsService
 	/**
 	 * $return String Possible errors encountered
 	 */
-	public static function get_error()
+	public static function get_error(): string
 	{
 		$error = self::$error;
 		if (!empty($error))
 		{
 			return $error;
 		}
+        return '';
 	}
 }
 ?>

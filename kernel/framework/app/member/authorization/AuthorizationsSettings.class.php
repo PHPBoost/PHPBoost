@@ -14,13 +14,14 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 03 01
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AuthorizationsSettings
 {
-	private $actions;
+	private array $actions;
 
 	/**
 	 * Constructs from a list of {@link ActionAuthorization}
@@ -35,7 +36,7 @@ class AuthorizationsSettings
 	 * Returns the list of the actions
 	 * @return ActionAuthorization[]
 	 */
-	public function get_actions()
+	public function get_actions(): array
 	{
 		return $this->actions;
 	}
@@ -44,7 +45,7 @@ class AuthorizationsSettings
 	 * Adds an action
 	 * @param ActionAuthorization $action The action to add
 	 */
-	public function add_action(ActionAuthorization $action)
+	public function add_action(ActionAuthorization $action): void
 	{
 		$this->actions[] = $action;
 	}
@@ -55,7 +56,7 @@ class AuthorizationsSettings
 	 * check authorizations.
 	 * @return mixed[] The correspondant array
 	 */
-	public function build_auth_array()
+	public function build_auth_array(): array
 	{
 		$auth_array = [];
 		foreach ($this->actions as $action)
@@ -65,7 +66,7 @@ class AuthorizationsSettings
 		return $auth_array;
 	}
 
-	private static function merge_auth_array(array & $global, ActionAuthorization $action)
+	private static function merge_auth_array(array &$global, ActionAuthorization $action): void
 	{
 		foreach ($action->build_auth_array() as $role => $value)
 		{
@@ -84,7 +85,7 @@ class AuthorizationsSettings
 	 * Sets the authorizations from an authorization array formatted at the legacy format.
 	 * @param array $auth_array The array to read.
 	 */
-	public function build_from_auth_array(array $auth_array)
+	public function build_from_auth_array(array $auth_array): void
 	{
 		foreach ($this->actions as $action)
 		{

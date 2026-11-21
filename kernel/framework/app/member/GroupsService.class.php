@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 21
  * @since       PHPBoost 1.6 - 2007 05 18
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -22,7 +22,7 @@ class GroupsService
 {
 	private static ?DBQuerier $db_querier = null;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$db_querier = PersistenceContext::get_querier();
 	}
@@ -33,7 +33,7 @@ class GroupsService
 	 * @param int $idgroup Group id
 	 * @return boolean True if the member has been succefully added.
 	 */
-	public static function add_member($user_id, $idgroup)
+	public static function add_member(int $user_id, int $idgroup): bool
 	{
 		//On insère le groupe au champ membre.
 		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_groups', 'WHERE user_id = :user_id', ['user_id' => $user_id]);
@@ -71,7 +71,7 @@ class GroupsService
 	 * @param int $user_id The user id
 	 * @param array $array_user_groups The new array of groups.
 	 */
-	public static function edit_member($user_id, $array_user_groups)
+	public static function edit_member(int $user_id, array $array_user_groups): void
 	{
 		//Récupération des groupes précédent du membre.
 		$user_groups_old = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_groups', 'WHERE user_id = :user_id', ['user_id' => $user_id]);
@@ -102,7 +102,7 @@ class GroupsService
 	 * Returns the list of the names of the groups, array: id => name
 	 * @return mixed The array groups
 	 */
-	public static function get_groups_names()
+	public static function get_groups_names(): ?array
 	{
 		static $groups_names = null;
 		if ($groups_names === null)
@@ -121,7 +121,7 @@ class GroupsService
 	 * Returns the list of the groups
 	 * @return array The array groups
 	 */
-	public static function get_groups()
+	public static function get_groups(): ?array
 	{
 		static $groups = null;
 		if ($groups === null)
@@ -137,7 +137,7 @@ class GroupsService
 	 * @param int $user_id The user id
 	 * @param int $idgroup The id group.
 	 */
-	public static function remove_member($user_id, $idgroup)
+	public static function remove_member(int $user_id, int $idgroup): void
 	{
 		//Suppression dans la table des membres.
 		$user_groups = self::$db_querier->get_column_value(DB_TABLE_MEMBER, 'user_groups', 'WHERE user_id = :user_id', ['user_id' => $user_id]);
@@ -146,21 +146,27 @@ class GroupsService
 
 		$key = array_search($idgroup, $user_groups);
 		if($key !== false)
+        {
 			unset($user_groups[$key]);
+        }
 
 		self::$db_querier->update(DB_TABLE_MEMBER, ['user_groups' => implode('|', $user_groups)], 'WHERE user_id = :user_id', ['user_id' => $user_id]);
 
 		//Suppression dans la table des groupes.
 		$members_group = '';
-		try {
+		try
+        {
 			$members_group = self::$db_querier->get_column_value(DB_TABLE_GROUP, 'members', 'WHERE id = :id', ['id' => $idgroup]);
-		} catch (RowNotFoundException $e) {}
+		}
+        catch (RowNotFoundException $e) {}
 
 		$members_group = explode('|', $members_group);
 
 		$key = array_search($user_id, $members_group);
 		if($key !== false)
+        {
 			unset($members_group[$key]);
+        }
 
 		self::$db_querier->update(DB_TABLE_GROUP, ['members' => implode('|', $members_group)], 'WHERE id = :id', ['id' => $idgroup]);
 	}

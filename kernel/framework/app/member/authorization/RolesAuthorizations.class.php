@@ -6,19 +6,20 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 03 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class RolesAuthorizations
 {
-	private $moderators = false;
-	private $members = false;
-	private $guests = false;
-	private $groups = [];
-	private $users = [];
+	private bool $moderators = false;
+	private bool $members = false;
+	private bool $guests = false;
+	private array $groups = [];
+	private array $users = [];
 
 	public function __construct(array $auth_array = [])
 	{
@@ -30,7 +31,7 @@ class RolesAuthorizations
 	 * are on the first bit.
 	 * @return mixed[]
 	 */
-	public function build_auth_array()
+	public function build_auth_array(): array
 	{
 		$auth_array = [];
 		$this->fill_levels_auths($auth_array);
@@ -39,7 +40,7 @@ class RolesAuthorizations
 		return $auth_array;
 	}
 
-	private function fill_levels_auths(array & $auth_array)
+	private function fill_levels_auths(array &$auth_array): void
 	{
 		if ($this->moderators)
 		{
@@ -55,7 +56,7 @@ class RolesAuthorizations
 		}
 	}
 
-	private function fill_groups_auths(array & $auth_array)
+	private function fill_groups_auths(array &$auth_array): void
 	{
 		foreach ($this->groups as $group_id)
 		{
@@ -63,7 +64,7 @@ class RolesAuthorizations
 		}
 	}
 
-	private function fill_users_auths(array & $auth_array)
+	private function fill_users_auths(array &$auth_array): void
 	{
 		foreach ($this->users as $user_id)
 		{
@@ -71,7 +72,7 @@ class RolesAuthorizations
 		}
 	}
 
-	private function init()
+	private function init(): void
 	{
 		$this->moderators = false;
 		$this->members = false;
@@ -84,7 +85,7 @@ class RolesAuthorizations
 	 * Sets the authorizations from the legacy style formatted array.
 	 * @param array $auth_array The array
 	 */
-	public function build_from_auth_array(array $auth_array)
+	public function build_from_auth_array(array $auth_array): void
 	{
 		$this->init();
 		$this->read_levels_auths($auth_array);
@@ -92,7 +93,7 @@ class RolesAuthorizations
 		$this->read_users_auths($auth_array);
 	}
 
-	private function read_levels_auths(array $auth_array)
+	private function read_levels_auths(array $auth_array): void
 	{
 		if (!empty($auth_array['r1']))
 		{
@@ -108,7 +109,7 @@ class RolesAuthorizations
 		}
 	}
 
-	private function read_groups_auths(array $auth_array)
+	private function read_groups_auths(array $auth_array): void
 	{
 		foreach ($auth_array as $role => $auth)
 		{
@@ -122,7 +123,7 @@ class RolesAuthorizations
 		}
 	}
 
-	private function read_users_auths(array $auth_array)
+	private function read_users_auths(array $auth_array): void
 	{
 		foreach ($auth_array as $role => $auth)
 		{

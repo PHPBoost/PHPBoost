@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 20
  * @since       PHPBoost 3.0 - 2010 12 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -14,7 +14,7 @@
 
 class MemberExtendedFieldsService
 {
-	private $form;
+	private HTMLForm $form;
 
 	public function __construct(HTMLForm $form)
 	{
@@ -23,9 +23,8 @@ class MemberExtendedFieldsService
 
 	/**
 	 * This function displayed fields form
-	 * @param object $member_extended_field MemberExtendedField containing user_id and Template. If user is not registered, use object MemberExtendedField, and define user_id of null.
 	 */
-	public function display_form_fields($user_id = null)
+	public function display_form_fields(?int $user_id = null): void
 	{
 		$extended_fields_displayed = PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
         if ($extended_fields_displayed)
@@ -46,21 +45,22 @@ class MemberExtendedFieldsService
 
 	/**
 	 * This function displayed fields profile
-	 * @param object $member_extended_field MemberExtendedField containing user_id, Template and field_type.
 	 */
-	public static function display_profile_fields($user_id)
+	public static function display_profile_fields(int $user_id): array
 	{
 		$fields = [];
 		$extended_fields_displayed = PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, 'WHERE display=1');
 		if ($extended_fields_displayed)
 		{
-			$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
-			FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-			LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
-			WHERE exc.display = 1
-			ORDER BY exc.position", [
-				'user_id' => $user_id
-			]);
+			$result = PersistenceContext::get_querier()->select("
+                SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
+                FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
+                LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
+                WHERE exc.display = 1
+                ORDER BY exc.position", [
+                    'user_id' => $user_id
+                ]
+            );
 			while ($extended_field = $result->fetch())
 			{
 				if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_PROFILE_AUTHORIZATION))
@@ -74,7 +74,9 @@ class MemberExtendedFieldsService
 
 					$display_field_profile = $member_extended_field->get_instance()->display_field_profile($member_extended_field);
 					if ($display_field_profile)
+                    {
 						$fields[] = $display_field_profile;
+                    }
 				}
 			}
 			$result->dispose();
@@ -84,9 +86,8 @@ class MemberExtendedFieldsService
 
 	/**
 	 * This function register fields
-	 * @param object $member_extended_field MemberExtendedField
 	 */
-	public function get_data($user_id)
+	public function get_data(int $user_id): mixed
 	{
 		$has_error = $error = false;
 		$data = [];
@@ -114,16 +115,19 @@ class MemberExtendedFieldsService
 		}
 
 		if (!$has_error)
+        {
 			return $data;
+        }
 		else
+        {
 			throw new MemberExtendedFieldErrorsMessageException($error);
+        }
 	}
 
 	/**
 	 * This private function display form create
-	 * @param object $member_extended_field MemberExtendedField
 	 */
-	private function display_create_form(FormFieldset $fieldset)
+	private function display_create_form(FormFieldset $fieldset): void
 	{
 		$extended_fields_cache = ExtendedFieldsCache::load()->get_extended_fields();
 		foreach ($extended_fields_cache as $id => $extended_field)
@@ -142,17 +146,18 @@ class MemberExtendedFieldsService
 
 	/**
 	 * This private function display form update
-	 * @param object $member_extended_field MemberExtendedField
 	 */
-	private function display_update_form(FormFieldset $fieldset, $user_id)
+	private function display_update_form(FormFieldset $fieldset, int $user_id): void
 	{
-		$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
-		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
-		WHERE exc.display = 1
-		ORDER BY exc.position", [
-			'user_id' => $user_id
-		]);
+		$result = PersistenceContext::get_querier()->select("
+            SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
+            FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
+            LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
+            WHERE exc.display = 1
+            ORDER BY exc.position", [
+                'user_id' => $user_id
+            ]
+        );
 		while ($extended_field = $result->fetch())
 		{
 			if (AppContext::get_current_user()->check_auth(TextHelper::unserialize($extended_field['auth']), ExtendedField::READ_EDIT_AND_ADD_AUTHORIZATION))
@@ -174,13 +179,15 @@ class MemberExtendedFieldsService
 	 * This function deletes the extended fields of the user
 	 * @param int $user_id id of the user.
 	 */
-	public static function delete_user_fields($user_id)
+	public static function delete_user_fields(int $user_id): void
 	{
-		$result = PersistenceContext::get_querier()->select("SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
-		FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-		LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id", [
-			'user_id' => $user_id
-		]);
+		$result = PersistenceContext::get_querier()->select("
+            SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
+            FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
+            LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id", [
+                'user_id' => $user_id
+            ]
+        );
 		while ($extended_field = $result->fetch())
 		{
 			$value = !empty($extended_field[$extended_field['field_name']]) ? $extended_field[$extended_field['field_name']] : $extended_field['default_value'];
@@ -195,16 +202,19 @@ class MemberExtendedFieldsService
 	/**
 	 * This public function return the data sent by the user depending field_name
 	 */
-	public static function return_field_member($field_name, $user_id, $rewrite = false)
+	public static function return_field_member(string $field_name, int $user_id, bool $rewrite = false): mixed
 	{
 		if ($rewrite)
 		{
 			$field_name = 'f_' . $field_name;
 		}
 
-		try {
+		try
+        {
 			return PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER_EXTENDED_FIELDS, $field_name, 'WHERE user_id =:user_id', ['user_id' => $user_id]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			return '';
 		}
 	}
@@ -212,7 +222,7 @@ class MemberExtendedFieldsService
 	/**
 	 * This protects the string that will be serialized
 	 */
-	public static function set_protection_for_serialized_string($string)
+	public static function set_protection_for_serialized_string(string $string): string
 	{
 		return ($string ? str_replace('";', '"\;', $string) : '');
 	}
@@ -220,7 +230,7 @@ class MemberExtendedFieldsService
 	/**
 	 * This remove the protection on the string that was serialized
 	 */
-	public static function unset_protection_for_serialized_string($string)
+	public static function unset_protection_for_serialized_string(string $string): string
 	{
 		return ($string ? str_replace('"\;', '";', $string) : '');
 	}
