@@ -19,7 +19,7 @@ class FeedItem
     private ?Date $date = null;       // Feed date
     private string $desc = '';         // Item Description
     private string $guid = '';         // Item GUID
-    private string $image_url = '';    // Item Image
+    private string $image_url = '';       // Item Image
     private ?FeedItemEnclosure $enclosure = null; // Item Enclosure
     private array $auth = [];       // Authorizations
 
@@ -30,13 +30,13 @@ class FeedItem
 
     public function set_desc(string $value): void { $this->desc = $value; }
 
-    public function set_image_url(string|Url $value): void
+    public function set_image_url(string|Url|null $value): void
     {
         if ($value instanceof Url)
         {
             $value = $value->absolute();
         }
-        $this->image_url = $value;
+        $this->image_url = $value ?? '';
     }
 
     public function set_enclosure(FeedItemEnclosure $value) { $this->enclosure = $value; }

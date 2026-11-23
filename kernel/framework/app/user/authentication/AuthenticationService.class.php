@@ -45,7 +45,7 @@ class AuthenticationService
 	 * @param bool $autoconnect If true, an autoconnect cookie will be created
 	 * @return int $user_id, if authentication has been performed successfully
 	 */
-	public static function authenticate(AuthenticationMethod $authentication, bool $autoconnect = false): int
+	public static function authenticate(AuthenticationMethod $authentication, bool $autoconnect = false): ?int
 	{
 		$user_id = $authentication->authenticate();
 		if ($user_id)

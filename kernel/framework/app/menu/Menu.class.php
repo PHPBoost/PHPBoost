@@ -136,6 +136,11 @@ abstract class Menu
 				continue;
 			}
 
+			if ($property === 'target' && $value === null && $this instanceof LinksMenuElement)
+			{
+				$value = false;
+			}
+
 			if (property_exists($this, $property))
 			{
 				$reflection_property = new ReflectionProperty($this, $property);

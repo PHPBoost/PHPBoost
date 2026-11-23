@@ -33,7 +33,7 @@ class UserLoginController extends AbstractController
 			$this->redirect = $redirect;
 	}
 
-	public function execute(HTTPRequestCustom $request): SiteDisplayResponse
+	public function execute(HTTPRequestCustom $request): Response
 	{
 		$this->init($request);
 		$this->build_form();

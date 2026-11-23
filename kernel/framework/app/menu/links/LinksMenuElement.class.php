@@ -42,7 +42,7 @@ abstract class LinksMenuElement extends Menu
      * @access protected
      * @var bool open the link in a new window
      */
-    public bool $target;
+    public bool $target = false;
     /**
      * @access protected
      * @var int Menu's uid
