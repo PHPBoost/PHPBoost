@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 17
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2009 09 30
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -236,7 +236,7 @@ class ErrorHandler
 
 	private static function compute_error_log_string(string $error_msg, string $error_stacktrace, int $errno = 0): string
 	{
-		return Date::to_format(time(), 'Y-m-d H:i:s', Timezone::SERVER_TIMEZONE) . "\n" .
+		return date('Y-m-d H:i:s') . "\n" .
             $errno . "\n" .
             self::clean_error_string($error_msg) . "\n" .
             self::clean_error_string($error_stacktrace) . "\n";

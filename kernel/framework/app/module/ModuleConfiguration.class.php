@@ -35,7 +35,7 @@ class ModuleConfiguration
     private string $home_page;
     private string $contribution_interface;
     private array $specific_hooks;
-    private string $url_rewrite_rules;
+    private array $url_rewrite_rules;
     private string $documentation;
     private array $features;
     private string $item_name;
@@ -152,7 +152,7 @@ class ModuleConfiguration
         return $this->specific_hooks;
     }
 
-    public function get_url_rewrite_rules(): string
+    public function get_url_rewrite_rules(): array
     {
         return $this->url_rewrite_rules;
     }
