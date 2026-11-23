@@ -40,7 +40,14 @@ if (!empty($member) || !empty($insert_member) || !empty($add_member_auth) || !em
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", ['login' => $login . '%']);
+		$result = $db_querier->select("
+            SELECT user_id, display_name
+            FROM " . DB_TABLE_MEMBER . "
+            WHERE display_name LIKE :login
+            ", [
+                'login' => $login . '%'
+            ]
+        );
 		while ($row = $result->fetch())
 		{
 			if (!empty($member))
@@ -84,7 +91,14 @@ elseif (!empty($warning_user) || !empty($punish_user) || !empty($ban_user)) //Re
 	if (!empty($login))
 	{
 		$i = 0;
-		$result = $db_querier->select("SELECT user_id, display_name FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE :login", ['login' => $login . '%']);
+		$result = $db_querier->select("
+            SELECT user_id, display_name
+            FROM " . DB_TABLE_MEMBER . "
+            WHERE display_name LIKE :login
+            ", [
+                'login' => $login . '%'
+            ]
+        );
 		while ($row = $result->fetch())
 		{
 			$url_warn = ($admin) ? 'admin_members_punishment.php?action=warning&amp;id=' . $row['user_id'] : url('moderation_panel.php?action=warning&amp;id=' . $row['user_id']);

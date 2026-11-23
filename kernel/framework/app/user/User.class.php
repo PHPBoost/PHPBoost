@@ -38,7 +38,7 @@ class User
 	protected int $registration_date = 0;
 
 	protected int $timestamp;
-	protected string $locale;
+	protected string $locale = '';
 	protected string $theme;
 	protected string $timezone;
 	protected string $editor;
@@ -112,12 +112,12 @@ class User
 		return $this->display_name;
 	}
 
-	public function set_email(string $email): void
+	public function set_email(?string $email): void
 	{
 		$this->email = $email;
 	}
 
-	public function get_email(): string
+	public function get_email(): ?string
 	{
 		return $this->email;
 	}

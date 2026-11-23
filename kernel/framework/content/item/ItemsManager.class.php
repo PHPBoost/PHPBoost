@@ -72,7 +72,8 @@ class ItemsManager
             SELECT COUNT(*) AS items_number
             FROM ' . self::$items_table . ' ' . self::$module_id . '
             LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = \'' . self::$module_id . '\' AND keywords_relations.id_in_module = ' . self::$module_id . '.id
-            ' . $condition, $parameters
+            ' . $condition
+            , $parameters
         );
     }
 
@@ -137,7 +138,8 @@ class ItemsManager
             LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
             LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
             LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
-            WHERE ' . self::$module_id . '.id=:id', [
+            WHERE ' . self::$module_id . '.id=:id
+            ', [
                 'module_id'       => self::$module_id,
                 'id'              => $id,
                 'current_user_id' => AppContext::get_current_user()->get_id()

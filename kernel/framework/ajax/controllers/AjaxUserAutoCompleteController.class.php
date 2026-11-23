@@ -18,7 +18,12 @@ class AjaxUserAutoCompleteController extends AbstractController
 
 		try
         {
-			$result = PersistenceContext::get_querier()->select("SELECT display_name, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . str_replace('*', '%', $request->get_value('value', '')) . "%'");
+			$result = PersistenceContext::get_querier()->select("
+                SELECT display_name, level, user_groups
+                FROM " . DB_TABLE_MEMBER . "
+                WHERE display_name LIKE '" . str_replace('*', '%', $request->get_value('value', '')) . "%'
+                "
+            );
 
 			while($row = $result->fetch())
 			{

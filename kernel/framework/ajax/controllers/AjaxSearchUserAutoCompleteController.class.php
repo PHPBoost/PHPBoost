@@ -29,11 +29,13 @@ class AjaxSearchUserAutoCompleteController extends AbstractController
             $querier = PersistenceContext::get_querier();
 
             // Prepared statement with a bound parameter instead of manual escaping
-            $result = $querier->select(
-                'SELECT user_id, display_name, level, user_groups
+            $result = $querier->select('
+                SELECT user_id, display_name, level, user_groups
                 FROM ' . DB_TABLE_MEMBER . '
-                WHERE display_name LIKE :value',
-                ['value' => $like_value]
+                WHERE display_name LIKE :value
+                ', [
+                    'value' => $like_value
+                ]
             );
 
             while ($row = $result->fetch())

@@ -138,11 +138,11 @@ elseif (!empty($move_folder) && $to != -1) // Moving folder
     AppContext::get_session()->csrf_get_protect(); // csrf protection
 
     $user_id = AppContext::get_current_user()->get_id();
-    try {
+    try
+    {
         $user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'user_id', 'WHERE id=:id', ['id' => $move_folder]);
-    } catch (RowNotFoundException $e) {
-
     }
+    catch (RowNotFoundException $e) {}
 
     $move_list_parent = [];
 
@@ -158,7 +158,9 @@ elseif (!empty($move_folder) && $to != -1) // Moving folder
             ]
         );
         while ($row = $result->fetch())
+        {
             $move_list_parent[$row['id']] = $row['id_parent'];
+        }
 
         $result->dispose();
     }
@@ -333,7 +335,8 @@ else
             SELECT u.user_id, m.display_name
             FROM " . DB_TABLE_UPLOAD . " u
             LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
-            WHERE u.user_id = :user_id ", [
+            WHERE u.user_id = :user_id
+            ", [
                 'user_id' => $folder_member
             ]
         );
@@ -344,7 +347,8 @@ else
             SELECT uc.user_id, m.display_name
             FROM " . DB_TABLE_UPLOAD_CAT . " uc
             LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = uc.user_id
-            WHERE uc.id = :id", [
+            WHERE uc.id = :id
+            ", [
                 'id' => $folder
             ]
         );
@@ -428,7 +432,8 @@ else
             FROM " . DB_TABLE_UPLOAD . " u
             LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = u.user_id
             WHERE u.user_id <> -1
-            ORDER BY name", [
+            ORDER BY name
+            ", [
                 'id' => $folder
             ]
         );
@@ -439,7 +444,8 @@ else
             SELECT id, name, id_parent, user_id
             FROM " . DB_TABLE_UPLOAD_CAT . "
             WHERE id_parent = 0 AND user_id = :user_id
-            ORDER BY name", [
+            ORDER BY name
+            ", [
                 'user_id' => $folder_member
             ]
         );
@@ -450,7 +456,8 @@ else
             SELECT id, name, id_parent, user_id
             FROM " . DB_TABLE_UPLOAD_CAT . "
             WHERE id_parent = :id" . ((empty($folder) || $folder_info['user_id'] <= 0) ? ' AND user_id = -1' : ' AND user_id <> -1') . "
-            ORDER BY name", [
+            ORDER BY name
+            ", [
                 'id' => $folder
             ]
         );

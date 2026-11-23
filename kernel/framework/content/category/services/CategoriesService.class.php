@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 06
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 6.0 - 2019 11 11
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -42,7 +42,7 @@ class CategoriesService
 			$module = ModulesManager::get_module($module_id);
 
 			$module_categories_cache_class_name = TextHelper::ucfirst($module_id) . 'CategoriesCache';
-			$categories_cache_class = ClassLoader::is_class_registered_and_valid($module_categories_cache_class_name) && is_subclass_of($module_categories_cache_class_name, 'CategoriesCache') ? $module_categories_cache_class_name : '';
+			$categories_cache_class = class_exists($module_categories_cache_class_name) && is_subclass_of($module_categories_cache_class_name, 'CategoriesCache') ? $module_categories_cache_class_name : '';
 			if ($categories_cache_class)
             {
 				$categories_cache = !empty($requested_module_id) ? call_user_func_array($categories_cache_class . '::load', [$requested_module_id]) : call_user_func($categories_cache_class . '::load');
@@ -55,7 +55,7 @@ class CategoriesService
             {
 				$categories_cache = DefaultCategoriesCache::load($module_id);
             }
-			elseif (preg_match('/^(A-Za-z0-9_-)+$/suU', $module_id) && !in_array($module_id, ['admin', 'kernel', 'user']))
+			elseif (preg_match('/^[A-Za-z0-9_-]+$/', $module_id) && !in_array($module_id, ['admin', 'kernel', 'user']))
             {
 				throw new Exception('Class ' . $categories_cache_class . ' does not exist in module ' . $module_id);
             }

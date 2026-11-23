@@ -57,7 +57,8 @@ class MemberExtendedFieldsService
                 FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
                 LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
                 WHERE exc.display = 1
-                ORDER BY exc.position", [
+                ORDER BY exc.position
+                ", [
                     'user_id' => $user_id
                 ]
             );
@@ -154,7 +155,8 @@ class MemberExtendedFieldsService
             FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
             LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
             WHERE exc.display = 1
-            ORDER BY exc.position", [
+            ORDER BY exc.position
+            ", [
                 'user_id' => $user_id
             ]
         );
@@ -184,7 +186,8 @@ class MemberExtendedFieldsService
 		$result = PersistenceContext::get_querier()->select("
             SELECT exc.name, exc.description, exc.field_type, exc.required, exc.field_name, exc.possible_values, exc.default_value, exc.auth, exc.regex, ex.*
             FROM " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " exc
-            LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id", [
+            LEFT JOIN " . DB_TABLE_MEMBER_EXTENDED_FIELDS . " ex ON ex.user_id = :user_id
+            ", [
                 'user_id' => $user_id
             ]
         );

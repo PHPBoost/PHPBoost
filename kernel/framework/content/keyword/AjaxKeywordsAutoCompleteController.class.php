@@ -19,7 +19,12 @@ class AjaxKeywordsAutoCompleteController extends AbstractController
 
 		try
         {
-			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . DB_TABLE_KEYWORDS . " WHERE name LIKE '" . $request->get_value('value', '') . "%'");
+			$result = PersistenceContext::get_querier()->select("
+                SELECT name, rewrited_name
+                FROM " . DB_TABLE_KEYWORDS . "
+                WHERE name LIKE '" . $request->get_value('value', '') . "%'
+                "
+            );
 
 			while($row = $result->fetch())
 			{

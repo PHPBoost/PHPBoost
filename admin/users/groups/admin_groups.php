@@ -284,7 +284,8 @@ elseif (!empty($idgroup)) // Group editing interface
             $result = PersistenceContext::get_querier()->select('
                 SELECT user_id, display_name, level, user_groups
                 FROM ' . DB_TABLE_MEMBER . '
-                WHERE user_id IN (' . $members . ')'
+                WHERE user_id IN (' . $members . ')
+                '
             );
 
             while ($row = $result->fetch())

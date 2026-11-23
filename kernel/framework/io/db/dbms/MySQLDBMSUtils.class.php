@@ -199,7 +199,8 @@ class MySQLDBMSUtils implements DBMSUtils
             FROM `information_schema`.`COLUMNS` C
             WHERE TABLE_SCHEMA = :schema
 			AND TABLE_NAME = :table_name
-            AND COLUMN_NAME = :column_name', [
+            AND COLUMN_NAME = :column_name
+            ', [
 				'schema' => $this->get_database_name(),
 				'table_name' => $table_name,
 				'column_name' => $column_name

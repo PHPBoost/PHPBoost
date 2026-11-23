@@ -51,7 +51,8 @@ class Uploads
         $result = self::$db_querier->select("
             SELECT path
             FROM " . DB_TABLE_UPLOAD . "
-            WHERE user_id = :user_id", [
+            WHERE user_id = :user_id
+            ", [
                 'user_id' => $user_id
             ]
         );
@@ -76,7 +77,8 @@ class Uploads
         $result = self::$db_querier->select("
             SELECT path
             FROM " . DB_TABLE_UPLOAD . "
-            WHERE idcat = :idcat", [
+            WHERE idcat = :idcat
+            ", [
                 'idcat' => $id_folder
             ]
         );
@@ -98,7 +100,8 @@ class Uploads
         $result = self::$db_querier->select("
             SELECT id
             FROM " . DB_TABLE_UPLOAD_CAT . "
-            WHERE id_parent = :id", [
+            WHERE id_parent = :id
+            ", [
                 'id' => $id_folder
             ]
         );

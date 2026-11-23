@@ -18,7 +18,7 @@
 
 abstract class AuthenticationMethod
 {
-	protected string $error_msg;
+	protected string $error_msg = '';
 
 	/**
 	 * associate the current authentication method with the given user_id.

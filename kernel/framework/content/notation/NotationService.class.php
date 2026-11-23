@@ -302,7 +302,8 @@ class NotationService
                 SELECT average_notes, notes_number, (SELECT COUNT(*) FROM '. DB_TABLE_NOTE .'
                 WHERE user_id=:user_id AND module_name=:module_name AND id_in_module=:id_in_module) AS user_already_noted
                 FROM ' . DB_TABLE_AVERAGE_NOTES . '
-                WHERE module_name = :module_name AND id_in_module = :id_in_module', [
+                WHERE module_name = :module_name AND id_in_module = :id_in_module
+                ', [
                     'module_name' => $notation->get_module_name(),
                     'id_in_module' => $notation->get_id_in_module(),
                     'user_id' => $notation->get_user_id()

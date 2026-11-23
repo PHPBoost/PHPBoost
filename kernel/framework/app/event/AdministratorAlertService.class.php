@@ -37,7 +37,8 @@ class AdministratorAlertService
             SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
             FROM " . DB_TABLE_EVENTS  . "
             WHERE id = :alert_id
-            ORDER BY creation_date DESC", [
+            ORDER BY creation_date DESC
+            ", [
                 'alert_id' => $alert_id
             ]
         );
@@ -93,7 +94,8 @@ class AdministratorAlertService
             $result = self::$db_querier->select("
                 SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
                 FROM " . DB_TABLE_EVENTS  . "
-                WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode(' AND ', $criterias)
+                WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "'
+                AND " . implode(' AND ', $criterias)
             );
 
             while ($row = $result->fetch())
@@ -124,7 +126,8 @@ class AdministratorAlertService
         $result = self::$db_querier->select("
             SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
             FROM " . DB_TABLE_EVENTS  . "
-            WHERE contribution_type = :contribution_type AND current_status = :current_status", [
+            WHERE contribution_type = :contribution_type AND current_status = :current_status
+            ", [
                 'contribution_type' => ADMINISTRATOR_ALERT_TYPE,
                 'current_status' => AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD
             ]
@@ -153,7 +156,8 @@ class AdministratorAlertService
             SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
             FROM " . DB_TABLE_EVENTS  . "
             WHERE identifier = :identifier" . (!empty($type) ? " AND type = :type" : '') . " ORDER BY creation_date DESC
-            LIMIT 1;", [
+            LIMIT 1;
+            ", [
                 'identifier' => $identifier,
                 'type' => $type
             ]
@@ -190,7 +194,8 @@ class AdministratorAlertService
             FROM " . DB_TABLE_EVENTS  . "
             WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
             ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . "
-            LIMIT :pagination_number OFFSET :display_from", [
+            LIMIT :pagination_number OFFSET :display_from
+            ", [
                 'pagination_number' => $number,
                 'display_from' => $begin
             ]

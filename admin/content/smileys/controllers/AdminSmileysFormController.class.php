@@ -217,7 +217,8 @@ class AdminSmileysFormController extends DefaultAdminController
 		{
 			$result = PersistenceContext::get_querier()->select("
                 SELECT url_smiley
-                FROM " . PREFIX . "smileys"
+                FROM " . PREFIX . "smileys
+                "
             );
 			while ($row = $result->fetch())
 			{

@@ -383,7 +383,8 @@ class SessionData
                 FROM ' . DB_TABLE_SESSIONS . '
                 WHERE user_id=:user_id
                 ORDER BY timestamp DESC
-                LIMIT 1', $parameters
+                LIMIT 1
+                ', $parameters
             );
 
 			PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:user_id AND session_id != :session_id', ['user_id' => $user_id, 'session_id' => $row['session_id']]);

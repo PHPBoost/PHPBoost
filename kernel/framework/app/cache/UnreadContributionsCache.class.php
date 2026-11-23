@@ -81,10 +81,10 @@ class UnreadContributionsCache implements CacheData
 	/**
 	 * Tells whether a group has unread contributions (it only deals with user-specific contributions
 	 * and not with rank or group contributions).
-	 * @param int $group_id The id of the group
+	 * @param string $group_id The id of the group
 	 * @return bool true if the group has, false otherwise
 	 */
-	public function has_group_unread_contributions(int $group_id): bool
+	public function has_group_unread_contributions(string $group_id): bool
 	{
 		return in_array($group_id, $this->get_groups_with_unread_contributions());
 	}

@@ -37,7 +37,8 @@ class ContributionService
             LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
             LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.poster_id
             WHERE id = :id AND contribution_type = :contribution_type
-            ORDER BY creation_date DESC", [
+            ORDER BY creation_date DESC
+            ", [
                 'id' => $id_contrib,
                 'contribution_type' => self::CONTRIBUTION_TYPE
             ]
@@ -78,7 +79,8 @@ class ContributionService
             LEFT JOIN " . DB_TABLE_MEMBER . " poster_member ON poster_member.user_id = c.poster_id
             LEFT JOIN " . DB_TABLE_MEMBER . " fixer_member ON fixer_member.user_id = c.fixer_id
             WHERE contribution_type = :contribution_type
-            ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . ", creation_date DESC", [
+            ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . ", creation_date DESC
+            ", [
                 'contribution_type' => self::CONTRIBUTION_TYPE
             ]
         );
@@ -246,8 +248,10 @@ class ContributionService
 		$array_result = ['r2' => 0, 'r1' => 0, 'r0' => 0];
 
 		$result = self::$db_querier->select("
-            SELECT auth FROM " . DB_TABLE_EVENTS  . "
-            WHERE current_status = :current_status AND contribution_type = :contribution_type", [
+            SELECT auth
+            FROM " . DB_TABLE_EVENTS  . "
+            WHERE current_status = :current_status AND contribution_type = :contribution_type
+            ", [
                 'current_status' => Event::EVENT_STATUS_UNREAD,
                 'contribution_type' => self::CONTRIBUTION_TYPE
             ]
