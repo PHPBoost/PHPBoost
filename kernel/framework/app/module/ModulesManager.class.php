@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 2.0 - 2008 10 12
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -36,7 +36,7 @@ class ModulesManager
      * @param string $module_id the module id
      * @return string the module path
      */
-    public static function get_module_path($module_id)
+    public static function get_module_path(string $module_id): string
     {
         // Try modules folder first
         $modules_path = PATH_TO_ROOT . '/modules/' . $module_id;
@@ -50,7 +50,7 @@ class ModulesManager
     /**
      * @return Module[] the Modules map (name => module) of the installed modules (activated or not)
      */
-    public static function get_installed_modules_map()
+    public static function get_installed_modules_map(): array
     {
         return ModulesConfig::load()->get_modules();
     }
@@ -58,11 +58,13 @@ class ModulesManager
     /**
      * @return Module[] the Modules map (name => module) of the installed modules (and activated )
      */
-    public static function get_activated_modules_map()
+    public static function get_activated_modules_map(): array
     {
         $activated_modules = [];
-        foreach (ModulesConfig::load()->get_modules() as $module) {
-            if ($module->is_activated()) {
+        foreach (ModulesConfig::load()->get_modules() as $module)
+        {
+            if ($module->is_activated())
+            {
                 $activated_modules[$module->get_id()] = $module;
             }
 
@@ -73,7 +75,7 @@ class ModulesManager
     /**
      * @return Module[] the Modules map (name => module) of the uninstalled modules (activated or not)
      */
-    public static function get_uninstalled_modules_map()
+    public static function get_uninstalled_modules_map(): array
     {
         throw new NotYetImplementedException();
     }
@@ -82,13 +84,15 @@ class ModulesManager
      * @return Module[] the Modules map (name => module) of the installed modules (activated or not)
      * sorted by name
      */
-    public static function get_installed_modules_map_sorted_by_localized_name()
+    public static function get_installed_modules_map_sorted_by_localized_name(): array
     {
         $modules = self::get_installed_modules_map();
-        try {
+        try
+        {
             uasort($modules, [self::class, 'callback_sort_modules_by_name']);
-        } catch (IOException $ex) {
         }
+        catch (IOException $ex) {}
+
         return $modules;
     }
 
@@ -96,19 +100,22 @@ class ModulesManager
      * @return Module[] the Modules map (name => module) of the installed modules (and activated)
      * sorted by name
      */
-    public static function get_activated_modules_map_sorted_by_localized_name()
+    public static function get_activated_modules_map_sorted_by_localized_name(): array
     {
         $modules = self::get_activated_modules_map();
-        try {
+        try
+        {
             uasort($modules, [self::class, 'callback_sort_modules_by_name']);
-        } catch (IOException $ex) {
         }
+        catch (IOException $ex) {}
+
         return $modules;
     }
 
-    public static function callback_sort_modules_by_name(Module $module1, Module $module2)
+    public static function callback_sort_modules_by_name(Module $module1, Module $module2): int
     {
-        if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name())) {
+        if (TextHelper::strtolower($module1->get_configuration()->get_name()) > TextHelper::strtolower($module2->get_configuration()->get_name()))
+        {
             return 1;
         }
         return -1;
@@ -117,7 +124,7 @@ class ModulesManager
     /**
      * @return array the names list of the installed modules (activated or not)
      */
-    public static function get_installed_modules_ids_list()
+    public static function get_installed_modules_ids_list(): array
     {
         return array_keys(self::get_installed_modules_map());
     }
@@ -125,7 +132,7 @@ class ModulesManager
     /**
      * @return array the names list of the installed modules (and activated)
      */
-    public static function get_activated_modules_ids_list()
+    public static function get_activated_modules_ids_list(): array
     {
         return array_keys(self::get_activated_modules_map());
     }
@@ -133,7 +140,7 @@ class ModulesManager
     /**
      * @return array the list of modules that have the requested feature
      */
-    public static function get_activated_feature_modules($feature)
+    public static function get_activated_feature_modules(string $feature): array
     {
         $modules = [];
         foreach (self::get_activated_modules_map() as $module) {
@@ -159,7 +166,7 @@ class ModulesManager
      * tells whether the requested module is installed (activated or not)
      * @return bool true if the requested module is installed
      */
-    public static function is_module_installed($module_id)
+    public static function is_module_installed(string $module_id): bool
     {
         return in_array($module_id, self::get_installed_modules_ids_list());
     }
@@ -168,7 +175,7 @@ class ModulesManager
      * tells whether the requested module is activated
      * @return bool true if the requested module is activated
      */
-    public static function is_module_activated($module_id)
+    public static function is_module_activated(string $module_id): bool
     {
         return in_array($module_id, self::get_activated_modules_ids_list());
     }
@@ -187,18 +194,20 @@ class ModulesManager
      *     <li>CONFIG_CONFLICT: the configuration field is already used</i>
      * </ul>
      */
-    public static function install_module($module_identifier, $enable_module = true, $generate_cache = true)
+    public static function install_module(string $module_identifier, bool $enable_module = true, bool $generate_cache = true): int
     {
         self::update_class_list();
 
         // Check both modules folder and root
         $modules_path = PATH_TO_ROOT . '/modules/' . $module_identifier;
         $root_path    = PATH_TO_ROOT . '/' . $module_identifier;
-        if (empty($module_identifier) || (!is_dir($modules_path) && !is_dir($root_path))) {
+        if (empty($module_identifier) || (!is_dir($modules_path) && !is_dir($root_path)))
+        {
             return self::UNEXISTING_MODULE;
         }
 
-        if (self::is_module_installed($module_identifier)) {
+        if (self::is_module_installed($module_identifier))
+        {
             return self::MODULE_ALREADY_INSTALLED;
         }
 
@@ -206,12 +215,14 @@ class ModulesManager
         $configuration = $module->get_configuration();
 
         $phpversion = ServerConfiguration::get_phpversion();
-        if (version_compare($phpversion, $configuration->get_php_version(), 'lt')) {
+        if (version_compare($phpversion, $configuration->get_php_version(), 'lt'))
+        {
             return self::PHP_VERSION_CONFLICT;
         }
 
         $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
-        if (version_compare($phpboost_version, $configuration->get_compatibility(), '!=')) {
+        if (version_compare($phpboost_version, $configuration->get_compatibility(), '!='))
+        {
             return self::PHPBOOST_VERSION_CONFLICT;
         }
 
@@ -229,34 +240,48 @@ class ModulesManager
         $module_path = self::get_module_path($module_identifier);
         $picture     = $module_path . '/' . $module_identifier . '.png';
         $file        = new File($picture);
-        if ($file->exists()) {
+        if ($file->exists())
+        {
             $resizer = new ImageResizer();
             $image   = new Image($picture);
-            if ($image->get_width() > 32 && $image->get_height() > 32) {
-                try {
+            if ($image->get_width() > 32 && $image->get_height() > 32)
+            {
+                try
+                {
                     $resizer->resize_with_max_values($image, 32, 32, $picture);
-                } catch (UnsupportedOperationException $e) {}
+                }
+                catch (UnsupportedOperationException $e) {}
             }
             $mini_picture = $module_path . '/' . $module_identifier . '_mini.png';
             $file         = new File($mini_picture);
-            if (!$file->exists()) {
-                try {
+            if (!$file->exists())
+            {
+                try
+                {
                     $resizer->resize_with_max_values($image, 16, 16, $mini_picture);
-                } catch (UnsupportedOperationException $e) {}
-            } else {
+                }
+                catch (UnsupportedOperationException $e) {}
+            }
+            else
+            {
                 $image = new Image($mini_picture);
-                if ($image->get_width() > 16 && $image->get_height() > 16) {
-                    try {
+                if ($image->get_width() > 16 && $image->get_height() > 16)
+                {
+                    try
+                    {
                         $resizer->resize_with_max_values($image, 16, 16, $picture);
-                    } catch (UnsupportedOperationException $e) {}
+                    }
+                    catch (UnsupportedOperationException $e) {}
                 }
             }
         }
 
-        if ($generate_cache) {
+        if ($generate_cache)
+        {
             MenuService::generate_cache();
 
-            if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
+            if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+            {
                 HtaccessFileCache::regenerate();
                 NginxFileCache::regenerate();
             }
@@ -277,111 +302,131 @@ class ModulesManager
      *     <li>NOT_INSTALLED_MODULE: the module to uninstall doesn't exist!</li>
      * </ul>
      */
-    public static function uninstall_module($module_id, $drop_files = false, $generate_cache = true)
+    public static function uninstall_module(int $module_id, bool $drop_files = false,  bool $generate_cache = true): int
     {
-        if (!empty($module_id) && self::is_module_installed($module_id)) {
-            $error = self::execute_module_uninstallation($module_id);
-            if ($error === null) {
-                ContributionService::delete_contribution_module($module_id);
+        if (!empty($module_id) && self::is_module_installed($module_id))
+        {
+            self::execute_module_uninstallation($module_id);
+            ContributionService::delete_contribution_module($module_id);
 
-                NotationService::delete_notes_module($module_id);
+            NotationService::delete_notes_module($module_id);
 
-                CommentsService::delete_comments_module($module_id);
+            CommentsService::delete_comments_module($module_id);
 
-                PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, "WHERE name = :name", ['name' => $module_id]);
+            PersistenceContext::get_querier()->delete(DB_TABLE_CONFIGS, "WHERE name = :name", ['name' => $module_id]);
 
-                //Régénération des feeds.
-                Feed::clear_cache($module_id);
+            //Régénération des feeds.
+            Feed::clear_cache($module_id);
 
-                MenuService::delete_mini_module($module_id);
-                MenuService::delete_module_feeds_menus($module_id);
+            MenuService::delete_mini_module($module_id);
+            MenuService::delete_module_feeds_menus($module_id);
 
-                ModulesConfig::load()->remove_module_by_id($module_id);
-                ModulesConfig::save();
+            ModulesConfig::load()->remove_module_by_id($module_id);
+            ModulesConfig::save();
 
-                //Module home page ?
-                $general_config            = GeneralConfig::load();
-                $module_home_page_selected = $general_config->get_module_home_page();
-                if ($module_home_page_selected == $module_id) {
-                    $general_config->set_module_home_page('');
-                    $general_config->set_other_home_page('index.php');
-                }
-
-                //Suppression des fichiers du module
-                if ($drop_files) {
-                    $module_path = self::get_module_path($module_id);
-                    $folder      = new Folder($module_path);
-                    try
-                    {
-                        $folder->delete();
-                        self::update_class_list();
-                        AppContext::init_extension_provider_service();
-                    } catch (IOException $ex) {
-                        return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
-                    }
-                }
-
-                if ($generate_cache) {
-                    AppContext::get_cache_service()->clear_cache();
-
-                    if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
-                        HtaccessFileCache::regenerate();
-                        NginxFileCache::regenerate();
-                    }
-                }
-
-                return self::MODULE_UNINSTALLED;
+            //Module home page ?
+            $general_config            = GeneralConfig::load();
+            $module_home_page_selected = $general_config->get_module_home_page();
+            if ($module_home_page_selected == $module_id)
+            {
+                $general_config->set_module_home_page('');
+                $general_config->set_other_home_page('index.php');
             }
-            return $error;
-        } else {
+
+            //Suppression des fichiers du module
+            if ($drop_files)
+            {
+                $module_path = self::get_module_path($module_id);
+                $folder      = new Folder($module_path);
+                try
+                {
+                    $folder->delete();
+                    self::update_class_list();
+                    AppContext::init_extension_provider_service();
+                }
+                catch (IOException $ex)
+                {
+                    return self::MODULE_FILES_COULD_NOT_BE_DROPPED;
+                }
+            }
+
+            if ($generate_cache)
+            {
+                AppContext::get_cache_service()->clear_cache();
+
+                if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+                {
+                    HtaccessFileCache::regenerate();
+                    NginxFileCache::regenerate();
+                }
+            }
+
+            return self::MODULE_UNINSTALLED;
+        }
+        else
+        {
             return self::NOT_INSTALLED_MODULE;
         }
     }
 
-    public static function upgrade_module($module_identifier, $generate_cache = true)
+    public static function upgrade_module(string $module_identifier, bool $generate_cache = true): int
     {
         self::update_class_list();
 
         // Check both modules folder and root
         $modules_path = PATH_TO_ROOT . '/modules/' . $module_identifier;
         $root_path    = PATH_TO_ROOT . '/' . $module_identifier;
-        if (!empty($module_identifier) && (is_dir($modules_path) || is_dir($root_path))) {
-            if (self::is_module_installed($module_identifier)) {
-                if (self::module_is_upgradable($module_identifier)) {
+        if (!empty($module_identifier) && (is_dir($modules_path) || is_dir($root_path)))
+        {
+            if (self::is_module_installed($module_identifier))
+            {
+                if (self::module_is_upgradable($module_identifier))
+                {
                     $module = self::get_module($module_identifier);
 
                     $version_upgrading = self::execute_module_upgrade($module_identifier, $module->get_installed_version());
 
-                    if ($version_upgrading !== null) {
+                    if ($version_upgrading !== null)
+                    {
                         $module->set_installed_version($version_upgrading);
                         ModulesConfig::load()->update($module);
                         ModulesConfig::save();
 
-                        if ($generate_cache) {
+                        if ($generate_cache)
+                        {
                             AppContext::get_cache_service()->clear_cache();
 
-                            if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
+                            if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+                            {
                                 HtaccessFileCache::regenerate();
                                 NginxFileCache::regenerate();
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         return self::UPGRADE_FAILED;
                     }
-                } else {
+                }
+                else
+                {
                     return self::MODULE_NOT_UPGRADABLE;
                 }
-            } else {
+            }
+            else
+            {
                 return self::NOT_INSTALLED_MODULE;
             }
-        } else {
+        }
+        else
+        {
             return self::UNEXISTING_MODULE;
         }
 
         return self::MODULE_UPDATED;
     }
 
-    public static function module_is_upgradable($module_identifier)
+    public static function module_is_upgradable(string $module_identifier): bool
     {
         if (!empty($module_identifier) && is_dir(PATH_TO_ROOT . '/' . $module_identifier)) {
             if (self::is_module_installed($module_identifier)) {
@@ -395,61 +440,78 @@ class ModulesManager
         return false;
     }
 
-    public static function update_module($module_id, $activated, $generate_cache = true)
+    public static function update_module(string $module_id, bool $activated, bool $generate_cache = true): string
     {
         $error = '';
-        if (!$activated) {
+        if (!$activated)
+        {
             MenuService::delete_mini_module($module_id);
             MenuService::delete_module_feeds_menus($module_id);
 
             $general_config            = GeneralConfig::load();
             $module_home_page_selected = $general_config->get_module_home_page();
-            if ($module_home_page_selected == $module_id) {
+            if ($module_home_page_selected == $module_id)
+            {
                 $general_config->set_module_home_page('');
                 $general_config->set_other_home_page('index.php');
             }
 
             $editors = AppContext::get_content_formatting_service()->get_available_editors();
-            if (in_array($module_id, $editors)) {
-                if (count($editors) > 1) {
+            if (in_array($module_id, $editors))
+            {
+                if (count($editors) > 1)
+                {
                     $default_editor = ContentFormattingConfig::load()->get_default_editor();
                     if ($default_editor !== $module_id) {
                         PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['editor' => $default_editor],
                             'WHERE editor=:old_editor', ['old_editor' => $module_id,
                             ]);
-                    } else {
+                    }
+                    else
+                    {
                         $error = LangLoader::get_message('warning.is.default.editor', 'warning-lang');
                     }
 
-                } else {
+                }
+                else
+                {
                     $error = LangLoader::get_message('warning.last.editor.installed', 'warning-lang');
                 }
 
             }
 
             $captchas = AppContext::get_captcha_service()->get_available_captchas();
-            if (in_array($module_id, $captchas)) {
-                if (count($captchas) > 1) {
+            if (in_array($module_id, $captchas))
+            {
+                if (count($captchas) > 1)
+                {
                     $default_captcha = ContentManagementConfig::load()->get_used_captcha_module();
-                    if ($default_captcha == $module_id) {
+                    if ($default_captcha == $module_id)
+                    {
                         $error = LangLoader::get_message('warning.captcha.is.default', 'warning-lang');
                     }
 
-                } else {
+                }
+                else
+                {
                     $error = LangLoader::get_message('warning.captcha.last.installed', 'warning-lang');
                 }
 
             }
-        } else {
+        }
+        else
+        {
             $module = self::get_module($module_id);
 
-            if ($module->get_configuration()->get_compatibility() != GeneralConfig::load()->get_phpboost_major_version()) {
+            if ($module->get_configuration()->get_compatibility() != GeneralConfig::load()->get_phpboost_major_version())
+            {
                 $error = LangLoader::get_message('addon.not.compatible', 'addon-lang');
             }
 
         }
 
-        if (empty($error)) {
+        if (empty($error))
+        {
             $module = self::get_module($module_id);
             $module->set_activated($activated);
             ModulesConfig::load()->update($module);
@@ -458,10 +520,12 @@ class ModulesManager
             MenuService::add_mini_module($module_id);
             Feed::clear_cache($module_id);
 
-            if ($generate_cache) {
+            if ($generate_cache)
+            {
                 AppContext::get_cache_service()->clear_cache();
 
-                if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
+                if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled())
+                {
                     HtaccessFileCache::regenerate();
                     NginxFileCache::regenerate();
                 }
@@ -471,7 +535,7 @@ class ModulesManager
         return $error;
     }
 
-    public static function set_module_activation($module_id, bool $activated)
+    public static function set_module_activation(string $module_id, bool $activated): void
     {
         $module = self::get_module($module_id);
         $module->set_activated($activated);
@@ -479,24 +543,27 @@ class ModulesManager
         ModulesConfig::save();
     }
 
-    private static function execute_module_installation($module_id)
+    private static function execute_module_installation(string $module_id): void
     {
         $module_setup      = self::get_module_setup($module_id);
         $environment_check = $module_setup->check_environment();
-        if (!$environment_check->has_errors()) {
+        if (!$environment_check->has_errors())
+        {
             $module_setup->install();
-        } else {
+        }
+        else
+        {
             // TODO process module installation errors
         }
     }
 
-    private static function execute_module_uninstallation($module_id)
+    private static function execute_module_uninstallation(string $module_id): void
     {
         $module_setup = self::get_module_setup($module_id);
-        return $module_setup->uninstall();
+        $module_setup->uninstall();
     }
 
-    private static function execute_module_upgrade($module_id, $installed_version)
+    private static function execute_module_upgrade(string $module_id, string $installed_version): mixed
     {
         $module_setup = self::get_module_setup($module_id);
         return $module_setup->upgrade($installed_version);
@@ -507,7 +574,7 @@ class ModulesManager
      * @param string $module_id
      * @return ModuleSetup
      */
-    private static function get_module_setup($module_id)
+    private static function get_module_setup(string $module_id): mixed
     {
         $module_setup_classname = TextHelper::ucfirst($module_id) . 'Setup';
         if (self::module_setup_exists($module_setup_classname)) {
@@ -516,12 +583,12 @@ class ModulesManager
         return new DefaultModuleSetup($module_id);
     }
 
-    private static function module_setup_exists($module_setup_classname)
+    private static function module_setup_exists(string $module_setup_classname): mixed
     {
         return ClassLoader::is_class_registered_and_valid($module_setup_classname);
     }
 
-    private static function update_class_list()
+    private static function update_class_list(): void
     {
         ClassLoader::generate_classlist(true);
     }
@@ -530,7 +597,7 @@ class ModulesManager
      * @return array the names list of the modules for unauthorized FormFieldSelectChoiceOption
      * @param string $feature Feature for which display the modules list.
      */
-    public static function generate_unauthorized_module_option($feature)
+    public static function generate_unauthorized_module_option(string $feature): array
     {
         $options = [];
 
@@ -539,5 +606,5 @@ class ModulesManager
         }
         return $options;
     }
-
 }
+?>

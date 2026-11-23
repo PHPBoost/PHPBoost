@@ -20,7 +20,7 @@ class PrivateMsg
 	const DEL_PM_CONVERS = true; //Suppression de la conversation complète.
 	const UPDATE_MBR_PM  = false;  //Met à jour le nombre de mp du membre.
 
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 
 	public static function __static(): void
 	{

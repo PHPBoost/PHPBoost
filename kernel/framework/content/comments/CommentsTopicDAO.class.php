@@ -14,7 +14,7 @@
 class CommentsTopicDAO
 {
 	private static ?CommentsCache $comments_cache = null;
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 
 	public static function __static(): void
 	{

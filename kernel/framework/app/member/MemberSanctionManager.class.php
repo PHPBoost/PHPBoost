@@ -14,7 +14,7 @@
 
 class MemberSanctionManager
 {
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 	private static array $lang;
 
 	const NO_SEND_CONFIRMATION = 'no_send_confirmation';

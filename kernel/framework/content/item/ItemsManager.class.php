@@ -13,7 +13,7 @@
 
 class ItemsManager
 {
-    protected static ?DBQuerier $db_querier = null;
+    protected static DBQuerier $db_querier ;
     protected static string $module_id = '';
     protected static ?Module $module = null;
     protected static string $items_table = '';

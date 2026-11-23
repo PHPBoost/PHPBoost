@@ -3,22 +3,23 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2012 02 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
 abstract class ConfigUpdateVersion implements UpdateVersion
 {
-    protected static $module_id;
+    protected static string $module_id;
 
-    protected $delete_old_config;
-    protected $config_name;
-    protected $querier;
+    protected bool $delete_old_config;
+    protected string $config_name;
+    protected DBQuerier $querier;
 
     protected $config_parameters_to_modify = [];
 
-    public function __construct($module_id, $delete_old_config = false, $config_name = '')
+    public function __construct(string $module_id, bool $delete_old_config = false, string $config_name = '')
     {
         self::$module_id         = $module_id;
         $this->delete_old_config = $delete_old_config;
@@ -26,61 +27,69 @@ abstract class ConfigUpdateVersion implements UpdateVersion
         $this->querier           = PersistenceContext::get_querier();
     }
 
-    public function get_module_id()
+    public function get_module_id(): string
     {
         return self::$module_id;
     }
 
-    public function get_config_name()
+    public function get_config_name(): string
     {
         return $this->config_name;
     }
 
-    public function execute()
+    public function execute(): void
     {
         // Ensure the config class file is loaded before build_new_config() calls
         // MaintenanceConfig::load() → unserialize(). class_exists() triggers the
         // SPL autoloader which does the require_once, so the class is defined before
         // any unserialize() attempt on a stored instance of it.
         $config_class = ucfirst(self::$module_id) . 'Config';
-        if (!class_exists($config_class, true)) {
+        if (!class_exists($config_class, true))
+        {
             // Class not found even after autoload attempt — build_new_config()
             // will fall back to default values via ConfigNotFoundException.
         }
-        try {
-            if ($this->build_new_config()) {
-                if ($this->delete_old_config) {
+        try
+        {
+            if ($this->build_new_config())
+            {
+                if ($this->delete_old_config)
+                {
                     $this->delete_old_config();
                 }
             }
-        } catch (RowNotFoundException $e) {}
+        }
+        catch (RowNotFoundException $e) {}
     }
 
-    protected function get_old_config($serialize = true)
+    protected function get_old_config(bool $serialize = true): mixed
     {
         $old_config = [];
-        try {
+        try
+        {
             $old_config = $this->querier->get_column_value(DB_TABLE_CONFIGS, 'value', 'WHERE name = :config_name', ['config_name' => $this->get_config_name()]);
-        } catch (RowNotFoundException $e) {}
+        }
+        catch (RowNotFoundException $e) {}
 
-        if ($serialize) {
+        if ($serialize)
+        {
             mb_internal_encoding('utf-8');
             return TextHelper::deserialize($old_config);
         }
         return $old_config;
     }
 
-    protected function save_new_config($name, ConfigData $data)
+    protected function save_new_config(string $name, ConfigData $data): mixed
     {
         return $this->querier->inject('UPDATE ' . DB_TABLE_CONFIGS . ' SET value = :value WHERE name = :config_name', ['value' => TextHelper::serialize($data), 'config_name' => $name]);
     }
 
-    protected function build_new_config()
+    protected function build_new_config(): mixed
     {
         return $this->modify_config_parameters();
     }
 
-    protected function delete_old_config()
+    protected function delete_old_config(): void
     {
         $this->querier->delete(DB_TABLE_CONFIGS, 'WHERE name = :config_name', ['config_name' => $this->get_config_name()]);
     }
@@ -88,37 +97,49 @@ abstract class ConfigUpdateVersion implements UpdateVersion
     /**
      * Updates config parameters.
      */
-    protected function modify_config_parameters()
+    protected function modify_config_parameters(): bool
     {
         $configuration_class_name = ucfirst(self::$module_id) . 'Config';
         $old_config= $this->get_old_config();
 
-        if (ClassLoader::is_class_registered_and_valid($configuration_class_name) && !empty($old_config)) {
+        if (ClassLoader::is_class_registered_and_valid($configuration_class_name) && !empty($old_config))
+        {
             $config = $configuration_class_name::load(self::$module_id);
             $modified_properties = [];
             foreach ($this->config_parameters_to_modify as $old_name => $new_name) {
                 $property = '';
 
-                try {
+                try
+                {
                     $property = $old_config->get_property($old_name);
-                } catch (PropertyNotFoundException $e) {}
+                }
+                catch (PropertyNotFoundException $e) {}
 
-                if ($property) {
-                    if (!is_array($new_name)) {
+                if ($property)
+                {
+                    if (!is_array($new_name))
+                    {
                         $set_new_property = 'set_' . $new_name;
                         $config->$set_new_property($property);
                         $modified_properties[] = $new_name;
-                    } else {
+                    }
+                    else
+                    {
                         $set_new_property = 'set_' . $new_name['parameter_name'];
 
-                        if (isset($new_name['values'])) {
-                            foreach ($new_name['values'] as $old_value_name => $new_value_name) {
-                                if ($property == $old_value_name) {
+                        if (isset($new_name['values']))
+                        {
+                            foreach ($new_name['values'] as $old_value_name => $new_value_name)
+                            {
+                                if ($property == $old_value_name)
+                                {
                                     $config->$set_new_property($new_value_name);
                                 }
                             }
                             $modified_properties[] = $new_name['parameter_name'];
-                        } elseif (isset($new_name['value'])) {
+                        }
+                        elseif (isset($new_name['value']))
+                        {
                             $config->$set_new_property($new_name['value']);
                             $modified_properties[] = $new_name['parameter_name'];
                         }
@@ -128,15 +149,20 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
             $configuration_class = new ReflectionClass($configuration_class_name);
 
-            foreach (array_diff($configuration_class->getConstants(), $modified_properties) as $parameter) {
-                if (is_string($parameter)) {
+            foreach (array_diff($configuration_class->getConstants(), $modified_properties) as $parameter)
+            {
+                if (is_string($parameter))
+                {
                     $property = '';
 
-                    try {
+                    try
+                    {
                         $property = $old_config->get_property($parameter);
-                    } catch (PropertyNotFoundException $e) {}
+                    }
+                    catch (PropertyNotFoundException $e) {}
 
-                    if ($property && $configuration_class->hasMethod('set_' . $parameter)) {
+                    if ($property && $configuration_class->hasMethod('set_' . $parameter))
+                    {
                         $set_new_property = 'set_' . $parameter;
                         $config->$set_new_property($property);
                     }
@@ -150,10 +176,11 @@ abstract class ConfigUpdateVersion implements UpdateVersion
         return false;
     }
 
-    protected function get_parsed_old_content($module_config, $parameter)
+    protected function get_parsed_old_content(mixed $module_config, string $parameter): mixed
     {
         $old_config = $this->get_old_config();
-        if ($old_config && (ModulesManager::is_module_installed(self::$module_id) && ModulesManager::is_module_activated(self::$module_id))) {
+        if ($old_config && (ModulesManager::is_module_installed(self::$module_id) && ModulesManager::is_module_activated(self::$module_id)))
+        {
             $config           = $module_config::load();
             $unparser         = new OldBbcodeUnparser();
             $parser           = new BbcodeParser();
@@ -166,10 +193,13 @@ abstract class ConfigUpdateVersion implements UpdateVersion
             $parser->set_content($unparser->get_content());
             $parser->parse();
 
-            if ($parser->get_content() != $root_description) {
+            if ($parser->get_content() != $root_description)
+            {
                 $config->$setter($parser->get_content());
                 return $config->$getter();
             }
         }
+        return null;
     }
 }
+?>

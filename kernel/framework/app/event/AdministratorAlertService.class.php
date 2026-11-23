@@ -19,7 +19,7 @@ define('ADMINISTRATOR_ALERT_TYPE', 1);
 
 class AdministratorAlertService
 {
-    private static ?DBQuerier $db_querier = null;
+    private static DBQuerier $db_querier ;
 
     public static function __static(): void
     {

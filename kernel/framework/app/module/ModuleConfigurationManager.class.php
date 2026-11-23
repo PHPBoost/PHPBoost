@@ -5,24 +5,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2009 12 12
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModuleConfigurationManager
 {
-	/**
-	 * @var DataStore
-	 */
-	private static $cache_manager = null;
+	private static ?DataStore $cache_manager = null;
 
 	/**
 	 * Returns the <code>$module_id</code> ModuleConfiguration
 	 * @param string $module_id the module id
 	 * @return ModuleConfiguration the module configuration
 	 */
-	public static function get($module_id)
+	public static function get(string $module_id): ModuleConfiguration
 	{
 		$cache_manager = self::get_cache_manager();
 		if (!$cache_manager->contains($module_id))
@@ -33,10 +31,7 @@ class ModuleConfigurationManager
 		return $cache_manager->get($module_id);
 	}
 
-	/**
-	 * @return DataStore
-	 */
-	private static function get_cache_manager()
+	private static function get_cache_manager(): DataStore
 	{
 		if (self::$cache_manager === null)
 		{
@@ -45,10 +40,7 @@ class ModuleConfigurationManager
 		return self::$cache_manager;
 	}
 
-	/**
-	 * @return ModuleConfiguration
-	 */
-	private static function get_module_configuration($module_id)
+	private static function get_module_configuration(string $module_id): ModuleConfiguration
 	{
 		$config_ini_file = self::get_module_path($module_id) . '/config.ini';
 		$desc_ini_file = self::find_desc_ini_file($module_id);
@@ -60,7 +52,7 @@ class ModuleConfigurationManager
 	 * @param string $module_id the module id
 	 * @return string the module path
 	 */
-	private static function get_module_path($module_id)
+	private static function get_module_path(string $module_id): string
 	{
 		// Try modules folder first
 		$modules_path = PATH_TO_ROOT . '/modules/' . $module_id;
@@ -72,7 +64,7 @@ class ModuleConfigurationManager
 		return PATH_TO_ROOT . '/' . $module_id;
 	}
 
-	private static function find_desc_ini_file($module_id)
+	private static function find_desc_ini_file(string $module_id): mixed
 	{
 		$module_path = self::get_module_path($module_id);
 

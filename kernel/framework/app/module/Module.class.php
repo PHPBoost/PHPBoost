@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 17
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2009 12 12
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -18,7 +18,7 @@ class Module
 
     // band-aid TODO in update script : remove 'authorizations' from db /configs/kernel-modules in serialized 'value'
     // remains of 4.0 version - Thx to SchyzoO
-	private $authorizations;
+	private array $authorizations;
 
 	public function __construct(string $module_id, bool $activated = false)
 	{

@@ -15,7 +15,7 @@
 class PersistenceContext
 {
 	private static ?SQLQuerier $sql_querier = null;
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 	private static ?DBMSUtils $dbms_utils = null;
 
 	/** Returns the sql querier */

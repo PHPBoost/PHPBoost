@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 4.1 - 2013 11 15
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,13 +13,13 @@
 
 class ModuleLink
 {
-	protected $name;
-	protected $url;
-	protected $css_class;
+	protected string $name;
+	protected Url|string $url;
+	protected string $css_class;
 	protected $sub_link = [];
 	protected $visibility = true;
 
-	public function __construct($name, $url, $visibility = true, $css_class = '')
+	public function __construct(string $name, Url|string $url, bool$visibility = true, string $css_class = '')
 	{
 		$this->name = $name;
 		$this->visibility = $visibility;
@@ -27,32 +27,32 @@ class ModuleLink
 		$this->set_url($url);
 	}
 
-	public function set_name($name)
+	public function set_name(string $name): void
 	{
 		$this->name = $name;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function set_css_class($css_class)
+	public function set_css_class(string $css_class)
 	{
 		$this->css_class = $css_class;
 	}
 
-	public function get_css_class()
+	public function get_css_class(): string
 	{
 		return $this->css_class;
 	}
 
-	public function has_css_class()
+	public function has_css_class(): bool
 	{
 		return !empty($this->css_class);
 	}
 
-	public function set_url($url)
+	public function set_url(Url|string $url): void
 	{
 		if (!($url instanceof Url))
         {
@@ -61,42 +61,42 @@ class ModuleLink
         $this->url = $url;
 	}
 
-	public function get_url()
+	public function get_url(): Url|string
 	{
 		return $this->url;
 	}
 
-	public function add_sub_link(ModuleLink $sub_link)
+	public function add_sub_link(ModuleLink $sub_link): void
 	{
 		$this->sub_link[] = $sub_link;
 	}
 
-	public function get_sub_link()
+	public function get_sub_link(): array
 	{
 		return $this->sub_link;
 	}
 
-	public function has_sub_link()
+	public function has_sub_link(): bool
 	{
 		return !empty($this->sub_link);
 	}
 
-	public function set_visibility($visibility)
+	public function set_visibility(bool $visibility): void
 	{
 		$this->visibility = $visibility;
 	}
 
-	public function is_visible()
+	public function is_visible(): bool
 	{
 		return (bool)$this->visibility;
 	}
 
-	public function is_active()
+	public function is_active(): bool
 	{
 		return Url::is_current_url($this->get_url()->relative(), true);
 	}
 
-	public function export()
+	public function export(): Template
 	{
 		$tpl = new FileTemplate('framework/module/module_actions_link.tpl');
 

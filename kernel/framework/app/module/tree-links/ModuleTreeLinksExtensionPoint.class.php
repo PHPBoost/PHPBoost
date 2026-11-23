@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 4.1 - 2013 11 15
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface ModuleTreeLinksExtensionPoint extends ExtensionPoint
@@ -16,6 +17,6 @@ interface ModuleTreeLinksExtensionPoint extends ExtensionPoint
 	/**
 	 * @return ModuleTreeLinks class containing the tree links different as possible actions in the module (addition, configuration, etc).
 	 */
-	function get_actions_tree_links();
+	function get_actions_tree_links(): ModuleTreeLinks;
 }
 ?>

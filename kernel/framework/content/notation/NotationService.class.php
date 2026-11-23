@@ -17,7 +17,7 @@ class NotationService
 {
 	private static bool $js_already_included = false;
 	private static ?CurrentUser $user = null;
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 
 	public static function __static()
 	{

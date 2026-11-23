@@ -15,7 +15,7 @@ class KeywordsManager
 {
 	private string $module_id = '';
 
-	private ?DBQuerier $db_querier = null;
+	private DBQuerier $db_querier ;
 
 	public function __construct(string $module_id = '')
 	{

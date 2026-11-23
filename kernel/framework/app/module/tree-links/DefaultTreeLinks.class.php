@@ -5,28 +5,21 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 12
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 {
-	/**
-	 * @var string the module identifier
-	 */
-	private $module_id;
-
-	/**
-	 * @var CategoriesAuthorizationsService|ItemsAuthorizationsService authorizations checker
-	 */
-	private $authorizations;
+	private string $module_id;
+	private CategoriesAuthorizationsService|ItemsAuthorizationsService $authorizations;
 
 	/**
 	 * DefaultTreeLinks constructor
 	 * @param string $module_id the module id.
 	 */
-	public function __construct($module_id)
+	public function __construct(string $module_id)
 	{
 		$this->module_id = $module_id;
 	}
@@ -34,7 +27,7 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	/**
 	 * @return CategoriesAuthorizationsService|ItemsAuthorizationsService Return the authorizations checker
 	 */
-	public function get_authorizations()
+	public function get_authorizations(): CategoriesAuthorizationsService|ItemsAuthorizationsService
 	{
 		return $this->authorizations;
 	}
@@ -42,12 +35,12 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 	/**
 	 * @return string Return the id of the module
 	 */
-	public function get_module_id()
+	public function get_module_id(): string
 	{
 		return $this->module_id;
 	}
 
-	public function get_actions_tree_links()
+	public function get_actions_tree_links(): ModuleTreeLinks
 	{
 		$tree = new ModuleTreeLinks();
 		$module_configuration = ModuleConfigurationManager::get($this->module_id);
@@ -86,7 +79,9 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		$this->get_module_additional_actions_tree_links($tree);
 
 		if ($module_configuration->get_admin_main_page() && $this->display_configuration_link())
+        {
 			$tree->add_link(new AdminModuleLink(LangLoader::get_message('form.configuration', 'form-lang'), ModulesUrlBuilder::configuration($this->module_id)));
+        }
 
 		if ($module_configuration->get_documentation())
 		{
@@ -103,12 +98,12 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		return $tree;
 	}
 
-	protected function get_add_item_url()
+	protected function get_add_item_url(): Url
 	{
 		return ItemsUrlBuilder::add($this->get_requested_category_id(), $this->module_id);
 	}
 
-	protected function get_requested_category_id()
+	protected function get_requested_category_id(): int
 	{
 		$id_category = AppContext::get_request()->get_getint('id_category', Category::ROOT_CATEGORY);
 		if (ModuleConfigurationManager::get($this->module_id)->has_categories() && !CategoriesService::get_categories_manager($this->module_id)->get_categories_cache()->category_exists($id_category))
@@ -118,18 +113,18 @@ class DefaultTreeLinks implements ModuleTreeLinksExtensionPoint
 		return $id_category;
 	}
 
-	protected function check_write_authorization()
+	protected function check_write_authorization(): bool
 	{
 		return ModulesManager::get_module($this->module_id)->get_configuration()->has_contribution() ? ($this->authorizations->write() || $this->authorizations->contribution()) : $this->authorizations->write();
 	}
 
-	protected function display_configuration_link()
+	protected function display_configuration_link(): bool
 	{
 		return true;
 	}
 
-	protected function get_module_additional_actions_tree_links(&$tree) {}
+	protected function get_module_additional_actions_tree_links(mixed &$tree): void {}
 
-	protected function get_module_additional_items_actions_tree_links(&$tree) {}
+	protected function get_module_additional_items_actions_tree_links(mixed &$tree): void {}
 }
 ?>

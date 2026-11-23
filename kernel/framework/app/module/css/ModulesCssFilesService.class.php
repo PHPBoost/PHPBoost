@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2011 10 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,9 +13,9 @@
 
 class ModulesCssFilesService
 {
-    private static $modules_css_files = [];
+    private static array $modules_css_files = [];
 
-    public static function __static()
+    public static function __static(): void
     {
         $extension_points = AppContext::get_extension_provider_service()->get_extension_point(CssFilesExtensionPoint::EXTENSION_POINT);
         foreach ($extension_points as $module_id => $provider)
@@ -24,7 +24,7 @@ class ModulesCssFilesService
         }
     }
 
-    public static function get_css_files_always_displayed()
+    public static function get_css_files_always_displayed(): array
     {
         $css_files = [];
         foreach (self::$modules_css_files as $module_id => $module_css_files)
@@ -40,7 +40,7 @@ class ModulesCssFilesService
         return $css_files;
     }
 
-    public static function get_css_files_running_module_displayed()
+    public static function get_css_files_running_module_displayed(): array
     {
         $css_files = [];
         $module_id = Environment::get_running_module_name();
@@ -61,7 +61,7 @@ class ModulesCssFilesService
         return $css_files;
     }
 
-    private static function get_real_path_css_file($module_id, $css_file)
+    private static function get_real_path_css_file(string $module_id, string $css_file): string
     {
         if (filter_var($css_file, FILTER_VALIDATE_URL))
         {

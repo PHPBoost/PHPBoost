@@ -20,7 +20,7 @@ class Uploads
     const ADMIN_NO_CHECK = true;
 
 
-    private static ?DBQuerier $db_querier;
+    private static DBQuerier $db_querier;
 
 
     public static function __static(): void

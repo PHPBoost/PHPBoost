@@ -15,7 +15,7 @@
 
 class ExtendedFieldsDatabaseService
 {
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 	private static ?DBMSUtils $db_utils = null;
 
 	public static function __static()

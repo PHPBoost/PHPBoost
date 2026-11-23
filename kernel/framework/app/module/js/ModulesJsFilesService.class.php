@@ -5,8 +5,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 6.0 - 2024 06 25
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ModulesJsFilesService
@@ -15,12 +16,12 @@ class ModulesJsFilesService
      * @var array
      * Modules who called js_files in ExtensionPoint
      */
-    private static $modules_js_files = [];
+    private static array $modules_js_files = [];
 
     /**
      * Static constructor, to call all modules ExtensionPoint::js_files()
      */
-    public static function __static()
+    public static function __static(): void
     {
         $extension_points = AppContext::get_extension_provider_service()->get_extension_point(JsFilesExtensionPoint::EXTENSION_POINT);
         foreach ($extension_points as $module_id => $provider)
@@ -97,7 +98,7 @@ class ModulesJsFilesService
      * Get all modules JS files displayed in the module, at the bottom_js
      * @return array JS files
      */
-    public static function get_bottom_js_files_running_module_displayed():array
+    public static function get_bottom_js_files_running_module_displayed(): array
     {
         $js_files = [];
         $module_id = Environment::get_running_module_name();
@@ -128,7 +129,7 @@ class ModulesJsFilesService
      * - 'kernel/lib/js/$filename'
      * Else, return '$module/templates/$filename' 
      */
-    private static function get_real_path_js_file($module_id, $js_file):string
+    private static function get_real_path_js_file(string $module_id, string $js_file):string
     {
         if (filter_var($js_file, FILTER_VALIDATE_URL))
         {

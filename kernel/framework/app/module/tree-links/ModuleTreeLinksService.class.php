@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 4.1 - 2013 11 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -14,7 +14,7 @@
 
 class ModuleTreeLinksService
 {
-	public static function display_actions_menu()
+	public static function display_actions_menu(): ?Template
 	{
 		$lang = LangLoader::get_all_langs();
 		$module_name = Environment::get_running_module_name();
@@ -47,9 +47,10 @@ class ModuleTreeLinksService
 
 			return self::display($actions_tree_links, $view);
 		}
+        return null;
 	}
 
-	public static function display_admin_actions_menu(Module $module)
+	public static function display_admin_actions_menu(Module $module): Template
 	{
 		$lang = LangLoader::get_all_langs();
 		$id_module = $module->get_id();
@@ -103,7 +104,7 @@ class ModuleTreeLinksService
 		return $view;
 	}
 
-	public static function display(ModuleTreeLinks $tree_links, View $view)
+	public static function display(ModuleTreeLinks $tree_links, template $view)
 	{
 		$has_links = $tree_links->has_links();
 		if ($has_links)
@@ -123,13 +124,18 @@ class ModuleTreeLinksService
 		return $view;
 	}
 
-	public static function get_tree_links($module_name)
+	public static function get_tree_links(string $module_name): mixed
 	{
-		try {
+		try
+        {
 			return AppContext::get_extension_provider_service()->get_provider($module_name)->get_extension_point(ModuleTreeLinksExtensionPoint::EXTENSION_POINT);
-		} catch (UnexistingExtensionPointProviderException $e) {
+		}
+        catch (UnexistingExtensionPointProviderException $e)
+        {
 			return null;
-		} catch (ExtensionPointNotFoundException $e) {
+		}
+        catch (ExtensionPointNotFoundException $e)
+        {
 			return null;
 		}
 	}

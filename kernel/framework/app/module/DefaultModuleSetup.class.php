@@ -14,7 +14,7 @@
 
 class DefaultModuleSetup implements ModuleSetup
 {
-	protected static ?DBQuerier $db_querier = null;
+	protected static DBQuerier $db_querier ;
 	protected static ?DBMSUtils $dbms_utils = null;
 	protected string $module_id;
 	protected ?ModuleConfiguration $module_configuration = null;

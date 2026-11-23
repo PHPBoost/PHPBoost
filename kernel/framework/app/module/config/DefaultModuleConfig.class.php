@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 6.0 - 2020 01 10
  * @author      xela <xela@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -16,20 +16,17 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * @var string the module identifier
 	 */
-	protected static $module_id;
+	protected static string $module_id;
 
 	const ITEMS_PER_PAGE = 'items_per_page';
 	const AUTHORIZATIONS = 'authorizations';
 
-	public static function __static()
+	public static function __static(): void
 	{
 		$module_id = ClassLoader::get_module_id_from_class_name(get_called_class());
 		self::$module_id = ($module_id && !in_array($module_id, ['admin', 'kernel', 'user']) ? $module_id : Environment::get_running_module_name());
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function get_default_values(): array
 	{
 		return array_merge(
@@ -45,7 +42,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * Returns the default values of additional parameters defined in other config classes of the kernel.
 	 */
-	public function get_kernel_additional_default_values()
+	public function get_kernel_additional_default_values(): array
 	{
 		return [];
 	}
@@ -53,7 +50,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * Returns the default values of additional parameters of the module.
 	 */
-	public function get_additional_default_values()
+	public function get_additional_default_values(): array
 	{
 		return [];
 	}
@@ -61,7 +58,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * Returns the configuration of the module.
 	 */
-	public static function load($module_id = '')
+	public static function load(string $module_id = ''): ConfigData
 	{
 		!empty($module_id) ? self::$module_id = $module_id : '';
 		return ConfigManager::load(get_called_class(), (!empty($module_id) ? $module_id : self::$module_id), 'config');
@@ -70,7 +67,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	/**
 	 * Saves the configuration in the database. As it become persistent.
 	 */
-	public static function save($module_id = '')
+	public static function save(string $module_id = ''): void
 	{
 		ConfigManager::save((!empty($module_id) ? $module_id : self::$module_id), self::load((!empty($module_id) ? $module_id : self::$module_id)), 'config');
 	}
@@ -84,7 +81,7 @@ class DefaultModuleConfig extends AbstractConfigData
 	 * @param string $method method name ( ex : get_constant_value or set_constant_value($arguments) )
 	 * @param array|string $arguments parameter to set.
 	 */
-	public function __call($method, $arguments)
+	public function __call(string $method, string|array $arguments): mixed
 	{
 		if ( !$this->current_class_has_method($method) && !empty($this->get_class_constants()) )
 		{
@@ -113,10 +110,11 @@ class DefaultModuleConfig extends AbstractConfigData
 					if ($argument_type != $default_argument_type)
 						settype($arguments[0], $default_argument_type);
 
-					return $this->set_property($constant_value, $arguments[0]);
+					$this->set_property($constant_value, $arguments[0]);
 				}
 			}
 		}
+        return null;
 	}
 
 	/**

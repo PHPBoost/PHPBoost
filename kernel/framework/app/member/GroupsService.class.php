@@ -20,7 +20,7 @@ define('GROUP_DISABLED_ADVANCED_AUTH', true); //Désactivation des autorisations
 
 class GroupsService
 {
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 
 	public static function __static(): void
 	{

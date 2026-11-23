@@ -17,7 +17,7 @@ class ContributionService
 {
 	const CONTRIBUTION_TYPE = 0;
 
-	private static ?DBQuerier $db_querier = null;
+	private static DBQuerier $db_querier ;
 
 	public static function __static(): void
 	{

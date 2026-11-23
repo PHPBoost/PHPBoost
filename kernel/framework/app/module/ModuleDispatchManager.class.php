@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 03
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 6.0 - 2020 02 07
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -55,22 +55,32 @@ class ModuleDispatchManager extends DispatchManager
 
             //Item display
             if ($module_configuration->has_categories())
+            {
                 $url_controller_mappers[] = new UrlControllerMapper('DefaultDisplayItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+))/?$`', ['id_category', 'rewrited_name_category', 'id', 'rewrited_title'], $module_id);
+            }
             else
+            {
                 $url_controller_mappers[] = new UrlControllerMapper('DefaultDisplayItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+))/?$`', ['id', 'rewrited_title'], $module_id);
+            }
 
             //Items display
             $url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/member/?([0-9]+)?/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', ['user_id', 'field', 'sort', 'page'], $module_id);
             $url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/pending/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', ['field', 'sort', 'page'], $module_id);
 
             if ($module_configuration->feature_is_enabled('keywords'))
+            {
                 $url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/tag/?([a-z0-9-_]+)/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', ['tag', 'field', 'sort', 'page'], $module_id);
+            }
 
             //Categories and home page display
             if ($module_configuration->has_categories())
+            {
                 $url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/([0-9]+)-([a-z0-9-_]+)/?([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?([0-9]+)?/?$`', ['id_category', 'rewrited_name', 'field', 'sort', 'page', 'subcategories_page'], $module_id);
+            }
             else
+            {
                 $url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/([a-z_]+)?/?([a-z]+)?/?([0-9]+)?/?$`', ['field', 'sort', 'page'], $module_id);
+            }
 
             $url_controller_mappers[] = new UrlControllerMapper('DefaultSeveralItemsController', '`^/?$`', [], $module_id);
         }
