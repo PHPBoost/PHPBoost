@@ -5,132 +5,132 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 29
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2011 04 10
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ThemeConfiguration
 {
-	private $addon_type;
-	private $name;
-	private $author_name;
-	private $author_mail;
-	private $author_link;
-	private $version;
-	private $description = '';
-	private $creation_date;
-	private $last_update;
-	private $compatibility;
-	private $require_copyright = false;
-	private $html_version = '1.0 Strict';
-	private $css_version = 2.1;
-	private $columns_disabled = null;
-	private $main_color = '';
-	private $variable_width;
-	private $width;
-	private $pictures;
-	private $parent_theme;
-	private $repository;
+	private string $addon_type;
+	private string $name;
+	private string $author_name;
+	private string $author_mail;
+	private string $author_link;
+	private string $version;
+	private string $description = '';
+	private string $creation_date;
+	private string $last_update;
+	private string $compatibility;
+	private bool $require_copyright = false;
+	private string $html_version = '5.0';
+	private string $css_version = '4.0';
+	private ?ColumnsDisabled $columns_disabled = null;
+	private string $main_color = '';
+	private string $variable_width;
+	private string $width;
+	private array $pictures;
+	private string $parent_theme;
+	private string $repository;
 
-	public function __construct($config_ini_file, $desc_ini_file)
+	public function __construct(mixed $config_ini_file, mixed $desc_ini_file)
 	{
 		$this->load_configuration($config_ini_file);
 		$this->load_description($desc_ini_file);
 	}
 
-	public function get_addon_type()
+	public function get_addon_type(): string
 	{
 		return $this->addon_type;
 	}
 
-	public function get_name()
+	public function get_name(): string
 	{
 		return $this->name;
 	}
 
-	public function get_author_name()
+	public function get_author_name(): string
 	{
 		return $this->author_name;
 	}
 
-	public function get_author_mail()
+	public function get_author_mail(): string
 	{
 		return $this->author_mail;
 	}
 
-	public function get_author_link()
+	public function get_author_link(): string
 	{
 		return $this->author_link;
 	}
 
-	public function get_version()
+	public function get_version(): string
 	{
 		return $this->version;
 	}
 
-	public function get_description()
+	public function get_description(): string
 	{
 		return $this->description;
 	}
 
-	public function get_creation_date()
+	public function get_creation_date(): string
 	{
 		return $this->creation_date;
 	}
 
-	public function get_last_update()
+	public function get_last_update(): string
 	{
 		return $this->last_update;
 	}
 
-	public function get_compatibility()
+	public function get_compatibility(): string
 	{
 		return $this->compatibility;
 	}
 
-	public function get_require_copyright()
+	public function get_require_copyright(): string
 	{
 		return $this->require_copyright;
 	}
 
-	public function get_html_version()
+	public function get_html_version(): string
 	{
 		return $this->html_version;
 	}
 
-	public function get_css_version()
+	public function get_css_version(): string
 	{
 		return $this->css_version;
 	}
 
-	public function get_columns_disabled()
+	public function get_columns_disabled(): ColumnsDisabled
 	{
 		return $this->columns_disabled;
 	}
 
-	public function get_main_color()
+	public function get_main_color(): string
 	{
 		return $this->main_color;
 	}
 
-	public function get_variable_width()
+	public function get_variable_width(): string
 	{
 		return $this->variable_width;
 	}
 
-	public function get_width()
+	public function get_width(): string
 	{
 		return $this->width;
 	}
 
-	public function get_pictures()
+	public function get_pictures(): array
 	{
 		return $this->pictures;
 	}
 
-	public function get_first_picture()
+	public function get_first_picture(): string
 	{
 		if (isset($this->pictures[0]))
 		{
@@ -139,17 +139,17 @@ class ThemeConfiguration
 		return '';
 	}
 
-	public function get_parent_theme()
+	public function get_parent_theme(): string
 	{
 		return $this->parent_theme;
 	}
 
-	public function get_repository()
+	public function get_repository(): string
 	{
 		return $this->repository;
 	}
 
-	private function load_configuration($config_ini_file)
+	private function load_configuration(mixed $config_ini_file): void
 	{
 		$config = @parse_ini_file($config_ini_file);
 
@@ -198,7 +198,7 @@ class ThemeConfiguration
 
 	}
 
-	private function load_description($desc_ini_file)
+	private function load_description(mixed $desc_ini_file): void
 	{
 		if (empty($desc_ini_file))
 		{
@@ -214,12 +214,12 @@ class ThemeConfiguration
 		$this->main_color = isset($desc['main_color']) ? $desc['main_color'] : '';
 	}
 
-	private function parse_pictures_array($pictures)
+	private function parse_pictures_array(string $pictures): array
 	{
 		return explode(',', $pictures);
 	}
 
-	private function parse_columns_disabled_array($columns_disabled)
+	private function parse_columns_disabled_array(string $columns_disabled): ColumnsDisabled
 	{
 		$columns_disabled_array = explode(',', $columns_disabled);
 		$columns_disabled_class = new ColumnsDisabled();
@@ -228,7 +228,7 @@ class ThemeConfiguration
 		return $columns_disabled_class;
 	}
 
-	private function check_parse_ini_file($parse_result, $ini_file)
+	private function check_parse_ini_file(mixed $parse_result, mixed $ini_file): void
 	{
 		if ($parse_result === false)
 		{
@@ -236,7 +236,7 @@ class ThemeConfiguration
 		}
 	}
 
-	public function get_properties()
+	public function get_properties(): array
 	{
 		return [
 			'addon_type'        => $this->addon_type,

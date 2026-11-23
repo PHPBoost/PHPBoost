@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 2.0 - 2008 08 17
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -18,8 +18,8 @@ define('CHECK_ALL_UPDATES', CHECK_KERNEL|CHECK_MODULES|CHECK_THEMES);
 
 class Updates
 {
-    private $repositories = [];
-    private $apps = [];
+    private array $repositories = [];
+    private array $apps = [];
 
     const PHPBOOST_OFFICIAL_REPOSITORY         = 'https://www.phpboost.com/repository/main.xml';
     const PHPBOOST_OFFICIAL_MODULES_REPOSITORY = 'https://dl.phpboost.com/repository/modules.xml';
@@ -29,7 +29,7 @@ class Updates
     * constructor of the class
     * @param $checks
     */
-    public function __construct($checks = CHECK_ALL_UPDATES)
+    public function __construct(int $checks = CHECK_ALL_UPDATES)
     {
         $this->load_apps($checks);
         $this->load_repositories();
@@ -40,7 +40,7 @@ class Updates
     * Load Application Classes
     * @param $checks
     */
-    private function load_apps($checks = CHECK_ALL_UPDATES)
+    private function load_apps(int $checks = CHECK_ALL_UPDATES): void
     {
         $user_locale = AppContext::get_current_user()->get_locale();
         if ($checks & CHECK_KERNEL)
@@ -75,20 +75,22 @@ class Updates
     /**
     * Load Repository Classes
     */
-    private function load_repositories()
+    private function load_repositories(): void
     {
         foreach ($this->apps as $app)
         {
             $rep = $app->get_repository();
             if (!empty($rep) && !isset($this->repositories[$rep]))
+            {
                 $this->repositories[$rep] = new Repository($rep);
+            }
         }
     }
 
     /**
     * Check Repository for Update Notification
     */
-    private function check_repositories()
+    private function check_repositories(): void
     {
         foreach ($this->apps as $app)
         {
@@ -103,7 +105,7 @@ class Updates
     /**
     * Save an alert for Update Notification
     */
-    private function add_update_alert($app)
+    private function add_update_alert(mixed $app): void
     {
         $identifier = $app->get_identifier();
         // We verify that the alert is not already registered
@@ -112,9 +114,13 @@ class Updates
             $alert = new AdministratorAlert();
 
             if ($app->get_type() == Application::KERNEL_TYPE)
+            {
                 $alert->set_entitled(sprintf(LangLoader::get_message('admin.kernel.update', 'admin-lang'), $app->get_version()));
+            }
             else
+            {
                 $alert->set_entitled(sprintf(LangLoader::get_message('admin.available.update', 'admin-lang'), $app->get_type(), $app->get_name(), $app->get_version()));
+            }
 
             $alert->set_fixing_url('/admin/updates/detail.php?identifier=' . $identifier);
             $alert->set_priority($app->get_priority());

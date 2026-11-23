@@ -150,7 +150,7 @@ $lang['addon.themes.parent.theme']      = 'Thème parent';
 $lang['addon.themes.bot.informed']      = 'Non précisé';
 $lang['addon.themes.view.real.preview'] = 'Voir en taille réelle';
 $lang['addon.theme.uninstall']         = '<strong>Désinstaller</strong><br />Le thème est désinstallé mais les fichiers sont conservés';
-$lang['addon.theme.delete']            = '<strong>Supprimer</strong><br />Le thème et ses fichiers seront désinstallé et supprimés';
+$lang['addon.theme.delete']            = '<strong>Supprimer</strong><br />Le thème et ses fichiers seront désinstallés et supprimés';
 $lang['addon.theme.warning.uninstall'] = 'Le module <strong>:module</strong> a été désinstallé avec succès';
 $lang['addon.theme.warning.delete']    = 'Le module <strong>:module</strong> a été supprimé avec succès';
     // Warnings

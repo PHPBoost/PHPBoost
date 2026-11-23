@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 2.0 - 2008 08 17
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,14 +13,10 @@
 
 class Repository
 {
-    private $url = '';
-    private $xml = null;
+    private string $url = '';
+    private mixed $xml = null;
 
-    /**
-     * constructor of the class
-     * @param $url
-     */
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $this->url = $url;
         $server_configuration = new ServerConfiguration();
@@ -29,18 +25,22 @@ class Repository
             libxml_use_internal_errors(true);
             $this->xml = simplexml_load_string($this->get_xml_content_with_curl($this->url));
             if ($this->xml == false)
+            {
                 $this->xml = null;
+            }
         }
-        else if (function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen())
+        elseif (function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen())
         {
             libxml_use_internal_errors(true);
             $this->xml = simplexml_load_file($this->url);
             if ($this->xml == false)
+            {
                 $this->xml = null;
+            }
         }
     }
-    
-    private function get_xml_content_with_curl($url)
+
+    private function get_xml_content_with_curl(string $url): string
     {
         $curl = curl_init();
         $header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
@@ -59,26 +59,24 @@ class Repository
 
         $html = curl_exec($curl);
         if (\PHP_VERSION_ID < 80100)
+        {
             curl_close($curl);
+        }
 
         return $html;
     }
 
-    /**
-     * Check Application
-     * @param $app
-     */
-    public function check($app)
+    public function check(mixed $app): mixed
     {
         $xpath_query = '//app[@id=\'' . $app->get_id() . '\' and @type=\'' .  $app->get_type() . '\']/version[@language=\'' . $app->get_language() . '\']';
         // can't compare strings with XPath, so we check the version number with PHP.
         if ($this->xml != null)
         {
-            $newerVersions = [];
+            $newer_version = [];
             $versions = $this->xml->xpath($xpath_query);
-            $nbVersions = $versions != false ? count($versions) : 0;
+            $nb_versions = $versions != false ? count($versions) : 0;
             // Retrieves all the available updates for the current application
-            for ($i = 0; $i < $nbVersions; $i++)
+            for ($i = 0; $i < $nb_versions; $i++)
             {
                 $rep_app = clone($app);
                 $rep_app->load($versions[$i]);
@@ -87,7 +85,7 @@ class Repository
                 {
                     if ($rep_app->check_compatibility())
                     {
-                        $newerVersions[$rep_app->get_version()] = $i;
+                        $newer_version[$rep_app->get_version()] = $i;
                     }
                 }
             }
@@ -96,13 +94,17 @@ class Repository
 
             // Keep only the first applicable update
             if ($server_configuration->has_curl_extension() && $app->get_type() == 'kernel')
-                $NewVersion = count($newerVersions) > 0 ? max(array_keys($newerVersions)) : '';
-            else
-                $NewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';
-
-            if (!empty($NewVersion))
             {
-                $app->load($versions[$newerVersions[$NewVersion]]);
+                $new_version = count($newer_version) > 0 ? max(array_keys($newer_version)) : '';
+            }
+            else
+            {
+                $new_version = count($newer_version) > 0 ? min(array_keys($newer_version)) : '';
+            }
+
+            if (!empty($new_version))
+            {
+                $app->load($versions[$newer_version[$new_version]]);
                 return $app;
             }
         }
@@ -112,6 +114,6 @@ class Repository
     /**
      * Accessor of url
      */
-    public function get_url() { return $this->url; }
+    public function get_url(): string { return $this->url; }
 }
 ?>

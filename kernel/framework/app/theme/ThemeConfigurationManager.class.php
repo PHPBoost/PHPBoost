@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 06 299
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2011 04 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,9 +13,9 @@
 
 class ThemeConfigurationManager
 {
-	private static $cache_manager = null;
+	private static ?DataStore $cache_manager = null;
 
-	public static function get($theme_id)
+	public static function get(string $theme_id): ThemeConfiguration
 	{
 		$cache_manager = self::get_cache_manager();
 		if (!$cache_manager->contains($theme_id))
@@ -26,7 +26,7 @@ class ThemeConfigurationManager
 		return $cache_manager->get($theme_id);
 	}
 
-	private static function get_cache_manager()
+	private static function get_cache_manager(): DataStore
 	{
 		if (self::$cache_manager === null)
 		{
@@ -35,7 +35,7 @@ class ThemeConfigurationManager
 		return self::$cache_manager;
 	}
 
-	private static function get_theme_configuration($theme_id)
+	private static function get_theme_configuration(string $theme_id): ThemeConfiguration
 	{
 		$config_ini_file = PATH_TO_ROOT . '/templates/' . $theme_id . '/config.ini';
 		$desc_ini_file = self::find_desc_ini_file($theme_id);
@@ -50,7 +50,7 @@ class ThemeConfigurationManager
 		return new ThemeConfiguration($config_ini_file, $desc_ini_file);
 	}
 
-	private static function find_desc_ini_file($theme_id)
+	private static function find_desc_ini_file(string $theme_id): ?string
 	{
 		$desc_ini_file = PATH_TO_ROOT . '/lang/' . AppContext::get_current_user()->get_locale() . '/templates/' . $theme_id . '/desc.ini';
 		if (file_exists($desc_ini_file))

@@ -5,43 +5,44 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 2.0 - 2008 08 17
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Application
 {
-	private $id = '';
-	private $name = '';
-	private $language = '';
-	private $localized_language = '';
-	private $type = '';
+	private string $id = '';
+	private string $name = '';
+	private string $language = '';
+	private string $localized_language = '';
+	private string $type = '';
 
-	private $repository = '';
+	private string $repository = '';
 
-	private $version = '';
-	private $compatibility_min = '';
-	private $compatibility_max = '';
-	private $pubdate = null;
-	private $priority = null;
-	private $security_update = false;
+	private string $version = '';
+	private string $compatibility_min = '';
+	private string $compatibility_max = '';
+	private ?Date $pubdate = null;
+	private ?int $priority = null;
+	private bool $security_update = false;
 
-	private $download_url = '';
-	private $update_url = '';
-	private $autoupdate_url = '';
+	private string $download_url = '';
+	private string $update_url = '';
+	private string $autoupdate_url = '';
 
-	private $authors = [];
+	private array $authors = [];
 
-	private $description = '';
-	private $new_features = [];
-	private $improvements = [];
-	private $bug_corrections = [];
-	private $security_improvements = [];
+	private string $description = '';
+	private array $new_features = [];
+	private array $improvements = [];
+	private array $bug_corrections = [];
+	private array $security_improvements = [];
 
-	private $warning_level = '';
-	private $warning = '';
+	private string $warning_level = '';
+	private string $warning = '';
 
 	const KERNEL_TYPE = 'kernel';
 	const MODULE_TYPE = 'module';
@@ -55,7 +56,7 @@ class Application
 	 * @param $version
 	 * @param $repository
 	 */
-	public function __construct($id, $language, $type = self::MODULE_TYPE, $version = 0, $repository = '')
+	public function __construct(string $id, string $language, string $type = self::MODULE_TYPE, string $version = '0', string $repository = '')
 	{
 		$this->id = $id;
 		$this->name = $id;
@@ -72,7 +73,7 @@ class Application
 	 * Loads an XML description
 	 * @param $xml_desc reference to xml description
 	 */
-	public function load($xml_desc)
+	public function load(mixed $xml_desc): void
 	{
 		$attributes = $xml_desc->attributes();
 
@@ -116,7 +117,9 @@ class Application
 				break;
 		}
 		if ($this->security_update)
-		$this->priority++;
+        {
+            $this->priority++;
+        }
 
 		$this->download_url = self::get_attribute($xml_desc, 'url', 'download');
 		$this->update_url = self::get_attribute($xml_desc, 'url', 'update');
@@ -169,11 +172,12 @@ class Application
 			$this->warning = (string) $this->warning[0];
 		}
 	}
-	/**
+
+    /**
 	 * Gets an identifier of the application
 	 * @return string identifier
 	 */
-	public function get_identifier()
+	public function get_identifier(): string
 	{
 		return md5($this->type . '_' . $this->id . '_' . $this->version . '_' . $this->language);
 	}
@@ -181,7 +185,7 @@ class Application
 	 * Checks compatibility with limits
 	 * @return boolean TRUE if compatible FALSE if not
 	 */
-	public function check_compatibility()
+	public function check_compatibility(): bool
 	{
 		$current_version = $this->get_installed_version();
 
@@ -201,105 +205,105 @@ class Application
 	/**
 	 * Accessor of id
 	 */
-	public function get_id() { return $this->id; }
+	public function get_id(): string { return $this->id; }
 	/**
 	 * Accessor of name
 	 */
-	public function get_name() { return $this->name; }
+	public function get_name(): string { return $this->name; }
 	/**
 	 * Accessor of Language
 	 */
-	public function get_language() { return $this->language; }
+	public function get_language(): string { return $this->language; }
 	/**
 	 * Accessor of Localized language
 	 */
-	public function get_localized_language() { return !empty($this->localized_language) ? $this->localized_language : $this->language; }
+	public function get_localized_language(): string { return !empty($this->localized_language) ? $this->localized_language : $this->language; }
 	/**
 	 * Accessor of Type
 	 */
-	public function get_type() { return $this->type; }
+	public function get_type(): string { return $this->type; }
 	/**
 	 * Accessor of Repository
 	 */
-	public function get_repository() { return $this->repository; }
+	public function get_repository(): string { return $this->repository; }
 	/**
 	 * Accessor of Version
 	 */
-	public function get_version() { return $this->version; }
+	public function get_version(): string { return $this->version; }
 	/**
 	 * Accessor of Compatibility min value
 	 */
-	public function get_compatibility_min() { return $this->compatibility_min; }
+	public function get_compatibility_min(): string { return $this->compatibility_min; }
 	/**
 	 * Accessor of Compatibility Max value
 	 */
-	public function get_compatibility_max() { return $this->compatibility_max; }
+	public function get_compatibility_max(): string { return $this->compatibility_max; }
 	/**
 	 * Accessor of Publication Date
 	 */
-	public function get_pubdate() { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(Date::FORMAT_DAY_MONTH_YEAR, Timezone::USER_TIMEZONE) : ''; }
+	public function get_pubdate(): Date|string { return !empty($this->pubdate) && is_object($this->pubdate) ? $this->pubdate->format(Date::FORMAT_DAY_MONTH_YEAR, Timezone::USER_TIMEZONE) : ''; }
 	/**
 	 * Accessor of Priority
 	 */
-	public function get_priority() { return $this->priority; }
+	public function get_priority(): int { return $this->priority; }
 	/**
 	 * Accessor of Security Update
 	 */
-	public function get_security_update() { return $this->security_update; }
+	public function get_security_update(): string { return $this->security_update; }
 	/**
 	 * Accessor of Download URL
 	 */
-	public function get_download_url() { return $this->download_url; }
+	public function get_download_url(): string { return $this->download_url; }
 	/**
 	 * Accessor of Update URL
 	 */
-	public function get_update_url() { return $this->update_url; }
+	public function get_update_url(): string { return $this->update_url; }
 	/**
 	 * Accessor of Auto Update URL
 	 */
-	public function get_autoupdate_url() { return $this->autoupdate_url; }
+	public function get_autoupdate_url(): string { return $this->autoupdate_url; }
 	/**
 	 * Accessor of Authors
 	 */
-	public function get_authors() { return $this->authors; }
+	public function get_authors(): array { return $this->authors; }
 	/**
 	 * Accessor of Description Text
 	 */
-	public function get_description() { return $this->description; }
+	public function get_description(): string { return $this->description; }
 	/**
 	 * Accessor of New Features Text
 	 */
-	public function get_new_features() { return $this->new_features; }
+	public function get_new_features(): array { return $this->new_features; }
 	/**
 	 * Accessor of improvements Text
 	 */
-	public function get_improvements() { return $this->improvements; }
+	public function get_improvements(): array { return $this->improvements; }
 	/**
 	 * Accessor of Bug Corrections Text
 	 */
-	public function get_bug_corrections() { return $this->bug_corrections; }
+	public function get_bug_corrections(): array { return $this->bug_corrections; }
 	/**
 	 * Accessor of Security improvements
 	 */
-	public function get_security_improvements() { return $this->security_improvements; }
+	public function get_security_improvements(): array { return $this->security_improvements; }
 	/**
 	 * Accessor of Warning level
 	 */
-	public function get_warning_level() { return $this->warning_level; }
+	public function get_warning_level(): string { return $this->warning_level; }
 	/**
 	 * Accessor of Warning
 	 */
-	public function get_warning() { return $this->warning; }
+	public function get_warning(): string { return $this->warning; }
 
 	## PRIVATE METHODS ##
 	/**
 	 * Get attribute of xml token
-	 * @param xdoc reference to xml document
-	 * @param attibute_name name of the attribute
-	 * @param xpath_query
+	 * @param $xdoc reference to xml document
+	 * @param $attibute_name name of the attribute
+	 * @param $xpath_query
 	 * @return string attrbute value
 	 */
-	private function get_attribute($xdoc, $attibute_name, $xpath_query = '.')
+	private function get_attribute(mixed $xdoc, string $attibute_name, string $xpath_query = '.'): string
 	{
 		$elements = $xdoc->xpath($xpath_query);
 		if (count($elements) > 0)
@@ -314,7 +318,7 @@ class Application
 	 * Get the number of the installed version
 	 * @return string version
 	 */
-	private function get_installed_version()
+	private function get_installed_version(): string
 	{
 		switch ($this->type)
 		{

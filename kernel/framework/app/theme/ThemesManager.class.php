@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2011 04 10
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -31,7 +31,7 @@ class ThemesManager
 	 * @return Theme[] the Themes map (name => theme) of the installed themes (activated or not)
 	 * sorted by name
 	 */
-	public static function get_installed_themes_map_sorted_by_localized_name(): mixed
+	public static function get_installed_themes_map_sorted_by_localized_name(): array
 	{
 		$themes = self::get_installed_themes_map();
 		try
@@ -42,7 +42,7 @@ class ThemesManager
 		return $themes;
 	}
 
-	public static function get_activated_themes_map(): mixed
+	public static function get_activated_themes_map(): array
 	{
 		$activated_themes = [];
 		foreach (ThemesConfig::load()->get_themes() as $theme)
@@ -60,7 +60,7 @@ class ThemesManager
 	 * @return Theme[] the Themes map (name => theme) of the installed themes (and activated)
 	 * sorted by name
 	 */
-	public static function get_activated_themes_map_sorted_by_localized_name(): mixed
+	public static function get_activated_themes_map_sorted_by_localized_name(): array
 	{
 		$themes = self::get_activated_themes_map();
 		try
@@ -71,7 +71,7 @@ class ThemesManager
 		return $themes;
 	}
 
-	public static function get_activated_and_authorized_themes_map(): mixed
+	public static function get_activated_and_authorized_themes_map(): array
 	{
 		$themes = [];
 		foreach (ThemesConfig::load()->get_themes() as $theme)
@@ -89,7 +89,7 @@ class ThemesManager
 	 * @return Theme[] the Themes map (name => theme) of the installed themes (and activated and authorized)
 	 * sorted by name
 	 */
-	public static function get_activated_and_authorized_themes_map_sorted_by_localized_name()
+	public static function get_activated_and_authorized_themes_map_sorted_by_localized_name(): array
 	{
 		$themes = self::get_activated_and_authorized_themes_map();
 		try {
@@ -108,7 +108,7 @@ class ThemesManager
 		return -1;
 	}
 
-	public static function get_default_theme(): mixed
+	public static function get_default_theme(): string
 	{
 		return UserAccountsConfig::load()->get_default_theme();
 	}

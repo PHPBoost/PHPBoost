@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2011 09 27
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -13,10 +13,10 @@
 
 class Countries
 {
-	private static $countries = [];
-	private static $pictures_path = '/images/stats/countries/';
-	private static $pictures_extension = '.png';
-	private static $countries_identifier = [
+	private static array $countries = [];
+	private static string $pictures_path = '/images/stats/countries/';
+	private static string $pictures_extension = '.png';
+	private static array $countries_identifier = [
 		'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao', 'aq', 'ar', 'as', 'at', 'au', 'aw', 'az',
         'ba', 'bb', 'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bm', 'bn', 'bo', 'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz',
         'ca', 'cc', 'cd', 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cr', 'cu', 'cv', 'cx', 'cy', 'cz',
@@ -45,7 +45,7 @@ class Countries
         'other'
 	];
 
-	public static function __static()
+	public static function __static(): void
 	{
 		if (empty(self::$countries))
 		{
@@ -53,7 +53,7 @@ class Countries
 		}
 	}
 
-	public static function get_countries()
+	public static function get_countries(): array
 	{
         usort(self::$countries, function($a, $b) {
             return strcmp($a["name"], $b["name"]);
@@ -61,7 +61,7 @@ class Countries
 		return self::$countries;
 	}
 
-	public static function get_country($identifier)
+	public static function get_country(string $identifier): string
 	{
 		if (self::is_available($identifier))
 		{
@@ -70,12 +70,12 @@ class Countries
 		throw new Exception($identifier . ' not available');
 	}
 
-	public static function is_available($identifier)
+	public static function is_available(string $identifier): bool
 	{
 		return in_array($identifier, self::$countries_identifier);
 	}
 
-	private static function build_countries()
+	private static function build_countries(): void
 	{
 		$lang = LangLoader::get_all_langs();
 		foreach (self::$countries_identifier as $country_identifier)

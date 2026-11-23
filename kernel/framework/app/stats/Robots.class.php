@@ -5,21 +5,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 4.0 - 2013 01 06
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Robots
 {
-	public static function is_robot()
+	public static function is_robot(): bool
 	{
 		return self::get_current_robot_name() !== null;
 	}
 
-	public static function get_current_robot_name()
+	public static function get_current_robot_name(): ?string
 	{
 		$user_agent = AppContext::get_request()->get_user_agent();
 
@@ -28,7 +29,9 @@ class Robots
 			foreach (self::get_robots_list() as $robot)
 			{
 				if (TextHelper::stripos($user_agent, $robot) !== false)
+                {
 					$user_agent = $robot;
+                }
 			}
 			if (preg_match('`(http:\/\/|bot|spider|crawl)+`iu', $user_agent))
 			{
@@ -47,7 +50,7 @@ class Robots
 	}
 
 	// Robots with user-agents that don't match the regex
-	private static function get_robots_list()
+	private static function get_robots_list(): array
 	{
 		return [
 			'360Spider',
