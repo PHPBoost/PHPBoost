@@ -8,27 +8,22 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2010 11 04
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Session
 {
 	const VISITOR_SESSION_ID = -1;
 
-	public static $DATA_COOKIE_NAME;
-	public static $AUTOCONNECT_COOKIE_NAME;
+	public static string $DATA_COOKIE_NAME;
+	public static string $AUTOCONNECT_COOKIE_NAME;
 
-	/**
-	 * @var HTTPRequest
-	 */
-	private static $request;
-	/**
-	 * @var HTTPResponse
-	 */
-	private static $response;
+	private static ?HTTPRequestCustom $request = null;
+	private static ?HTTPResponseCustom $response = null;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		$config = SessionsConfig::load();
 		self::$DATA_COOKIE_NAME = $config->get_cookie_name() . '_data';
@@ -37,12 +32,12 @@ class Session
 		self::$response = AppContext::get_response();
 	}
 
-	public static function gc()
+	public static function gc(): void
 	{
 		SessionData::gc();
 	}
 
-	public static function start()
+	public static function start(): mixed
 	{
 		try
 		{
@@ -62,7 +57,7 @@ class Session
 		}
 	}
 
-	public static function create($user_id, $autoconnect = false)
+	public static function create(int $user_id, bool $autoconnect = false): mixed
 	{
 		if ($user_id == Session::VISITOR_SESSION_ID)
 		{
@@ -83,13 +78,13 @@ class Session
 	 * Delete the session in database. The current session stays alive for the rest of the
 	 * request and a visitor session will be created at the next request.
 	 */
-	public static function delete(SessionData $session)
+	public static function delete(SessionData $session): void
 	{
 		$session->delete();
 		self::$response->delete_cookie(self::$AUTOCONNECT_COOKIE_NAME);
 	}
 
-	private static function connect()
+	private static function connect(): mixed
 	{
 		try
 		{
@@ -105,7 +100,7 @@ class Session
 		}
 	}
 
-	private static function autoconnect()
+	private static function autoconnect(): mixed
 	{
 		$cookie = self::$request->get_cookie(self::$AUTOCONNECT_COOKIE_NAME);
 		$user_id = AutoConnectData::get_user_id_from_cookie($cookie);
@@ -120,7 +115,7 @@ class Session
 		}
 	}
 
-	private static function create_visitor()
+	private static function create_visitor(): mixed
 	{
 		return SessionData::create_visitor();
 	}

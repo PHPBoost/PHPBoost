@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 3.0 - 2012 03 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -26,68 +26,68 @@ class User
 	const MODERATOR_LEVEL     = 1;
 	const ADMINISTRATOR_LEVEL = 2;
 
-	protected $id = -1;
-	protected $level = -1;
-	protected $is_admin;
-	protected $groups = [];
+	protected int $id = -1;
+	protected int $level = -1;
+	protected bool $is_admin;
+	protected array $groups = [];
 
-	protected $display_name;
-	protected $email;
-	protected $show_email = false;
-	protected $unread_pm = 0;
-	protected $registration_date = 0;
+	protected string $display_name;
+	protected ?string $email;
+	protected bool $show_email = false;
+	protected int $unread_pm = 0;
+	protected int $registration_date = 0;
 
-	protected $timestamp;
-	protected $locale;
-	protected $theme;
-	protected $timezone;
-	protected $editor;
+	protected int $timestamp;
+	protected string $locale;
+	protected string $theme;
+	protected string $timezone;
+	protected string $editor;
 
-	protected $delay_banned = 0;
-	protected $delay_readonly = 0;
-	protected $warning_percentage = 0;
+	protected int $delay_banned = 0;
+	protected int $delay_readonly = 0;
+	protected int $warning_percentage = 0;
 
-	public function set_id($id)
+	public function set_id(int $id): void
 	{
 		$this->id = $id;
 	}
 
-	public function get_id()
+	public function get_id(): int
 	{
 		return $this->id;
 	}
 
-	public function set_level($level)
+	public function set_level(int $level): void
 	{
 		$this->level = $level;
 	}
 
-	public function get_level()
+	public function get_level(): int
 	{
 		return $this->level;
 	}
 
-	public function is_guest()
+	public function is_guest(): bool
 	{
 		return $this->level == self::VISITOR_LEVEL;
 	}
 
-	public function is_robot()
+	public function is_robot(): bool
 	{
 		return $this->level == self::ROBOT_LEVEL;
 	}
 
-	public function is_moderator()
+	public function is_moderator(): bool
 	{
 		return $this->level == self::MODERATOR_LEVEL;
 	}
 
-	public function is_admin()
+	public function is_admin(): bool
 	{
 		return $this->level == self::ADMINISTRATOR_LEVEL;
 	}
 
-	public function set_groups($groups)
+	public function set_groups(array|string $groups): void
 	{
 		if (!is_array($groups))
         {
@@ -97,67 +97,67 @@ class User
 		$this->groups = $groups;
 	}
 
-	public function get_groups()
+	public function get_groups(): array|string
 	{
 		return $this->groups;
 	}
 
-	public function set_display_name($display_name)
+	public function set_display_name(string $display_name): void
 	{
 		$this->display_name = $display_name;
 	}
 
-	public function get_display_name()
+	public function get_display_name(): string
 	{
 		return $this->display_name;
 	}
 
-	public function set_email($email)
+	public function set_email(string $email): void
 	{
 		$this->email = $email;
 	}
 
-	public function get_email()
+	public function get_email(): string
 	{
 		return $this->email;
 	}
 
-	public function set_show_email($show_email)
+	public function set_show_email(bool $show_email): void
 	{
 		$this->show_email = $show_email;
 	}
 
-	public function get_show_email()
+	public function get_show_email(): bool
 	{
 		return $this->show_email;
 	}
 
-	public function set_unread_pm($unread_pm)
+	public function set_unread_pm(int $unread_pm): void
 	{
 		$this->unread_pm = $unread_pm;
 	}
 
-	public function get_unread_pm()
+	public function get_unread_pm(): int
 	{
 		return $this->unread_pm;
 	}
 
-	public function set_registration_date($date)
+	public function set_registration_date(int $date): void
 	{
-		return $this->registration_date = $date;
+		$this->registration_date = $date;
 	}
 
-	public function get_registration_date()
+	public function get_registration_date(): int
 	{
 		return $this->registration_date;
 	}
 
-	public function set_locale($locale)
+	public function set_locale(string $locale): void
 	{
 		$this->locale = $locale;
 	}
 
-	public function get_locale()
+	public function get_locale(): string
 	{
 		if (!empty($this->locale))
 		{
@@ -166,12 +166,12 @@ class User
 		return UserAccountsConfig::load()->get_default_lang();
 	}
 
-	public function set_theme($theme)
+	public function set_theme(string $theme): void
 	{
 		$this->theme = $theme;
 	}
 
-	public function get_theme()
+	public function get_theme(): string
 	{
 		if (!empty($this->theme))
 		{
@@ -180,12 +180,12 @@ class User
 		return UserAccountsConfig::load()->get_default_theme();
 	}
 
-	public function set_timezone($timezone)
+	public function set_timezone(string $timezone): void
 	{
 		$this->timezone = $timezone;
 	}
 
-	public function get_timezone()
+	public function get_timezone(): string
 	{
 		if (!empty($this->timezone))
 		{
@@ -194,12 +194,12 @@ class User
 		return GeneralConfig::load()->get_site_timezone();
 	}
 
-	public function set_editor($editor)
+	public function set_editor(string $editor): void
 	{
 		$this->editor = $editor;
 	}
 
-	public function get_editor()
+	public function get_editor(): string
 	{
 		if (!empty($this->editor))
 		{
@@ -208,55 +208,58 @@ class User
 		return ContentFormattingConfig::load()->get_default_editor();
 	}
 
-	public function set_warning_percentage($warning_percentage)
+	public function set_warning_percentage(int $warning_percentage): void
 	{
 		$this->warning_percentage = $warning_percentage;
 	}
 
-	public function get_warning_percentage()
+	public function get_warning_percentage(): int
 	{
 		return $this->warning_percentage;
 	}
 
-	public function set_delay_banned($delay_banned)
+	public function set_delay_banned(int $delay_banned): void
 	{
 		$this->delay_banned = $delay_banned;
 	}
 
-	public function get_delay_banned()
+	public function get_delay_banned(): int
 	{
 		return $this->delay_banned;
 	}
 
-	public function is_banned()
+	public function is_banned(): bool
 	{
 		return (time() - $this->delay_banned) <= 0 || $this->warning_percentage >= '100';
 	}
 
-	public function set_delay_readonly($delay_readonly)
+	public function set_delay_readonly(int $delay_readonly): void
 	{
 		$this->delay_readonly = $delay_readonly;
 	}
 
-	public function get_delay_readonly()
+	public function get_delay_readonly(): int
 	{
 		return $this->delay_readonly;
 	}
 
-	public function is_readonly()
+	public function is_readonly(): bool
 	{
 		return (time() - $this->delay_readonly) <= 0;
 	}
 
-	public static function get_group_color($user_groups, $level = 0)
+	public static function get_group_color(mixed $user_groups, int $level = 0): string
 	{
 		/* For PHP8.1 see : https://wiki.php.net/rfc/deprecate_null_to_scalar_internal_arg */
 		if ($user_groups === null)
+        {
 			$user_groups = '';
+        }
 		if (!is_array($user_groups))
+        {
 			$user_groups = explode('|', $user_groups);
+        }
 
-		$i = 0;
 		$group_color = '';
 		$groups_cache = GroupsCache::load();
 
@@ -271,10 +274,12 @@ class User
 		return $group_color;
 	}
 
-	public function set_properties(array $properties)
+	public function set_properties(array $properties): void
 	{
 		if ($properties['user_id'] == null || $properties['level'] == null)
+        {
 			$this->init_visitor_user();
+        }
 		else
 		{
 			$this->id                 = $properties['user_id'];
@@ -295,7 +300,7 @@ class User
 		}
 	}
 
-	public function get_properties()
+	public function get_properties(): array
 	{
 		return [
 			'id'                 => $this->id,
@@ -313,17 +318,17 @@ class User
 		];
 	}
 
-	public function init_robot_user($robot_name)
+	public function init_robot_user(string $robot_name): void
 	{
 		$this->set_properties(self::get_visitor_properties($robot_name, self::ROBOT_LEVEL));
 	}
 
-	public function init_visitor_user()
+	public function init_visitor_user(): void
 	{
 		$this->set_properties(self::get_visitor_properties());
 	}
 
-	public static function get_visitor_properties($display_name = null, $level = self::VISITOR_LEVEL)
+	public static function get_visitor_properties(?string $display_name = null, int $level = self::VISITOR_LEVEL): array
 	{
 		return [
 			'user_id'              => Session::VISITOR_SESSION_ID,

@@ -5,18 +5,19 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 5.1 - 2018 01 08
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ExternalAuthenticationsExtensionPoint implements ExtensionPoint
 {
 	const EXTENSION_POINT = 'external_authentications';
 
-	protected $external_authentications = [];
+	protected array $external_authentications = [];
 
 	/**
-	 * @param array Contains a table with instances of the class ExternalAuthentication
+	 * @param array $external_authentications Contains a table with instances of the class ExternalAuthentication
 	 */
 	public function __construct(array $external_authentications)
 	{
@@ -26,7 +27,7 @@ class ExternalAuthenticationsExtensionPoint implements ExtensionPoint
 	/**
 	 * @return array Contains a table with instances of the class ExternalAuthentication
 	 */
-	public function get_external_authentications()
+	public function get_external_authentications(): array
 	{
 		return $this->external_authentications;
 	}

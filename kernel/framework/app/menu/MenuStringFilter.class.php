@@ -14,12 +14,12 @@
 
 class MenuStringFilter extends Filter
 {
-	public function __construct($pattern)
+	public function __construct(string $pattern)
 	{
 		parent::__construct($pattern);
 	}
 
-	public function match()
+	public function match(): mixed
 	{
         if ($this->pattern === null)
         {
@@ -31,7 +31,9 @@ class MenuStringFilter extends Filter
 			return Url::is_current_url('/' . TextHelper::substr($this->pattern, 0, -9), true) || Url::is_current_url($this->pattern);
 		}
 		else
+        {
 			return Url::is_current_url($this->pattern);
+        }
 	}
 }
 ?>

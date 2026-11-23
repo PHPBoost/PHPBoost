@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 15
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 2.0 - 2008 11 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -56,7 +56,7 @@ class ModuleMiniMenu extends Menu
 		return true;
 	}
 
-	public function get_format_title(): bool
+	public function get_format_title(): string
 	{
 		$class_name = get_class($this);
 		$module_name = TextHelper::strstr($class_name, self::MODULE_MINI_MENU__CLASS, true);

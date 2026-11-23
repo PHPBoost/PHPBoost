@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 3.0 - 2012 03 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -15,20 +15,19 @@
 
 class UserService
 {
-	private static $querier;
+	private static DBQuerier $querier;
 
-	public static function __static()
+	public static function __static(): void
 	{
 		self::$querier = PersistenceContext::get_querier();
 	}
 
 	/**
 	 * Create a user
-	 * @param UserAuthentification $user_authentification
 	 * @param User $user
 	 * @return int Id of the user if new user, false otherwise
 	 */
-	public static function create(User $user, AuthenticationMethod $auth_method, $extended_fields = [], $auth_method_data = [])
+	public static function create(User $user, AuthenticationMethod $auth_method, array $extended_fields = [], array $auth_method_data = []): mixed
 	{
 		if (!self::user_exists('WHERE display_name = :display_name', ['display_name' => TextHelper::htmlspecialchars($user->get_display_name())]))
 		{
@@ -49,9 +48,12 @@ class UserService
 
 			if ($extended_fields instanceof MemberExtendedFieldsService)
 			{
-				try {
+				try
+                {
 					$fields_data = $extended_fields->get_data($user_id);
-				} catch (MemberExtendedFieldErrorsMessageException $e) {
+				}
+                catch (MemberExtendedFieldErrorsMessageException $e)
+                {
 					self::$querier->delete(DB_TABLE_MEMBER, 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 					throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
 				}
@@ -76,7 +78,7 @@ class UserService
 		return false;
 	}
 
-	public static function delete_by_id($user_id)
+	public static function delete_by_id(int $user_id): void
 	{
 		MemberExtendedFieldsService::delete_user_fields($user_id);
 
@@ -85,7 +87,9 @@ class UserService
 		foreach ($activated_external_authentication as $id => $authentication)
 		{
 			if (in_array($id, $user_auth_types))
+            {
 				$authentication->delete_session_token();
+            }
 		}
 
 		$condition = 'WHERE user_id=:user_id';
@@ -105,10 +109,8 @@ class UserService
 	/**
 	 * Update user
 	 * @param User $user
-	 * @param string $condition the SQL condition update user
-	 * @param array $parameters
 	 */
-	public static function update(User $user, $extended_fields = null)
+	public static function update(User $user, ?MemberExtendedFieldsService $extended_fields = null): void
 	{
 		$condition = 'WHERE user_id=:user_id';
 		$parameters = ['user_id' => $user->get_id()];
@@ -128,19 +130,28 @@ class UserService
 		{
 			if ($extended_fields instanceof MemberExtendedFieldsService)
 			{
-				try {
+				try
+                {
 					$fields_data = $extended_fields->get_data($user->get_id());
-				} catch (MemberExtendedFieldErrorsMessageException $e) {
+				}
+                catch (MemberExtendedFieldErrorsMessageException $e)
+                {
 					throw new MemberExtendedFieldErrorsMessageException($e->getMessage());
 				}
 			}
 			elseif (is_array($extended_fields))
+            {
 				$fields_data = $extended_fields;
+            }
 			else
+            {
 				$fields_data = [];
+            }
 
 			if ($fields_data)
+            {
 				self::$querier->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, $fields_data, $condition, $parameters);
+            }
 		}
 
 		SessionData::recheck_cached_data_from_user_id($user->get_id());
@@ -148,7 +159,7 @@ class UserService
 		self::regenerate_cache();
 	}
 
-	public static function update_punishment(User $user)
+	public static function update_punishment(User $user): void
 	{
 		self::$querier->update(DB_TABLE_MEMBER, [
 			'warning_percentage' => $user->get_warning_percentage(),
@@ -162,7 +173,7 @@ class UserService
 	 * @param int $user_id Id of the user concerned
 	 * @return User The requested user if exists, false otherwise
 	 */
-	public static function get_user($user_id)
+	public static function get_user(int $user_id): mixed
 	{
 		try {
 			$row = self::$querier->select_single_row(PREFIX . 'member', ['*'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
@@ -179,11 +190,14 @@ class UserService
 	 * @param string $display_name Display name of the user concerned
 	 * @return User The requested user if exists, false otherwise
 	 */
-	public static function get_user_by_display_name($display_name)
+	public static function get_user_by_display_name(string $display_name): mixed
 	{
-		try {
+		try
+        {
 			$row = self::$querier->select_single_row(PREFIX . 'member', ['*'], 'WHERE display_name=:display_name', ['display_name' => $display_name]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			return false;
 		}
 		$user = new User();
@@ -196,11 +210,14 @@ class UserService
 	 * @param string $email Email of the user concerned
 	 * @return User The requested user if exists, false otherwise
 	 */
-	public static function get_user_by_email($email)
+	public static function get_user_by_email(string $email): mixed
 	{
-		try {
+		try
+        {
 			$row = self::$querier->select_single_row(PREFIX . 'member', ['*'], 'WHERE email=:email', ['email' => $email]);
-		} catch (RowNotFoundException $e) {
+		}
+        catch (RowNotFoundException $e)
+        {
 			return false;
 		}
 		$user = new User();
@@ -214,7 +231,7 @@ class UserService
 	 * @param array $parameters Parameters contained in the condition
 	 * @return bool true if the user exists
 	 */
-	public static function user_exists($condition, Array $parameters)
+	public static function user_exists(string $condition, array $parameters): mixed
 	{
 		try
 		{
@@ -231,26 +248,23 @@ class UserService
 	 * @param string $level Level of the user
 	 * @return string The localized level
 	 */
-	public static function get_level_lang($level)
+	public static function get_level_lang(int $level): string
 	{
 		$lang = LangLoader::get_all_langs();
 		switch ($level)
 		{
 			case User::ROBOT_LEVEL:
 				return $lang['user.robot'];
-			break;
 			case User::VISITOR_LEVEL:
 				return $lang['user.guest'];
-			break;
 			case User::MEMBER_LEVEL:
 				return $lang['user.member'];
-			break;
 			case User::MODERATOR_LEVEL:
 				return $lang['user.moderator'];
-			break;
 			case User::ADMINISTRATOR_LEVEL:
 				return $lang['user.administrator'];
-			break;
+            default:
+                return '';
 		}
 	}
 
@@ -259,31 +273,26 @@ class UserService
 	 * @param string $level Level of the user
 	 * @return string The CSS class
 	 */
-	public static function get_level_class($level)
+	public static function get_level_class(int $level): string
 	{
 		switch ($level)
 		{
 			case User::ROBOT_LEVEL:
 				return 'robot';
-			break;
 			case User::VISITOR_LEVEL:
 				return 'visitor';
-			break;
 			case User::MEMBER_LEVEL:
 				return 'member';
-			break;
 			case User::MODERATOR_LEVEL:
 				return 'moderator';
-			break;
 			case User::ADMINISTRATOR_LEVEL:
 				return 'administrator';
-			break;
 			default:
 				return '';
 		}
 	}
 
-	public static function remove_old_unactivated_member_accounts()
+	public static function remove_old_unactivated_member_accounts(): void
 	{
 		$user_account_settings = UserAccountsConfig::load();
 		$delay_unactiv_max = $user_account_settings->get_unactivated_accounts_timeout() * 3600 * 24;
@@ -299,12 +308,12 @@ class UserService
 		}
 	}
 
-	public static function count_admin_members()
+	public static function count_admin_members(): int
 	{
 		return self::$querier->count(DB_TABLE_MEMBER, 'WHERE level = :level', ['level' => User::ADMINISTRATOR_LEVEL]);
 	}
 
-	public static function display_user_profile_link($user_id)
+	public static function display_user_profile_link(int $user_id): string
 	{
 		if ($user_id != User::VISITOR_LEVEL)
 		{
@@ -330,14 +339,17 @@ class UserService
 		return '';
 	}
 
-    public static function get_avatar(User $user)
+    public static function get_avatar(User $user): string
     {
 		$user_accounts_config = UserAccountsConfig::load();
         if(!$user->is_guest())
 		{
-			try {
+			try
+            {
 				$user_extended_fields = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER_EXTENDED_FIELDS, ['user_avatar'], 'WHERE user_id=:user_id', ['user_id' => $user->get_id()]);
-			} catch (RowNotFoundException $e) {
+			}
+            catch (RowNotFoundException $e)
+            {
 				$user_extended_fields = [];
 			}
 			$avatar = !empty($user_extended_fields) && $user_extended_fields['user_avatar'] ? Url::to_rel($user_extended_fields['user_avatar']) : $user_accounts_config->get_default_avatar();
@@ -350,7 +362,7 @@ class UserService
         return $avatar;
     }
 
-	public static function regenerate_cache()
+	public static function regenerate_cache(): void
 	{
 		GroupsCache::invalidate();
 		StatsCache::invalidate();

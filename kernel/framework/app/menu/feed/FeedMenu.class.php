@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 2.0 - 2009 01 14
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -20,14 +20,14 @@ class FeedMenu extends Menu
 	/**
 	 * @var string the feed url
 	 */
-	public $url = '';
-	public $module_id = '';
-	public $name = '';
-	public $category = 0;
-	public $number = 10;
-	public $begin_at = 0;
+	public string $url = '';
+	public string $module_id = '';
+	public string $name = '';
+	public int|string $category = 0;
+	public int $number = 10;
+	public int $begin_at = 0;
 
-	public function __construct($title, $module_id, $category = 0, $name = Feed::DEFAULT_FEED_NAME, $number = 10, $begin_at = 0)
+	public function __construct(string $title, string $module_id, int|string $category = 0, string $name = Feed::DEFAULT_FEED_NAME, int $number = 10, int $begin_at = 0)
 	{
 		parent::__construct($title);
 		$this->module_id = $module_id;
@@ -39,28 +39,36 @@ class FeedMenu extends Menu
 
 	/**
 	 * Returns the tpl to parse a feed
-	 * @param string $id The feed id
+	 * @param int $id The feed id
 	 * @param string $name The feed name
-	 * @param string $block_position The indentifier block position defined in the inherit class menu
-	 * @return the tpl to parse a feed
+	 * @param int $block_position The indentifier block position defined in the inherit class menu
+	 * @return Template the tpl to parse a feed
      * @static
 	 */
-	public static function get_template($id, $name = '', $block_position = Menu::BLOCK_POSITION__LEFT, $hidden_with_small_screens = false, $module_id = '')
+	public static function get_template(int $id, string $name = '', int $block_position = Menu::BLOCK_POSITION__LEFT, bool $hidden_with_small_screens = false, string $module_id = ''): Template
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
 		if (!empty($module_id) && file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
+        {
 			$tpl = new FileTemplate('templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
+        }
 		elseif (!empty($module_id))
 		{
 			// Check new /modules structure with fallback to root
 			$module_template_path = FileTemplateLoader::get_module_template_path($module_id);
 			if (file_exists(PATH_TO_ROOT . $module_template_path . '/feed.tpl'))
+            {
 				$tpl = new FileTemplate($module_template_path . '/feed.tpl');
+            }
 			else
-				$tpl = new FileTemplate('framework/menus/feed.tpl');
+            {
+				$tpl = self::get_default_feed_template();
+            }
 		}
 		else
-			$tpl = new FileTemplate('framework/menus/feed.tpl');
+        {
+			$tpl = self::get_default_feed_template();
+        }
 
 		$tpl->put_all([
 			'NAME' => $name,
@@ -73,17 +81,30 @@ class FeedMenu extends Menu
 		return $tpl;
 	}
 
+	public function get_default_template(): FileTemplate
+	{
+		return self::get_default_feed_template();
+	}
+
+	private static function get_default_feed_template(): FileTemplate
+	{
+		return new FileTemplate('framework/menus/feed.tpl');
+	}
+
 	## Getters ##
 	/**
 	 * @return string the feed menu module id
 	 */
-	public function get_module_id() { return $this->module_id; }
+	public function get_module_id(): string
+    {
+        return $this->module_id;
+    }
 
 	/**
 	* @param bool $relative If false, compute the absolute url, else, returns the relative one
-	* @return Return the absolute feed Url
+	* @return string the absolute feed Url
 	*/
-	public function get_url($relative = false)
+	public function get_url(bool $relative = false): string
 	{
 		$url = DispatchManager::get_url('/syndication', '/rss/' . $this->module_id . '/' . $this->category . '/' . $this->name . '/');
 		if ($relative)
@@ -97,20 +118,29 @@ class FeedMenu extends Menu
 	/**
 	 * @param string $value the feed's module_id
 	 */
-	public function set_module_id($value) { $this->module_id = $value; }
+	public function set_module_id(string $value)
+    {
+        $this->module_id = $value;
+    }
 	/**
 	 * @param int $value the feed's category
 	 */
-	public function set_cat($value) { $this->category = is_numeric($value) ? NumberHelper::numeric($value) : 0; }
+	public function set_cat(int $value)
+    {
+        $this->category = is_numeric($value) ? NumberHelper::numeric($value) : 0;
+    }
 	/**
 	 * @param string $value the feed's name
 	 */
-	public function set_name($value) { $this->name = $value; }
+	public function set_name(string $value)
+    {
+        $this->name = $value;
+    }
 
 	/**
-	* @return Return the number of elements displayed in the menu
+	* @return int the number of elements displayed in the menu
 	*/
-	public function get_number()
+	public function get_number(): int
 	{
 		return $this->number;
 	}
@@ -118,9 +148,12 @@ class FeedMenu extends Menu
 	/**
 	 * @param string $value the number of elements displayed in the menu
 	 */
-	public function set_number($value) { $this->number = $value; }
+	public function set_number(string $value)
+    {
+        $this->number = $value;
+    }
 
-	public function display()
+	public function display(): string
 	{
 		$filters = $this->get_filters();
 		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/';

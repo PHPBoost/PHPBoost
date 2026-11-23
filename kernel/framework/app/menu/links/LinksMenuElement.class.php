@@ -9,7 +9,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 2.0 - 2008 07 08
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -27,32 +27,32 @@ abstract class LinksMenuElement extends Menu
      * @access protected
      * @var string the LinksMenuElement url
      */
-    public $url = '';
+    public string $url = '';
     /**
      * @access protected
      * @var string the image url. Could be relative to the website root or absolute
      */
-    public $image = '';
+    public string $image = '';
     /**
      * @access protected
      * @var string the icon class
      */
-    public $icon = '';
+    public string $icon = '';
     /**
      * @access protected
      * @var bool open the link in a new window
      */
-    public $target;
+    public bool $target;
     /**
      * @access protected
      * @var int Menu's uid
      */
-    public $uid = null;
+    public ?int $uid = null;
     /**
      * @access protected
      * @var int Menu's depth
      */
-    public $depth = 0;
+    public int $depth = 0;
 
     /**
      * Build a LinksMenuElement object
@@ -63,7 +63,7 @@ abstract class LinksMenuElement extends Menu
      * @param $icon
      * @param $target
      */
-    public function __construct($title, $url, $target, $image = '', $icon = '')
+    public function __construct(string $title, string $url, bool $target, string $image = '', string $icon = '')
     {
         parent::__construct($title);
         $this->uid = AppContext::get_uid();
@@ -77,11 +77,11 @@ abstract class LinksMenuElement extends Menu
      * Assign tpl vars
      * @access protected
      * @param Template $view the template on which we gonna assign vars
-     * @param int $mode in LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
+     * @param bool $mode in LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING mode, the links menu is
      * displayed. With the LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING mode, the authorization form is
      * also shown.
      */
-    protected function _assign($view, $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+    protected function _assign(Template $view, bool $mode = self::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING): void
     {
         if ($this->image)
         {
@@ -99,9 +99,13 @@ abstract class LinksMenuElement extends Menu
             if (!$url->is_relative() || $file->exists())
             {
                 if (!$url->is_relative())
+                {
                     $image = new Image($url->absolute());
+                }
                 else
+                {
                     $image = new Image(PATH_TO_ROOT . $this->image);
+                }
 
                 $view->put_all([
                     'C_IMG'        => !empty($this->image),
@@ -117,9 +121,13 @@ abstract class LinksMenuElement extends Menu
         parent::_assign($view);
 
         if ($this->url instanceof Url)
+        {
             $url = $this->url;
+        }
         else
+        {
             $url = new Url($this->url);
+        }
 
         $view->put_all([
             'C_MENU'         => false,
@@ -158,24 +166,32 @@ abstract class LinksMenuElement extends Menu
      * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the $string_url url
      */
-    private function _get_url($string_url, $compute_relative_url = true)
+    private function _get_url(string $string_url, bool $compute_relative_url = true): string
     {
         if ($string_url instanceof Url)
+        {
             $url = $string_url;
+        }
         else
+        {
             $url = new Url($string_url);
+        }
 
         if ($compute_relative_url)
+        {
             return $url->relative();
+        }
         else
+        {
             return $url->absolute();
+        }
     }
 
     /**
      * Increase the Menu Depth and set the menu type to its parent one
      * @access protected
      */
-    protected function _parent($type)
+    protected function _parent(string $type): void
     {
         $this->depth++;
     }
@@ -184,28 +200,28 @@ abstract class LinksMenuElement extends Menu
     /**
      * @param string $image the value to set
      */
-    public function set_image($image)
+    public function set_image(string $image): void
     {
         $this->image = $image;
     }
     /**
      * @param string $url the value to set
      */
-    public function set_url($url)
+    public function set_url(string $url): void
     {
         $this->url = $url;
     }
     /**
      * @param string $icon the value to set
      */
-    public function set_icon($icon)
+    public function set_icon(string $icon): void
     {
         $this->icon = $icon;
     }
     /**
-     * @param string $target the value to set
+     * @param bool $target the value to set
      */
-    public function set_target($target)
+    public function set_target(bool $target): void
     {
         $this->target = $target;
     }
@@ -215,14 +231,14 @@ abstract class LinksMenuElement extends Menu
      * Returns the menu uid
      * @return int the menu uid
      */
-    public function get_uid()
+    public function get_uid(): int
     {
         return $this->uid;
     }
     /**
      * Update the menu uid
      */
-    public function update_uid()
+    public function update_uid(): void
     {
         $this->uid = AppContext::get_uid();
     }
@@ -230,7 +246,7 @@ abstract class LinksMenuElement extends Menu
      * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the link $url
      */
-    public function get_url($compute_relative_url = true)
+    public function get_url(bool $compute_relative_url = true): string
     {
         return $this->_get_url($this->url, $compute_relative_url);
     }
@@ -239,16 +255,15 @@ abstract class LinksMenuElement extends Menu
      * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the $image url
      */
-    public function get_image($compute_relative_url = true)
+    public function get_image(bool $compute_relative_url = true): string
     {
         return $this->_get_url($this->image, $compute_relative_url);
     }
 
     /**
-     * @param bool $compute_relative_url If true, computes relative urls to the website root
      * @return string the $icon url
      */
-    public function get_icon()
+    public function get_icon(): string
     {
         return $this->icon;
     }
@@ -256,7 +271,7 @@ abstract class LinksMenuElement extends Menu
     /**
      * @return bool true if the link is set to open in a new window, false otherwise
      */
-    public function get_target()
+    public function get_target(): bool
     {
         return $this->target;
     }

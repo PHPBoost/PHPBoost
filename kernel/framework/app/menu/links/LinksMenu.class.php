@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Regis VIARRE <crowkait@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 2.0 - 2008 07 08
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -34,12 +34,12 @@ class LinksMenu extends LinksMenuElement
 	* @access protected
 	* @var string menu's type
 	*/
-	public $type;
+	public string $type = '';
 	/**
 	* @access protected
 	* @var LinksMenuElement[] Direct menu children list
 	*/
-	public $elements = [];
+	public array $elements = [];
 
 	/**
 	* Constructor
@@ -47,9 +47,8 @@ class LinksMenu extends LinksMenuElement
 	* @param string $url Destination url
 	* @param string $image Menu's image url relative to the website root or absolute
 	* @param string $type Menu's type
-	* @param int $id The Menu's id in the database
 	*/
-	public function __construct($title, $url, $image = '', $icon = '', $type = self::AUTOMATIC_MENU)
+	public function __construct(string $title, string $url, string $image = '', string $icon = '', string $type = self::AUTOMATIC_MENU)
 	{
 		// Set the menu type
 
@@ -65,7 +64,7 @@ class LinksMenu extends LinksMenuElement
 	* Add a list of LinksMenu or (sub)Menu to the current one
 	* @param LinksMenuElement[] $menu_elements A reference to a list of LinksMenuLink and / or Menu to add
 	*/
-	public function add_array($menu_elements)
+	public function add_array(array $menu_elements): void
 	{
 		foreach ($menu_elements as $element)
 		{
@@ -77,16 +76,9 @@ class LinksMenu extends LinksMenuElement
 	* Add a single LinksMenuLink or (sub) Menu
 	* @param LinksMenuElement $element the LinksMenuLink or Menu to add
 	*/
-	public function add($element)
+	public function add(LinksMenuElement $element): void
 	{
-		if ($element instanceof _CLASS_)
-		{
-			$element->_parent($this->type);
-		}
-		else
-		{
-			$element->_parent($this->type);
-		}
+		$element->_parent($this->type);
 
 		$this->elements[] = $element;
 	}
@@ -94,7 +86,7 @@ class LinksMenu extends LinksMenuElement
 	/**
 	* Update the menu uid
 	*/
-	public function update_uid()
+	public function update_uid(): void
 	{
 		parent::update_uid();
 		foreach ($this->elements as $element)
@@ -103,12 +95,17 @@ class LinksMenu extends LinksMenuElement
 		}
 	}
 
+	public function get_default_template(): FileTemplate
+	{
+		return new FileTemplate('framework/menus/links.tpl');
+	}
+
 	/**
 	* Display the menu
 	* @param Template $template the template to use
 	* @return string the menu parsed in xHTML
 	*/
-	public function display($template = false, $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING)
+	public function display(Template|bool $template = false, bool $mode = LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING): string
 	{
 		$filters = $this->get_filters();
 		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/' || $mode != LinksMenuElement::LINKS_MENU_ELEMENT__CLASSIC_DISPLAYING;
@@ -128,9 +125,13 @@ class LinksMenu extends LinksMenuElement
 			if (!is_object($template) || !($template instanceof Template))
 			{
 				if($this->type == self::PUSH_MENU)
+                {
 					$tpl = new FileTemplate('framework/menus/push.tpl');
+                }
 				else
-					$tpl = new FileTemplate('framework/menus/links.tpl');
+                {
+					$tpl = $this->get_default_template();
+                }
 			}
 			else
 			{
@@ -210,15 +211,19 @@ class LinksMenu extends LinksMenuElement
 	/**
 	* @return string the string to write in the cache file
 	*/
-	public function cache_export($template = false)
+	public function cache_export(Template|bool $template = false): string
 	{
 		// Get the good Template object
 		if (!is_object($template) || !($template instanceof Template))
 		{
 			if($this->type == self::PUSH_MENU)
+            {
 				$tpl = new FileTemplate('framework/menus/push.tpl');
+            }
 			else
+            {
 				$tpl = new FileTemplate('framework/menus/links.tpl');
+            }
 		}
 		else
 		{
@@ -232,7 +237,10 @@ class LinksMenu extends LinksMenuElement
 		foreach ($this->elements as $element)
 		{
 			// We use a new Tpl to avoid overwrite issues
-			$tpl->assign_block_vars('elements', ['DISPLAY' => $element->cache_export(clone $original_tpl)]);
+			$display = $element instanceof self
+				? $element->cache_export(clone $original_tpl)
+				: $element->display();
+			$tpl->assign_block_vars('elements', ['DISPLAY' => $display]);
 			$elements_number++;
 			if (get_class($element) == self::LINKS_MENU__CLASS)
 			{
@@ -288,9 +296,7 @@ class LinksMenu extends LinksMenuElement
 
 		if ($this->depth == 0)
 		{   // We protect and unprotect only on the top level
-			$cache_str = parent::cache_export_begin() . '\'.' .
-				var_export($tpl->render(), true) .
-				'.\'' . parent::cache_export_end();
+			$cache_str = var_export($tpl->render(), true);
 			$cache_str = str_replace(
 				['#GET_UID#', '#GET_UID_VAR#', '##'],
 				['($__uid = AppContext::get_uid())', '$__uid', '\''],
@@ -298,7 +304,7 @@ class LinksMenu extends LinksMenuElement
 			);
 			return $cache_str;
 		}
-		return parent::cache_export_begin() . $tpl->render() . parent::cache_export_end();
+		return $tpl->render();
 	}
 
 	/**
@@ -307,7 +313,7 @@ class LinksMenu extends LinksMenuElement
 	* @return array The list of the menu types
 	* @static
 	*/
-	public static function get_menu_types_list()
+	public static function get_menu_types_list(): array
 	{
 		return [self::AUTOMATIC_MENU, self::VERTICAL_MENU, self::HORIZONTAL_MENU, self::STATIC_MENU, self::PUSH_MENU];
 	}
@@ -317,7 +323,7 @@ class LinksMenu extends LinksMenuElement
 	* @access protected
 	* @param string $type the type of the menu
 	*/
-	protected function _parent($type)
+	protected function _parent(string $type): void
 	{
 		parent::_parent($type);
 
@@ -332,18 +338,27 @@ class LinksMenu extends LinksMenuElement
 	/**
 	* @return string the menu type
 	*/
-	public function get_type() { return $this->type; }
+	public function get_type(): string
+    {
+        return $this->type;
+    }
 
 	/**
 	* Sets the type of the menu
 	*
 	* @param string $type Type of the menu
 	*/
-	public function set_type($type) { $this->type = $type; }
+	public function set_type(string $type): void
+    {
+        $this->type = $type;
+    }
 
 	/**
 	* @return LinksMenuElement[] the menu children elements
 	*/
-	public function get_children() { return $this->elements; }
+	public function get_children(): array
+    {
+        return $this->elements;
+    }
 }
 ?>

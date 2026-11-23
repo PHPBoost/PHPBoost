@@ -14,7 +14,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 20
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -77,13 +77,24 @@ class CacheManager
     {
         $name = self::compute_entry_name($module_name, $entry_name);
 
-        if (self::is_memory_cached($name)) {
+        if (self::is_memory_cached($name))
+        {
             return self::get_memory_cached_data($name);
-        } elseif (self::is_file_cached($name)) {
-            $data = self::get_file_cached_data($name);
-            if ($data instanceof $classname) {
-                self::memory_cache_data($name, $data);
-                return $data;
+        }
+        elseif (self::is_file_cached($name))
+        {
+            try
+            {
+                $data = self::get_file_cached_data($name);
+                if ($data instanceof $classname)
+                {
+                    self::memory_cache_data($name, $data);
+                    return $data;
+                }
+            }
+            catch (DataStoreException $ex)
+            {
+                // The cache entry may have disappeared or failed validation after the existence check.
             }
         }
         throw new CacheDataNotFoundException($name);

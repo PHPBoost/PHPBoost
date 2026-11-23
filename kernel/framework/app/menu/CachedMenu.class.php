@@ -12,8 +12,8 @@
 
 class CachedMenu
 {
-	private $menu;
-	private $cached_string;
+	private ?Menu $menu = null;
+	private string $cached_string;
 
 	public function __construct(Menu $menu)
 	{
@@ -21,7 +21,7 @@ class CachedMenu
 		$this->build_cached_string();
 	}
 
-	private function build_cached_string()
+	private function build_cached_string(): void
 	{
 		if (self::need_cached_string($this->menu))
 		{
@@ -29,22 +29,22 @@ class CachedMenu
 		}
 	}
 
-	public function get_menu()
+	public function get_menu(): Menu
 	{
 		return $this->menu;
 	}
 
-	public function get_cached_string()
+	public function get_cached_string(): string
 	{
 		return $this->cached_string;
 	}
 
-	public function has_cached_string()
+	public function has_cached_string(): bool
 	{
 		return !empty($this->cached_string);
 	}
 
-	public static function need_cached_string(Menu $menu)
+	public static function need_cached_string(Menu $menu): string
 	{
 		return $menu->need_cached_string();
 	}

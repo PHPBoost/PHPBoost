@@ -7,9 +7,10 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 23
  * @since       PHPBoost 3.0 - 2010 11 28
  * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
@@ -19,11 +20,12 @@ class AuthenticationService
 	 * associate the current authentication method with the given user_id.
 	 * @param AuthenticationMethod $authentication the authentication method to use
 	 * @param int $user_id
+	 * @param array $auth_method_data
 	 * @throws IllegalArgumentException if the user_id is already associate with an authentication method
 	 */
-	public static function associate(AuthenticationMethod $authentication, $user_id)
+	public static function associate(AuthenticationMethod $authentication, int $user_id, array $auth_method_data = []): void
 	{
-		$authentication->associate($user_id);
+		$authentication->associate($user_id, $auth_method_data);
 	}
 
 	/**
@@ -32,7 +34,7 @@ class AuthenticationService
 	 * @param int $user_id
 	 * @throws IllegalArgumentException if the user_id is already dissociate with an authentication method
 	 */
-	public static function dissociate(AuthenticationMethod $authentication, $user_id)
+	public static function dissociate(AuthenticationMethod $authentication, int $user_id): void
 	{
 		$authentication->dissociate($user_id);
 	}
@@ -43,7 +45,7 @@ class AuthenticationService
 	 * @param bool $autoconnect If true, an autoconnect cookie will be created
 	 * @return int $user_id, if authentication has been performed successfully
 	 */
-	public static function authenticate(AuthenticationMethod $authentication, $autoconnect = false)
+	public static function authenticate(AuthenticationMethod $authentication, bool $autoconnect = false): int
 	{
 		$user_id = $authentication->authenticate();
 		if ($user_id)
@@ -59,12 +61,13 @@ class AuthenticationService
 		return $user_id;
 	}
 
-	public static function get_user_types_authentication($user_id)
+	public static function get_user_types_authentication(int $user_id): array
 	{
 		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_AUTHENTICATION_METHOD, ['method'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 
 		$types = [];
-		foreach ($result as $row) {
+		foreach ($result as $row)
+        {
 			$types[] = $row['method'];
 		}
 		$result->dispose();
@@ -72,23 +75,24 @@ class AuthenticationService
 		return $types;
 	}
 
-	private static $external_authentications_actived;
+	private static array $external_authentications_actived = [];
 
-	public static function get_external_auth_activated($identifier)
+	public static function get_external_auth_activated(string $identifier): mixed
 	{
 		$external_auths_activated = self::get_external_auths_activated();
 		if (self::external_auth_is_activated($identifier))
 		{
 			return $external_auths_activated[$identifier];
 		}
+        return null;
 	}
 
-	public static function external_auth_is_activated($id)
+	public static function external_auth_is_activated(string $id): bool
 	{
 		return array_key_exists($id, self::get_external_auths_activated());
 	}
 
-	public static function get_external_auths_activated()
+	public static function get_external_auths_activated(): mixed
 	{
 		if (self::$external_authentications_actived == null)
 		{

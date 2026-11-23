@@ -5,11 +5,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 22
  * @since       PHPBoost 2.0 - 2008 11 15
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContentMenu extends Menu
@@ -19,23 +20,28 @@ class ContentMenu extends Menu
 	/**
 	 * @var string the menu's content
 	 */
-	public $content = '';
+	public string $content = '';
 
 	/**
 	 * @var bool If true, the content menu title will be displayed
 	 */
-	public $display_title = true;
+	public bool $display_title = true;
 
-	public function __construct($title)
+	public function __construct(string $title)
 	{
 		parent::__construct($title);
 	}
 
+	public function get_default_template(): FileTemplate
+	{
+		return new FileTemplate('framework/menus/content.tpl');
+	}
+
 	/**
 	 * Display the content menu.
-	 * @return a string of the parsed template ready to be displayed
+	 * @return string of the parsed template ready to be displayed
 	 */
-	public function display()
+	public function display(): string
 	{
 		$filters = $this->get_filters();
 		$is_displayed = empty($filters) || $filters[0]->get_pattern() == '/';
@@ -51,7 +57,7 @@ class ContentMenu extends Menu
 
 		if ($is_displayed)
 		{
-			$tpl = new FileTemplate('framework/menus/content.tpl');
+			$tpl = $this->get_default_template();
 			$tpl->put_all([
 				'C_DISPLAY_TITLE' => $this->display_title,
 				'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
@@ -69,13 +75,17 @@ class ContentMenu extends Menu
 	/**
 	 * @param bool $display_title if false, the title won't be displayed
 	 */
-	public function set_display_title($display_title) { $this->display_title = $display_title; }
+	public function set_display_title(bool $display_title)
+    {
+        $this->display_title = $display_title;
+    }
 
 	/**
 	 * @param string $content the content to set
 	 */
-	public function set_content($content) { 
-        $this->content = FormatingHelper::strparse($content, [], false); 
+	public function set_content(string $content): void
+    {
+        $this->content = FormatingHelper::strparse($content, [], false);
     }
 
 	## Getters ##
@@ -83,11 +93,17 @@ class ContentMenu extends Menu
 	 * Returns true if the title will be displayed
 	 * @return bool true if the title will be displayed
 	 */
-	public function get_display_title() { return $this->display_title; }
+	public function get_display_title(): bool
+    {
+        return $this->display_title;
+    }
 
 	/**
 	 * @return string the menu content
 	 */
-	public function get_content() { return $this->content; }
+	public function get_content(): string
+    {
+        return $this->content;
+    }
 }
 ?>
