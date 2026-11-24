@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 08
+ * @version     PHPBoost 6.1 - last update: 2026 11 24
  * @since       PHPBoost 2.0 - 2008 06 21
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -19,7 +19,7 @@ class FeedItem
     private ?Date $date = null;       // Feed date
     private string $desc = '';         // Item Description
     private string $guid = '';         // Item GUID
-    private string $image_url = '';       // Item Image
+    private ?string $image_url = '';       // Item Image
     private ?FeedItemEnclosure $enclosure = null; // Item Enclosure
     private array $auth = [];       // Authorizations
 
@@ -70,7 +70,7 @@ class FeedItem
     public function get_guid(): string { return $this->guid; }
     public function get_date(): ?Date { return $this->date; }
     public function get_desc(): string { return TextHelper::htmlspecialchars_decode($this->desc); }
-    public function get_image_url(): string { return $this->image_url; }
+    public function get_image_url(): string { return $this->image_url ?? ''; }
 	public function get_enclosure(): ?FeedItemEnclosure { return $this->enclosure; }
     public function get_auth(): array { return $this->auth; }
 }

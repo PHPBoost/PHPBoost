@@ -26,7 +26,7 @@ class Application
 	private string $compatibility_min = '';
 	private string $compatibility_max = '';
 	private ?Date $pubdate = null;
-	private ?int $priority = null;
+	private ?string $priority = null;
 	private bool $security_update = false;
 
 	private string $download_url = '';
