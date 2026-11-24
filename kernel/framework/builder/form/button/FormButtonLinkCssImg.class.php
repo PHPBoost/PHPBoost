@@ -14,7 +14,7 @@
 
 class FormButtonLinkCssImg extends AbstractFormButton
 {
-	public function __construct(string $label, string $link, string $css_class_image = '', string $text_button = '')
+	public function __construct(string $label, Url|string $link, string $css_class_image = '', string $text_button = '')
 	{
 		$full_label = '';
 		if (!empty($css_class_image))

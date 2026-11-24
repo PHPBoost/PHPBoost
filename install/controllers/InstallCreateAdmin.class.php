@@ -57,7 +57,8 @@ class InstallCreateAdmin extends InstallController
 			[
                 'maxlength' => 100, 'required' => true,
                 'events' => ['blur' => '
-                    if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "") {
+                    if (!HTMLForms.getField("login").getValue() && HTMLForms.getField("display_name").validate() == "")
+                    {
                         HTMLForms.getField("login").setValue(HTMLForms.getField("display_name").getValue().replace(/\s/g, \'\'));
                     }'
                 ]
@@ -74,9 +75,12 @@ class InstallCreateAdmin extends InstallController
 				'class' => 'custom-checkbox',
 				'description'=> $this->lang['user.username.custom.clue'],
 				'events' => ['click' => '
-					if (HTMLForms.getField("custom_login").getValue()) {
+					if (HTMLForms.getField("custom_login").getValue())
+                    {
 						HTMLForms.getField("login").enable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("login").disable();
 					}'
                 ]

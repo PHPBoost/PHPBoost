@@ -162,10 +162,13 @@ class AdminContentConfigController extends DefaultAdminController
 			[
 				'class' => 'top-field custom-checkbox',
 				'events' => ['click' => '
-					if (HTMLForms.getField("notation_enabled").getValue()) {
+					if (HTMLForms.getField("notation_enabled").getValue())
+                    {
 						HTMLForms.getField("notation_scale").enable();
 						HTMLForms.getField("notation_unauthorized_modules").enable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("notation_scale").disable();
 						HTMLForms.getField("notation_unauthorized_modules").disable();
 					}'
@@ -196,11 +199,14 @@ class AdminContentConfigController extends DefaultAdminController
 			[
 				'class' => 'top-field custom-checkbox',
 				'events' => ['click' => '
-					if (HTMLForms.getField("content_sharing_enabled").getValue()) {
+					if (HTMLForms.getField("content_sharing_enabled").getValue())
+                    {
 						HTMLForms.getField("content_sharing_email_enabled").enable();
 						HTMLForms.getField("content_sharing_print_enabled").enable();
 						HTMLForms.getField("content_sharing_sms_enabled").enable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("content_sharing_email_enabled").disable();
 						HTMLForms.getField("content_sharing_print_enabled").disable();
 						HTMLForms.getField("content_sharing_sms_enabled").disable();
@@ -237,10 +243,13 @@ class AdminContentConfigController extends DefaultAdminController
 				'class' => 'top-field custom-checkbox',
 				'description' => $this->lang['admin.opengraph.clue'],
 				'events' => ['click' => '
-					if (HTMLForms.getField("opengraph_enabled").getValue()) {
+					if (HTMLForms.getField("opengraph_enabled").getValue())
+                    {
 						HTMLForms.getField("site_default_picture_url").enable();
 						jQuery("#' . self::class . '_site_default_picture_url_preview").show();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("site_default_picture_url").disable();
 						jQuery("#' . self::class . '_site_default_picture_url_preview").hide();
 					}'
@@ -263,9 +272,12 @@ class AdminContentConfigController extends DefaultAdminController
 				'class' => 'top-field custom-checkbox',
 				'description' => $this->lang['admin.id.card.clue'],
 				'events' => ['click' => '
-					if (HTMLForms.getField("id_card_enabled").getValue()) {
+					if (HTMLForms.getField("id_card_enabled").getValue())
+                    {
 						HTMLForms.getField("id_card_unauthorized_modules").enable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("id_card_unauthorized_modules").disable();
 					}'
 				]

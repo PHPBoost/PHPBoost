@@ -102,14 +102,17 @@ abstract class AbstractDeleteCategoryController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('delete_category_and_content', $this->lang['category.delete.all.content'], FormFieldCheckbox::UNCHECKED,
 			[
 				'events' => ['click' => '
-					if (HTMLForms.getField("delete_category_and_content").getValue()) {
+					if (HTMLForms.getField("delete_category_and_content").getValue())
+                    {
 						HTMLForms.getField("move_in_other_cat").disable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("move_in_other_cat").enable();
-					}']
-				]
-			)
-		);
+					}'
+                ]
+			]
+        ));
 
 		$options = new SearchCategoryChildrensOptions();
 		$options->add_category_in_excluded_categories($this->get_category()->get_id());

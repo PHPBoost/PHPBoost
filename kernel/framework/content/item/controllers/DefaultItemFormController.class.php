@@ -105,9 +105,12 @@ class DefaultItemFormController extends AbstractItemController
 			$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_' . $this->item_class::get_title_label(), $this->lang['form.rewrited.title.personalize'], $this->get_item()->rewrited_title_is_personalized(),
 				[
 					'events' => ['click' =>'
-						if (HTMLForms.getField("personalize_rewrited_' . $this->item_class::get_title_label() . '").getValue()) {
+						if (HTMLForms.getField("personalize_rewrited_' . $this->item_class::get_title_label() . '").getValue())
+                        {
 							HTMLForms.getField("rewrited_' . $this->item_class::get_title_label() . '").enable();
-						} else {
+						}
+                        else
+                        {
 							HTMLForms.getField("rewrited_' . $this->item_class::get_title_label() . '").disable();
 						}'
 					]
@@ -196,15 +199,18 @@ class DefaultItemFormController extends AbstractItemController
 			if ($this->config->get_author_displayed() && $this->get_item()->author_custom_name_field_enabled())
 			{
 				$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
-					['events' => ['click' => '
-					if (HTMLForms.getField("author_custom_name_enabled").getValue())
-                    {
-						HTMLForms.getField("author_custom_name").enable();
-					}
-                    else
-                    {
-						HTMLForms.getField("author_custom_name").disable();
-					}']]
+					[
+                        'events' => ['click' => '
+                            if (HTMLForms.getField("author_custom_name_enabled").getValue())
+                            {
+                                HTMLForms.getField("author_custom_name").enable();
+                            }
+                            else
+                            {
+                                HTMLForms.getField("author_custom_name").disable();
+                            }'
+                        ]
+                    ]
 				));
 
 				$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
@@ -294,9 +300,12 @@ class DefaultItemFormController extends AbstractItemController
 					[
 						'hidden' => ($this->request->is_post_method() ? ($this->request->get_postint(self::$module_id . '_form_publishing_state', 0) != Item::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != Item::DEFERRED_PUBLICATION)),
 						'events' => ['click' => '
-							if (HTMLForms.getField("end_date_enabled").getValue()) {
+							if (HTMLForms.getField("end_date_enabled").getValue())
+                            {
 								HTMLForms.getField("publishing_end_date").enable();
-							} else {
+							}
+                            else
+                            {
 								HTMLForms.getField("publishing_end_date").disable();
 							}'
 						]

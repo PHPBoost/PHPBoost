@@ -77,21 +77,29 @@ class DefaultConfigurationController extends AbstractAdminItemController
 				[
                     'select_to_list' => true,
 					'events' => ['change' => '
-                        if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::GRID_VIEW . '\') {
+                        if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::GRID_VIEW . '\')
+                        {
                             HTMLForms.getField("items_per_row").enable();
                             HTMLForms.getField("full_item_display").disable();
                             HTMLForms.getField("auto_cut_characters_number").enable();
                             HTMLForms.getField("summary_displayed_to_guests").enable();
-                        } else if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::LIST_VIEW . '\') {
+                        }
+                        else if (HTMLForms.getField("display_type").getValue() == \'' . DefaultRichModuleConfig::LIST_VIEW . '\')
+                        {
                             HTMLForms.getField("items_per_row").disable();
                             HTMLForms.getField("full_item_display").enable();
                             HTMLForms.getField("summary_displayed_to_guests").enable();
-                            if (HTMLForms.getField("full_item_display").getValue()) {
+                            if (HTMLForms.getField("full_item_display").getValue())
+                            {
                                 HTMLForms.getField("auto_cut_characters_number").disable();
-                            } else {
+                            }
+                            else
+                            {
                                 HTMLForms.getField("auto_cut_characters_number").enable();
                             }
-                        } else {
+                        }
+                        else
+                        {
                             HTMLForms.getField("items_per_row").disable();
                             HTMLForms.getField("full_item_display").disable();
                             HTMLForms.getField("auto_cut_characters_number").disable();
@@ -117,9 +125,12 @@ class DefaultConfigurationController extends AbstractAdminItemController
 						'class' => 'custom-checkbox',
 						'hidden' => $this->config->get_display_type() != DefaultRichModuleConfig::LIST_VIEW,
 						'events' => ['click' => '
-							if (HTMLForms.getField("full_item_display").getValue()) {
+							if (HTMLForms.getField("full_item_display").getValue())
+                            {
 								HTMLForms.getField("auto_cut_characters_number").disable();
-							} else {
+							}
+                            else
+                            {
 								HTMLForms.getField("auto_cut_characters_number").enable();
 							}'
 						]

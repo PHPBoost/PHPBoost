@@ -68,9 +68,12 @@ abstract class AbstractCategoriesFormController extends ModuleController
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
 			[
 				'events' => ['click' => '
-					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
+					if (HTMLForms.getField("personalize_rewrited_name").getValue())
+                    {
 						HTMLForms.getField("rewrited_name").enable();
-					} else {
+					}
+                    else
+                    {
 						HTMLForms.getField("rewrited_name").disable();
 					}'
 				]
@@ -104,9 +107,12 @@ abstract class AbstractCategoriesFormController extends ModuleController
 			[
 				'description' => self::$lang['category.form.authorizations.clue'],
 				'events' => ['click' => '
-					if (HTMLForms.getField("special_authorizations").getValue()) {
+					if (HTMLForms.getField("special_authorizations").getValue())
+                    {
 						jQuery("#' . self::class . '_authorizations").show();
-					} else {
+					}
+                    else
+                    {
 						jQuery("#' . self::class . '_authorizations").hide();
 					}'
 				]
