@@ -14,7 +14,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 22
+ * @version     PHPBoost 6.1 - last update: 2026 11 25
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -79,9 +79,13 @@ class CacheManager
 
         if (self::is_memory_cached($name))
         {
-            return self::get_memory_cached_data($name);
+            $data = self::get_memory_cached_data($name);
+            if ($data instanceof $classname)
+            {
+                return $data;
+            }
         }
-        elseif (self::is_file_cached($name))
+        if (self::is_file_cached($name))
         {
             try
             {

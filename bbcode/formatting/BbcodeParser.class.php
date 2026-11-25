@@ -382,7 +382,7 @@ class BbcodeParser extends ContentFormattingParser
 	 * Serializes a split content according to the table tag and generates the complete HTML code.
 	 * @param array $content Content of the parser split according to the table tag
 	 */
-	protected function parse_imbricated_table(array &$content): void
+	protected function parse_imbricated_table(array|string &$content): void
 	{
 		if (is_array($content))
 		{

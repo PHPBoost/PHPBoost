@@ -80,11 +80,11 @@ abstract class AbstractItemController extends DefaultModuleController
                     {
 						case 'boolean':
 							$configuration_variables['C_' . strtoupper($parameter)] = $this->config->$parameter_get_method();
-						break;
+                            break;
 						case 'integer':
 						case 'string':
 							$configuration_variables[strtoupper($parameter)] = $this->config->$parameter_get_method();
-						break;
+                            break;
 					}
 				}
 			}
@@ -104,7 +104,7 @@ abstract class AbstractItemController extends DefaultModuleController
 		$this->view->put_all($this->module_item->get_global_template_vars());
 	}
 
-	protected static function get_items_manager(): ItemsManager
+	protected static function get_items_manager(): mixed
 	{
 		return ItemsService::get_items_manager(self::get_module()->get_id());
 	}

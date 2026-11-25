@@ -14,7 +14,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 25
  * @since       PHPBoost 3.0 - 2009 09 16
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -41,7 +41,7 @@ class ConfigManager
 			$data = null;
 			try
 			{
-				$data = self::load_in_db($module_name, $entry_name);
+				$data = self::load_in_db($classname, $module_name, $entry_name);
                 CacheManager::save($data, $module_name, $entry_name);
 			}
 			catch(ConfigNotFoundException $ex)
@@ -72,7 +72,7 @@ class ConfigManager
 		}
 	}
 
-	private static function load_in_db(string $module_name, string $entry_name = ''): ConfigData
+	private static function load_in_db(string $classname, string $module_name, string $entry_name = ''): ConfigData
 	{
 		$name = self::compute_entry_name($module_name, $entry_name);
 
@@ -86,12 +86,11 @@ class ConfigManager
 		}
 
 		$required_value = @unserialize($result['value']);
-		// @unserialize() returns false on malformed data, but returns a
-		// __PHP_Incomplete_Class object when the class definition is missing
-		// (e.g. during an update where module paths have changed). Both cases
-		// must be treated as a cache miss so ConfigManager falls back to
-		// instantiating a fresh default object via new $classname().
-		if ($required_value === false || $required_value instanceof \__PHP_Incomplete_Class)
+		// @unserialize() returns false on malformed data, a __PHP_Incomplete_Class
+		// object when the class definition is missing, or a different config class
+		// when the stored configuration is stale. Treat these cases as a cache miss
+		// so ConfigManager can instantiate a fresh default object via new $classname().
+		if ($required_value === false || $required_value instanceof \__PHP_Incomplete_Class || !($required_value instanceof $classname))
 		{
 			throw new ConfigNotFoundException($name);
 		}
