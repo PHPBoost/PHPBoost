@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 09
+ * @version     PHPBoost 6.1 - last update: 2026 11 25
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      xela <xela@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -65,16 +65,19 @@ class ItemsManager
      * Count items number having a specific keyword.
      * @param string $condition (optional) : Restriction to apply to the list of items
      * @param array $parameters (optional) : Parameters list to apply to the condition
+     * @return int Number of matching items
      */
     public function count_items_having_keyword(string $condition = '', array $parameters = []): int
     {
-        return self::$db_querier->select_single_row_query('
+        $result = self::$db_querier->select_single_row_query('
             SELECT COUNT(*) AS items_number
             FROM ' . self::$items_table . ' ' . self::$module_id . '
             LEFT JOIN ' . DB_TABLE_KEYWORDS_RELATIONS . ' keywords_relations ON keywords_relations.module_id = \'' . self::$module_id . '\' AND keywords_relations.id_in_module = ' . self::$module_id . '.id
             ' . $condition
             , $parameters
         );
+
+        return (int)$result['items_number'];
     }
 
     /**

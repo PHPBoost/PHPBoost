@@ -83,7 +83,7 @@ class ItemsUrlBuilder
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $category . $sort_field . $sort_mode . $page . $subcategories_page);
 	}
 
-	public static function display_tag(string $rewrited_name, string $module_id = '', string $sort_field = '', string $sort_mode = '', int $page = 1): Url
+	public static function display_tag(string $rewrited_name, string $module_id = '', string $sort_field = '', string $sort_mode = '', int|string $page = 1): Url
 	{
 		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
