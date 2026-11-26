@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 08
+ * @version     PHPBoost 6.1 - last update: 2026 11 26
  * @since       PHPBoost 3.0 - 2011 09 25
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -59,15 +59,15 @@ class CommentsDAO
 		return $comment['user_id'];
 	}
 
-	public static function get_last_comment_added(int $user_id): mixed
+	public static function get_last_comment_added(int $user_id): int
 	{
-		if ($user_id !== '-1')
+		if ($user_id !== -1)
 		{
-			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_id=:user_id', ['user_id' => $user_id]);
+			return (int) self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 		}
 		else
 		{
-			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_ip=:user_ip', ['user_ip' => AppContext::get_request()->get_ip_address()]);
+			return (int) self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_ip=:user_ip', ['user_ip' => AppContext::get_request()->get_ip_address()]);
 		}
 	}
 

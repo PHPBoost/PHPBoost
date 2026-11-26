@@ -205,7 +205,7 @@ class Item
 
 	public function get_keywords(): array
 	{
-		if ($this->keywords === null)
+		if ($this->keywords !== null)
 		{
 			$this->keywords = KeywordsService::get_keywords_manager(self::$module_id)->get_keywords($this->id);
 		}

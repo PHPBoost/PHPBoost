@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 05
+ * @version     PHPBoost 6.1 - last update: 2026 11 26
  * @since       PHPBoost 6.0 - 2021 03 22
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -25,7 +25,7 @@ class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLF
 		$search_category_children_options->add_authorizations_bits(Category::CONTRIBUTION_AUTHORIZATIONS);
 		$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
 
-		$this->options = FormFieldCategoriesSelect::generate_options('', $search_category_children_options, true);
+		$this->options = FormFieldCategoriesSelect::generate_options(Category::ROOT_CATEGORY, $search_category_children_options, true);
 
 		$select = CategoriesService::get_categories_manager()->get_select_categories_form_field($db_field, $label, '', $search_category_children_options, [], $this->options);
 
