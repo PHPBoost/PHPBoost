@@ -4,7 +4,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 05 19
+ * @version     PHPBoost 6.1 - last update: 2026 11 26
  * @since       PHPBoost 3.0 - 2010 07 08
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -116,8 +116,7 @@ class StringInputStream
      */
     public function assert_next(string $pattern, string $options = '', ?array &$matches = null): int
     {
-        $subject = TextHelper::substr($this->stream, $this->index + 1);
-        return preg_match('`^(?:' . $pattern . ')`u' . $options, $subject, $matches);
+        return preg_match('`\\G(?:' . $pattern . ')`u' . $options, $this->stream, $matches, 0, $this->index + 1);
     }
 
     /**
