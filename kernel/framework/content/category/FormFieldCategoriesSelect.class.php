@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 05
+ * @version     PHPBoost 6.1 - last update: 2026 11 27
  * @since       PHPBoost 3.0 - 2011 09 26
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -24,7 +24,7 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
      */
     public function __construct(string $id, string $label, mixed $value, SearchCategoryChildrensOptions $search_category_children_options, mixed $field_options, CategoriesCache $categories_cache, array $select_options = [])
     {
-		parent::__construct($id, $label, $value, ($select_options ? $select_options : self::generate_options($value, $search_category_children_options, false, $categories_cache)), $field_options);
+		parent::__construct($id, $label, $value, ($select_options ? $select_options : self::generate_options(Category::ROOT_CATEGORY, $search_category_children_options, false, $categories_cache)), $field_options);
     }
 
     public static function generate_options(int $id_category, SearchCategoryChildrensOptions $search_category_children_options, bool $all_categories_option = false, ?CategoriesCache $categories_cache = null): mixed

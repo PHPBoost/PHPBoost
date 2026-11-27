@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 27
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -91,7 +91,7 @@ class ItemsUrlBuilder
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/tag/' . $rewrited_name . '/' . $sort_field . $sort_mode . $page);
 	}
 
-	public static function display_pending(string $module_id = '', string $sort_field = '', string $sort_mode = '', int $page = 1): Url
+	public static function display_pending(string $module_id = '', string $sort_field = '', string $sort_mode = '', int|string $page = 1): Url
 	{
 		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';
@@ -99,7 +99,7 @@ class ItemsUrlBuilder
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/pending/' . $sort_field . $sort_mode . $page);
 	}
 
-	public static function display_member_items(?int $user_id = null, string $module_id = '', string $sort_field = '', string $sort_mode = '', int $page = 1): Url
+	public static function display_member_items(?int $user_id = null, string $module_id = '', string $sort_field = '', string $sort_mode = '', int|string $page = 1): Url
 	{
 		$sort_field = is_string($sort_field) && $sort_field !== '' ? $sort_field . '/' : '';
 		$sort_mode = $sort_mode !== '' ? $sort_mode . '/' : '';

@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 09
+ * @version     PHPBoost 6.1 - last update: 2026 11 27
  * @since       PHPBoost 6.0 - 2020 02 08
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -17,6 +17,11 @@ abstract class AbstractAdminItemController extends DefaultAdminModuleController
 	public function __construct(string $module_id = '')
 	{
 		parent::__construct($module_id);
+
+		if ($this->view === null)
+		{
+			return;
+		}
 
 		$this->view->put_all($this->get_additional_view_parameters());
 

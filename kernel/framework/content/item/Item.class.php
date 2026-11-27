@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 11
+ * @version     PHPBoost 6.1 - last update: 2026 11 26
  * @since       PHPBoost 6.0 - 2019 12 20
  * @author      xela <xela@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -22,7 +22,7 @@ class Item
 	protected ?Date $creation_date = null;
 	protected ?Date $update_date = null;
 	protected ?Notation $notation = null;
-	protected array $keywords = [];
+	protected ?array $keywords = null;
 	protected array $sources = [];
 
 	protected bool $published = false;
@@ -205,7 +205,7 @@ class Item
 
 	public function get_keywords(): array
 	{
-		if ($this->keywords !== null)
+		if ($this->keywords === null)
 		{
 			$this->keywords = KeywordsService::get_keywords_manager(self::$module_id)->get_keywords($this->id);
 		}

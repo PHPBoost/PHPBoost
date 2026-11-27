@@ -17,7 +17,7 @@ class TemplateRenderingException extends Exception
 	private ?StringInputStream $input = null;
 	private int $tpl_line = 0;
 	private int $offset = 0;
-	private int $error_message = 0;
+	private string $error_message = '';
 
 	public function __construct(string $message, ?StringInputStream $input = null)
 	{
@@ -47,10 +47,10 @@ class TemplateRenderingException extends Exception
 		$string = $this->input->entire_string();
 		$str_to_position = TextHelper::substr($string, 0, $position);
 
-		$this->tpl_line = TextHelper::substr_count($str_to_position, "\n") + 1;
+		$this->tpl_line  = TextHelper::substr_count($str_to_position, "\n") + 1;
 		$last_line_index = TextHelper::strrpos($str_to_position, "\n");
-		$line_content = TextHelper::substr($str_to_position, $last_line_index + 1);
-		$this->offset = TextHelper::strlen($line_content);
+		$line_content    = TextHelper::substr($str_to_position, $last_line_index + 1);
+		$this->offset    = TextHelper::strlen($line_content);
 	}
 }
 ?>
