@@ -6,7 +6,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 22
+ * @version     PHPBoost 6.1 - last update: 2026 11 28
  * @since       PHPBoost 3.0 - 2012 03 31
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -245,7 +245,7 @@ class UserService
 
 	/**
 	 * Get localized user level
-	 * @param string $level Level of the user
+	 * @param int $level Level of the user
 	 * @return string The localized level
 	 */
 	public static function get_level_lang(int $level): string
@@ -270,10 +270,10 @@ class UserService
 
 	/**
 	 * Get CSS class of the user level
-	 * @param string $level Level of the user
+	 * @param int $level Level of the user
 	 * @return string The CSS class
 	 */
-	public static function get_level_class(int $level): string
+	public static function get_level_class(?int $level): string
 	{
 		switch ($level)
 		{

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 11 24
+ * @version     PHPBoost 6.1 - last update: 2026 11 27
  * @since       PHPBoost 6.0 - 2020 01 10
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
@@ -11,7 +11,7 @@
 class DefaultCommentsTopic extends CommentsTopic
 {
 	protected ?Module $module = null;
-	protected ?Item $item = null;
+	protected mixed $item = null;
 
 	public function __construct(string $module_id, mixed $item = null, $url = null)
 	{
